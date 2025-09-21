@@ -1,0 +1,291 @@
+<style>
+  .sk-led-mask {
+    background: #F1EFF4;
+    padding: 7rem 0;
+  }
+
+  .sk-led-mask__container {
+    display: flex;
+    align-items: start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .sk-led-mask__image {
+    flex: 0 0 550px
+  }
+
+  .sk-led-mask__image img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+
+  .sk-led-mask__content {
+    flex: 0 0 520px;
+  }
+
+  .sk-led-mask__title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #30273E;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+
+  .sk-led-mask__wavelength {
+    margin-bottom: 7px;
+    display: flex;
+    align-items: center
+  }
+
+  .sk-led-mask__wavelength:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .sk-led-mask__wavelength-value {
+    font-size: 40px;
+    font-weight: 400;
+    color: #30273E;
+    margin-bottom: 8px;
+    display: block;
+    font-family: "Anton"
+    , sans-serif !important;
+    width: 150px;
+  }
+
+  .sk-led-mask__wavelength-description {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+
+  .sk-led-mask__result strong {
+    font-weight: 800;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .sk-led-mask {
+      padding: 40px 0;
+    }
+
+    .sk-led-mask__container {
+      flex-direction: column;
+      gap: 40px;
+      padding: 0 15px;
+    }
+
+    .sk-led-mask__image {
+      flex: none;
+      width: 100%;
+    }
+
+    .sk-led-mask__title {
+      font-size: 24px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .sk-led-mask__wavelength-value {
+      font-size: 24px;
+    }
+
+    .sk-led-mask__wavelength-description {
+      font-size: 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .sk-led-mask__title {
+      font-size: 20px;
+    }
+
+    .sk-led-mask__wavelength-value {
+      font-size: 20px;
+    }
+
+    .sk-led-mask__wavelength-description {
+      font-size: 14px;
+    }
+  }
+
+  .sk-led-mask__wavelengths {
+    display: flex;
+    align-items: center;
+  }
+
+  .sk-led-mask p {
+    color: #4F4F4F;
+    font-weight: 500;
+    line-height: 24px;
+  }
+</style>
+
+<section class="sk-led-mask">
+  <div class="container">
+    <div class="sk-led-mask__container">
+      <div class="sk-led-mask__image">
+        <img
+          src="{{ section.settings.led_mask_image | image_url: width: 600, height: 600 }}"
+          alt="{{ section.settings.led_mask_image.alt | default: section.settings.title }}"
+          width="600"
+          height="600"
+          loading="lazy">
+      </div>
+
+      <div class="sk-led-mask__content">
+        {% if section.settings.title != blank %}
+          <h2 class="sk-led-mask__title">{{ section.settings.title }}</h2>
+        {% endif %}
+
+        <div class="sk-led-mask__wavelengths">
+          <div class="wave-length-values">
+            {% for block in section.blocks %}
+              {% case block.type %}
+                {% when 'wavelength' %}
+                  <div class="sk-led-mask__wavelength" {{ block.shopify_attributes }}>
+                    <span class="sk-led-mask__wavelength-value">{{ block.settings.wavelength_value }}</span>
+                  {% comment %} <p class="sk-led-mask__wavelength-description">{{ block.settings.wavelength_description }}</p> {% endcomment %}
+                  </div>
+              {% endcase %}
+            {% endfor %}
+          </div>
+          <div class="wave-length-description">
+            {% for block in section.blocks %}
+              {% case block.type %}
+                {% when 'wavelength' %}
+                  <div class="sk-led-mask__wavelength" {{ block.shopify_attributes }}>
+                    {% comment %} <span class="sk-led-mask__wavelength-value">{{ block.settings.wavelength_value }}</span> {% endcomment %}
+                    <p class="sk-led-mask__wavelength-description">{{ block.settings.wavelength_description }}</p>
+                  </div>
+              {% endcase %}
+            {% endfor %}
+          </div>
+        </div>
+
+        {% if section.settings.study_info != blank %}
+          <div class="sk-led-mask__study-info">
+            {{ section.settings.study_info }}
+          </div>
+        {% endif %}
+
+        {% if section.settings.result_text != blank %}
+          <div class="sk-led-mask__result">
+            <p>
+              <strong>{{ section.settings.result_label }}</strong>
+              {{ section.settings.result_text }}
+            </p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "SK LED Mask",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "led_mask_image",
+        "label": "LED Mask Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Title",
+        "default": "Skinora Clear Mask kombinerer tre bølgelengder"
+      },
+      {
+        "type": "richtext",
+        "id": "study_info",
+        "label": "Study Information",
+        "default": "<p>Kliniske studier har vist at kombinasjonen av blått og rødt lys gir en signifikant bedre reduksjon av akne enn blått lys alene (Papageorgiou et al., Br J Dermatol 2000; Goldberg & Russell 2006). Tillegg av nær-infrarødt lys forsterker vevsreparasjon og langtidseffekt.</p>"
+      },
+      {
+        "type": "text",
+        "id": "result_label",
+        "label": "Result Label",
+        "default": "Resultatet?"
+      }, {
+        "type": "text",
+        "id": "result_text",
+        "label": "Result Text",
+        "default": "Klarere hud, mindre rødhet og forbedret hudhelse – helt uten kjemikalier eller aggressive behandlinger."
+      }, {
+        "type": "header",
+        "content": "Section Padding"
+      }, {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Top padding",
+        "default": 60
+      }, {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Bottom padding",
+        "default": 60
+      }
+    ],
+    "blocks": [
+      {
+        "type": "wavelength",
+        "name": "Wavelength",
+        "settings": [
+          {
+            "type": "text",
+            "id": "wavelength_value",
+            "label": "Wavelength Value",
+            "default": "415 nm",
+            "info": "e.g., 415 nm, 650 nm, 850 nm"
+          }, {
+            "type": "richtext",
+            "id": "wavelength_description",
+            "label": "Wavelength Description",
+            "default": "<p>Blått lys (415 nm): Retter seg mot C. acnes-bakterier ved å aktivere porfyriner → bakteriene ødelegges.</p>"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SK LED Mask",
+        "blocks": [
+          {
+            "type": "wavelength",
+            "settings": {
+              "wavelength_value": "415 nm",
+              "wavelength_description": "<p>Blått lys (415 nm): Retter seg mot C. acnes-bakterier ved å aktivere porfyriner → bakteriene ødelegges.</p>"
+            }
+          }, {
+            "type": "wavelength",
+            "settings": {
+              "wavelength_value": "650 nm",
+              "wavelength_description": "<p>Trenger dypere enn blått, roer inflammasjon og stimulerer hudens naturlige regenerering.</p>"
+            }
+          }, {
+            "type": "wavelength",
+            "settings": {
+              "wavelength_value": "850 nm",
+              "wavelength_description": "<p>Går enda dypere i vevet, forbedrer mikrosirkulasjon, fremmer heling og kan bidra til å redusere arrdannelse.</p>"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

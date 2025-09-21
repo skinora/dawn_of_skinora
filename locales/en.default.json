@@ -316,7 +316,8 @@
       }
     },
     "footer": {
-      "payment": "Payment methods"
+      "payment": "Payment methods",
+      "shipping_and_delivery": "Shipping & Delivery"
     },
     "featured_blog": {
       "view_all": "View all",

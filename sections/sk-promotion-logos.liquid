@@ -1,0 +1,64 @@
+<style>
+  .sk-promotion-logos__container {
+    background: {{ section.settings.sk_promotion_bgColor }};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .sk-promotion-logos {
+    margin: 3rem 0;
+  }
+</style>
+
+<section class="sk-promotion-logos">
+  <div class="container">
+    <div class="sk-promotion-logos__container">
+      {% for block in section.blocks %}
+        <div class="sk-promotion-logos__item">
+          <img
+            src="{{ block.settings.sk_promotion_img | image_url: width: 104,height: 104 }}"
+            alt="{{ block.settings.sk_promotion_img.alt }}"
+            width="104"
+            height="104">
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "SK Promotion",
+    "settings": [
+      {
+        "type": "color",
+        "id": "sk_promotion_bgColor",
+        "label": "Background Color",
+        "default": "#fff"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Logo",
+        "type": "Card",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "sk_promotion_img",
+            "label": "Select Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SK Promotion",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

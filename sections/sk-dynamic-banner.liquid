@@ -1,0 +1,110 @@
+<style>
+  .sk-dynamic-banner {
+    background: url('{{ 'banner-bg.png' | asset_url }}') no-repeat center center/cover;
+    height: 85vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .sk-dynamic-banner__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sk-dynamic-banner__title {
+    font-size: 64px;
+    color: #2C2C2C;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .sk-dynamic-banner__content {
+    padding-right: 15rem;
+  }
+  .sk-dynamic-banner__description {
+    font-size: 28px;
+    font-weight: 600;
+    color: #6C6C6C;
+    line-height: 38px;
+    margin-bottom: 30px;
+  }
+
+  .sk-dynamic-banner__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8rem;
+  }
+</style>
+
+<section class="sk-dynamic-banner">
+  <div class="container">
+    <div class="sk-dynamic-banner__container">
+      <div class="sk-dynamic-banner__content">
+        <h2 class="sk-dynamic-banner__title">
+          {{ section.settings.sk_banner_title }}
+        </h2>
+        <p class="sk-dynamic-banner__description">
+          {{ section.settings.sk_banner_description }}
+        </p>
+        <div>
+          <a href="{{ section.settings.sk_banner_button_link }}" class="sk-dynamic-banner__button sk_primary-button">
+            {{ section.settings.sk_banner_button_text }}
+            <span class="svg-wrapper">
+              {{- 'arrow-right.svg' | inline_asset_content -}}
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="sk-dynamic-banner__img">
+        <img
+          src="{{ section.settings.sk_banner_img | image_url: width: 555,height: 370 }}"
+          alt="{{ section.settings.sk_banner_title }}"
+          width="555"
+          height="370">
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "SK Dynamic Banner",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "sk_banner_img",
+        "label": "Banner Img"
+      },
+      {
+        "type": "text",
+        "id": "sk_banner_title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "sk_banner_description",
+        "label": "Description"
+      },
+      {
+        "type": "url",
+        "id": "sk_banner_button_link",
+        "label": "Button Link"
+      }, {
+        "type": "text",
+        "id": "sk_banner_button_text",
+        "label": "Button Text"
+      }
+    ],
+    "presets": [
+      {
+        "name": "SK Dynamic Banner"
+      }
+    ]
+  }
+{% endschema %}
