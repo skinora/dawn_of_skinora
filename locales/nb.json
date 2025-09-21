@@ -308,7 +308,8 @@
       "taxes_at_checkout_shipping_at_checkout_without_policy": "Avgifter, rabatter og frakt beregnes i kassen."
     },
     "footer": {
-      "payment": "Betalingsmåter"
+      "payment": "Betalingsmåter",
+      "shipping_and_delivery": "Frakt & Levering"
     },
     "featured_blog": {
       "view_all": "Vis alle",

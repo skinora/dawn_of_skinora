@@ -11,6 +11,119 @@
   display: block;
 }
 
+/* New 4-column layout styles */
+.footer__main-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.footer__column {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer__column--brand {
+  flex: 1.2;
+  max-width: 300px;
+}
+
+.footer__column--menu {
+  flex: 0.8;
+}
+
+/* Brand column styles */
+.footer__logo {
+  margin-bottom: 1.5rem;
+}
+
+.footer__logo img {
+  display: block;
+  height: auto;
+}
+
+.footer__brand-name {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+}
+
+.footer__brand-description {
+  margin-bottom: 2rem;
+  color: rgba(var(--color-foreground), 0.75);
+  line-height: 1.5;
+}
+
+.footer__newsletter {
+  margin-bottom: 1rem;
+}
+
+.footer__newsletter-heading {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+.footer__newsletter-form .field {
+  display: flex;
+  position: relative;
+}
+
+.footer__newsletter-form .field__input {
+  flex: 1;
+  padding-right: 5rem;
+}
+
+.footer__newsletter-form .newsletter-form__button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 4rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.footer__social-icons {
+  margin-top: 1.5rem;
+}
+
+/* Menu column styles */
+.footer__menu-heading {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  color: rgb(var(--color-foreground));
+}
+
+.footer__menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer__menu-item {
+  margin-bottom: 0.8rem;
+}
+
+.footer__menu-link {
+  color: rgba(var(--color-foreground), 0.75);
+  text-decoration: none;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.footer__menu-link:hover {
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+}
+
 @media screen and (max-width: 749px) {
   .footer .grid {
     display: block;
@@ -30,6 +143,86 @@
     padding-bottom: 3rem;
     padding-left: calc(4rem / var(--font-body-scale));
     padding-right: calc(4rem / var(--font-body-scale));
+  }
+
+  /* Mobile responsive styles for new layout */
+  .footer__main-columns {
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .footer__column {
+    min-width: auto;
+    max-width: none;
+  }
+
+  .footer__column--brand {
+    max-width: none;
+    text-align: center;
+  }
+
+  .footer__logo {
+    text-align: center;
+  }
+
+  .footer__brand-description {
+    text-align: center;
+  }
+
+  .footer__newsletter {
+    text-align: center;
+  }
+
+  .footer__social-icons {
+    justify-content: center;
+  }
+
+  .footer__menu-heading {
+    text-align: center;
+    font-size: 1.8rem;
+  }
+
+  .footer__menu-list {
+    text-align: center;
+  }
+
+  .footer__menu-link {
+    font-size: 1.6rem;
+  }
+
+  /* Mobile responsive styles for payment and shipping */
+  .footer__payment-shipping-wrapper {
+    align-items: center;
+  }
+
+
+  .list-shipping-delivery {
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .shipping-delivery-icon {
+    padding: 0.4rem 0.8rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* Tablet styles */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .footer__main-columns {
+    flex-wrap: wrap;
+  }
+
+  .footer__column--brand {
+    flex: 1 1 100%;
+    max-width: none;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .footer__column--menu {
+    flex: 1 1 calc(33.333% - 1.5rem);
+    min-width: 200px;
   }
 }
 
@@ -52,6 +245,7 @@
 .footer__content-bottom-wrapper {
   display: flex;
   width: 100%;
+  justify-content: flex-start;
 }
 
 @media screen and (max-width: 749px) {
@@ -91,21 +285,21 @@
   align-items: flex-end;
 }
 
-.footer__column--info {
+/* .footer__column--info {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-left: 2rem;
   padding-right: 2rem;
-}
+} */
 
 @media screen and (min-width: 750px) {
-  .footer__column--info {
+  /* .footer__column--info {
     padding-left: 0;
     padding-right: 0;
     align-items: flex-end;
-  }
+  } */
 }
 
 .footer-block:only-child:last-child {
@@ -280,15 +474,71 @@
   }
 }
 
-@media screen and (min-width: 750px) {
-  .footer__payment {
-    margin-top: 1.5rem;
-  }
+/* Payment and Shipping/Delivery Styles */
+.footer__payment-shipping-wrapper {
+  display: flex
+  ;
+      gap: 1.5rem;
+      align-items: start;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      flex-direction: row-reverse;
 }
 
-.footer__content-bottom-wrapper--center {
-  justify-content: center;
+
+.list-shipping-delivery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: flex-end;
+  padding-top: 1rem;
+    padding-left: 10px;
 }
+
+/* .list-shipping-delivery__item {
+  display: flex;
+  align-items: center;
+} */
+
+/* .shipping-delivery-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(var(--color-foreground), 0.05);
+  border-radius: 0.4rem;
+  font-size: 1.2rem;
+  color: rgba(var(--color-foreground), 0.75);
+  transition: all 0.2s ease;
+} */
+
+.shipping-delivery-icon:hover {
+  background: rgba(var(--color-foreground), 0.1);
+  color: rgb(var(--color-foreground));
+}
+
+.shipping-delivery-icon svg {
+  width: 175px;
+}
+
+/* Ensure custom SVG icons are properly sized */
+/* .shipping-delivery-icon > svg {
+  max-width: 2.4rem;
+  max-height: 2.4rem;
+  min-width: 1.6rem;
+  min-height: 1.6rem;
+} */
+
+.shipping-delivery-text {
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+
+
 
 .footer__copyright {
   text-align: center;
@@ -505,4 +755,25 @@
       padding-left: 3rem;
     }
   }
+}
+
+
+footer{
+  margin: 0;
+  padding-top: 48px;
+  background: #30273e !important;
+}
+
+footer .field__input{
+  background-color: transparent !important;
+  color: #fff !important;
+  padding: 0 12px !important;
+}
+footer .field__input::placeholder{
+  color: #fff !important;
+}
+
+footer .svg-wrapper{
+  width: 28px;
+  height: 28px;
 }

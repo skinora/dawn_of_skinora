@@ -1,0 +1,83 @@
+<style>
+  .sk-features__container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .sk-features__item {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    flex: 0 0 270px;
+  }
+  .sk-features__title {
+    text-align: center;
+    margin-top: 25px;
+    color: #30273E;
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: 600;
+  }
+  .sk-features {
+    padding: 30px 0;
+  }
+</style>
+
+
+<section class="sk-features">
+  <div class="container">
+    <div class="sk-features__container">
+      {% for block in section.blocks %}
+        <div class="sk-features__item">
+          <img
+            src="{{ block.settings.sk_features_img | image_url: width: 98,height: 98 }}"
+            alt="{{ block.settings.sk_features_img.alt }}"
+            width="98"
+            height="98">
+          <span class="sk-features__title">{{ block.settings.sk_features_title }}</span>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "SK Features",
+    "settings": [
+      {
+        "type": "color",
+        "id": "sk_features_bgColor",
+        "label": "Background Color",
+        "default": "#fff"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Logo",
+        "type": "Card",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "sk_features_img",
+            "label": "Select Image"
+          }, {
+            "type": "text",
+            "id": "sk_features_title",
+            "label": "Title"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SK Features",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}
