@@ -6,8 +6,6 @@
 {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-
-
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
@@ -32,7 +30,6 @@
   -%}
   <div class="footer__content-top page-width">
     <div class="footer__main-columns{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-
       {%- comment -%} First Column: Logo, Description, Newsletter, Social Icons {%- endcomment -%}
       <div class="footer__column footer__column--brand">
         {%- if section.settings.logo != blank -%}
@@ -42,7 +39,8 @@
               alt="{{ shop.name }}"
               width="{{ section.settings.logo_width | default: 120 }}"
               height="auto"
-              loading="lazy">
+              loading="lazy"
+            >
           </div>
         {%- else -%}
           <h2 class="footer__brand-name">{{ shop.name }}</h2>
@@ -59,13 +57,12 @@
             {%- if section.settings.newsletter_heading != blank -%}
               <h3 class="footer__newsletter-heading">{{ section.settings.newsletter_heading }}</h3>
             {%- endif -%}
-            {%- form 'customer'
-              , id: 'ContactFooter'
-              , class: 'footer__newsletter-form newsletter-form' -%}
+            {%- form 'customer', id: 'ContactFooter', class: 'footer__newsletter-form newsletter-form' -%}
               <input
                 type="hidden"
                 name="contact[tags]"
-                value="newsletter">
+                value="newsletter"
+              >
               <div class="newsletter-form__field-wrapper">
                 <div class="field">
                   <input
@@ -79,20 +76,22 @@
                     autocapitalize="off"
                     autocomplete="email"
                     {% if form.errors %}
-                    autofocus
-                    aria-invalid="true"
-                    aria-describedby="ContactFooter-error"
+                      autofocus
+                      aria-invalid="true"
+                      aria-describedby="ContactFooter-error"
                     {% elsif form.posted_successfully? %}
-                    aria-describedby="ContactFooter-success"
+                      aria-describedby="ContactFooter-success"
                     {% endif %}
                     placeholder="{{ section.settings.newsletter_placeholder | default: 'Email' }}"
-                    required>
+                    required
+                  >
                   <button
                     type="submit"
                     class="newsletter-form__button field__button"
                     name="commit"
                     id="Subscribe"
-                    aria-label="{{ 'newsletter.button_label' | t }}">
+                    aria-label="{{ 'newsletter.button_label' | t }}"
+                  >
                     <span class="svg-wrapper">
                       {{- 'icon-arrow.svg' | inline_asset_content -}}
                     </span>
@@ -113,7 +112,8 @@
                   class="newsletter-form__message newsletter-form__message--success form__message"
                   id="ContactFooter-success"
                   tabindex="-1"
-                  autofocus>
+                  autofocus
+                >
                   <span class="svg-wrapper">
                     {{- 'icon-success.svg' | inline_asset_content -}}
                   </span>
@@ -125,8 +125,7 @@
         {%- endif -%}
 
         {%- if section.settings.show_social and has_social_icons -%}
-          {%- render 'social-icons'
-            , class: 'footer__social-icons' -%}
+          {%- render 'social-icons', class: 'footer__social-icons' -%}
         {%- endif -%}
       </div>
 
@@ -156,19 +155,17 @@
   <div
     class="footer__content-bottom{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
     {% if settings.animations_reveal_on_scroll %}
-    data-cascade
-    {% endif %}>
+      data-cascade
+    {% endif %}
+  >
     <div class="footer__content-bottom-wrapper page-width">
       <div class="footer__column footer__localization isolate">
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
           <localization-form>
-            {%- form 'localization'
-              , id: 'FooterCountryForm'
-              , class: 'localization-form' -%}
+            {%- form 'localization', id: 'FooterCountryForm', class: 'localization-form' -%}
               <div>
                 <h2 class="caption-large text-body" id="FooterCountryLabel">{{ 'localization.country_label' | t }}</h2>
-                {%- render 'country-localization'
-                  , localPosition: 'FooterCountry' -%}
+                {%- render 'country-localization', localPosition: 'FooterCountry' -%}
               </div>
             {%- endform -%}
           </localization-form>
@@ -176,15 +173,12 @@
 
         {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
           <localization-form>
-            {%- form 'localization'
-              , id: 'FooterLanguageForm'
-              , class: 'localization-form' -%}
+            {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
               <div>
                 <h2 class="caption-large text-body" id="FooterLanguageLabel">
                   {{ 'localization.language_label' | t }}
                 </h2>
-                {%- render 'language-localization'
-                  , localPosition: 'FooterLanguage' -%}
+                {%- render 'language-localization', localPosition: 'FooterLanguage' -%}
               </div>
             {%- endform -%}
           </localization-form>
@@ -226,7 +220,8 @@
                           height="24"
                           viewBox="0 0 24 24"
                           fill="none"
-                          xmlns="http://www.w3.org/2000/svg">
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
                           <path
                             d="M3 6H21L19 12H5L3 6Z"
                             stroke="currentColor"
@@ -246,7 +241,6 @@
                             stroke-linecap="round" />
                         </svg>
                       {%- endif -%}
-                    {% comment %} <span class="shipping-delivery-text">{{ section.settings.free_shipping_text | default: 'Free Shipping' }}</span> {% endcomment %}
                     </div>
                   </li>
                 {%- endif -%}
@@ -262,7 +256,8 @@
                           height="24"
                           viewBox="0 0 24 24"
                           fill="none"
-                          xmlns="http://www.w3.org/2000/svg">
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
                           <path
                             d="M16 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V8L16 3Z"
                             stroke="currentColor"
@@ -288,7 +283,6 @@
                             stroke-linecap="round" />
                         </svg>
                       {%- endif -%}
-                    {% comment %} <span class="shipping-delivery-text">{{ section.settings.fast_delivery_text | default: 'Fast Delivery' }}</span> {% endcomment %}
                     </div>
                   </li>
                 {%- endif -%}
@@ -304,7 +298,8 @@
                           height="24"
                           viewBox="0 0 24 24"
                           fill="none"
-                          xmlns="http://www.w3.org/2000/svg">
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
                           <path
                             d="M12 2L3 7L12 12L21 7L12 2Z"
                             stroke="currentColor"
@@ -325,7 +320,6 @@
                             stroke-linejoin="round" />
                         </svg>
                       {%- endif -%}
-                    {% comment %} <span class="shipping-delivery-text">{{ section.settings.secure_payment_text | default: 'Secure Payment' }}</span> {% endcomment %}
                     </div>
                   </li>
                 {%- endif -%}
@@ -341,7 +335,8 @@
                           height="24"
                           viewBox="0 0 24 24"
                           fill="none"
-                          xmlns="http://www.w3.org/2000/svg">
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
                           <path
                             d="M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
                             stroke="currentColor"
@@ -354,7 +349,6 @@
                             stroke-linejoin="round" />
                         </svg>
                       {%- endif -%}
-                    {% comment %} <span class="shipping-delivery-text">{{ section.settings.return_policy_text | default: 'Easy Returns' }}</span> {% endcomment %}
                     </div>
                   </li>
                 {%- endif -%}
@@ -366,7 +360,8 @@
     </div>
     <div class="footer__content-bottom-wrapper page-width{% if section.settings.enable_country_selector == false and section.settings.enable_language_selector == false %} footer__content-bottom-wrapper--center{% endif %}">
       <div class="footer__copyright caption">
-        <small class="copyright__content">&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url -}}
+        <small class="copyright__content"
+          >&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url -}}
         </small>
         <small class="copyright__content">{{ powered_by_link }}</small>
         {%- if section.settings.show_policy -%}
@@ -388,216 +383,229 @@
 </footer>
 
 {% schema %}
-  {
-    "name": "t:sections.footer.name",
-    "settings": [
-      {
-        "type": "color_scheme",
-        "id": "color_scheme",
-        "label": "t:sections.all.colors.label",
-        "default": "scheme-1"
-      },
-      {
-        "type": "header",
-        "content": "Brand Information"
-      },
-      {
-        "type": "image_picker",
-        "id": "logo",
-        "label": "Logo"
-      },
-      {
-        "type": "range",
-        "id": "logo_width",
-        "min": 50,
-        "max": 300,
-        "step": 10,
-        "unit": "px",
-        "label": "Logo width",
-        "default": 120
-      }, {
-        "type": "richtext",
-        "id": "brand_description",
-        "label": "Brand description",
-        "default": "<p>Sign up to be the first to know about new expert product launches, the latest beauty trends and more.</p>"
-      }, {
-        "type": "header",
-        "content": "Newsletter"
-      }, {
-        "type": "checkbox",
-        "id": "newsletter_enable",
-        "default": true,
-        "label": "Enable newsletter signup"
-      }, {
-        "type": "inline_richtext",
-        "id": "newsletter_heading",
-        "default": "SUBSCRIBE",
-        "label": "Newsletter heading"
-      }, {
-        "type": "text",
-        "id": "newsletter_placeholder",
-        "default": "Email",
-        "label": "Email placeholder text"
-      }, {
-        "type": "header",
-        "content": "Menu"
-      }, {
-        "type": "link_list",
-        "id": "footer_menu",
-        "label": "Footer menu",
-        "info": "Select the menu with nested structure (parent -> children). Only the first 3 parent items will be displayed as columns."
-      }, {
-        "type": "header",
-        "content": "Social Media"
-      }, {
-        "type": "checkbox",
-        "id": "show_social",
-        "default": true,
-        "label": "Show social media icons",
-        "info": "Configure social media links in theme settings"
-      }, {
-        "type": "header",
-        "content": "Follow on Shop"
-      }, {
-        "type": "checkbox",
-        "id": "enable_follow_on_shop",
-        "default": true,
-        "label": "Enable Follow on Shop",
-        "info": "Display Follow on Shop button to allow customers to follow your store"
-      }, {
-        "type": "header",
-        "content": "Localization"
-      }, {
-        "type": "checkbox",
-        "id": "enable_country_selector",
-        "default": true,
-        "label": "Enable country/region selector",
-        "info": "To add a country/region, go to your [payment settings.](/admin/settings/payments)"
-      }, {
-        "type": "checkbox",
-        "id": "enable_language_selector",
-        "default": true,
-        "label": "Enable language selector",
-        "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
-      }, {
-        "type": "header",
-        "content": "Payment Icons"
-      }, {
-        "type": "checkbox",
-        "id": "payment_enable",
-        "default": true,
-        "label": "Show payment icons"
-      }, {
-        "type": "header",
-        "content": "Shipping & Delivery"
-      }, {
-        "type": "checkbox",
-        "id": "show_shipping_delivery",
-        "default": true,
-        "label": "Show shipping & delivery icons"
-      }, {
-        "type": "checkbox",
-        "id": "show_free_shipping",
-        "default": true,
-        "label": "Show free shipping icon"
-      }, {
-        "type": "text",
-        "id": "free_shipping_text",
-        "default": "Free Shipping",
-        "label": "Free shipping text"
-      }, {
-        "type": "html",
-        "id": "free_shipping_svg",
-        "label": "Free shipping SVG icon",
-        "info": "Paste your custom SVG code here. Leave empty to use default icon."
-      }, {
-        "type": "checkbox",
-        "id": "show_fast_delivery",
-        "default": true,
-        "label": "Show fast delivery icon"
-      }, {
-        "type": "text",
-        "id": "fast_delivery_text",
-        "default": "Fast Delivery",
-        "label": "Fast delivery text"
-      }, {
-        "type": "html",
-        "id": "fast_delivery_svg",
-        "label": "Fast delivery SVG icon",
-        "info": "Paste your custom SVG code here. Leave empty to use default icon."
-      }, {
-        "type": "checkbox",
-        "id": "show_secure_payment",
-        "default": true,
-        "label": "Show secure payment icon"
-      }, {
-        "type": "text",
-        "id": "secure_payment_text",
-        "default": "Secure Payment",
-        "label": "Secure payment text"
-      }, {
-        "type": "html",
-        "id": "secure_payment_svg",
-        "label": "Secure payment SVG icon",
-        "info": "Paste your custom SVG code here. Leave empty to use default icon."
-      }, {
-        "type": "checkbox",
-        "id": "show_return_policy",
-        "default": true,
-        "label": "Show return policy icon"
-      }, {
-        "type": "text",
-        "id": "return_policy_text",
-        "default": "Easy Returns",
-        "label": "Return policy text"
-      }, {
-        "type": "html",
-        "id": "return_policy_svg",
-        "label": "Return policy SVG icon",
-        "info": "Paste your custom SVG code here. Leave empty to use default icon."
-      }, {
-        "type": "header",
-        "content": "Policies"
-      }, {
-        "type": "checkbox",
-        "id": "show_policy",
-        "default": true,
-        "label": "Show policy links",
-        "info": "To add or edit policies, go to your [policy settings.](/admin/settings/legal)"
-      }, {
-        "type": "header",
-        "content": "t:sections.all.spacing"
-      }, {
-        "type": "range",
-        "id": "margin_top",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "t:sections.footer.settings.margin_top.label",
-        "default": 0
-      }, {
-        "type": "header",
-        "content": "t:sections.all.padding.section_padding_heading"
-      }, {
-        "type": "range",
-        "id": "padding_top",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "t:sections.all.padding.padding_top",
-        "default": 36
-      }, {
-        "type": "range",
-        "id": "padding_bottom",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "t:sections.all.padding.padding_bottom",
-        "default": 36
-      }
-    ]
-  }
+{
+  "name": "t:sections.footer.name",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Brand Information"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 120
+    },
+    {
+      "type": "richtext",
+      "id": "brand_description",
+      "label": "Brand description",
+      "default": "<p>Sign up to be the first to know about new expert product launches, the latest beauty trends and more.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "checkbox",
+      "id": "newsletter_enable",
+      "default": true,
+      "label": "Enable newsletter signup"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "newsletter_heading",
+      "default": "SUBSCRIBE",
+      "label": "Newsletter heading"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_placeholder",
+      "default": "Email",
+      "label": "Email placeholder text"
+    },
+    {
+      "type": "header",
+      "content": "Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_menu",
+      "label": "Footer menu",
+      "info": "Select the menu with nested structure (parent -> children). Only the first 3 parent items will be displayed as columns."
+    },
+    {
+      "type": "header",
+      "content": "Social Media"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "default": true,
+      "label": "Show social media icons",
+      "info": "Configure social media links in theme settings"
+    },
+    {
+      "type": "header",
+      "content": "Follow on Shop"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_follow_on_shop",
+      "default": true,
+      "label": "Enable Follow on Shop",
+      "info": "Display Follow on Shop button to allow customers to follow your store"
+    },
+    {
+      "type": "header",
+      "content": "Localization"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": true,
+      "label": "Enable country/region selector",
+      "info": "To add a country/region, go to your [payment settings.](/admin/settings/payments)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "default": true,
+      "label": "Enable language selector",
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    {
+      "type": "header",
+      "content": "Payment Icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_enable",
+      "default": true,
+      "label": "Show payment icons"
+    },
+    {
+      "type": "header",
+      "content": "Shipping & Delivery"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_delivery",
+      "default": true,
+      "label": "Show shipping & delivery icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_free_shipping",
+      "default": true,
+      "label": "Show free shipping icon"
+    },
+    {
+      "type": "html",
+      "id": "free_shipping_svg",
+      "label": "Free shipping SVG icon",
+      "info": "Paste your custom SVG code here. Leave empty to use default icon."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_fast_delivery",
+      "default": true,
+      "label": "Show fast delivery icon"
+    },
+    {
+      "type": "html",
+      "id": "fast_delivery_svg",
+      "label": "Fast delivery SVG icon",
+      "info": "Paste your custom SVG code here. Leave empty to use default icon."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secure_payment",
+      "default": true,
+      "label": "Show secure payment icon"
+    },
+    {
+      "type": "html",
+      "id": "secure_payment_svg",
+      "label": "Secure payment SVG icon",
+      "info": "Paste your custom SVG code here. Leave empty to use default icon."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_return_policy",
+      "default": true,
+      "label": "Show return policy icon"
+    },
+    {
+      "type": "html",
+      "id": "return_policy_svg",
+      "label": "Return policy SVG icon",
+      "info": "Paste your custom SVG code here. Leave empty to use default icon."
+    },
+    {
+      "type": "header",
+      "content": "Policies"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_policy",
+      "default": true,
+      "label": "Show policy links",
+      "info": "To add or edit policies, go to your [policy settings.](/admin/settings/legal)"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.footer.settings.margin_top.label",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
 {% endschema %}
