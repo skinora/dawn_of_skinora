@@ -87,11 +87,12 @@
                   >
                   <button
                     type="submit"
-                    class="newsletter-form__button field__button"
+                    class="newsletter-form__button field__button footer_submit_btn"
                     name="commit"
                     id="Subscribe"
                     aria-label="{{ 'newsletter.button_label' | t }}"
                   >
+                    <span class="">SIGN UP</span>
                     <span class="svg-wrapper">
                       {{- 'icon-arrow.svg' | inline_asset_content -}}
                     </span>
@@ -134,7 +135,7 @@
         {%- assign footer_menu = linklists[section.settings.footer_menu] -%}
         {%- for parent_link in footer_menu.links limit: 3 -%}
           <div class="footer__column footer__column--menu">
-            <h3 class="footer__menu-heading">{{ parent_link.title | escape }}</h3>
+            <p class="footer__menu-heading">{{ parent_link.title | escape }}</p>
             {%- if parent_link.links != blank -%}
               <ul class="footer__menu-list list-unstyled">
                 {%- for child_link in parent_link.links -%}

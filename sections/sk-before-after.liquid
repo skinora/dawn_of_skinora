@@ -1,0 +1,574 @@
+{% comment %}
+  SK Before/After Section
+  Displays a slider of before/after testimonial cards using SwiperJS
+{% endcomment %}
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+<style>
+    .sk-before-after {
+      padding: 7rem 0;
+      background-color: {{ section.settings.background_color | default: '#f1eff4' }};
+      position: relative;
+    }
+
+    .sk-before-after__header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .sk-before-after__title {
+      font-size: {{ section.settings.title_size }}px;
+      font-weight: {{ section.settings.title_weight }};
+      color: {{ section.settings.title_color }};
+      margin-bottom: 15px;
+      line-height: 1.2;
+    }
+
+    .sk-before-after__subtitle {
+      font-size: {{ section.settings.subtitle_size }}px;
+      color: {{ section.settings.subtitle_color }};
+      font-weight: {{ section.settings.subtitle_weight }};
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .sk-testimonial-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: 395px;
+    }
+
+    /* .sk-testimonial-card:hover {
+      transform: translateY(-5px);
+    } */
+
+    .sk-testimonial-card__images {
+        position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+
+    }
+
+    .sk-testimonial-card__image {
+      width: 50%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+    }
+
+    .sk-testimonial-card__image--before {
+      left: 0;
+      border-radius: 16px 0 0 0;
+    }
+
+    .sk-testimonial-card__image--after {
+      right: 0;
+      border-radius: 0 16px 0 0;
+    }
+
+    .sk-testimonial-card__divider {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: white;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .sk-testimonial-card__content {
+        text-align: center;
+        background: {{ section.settings.card_bg_color | default: '#fff' }};
+        color: #000000;
+        padding: 22px 45px 25px 45px;
+        margin-top: 30px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .sk-testimonial-card__author {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        background: #30273E;
+        color: #fff;
+        font-style: italic;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        padding: 13px;
+    }
+
+    .sk-testimonial-card__verified {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .sk-testimonial-card__title {
+        font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #000;
+    font-family: "DM Sans", sans-serif !important;
+    }
+
+    .sk-testimonial-card__text {
+        font-size: 14px;
+    line-height: 1.5;
+    color: #000;
+    font-weight: 500;
+    }
+
+    /* Navigation Arrows */
+    .sk-before-after-prev,
+    .sk-before-after-next {
+      position: absolute;
+      top: 40%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      background: none;
+      border: none;
+      border-radius: 50%;
+      box-shadow: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    .sk-before-after-prev:hover,
+    .sk-before-after-next:hover {
+      background: #f5f5f5;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .sk-before-after-prev {
+      left: 10px;
+    }
+
+    .sk-before-after-next {
+      right: 10px;
+    }
+
+    .sk-before-after-prev svg,
+    .sk-before-after-next svg {
+      width: 24px;
+      height: 24px;
+      fill: #333;
+    }
+
+    /* Pagination */
+    .swiper-pagination {
+      position: relative !important;
+      margin-top: 40px;
+    }
+
+    .swiper-pagination-bullet {
+      width: 12px;
+      height: 12px;
+      background: #ddd;
+      opacity: 1;
+      transition: all 0.3s ease;
+    }
+
+    .swiper-pagination-bullet-active {
+      background: #4a4458;
+      transform: scale(1.2);
+    }
+
+    @media screen and (max-width: 768px) {
+      .sk-before-after {
+        padding: 40px 0;
+      }
+
+      .sk-before-after__title {
+        font-size: 28px;
+      }
+
+      .sk-before-after-prev,
+      .sk-before-after-next {
+        width: 40px;
+        height: 40px;
+      }
+
+      .sk-before-after-prev {
+        left: 5px;
+      }
+
+      .sk-before-after-next {
+        right: 5px;
+      }
+
+      .sk-testimonial-card__content {
+        padding: 20px;
+      }
+    }
+
+    .sk-before-after .swiper-pagination{
+      display: none;
+    }
+
+    .sk_before_img{
+      width: 100%;
+      height: auto;
+    }
+
+    .sk-before-after .swiper-wrapper{
+      position: unset;
+    }
+    .sk-before-after .swiper{
+      position: unset;
+    }
+
+    .sk-before-after-prev {
+      left: 40px;
+  }
+  .sk-before-after-next {
+      right: 65px;
+  }
+</style>
+
+<section class="sk-before-after">
+  <div class="container">
+    {% if section.settings.section_title != blank or section.settings.section_subtitle != blank %}
+      <div class="sk-before-after__header">
+        {% if section.settings.section_title != blank %}
+          <h2 class="sk-before-after__title">{{ section.settings.section_title }}</h2>
+        {% endif %}
+        {% if section.settings.section_subtitle != blank %}
+          <p class="sk-before-after__subtitle">{{ section.settings.section_subtitle }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="swiper sk-before-after-swiper">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="swiper-slide" {{ block.shopify_attributes }}>
+              <div class="sk-testimonial-card">
+                <div class="sk-testimonial-card__images">
+                  <img
+                    src="{{ block.settings.before_image | image_url: width: 334, height: 360 }}"
+                    alt="{{ block.settings.before_image.alt | escape }}"
+                    class="sk_before_img"
+                    loading="lazy"
+                    width="334"
+                    height="360"
+                  >
+
+                  {% if block.settings.author_name != blank %}
+                    <div class="sk-testimonial-card__author">
+                      {{ block.settings.author_name }}
+                      {% if block.settings.show_verified %}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="17"
+                          height="17"
+                          viewBox="0 0 17 17"
+                          fill="none"
+                        >
+                          <path d="M15.5124 6.76909C15.2287 6.47309 14.9356 6.16764 14.8178 5.88327C14.7087 5.61927 14.7029 5.22873 14.6964 4.81564C14.6862 4.13345 14.6745 3.36109 14.1567 2.84327C13.6389 2.32545 12.8636 2.31382 12.1844 2.30364C11.7713 2.29709 11.3844 2.29127 11.1167 2.18218C10.8324 2.06436 10.5269 1.77127 10.2309 1.48764C9.748 1.02509 9.20109 0.5 8.5 0.5C7.79891 0.5 7.252 1.02509 6.76909 1.48764C6.47309 1.77127 6.16764 2.06436 5.88327 2.18218C5.61927 2.29127 5.22873 2.29709 4.81564 2.30364C4.13345 2.31382 3.36109 2.32545 2.84327 2.84327C2.32545 3.36109 2.31382 4.13636 2.30364 4.81564C2.29709 5.22873 2.29127 5.61564 2.18218 5.88327C2.06436 6.16764 1.77127 6.47309 1.48764 6.76909C1.02509 7.252 0.5 7.79891 0.5 8.5C0.5 9.20109 1.02509 9.748 1.48764 10.2309C1.77127 10.5269 2.06436 10.8324 2.18218 11.1167C2.29127 11.3807 2.29709 11.7713 2.30364 12.1844C2.31382 12.8665 2.32545 13.6389 2.84327 14.1567C3.36109 14.6745 4.13636 14.6862 4.81564 14.6964C5.22873 14.7029 5.61564 14.7087 5.88327 14.8178C6.16764 14.9356 6.47309 15.2287 6.76909 15.5124C7.252 15.9749 7.79891 16.5 8.5 16.5C9.20109 16.5 9.748 15.9749 10.2309 15.5124C10.5269 15.2287 10.8324 14.9356 11.1167 14.8178C11.3807 14.7087 11.7713 14.7029 12.1844 14.6964C12.8665 14.6862 13.6389 14.6745 14.1567 14.1567C14.6745 13.6389 14.6862 12.8665 14.6964 12.1844C14.7029 11.7713 14.7087 11.3844 14.8178 11.1167C14.9356 10.8324 15.2287 10.5269 15.5124 10.2309C15.9749 9.748 16.5 9.20109 16.5 8.5C16.5 7.79891 15.9749 7.252 15.5124 6.76909ZM14.8825 9.62727C14.5429 9.98073 14.1916 10.3473 14.0098 10.7836C13.8367 11.2011 13.8295 11.6942 13.8222 12.1713C13.8142 12.7124 13.8055 13.2724 13.5385 13.54C13.2716 13.8076 12.7109 13.8156 12.1698 13.8236C11.6927 13.8309 11.1996 13.8382 10.7822 14.0113C10.3458 14.1916 9.98218 14.5429 9.62509 14.884C9.24327 15.2476 8.84836 15.6287 8.49855 15.6287C8.14873 15.6287 7.75382 15.2498 7.37127 14.884C7.01782 14.5444 6.65127 14.1931 6.21491 14.0113C5.79746 13.8382 5.30436 13.8309 4.82727 13.8236C4.28618 13.8156 3.72618 13.8069 3.45855 13.54C3.19091 13.2731 3.18291 12.7124 3.17491 12.1713C3.16764 11.6942 3.16036 11.2011 2.98727 10.7836C2.80691 10.3473 2.45564 9.98364 2.11455 9.62655C1.75164 9.24473 1.37273 8.84982 1.37273 8.5C1.37273 8.15018 1.75164 7.75527 2.11745 7.37273C2.45709 7.01927 2.80836 6.65273 2.99018 6.21636C3.16327 5.79891 3.17055 5.30582 3.17782 4.82873C3.18582 4.28764 3.19455 3.72764 3.46145 3.46C3.72836 3.19236 4.28909 3.18436 4.83018 3.17636C5.30727 3.16909 5.80036 3.16182 6.21782 2.98873C6.65418 2.80836 7.01782 2.45709 7.37491 2.116C7.75527 1.75164 8.15018 1.37273 8.5 1.37273C8.84982 1.37273 9.24473 1.75164 9.62727 2.11745C9.98073 2.45709 10.3473 2.80836 10.7836 2.99018C11.2011 3.16327 11.6942 3.17055 12.1713 3.17782C12.7124 3.18582 13.2724 3.19455 13.54 3.46145C13.8076 3.72836 13.8156 4.28909 13.8236 4.83018C13.8309 5.30727 13.8382 5.80036 14.0113 6.21782C14.1916 6.65418 14.5429 7.01782 14.884 7.37491C15.2476 7.75673 15.6287 8.15164 15.6287 8.50146C15.6287 8.85127 15.2484 9.24473 14.8825 9.62727ZM11.7175 6.44618C11.7992 6.528 11.8451 6.63891 11.8451 6.75455C11.8451 6.87018 11.7992 6.98109 11.7175 7.06291L7.64473 11.1356C7.56291 11.2174 7.452 11.2633 7.33636 11.2633C7.22073 11.2633 7.10982 11.2174 7.028 11.1356L5.28255 9.39018C5.20547 9.30746 5.1635 9.19805 5.1655 9.08501C5.16749 8.97196 5.21329 8.8641 5.29324 8.78415C5.37319 8.7042 5.48105 8.6584 5.5941 8.65641C5.70714 8.65441 5.81655 8.69638 5.89927 8.77345L7.33636 10.2098L11.1007 6.44618C11.1825 6.36447 11.2935 6.31857 11.4091 6.31857C11.5247 6.31857 11.6356 6.36447 11.7175 6.44618Z" fill="white"/>
+                        </svg>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="sk-testimonial-card__content">
+                  {% if block.settings.testimonial_title != blank %}
+                    <h3 class="sk-testimonial-card__title">{{ block.settings.testimonial_title }}</h3>
+                  {% endif %}
+
+                  {% if block.settings.testimonial_text != blank %}
+                    <p class="sk-testimonial-card__text">{{ block.settings.testimonial_text }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <!-- Navigation arrows -->
+        <div class="sk-before-after-prev">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
+            <path d="M30 16.2756L2 16.2756M2 16.2756L16 30.2756M2 16.2756L16 2.27563" stroke="#6C6C6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="sk-before-after-next">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
+            <path d="M2 16.2756H30M30 16.2756L16 2.27563M30 16.2756L16 30.2756" stroke="#6C6C6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Pagination -->
+        <div class="swiper-pagination"></div>
+      </div>
+    {% else %}
+      <div style="text-align: center; padding: 60px 0; color: #999;">
+        <p>Add testimonial blocks to display before/after cards here.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const swiper = new Swiper('.sk-before-after-swiper', {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      loop: {{ section.settings.enable_loop }},
+      autoplay: {{ section.settings.enable_autoplay }} ? {
+        delay: 600,
+        disableOnInteraction: false,
+      } : false,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.sk-before-after-next',
+        prevEl: '.sk-before-after-prev',
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 30,
+        },
+        1024: {
+          slidesPerView: {{ section.settings.slides_per_view | default: 3 }},
+          spaceBetween: 30,
+        },
+      },
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "SK Before/After Section",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Real Results from Real Customers"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subtitle",
+      "label": "Section Subtitle",
+      "default": "See the amazing transformations our customers have achieved"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f1eff4"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Content Background",
+      "default": "#fff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Font Size",
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Title Font Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi Bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtitle Font Size",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "subtitle_weight",
+      "label": "Subtitle Font Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Card Settings"
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "range",
+      "id": "slides_per_view",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Slides Per View (Desktop)",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_loop",
+      "label": "Enable Loop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Before/After Testimonial",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Images"
+        },
+        {
+          "type": "image_picker",
+          "id": "before_image",
+          "label": "Image"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author Name",
+          "default": "Kari M. Nøtteden | Skinora Verified Buyer"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_verified",
+          "label": "Show Verified Badge",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "testimonial_title",
+          "label": "Testimonial Title",
+          "default": "Reduced Lines & Wrinkles"
+        },
+        {
+          "type": "textarea",
+          "id": "testimonial_text",
+          "label": "Testimonial Text",
+          "default": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Before/After Section",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

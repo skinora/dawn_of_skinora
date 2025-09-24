@@ -1,0 +1,291 @@
+{% comment %}
+  SK Product Listing Section
+  Displays a grid of products with product cards matching the Skinora design
+{% endcomment %}
+
+<style>
+  .sk-product-listing {
+    padding: 7rem 0;
+    background-color: #f1eff4;
+  }
+
+  .sk-product-listing__header {
+    text-align: center;
+    margin-bottom: 50px;
+    width: 65%;
+    margin: auto;
+    margin-bottom: 70px;
+  }
+
+  .sk-product-listing__title {
+    font-size: 48px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+  }
+
+  .sk-product-listing__subtitle {
+    font-size: 16px;
+    color: #666;
+    font-weight: 400;
+  }
+
+  .sk-product-listing__grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .sk-product-card {
+    text-align: center;
+    flex: 0 0 428px;
+  }
+
+  .sk-product-card__image {
+    width: 330px;
+    margin: auto;
+    margin-bottom: 25px;
+  }
+
+  .sk-product-card__image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .sk-product-card__title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 3px;
+    font-family: 'DM Sans', sans-serif !important;
+  }
+
+  .sk-product-card__description {
+    font-size: 14px;
+    color: #000;
+    line-height: 1.5;
+    margin-bottom: 13px;
+    font-weight: 500;
+  }
+
+  .sk-product-card__price {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 25px;
+  }
+
+  .sk-product-card__button {
+    background-color: #4a4458;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    min-width: 120px;
+  }
+
+  .sk-product-card__button:hover {
+    background-color: #3a3448;
+    transform: translateY(-2px);
+  }
+
+  .sk-product-card__button-icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+  .sk-product-card__content {
+    padding: 0 60px;
+  }
+
+  .buy_prod_btn {
+    align-items: center;
+    gap: 15px;
+    font-size: 20px;
+    padding: 10px 55px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .sk-product-listing {
+      padding: 40px 0;
+    }
+
+    .sk-product-listing__container {
+      padding: 0 15px;
+    }
+
+    .sk-product-listing__title {
+      font-size: 28px;
+    }
+
+    .sk-product-listing__grid {
+      grid-template-columns: 1fr;
+      gap: 25px;
+    }
+  }
+</style>
+
+<section class="sk-product-listing">
+  <div class="container">
+    <div class="sk-product-listing__container">
+      {% if section.settings.section_title != blank or section.settings.section_subtitle != blank %}
+        <div class="sk-product-listing__header">
+          {% if section.settings.section_title != blank %}
+            <h2 class="sk-product-listing__title">{{ section.settings.section_title }}</h2>
+          {% endif %}
+          {% if section.settings.section_subtitle != blank %}
+            <p class="sk-product-listing__subtitle">{{ section.settings.section_subtitle }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if section.blocks.size > 0 %}
+        <div class="sk-product-listing__grid">
+          {% for block in section.blocks %}
+            {% assign product = block.settings.product %}
+            {% if product != blank %}
+              <div class="sk-product-card" {{ block.shopify_attributes }}>
+                <div class="sk-product-card__image">
+                  {% if product.featured_media %}
+                    <img
+                      src="{{ product.featured_media | image_url: width: 375, height: 355 }}"
+                      alt="{{ product.featured_media.alt | escape }}"
+                      loading="lazy"
+                      width="375"
+                      height="355"
+                    >
+                  {% else %}
+                    <div style="width: 250px; height: 250px; background: #f0f0f0; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999; margin: 0 auto;">
+                      No Image
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="sk-product-card__content">
+                  <h3 class="sk-product-card__title">{{ product.title | escape }}</h3>
+
+                  {% if block.settings.show_description and product.description != blank %}
+                    <div class="sk-product-card__description">
+                      <p>{{ product.description | strip_html | truncate: 120 }}</p>
+                    </div>
+                  {% endif %}
+
+                  <div class="sk-product-card__price">
+                    {% if product.compare_at_price > product.price %}
+                      <span style="text-decoration: line-through; color: #999; margin-right: 10px;">
+                        {{ product.compare_at_price | money }}
+                      </span>
+                    {% endif %}
+                    {{ product.price | money }}
+                  </div>
+
+                  {% if block.settings.button_text != blank %}
+                    <a
+                      href="{{ product.url }}"
+                      class=" sk_primary-button buy_prod_btn"
+                      {% if block.settings.open_in_new_tab %}
+                        target="_blank"
+                      {% endif %}
+                    >
+                      {{ block.settings.button_text }}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 23 24" fill="none">
+                        <path d="M11.5001 1.79175V22.2084M1.29175 12.0001H21.7084" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <div style="text-align: center; padding: 60px 0; color: #999;">
+          <p>Add product blocks to display your products here.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SK Product Listing",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Finn Skinora Led-Maske Som Passer Akkurat Deg"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle",
+      "label": "Section Subtitle",
+      "default": "OD3 komfortbriller inkludert – ekstra komfort, samme effekt."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_description",
+          "label": "Show Product Description",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "KJØP"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open Product in New Tab",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Product Listing",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

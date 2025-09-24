@@ -15,7 +15,7 @@
   .sk-features__title {
     text-align: center;
     margin-top: 25px;
-    color: #30273E;
+    color: #30273e;
     font-size: 20px;
     line-height: 25px;
     font-weight: 600;
@@ -23,61 +23,73 @@
   .sk-features {
     padding: 30px 0;
   }
+  .sk-features__icon {
+    width: 98px;
+    height: 98px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sk-features__icon svg {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+  }
 </style>
-
 
 <section class="sk-features">
   <div class="container">
     <div class="sk-features__container">
       {% for block in section.blocks %}
         <div class="sk-features__item">
-          <img
-            src="{{ block.settings.sk_features_img | image_url: width: 98,height: 98 }}"
-            alt="{{ block.settings.sk_features_img.alt }}"
-            width="98"
-            height="98">
+          {% if block.settings.sk_features_svg != blank %}
+            <div class="sk-features__icon">
+              {{ block.settings.sk_features_svg }}
+            </div>
+          {% endif %}
           <span class="sk-features__title">{{ block.settings.sk_features_title }}</span>
         </div>
       {% endfor %}
-
     </div>
   </div>
 </section>
 
-
 {% schema %}
-  {
-    "name": "SK Features",
-    "settings": [
-      {
-        "type": "color",
-        "id": "sk_features_bgColor",
-        "label": "Background Color",
-        "default": "#fff"
-      }
-    ],
-    "blocks": [
-      {
-        "name": "Logo",
-        "type": "Card",
-        "settings": [
-          {
-            "type": "image_picker",
-            "id": "sk_features_img",
-            "label": "Select Image"
-          }, {
-            "type": "text",
-            "id": "sk_features_title",
-            "label": "Title"
-          }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "SK Features",
-        "category": "Custom"
-      }
-    ]
-  }
+{
+  "name": "SK Features",
+  "settings": [
+    {
+      "type": "color",
+      "id": "sk_features_bgColor",
+      "label": "Background Color",
+      "default": "#fff"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Logo",
+      "type": "Card",
+      "settings": [
+        {
+          "type": "html",
+          "id": "sk_features_svg",
+          "label": "SVG Code",
+          "info": "Paste your SVG code here. The SVG will be automatically sized to 98x98px."
+        },
+        {
+          "type": "text",
+          "id": "sk_features_title",
+          "label": "Title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Features",
+      "category": "Custom"
+    }
+  ]
+}
 {% endschema %}

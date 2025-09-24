@@ -12,53 +12,126 @@
   }
 </style>
 
-<section class="sk-promotion-logos">
-  <div class="container">
-    <div class="sk-promotion-logos__container">
+<style>
+  .sw-publication-{{ section.id }}{
+    margin-top: 2rem;
+    overflow-x: hidden;
+  }
+  .sw-publication-{{ section.id }} .sw-publication__scroll-parent {
+      position: relative;
+      width: 100vw;
+      height: 10rem;
+      overflow: hidden;
+  }
+
+  .sw-publication-{{ section.id }} .sw-publication__scroll-element {
+      width: inherit;
+      height: inherit;
+      position: absolute;
+      left: 0%;
+      top: 0%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+  }
+  .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card{
+      flex: 0 0 70px
+  }
+  .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card img{
+      width:100%;
+      height: auto;
+      display: block;
+  }
+
+  .primary {
+      animation: primary 30s linear infinite;
+  }
+
+  .secondary {
+      animation: secondary 30s linear infinite;
+  }
+
+  @keyframes primary {
+      from {
+
+          transform: translateX(0);
+      }
+      to {
+
+          transform: translateX(-100%);
+      }
+  }
+
+  @keyframes secondary {
+      from {
+
+          transform: translateX(100%);
+      }
+      to {
+
+          transform: translateX(0);
+      }
+  }
+</style>
+
+<section class="sw-publication-{{ section.id }}">
+  <div class="sw-publication__scroll-parent">
+    <div class="sw-publication__scroll-element primary">
       {% for block in section.blocks %}
-        <div class="sk-promotion-logos__item">
+        <div class="sw-publication__card ">
           <img
             src="{{ block.settings.sk_promotion_img | image_url: width: 104,height: 104 }}"
             alt="{{ block.settings.sk_promotion_img.alt }}"
             width="104"
-            height="104">
+            height="104"
+          >
         </div>
       {% endfor %}
-
+    </div>
+    <div class="sw-publication__scroll-element secondary">
+      {% for block in section.blocks %}
+        <div class="sw-publication__card">
+          <img
+            src="{{ block.settings.sk_promotion_img | image_url: width: 104,height: 104 }}"
+            alt="{{ block.settings.sk_promotion_img.alt }}"
+            width="104"
+            height="104"
+          >
+        </div>
+      {% endfor %}
     </div>
   </div>
 </section>
 
-
 {% schema %}
-  {
-    "name": "SK Promotion",
-    "settings": [
-      {
-        "type": "color",
-        "id": "sk_promotion_bgColor",
-        "label": "Background Color",
-        "default": "#fff"
-      }
-    ],
-    "blocks": [
-      {
-        "name": "Logo",
-        "type": "Card",
-        "settings": [
-          {
-            "type": "image_picker",
-            "id": "sk_promotion_img",
-            "label": "Select Image"
-          }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "SK Promotion",
-        "category": "Custom"
-      }
-    ]
-  }
+{
+  "name": "SK Promotion",
+  "settings": [
+    {
+      "type": "color",
+      "id": "sk_promotion_bgColor",
+      "label": "Background Color",
+      "default": "#fff"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Logo",
+      "type": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "sk_promotion_img",
+          "label": "Select Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Promotion",
+      "category": "Custom"
+    }
+  ]
+}
 {% endschema %}
