@@ -3,76 +3,76 @@
     "banner": {
       "type": "sk-help-banner",
       "settings": {
-        "heading": "Help Center",
+        "heading": "Legal Document",
         "padding_top": 0,
         "padding_bottom": 0
       }
     },
-    "help_categories": {
+    "legal_categories": {
       "type": "sk-help-categories",
       "blocks": {
         "category_1": {
           "type": "category_item",
           "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V7h2v4z\" fill=\"currentColor\"/></svg>",
-            "title": "Produkt-FAQ",
-            "article_count": "8 Articles"
+            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z\" fill=\"currentColor\"/></svg>",
+            "title": "Terms of Service",
+            "article_count": "5 Documents"
           }
         },
         "category_2": {
           "type": "category_item",
           "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z\" fill=\"currentColor\"/></svg>",
-            "title": "Bestilling & Betaling",
-            "article_count": "8 Articles"
+            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z\" fill=\"currentColor\"/></svg>",
+            "title": "Privacy Policy",
+            "article_count": "3 Documents"
           }
         },
         "category_3": {
           "type": "category_item",
           "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\" fill=\"currentColor\"/></svg>",
-            "title": "Frakt & Levering",
-            "article_count": "8 Articles"
+            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z\" fill=\"currentColor\"/></svg>",
+            "title": "Cookie Policy",
+            "article_count": "2 Documents"
           }
         },
         "category_4": {
           "type": "category_item",
           "settings": {
             "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7v2H4V4h3.5l1-1h7l1 1H20z\" fill=\"currentColor\"/></svg>",
-            "title": "Retur & Angrerett",
-            "article_count": "8 Articles"
+            "title": "Return Policy",
+            "article_count": "4 Documents"
           }
         },
         "category_5": {
           "type": "category_item",
           "settings": {
             "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z\" fill=\"currentColor\"/></svg>",
-            "title": "Garanti & Support",
-            "article_count": "8 Articles"
+            "title": "Warranty Terms",
+            "article_count": "3 Documents"
           }
         },
         "category_6": {
           "type": "category_item",
           "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z\" fill=\"currentColor\"/></svg>",
-            "title": "Personvern & Cookies",
-            "article_count": "8 Articles"
+            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z\" fill=\"currentColor\"/></svg>",
+            "title": "GDPR Compliance",
+            "article_count": "6 Documents"
           }
         },
         "category_7": {
           "type": "category_item",
           "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z\" fill=\"currentColor\"/></svg>",
-            "title": "Bestilling & Betaling",
-            "article_count": "8 Articles"
+            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z\" fill=\"currentColor\"/></svg>",
+            "title": "Shipping Terms",
+            "article_count": "4 Documents"
           }
         },
         "category_8": {
           "type": "category_item",
           "settings": {
             "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M18 7l-1.41-1.41-6.34 6.34 1.41 1.41L18 7zm4.24-1.41L11.66 16.17 7.48 12l-1.41 1.41L11.66 19l12-12-1.42-1.41zM.41 13.41L6 19l1.41-1.41L1.83 12 .41 13.41z\" fill=\"currentColor\"/></svg>",
-            "title": "Kundeservice",
-            "article_count": "8 Articles"
+            "title": "Legal Disclaimers",
+            "article_count": "2 Documents"
           }
         }
       },
@@ -87,8 +87,8 @@
         "category_8"
       ],
       "settings": {
-        "heading": "Hjelpesenter",
-        "description": "<p>Vi Har Samlet Alt Du Trenger Å Vite Om Bestilling, Levering Og Bruk Av Våre Produkter.</p>",
+        "heading": "Legal Documents",
+        "description": "<p>Access all our legal documents, policies, and terms that govern your use of our products and services.</p>",
         "padding_top": 80,
         "padding_bottom": 80
       }
@@ -103,7 +103,7 @@
   },
   "order": [
     "banner",
-    "help_categories",
+    "legal_categories",
     "main"
   ]
 }
