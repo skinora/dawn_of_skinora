@@ -12,23 +12,34 @@
     "banner": {
       "type": "sk-help-banner",
       "settings": {
+        "background_image": "shopify://shop_images/about-section-bg.png",
         "heading": "Legal Document",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "background-1",
         "padding_top": 0,
         "padding_bottom": 0
       }
     },
-   
     "content_section": {
       "type": "sk-content-section",
       "settings": {
-        "heading": "",
-        "content": "<p>Lorem Ipsum dolor sit amet consectetur. Platea ac eleifend morbi consequat neque libero. Nibh pharetra sociis urna pretium. Tristique mattis sed tortor lobortis tincidunt mauris vel. Eu tempus at pellentesque hac posuere ipsum arcu commodo. Sapien arcu ultrices tellus lacus.</p><p>Mi vitae feugiat urna nunc sapien id non fringilla orci. Ut senectus amet nisl ut. Viverra platea purus lectus risus felis ipsum ultrices imperdiet erat. Porta arcu amet tincidunt placerat. Massa venenatis facilisis a fringilla ac. Nisl lobortis amet varius posuere elit morbi tempor ornare. Mi placerat porta in dignissim id accumsan volutpat accumsan in. Sollicitudin ultrices etiam tincidunt ultrices donec ac.</p><p>In molestie id aenean massa gravida vestibulum placerat morbi lacus. Ipsum adipiscing congue eu sapien lacus. Tortor id nibh porta lorem bibendum. Mi sagittis sodales suscipit venenatis elit quam hendrerit. Eget convallis laoreet adipiscing id eget mattis. Gravida dolor sed lacus ullamcorper sollicitudin. Quis duis at purus pellentesque blandit. Eget posuere sed consectetur orci velit vel sit at.</p><p>Faucibus suscipit eu velit fusce enim aliquam molestie et. Et eros arcu tristique vitae. Auctor amet semper aenean sit accumsan vitae turpis eget elementum. Viverra sit id ornare ac porta tincidunt. A viverra nisl nunc ac dis sed. Nec pharetra fringilla mi sed non viverra in non. Enim aliquet egestas dui viverra suspendisse.</p><p>Sed tempus ullamcorper mauris eget. Commodo quam velit cursus ultrices ornare blandit et orci mi. Ac euismod ullamcorper etiam a velit. Arcu sodales interdum arcu nam nisl. Sed vulputate consequat orci nascetur vitae. Erat sed bibendum nunc tortor gravida velit. Amet mi cras ornare bibendum vitae. Vitae risus quam nullam consectetur sed feugiat gravida. Senectus orci eget nulla non. Donec velit at ullamcorper fames libero. Curabitur enim varius porta vulputate elementum. Mi accumsan vitae pellentesque mauris. Erat duis volutpat lobortis viverra risus condimentum id nunc. Ultrices vulputate mus purus velit fringilla sagittis.</p>",
+        "heading": "Legal Document",
+        "content": "<p>Lorem Ipsum dolor sit amet consectetur. Platea ac eleifend morbi consequat neque libero. Nibh pharetra sociis urna pretium. Tristique mattis sed tortor lobortis tincidunt mauris vel. Eu tempus at pellentesque hac posuere ipsum arcu commodo. Sapien arcu ultrices tellus lacus.</p><p>Mi vitae feugiat urna nunc sapien id non fringilla orci. Ut senectus amet nisl ut. Viverra platea purus lectus risus felis ipsum ultrices imperdiet erat. Porta arcu amet tincidunt placerat. Massa venenatis facilisis a fringilla ac. Nisl lobortis amet varius posuere elit morbi tempor ornare. Mi placerat porta in dignissim id accumsan volutpat accumsan in. Sollicitudin ultrices etiam tincidunt ultrices donec ac.</p><p>In molestie id aenean massa gravida vestibulum placerat morbi lacus. Ipsum adipiscing congue eu sapien lacus. Tortor id nibh porta lorem bibendum. Mi sagittis sodales suscipit venenatis elit quam hendrerit. Eget convallis laoreet adipiscing id eget mattis. Gravida dolor sed lacus ullamcorper sollicitudin. Quis duis at purus pellentesque blandit. Eget posuere sed consectetur orci velit vel sit at.</p><p>Faucibus suscipit eu velit fusce enim aliquam molestie et. Et eros arcu tristique vitae. Auctor amet semper aenean sit accumsan vitae turpis eget elementum. Viverra sit id ornare ac porta tincidunt. A viverra nisl nunc ac dis sed. Nec pharetra fringilla mi sed non viverra in non. Enim aliquet egestas dui viverra suspendisse.</p><p>Sed tempus ullamcorper mauris eget. Commodo quam velit cursus ultrices ornare blandit et orci mi. Ac euismod ullamcorper etiam a velit. Arcu sodales interdum arcu nam nisl. Sed vulputate consequat orci nascetur vitae. Erat sed bibendum nunc tortor gravida velit. Amet mi cras ornare bibendum vitae. Vitae risus quam nullam consectetur sed feugiat gravida. Senectus orci eget nulla non. Donec velit at ullamcorper fames libero. Curabitur enim varius porta vulputate elementum. Mi accumsan vitae pellentesque mauris. Erat duis volutpat lobortis viverra risus condimentum id nunc. Ultrices vulputate mus purus velit fringilla sagittis.<br/><br/><strong>Lorem Ipsum Dolor sit Amet</strong><br/><br/>Beauty Project<br/></p><p>Feb 2024<br/><br/></p>",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "background-1",
         "padding_top": 60,
         "padding_bottom": 60
       }
     },
     "main": {
       "type": "main-page",
+      "custom_css": [
+        ".main-page-title.page-title {display: none;}"
+      ],
       "settings": {
         "padding_top": 36,
         "padding_bottom": 36
