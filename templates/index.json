@@ -41,6 +41,18 @@
             "sk_promotion_img": "shopify://shop_images/p3.png"
           }
         },
+        "card_EBLUp4": {
+          "type": "Card",
+          "settings": {
+            "sk_promotion_img": "shopify://shop_images/p3.png"
+          }
+        },
+        "card_TeC3jt": {
+          "type": "Card",
+          "settings": {
+            "sk_promotion_img": "shopify://shop_images/p3.png"
+          }
+        },
         "card_tnjidX": {
           "type": "Card",
           "settings": {
@@ -59,7 +71,19 @@
             "sk_promotion_img": "shopify://shop_images/p9.png"
           }
         },
+        "card_7JU9BL": {
+          "type": "Card",
+          "settings": {
+            "sk_promotion_img": "shopify://shop_images/p9.png"
+          }
+        },
         "card_GpRYXU": {
+          "type": "Card",
+          "settings": {
+            "sk_promotion_img": "shopify://shop_images/p6.png"
+          }
+        },
+        "card_eaMcxy": {
           "type": "Card",
           "settings": {
             "sk_promotion_img": "shopify://shop_images/p6.png"
@@ -94,10 +118,14 @@
         "card_4m7e7C",
         "card_cDgaN7",
         "card_nyXh3d",
+        "card_EBLUp4",
+        "card_TeC3jt",
         "card_tnjidX",
         "card_BzUxq4",
         "card_eKVzz7",
+        "card_7JU9BL",
         "card_GpRYXU",
+        "card_eaMcxy",
         "card_xJiww7",
         "card_kfUhhQ",
         "card_dcawxP",
@@ -105,7 +133,127 @@
       ],
       "name": "SK Promotion",
       "settings": {
-        "sk_promotion_bgColor": "#fff"
+        "sk_promotion_bgColor": "#ffffff"
+      }
+    },
+    "sk_product_listing_dYMpyE": {
+      "type": "sk-product-listing",
+      "blocks": {
+        "product_azBm9j": {
+          "type": "product",
+          "settings": {
+            "product": "skinora-radiance",
+            "show_description": true,
+            "button_text": "KJØP",
+            "open_in_new_tab": false
+          }
+        },
+        "product_Km3at8": {
+          "type": "product",
+          "settings": {
+            "product": "skinora-radiance",
+            "show_description": true,
+            "button_text": "KJØP",
+            "open_in_new_tab": false
+          }
+        },
+        "product_fRgkE9": {
+          "type": "product",
+          "settings": {
+            "product": "skinora-radiance",
+            "show_description": true,
+            "button_text": "KJØP",
+            "open_in_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "product_azBm9j",
+        "product_Km3at8",
+        "product_fRgkE9"
+      ],
+      "name": "SK Product Listing",
+      "settings": {
+        "section_title": "Finn Skinora Led-Maske Som Passer Akkurat Deg",
+        "section_subtitle": "OD3 komfortbriller inkludert – ekstra komfort, samme effekt."
+      }
+    },
+    "sk_before_after_HqFkek": {
+      "type": "sk-before-after",
+      "blocks": {
+        "testimonial_4YHa8c": {
+          "type": "testimonial",
+          "settings": {
+            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
+            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "show_verified": true,
+            "testimonial_title": "Reduced Lines & Wrinkles 1",
+            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+          }
+        },
+        "testimonial_XiMBAy": {
+          "type": "testimonial",
+          "settings": {
+            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
+            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "show_verified": true,
+            "testimonial_title": "Reduced Lines & Wrinkles 2",
+            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+          }
+        },
+        "testimonial_wanmk4": {
+          "type": "testimonial",
+          "settings": {
+            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
+            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "show_verified": true,
+            "testimonial_title": "Reduced Lines & Wrinkles 3",
+            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+          }
+        },
+        "testimonial_EbbgMm": {
+          "type": "testimonial",
+          "settings": {
+            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
+            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "show_verified": true,
+            "testimonial_title": "Reduced Lines & Wrinkles 4",
+            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+          }
+        },
+        "testimonial_rWEGVc": {
+          "type": "testimonial",
+          "settings": {
+            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
+            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "show_verified": true,
+            "testimonial_title": "Reduced Lines & Wrinkles 5",
+            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_4YHa8c",
+        "testimonial_XiMBAy",
+        "testimonial_wanmk4",
+        "testimonial_EbbgMm",
+        "testimonial_rWEGVc"
+      ],
+      "name": "SK Before/After Section",
+      "settings": {
+        "section_title": "",
+        "section_subtitle": "",
+        "background_color": "#f1eff4",
+        "card_bg_color": "#ffffff",
+        "title_size": 36,
+        "title_weight": "600",
+        "title_color": "#333333",
+        "subtitle_size": 16,
+        "subtitle_weight": "400",
+        "subtitle_color": "#666666",
+        "slides_per_view": 3,
+        "enable_loop": true,
+        "enable_autoplay": false
       }
     },
     "sk_features_pHkfMf": {
@@ -114,21 +262,21 @@
         "card_kHQtcn": {
           "type": "Card",
           "settings": {
-            "sk_features_img": "shopify://shop_images/Component_4_2.png",
+            "sk_features_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"99\" height=\"98\" viewbox=\"0 0 99 98\" fill=\"none\">\n<rect width=\"97.7292\" height=\"97.7292\" transform=\"translate(0.635498 0.135498)\" fill=\"#30273E\"></rect>\n<path d=\"M65.4414 24.5C71.6589 24.5 76.7196 29.5144 76.7196 35.6751L76.7223 42.9633C76.7223 43.4974 76.5072 44.0153 76.1261 44.3929C75.7423 44.7733 75.2251 44.9863 74.6806 44.9863C72.4457 44.9863 70.6272 46.7882 70.6272 49.0027C70.6272 51.2172 72.4457 53.019 74.6806 53.019C75.8076 53.019 76.7223 53.9254 76.7223 55.0421V62.3276C76.7223 68.4883 71.6644 73.5 65.4468 73.5H33.556C27.3384 73.5 22.2778 68.4883 22.2778 62.3276V55.0421C22.2778 53.9254 23.1925 53.019 24.3195 53.019C26.5572 53.019 28.3756 51.2172 28.3756 49.0027C28.3756 46.8448 26.6307 45.221 24.3195 45.221C23.7778 45.221 23.2606 45.0079 22.8767 44.6276C22.4929 44.2473 22.2778 43.7321 22.2778 43.198L22.2833 35.6751C22.2833 29.5144 27.3412 24.5 33.5587 24.5H65.4414ZM49.5055 38.5289C48.7324 38.5289 48.0409 38.9551 47.6952 39.6402L45.7107 43.6242L41.2844 44.2635C40.5194 44.3714 39.8933 44.8892 39.6511 45.6175C39.4115 46.3458 39.6048 47.1334 40.1601 47.6675L43.3696 50.7641L42.6128 55.1419C42.4822 55.8971 42.7898 56.647 43.4159 57.0974C43.7698 57.3483 44.1808 57.4778 44.5973 57.4778C44.9158 57.4778 45.2371 57.3995 45.5311 57.2458L49.5001 55.1796L53.4609 57.2404C54.1469 57.6045 54.9608 57.5479 55.5842 57.0947C56.2131 56.647 56.5207 55.8971 56.39 55.1419L55.6305 50.7641L58.84 47.6675C59.3981 47.1334 59.5913 46.3458 59.3491 45.6175C59.1095 44.8892 58.4834 44.3714 57.7266 44.2662L53.2921 43.6242L51.3076 39.6429C50.9673 38.9578 50.2759 38.5316 49.5055 38.5289Z\" fill=\"white\"></path>\n</svg>",
             "sk_features_title": "14-dagers angrerett"
           }
         },
         "card_UCy7PJ": {
           "type": "Card",
           "settings": {
-            "sk_features_img": "shopify://shop_images/Component_4_2.png",
+            "sk_features_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"99\" height=\"98\" viewbox=\"0 0 99 98\" fill=\"none\">\n<rect width=\"97.7292\" height=\"97.7292\" transform=\"translate(0.635498 0.135498)\" fill=\"#30273E\"></rect>\n<path d=\"M65.4414 24.5C71.6589 24.5 76.7196 29.5144 76.7196 35.6751L76.7223 42.9633C76.7223 43.4974 76.5072 44.0153 76.1261 44.3929C75.7423 44.7733 75.2251 44.9863 74.6806 44.9863C72.4457 44.9863 70.6272 46.7882 70.6272 49.0027C70.6272 51.2172 72.4457 53.019 74.6806 53.019C75.8076 53.019 76.7223 53.9254 76.7223 55.0421V62.3276C76.7223 68.4883 71.6644 73.5 65.4468 73.5H33.556C27.3384 73.5 22.2778 68.4883 22.2778 62.3276V55.0421C22.2778 53.9254 23.1925 53.019 24.3195 53.019C26.5572 53.019 28.3756 51.2172 28.3756 49.0027C28.3756 46.8448 26.6307 45.221 24.3195 45.221C23.7778 45.221 23.2606 45.0079 22.8767 44.6276C22.4929 44.2473 22.2778 43.7321 22.2778 43.198L22.2833 35.6751C22.2833 29.5144 27.3412 24.5 33.5587 24.5H65.4414ZM49.5055 38.5289C48.7324 38.5289 48.0409 38.9551 47.6952 39.6402L45.7107 43.6242L41.2844 44.2635C40.5194 44.3714 39.8933 44.8892 39.6511 45.6175C39.4115 46.3458 39.6048 47.1334 40.1601 47.6675L43.3696 50.7641L42.6128 55.1419C42.4822 55.8971 42.7898 56.647 43.4159 57.0974C43.7698 57.3483 44.1808 57.4778 44.5973 57.4778C44.9158 57.4778 45.2371 57.3995 45.5311 57.2458L49.5001 55.1796L53.4609 57.2404C54.1469 57.6045 54.9608 57.5479 55.5842 57.0947C56.2131 56.647 56.5207 55.8971 56.39 55.1419L55.6305 50.7641L58.84 47.6675C59.3981 47.1334 59.5913 46.3458 59.3491 45.6175C59.1095 44.8892 58.4834 44.3714 57.7266 44.2662L53.2921 43.6242L51.3076 39.6429C50.9673 38.9578 50.2759 38.5316 49.5055 38.5289Z\" fill=\"white\"></path>\n</svg>",
             "sk_features_title": "Norsk selskap – Providento AS"
           }
         },
         "card_XrpM6T": {
           "type": "Card",
           "settings": {
-            "sk_features_img": "shopify://shop_images/Component_4_2.png",
+            "sk_features_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"99\" height=\"98\" viewbox=\"0 0 99 98\" fill=\"none\">\n<rect width=\"97.7292\" height=\"97.7292\" transform=\"translate(0.635498 0.135498)\" fill=\"#30273E\"></rect>\n<path d=\"M65.4414 24.5C71.6589 24.5 76.7196 29.5144 76.7196 35.6751L76.7223 42.9633C76.7223 43.4974 76.5072 44.0153 76.1261 44.3929C75.7423 44.7733 75.2251 44.9863 74.6806 44.9863C72.4457 44.9863 70.6272 46.7882 70.6272 49.0027C70.6272 51.2172 72.4457 53.019 74.6806 53.019C75.8076 53.019 76.7223 53.9254 76.7223 55.0421V62.3276C76.7223 68.4883 71.6644 73.5 65.4468 73.5H33.556C27.3384 73.5 22.2778 68.4883 22.2778 62.3276V55.0421C22.2778 53.9254 23.1925 53.019 24.3195 53.019C26.5572 53.019 28.3756 51.2172 28.3756 49.0027C28.3756 46.8448 26.6307 45.221 24.3195 45.221C23.7778 45.221 23.2606 45.0079 22.8767 44.6276C22.4929 44.2473 22.2778 43.7321 22.2778 43.198L22.2833 35.6751C22.2833 29.5144 27.3412 24.5 33.5587 24.5H65.4414ZM49.5055 38.5289C48.7324 38.5289 48.0409 38.9551 47.6952 39.6402L45.7107 43.6242L41.2844 44.2635C40.5194 44.3714 39.8933 44.8892 39.6511 45.6175C39.4115 46.3458 39.6048 47.1334 40.1601 47.6675L43.3696 50.7641L42.6128 55.1419C42.4822 55.8971 42.7898 56.647 43.4159 57.0974C43.7698 57.3483 44.1808 57.4778 44.5973 57.4778C44.9158 57.4778 45.2371 57.3995 45.5311 57.2458L49.5001 55.1796L53.4609 57.2404C54.1469 57.6045 54.9608 57.5479 55.5842 57.0947C56.2131 56.647 56.5207 55.8971 56.39 55.1419L55.6305 50.7641L58.84 47.6675C59.3981 47.1334 59.5913 46.3458 59.3491 45.6175C59.1095 44.8892 58.4834 44.3714 57.7266 44.2662L53.2921 43.6242L51.3076 39.6429C50.9673 38.9578 50.2759 38.5316 49.5055 38.5289Z\" fill=\"white\"></path>\n</svg>",
             "sk_features_title": "Fri frakt over X NOK” or “Inkludert briller for bedre komfort"
           }
         }
@@ -140,7 +288,7 @@
       ],
       "name": "SK Features",
       "settings": {
-        "sk_features_bgColor": "#fff"
+        "sk_features_bgColor": "#ffffff"
       }
     },
     "sk_radiance_meq7Gb": {
@@ -316,6 +464,8 @@
   "order": [
     "sk_dynamic_banner_AEb7NJ",
     "sk_promotion_logos_giWdMT",
+    "sk_product_listing_dYMpyE",
+    "sk_before_after_HqFkek",
     "sk_features_pHkfMf",
     "sk_radiance_meq7Gb",
     "sk_led_light_work_QHXAbE",
