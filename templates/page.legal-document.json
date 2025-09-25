@@ -8,89 +8,14 @@
         "padding_bottom": 0
       }
     },
-    "legal_categories": {
-      "type": "sk-help-categories",
-      "blocks": {
-        "category_1": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z\" fill=\"currentColor\"/></svg>",
-            "title": "Terms of Service",
-            "article_count": "5 Documents"
-          }
-        },
-        "category_2": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z\" fill=\"currentColor\"/></svg>",
-            "title": "Privacy Policy",
-            "article_count": "3 Documents"
-          }
-        },
-        "category_3": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z\" fill=\"currentColor\"/></svg>",
-            "title": "Cookie Policy",
-            "article_count": "2 Documents"
-          }
-        },
-        "category_4": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7v2H4V4h3.5l1-1h7l1 1H20z\" fill=\"currentColor\"/></svg>",
-            "title": "Return Policy",
-            "article_count": "4 Documents"
-          }
-        },
-        "category_5": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z\" fill=\"currentColor\"/></svg>",
-            "title": "Warranty Terms",
-            "article_count": "3 Documents"
-          }
-        },
-        "category_6": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z\" fill=\"currentColor\"/></svg>",
-            "title": "GDPR Compliance",
-            "article_count": "6 Documents"
-          }
-        },
-        "category_7": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z\" fill=\"currentColor\"/></svg>",
-            "title": "Shipping Terms",
-            "article_count": "4 Documents"
-          }
-        },
-        "category_8": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M18 7l-1.41-1.41-6.34 6.34 1.41 1.41L18 7zm4.24-1.41L11.66 16.17 7.48 12l-1.41 1.41L11.66 19l12-12-1.42-1.41zM.41 13.41L6 19l1.41-1.41L1.83 12 .41 13.41z\" fill=\"currentColor\"/></svg>",
-            "title": "Legal Disclaimers",
-            "article_count": "2 Documents"
-          }
-        }
-      },
-      "block_order": [
-        "category_1",
-        "category_2",
-        "category_3",
-        "category_4",
-        "category_5",
-        "category_6",
-        "category_7",
-        "category_8"
-      ],
+   
+    "content_section": {
+      "type": "sk-content-section",
       "settings": {
-        "heading": "Legal Documents",
-        "description": "<p>Access all our legal documents, policies, and terms that govern your use of our products and services.</p>",
-        "padding_top": 80,
-        "padding_bottom": 80
+        "heading": "",
+        "content": "<p>Lorem Ipsum dolor sit amet consectetur. Platea ac eleifend morbi consequat neque libero. Nibh pharetra sociis urna pretium. Tristique mattis sed tortor lobortis tincidunt mauris vel. Eu tempus at pellentesque hac posuere ipsum arcu commodo. Sapien arcu ultrices tellus lacus.</p><p>Mi vitae feugiat urna nunc sapien id non fringilla orci. Ut senectus amet nisl ut. Viverra platea purus lectus risus felis ipsum ultrices imperdiet erat. Porta arcu amet tincidunt placerat. Massa venenatis facilisis a fringilla ac. Nisl lobortis amet varius posuere elit morbi tempor ornare. Mi placerat porta in dignissim id accumsan volutpat accumsan in. Sollicitudin ultrices etiam tincidunt ultrices donec ac.</p><p>In molestie id aenean massa gravida vestibulum placerat morbi lacus. Ipsum adipiscing congue eu sapien lacus. Tortor id nibh porta lorem bibendum. Mi sagittis sodales suscipit venenatis elit quam hendrerit. Eget convallis laoreet adipiscing id eget mattis. Gravida dolor sed lacus ullamcorper sollicitudin. Quis duis at purus pellentesque blandit. Eget posuere sed consectetur orci velit vel sit at.</p><p>Faucibus suscipit eu velit fusce enim aliquam molestie et. Et eros arcu tristique vitae. Auctor amet semper aenean sit accumsan vitae turpis eget elementum. Viverra sit id ornare ac porta tincidunt. A viverra nisl nunc ac dis sed. Nec pharetra fringilla mi sed non viverra in non. Enim aliquet egestas dui viverra suspendisse.</p><p>Sed tempus ullamcorper mauris eget. Commodo quam velit cursus ultrices ornare blandit et orci mi. Ac euismod ullamcorper etiam a velit. Arcu sodales interdum arcu nam nisl. Sed vulputate consequat orci nascetur vitae. Erat sed bibendum nunc tortor gravida velit. Amet mi cras ornare bibendum vitae. Vitae risus quam nullam consectetur sed feugiat gravida. Senectus orci eget nulla non. Donec velit at ullamcorper fames libero. Curabitur enim varius porta vulputate elementum. Mi accumsan vitae pellentesque mauris. Erat duis volutpat lobortis viverra risus condimentum id nunc. Ultrices vulputate mus purus velit fringilla sagittis.</p>",
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
     "main": {
@@ -103,7 +28,7 @@
   },
   "order": [
     "banner",
-    "legal_categories",
+    "content_section",
     "main"
   ]
 }

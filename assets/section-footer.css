@@ -767,18 +767,18 @@
 footer {
   margin: 0;
   padding-top: 48px;
-  background: #30273e !important;
+  background: linear-gradient(to top, #30273E, #070707) !important;
 }
 
 footer .field__input {
   background-color: transparent !important;
-  color: #fff !important;
-  padding: 0 12px !important;
+  color: #000 !important;
+  padding: 0 20px !important;
   max-width: 190px;
 }
 
 footer .field__input::placeholder {
-  color: #fff !important;
+  color: #000 !important;
   opacity: 1 !important;
 }
 
@@ -798,4 +798,24 @@ footer .footer_submit_btn {
 footer .field__input:focus {
   box-shadow: none !important;
 
+}
+
+.footer-top_section-content {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-bottom: 8rem;
+}
+
+.footer-top_section-content h2 {
+  font-weight: 700;
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.news_letter_join-btn {
+  background: #30273E;
+  color: #fff;
+  padding: 5px 28px;
+  border-radius: 20px;
 }

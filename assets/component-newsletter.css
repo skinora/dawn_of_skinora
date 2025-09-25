@@ -25,6 +25,11 @@
 
 .newsletter-form__field-wrapper .field {
   z-index: 0;
+  background: #fff;
+  border: none;
+  outline: none;
+  border-radius: 30px;
+  overflow: hidden;
 }
 
 .newsletter-form__message {
