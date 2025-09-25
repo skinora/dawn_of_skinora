@@ -1,0 +1,300 @@
+{{ 'section-sk-about.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="about-page section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    {%- if section.settings.show_page_title -%}
+      <div class="about-page__header">
+        <h1 class="about-page__title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {%- if section.settings.custom_title != blank -%}
+            {{ section.settings.custom_title | escape }}
+          {%- else -%}
+            {{ page.title | escape }}
+          {%- endif -%}
+        </h1>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="about-page__subtitle h2{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ section.settings.subtitle | escape }}
+          </p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="about-page__content{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      {%- if section.settings.show_featured_image and page.featured_image -%}
+        <div class="about-page__image-wrapper">
+          <img
+            srcset="
+              {%- if page.featured_image.width >= 375 -%}{{ page.featured_image | image_url: width: 375 }} 375w,{%- endif -%}
+              {%- if page.featured_image.width >= 750 -%}{{ page.featured_image | image_url: width: 750 }} 750w,{%- endif -%}
+              {%- if page.featured_image.width >= 1100 -%}{{ page.featured_image | image_url: width: 1100 }} 1100w,{%- endif -%}
+              {%- if page.featured_image.width >= 1500 -%}{{ page.featured_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+              {{ page.featured_image | image_url }} {{ page.featured_image.width }}w
+            "
+            src="{{ page.featured_image | image_url: width: 750 }}"
+            sizes="(min-width: 1200px) 1100px, (min-width: 750px) calc(100vw - 10rem), calc(100vw - 3rem)"
+            alt="{{ page.featured_image.alt | escape }}"
+            class="about-page__image"
+            width="{{ page.featured_image.width }}"
+            height="{{ page.featured_image.height }}"
+            loading="lazy"
+          >
+        </div>
+      {%- endif -%}
+
+      <div class="about-page__text rte">
+        {{ page.content }}
+      </div>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="about-page__blocks">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'text_block' -%}
+              <div
+                class="about-page__block about-page__block--text{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.heading != blank -%}
+                  <h3 class="about-page__block-title h3">{{ block.settings.heading | escape }}</h3>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <div class="about-page__block-text rte">{{ block.settings.text }}</div>
+                {%- endif -%}
+              </div>
+
+            {%- when 'image_block' -%}
+              <div
+                class="about-page__block about-page__block--image{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.image != blank -%}
+                  <div class="about-page__block-image-wrapper">
+                    <img
+                      srcset="
+                        {%- if block.settings.image.width >= 375 -%}{{ block.settings.image | image_url: width: 375 }} 375w,{%- endif -%}
+                        {%- if block.settings.image.width >= 550 -%}{{ block.settings.image | image_url: width: 550 }} 550w,{%- endif -%}
+                        {%- if block.settings.image.width >= 750 -%}{{ block.settings.image | image_url: width: 750 }} 750w,{%- endif -%}
+                        {{ block.settings.image | image_url }} {{ block.settings.image.width }}w
+                      "
+                      src="{{ block.settings.image | image_url: width: 550 }}"
+                      sizes="(min-width: 750px) 550px, calc(100vw - 3rem)"
+                      alt="{{ block.settings.image.alt | escape }}"
+                      class="about-page__block-image"
+                      width="{{ block.settings.image.width }}"
+                      height="{{ block.settings.image.height }}"
+                      loading="lazy"
+                    >
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.caption != blank -%}
+                  <p class="about-page__block-caption">{{ block.settings.caption | escape }}</p>
+                {%- endif -%}
+              </div>
+
+            {%- when 'stats_block' -%}
+              <div
+                class="about-page__block about-page__block--stats{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                <div class="about-page__stats">
+                  {%- if block.settings.stat_1_number != blank -%}
+                    <div class="about-page__stat">
+                      <span class="about-page__stat-number h1">{{ block.settings.stat_1_number }}</span>
+                      <span class="about-page__stat-label">{{ block.settings.stat_1_label | escape }}</span>
+                    </div>
+                  {%- endif -%}
+                  {%- if block.settings.stat_2_number != blank -%}
+                    <div class="about-page__stat">
+                      <span class="about-page__stat-number h1">{{ block.settings.stat_2_number }}</span>
+                      <span class="about-page__stat-label">{{ block.settings.stat_2_label | escape }}</span>
+                    </div>
+                  {%- endif -%}
+                  {%- if block.settings.stat_3_number != blank -%}
+                    <div class="about-page__stat">
+                      <span class="about-page__stat-number h1">{{ block.settings.stat_3_number }}</span>
+                      <span class="about-page__stat-label">{{ block.settings.stat_3_label | escape }}</span>
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Page",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_page_title",
+      "default": true,
+      "label": "Show page title"
+    },
+    {
+      "type": "text",
+      "id": "custom_title",
+      "label": "Custom title",
+      "info": "Leave blank to use page title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured_image",
+      "default": true,
+      "label": "Show featured image"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.all.colors.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Text Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "image_block",
+      "name": "Image Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption"
+        }
+      ]
+    },
+    {
+      "type": "stats_block",
+      "name": "Statistics Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "stat_1_number",
+          "label": "Statistic 1 - Number"
+        },
+        {
+          "type": "text",
+          "id": "stat_1_label",
+          "label": "Statistic 1 - Label"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_number",
+          "label": "Statistic 2 - Number"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_label",
+          "label": "Statistic 2 - Label"
+        },
+        {
+          "type": "text",
+          "id": "stat_3_number",
+          "label": "Statistic 3 - Number"
+        },
+        {
+          "type": "text",
+          "id": "stat_3_label",
+          "label": "Statistic 3 - Label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Page"
+    }
+  ]
+}
+{% endschema %}

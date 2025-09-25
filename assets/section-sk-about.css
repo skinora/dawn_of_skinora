@@ -1,0 +1,227 @@
+.about-page {
+    --about-page-max-width: 120rem;
+}
+
+.about-page__header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.about-page__title {
+    margin-bottom: 2rem;
+}
+
+.about-page__subtitle {
+    color: rgba(var(--color-foreground), 0.75);
+    font-weight: 400;
+    margin: 0;
+}
+
+.about-page__content {
+    max-width: var(--about-page-max-width);
+    margin: 0 auto;
+}
+
+.about-page__image-wrapper {
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.about-page__image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-horizontal-offset) var(--shadow-vertical-offset) var(--shadow-blur-radius) rgba(var(--color-shadow), var(--shadow-opacity));
+}
+
+.about-page__text {
+    font-size: 1.8rem;
+    line-height: 1.6;
+    margin-bottom: 5rem;
+}
+
+.about-page__text p {
+    margin-bottom: 2rem;
+}
+
+.about-page__text p:last-child {
+    margin-bottom: 0;
+}
+
+.about-page__blocks {
+    display: grid;
+    gap: 4rem;
+    margin-top: 5rem;
+}
+
+.about-page__block {
+    max-width: var(--about-page-max-width);
+    margin: 0 auto;
+}
+
+.about-page__block--text {
+    text-align: center;
+}
+
+.about-page__block-title {
+    margin-bottom: 1.5rem;
+    color: rgb(var(--color-foreground));
+}
+
+.about-page__block-text {
+    font-size: 1.6rem;
+    line-height: 1.6;
+    color: rgba(var(--color-foreground), 0.8);
+}
+
+.about-page__block--image {
+    text-align: center;
+}
+
+.about-page__block-image-wrapper {
+    margin-bottom: 1.5rem;
+}
+
+.about-page__block-image {
+    width: 100%;
+    height: auto;
+    max-width: 55rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-horizontal-offset) var(--shadow-vertical-offset) var(--shadow-blur-radius) rgba(var(--color-shadow), var(--shadow-opacity));
+}
+
+.about-page__block-caption {
+    font-size: 1.4rem;
+    color: rgba(var(--color-foreground), 0.6);
+    font-style: italic;
+    margin: 0;
+}
+
+.about-page__block--stats {
+    background: rgba(var(--color-background), 0.5);
+    border-radius: var(--border-radius);
+    padding: 4rem 2rem;
+    border: 0.1rem solid rgba(var(--color-foreground), 0.1);
+}
+
+.about-page__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 3rem;
+    text-align: center;
+}
+
+.about-page__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-page__stat-number {
+    color: rgb(var(--color-foreground));
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.about-page__stat-label {
+    color: rgba(var(--color-foreground), 0.7);
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media screen and (min-width: 750px) {
+    .about-page__header {
+        margin-bottom: 6rem;
+    }
+
+    .about-page__title {
+        margin-bottom: 2.5rem;
+    }
+
+    .about-page__content {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 5rem;
+        align-items: start;
+    }
+
+    .about-page__image-wrapper {
+        margin-bottom: 0;
+    }
+
+    .about-page__text {
+        font-size: 2rem;
+        margin-bottom: 0;
+    }
+
+    .about-page__blocks {
+        grid-column: 1 / -1;
+        gap: 5rem;
+        margin-top: 6rem;
+    }
+
+    .about-page__block--stats {
+        padding: 5rem 4rem;
+    }
+
+    .about-page__stats {
+        gap: 4rem;
+    }
+}
+
+@media screen and (min-width: 990px) {
+    .about-page__header {
+        margin-bottom: 8rem;
+    }
+
+    .about-page__content {
+        gap: 6rem;
+    }
+
+    .about-page__text {
+        font-size: 2.2rem;
+    }
+
+    .about-page__blocks {
+        gap: 6rem;
+        margin-top: 8rem;
+    }
+
+    .about-page__block-text {
+        font-size: 1.8rem;
+    }
+}
+
+/* Animation support */
+@media (prefers-reduced-motion: no-preference) {
+
+    .about-page__image,
+    .about-page__block-image {
+        transition: transform 0.3s ease;
+    }
+
+    .about-page__image:hover,
+    .about-page__block-image:hover {
+        transform: scale(1.02);
+    }
+
+    .about-page__stat-number {
+        transition: color 0.3s ease;
+    }
+
+    .about-page__block--stats:hover .about-page__stat-number {
+        color: rgb(var(--color-accent-1));
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .about-page__block--stats {
+        background: rgba(var(--color-foreground), 0.05);
+        border-color: rgba(var(--color-foreground), 0.15);
+    }
+}

@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "main": {
+      "type": "sk-about",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "features": {
+      "type": "sk-features",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "features"
+  ]
+}
