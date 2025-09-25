@@ -1,5 +1,26 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
+    "main": {
+      "type": "sk-about",
+      "settings": {
+        "show_page_title": true,
+        "custom_title": "",
+        "subtitle": "",
+        "show_featured_image": true,
+        "color_scheme": "background-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "section_2": {
       "type": "sk-about-section-2",
       "settings": {
@@ -8,17 +29,12 @@
         "description": "<p>If relaxation is what you seek, massage therapy can soothe your muscles and ease tension, while body treatments can leave you feeling pampered and rejuvenated. Whether you're preparing for a special occasion or simply want to treat yourself to some self-care, beauty services offer a chance to feel confident and look your best.</p>",
         "button_label": "Take a Look",
         "button_link": "/collections/all",
+        "main_image": "shopify://shop_images/about-sec-2-img-1.png",
+        "accent_image": "shopify://shop_images/Rectangle_2.png",
         "show_glow_effect": true,
+        "color_scheme": "background-1",
         "padding_top": 60,
         "padding_bottom": 60
-      }
-    },
-    "main": {
-      "type": "sk-about",
-      "settings": {
-        "show_page_title": true,
-        "padding_top": 36,
-        "padding_bottom": 36
       }
     },
     "content_section": {
@@ -26,6 +42,9 @@
       "settings": {
         "heading": "",
         "content": "<p>Beauty services encompass a wide range of treatments that can enhance your appearance and well-being. From classic hair care services like haircuts, coloring, and styling to nail care including manicures, pedicures, and artificial nail applications, there's something for everyone. You can also indulge in facial treatments for clearer, more radiant skin, or opt for eyebrow shaping and waxing to define your features. If relaxation is what you seek, massage therapy can soothe your muscles and ease tension, while body treatments can leave you feeling pampered and rejuvenated. Whether you're preparing for a special occasion or simply want to treat yourself to some self-care, beauty services offer a chance to feel confident and look your best. Additionally, some salons even provide services like makeup application and eyelash extensions for a more dramatic look. Don't forget that many spas offer beauty services alongside wellness treatments, creating a holistic approach to beauty that nourishes both your body and soul.</p>",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "background-1",
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -33,12 +52,15 @@
     "product_showcase": {
       "type": "sk-product-showcase",
       "settings": {
+        "product_image": "shopify://shop_images/Image_Placeholder_1.png",
         "product_title": "Blue Mask",
         "product_description": "<p>Beauty services encompass a wide range of treatments that can enhance your appearance and well-being. From classic hair care services like haircuts, coloring, and styling to nail care including manicures, pedicures, and artificial nail applications, there's something for everyone.</p>",
         "project_title": "Lorem Ipsum Dolor sit Amet",
         "project_subtitle": "Beauty Project",
         "project_date": "SEP 2025",
         "button_label": "View Product",
+        "button_link": "",
+        "color_scheme": "background-1",
         "padding_top": 80,
         "padding_bottom": 80
       }
@@ -66,6 +88,24 @@
         "item_2"
       ],
       "settings": {
+        "featured_image": "shopify://shop_images/about-sec-2-img-1.png",
+        "color_scheme": "background-1",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "sk_product_showcase_xciGiE": {
+      "type": "sk-product-showcase",
+      "settings": {
+        "product_image": "shopify://shop_images/Rectangle_2.png",
+        "product_title": "Blue Mask",
+        "product_description": "<p>Beauty services encompass a wide range of treatments that can enhance your appearance and well-being. From classic hair care services like haircuts, coloring, and styling to nail care including manicures, pedicures, and artificial nail applications, there's something for everyone.</p>",
+        "project_title": "Lorem Ipsum Dolor sit Amet",
+        "project_subtitle": "Beauty Project",
+        "project_date": "SEP 2025",
+        "button_label": "View Product",
+        "button_link": "",
+        "color_scheme": "background-1",
         "padding_top": 80,
         "padding_bottom": 80
       }
@@ -73,8 +113,7 @@
     "features": {
       "type": "sk-features",
       "settings": {
-        "padding_top": 36,
-        "padding_bottom": 36
+        "sk_features_bgColor": "#ffffff"
       }
     }
   },
@@ -84,6 +123,7 @@
     "content_section",
     "product_showcase",
     "numbered_list",
+    "sk_product_showcase_xciGiE",
     "features"
   ]
 }
