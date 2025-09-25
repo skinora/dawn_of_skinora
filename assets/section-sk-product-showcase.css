@@ -1,0 +1,108 @@
+.sk-product-showcase {
+    background-color: #ffffff;
+}
+
+.sk-product-showcase__wrapper {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+}
+
+.sk-product-showcase__image-section {
+    flex: 0 0 550px;
+}
+
+.sk-product-showcase__image {
+    width: 100%;
+    height: auto;
+}
+
+.sk-product-showcase__content-section {
+    flex: 0 0 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sk-product-showcase__title {
+    font-size: 64px;
+    font-weight: 600;
+    color: #30273E;
+    margin-bottom: 30px;
+    margin-top: 0;
+    line-height: 1.1;
+}
+
+.sk-product-showcase__description {
+    margin-bottom: 40px;
+}
+
+.sk-product-showcase__description p {
+    font-size: 16px;
+    line-height: 24px;
+    color: #4F4F4F;
+    margin-bottom: 16px;
+}
+
+.sk-product-showcase__description p:last-child {
+    margin-bottom: 0;
+}
+
+.sk-product-showcase__project-info {
+    margin-bottom: 50px;
+}
+
+.sk-product-showcase__project-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #30273E;
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
+.sk-product-showcase__project-subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: #4F4F4F;
+    margin-bottom: 4px;
+    margin-top: 0;
+}
+
+.sk-product-showcase__project-date {
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    margin: 0;
+}
+
+.sk-product-showcase__button-wrapper {
+    display: flex;
+}
+
+.sk-product-showcase__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #30273E;
+    color: white;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.sk-product-showcase__button:hover {
+    background-color: #4a3d5c;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(48, 39, 62, 0.3);
+}
+
+.sk-product-showcase__button-arrow {
+    transition: transform 0.3s ease;
+}
+
+.sk-product-showcase__button:hover .sk-product-showcase__button-arrow {
+    transform: translateX(4px);
+}

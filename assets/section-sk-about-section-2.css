@@ -1,0 +1,229 @@
+.sk-about-section-2__container {
+    width: 100%;
+    max-width: 140rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.sk-about-section-2__content {
+    display: flex;
+    gap: 10rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8rem;
+}
+
+
+
+
+
+.sk-about-section-2__subheading {
+    font-size: 18px;
+    font-weight: 700;
+    color: #6C6C6C;
+}
+
+.sk-about-section-2__heading {
+    font-size: 90px;
+    font-weight: 600;
+    line-height: 100px;
+    color: #30273E;
+    margin-bottom: 2.5rem;
+    margin-top: 0;
+}
+
+
+
+
+
+
+.sk-about-section-2__button-wrapper {
+    margin-top: 3rem;
+}
+
+.sk-about-section-2__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
+    padding: 1.6rem 3.2rem;
+    border-radius: 0.8rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.sk-about-section-2__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    background: rgb(var(--color-button-text));
+    color: rgb(var(--color-button));
+}
+
+.sk-about-section-2__button-arrow {
+    transition: transform 0.3s ease;
+}
+
+.sk-about-section-2__button:hover .sk-about-section-2__button-arrow {
+    transform: translateX(4px);
+}
+
+
+
+
+
+
+
+.sk-about-section-2__accent-image {
+    position: absolute;
+    top: -9rem;
+    left: -10rem;
+    z-index: 4;
+    width: 24rem;
+    height: 24rem;
+}
+
+.sk-about-section-2__accent {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.sk-about-section-2__glow-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40rem;
+    height: 40rem;
+    background: radial-gradient(circle, rgba(255, 165, 0, 0.3) 0%, rgba(255, 69, 0, 0.2) 50%, transparent 70%);
+    border-radius: 50%;
+    z-index: 1;
+    animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+/* Tablet and Desktop */
+@media screen and (min-width: 750px) {
+    .sk-about-section-2__heading {
+        margin-bottom: 4rem;
+    }
+
+
+
+
+
+
+
+
+    .sk-about-section-2__glow-effect {
+        width: 50rem;
+        height: 50rem;
+    }
+}
+
+@media screen and (min-width: 990px) {
+
+    .sk-about-section-2__button {
+        font-size: 1.8rem;
+        padding: 2rem 4rem;
+    }
+
+
+
+
+
+
+
+    /* Animation support */
+    @media (prefers-reduced-motion: no-preference) {
+
+        .sk-about-section-2__accent-image {
+            animation: float-reverse 4s ease-in-out infinite;
+        }
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    @keyframes float-reverse {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(10px);
+        }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+
+        .sk-about-section-2__main-image,
+        .sk-about-section-2__accent-image,
+        .sk-about-section-2__glow-effect {
+            animation: none;
+        }
+
+        .sk-about-section-2__button {
+            transition: none;
+        }
+
+        .sk-about-section-2__button:hover {
+            transform: none;
+        }
+    }
+
+
+    .sk-about-section-2__image-section {
+        position: relative;
+        flex: 0 0 500px;
+    }
+
+    .sk-about-section-2__text-section {
+        flex: 0 0 420px;
+    }
+
+
+    .sk-about-section-2__description p {
+        font-size: 16px;
+        line-height: 22px;
+        margin-top: 15px;
+        color: #4F4F4F;
+        margin-bottom: 3rem;
+    }
+
+    .about-sec-2-btn {
+        align-items: center;
+        gap: 10px;
+    }
+}

@@ -14,7 +14,10 @@
   }
 {%- endstyle -%}
 
-<div class="about-page section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} gradient">
+<div
+  class="about-section-banner about-page section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} gradient"
+  style="background: url('{{ 'about-section-bg.png' | asset_url }}') no-repeat center center/cover;"
+>
   <div class="page-width">
     {%- if section.settings.show_page_title -%}
       <div class="about-page__header">
