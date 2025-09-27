@@ -1,0 +1,275 @@
+{{ 'section-sk-blog-grid.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<div class="sk-blog-grid section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  <div class="container">
+    <div class="sk-blog-grid__header">
+      <div class="sk-blog-grid__heading-section">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="sk-blog-grid__heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ section.settings.heading | escape }}
+          </h2>
+        {%- endif -%}
+      </div>
+
+      <div class="sk-blog-grid__content-section">
+        {%- if section.settings.description != blank -%}
+          <div class="sk-blog-grid__description{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ section.settings.description }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="sk-blog-grid__posts">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'blog_post' -%}
+              <article
+                class="sk-blog-grid__post{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                <a
+                  href="{{ block.settings.post_link | default: '#' }}"
+                  class="sk-blog-grid__post-link"
+                >
+                  <div class="sk-blog-grid__post-image-wrapper">
+                    {%- if block.settings.post_image != blank -%}
+                      <img
+                        srcset="
+                          {%- if block.settings.post_image.width >= 300 -%}{{ block.settings.post_image | image_url: width: 300 }} 300w,{%- endif -%}
+                          {%- if block.settings.post_image.width >= 400 -%}{{ block.settings.post_image | image_url: width: 400 }} 400w,{%- endif -%}
+                          {%- if block.settings.post_image.width >= 500 -%}{{ block.settings.post_image | image_url: width: 500 }} 500w,{%- endif -%}
+                          {{ block.settings.post_image | image_url }} {{ block.settings.post_image.width }}w
+                        "
+                        src="{{ block.settings.post_image | image_url: width: 400 }}"
+                        sizes="400px"
+                        alt="{{ block.settings.post_image.alt | escape }}"
+                        class="sk-blog-grid__post-image"
+                        width="{{ block.settings.post_image.width }}"
+                        height="{{ block.settings.post_image.height }}"
+                        loading="lazy"
+                      >
+                    {%- endif -%}
+                    <div class="sk-blog-grid__post-overlay">
+                      <div class="sk-blog-grid__post-content">
+                        {%- if block.settings.post_title != blank -%}
+                          <h3 class="sk-blog-grid__post-title">
+                            {{ block.settings.post_title | escape }}
+                          </h3>
+                        {%- endif -%}
+                        {%- if block.settings.post_subtitle != blank -%}
+                          <p class="sk-blog-grid__post-subtitle">
+                            {{ block.settings.post_subtitle | escape }}
+                          </p>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </article>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_pagination -%}
+      <div class="sk-blog-grid__pagination">
+        <div class="sk-blog-grid__pagination-wrapper">
+          <button class="sk-blog-grid__pagination-btn sk-blog-grid__pagination-btn--active">1</button>
+          <button class="sk-blog-grid__pagination-btn">2</button>
+          <button class="sk-blog-grid__pagination-btn">3</button>
+          <button class="sk-blog-grid__pagination-btn">4</button>
+          <button class="sk-blog-grid__pagination-btn">5</button>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog Grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Skincare Insights-Tips For Healthy, Radiant Skin"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Discover expert tips, product guides, and the latest in light therapy technology. From anti-aging solutions to acne care, explore articles designed to help you achieve healthier, radiant skin every day.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show Pagination",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.all.colors.label"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "blog_post",
+      "name": "Blog Post",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "post_image",
+          "label": "Post Image"
+        },
+        {
+          "type": "text",
+          "id": "post_title",
+          "label": "Post Title",
+          "default": "Blue Light Therapy"
+        },
+        {
+          "type": "text",
+          "id": "post_subtitle",
+          "label": "Post Subtitle",
+          "default": "How it Helps Fight Acne"
+        },
+        {
+          "type": "url",
+          "id": "post_link",
+          "label": "Post Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Grid",
+      "blocks": [
+        {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

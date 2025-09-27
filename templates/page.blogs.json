@@ -13,6 +13,92 @@
         "padding_bottom": 0
       }
     },
+    "blog_grid": {
+      "type": "sk-blog-grid",
+      "blocks": {
+        "post_1": {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        "post_2": {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        "post_3": {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        "post_4": {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        "post_5": {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        "post_6": {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        "post_7": {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        "post_8": {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        },
+        "post_9": {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Blue Light Therapy",
+            "post_subtitle": "How it Helps Fight Acne"
+          }
+        }
+      },
+      "block_order": [
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4",
+        "post_5",
+        "post_6",
+        "post_7",
+        "post_8",
+        "post_9"
+      ],
+      "settings": {
+        "heading": "Our Skincare Insights-Tips For Healthy, Radiant Skin",
+        "description": "<p>Discover expert tips, product guides, and the latest in light therapy technology. From anti-aging solutions to acne care, explore articles designed to help you achieve healthier, radiant skin every day.</p>",
+        "show_pagination": true,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
     "main": {
       "type": "main-page",
       "custom_css": [
@@ -26,6 +112,7 @@
   },
   "order": [
     "banner",
+    "blog_grid",
     "main"
   ]
 }

@@ -1,0 +1,261 @@
+{{ 'section-sk-blog-article.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<div class="sk-blog-article section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  <div class="container">
+    <div class="sk-blog-article__wrapper">
+      {%- if section.settings.show_featured_image and article.image -%}
+        <div class="sk-blog-article__featured-image">
+          <img
+            srcset="
+              {%- if article.image.width >= 750 -%}{{ article.image | image_url: width: 750 }} 750w,{%- endif -%}
+              {%- if article.image.width >= 1100 -%}{{ article.image | image_url: width: 1100 }} 1100w,{%- endif -%}
+              {%- if article.image.width >= 1500 -%}{{ article.image | image_url: width: 1500 }} 1500w,{%- endif -%}
+              {{ article.image | image_url }} {{ article.image.width }}w
+            "
+            src="{{ article.image | image_url: width: 1100 }}"
+            sizes="(min-width: 1200px) 1100px, calc(100vw - 3rem)"
+            alt="{{ article.image.alt | escape }}"
+            class="sk-blog-article__image"
+            width="{{ article.image.width }}"
+            height="{{ article.image.height }}"
+            loading="eager"
+          >
+        </div>
+      {%- endif -%}
+
+      <div class="sk-blog-article__content">
+        <header class="sk-blog-article__header">
+          <h1 class="sk-blog-article__title">{{ article.title | escape }}</h1>
+
+          <div class="sk-blog-article__meta">
+            <time class="sk-blog-article__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+              {{ article.published_at | date: '%B %d, %Y' }}
+            </time>
+            {%- if article.author != blank -%}
+              <span class="sk-blog-article__author">by {{ article.author | escape }}</span>
+            {%- endif -%}
+          </div>
+        </header>
+
+        <div class="sk-blog-article__body">
+          {{ article.content }}
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="sk-blog-article__custom-content">
+            {%- for block in section.blocks -%}
+              {%- case block.type -%}
+                {%- when 'text_block' -%}
+                  <div class="sk-blog-article__text-block" {{ block.shopify_attributes }}>
+                    {%- if block.settings.heading != blank -%}
+                      <h3 class="sk-blog-article__block-heading">{{ block.settings.heading | escape }}</h3>
+                    {%- endif -%}
+                    {%- if block.settings.content != blank -%}
+                      <div class="sk-blog-article__block-content">{{ block.settings.content }}</div>
+                    {%- endif -%}
+                  </div>
+
+                {%- when 'image_block' -%}
+                  <div class="sk-blog-article__image-block" {{ block.shopify_attributes }}>
+                    {%- if block.settings.image != blank -%}
+                      <div class="sk-blog-article__block-image-wrapper">
+                        <img
+                          srcset="
+                            {%- if block.settings.image.width >= 400 -%}{{ block.settings.image | image_url: width: 400 }} 400w,{%- endif -%}
+                            {%- if block.settings.image.width >= 600 -%}{{ block.settings.image | image_url: width: 600 }} 600w,{%- endif -%}
+                            {%- if block.settings.image.width >= 800 -%}{{ block.settings.image | image_url: width: 800 }} 800w,{%- endif -%}
+                            {{ block.settings.image | image_url }} {{ block.settings.image.width }}w
+                          "
+                          src="{{ block.settings.image | image_url: width: 600 }}"
+                          sizes="600px"
+                          alt="{{ block.settings.image.alt | escape }}"
+                          class="sk-blog-article__block-image"
+                          width="{{ block.settings.image.width }}"
+                          height="{{ block.settings.image.height }}"
+                          loading="lazy"
+                        >
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.caption != blank -%}
+                      <p class="sk-blog-article__image-caption">{{ block.settings.caption | escape }}</p>
+                    {%- endif -%}
+                  </div>
+
+                {%- when 'image_grid' -%}
+                  <div class="sk-blog-article__image-grid" {{ block.shopify_attributes }}>
+                    <div class="sk-blog-article__grid-wrapper">
+                      {%- if block.settings.image_1 != blank -%}
+                        <div class="sk-blog-article__grid-item">
+                          <img
+                            src="{{ block.settings.image_1 | image_url: width: 300 }}"
+                            alt="{{ block.settings.image_1.alt | escape }}"
+                            class="sk-blog-article__grid-image"
+                            loading="lazy"
+                          >
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.image_2 != blank -%}
+                        <div class="sk-blog-article__grid-item">
+                          <img
+                            src="{{ block.settings.image_2 | image_url: width: 300 }}"
+                            alt="{{ block.settings.image_2.alt | escape }}"
+                            class="sk-blog-article__grid-image"
+                            loading="lazy"
+                          >
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.image_3 != blank -%}
+                        <div class="sk-blog-article__grid-item">
+                          <img
+                            src="{{ block.settings.image_3 | image_url: width: 300 }}"
+                            alt="{{ block.settings.image_3.alt | escape }}"
+                            class="sk-blog-article__grid-image"
+                            loading="lazy"
+                          >
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog Article",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_featured_image",
+      "label": "Show Featured Image",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.all.colors.label"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Text Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    },
+    {
+      "type": "image_block",
+      "name": "Single Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption"
+        }
+      ]
+    },
+    {
+      "type": "image_grid",
+      "name": "Image Grid (3 images)",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image 3"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Article"
+    }
+  ]
+}
+{% endschema %}

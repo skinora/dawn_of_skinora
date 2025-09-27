@@ -1,0 +1,296 @@
+{{ 'section-sk-latest-blogs.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<div class="sk-latest-blogs section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  <div class="container">
+    <div class="sk-latest-blogs__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sk-latest-blogs__heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.heading | escape }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <p class="sk-latest-blogs__description{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.description | escape }}
+        </p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="sk-latest-blogs__grid">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'blog_post' -%}
+              <article
+                class="sk-latest-blogs__post{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                <a
+                  href="{{ block.settings.post_link | default: '#' }}"
+                  class="sk-latest-blogs__post-link"
+                >
+                  <div class="sk-latest-blogs__post-image-wrapper">
+                    {%- if block.settings.post_image != blank -%}
+                      <img
+                        srcset="
+                          {%- if block.settings.post_image.width >= 300 -%}{{ block.settings.post_image | image_url: width: 300 }} 300w,{%- endif -%}
+                          {%- if block.settings.post_image.width >= 400 -%}{{ block.settings.post_image | image_url: width: 400 }} 400w,{%- endif -%}
+                          {%- if block.settings.post_image.width >= 500 -%}{{ block.settings.post_image | image_url: width: 500 }} 500w,{%- endif -%}
+                          {{ block.settings.post_image | image_url }} {{ block.settings.post_image.width }}w
+                        "
+                        src="{{ block.settings.post_image | image_url: width: 400 }}"
+                        sizes="400px"
+                        alt="{{ block.settings.post_image.alt | escape }}"
+                        class="sk-latest-blogs__post-image"
+                        width="{{ block.settings.post_image.width }}"
+                        height="{{ block.settings.post_image.height }}"
+                        loading="lazy"
+                      >
+                    {%- endif -%}
+                  </div>
+
+                  <div class="sk-latest-blogs__post-content">
+                    {%- if block.settings.post_title != blank -%}
+                      <h3 class="sk-latest-blogs__post-title">
+                        {{ block.settings.post_title | escape }}
+                      </h3>
+                    {%- endif -%}
+
+                    {%- if block.settings.post_excerpt != blank -%}
+                      <p class="sk-latest-blogs__post-excerpt">
+                        {{ block.settings.post_excerpt | escape }}
+                      </p>
+                    {%- endif -%}
+                  </div>
+                </a>
+              </article>
+
+            {%- when 'featured_post' -%}
+              <article
+                class="sk-latest-blogs__featured-post{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                <a
+                  href="{{ block.settings.post_link | default: '#' }}"
+                  class="sk-latest-blogs__featured-link"
+                >
+                  <div class="sk-latest-blogs__featured-image-wrapper">
+                    {%- if block.settings.post_image != blank -%}
+                      <img
+                        srcset="
+                          {%- if block.settings.post_image.width >= 400 -%}{{ block.settings.post_image | image_url: width: 400 }} 400w,{%- endif -%}
+                          {%- if block.settings.post_image.width >= 600 -%}{{ block.settings.post_image | image_url: width: 600 }} 600w,{%- endif -%}
+                          {%- if block.settings.post_image.width >= 800 -%}{{ block.settings.post_image | image_url: width: 800 }} 800w,{%- endif -%}
+                          {{ block.settings.post_image | image_url }} {{ block.settings.post_image.width }}w
+                        "
+                        src="{{ block.settings.post_image | image_url: width: 600 }}"
+                        sizes="600px"
+                        alt="{{ block.settings.post_image.alt | escape }}"
+                        class="sk-latest-blogs__featured-image"
+                        width="{{ block.settings.post_image.width }}"
+                        height="{{ block.settings.post_image.height }}"
+                        loading="lazy"
+                      >
+                    {%- endif -%}
+                    <div class="sk-latest-blogs__featured-overlay">
+                      <div class="sk-latest-blogs__featured-content">
+                        {%- if block.settings.post_title != blank -%}
+                          <h3 class="sk-latest-blogs__featured-title">
+                            {{ block.settings.post_title | escape }}
+                          </h3>
+                        {%- endif -%}
+                        {%- if block.settings.post_excerpt != blank -%}
+                          <p class="sk-latest-blogs__featured-excerpt">
+                            {{ block.settings.post_excerpt | escape }}
+                          </p>
+                        {%- endif -%}
+                        {%- if block.settings.button_text != blank -%}
+                          <span class="sk-latest-blogs__featured-button">
+                            {{ block.settings.button_text | escape }}
+                          </span>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </article>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Latest Blogs",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Latest Blogs"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Explore effective techniques and tips to elevate your skincare routine and enhance your skin's natural radiance and health."
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.all.colors.label"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "blog_post",
+      "name": "Blog Post",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "post_image",
+          "label": "Post Image"
+        },
+        {
+          "type": "text",
+          "id": "post_title",
+          "label": "Post Title",
+          "default": "How to concept great ideas for content"
+        },
+        {
+          "type": "textarea",
+          "id": "post_excerpt",
+          "label": "Post Excerpt",
+          "default": "Ut laborum incididunt consequat ut qui nostrud eiusmod. Quis exercitation sit enim consectetur eiusmod."
+        },
+        {
+          "type": "url",
+          "id": "post_link",
+          "label": "Post Link"
+        }
+      ]
+    },
+    {
+      "type": "featured_post",
+      "name": "Featured Post",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "post_image",
+          "label": "Post Image"
+        },
+        {
+          "type": "text",
+          "id": "post_title",
+          "label": "Post Title",
+          "default": "Butterfly lighting in photography"
+        },
+        {
+          "type": "textarea",
+          "id": "post_excerpt",
+          "label": "Post Excerpt",
+          "default": "Butterfly lighting is a portrait lighting technique that creates a distinctive butterfly-shaped shadow beneath the subject's nose."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Explore More Blogs"
+        },
+        {
+          "type": "url",
+          "id": "post_link",
+          "label": "Post Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Latest Blogs",
+      "blocks": [
+        {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "How to concept great ideas for content",
+            "post_excerpt": "Ut laborum incididunt consequat ut qui nostrud eiusmod. Quis exercitation sit enim consectetur eiusmod."
+          }
+        },
+        {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "How to concept great ideas for content",
+            "post_excerpt": "Ut laborum incididunt consequat ut qui nostrud eiusmod. Quis exercitation sit enim consectetur eiusmod."
+          }
+        },
+        {
+          "type": "featured_post",
+          "settings": {
+            "post_title": "Butterfly lighting in photography",
+            "post_excerpt": "Butterfly lighting is a portrait lighting technique that creates a distinctive butterfly-shaped shadow beneath the subject's nose.",
+            "button_text": "Explore More Blogs"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
