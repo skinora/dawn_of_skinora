@@ -1,0 +1,88 @@
+{
+  "sections": {
+    "main": {
+      "type": "sk-radiance-product",
+      "blocks": {
+        "category_tag": {
+          "type": "text",
+          "settings": {
+            "text": "Reduced Lines & Wrinkles",
+            "text_style": "subtitle"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "comfort_feature": {
+          "type": "text",
+          "settings": {
+            "text": "Komfortbriller følger med – ekstra komfort, samme effekt",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "category_tag",
+        "title",
+        "rating",
+        "price",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "comfort_feature"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "gallery_layout": "thumbnail_slider",
+        "mobile_thumbnails": "show",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "guarantee_section": {
+      "type": "sk-guarantee-banner",
+      "settings": {
+        "heading": "Prøv hjemme i 30 dager. Ser du ingen resultater, får du pengene tilbake",
+        "description": "Vår teknologi er klinisk dokumentert. Derfor tilbyr vi 30 dagers fornøydgaranti: ser du ikke resultater, får du pengene tilbake.",
+        "read_more_text": "LES MER →",
+        "read_more_link": "#guarantee-details",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    }
+  },
+  "order": [
+    "main",
+    "guarantee_section"
+  ]
+}

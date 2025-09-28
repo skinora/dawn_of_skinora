@@ -1,0 +1,376 @@
+{%- liquid
+  assign media_count = product.media.size
+  if media_count == 0
+    assign single_media_visible = true
+  endif
+
+  assign media_aspect_ratio = product.featured_media.aspect_ratio
+  unless media_aspect_ratio
+    assign media_aspect_ratio = 1
+  endunless
+-%}
+
+<modal-dialog
+  id="ProductModal-{{ product.id }}"
+  class="sk-radiance-product-media-modal sk-radiance-product-media-modal--{{ section.settings.media_size }}"
+>
+  <div
+    class="sk-radiance-product-media-modal__dialog"
+    role="dialog"
+    aria-label="{{ 'products.modal.label' | t }}"
+    aria-modal="true"
+    tabindex="-1"
+  >
+    <button
+      id="ModalClose-{{ product.id }}"
+      type="button"
+      class="sk-radiance-product-media-modal__toggle"
+      aria-label="{{ 'accessibility.close' | t }}"
+    >
+      <span class="svg-wrapper">
+        {{- 'icon-close.svg' | inline_asset_content -}}
+      </span>
+    </button>
+    <div class="sk-radiance-product-media-modal__content">
+      <div class="sk-radiance-product-media-modal__media">
+        {%- if product.media.size > 0 -%}
+          <div class="sk-radiance-product-media-modal__slider" data-media-count="{{ media_count }}">
+            {%- for media in product.media -%}
+              <div
+                class="sk-radiance-product-media-modal__item{% if forloop.first %} sk-radiance-product-media-modal__item--active{% endif %}"
+                data-media-id="{{ media.id }}"
+              >
+                {%- case media.media_type -%}
+                  {%- when 'image' -%}
+                    <div class="sk-radiance-product-media-modal__image">
+                      <img
+                        srcset="
+                          {%- if media.width >= 165 -%}{{ media | image_url: width: 165 }} 165w,{%- endif -%}
+                          {%- if media.width >= 360 -%}{{ media | image_url: width: 360 }} 360w,{%- endif -%}
+                          {%- if media.width >= 533 -%}{{ media | image_url: width: 533 }} 533w,{%- endif -%}
+                          {%- if media.width >= 720 -%}{{ media | image_url: width: 720 }} 720w,{%- endif -%}
+                          {%- if media.width >= 940 -%}{{ media | image_url: width: 940 }} 940w,{%- endif -%}
+                          {%- if media.width >= 1066 -%}{{ media | image_url: width: 1066 }} 1066w,{%- endif -%}
+                          {{ media | image_url }} {{ media.width }}w
+                        "
+                        src="{{ media | image_url: width: 533 }}"
+                        sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                        alt="{{ media.alt | escape }}"
+                        class="sk-radiance-product-media-modal__image-element"
+                        loading="lazy"
+                        width="{{ media.width }}"
+                        height="{{ media.height }}"
+                      >
+                    </div>
+                  {%- when 'video' -%}
+                    <div class="sk-radiance-product-media-modal__video">
+                      {{
+                        media
+                        | video_tag:
+                          image_size: '2048x',
+                          loop: section.settings.enable_video_looping,
+                          controls: true,
+                          muted: true
+                      }}
+                    </div>
+                  {%- when 'external_video' -%}
+                    <div class="sk-radiance-product-media-modal__external-video">
+                      {{ media | external_video_tag }}
+                    </div>
+                  {%- when 'model' -%}
+                    <div class="sk-radiance-product-media-modal__model">
+                      {{ media | model_viewer_tag: image_size: '2048x', reveal: 'interaction', toggleable: true }}
+                    </div>
+                {%- endcase -%}
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <!-- Navigation Arrows -->
+          {%- if media_count > 1 -%}
+            <button
+              class="sk-radiance-product-media-modal__nav sk-radiance-product-media-modal__nav--prev"
+              type="button"
+              aria-label="Previous media"
+            >
+              <span class="svg-wrapper">
+                {{- 'icon-chevron-left.svg' | inline_asset_content -}}
+              </span>
+            </button>
+            <button
+              class="sk-radiance-product-media-modal__nav sk-radiance-product-media-modal__nav--next"
+              type="button"
+              aria-label="Next media"
+            >
+              <span class="svg-wrapper">
+                {{- 'icon-chevron-right.svg' | inline_asset_content -}}
+              </span>
+            </button>
+          {%- endif -%}
+        {%- else -%}
+          <div class="sk-radiance-product-media-modal__placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</modal-dialog>
+
+<style>
+  .sk-radiance-product-media-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .sk-radiance-product-media-modal[open] {
+    display: flex;
+  }
+
+  .sk-radiance-product-media-modal__dialog {
+    position: relative;
+    width: 100%;
+    max-width: 90vw;
+    max-height: 90vh;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .sk-radiance-product-media-modal__toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background-color 0.2s ease;
+  }
+
+  .sk-radiance-product-media-modal__toggle:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .sk-radiance-product-media-modal__toggle .svg-wrapper {
+    width: 20px;
+    height: 20px;
+    color: #fff;
+  }
+
+  .sk-radiance-product-media-modal__content {
+    width: 100%;
+    height: 100%;
+  }
+
+  .sk-radiance-product-media-modal__media {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+  }
+
+  .sk-radiance-product-media-modal__slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .sk-radiance-product-media-modal__item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .sk-radiance-product-media-modal__item--active {
+    opacity: 1;
+  }
+
+  .sk-radiance-product-media-modal__image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+  }
+
+  .sk-radiance-product-media-modal__image-element {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .sk-radiance-product-media-modal__video,
+  .sk-radiance-product-media-modal__external-video,
+  .sk-radiance-product-media-modal__model {
+    width: 100%;
+    height: 100%;
+  }
+
+  .sk-radiance-product-media-modal__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background-color 0.2s ease;
+  }
+
+  .sk-radiance-product-media-modal__nav:hover {
+    background: rgba(255, 255, 255, 1);
+  }
+
+  .sk-radiance-product-media-modal__nav--prev {
+    left: 1rem;
+  }
+
+  .sk-radiance-product-media-modal__nav--next {
+    right: 1rem;
+  }
+
+  .sk-radiance-product-media-modal__nav .svg-wrapper {
+    width: 24px;
+    height: 24px;
+    color: #000;
+  }
+
+  .sk-radiance-product-media-modal__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+  }
+
+  @media screen and (max-width: 749px) {
+    .sk-radiance-product-media-modal {
+      padding: 1rem;
+    }
+
+    .sk-radiance-product-media-modal__dialog {
+      max-width: 95vw;
+      max-height: 95vh;
+    }
+
+    .sk-radiance-product-media-modal__nav {
+      width: 40px;
+      height: 40px;
+    }
+
+    .sk-radiance-product-media-modal__nav--prev {
+      left: 0.5rem;
+    }
+
+    .sk-radiance-product-media-modal__nav--next {
+      right: 0.5rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.querySelector('#ProductModal-{{ product.id }}');
+    const closeButton = document.querySelector('#ModalClose-{{ product.id }}');
+    const mediaItems = document.querySelectorAll('.sk-radiance-product-media-modal__item');
+    const prevButton = document.querySelector('.sk-radiance-product-media-modal__nav--prev');
+    const nextButton = document.querySelector('.sk-radiance-product-media-modal__nav--next');
+
+    let currentIndex = 0;
+    const totalItems = mediaItems.length;
+
+    function updateActiveMedia(index) {
+      mediaItems.forEach((item, i) => {
+        item.classList.toggle('sk-radiance-product-media-modal__item--active', i === index);
+      });
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % totalItems;
+      updateActiveMedia(currentIndex);
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+      updateActiveMedia(currentIndex);
+    }
+
+    function closeModal() {
+      modal.removeAttribute('open');
+      document.body.style.overflow = '';
+    }
+
+    function openModal() {
+      modal.setAttribute('open', '');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close modal handlers
+    if (closeButton) {
+      closeButton.addEventListener('click', closeModal);
+    }
+
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Navigation handlers
+    if (nextButton) {
+      nextButton.addEventListener('click', showNext);
+    }
+
+    if (prevButton) {
+      prevButton.addEventListener('click', showPrev);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function (e) {
+      if (modal.hasAttribute('open')) {
+        if (e.key === 'Escape') {
+          closeModal();
+        } else if (e.key === 'ArrowLeft') {
+          showPrev();
+        } else if (e.key === 'ArrowRight') {
+          showNext();
+        }
+      }
+    });
+
+    // Expose openModal function globally for use by other elements
+    window.openProductModal = function (mediaIndex = 0) {
+      currentIndex = mediaIndex;
+      updateActiveMedia(currentIndex);
+      openModal();
+    };
+  });
+</script>

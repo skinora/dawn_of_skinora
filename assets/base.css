@@ -2752,6 +2752,8 @@ details[open]>.header__submenu {
   animation: animateMenuOpen var(--duration-default) ease;
   animation-fill-mode: forwards;
   z-index: 1;
+  background: #30273e;
+  padding: 5px;
 }
 
 @media (prefers-reduced-motion) {
@@ -2828,7 +2830,7 @@ details[open]>.header__menu-item .icon-caret {
 
 .header__active-menu-item {
   transition: text-decoration-thickness var(--duration-short) ease;
-  color: rgb(var(--color-foreground));
+  color: #fff;
   text-decoration: underline;
   text-underline-offset: 0.3rem;
 }
