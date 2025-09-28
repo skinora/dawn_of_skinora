@@ -1,12 +1,5 @@
 {{ 'section-sk-latest-blogs.css' | asset_url | stylesheet_tag }}
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top }}px;
-    padding-bottom: {{ section.settings.padding_bottom }}px;
-  }
-{%- endstyle -%}
-
 <div class="sk-latest-blogs section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="container">
     <div class="sk-latest-blogs__header">
@@ -94,8 +87,8 @@
                         sizes="600px"
                         alt="{{ block.settings.post_image.alt | escape }}"
                         class="sk-latest-blogs__featured-image"
-                        width="{{ block.settings.post_image.width }}"
-                        height="{{ block.settings.post_image.height }}"
+                        width="1200"
+                        height="400"
                         loading="lazy"
                       >
                     {%- endif -%}
@@ -110,11 +103,6 @@
                           <p class="sk-latest-blogs__featured-excerpt">
                             {{ block.settings.post_excerpt | escape }}
                           </p>
-                        {%- endif -%}
-                        {%- if block.settings.button_text != blank -%}
-                          <span class="sk-latest-blogs__featured-button">
-                            {{ block.settings.button_text | escape }}
-                          </span>
                         {%- endif -%}
                       </div>
                     </div>
@@ -250,12 +238,6 @@
           "default": "Butterfly lighting is a portrait lighting technique that creates a distinctive butterfly-shaped shadow beneath the subject's nose."
         },
         {
-          "type": "text",
-          "id": "button_text",
-          "label": "Button Text",
-          "default": "Explore More Blogs"
-        },
-        {
           "type": "url",
           "id": "post_link",
           "label": "Post Link"
@@ -285,8 +267,7 @@
           "type": "featured_post",
           "settings": {
             "post_title": "Butterfly lighting in photography",
-            "post_excerpt": "Butterfly lighting is a portrait lighting technique that creates a distinctive butterfly-shaped shadow beneath the subject's nose.",
-            "button_text": "Explore More Blogs"
+            "post_excerpt": "Butterfly lighting is a portrait lighting technique that creates a distinctive butterfly-shaped shadow beneath the subject's nose."
           }
         }
       ]
