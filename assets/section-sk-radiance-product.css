@@ -1,16 +1,8 @@
 /* SK Radiance Product Section Styles */
 .sk-radiance-product {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    display: flex;
+    gap: 4rem;
     margin-bottom: 2rem;
-}
-
-@media screen and (min-width: 750px) {
-    .sk-radiance-product {
-        grid-template-columns: 1fr 1fr;
-        gap: 4rem;
-    }
 }
 
 /* Product Media Gallery */
@@ -23,6 +15,16 @@
     background: #000;
     border-radius: 8px;
     overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sk-radiance-product__media-main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    flex: 1;
 }
 
 .sk-radiance-product__media-container {
@@ -103,6 +105,7 @@
 /* Thumbnail Gallery */
 .sk-radiance-product__media-thumbnails {
     margin-top: 1rem;
+    flex-shrink: 0;
 }
 
 .sk-radiance-product__media-thumbnails-container {
@@ -150,6 +153,7 @@
 .sk-radiance-product__info-wrapper {
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 .sk-radiance-product__info-container {
@@ -170,16 +174,10 @@
 }
 
 .sk-radiance-product__title h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 600;
     margin: 0;
     color: #333;
-}
-
-@media screen and (min-width: 750px) {
-    .sk-radiance-product__title h1 {
-        font-size: 2.5rem;
-    }
 }
 
 /* Rating */
@@ -444,22 +442,4 @@
     opacity: 1;
 }
 
-/* Responsive Design */
-@media screen and (max-width: 749px) {
-    .sk-radiance-product {
-        gap: 1.5rem;
-    }
-
-    .sk-radiance-product__title h1 {
-        font-size: 1.75rem;
-    }
-
-    .sk-radiance-buy-buttons__button {
-        padding: 0.875rem 1.5rem;
-    }
-
-    .sk-radiance-buy-buttons__payment-methods-logos {
-        flex-wrap: wrap;
-        gap: 0.75rem;
-    }
-}
+/* Desktop-only design - no responsive breakpoints */

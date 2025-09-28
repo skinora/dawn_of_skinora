@@ -115,6 +115,7 @@
   },
   "products": {
     "product": {
+      "payment_methods": "Betalingsmetoder",
       "add_to_cart": "Legg i handlekurv",
       "description": "Beskrivelse",
       "on_sale": "Salg",
