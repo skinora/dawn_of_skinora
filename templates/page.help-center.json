@@ -9,20 +9,6 @@
  */
 {
   "sections": {
-    "banner": {
-      "type": "sk-help-banner",
-      "settings": {
-        "background_image": "shopify://shop_images/about-section-bg.png",
-        "heading": "Help Center",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "color_scheme": "background-1",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
     "help_categories": {
       "type": "sk-help-categories",
       "blocks": {
@@ -120,7 +106,7 @@
     "main": {
       "type": "main-page",
       "custom_css": [
-        ".main-page-title.page-title{display: none}"
+        ".main-page-title.page-title {display: none;}"
       ],
       "settings": {
         "padding_top": 36,
@@ -129,7 +115,6 @@
     }
   },
   "order": [
-    "banner",
     "help_categories",
     "main"
   ]
