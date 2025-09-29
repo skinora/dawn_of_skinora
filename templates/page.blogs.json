@@ -64,6 +64,7 @@
         "post_5": {
           "type": "blog_post",
           "settings": {
+            "post_image": "shopify://shop_images/before_after_left_fit.webp",
             "post_title": "Klar Hud med LED – Slik Hjelper Lysbehandling mot Akne",
             "post_subtitle": "Blått og rødt lys jobber sammen for å redusere utbrudd, roe ned inflammasjon og støtte hudens naturlige balanse.",
             "post_link": ""
@@ -72,32 +73,9 @@
         "post_6": {
           "type": "blog_post",
           "settings": {
-            "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne",
-            "post_link": ""
-          }
-        },
-        "post_7": {
-          "type": "blog_post",
-          "settings": {
-            "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne",
-            "post_link": ""
-          }
-        },
-        "post_8": {
-          "type": "blog_post",
-          "settings": {
-            "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne",
-            "post_link": ""
-          }
-        },
-        "post_9": {
-          "type": "blog_post",
-          "settings": {
-            "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne",
+            "post_image": "shopify://shop_images/enecta-cannabis-extracts-80wCkpt-IKE-unsplash.webp",
+            "post_title": "Kombinasjon av LED-Maske og Hudpleieprodukter – Slik Får Du Maksimal Effekt",
+            "post_subtitle": "Praktiske tips til hvordan LED kan kombineres med serum, fuktighetskrem eller masker",
             "post_link": ""
           }
         }
@@ -108,10 +86,7 @@
         "post_3",
         "post_4",
         "post_5",
-        "post_6",
-        "post_7",
-        "post_8",
-        "post_9"
+        "post_6"
       ],
       "settings": {
         "heading": "Våre Hudinnsikter – For Well-Aging, Hudhelse og Problemfri Hud",
