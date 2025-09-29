@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
@@ -20,63 +29,72 @@
           "type": "blog_post",
           "settings": {
             "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne"
+            "post_subtitle": "How it Helps Fight Acne",
+            "post_link": ""
           }
         },
         "post_2": {
           "type": "blog_post",
           "settings": {
             "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne"
+            "post_subtitle": "How it Helps Fight Acne",
+            "post_link": ""
           }
         },
         "post_3": {
           "type": "blog_post",
           "settings": {
             "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne"
+            "post_subtitle": "How it Helps Fight Acne",
+            "post_link": ""
           }
         },
         "post_4": {
           "type": "blog_post",
           "settings": {
             "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne"
+            "post_subtitle": "How it Helps Fight Acne",
+            "post_link": ""
           }
         },
         "post_5": {
           "type": "blog_post",
           "settings": {
             "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne"
+            "post_subtitle": "How it Helps Fight Acne",
+            "post_link": ""
           }
         },
         "post_6": {
           "type": "blog_post",
           "settings": {
             "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne"
+            "post_subtitle": "How it Helps Fight Acne",
+            "post_link": ""
           }
         },
         "post_7": {
           "type": "blog_post",
           "settings": {
             "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne"
+            "post_subtitle": "How it Helps Fight Acne",
+            "post_link": ""
           }
         },
         "post_8": {
           "type": "blog_post",
           "settings": {
             "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne"
+            "post_subtitle": "How it Helps Fight Acne",
+            "post_link": ""
           }
         },
         "post_9": {
           "type": "blog_post",
           "settings": {
             "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne"
+            "post_subtitle": "How it Helps Fight Acne",
+            "post_link": ""
           }
         }
       },
@@ -92,9 +110,10 @@
         "post_9"
       ],
       "settings": {
-        "heading": "Our Skincare Insights-Tips For Healthy, Radiant Skin",
-        "description": "<p>Discover expert tips, product guides, and the latest in light therapy technology. From anti-aging solutions to acne care, explore articles designed to help you achieve healthier, radiant skin every day.</p>",
+        "heading": "Våre Well-Aging Innsikter – For Sunn Og Tidløs Hud",
+        "description": "<p>Hos Skinora tror vi på well-aging: å ta vare på huden med teknologi, vitenskap og gode rutiner. Her finner du artikler med råd, guider og kunnskap som hjelper deg å støtte hudens egen styrke og opprettholde glød – på en naturlig måte.<br/><br/></p>",
         "show_pagination": true,
+        "color_scheme": "accent-1",
         "padding_top": 80,
         "padding_bottom": 80
       }
