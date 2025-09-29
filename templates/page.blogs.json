@@ -37,6 +37,7 @@
         "post_2": {
           "type": "blog_post",
           "settings": {
+            "post_image": "shopify://shop_images/ChatGPT_Image_Sep_29_2025_10_57_16_AM.webp",
             "post_title": "Hvordan Virker LED-Masker?",
             "post_subtitle": "LED-masker har blitt en av de mest populære verktøyene innen well-aging. Men hva gjør egentlig lyset med huden, og hvorfor har disse maskene fått så mye oppmerksomhet de siste årene?",
             "post_link": ""
