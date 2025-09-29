@@ -55,8 +55,9 @@
         "post_4": {
           "type": "blog_post",
           "settings": {
+            "post_image": "shopify://shop_images/ChatGPT_Image_Sep_29_2025_11_15_12_AM.webp",
             "post_title": "Slik Bygger Du En Enkel Well-Aging Rutine Hjemme",
-            "post_subtitle": "How it Helps Fight Acne",
+            "post_subtitle": "Lær hvordan små daglige vaner og riktig teknologi kan støtte hudens styrke og naturlige glød over tid.",
             "post_link": ""
           }
         },
