@@ -28,8 +28,9 @@
         "post_1": {
           "type": "blog_post",
           "settings": {
-            "post_title": "Blue Light Therapy",
-            "post_subtitle": "How it Helps Fight Acne",
+            "post_image": "shopify://shop_images/ChatGPT_Image_Sep_29_2025_09_56_58_AM.png",
+            "post_title": "Hva Er Well-Aging?",
+            "post_subtitle": "En positiv tilnærming til hudpleie – lær hvordan well-aging styrker huden og fremhever naturlig glød",
             "post_link": ""
           }
         },
@@ -110,7 +111,7 @@
         "post_9"
       ],
       "settings": {
-        "heading": "Våre Well-Aging Innsikter – For Sunn Og Tidløs Hud",
+        "heading": "Våre Well-Aging Innsikter – For Hudhelse Og Naturlig Glød",
         "description": "<p>Hos Skinora tror vi på well-aging: å ta vare på huden med teknologi, vitenskap og gode rutiner. Her finner du artikler med råd, guider og kunnskap som hjelper deg å støtte hudens egen styrke og opprettholde glød – på en naturlig måte.<br/><br/></p>",
         "show_pagination": true,
         "color_scheme": "accent-1",
