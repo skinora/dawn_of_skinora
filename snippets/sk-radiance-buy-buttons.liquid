@@ -19,125 +19,83 @@
       <input type="hidden" name="id" value="{{ current_variant.id }}" disabled>
 
       <div class="sk-radiance-buy-buttons__wrapper">
-        {% comment %}
-          <div class="sk-radiance-buy-buttons__quantity">
-            <label for="Quantity-{{ section_id }}" class="sk-radiance-buy-buttons__quantity-label">
-              {{ 'products.product.quantity.label' | t }}
-            </label>
-            <quantity-input class="sk-radiance-quantity">
-              <button class="sk-radiance-quantity__button sk-radiance-quantity__button--minus" name="minus" type="button">
-                <span class="visually-hidden">
-                  {{- 'products.product.quantity.decrease' | t: product: product.title | escape -}}
-                </span>
-                <span class="svg-wrapper">
-                  {{- 'icon-minus.svg' | inline_asset_content -}}
-                </span>
-              </button>
-              <input
-                class="sk-radiance-quantity__input"
-                type="number"
-                name="quantity"
-                id="Quantity-{{ section_id }}"
-                min="1"
-                value="1"
-                form="{{ product_form_id }}"
-              >
-              <button class="sk-radiance-quantity__button sk-radiance-quantity__button--plus" name="plus" type="button">
-                <span class="visually-hidden">
-                  {{- 'products.product.quantity.increase' | t: product: product.title | escape -}}
-                </span>
-                <span class="svg-wrapper">
-                  {{- 'icon-plus.svg' | inline_asset_content -}}
-                </span>
-              </button>
-            </quantity-input>
-          </div>
-        {% endcomment %}
-
         <div class="sk-radiance-buy-buttons__buttons">
-          <button
-            id="ProductSubmitButton-{{ section_id }}"
-            type="submit"
-            name="add"
-            class="sk-radiance-buy-buttons__button sk-radiance-buy-buttons__button--primary"
-            {% if current_variant.available == false %}
-              disabled
-            {% endif %}
-          >
-            <span class="sk-radiance-buy-buttons__button-text">
-              {%- if current_variant.available -%}
-                {{ 'products.product.add_to_cart' | t }}
-              {%- else -%}
-                {{ 'products.product.sold_out' | t }}
-              {%- endif -%}
-            </span>
-            <span class="sk-radiance-buy-buttons__button-loading">
-              <span class="sk-radiance-buy-buttons__button-spinner">
-                {{- 'icon-loading.svg' | inline_asset_content -}}
+          {% comment %}
+            <button
+              id="ProductSubmitButton-{{ section_id }}"
+              type="submit"
+              name="add"
+              class="sk-radiance-buy-buttons__button sk-radiance-buy-buttons__button--primary"
+            >
+              <span class="sk-radiance-buy-buttons__button-text">
+                {%- if current_variant.available -%}
+                  {{ 'products.product.add_to_cart' | t }}
+                {%- else -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- endif -%}
               </span>
-            </span>
-          </button>
+              <span class="sk-radiance-buy-buttons__button-loading">
+                <span class="sk-radiance-buy-buttons__button-spinner">
+                  {{- 'icon-loading.svg' | inline_asset_content -}}
+                </span>
+              </span>
+            </button>
+          {% endcomment %}
 
-          {%- if block.settings.show_dynamic_checkout -%}
-            {{ form | payment_button }}
-          {%- endif -%}
+          {{ form | payment_button }}
+          {% comment %}
+            {%- if block.settings.show_dynamic_checkout -%}
+              {{ form | payment_button }}
+            {%- endif -%}
+          {% endcomment %}
         </div>
       </div>
 
-      <div class="sk-radiance-buy-buttons__features">
-        <div class="sk-radiance-buy-buttons__feature">
-          <span class="sk-radiance-buy-buttons__feature-icon">
-            {{- 'icon-check.svg' | inline_asset_content -}}
-          </span>
-          <span class="sk-radiance-buy-buttons__feature-text">
-            Komfortbriller følger med – ekstra komfort, samme effekt
-          </span>
-        </div>
-      </div>
-
-      <div class="sk-radiance-buy-buttons__payment-methods">
-        <div class="sk-radiance-buy-buttons__payment-methods-title d-none">
-          {{ 'products.product.payment_methods' | t }}
-        </div>
-        <div class="sk-radiance-buy-buttons__payment-methods-logos">
-          <div class="sk-radiance-buy-buttons__payment-method">
-            <img
-              src="{{ 'visa-logo.svg' | asset_url }}"
-              alt="Visa"
-              class="sk-radiance-buy-buttons__payment-logo"
-              width="47"
-              height="34"
-            >
+      {% comment %}
+        <div class="sk-radiance-buy-buttons__payment-methods">
+          <div class="sk-radiance-buy-buttons__payment-methods-title d-none">
+            {{ 'products.product.payment_methods' | t }}
           </div>
-          <div class="sk-radiance-buy-buttons__payment-method">
-            <img
-              src="{{ 'mastercard-logo.svg' | asset_url }}"
-              alt="Mastercard"
-              class="sk-radiance-buy-buttons__payment-logo"
-              width="47"
-              height="34"
-            >
-          </div>
-          <div class="sk-radiance-buy-buttons__payment-method">
-            <img
-              src="{{ 'apple-pay-logo.svg' | asset_url }}"
-              alt="Apple Pay"
-              class="sk-radiance-buy-buttons__payment-logo"
-              width="47"
-              height="34"
-            >
-          </div>
-          <div class="sk-radiance-buy-buttons__payment-method">
-            <img
-              src="{{ 'klarna-logo.svg' | asset_url }}"
-              alt="Klarna"
-              class="sk-radiance-buy-buttons__payment-logo"
-              width="47"
-              height="34"
-            >
+          <div class="sk-radiance-buy-buttons__payment-methods-logos">
+            <div class="sk-radiance-buy-buttons__payment-method">
+              <img
+                src="{{ 'visa-logo.svg' | asset_url }}"
+                alt="Visa"
+                class="sk-radiance-buy-buttons__payment-logo"
+                width="47"
+                height="34"
+              >
+            </div>
+            <div class="sk-radiance-buy-buttons__payment-method">
+              <img
+                src="{{ 'mastercard-logo.svg' | asset_url }}"
+                alt="Mastercard"
+                class="sk-radiance-buy-buttons__payment-logo"
+                width="47"
+                height="34"
+              >
+            </div>
+            <div class="sk-radiance-buy-buttons__payment-method">
+              <img
+                src="{{ 'apple-pay-logo.svg' | asset_url }}"
+                alt="Apple Pay"
+                class="sk-radiance-buy-buttons__payment-logo"
+                width="47"
+                height="34"
+              >
+            </div>
+            <div class="sk-radiance-buy-buttons__payment-method">
+              <img
+                src="{{ 'klarna-logo.svg' | asset_url }}"
+                alt="Klarna"
+                class="sk-radiance-buy-buttons__payment-logo"
+                width="47"
+                height="34"
+              >
+            </div>
           </div>
         </div>
-      </div>
+      {% endcomment %}
     {%- endform -%}
   </div>
 

@@ -148,7 +148,7 @@
                   {%- render 'sk-radiance-price',
                     product: product,
                     use_variant: true,
-                    show_badges: true,
+                    show_badges: false,
                     price_class: 'price--large'
                   -%}
                 </div>
@@ -177,7 +177,7 @@
                     for="Quantity-{{ section.id }}"
                     aria-labelledby="quantity-label-{{ section.id }}"
                   >
-                    <span aria-hidden="true">{{ 'products.product.quantity.label' | t }}</span>
+                    <span aria-hidden="true" class="d-none">{{ 'products.product.quantity.label' | t }}</span>
                     <span class="quantity__rules-cart{% if cart_qty == 0 %} hidden{% endif %}" aria-hidden="true">
                       {%- render 'loading-spinner' -%}
                       <span
@@ -188,7 +188,11 @@
                     </span>
                   </label>
                   <div class="price-per-item__container">
-                    <quantity-input class="quantity" data-url="{{ product.url }}" data-section="{{ section.id }}">
+                    <quantity-input
+                      class="quantity custom_quantity_input"
+                      data-url="{{ product.url }}"
+                      data-section="{{ section.id }}"
+                    >
                       <button class="quantity__button" name="minus" type="button">
                         <span class="visually-hidden">
                           {{- 'products.product.quantity.decrease' | t: product: product.title | escape -}}
@@ -222,22 +226,52 @@
                         </span>
                       </button>
                     </quantity-input>
+                    {%- render 'sk-radiance-buy-buttons',
+                      block: block,
+                      product: product,
+                      product_form_id: product_form_id,
+                      section_id: section.id,
+                      show_pickup_availability: true
+                    -%}
                   </div>
                 </div>
+              {%- when 'product_features' -%}
+                {%- comment -%} Check if this product should show features section {%- endcomment -%}
+                {%- if product.metafields.custom.show_product_features == true -%}
+                  <div class="sk-radiance-product-features" {{ block.shopify_attributes }}>
+                    {%- for i in (1..10) -%}
+                      {%- assign feature_enabled = 'feature_' | append: i | append: '_enabled' -%}
+                      {%- assign feature_svg = 'feature_' | append: i | append: '_svg' -%}
+                      {%- assign feature_top_text = 'feature_' | append: i | append: '_top_text' -%}
+                      {%- assign feature_bottom_text = 'feature_' | append: i | append: '_bottom_text' -%}
+
+                      {%- if block.settings[feature_enabled] -%}
+                        <div class="sk-radiance-product-features__item">
+                          <div class="sk-radiance-product-features__icon">
+                            {{ block.settings[feature_svg] }}
+                          </div>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              {%- when 'product_description' -%}
+                {%- comment -%} Check if this product should show description section {%- endcomment -%}
+
+                {%- if product.metafields.custom.product_description_content != blank -%}
+                  <div class="sk-radiance-product-description" {{ block.shopify_attributes }}>
+                    <div class="sk-radiance-product-description__content">
+                      {{ product.metafields.custom.product_description_content | metafield_tag }}
+                    </div>
+                  </div>
+                {%- endif -%}
+
               {%- when 'variant_picker' -%}
                 {% render 'sk-radiance-product-variant-picker',
                   product: product,
                   block: block,
                   product_form_id: product_form_id
                 %}
-              {%- when 'buy_buttons' -%}
-                {%- render 'sk-radiance-buy-buttons',
-                  block: block,
-                  product: product,
-                  product_form_id: product_form_id,
-                  section_id: section.id,
-                  show_pickup_availability: true
-                -%}
             {%- endcase -%}
           {%- endfor -%}
         </section>
@@ -373,6 +407,111 @@
           "id": "show_gift_card_recipient",
           "default": true,
           "label": "Show Gift Card Recipient"
+        }
+      ]
+    },
+    {
+      "type": "product_features",
+      "name": "Product Features",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Feature 1"
+        },
+        {
+          "type": "checkbox",
+          "id": "feature_1_enabled",
+          "default": true,
+          "label": "Enable Feature 1"
+        },
+        {
+          "type": "html",
+          "id": "feature_1_svg",
+          "label": "Feature 1 SVG Code"
+        },
+        {
+          "type": "header",
+          "content": "Feature 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "feature_2_enabled",
+          "default": true,
+          "label": "Enable Feature 2"
+        },
+        {
+          "type": "html",
+          "id": "feature_2_svg",
+          "label": "Feature 2 SVG Code"
+        },
+
+        {
+          "type": "header",
+          "content": "Feature 3"
+        },
+        {
+          "type": "checkbox",
+          "id": "feature_3_enabled",
+          "default": true,
+          "label": "Enable Feature 3"
+        },
+        {
+          "type": "html",
+          "id": "feature_3_svg",
+          "label": "Feature 3 SVG Code"
+        },
+
+        {
+          "type": "header",
+          "content": "Feature 4"
+        },
+        {
+          "type": "checkbox",
+          "id": "feature_4_enabled",
+          "default": true,
+          "label": "Enable Feature 4"
+        },
+        {
+          "type": "html",
+          "id": "feature_4_svg",
+          "label": "Feature 4 SVG Code"
+        },
+
+        {
+          "type": "header",
+          "content": "Feature 5"
+        },
+        {
+          "type": "checkbox",
+          "id": "feature_5_enabled",
+          "default": true,
+          "label": "Enable Feature 5"
+        },
+        {
+          "type": "html",
+          "id": "feature_5_svg",
+          "label": "Feature 5 SVG Code"
+        }
+      ]
+    },
+    {
+      "type": "product_description",
+      "name": "Product Description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product-Specific Control"
+        },
+        {
+          "type": "paragraph",
+          "content": "To show description on specific products only, add these metafields to each product:"
+        },
+
+        {
+          "type": "paragraph",
+          "content": "1. 'custom.product_description_content' (Rich text) - Use the rich text editor to format your content with headings, paragraphs, and lists"
         }
       ]
     }

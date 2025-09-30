@@ -115,6 +115,9 @@
   },
   "products": {
     "product": {
+      "features": {
+        "comfort_feature": "Comfort glasses come with – extra comfort, same effect"
+      },
       "payment_methods": "Payment methods",
       "add_to_cart": "Add to cart",
       "choose_options": "Choose options",

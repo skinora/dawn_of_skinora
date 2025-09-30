@@ -6,34 +6,51 @@
     data-update-url="false"
     {{ block.shopify_attributes }}
   >
-    {%- for option in product.options_with_values -%}
-      <fieldset class="sk-radiance-variant-selects__fieldset js product-form__input">
-        <legend class="sk-radiance-variant-selects__legend form__label">
-          {{ option.name }}
-        </legend>
-        {%- for value in option.values -%}
-          <input
-            type="radio"
-            id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-            name="{{ option.name }}"
-            value="{{ value | escape }}"
-            form="{{ product_form_id }}"
-            {% if option.selected_value == value %}
-              checked
-            {% endif %}
-            {% if value == product.selected_or_first_available_variant.options[forloop.index0] %}
-              checked
-            {% endif %}
-          >
-          <label
-            for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-            class="sk-radiance-variant-selects__label sk-radiance-variant-selects__label--{{ block.settings.picker_type }}"
-          >
-            <span class="sk-radiance-variant-selects__label-text">{{ value }}</span>
-          </label>
+    <fieldset class="sk-radiance-variant-selects__fieldset js product-form__input">
+      <div class="sk-radiance-variant-cards">
+        {%- for variant in product.variants -%}
+          <div class="sk-radiance-variant-card {% if variant.id == product.selected_or_first_available_variant.id %} sk-radiance-variant-card--active {% endif %}">
+            <a
+              href="{{ product.url }}?variant={{ variant.id }}"
+              class="sk-radiance-variant-card__link"
+            >
+              <div class="sk-radiance-variant-card__image">
+                {%- if variant.featured_image -%}
+                  <img
+                    src="{{ variant.featured_image | image_url: width: 200 }}"
+                    alt="{{ variant.featured_image.alt | escape }}"
+                    width="200"
+                    height="200"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 200 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    width="200"
+                    height="200"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              </div>
+              <div class="sk-radiance-variant-card__content">
+                <h3 class="sk-radiance-variant-card__title">{{ variant.title }}</h3>
+              </div>
+              <div class="sk-radiance-variant-card__price">
+                <span class="sk-radiance-variant-card__price-wrapper">
+                  <s class="sk-radiance-variant-card__compare-price">
+                    {{ variant.compare_at_price | money | strip_html }}
+                  </s>
+                  <span class="sk-radiance-variant-card__current-price">
+                    {{ variant.price | money | strip_html }}
+                  </span>
+                </span>
+              </div>
+            </a>
+          </div>
         {%- endfor -%}
-      </fieldset>
-    {%- endfor -%}
+      </div>
+    </fieldset>
     <script type="application/json">
       {{ product.variants | json }}
     </script>

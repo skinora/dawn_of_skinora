@@ -12,7 +12,7 @@
 
 .sk-radiance-product__media {
     position: relative;
-    background: #000;
+    /* background: #000; */
     border-radius: 8px;
     overflow: hidden;
     flex: 1;
@@ -58,12 +58,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #000;
 }
 
 .sk-radiance-product__media-image-element {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain;
+    /* object-fit: contain; */
 }
 
 /* Navigation Arrows */
@@ -71,7 +72,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.9);
+    background: none;
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -82,10 +83,6 @@
     cursor: pointer;
     z-index: 2;
     transition: background-color 0.2s ease;
-}
-
-.sk-radiance-product__media-nav:hover {
-    background: rgba(255, 255, 255, 1);
 }
 
 .sk-radiance-product__media-nav--prev {
@@ -156,28 +153,26 @@
     flex: 1;
 }
 
-.sk-radiance-product__info-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
 .sk-radiance-product__text {
     margin: 0;
-    font-size: 0.875rem;
-    color: #666;
+    font-size: 14px;
+    color: #6C6C6C;
+    font-family: "DM Sans", sans-serif !important;
 }
 
 .sk-radiance-product__text.subtitle {
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 700;
+    color: #30273E;
+    font-family: "DM Sans", sans-serif !important;
 }
 
 .sk-radiance-product__title h1 {
-    font-size: 2.5rem;
+    font-size: 36px;
     font-weight: 600;
     margin: 0;
-    color: #333;
+    color: #3A2D32;
+    margin-bottom: 12px;
 }
 
 /* Rating */
@@ -214,13 +209,20 @@
 .sk-radiance-price__container {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
 }
 
 .sk-radiance-price__wrapper {
     display: flex;
     align-items: center;
     gap: 1rem;
+    margin-top: 1rem;
+}
+
+.sk-radiance-price__sale {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-direction: row-reverse;
 }
 
 .sk-radiance-price-item {
@@ -230,12 +232,16 @@
 }
 
 .sk-radiance-price-item--regular {
-    color: #999;
+    color: #DF4040C7;
     text-decoration: line-through;
+    font-weight: 600;
+    font-size: 20px;
 }
 
 .sk-radiance-price-item--sale {
-    color: #e74c3c;
+    color: #000;
+    font-weight: 700;
+    font-size: 26px;
 }
 
 .sk-radiance-badges {
@@ -416,7 +422,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin-top: 1rem;
 }
 
 .sk-radiance-buy-buttons__payment-methods-title {
@@ -429,17 +434,175 @@
     display: flex;
     gap: 1rem;
     align-items: center;
+    margin: 12px 0;
 }
 
 .sk-radiance-buy-buttons__payment-logo {
-    height: 24px;
-    width: auto;
-    opacity: 0.7;
+    height: auto;
+    width: 38px;
+    opacity: 1;
     transition: opacity 0.2s ease;
 }
 
-.sk-radiance-buy-buttons__payment-logo:hover {
-    opacity: 1;
+
+.custom_quantity_input {
+    background: #30273E;
+    color: #fff;
 }
 
-/* Desktop-only design - no responsive breakpoints */
+.sk-radiance-product__info-container .price-per-item__container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 10px;
+}
+
+/* Product Features Section */
+.sk-radiance-product-features {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 1.5rem 0;
+    border-top: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.sk-radiance-product-features__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    max-width: 120px;
+}
+
+.sk-radiance-product-features__icon {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sk-radiance-product-features__icon svg {
+    width: 60px;
+    height: 60px;
+    transition: transform 0.2s ease;
+}
+
+.sk-radiance-product-features__item:hover .sk-radiance-product-features__icon svg {
+    transform: scale(1.05);
+}
+
+.sk-radiance-product-features__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.sk-radiance-product-features__text-top,
+.sk-radiance-product-features__text-bottom {
+    font-size: 11px;
+    font-weight: 600;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+.sk-radiance-product-features__text-top {
+    color: #666;
+}
+
+.sk-radiance-product-features__text-bottom {
+    color: #333;
+    font-weight: 700;
+}
+
+/* Product Description Section */
+.sk-radiance-product-description {
+    margin: 2rem 0;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.sk-radiance-product-description__content {
+    padding: 1.5rem;
+}
+
+.sk-radiance-product-description__content h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 1rem 0;
+    font-family: "DM Sans", sans-serif;
+}
+
+.sk-radiance-product-description__content h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+    margin: 1.5rem 0 1rem 0;
+    font-family: "DM Sans", sans-serif;
+}
+
+.sk-radiance-product-description__content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    margin: 0 0 1rem 0;
+    font-family: "DM Sans", sans-serif;
+}
+
+.sk-radiance-product-description__content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sk-radiance-product-description__content li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    position: relative;
+    padding-left: 0;
+}
+
+.sk-radiance-product-description__content li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: 0.125rem;
+    background: #333;
+    border-radius: 50%;
+    position: relative;
+}
+
+.sk-radiance-product-description__content li::after {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0.125rem;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.sk-radiance-product-description__content li span {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    flex: 1;
+    font-family: "DM Sans", sans-serif;
+}

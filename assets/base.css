@@ -1945,10 +1945,12 @@ input[type='checkbox'] {
 
 .quantity__button:first-child {
   margin-left: calc(var(--inputs-border-width));
+  color: #fff;
 }
 
 .quantity__button:last-child {
   margin-right: calc(var(--inputs-border-width));
+  color: #fff;
 }
 
 .quantity__button .svg-wrapper {

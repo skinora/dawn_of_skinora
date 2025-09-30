@@ -115,6 +115,9 @@
   },
   "products": {
     "product": {
+      "features": {
+        "comfort_feature": "Komfortbriller følger med – ekstra komfort, samme effekt"
+      },
       "payment_methods": "Betalingsmetoder",
       "add_to_cart": "Legg i handlekurv",
       "description": "Beskrivelse",

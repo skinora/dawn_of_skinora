@@ -39,6 +39,33 @@
             "show_gift_card_recipient": true
           }
         },
+        "product_features": {
+          "type": "product_features",
+          "settings": {
+            "feature_1_enabled": true,            
+            "feature_2_enabled": true,
+            
+            
+            "feature_3_enabled": true,
+            
+            
+            "feature_4_enabled": true,
+            
+            
+            "feature_5_enabled": true,
+            
+            
+            "feature_6_enabled": false,
+            "feature_7_enabled": false,
+            "feature_8_enabled": false,
+            "feature_9_enabled": false,
+            "feature_10_enabled": false
+          }
+        },
+        "product_description": {
+          "type": "product_description",
+          "settings": {}
+        },
         "comfort_feature": {
           "type": "text",
           "settings": {
@@ -55,6 +82,8 @@
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
+        "product_features",
+        "product_description",
         "comfort_feature"
       ],
       "settings": {
@@ -69,20 +98,9 @@
         "padding_bottom": 12
       }
     },
-    "guarantee_section": {
-      "type": "sk-guarantee-banner",
-      "settings": {
-        "heading": "Prøv hjemme i 30 dager. Ser du ingen resultater, får du pengene tilbake",
-        "description": "Vår teknologi er klinisk dokumentert. Derfor tilbyr vi 30 dagers fornøydgaranti: ser du ikke resultater, får du pengene tilbake.",
-        "read_more_text": "LES MER →",
-        "read_more_link": "#guarantee-details",
-        "padding_top": 40,
-        "padding_bottom": 40
-      }
-    }
+    
   },
   "order": [
-    "main",
-    "guarantee_section"
+    "main"
   ]
 }
