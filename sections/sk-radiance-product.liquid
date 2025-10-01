@@ -1,4 +1,5 @@
 {{ 'section-sk-radiance-product.css' | asset_url | stylesheet_tag }}
+{{ 'section-sk-guarantee-banner.css' | asset_url | stylesheet_tag }}
 
 <product-info
   id="MainProduct-{{ section.id }}"
@@ -261,7 +262,130 @@
                 {%- if product.metafields.custom.product_description_content != blank -%}
                   <div class="sk-radiance-product-description" {{ block.shopify_attributes }}>
                     <div class="sk-radiance-product-description__content">
-                      {{ product.metafields.custom.product_description_content | metafield_tag }}
+                      {%- assign check_icon = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M9.37358 2.23904C9.91768 1.56137 10.1897 1.22254 10.5143 1.09327C10.8265 0.96891 11.1735 0.96891 11.4857 1.09327C11.8103 1.22254 12.0823 1.56137 12.6264 2.23904C12.9294 2.61642 13.0809 2.80511 13.2701 2.92419C13.4532 3.03945 13.6613 3.10781 13.8762 3.12336C14.0983 3.13943 14.3331 3.07588 14.8026 2.94879C15.6285 2.7252 16.0415 2.61341 16.3721 2.69574C16.7105 2.78003 17.0028 2.99579 17.186 3.29657C17.3649 3.59038 17.3867 4.01752 17.4305 4.8718C17.4549 5.34921 17.4671 5.58791 17.5476 5.79383C17.6304 6.0057 17.7649 6.19281 17.9383 6.33768C18.1069 6.47848 18.329 6.5641 18.7732 6.73534C19.5631 7.03982 19.958 7.19206 20.178 7.4511C20.4108 7.72534 20.5252 8.08303 20.4953 8.4437C20.4672 8.78439 20.2376 9.1396 19.7785 9.85004C19.5226 10.2461 19.3946 10.4441 19.3395 10.6561C19.2809 10.8815 19.2809 11.1185 19.3395 11.3439C19.3946 11.5559 19.5226 11.7539 19.7785 12.15C20.2376 12.8604 20.4672 13.2156 20.4953 13.5563C20.5252 13.917 20.4108 14.2747 20.178 14.5489C19.958 14.8079 19.5631 14.9602 18.7732 15.2647C18.329 15.4359 18.1069 15.5215 17.9383 15.6623C17.7649 15.8072 17.6304 15.9943 17.5476 16.2062C17.4671 16.4121 17.4549 16.6508 17.4305 17.1282C17.3867 17.9825 17.3649 18.4096 17.186 18.7034C17.0028 19.0042 16.7105 19.22 16.3721 19.3043C16.0415 19.3866 15.6285 19.2748 14.8026 19.0512C14.3331 18.9241 14.0983 18.8606 13.8762 18.8766C13.6613 18.8922 13.4532 18.9605 13.2701 19.0758C13.0809 19.1949 12.9294 19.3836 12.6264 19.761C12.0823 20.4386 11.8103 20.7775 11.4857 20.9067C11.1735 21.0311 10.8265 21.0311 10.5143 20.9067C10.1897 20.7775 9.91768 20.4386 9.37358 19.761C9.07058 19.3836 8.91908 19.1949 8.72989 19.0758C8.54676 18.9605 8.33874 18.8922 8.12378 18.8766C7.9017 18.8606 7.66694 18.9241 7.19743 19.0512C6.37148 19.2748 5.95851 19.3866 5.62791 19.3043C5.28947 19.22 4.9972 19.0042 4.81405 18.7034C4.63515 18.4096 4.61328 17.9825 4.56954 17.1282C4.5451 16.6508 4.53288 16.4121 4.45238 16.2062C4.36956 15.9943 4.23514 15.8072 4.0617 15.6623C3.89313 15.5215 3.67101 15.4359 3.22677 15.2647C2.4369 14.9602 2.04197 14.8079 1.82204 14.5489C1.58921 14.2747 1.47484 13.917 1.50465 13.5563C1.53281 13.2156 1.76237 12.8604 2.22148 12.15C2.47741 11.7539 2.60538 11.5559 2.6605 11.3439C2.71912 11.1185 2.71912 10.8815 2.6605 10.6561C2.60538 10.4441 2.47741 10.2461 2.22148 9.85004C1.76237 9.1396 1.53281 8.78439 1.50465 8.4437C1.47484 8.08303 1.58921 7.72534 1.82204 7.4511C2.04197 7.19206 2.4369 7.03982 3.22677 6.73534C3.67101 6.5641 3.89313 6.47848 4.0617 6.33768C4.23514 6.19281 4.36956 6.0057 4.45238 5.79383C4.53288 5.58791 4.5451 5.34921 4.56954 4.8718C4.61328 4.01752 4.63515 3.59038 4.81405 3.29657C4.9972 2.99579 5.28947 2.78003 5.62791 2.69574C5.95851 2.61341 6.37148 2.7252 7.19743 2.94879C7.66694 3.07588 7.9017 3.13943 8.12378 3.12336C8.33874 3.10781 8.54676 3.03945 8.72989 2.92419C8.91908 2.80511 9.07058 2.61642 9.37358 2.23904Z" fill="#30273E" stroke="white" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 12.3333C8 12.3333 8.875 12.3333 9.75 14C9.75 14 12.5294 9.83333 15 9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' -%}
+                      {%- capture description_content -%}
+                        {{ product.metafields.custom.product_description_content | metafield_tag }}
+                      {%- endcapture -%}
+                      {{ description_content | replace: '~', check_icon }}
+                    </div>
+                  </div>
+                {%- endif -%}
+
+              {%- when 'guarantee_banner' -%}
+                {%- comment -%} Check if this product should show guarantee banner section {%- endcomment -%}
+
+                {%- if product.metafields.custom.guarantee_banner_content != blank -%}
+                  <div class="sk-radiance-guarantee-banner" {{ block.shopify_attributes }}>
+                    <div class="sk-radiance-guarantee-banner__content">
+                      {%- capture guarantee_content -%}
+                        {{ product.metafields.custom.guarantee_banner_content | metafield_tag }}
+                      {%- endcapture -%}
+                      {{ guarantee_content }}
+                    </div>
+                    {%- if block.settings.button_text != blank and block.settings.button_link != blank -%}
+                      <a href="{{ block.settings.button_link }}" class="sk-radiance-guarantee-banner__button">
+                        {{ block.settings.button_text }}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                          <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </a>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+
+              {%- when 'promotion_logos' -%}
+                {%- comment -%} Check if this product should show promotion logos section {%- endcomment -%}
+
+                {%- if product.metafields.custom.promotion_logos.value != blank -%}
+                  <div class="sk-product-promotion-logos-block" {{ block.shopify_attributes }}>
+                    <style>
+                      .sk-product-promotion-logos-block-{{ section.id }} {
+                        margin-top: 2rem;
+                        margin-bottom: 2rem;
+                        overflow-x: hidden;
+                      }
+                      .sk-product-promotion-logos-block-{{ section.id }} .sw-publication__scroll-parent {
+                        position: relative;
+                        width: 100%;
+                        height: 10rem;
+                        overflow: hidden;
+                      }
+
+                      .sk-product-promotion-logos-block-{{ section.id }} .sw-publication__scroll-element {
+                        width: inherit;
+                        height: inherit;
+                        position: absolute;
+                        left: 0%;
+                        top: 0%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
+                      }
+                      .sk-product-promotion-logos-block-{{ section.id }} .sw-publication__scroll-element .sw-publication__card {
+                        flex: 0 0 70px;
+                      }
+                      .sk-product-promotion-logos-block-{{ section.id }} .sw-publication__scroll-element .sw-publication__card img {
+                        width: 100%;
+                        height: auto;
+                        display: block;
+                      }
+
+                      .sk-product-promotion-logos-block-{{ section.id }} .primary {
+                        animation: primary-{{ section.id }} 30s linear infinite;
+                      }
+
+                      .sk-product-promotion-logos-block-{{ section.id }} .secondary {
+                        animation: secondary-{{ section.id }} 30s linear infinite;
+                      }
+
+                      @keyframes primary-{{ section.id }} {
+                        from {
+                          transform: translateX(0);
+                        }
+                        to {
+                          transform: translateX(-100%);
+                        }
+                      }
+
+                      @keyframes secondary-{{ section.id }} {
+                        from {
+                          transform: translateX(100%);
+                        }
+                        to {
+                          transform: translateX(0);
+                        }
+                      }
+                    </style>
+
+                    <div class="sk-product-promotion-logos-block-{{ section.id }}">
+                      <div class="sw-publication__scroll-parent">
+                        <div class="sw-publication__scroll-element primary">
+                          {% for logo in product.metafields.custom.promotion_logos.value %}
+                            <div class="sw-publication__card">
+                              <img
+                                src="{{ logo | image_url: width: 104, height: 104 }}"
+                                alt="Promotion logo {{ forloop.index }}"
+                                width="104"
+                                height="104"
+                                loading="lazy"
+                              >
+                            </div>
+                          {% endfor %}
+                        </div>
+                        <div class="sw-publication__scroll-element secondary">
+                          {% for logo in product.metafields.custom.promotion_logos.value %}
+                            <div class="sw-publication__card">
+                              <img
+                                src="{{ logo | image_url: width: 104, height: 104 }}"
+                                alt="Promotion logo {{ forloop.index }}"
+                                width="104"
+                                height="104"
+                                loading="lazy"
+                              >
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 {%- endif -%}
@@ -512,6 +636,63 @@
         {
           "type": "paragraph",
           "content": "1. 'custom.product_description_content' (Rich text) - Use the rich text editor to format your content with headings, paragraphs, and lists"
+        }
+      ]
+    },
+    {
+      "type": "guarantee_banner",
+      "name": "Guarantee Banner",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product-Specific Control"
+        },
+        {
+          "type": "paragraph",
+          "content": "To show guarantee banner on specific products only, add this metafield to each product:"
+        },
+        {
+          "type": "paragraph",
+          "content": "1. 'custom.guarantee_banner_content' (Rich text) - Use the rich text editor to add your guarantee text and subtitle"
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "LES MER"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    },
+    {
+      "type": "promotion_logos",
+      "name": "Promotion Logos",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product-Specific Control"
+        },
+        {
+          "type": "paragraph",
+          "content": "To show promotion logos on specific products only, add this metafield to each product:"
+        },
+        {
+          "type": "paragraph",
+          "content": "Metafield: 'custom.promotion_logos' (List of files)"
+        },
+        {
+          "type": "paragraph",
+          "content": "Add multiple logo images to the list, and they will automatically scroll across the screen with animation."
         }
       ]
     }

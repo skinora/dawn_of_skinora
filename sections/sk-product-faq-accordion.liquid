@@ -1,0 +1,273 @@
+<style>
+  .sk-faq-accordion-{{ section.id }} {
+    background: linear-gradient(to bottom, #30273E, #070707);
+    color: #ffffff;
+    padding: 7rem 0;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__container {
+    display: flex;
+    align-items: start;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__image {
+    flex: 0 0 210px;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__content {
+    flex: 0 0 590px;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__title {
+    font-size: 48px;
+    font-weight: 600;
+    color: #ffffff;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 14px;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__accordion {
+    border: none;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__item:last-child {
+    border-bottom: none;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__header {
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: none;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    width: 100%;
+    padding: 25px 0;
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1.4;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+    box-shadow: none;
+    border-bottom: 1px solid #fff;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button:hover,
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button:focus {
+    background: transparent;
+    color: #ffffff;
+    box-shadow: none;
+    border: none;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__question {
+    flex: 1;
+    margin: 0;
+    padding-right: 20px;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    display: flex !important;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon::before {
+    content: '+';
+    transition: all 0.3s ease;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button[aria-expanded="true"] .sk-faq-accordion__icon::before {
+    content: '−';
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__collapse {
+    border: none;
+    background: transparent;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__body {
+    padding: 0 0 25px;
+    background: transparent;
+    border: none;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__answer {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__answer p {
+    margin: 0 0 15px;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__answer p:last-child {
+    margin-bottom: 0;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .accordion-button::after {
+    background-image: none !important;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .accordion-button:not(.collapsed) {
+    color: #fff !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+</style>
+
+{%- if product.metafields.custom.faq_item.value != blank -%}
+  <section class="sk-faq-accordion-{{ section.id }}">
+    <div class="container">
+      <div class="sk-faq-accordion__container">
+        <div class="sk-faq-accordion__content">
+          {% if section.settings.title != blank %}
+            <h2 class="sk-faq-accordion__title">{{ section.settings.title }}</h2>
+          {% endif %}
+
+          <div class="sk-faq-accordion__questions">
+            <div class="accordion sk-faq-accordion__accordion" id="faqAccordion-{{ section.id }}">
+              {% for faq_item in product.metafields.custom.faq_item.value %}
+                <div class="accordion-item sk-faq-accordion__item">
+                  <h3
+                    class="accordion-header sk-faq-accordion__header"
+                    id="heading-{{ forloop.index }}-{{ section.id }}"
+                  >
+                    <button
+                      class="accordion-button sk-faq-accordion__button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapse-{{ forloop.index }}-{{ section.id }}"
+                      aria-expanded="{% if section.settings.open_first_item and forloop.first %}true{% else %}false{% endif %}"
+                      aria-controls="collapse-{{ forloop.index }}-{{ section.id }}"
+                    >
+                      <span class="sk-faq-accordion__question">{{ faq_item.question }}</span>
+                      <div class="sk-faq-accordion__icon"></div>
+                    </button>
+                  </h3>
+                  <div
+                    id="collapse-{{ forloop.index }}-{{ section.id }}"
+                    class="accordion-collapse collapse sk-faq-accordion__collapse {% if section.settings.open_first_item and forloop.first %}show{% endif %}"
+                    aria-labelledby="heading-{{ forloop.index }}-{{ section.id }}"
+                    data-bs-parent="#faqAccordion-{{ section.id }}"
+                  >
+                    <div class="accordion-body sk-faq-accordion__body">
+                      <div class="sk-faq-accordion__answer">
+                        {%- if faq_item.answer.type == 'rich_text_field' -%}
+                          {{ faq_item.answer | metafield_tag }}
+                        {%- else -%}
+                          {{ faq_item.answer }}
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% if section.settings.faq_image != blank %}
+          <div class="sk-faq-accordion__image">
+            <img
+              src="{{ section.settings.faq_image | image_url: width: 210, height: 808 }}"
+              alt="{{ section.settings.faq_image.alt | default: section.settings.title }}"
+              width="210"
+              height="808"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SK Product FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product-Specific Control"
+    },
+    {
+      "type": "paragraph",
+      "content": "This section displays FAQ from product metafields. To show FAQs on specific products:"
+    },
+    {
+      "type": "paragraph",
+      "content": "1. Create a metaobject definition called 'faq_item' with fields: 'question' (single line text) and 'answer' (rich text)"
+    },
+    {
+      "type": "paragraph",
+      "content": "2. Add product metafield 'custom.faq_items' (List of metaobject references to 'faq_item')"
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "faq_image",
+      "label": "FAQ Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Alt Du Lurte På"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first_item",
+      "label": "Open first FAQ item by default",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Product FAQ"
+    }
+  ]
+}
+{% endschema %}

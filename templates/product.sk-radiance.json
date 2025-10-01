@@ -66,6 +66,17 @@
           "type": "product_description",
           "settings": {}
         },
+        "guarantee_banner": {
+          "type": "guarantee_banner",
+          "settings": {
+            "button_text": "LES MER",
+            "button_link": ""
+          }
+        },
+        "promotion_logos": {
+          "type": "promotion_logos",
+          "settings": {}
+        },
         "comfort_feature": {
           "type": "text",
           "settings": {
@@ -84,6 +95,8 @@
         "buy_buttons",
         "product_features",
         "product_description",
+        "guarantee_banner",
+        "promotion_logos",
         "comfort_feature"
       ],
       "settings": {

@@ -1,0 +1,373 @@
+<style>
+  .sk-product-specifications-{{ section.id }} {
+    background: #FFFFFF;
+    padding: 7rem 0;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__main-heading {
+    font-size: 42px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #30273E;
+    margin-bottom: 60px;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__image {
+    flex: 0 0 580px;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__item {
+    display: flex;
+    align-items: start;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #E5E5E5;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__text h3,
+  .sk-product-specifications-{{ section.id }} .sk-specifications__text h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #30273E;
+    margin: 0 0 4px 0;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__text p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #666666;
+    margin: 0;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__sub-items {
+    list-style: none;
+    padding: 12px 0 0 0;
+    margin: 0;
+    margin-top: -25px;
+    margin-left: 33px;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__sub-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #666666;
+  }
+
+  .sk-product-specifications-{{ section.id }} .sk-specifications__sub-item svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .sk-specifications__item:last-child{
+    flex-direction: column;
+  }
+  .sk-specifications__item:last-child .sk-specifications__text{
+    display: none;
+  }
+</style>
+
+{%- if product.metafields.custom.specifications_content != blank
+  or product.metafields.custom.specifications_image != blank
+-%}
+  <section class="sk-product-specifications-{{ section.id }}">
+    <div class="container">
+      <div class="sk-specifications__container">
+        <!-- Image Section -->
+        <div class="sk-specifications__image">
+          {%- if product.metafields.custom.specifications_image != blank -%}
+            <img
+              src="{{ product.metafields.custom.specifications_image | image_url: width: 550, height: 600 }}"
+              alt="{{ product.metafields.custom.specifications_image.alt | default: product.title }}"
+              width="550"
+              height="600"
+              loading="lazy"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+
+        <!-- Content Section -->
+        <div class="sk-specifications__content">
+          {%- if product.metafields.custom.specifications_content != blank -%}
+            {%- capture specifications_html -%}
+              {{ product.metafields.custom.specifications_content | metafield_tag }}
+            {%- endcapture -%}
+
+            {%- comment -%} Extract main heading {%- endcomment -%}
+            {%- assign heading_start = specifications_html | split: '<h2>' | first -%}
+            {%- if heading_start == specifications_html -%}
+              {%- assign heading_start = specifications_html | split: '<h3>' | first -%}
+              {%- assign heading_end = specifications_html | split: '</h3>' | last -%}
+              {%- assign heading_full = specifications_html
+                | replace: heading_start, ''
+                | replace: heading_end, ''
+                | replace: '<h3>', ''
+                | replace: '</h3>', ''
+                | strip
+              -%}
+            {%- else -%}
+              {%- assign heading_end = specifications_html | split: '</h2>' | last -%}
+              {%- assign heading_full = specifications_html
+                | replace: heading_start, ''
+                | replace: heading_end, ''
+                | replace: '<h2>', ''
+                | replace: '</h2>', ''
+                | strip
+              -%}
+            {%- endif -%}
+
+            {%- if heading_full != blank -%}
+              <h2 class="sk-specifications__main-heading">{{ heading_full }}</h2>
+            {%- endif -%}
+
+            {%- comment -%} Parse specifications with icon patterns {%- endcomment -%}
+            {%- assign specs = specifications_html | split: '##' -%}
+
+            <ul class="sk-specifications__list">
+              {%- for spec in specs -%}
+                {%- if spec contains '||' -%}
+                  {%- assign spec_parts = spec | split: '||' -%}
+                  {%- assign icon_type = spec_parts[0] | strip | downcase -%}
+                  {%- assign spec_content = spec_parts[1] | strip -%}
+
+                  <li class="sk-specifications__item">
+                    <div class="sk-specifications__icon">
+                      {%- case icon_type -%}
+                        {%- when 'wave' -%}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#30273E"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path d="M2 12c.6-2.3 2.2-4 4-4 2.8 0 3 2 5 2s2.2-2 5-2c1.8 0 3.4 1.7 4 4"/><path d="M2 17c.6-2.3 2.2-4 4-4 2.8 0 3 2 5 2s2.2-2 5-2c1.8 0 3.4 1.7 4 4"/>
+                          </svg>
+                        {%- when 'dots' -%}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                          >
+                            <circle cx="6" cy="6" r="2" fill="#30273E"/><circle cx="12" cy="6" r="2" fill="#30273E"/><circle cx="18" cy="6" r="2" fill="#30273E"/><circle cx="6" cy="12" r="2" fill="#30273E"/><circle cx="12" cy="12" r="2" fill="#30273E"/><circle cx="18" cy="12" r="2" fill="#30273E"/><circle cx="6" cy="18" r="2" fill="#30273E"/><circle cx="12" cy="18" r="2" fill="#30273E"/><circle cx="18" cy="18" r="2" fill="#30273E"/>
+                          </svg>
+                        {%- when 'clock' -%}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#30273E"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                          </svg>
+                        {%- when 'tools' -%}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#30273E"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                          </svg>
+                        {%- when 'battery' -%}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#30273E"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <rect x="2" y="7" width="16" height="10" rx="2" ry="2"/><line x1="22" y1="11" x2="22" y2="13"/><line x1="6" y1="11" x2="6" y2="13"/><line x1="10" y1="11" x2="10" y2="13"/><line x1="14" y1="11" x2="14" y2="13"/>
+                          </svg>
+                        {%- when 'shield' -%}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#30273E"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                          </svg>
+                        {%- when 'box' -%}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#30273E"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+                          </svg>
+                        {%- else -%}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#30273E"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                          </svg>
+                      {%- endcase -%}
+                    </div>
+                    <div class="sk-specifications__text">
+                      {{ spec_content }}
+
+                      {%- comment -%} Check for sub-items marked with ++ {%- endcomment -%}
+                      {%- if spec_content contains '++' -%}
+                        {%- assign main_and_subs = spec_content | split: '++' -%}
+                        {%- assign main_content = main_and_subs[0] -%}
+
+                        {{ main_content }}
+
+                        <ul class="sk-specifications__sub-items">
+                          {%- for i in (1..10) -%}
+                            {%- if main_and_subs[i] != blank -%}
+                              <li class="sk-specifications__sub-item">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="#30273E"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                >
+                                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+                                </svg>
+                                {{ main_and_subs[i] | strip }}
+                              </li>
+                            {%- endif -%}
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </div>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SK Product Specifications",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product-Specific Control"
+    },
+    {
+      "type": "paragraph",
+      "content": "This section displays technical specifications from product metafields. Add these 2 metafields:"
+    },
+    {
+      "type": "paragraph",
+      "content": "1. 'custom.specifications_image' (File) - Upload product image"
+    },
+    {
+      "type": "paragraph",
+      "content": "2. 'custom.specifications_content' (Rich text) - Format with icon patterns"
+    },
+    {
+      "type": "paragraph",
+      "content": "Icon types: wave, dots, clock, tools, battery, shield, box. Format: ##ICON||<h4>Title</h4><p>Description</p>"
+    },
+    {
+      "type": "paragraph",
+      "content": "For sub-items, use ++ separator: ##box||<h4>Dette Får Du</h4>++Item 1++Item 2++Item 3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Product Specifications"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,150 @@
+<style>
+  .sk-promotion-logos__container {
+    background: {{ section.settings.sk_promotion_bgColor }};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .sk-promotion-logos {
+    margin: 3rem 0;
+  }
+</style>
+
+<style>
+  .sw-publication-{{ section.id }}{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    overflow-x: hidden;
+  }
+  .sw-publication-{{ section.id }} .sw-publication__scroll-parent {
+      position: relative;
+      width: 100vw;
+      height: 10rem;
+      overflow: hidden;
+  }
+
+  .sw-publication-{{ section.id }} .sw-publication__scroll-element {
+      width: inherit;
+      height: inherit;
+      position: absolute;
+      left: 0%;
+      top: 0%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+  }
+  .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card{
+      flex: 0 0 70px
+  }
+  .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card img{
+      width:100%;
+      height: auto;
+      display: block;
+  }
+
+  .primary {
+      animation: primary 30s linear infinite;
+  }
+
+  .secondary {
+      animation: secondary 30s linear infinite;
+  }
+
+  @keyframes primary {
+      from {
+
+          transform: translateX(0);
+      }
+      to {
+
+          transform: translateX(-100%);
+      }
+  }
+
+  @keyframes secondary {
+      from {
+
+          transform: translateX(100%);
+      }
+      to {
+
+          transform: translateX(0);
+      }
+  }
+</style>
+
+{%- if product.metafields.custom.promotion_logos.value != blank -%}
+  <section class="sw-publication-{{ section.id }}">
+    <div class="sw-publication__scroll-parent">
+      <div class="sw-publication__scroll-element primary">
+        {% for logo in product.metafields.custom.promotion_logos.value %}
+          <div class="sw-publication__card">
+            <img
+              src="{{ logo | image_url: width: 104, height: 104 }}"
+              alt="Promotion logo {{ forloop.index }}"
+              width="104"
+              height="104"
+              loading="lazy"
+            >
+          </div>
+        {% endfor %}
+      </div>
+      <div class="sw-publication__scroll-element secondary">
+        {% for logo in product.metafields.custom.promotion_logos.value %}
+          <div class="sw-publication__card">
+            <img
+              src="{{ logo | image_url: width: 104, height: 104 }}"
+              alt="Promotion logo {{ forloop.index }}"
+              width="104"
+              height="104"
+              loading="lazy"
+            >
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SK Promotion Logos",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product-Specific Control"
+    },
+    {
+      "type": "paragraph",
+      "content": "This section displays promotion logos from product metafields. To show logos on specific products, add this metafield:"
+    },
+    {
+      "type": "paragraph",
+      "content": "Metafield: 'custom.promotion_logos' (List of files)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add multiple logo images to the list, and they will automatically scroll across the screen."
+    },
+    {
+      "type": "header",
+      "content": "Style Settings"
+    },
+    {
+      "type": "color",
+      "id": "sk_promotion_bgColor",
+      "label": "Background Color",
+      "default": "#fff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Product Promotion Logos"
+    }
+  ]
+}
+{% endschema %}

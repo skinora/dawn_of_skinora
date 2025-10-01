@@ -1,0 +1,138 @@
+<style>
+  .sk-product-technology-{{ section.id }} {
+    background: #FFF9F5;
+    padding: 7rem 0;
+  }
+
+  .sk-product-technology-{{ section.id }} .sk-technology__main-heading {
+    font-size: 42px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #30273E;
+    margin-bottom: 60px;
+    text-align: center;
+  }
+
+
+  .sk-product-technology-{{ section.id }} .sk-technology__content {
+    flex: 1;
+    max-width: 400px;
+  }
+
+
+  .sk-product-technology-{{ section.id }} .sk-technology__content h3,
+  .sk-product-technology-{{ section.id }} .sk-technology__content h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #30273E;
+    margin: 0 0 12px 0;
+  }
+</style>
+
+{%- if product.metafields.custom.technology_content != blank or product.metafields.custom.technology_image != blank -%}
+  <section class="sk-product-technology-{{ section.id }}">
+    <div class="container">
+      {%- if product.metafields.custom.technology_content != blank -%}
+        {%- capture technology_html -%}
+          {{ product.metafields.custom.technology_content | metafield_tag }}
+        {%- endcapture -%}
+
+        {%- comment -%} Extract main heading (first h2 or h3) {%- endcomment -%}
+        {%- assign heading_start = technology_html | split: '<h2>' | first -%}
+        {%- if heading_start == technology_html -%}
+          {%- assign heading_start = technology_html | split: '<h3>' | first -%}
+          {%- assign heading_end = technology_html | split: '</h3>' | last -%}
+          {%- assign heading_full = technology_html
+            | replace: heading_start, ''
+            | replace: heading_end, ''
+            | replace: '<h3>', ''
+            | replace: '</h3>', ''
+            | strip
+          -%}
+          {%- assign content_without_heading = technology_html
+            | replace_first: '<h3>', ''
+            | replace_first: '</h3>', ''
+            | replace_first: heading_full, ''
+          -%}
+        {%- else -%}
+          {%- assign heading_end = technology_html | split: '</h2>' | last -%}
+          {%- assign heading_full = technology_html
+            | replace: heading_start, ''
+            | replace: heading_end, ''
+            | replace: '<h2>', ''
+            | replace: '</h2>', ''
+            | strip
+          -%}
+          {%- assign content_without_heading = technology_html
+            | replace_first: '<h2>', ''
+            | replace_first: '</h2>', ''
+            | replace_first: heading_full, ''
+          -%}
+        {%- endif -%}
+
+        {%- if heading_full != blank -%}
+          <h2 class="sk-technology__main-heading">{{ heading_full }}</h2>
+        {%- endif -%}
+      {%- endif -%}
+
+      <div class="sk-technology__container">
+        <!-- Diagram Section -->
+        <div class="sk-technology__diagram">
+          {%- if product.metafields.custom.technology_image != blank -%}
+            <img
+              src="{{ product.metafields.custom.technology_image | image_url: width: 1200, height: 400 }}"
+              alt="{{ product.metafields.custom.technology_image.alt | default: 'Technology diagram' }}"
+              width="1200"
+              height="400"
+              loading="lazy"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+
+        <!-- Content Section -->
+        {%- if product.metafields.custom.technology_content != blank -%}
+          <div class="sk-technology__content">
+            {{ content_without_heading }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SK Product Technology",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product-Specific Control"
+    },
+    {
+      "type": "paragraph",
+      "content": "This section displays technology explanation from product metafields. Add these 2 metafields:"
+    },
+    {
+      "type": "paragraph",
+      "content": "1. 'custom.technology_image' (File) - Upload the technology diagram/visual"
+    },
+    {
+      "type": "paragraph",
+      "content": "2. 'custom.technology_content' (Rich text) - Main heading and description text"
+    },
+    {
+      "type": "header",
+      "content": "Before/After Comparison (Optional)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Product Technology"
+    }
+  ]
+}
+{% endschema %}

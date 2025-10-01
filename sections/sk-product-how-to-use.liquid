@@ -1,0 +1,198 @@
+<style>
+  .sk-product-how-to-use-{{ section.id }} {
+    background: #FFFFFF;
+    padding: 7rem 0;
+  }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__container {
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+  }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__content {
+    flex: 0 0 480px;
+  }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image {
+    flex: 0 0 540px;
+  }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__heading {
+    font-size: 48px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #30273E;
+    margin-bottom: 40px;
+  }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step:last-child {
+    margin-bottom: 0;
+  }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-number {
+    font-size: 64px;
+    line-height: 1;
+    font-weight: 700;
+    color: #30273E;
+    flex-shrink: 0;
+    width: 80px;
+  }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content h3,
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content h4,
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content strong {
+    font-size: 16px;
+    font-weight: 600;
+    color: #30273E;
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #666666;
+    margin: 0;
+  }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content h3 + p,
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content h4 + p,
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content strong + p {
+    margin-top: 4px;
+  }
+</style>
+
+{%- if product.metafields.custom.how_to_use_content != blank or product.metafields.custom.how_to_use_image != blank -%}
+  <section class="sk-product-how-to-use-{{ section.id }}">
+    <div class="container">
+      <div class="sk-how-to-use__container">
+        <!-- Image Section -->
+        <div class="sk-how-to-use__image">
+          {%- if product.metafields.custom.how_to_use_image != blank -%}
+            <img
+              src="{{ product.metafields.custom.how_to_use_image | image_url: width: 540, height: 600 }}"
+              alt="{{ product.metafields.custom.how_to_use_image.alt | default: 'How to use' }}"
+              width="540"
+              height="600"
+              loading="lazy"
+            >
+          {%- else -%}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+        <!-- Content Section -->
+        <div class="sk-how-to-use__content">
+          {%- if product.metafields.custom.how_to_use_content != blank -%}
+            {%- capture how_to_use_html -%}
+              {{ product.metafields.custom.how_to_use_content | metafield_tag }}
+            {%- endcapture -%}
+
+            {%- comment -%} Extract heading (first h2 or h3) {%- endcomment -%}
+            {%- assign heading_start = how_to_use_html | split: '<h2>' | first -%}
+            {%- if heading_start == how_to_use_html -%}
+              {%- assign heading_start = how_to_use_html | split: '<h3>' | first -%}
+              {%- assign heading_end = how_to_use_html | split: '</h3>' | last -%}
+              {%- assign heading_full = how_to_use_html
+                | replace: heading_start, ''
+                | replace: heading_end, ''
+                | replace: '<h3>', ''
+                | replace: '</h3>', ''
+                | strip
+              -%}
+            {%- else -%}
+              {%- assign heading_end = how_to_use_html | split: '</h2>' | last -%}
+              {%- assign heading_full = how_to_use_html
+                | replace: heading_start, ''
+                | replace: heading_end, ''
+                | replace: '<h2>', ''
+                | replace: '</h2>', ''
+                | strip
+              -%}
+            {%- endif -%}
+
+            {%- if heading_full != blank -%}
+              <h2 class="sk-how-to-use__heading">{{ heading_full }}</h2>
+            {%- endif -%}
+
+            {%- comment -%} Parse numbered steps {%- endcomment -%}
+            {%- assign steps_content = how_to_use_html | split: '##' -%}
+
+            <ol class="sk-how-to-use__steps">
+              {%- for step in steps_content -%}
+                {%- if step contains '||' -%}
+                  {%- assign step_parts = step | split: '||' -%}
+                  {%- assign step_number = step_parts[0] | strip -%}
+                  {%- assign step_text = step_parts[1] | strip -%}
+
+                  <li class="sk-how-to-use__step">
+                    <div class="sk-how-to-use__step-number">{{ step_number }}</div>
+                    <div class="sk-how-to-use__step-content">
+                      {{ step_text }}
+                    </div>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ol>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SK Product How to Use",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product-Specific Control"
+    },
+    {
+      "type": "paragraph",
+      "content": "This section displays how-to-use instructions from product metafields. Add these 2 metafields:"
+    },
+    {
+      "type": "paragraph",
+      "content": "1. 'custom.how_to_use_image' (File) - Upload the instruction image"
+    },
+    {
+      "type": "paragraph",
+      "content": "2. 'custom.how_to_use_content' (Rich text) - Format: Heading, then each step as: ##01||<strong>Title</strong><p>Description</p>"
+    },
+    {
+      "type": "paragraph",
+      "content": "Example format: ##01||<strong>FORBERED HUDEN</strong><p>Rens huden og tørk lett...</p> ##02||<strong>SETT PÅ MASKE</strong><p>Plasser masken...</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Product How to Use"
+    }
+  ]
+}
+{% endschema %}
