@@ -148,7 +148,7 @@
       "type": "sk-product-promotion-logos",
       "name": "SK Product Promotion Logos",
       "settings": {
-        "sk_promotion_bgColor": "#ffffff"
+        "sk_promotion_bgColor": "#f1eff4"
       }
     },
     "sk_product_faq_accordion_EPRXLb": {
@@ -223,8 +223,8 @@
       ],
       "name": "SK Before/After Section",
       "settings": {
-        "section_title": "Real Results from Real Customers",
-        "section_subtitle": "See the amazing transformations our customers have achieved",
+        "section_title": "",
+        "section_subtitle": "",
         "background_color": "#f1eff4",
         "card_bg_color": "#ffffff",
         "title_size": 36,
