@@ -3700,3 +3700,31 @@ div.okeReviews .oke-is-large .oke-w-reviews-list-item {
 .oke-w-reviews-list .oke-w-review-side {
   margin-left: 24px !important;
 }
+
+.sk-radiance-product-description__content .metafield-rich_text_field h5 strong {
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 0;
+}
+
+.sk-radiance-product-description__content .metafield-rich_text_field h5 {
+  margin-top: 28px;
+  margin-bottom: 22px;
+}
+
+.oke-w-reviews-main .oke-w-review-content .oke-reviewContent {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.oke-w-reviews-main .oke-w-review-content .oke-reviewContent .oke-reviewContent-title {
+  order: 2;
+}
+
+.oke-w-reviews-main .oke-w-review-content .oke-reviewContent .oke-reviewContent-title+.oke-reviewContent-body.oke-bodyText {
+  order: 1;
+}
+
+.oke-w-reviews-main .oke-w-review-content .oke-reviewContent-top {
+  margin-top: 1rem
+}

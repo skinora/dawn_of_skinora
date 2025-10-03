@@ -42,8 +42,22 @@
 
   .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step {
     display: flex;
-    gap: 24px;
-    margin-bottom: 32px;
+    gap: 10px;
+    margin-bottom: 9px;
+  }
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step .sk-how-to-use__step-content strong {
+    font-family: "DM Sans", sans-serif !important;
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step .sk-how-to-use__step-content p {
+    font-family: "DM Sans", sans-serif !important;
+    font-size: 15px;
+    color: #666666;
+    line-height: 20px;
+  }
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step:first-child + .sk-how-to-use__step {
+    margin-bottom: 30px;
   }
 
   .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step:last-child {
@@ -81,6 +95,13 @@
   .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content h4 + p,
   .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content strong + p {
     margin-top: 4px;
+  }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-number{
+     font-family: "Anton";
+     font-size: 64px;
+     font-weight: 400;
+     color: #30273E;
   }
 </style>
 

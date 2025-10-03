@@ -49,6 +49,27 @@
   .sk-product-radiance-{{ section.id }} .sk-image-content__button {
     margin-top: 3rem;
   }
+
+  .sk-product-radiance-{{ section.id }} .metafield-rich_text_field h2 {
+    color: #30273E;
+    font-size: 65px;
+    line-height: 70px;
+    margin-bottom: 25px;
+    font-weight: 700;
+  }
+
+  .sk-product-radiance-{{ section.id }} .metafield-rich_text_field h2 + p svg{
+    margin: 5px;
+  }
+  .sk-product-radiance-{{ section.id }} .metafield-rich_text_field h2 + p{
+  color: #30273E;
+  font-weight: 500;
+  }
+
+  .sk-product-radiance-{{ section.id }} .metafield-rich_text_field p:last-child {
+    font-size: 12px;
+    line-height: 17px;
+  }
 </style>
 
 {%- if product.metafields.custom.radiance_content != blank or product.metafields.custom.radiance_image != blank -%}
