@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -42,24 +51,16 @@
         "product_features": {
           "type": "product_features",
           "settings": {
-            "feature_1_enabled": true,            
+            "feature_1_enabled": true,
+            "feature_1_svg": "",
             "feature_2_enabled": true,
-            
-            
+            "feature_2_svg": "",
             "feature_3_enabled": true,
-            
-            
+            "feature_3_svg": "",
             "feature_4_enabled": true,
-            
-            
+            "feature_4_svg": "",
             "feature_5_enabled": true,
-            
-            
-            "feature_6_enabled": false,
-            "feature_7_enabled": false,
-            "feature_8_enabled": false,
-            "feature_9_enabled": false,
-            "feature_10_enabled": false
+            "feature_5_svg": ""
           }
         },
         "product_description": {
@@ -101,19 +102,163 @@
       ],
       "settings": {
         "enable_sticky_info": true,
+        "color_scheme": "",
         "media_size": "large",
         "constrain_to_viewport": true,
         "gallery_layout": "thumbnail_slider",
         "mobile_thumbnails": "show",
+        "media_position": "left",
+        "image_zoom": "lightbox",
         "hide_variants": true,
         "enable_video_looping": false,
         "padding_top": 36,
         "padding_bottom": 12
       }
     },
-    
+    "sk_guarantee_banner_wzpk4H": {
+      "type": "sk-guarantee-banner",
+      "name": "SK Guarantee Banner",
+      "settings": {
+        "button_text": "LES MER",
+        "button_link": "#",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "sk_product_promotion_logos_r9MTbH": {
+      "type": "sk-product-promotion-logos",
+      "name": "SK Product Promotion Logos",
+      "settings": {
+        "sk_promotion_bgColor": "#ffffff"
+      }
+    },
+    "sk_product_faq_accordion_EPRXLb": {
+      "type": "sk-product-faq-accordion",
+      "name": "SK Product FAQ",
+      "settings": {
+        "faq_image": "shopify://shop_images/Image_7.png",
+        "title": "",
+        "open_first_item": true
+      }
+    },
+    "sk_before_after_mBrdqd": {
+      "type": "sk-before-after",
+      "blocks": {
+        "testimonial_W4kX3A": {
+          "type": "testimonial",
+          "settings": {
+            "before_image": "shopify://shop_images/Image_6.png",
+            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "show_verified": true,
+            "testimonial_title": "Reduced Lines & Wrinkles",
+            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+          }
+        },
+        "testimonial_brQAaU": {
+          "type": "testimonial",
+          "settings": {
+            "before_image": "shopify://shop_images/Image_6.png",
+            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "show_verified": true,
+            "testimonial_title": "Reduced Lines & Wrinkles",
+            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+          }
+        },
+        "testimonial_4QEVTJ": {
+          "type": "testimonial",
+          "settings": {
+            "before_image": "shopify://shop_images/Image_6.png",
+            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "show_verified": true,
+            "testimonial_title": "Reduced Lines & Wrinkles",
+            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+          }
+        },
+        "testimonial_AeLYyF": {
+          "type": "testimonial",
+          "settings": {
+            "before_image": "shopify://shop_images/Image_6.png",
+            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "show_verified": true,
+            "testimonial_title": "Reduced Lines & Wrinkles",
+            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+          }
+        },
+        "testimonial_LwmiwK": {
+          "type": "testimonial",
+          "settings": {
+            "before_image": "shopify://shop_images/Image_6.png",
+            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "show_verified": true,
+            "testimonial_title": "Reduced Lines & Wrinkles",
+            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_W4kX3A",
+        "testimonial_brQAaU",
+        "testimonial_4QEVTJ",
+        "testimonial_AeLYyF",
+        "testimonial_LwmiwK"
+      ],
+      "name": "SK Before/After Section",
+      "settings": {
+        "section_title": "Real Results from Real Customers",
+        "section_subtitle": "See the amazing transformations our customers have achieved",
+        "background_color": "#f1eff4",
+        "card_bg_color": "#ffffff",
+        "title_size": 36,
+        "title_weight": "600",
+        "title_color": "#333333",
+        "subtitle_size": 16,
+        "subtitle_weight": "400",
+        "subtitle_color": "#666666",
+        "slides_per_view": 3,
+        "enable_loop": true,
+        "enable_autoplay": false
+      }
+    },
+    "sk_product_radiance_TCYaUL": {
+      "type": "sk-product-radiance",
+      "name": "SK Product Radiance",
+      "settings": {
+        "button_text": "Kjøp Skinora Radiance",
+        "button_url": "#"
+      }
+    },
+    "sk_product_how_to_use_dbAJA9": {
+      "type": "sk-product-how-to-use",
+      "name": "SK Product How to Use",
+      "settings": {}
+    },
+    "sk_product_why_choose_pwJz83": {
+      "type": "sk-product-why-choose",
+      "name": "SK Product Why Choose",
+      "settings": {}
+    },
+    "sk_product_technology_iXTDFn": {
+      "type": "sk-product-technology",
+      "name": "SK Product Technology",
+      "settings": {}
+    },
+    "sk_product_specifications_cJY9VW": {
+      "type": "sk-product-specifications",
+      "name": "SK Product Specifications",
+      "settings": {}
+    }
   },
   "order": [
-    "main"
+    "main",
+    "sk_guarantee_banner_wzpk4H",
+    "sk_product_promotion_logos_r9MTbH",
+    "sk_product_faq_accordion_EPRXLb",
+    "sk_before_after_mBrdqd",
+    "sk_product_radiance_TCYaUL",
+    "sk_product_how_to_use_dbAJA9",
+    "sk_product_why_choose_pwJz83",
+    "sk_product_technology_iXTDFn",
+    "sk_product_specifications_cJY9VW"
   ]
 }
