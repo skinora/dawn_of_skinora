@@ -23,8 +23,22 @@
           "type": "title",
           "settings": {}
         },
+        "text_xAmerL": {
+          "type": "text",
+          "settings": {
+            "text": "Reduced Lines & Wrinkles",
+            "text_style": "subtitle"
+          }
+        },
+        "okendo_star_rating_qmwibi": {
+          "type": "shopify://apps/okendo/blocks/star-rating/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
+          "settings": {
+            "product": "{{product}}"
+          }
+        },
         "rating": {
           "type": "rating",
+          "disabled": true,
           "settings": {}
         },
         "price": {
@@ -89,6 +103,8 @@
       "block_order": [
         "category_tag",
         "title",
+        "text_xAmerL",
+        "okendo_star_rating_qmwibi",
         "rating",
         "price",
         "variant_picker",
@@ -247,6 +263,24 @@
       "type": "sk-product-specifications",
       "name": "SK Product Specifications",
       "settings": {}
+    },
+    "1759515838eeeda580": {
+      "type": "apps",
+      "blocks": {
+        "okendo_reviews_widget_bWp9Qg": {
+          "type": "shopify://apps/okendo/blocks/reviews-widget/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
+          "settings": {
+            "product": "{{product}}",
+            "widget_type": "reviews_widget"
+          }
+        }
+      },
+      "block_order": [
+        "okendo_reviews_widget_bWp9Qg"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
@@ -259,6 +293,7 @@
     "sk_product_how_to_use_dbAJA9",
     "sk_product_why_choose_pwJz83",
     "sk_product_technology_iXTDFn",
-    "sk_product_specifications_cJY9VW"
+    "sk_product_specifications_cJY9VW",
+    "1759515838eeeda580"
   ]
 }
