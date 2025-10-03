@@ -3726,5 +3726,5 @@ div.okeReviews .oke-is-large .oke-w-reviews-list-item {
 }
 
 .oke-w-reviews-main .oke-w-review-content .oke-reviewContent-top {
-  margin-top: 1rem
+  margin-top: 1rem !important;
 }
