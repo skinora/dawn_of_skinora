@@ -38,7 +38,8 @@
   .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card{
       flex: 0 0 70px
   }
-  .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card img{
+  .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card img,
+  .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card svg{
       width:100%;
       height: auto;
       display: block;
@@ -80,24 +81,23 @@
     <div class="sw-publication__scroll-element primary">
       {% for block in section.blocks %}
         <div class="sw-publication__card ">
-          <img
-            src="{{ block.settings.sk_promotion_img | image_url: width: 104,height: 104 }}"
-            alt="{{ block.settings.sk_promotion_img.alt }}"
-            width="104"
-            height="104"
-          >
+          {% if block.settings.sk_promotion_svg != blank %}
+            {{ block.settings.sk_promotion_svg }}
+          {% elsif block.settings.sk_promotion_img != blank %}
+            <img
+              src="{{ block.settings.sk_promotion_img | image_url: width: 104,height: 104 }}"
+              alt="{{ block.settings.sk_promotion_img.alt }}"
+              width="104"
+              height="104"
+            >
+          {% endif %}
         </div>
       {% endfor %}
     </div>
     <div class="sw-publication__scroll-element secondary">
       {% for block in section.blocks %}
         <div class="sw-publication__card">
-          <img
-            src="{{ block.settings.sk_promotion_img | image_url: width: 104,height: 104 }}"
-            alt="{{ block.settings.sk_promotion_img.alt }}"
-            width="104"
-            height="104"
-          >
+          {{ block.settings.sk_promotion_svg }}
         </div>
       {% endfor %}
     </div>
@@ -121,9 +121,10 @@
       "type": "Card",
       "settings": [
         {
-          "type": "image_picker",
-          "id": "sk_promotion_img",
-          "label": "Select Image"
+          "type": "html",
+          "id": "sk_promotion_svg",
+          "label": "SVG Code",
+          "info": "Paste your SVG code here. This will be used instead of the image picker if provided."
         }
       ]
     }

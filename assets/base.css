@@ -3688,11 +3688,15 @@ a {
 }
 
 
-.okeReviews[data-oke-container] .oke-is-large .oke-w-reviews-list-item, div.okeReviews .oke-is-large .oke-w-reviews-list-item{
-    background: #F1EFF4 !important;
-    margin-bottom: 18px !important;
+
+/* oken reviews styling */
+
+.okeReviews[data-oke-container] .oke-is-large .oke-w-reviews-list-item,
+div.okeReviews .oke-is-large .oke-w-reviews-list-item {
+  background: #F1EFF4 !important;
+  margin-bottom: 18px !important;
 }
 
-.oke-w-reviews-list .oke-w-review-side{
+.oke-w-reviews-list .oke-w-review-side {
   margin-left: 24px !important;
 }
