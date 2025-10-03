@@ -3686,3 +3686,9 @@ a {
 .d-none {
   display: none;
 }
+
+
+.okeReviews[data-oke-container] .oke-is-large .oke-w-reviews-list-item, div.okeReviews .oke-is-large .oke-w-reviews-list-item{
+    background: #F1EFF4 !important;
+    margin-bottom: 18px !important;
+}
