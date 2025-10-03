@@ -160,7 +160,7 @@
         "product_fRgkE9": {
           "type": "product",
           "settings": {
-            "product": "skinora-radiance",
+            "product": "skinora-radiance-red-light-nir-light",
             "show_description": true,
             "button_text": "KJØP",
             "open_in_new_tab": false
