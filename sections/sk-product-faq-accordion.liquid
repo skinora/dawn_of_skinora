@@ -8,7 +8,7 @@
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__container {
     display: flex;
     align-items: start;
-    gap: 40px;
+    gap: 80px;
     flex-wrap: wrap;
     justify-content: space-around;
   }
@@ -74,7 +74,7 @@
     outline: none;
     box-shadow: none;
     border-bottom: 1px solid #fff;
-    font-family: 'Playfair Display', serif !important;
+    /* font-family: 'Playfair Display', serif !important; */
   }
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button:hover,
@@ -157,6 +157,15 @@
     box-shadow: none !important;
     border: none !important;
   }
+
+  .sk-faq-read-more-btn .sk_primary-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+    width: 18rem;
+    padding: 13px;
+  }
 </style>
 
 {%- if product.metafields.custom.faq_item.value != blank -%}
@@ -207,6 +216,14 @@
                 </div>
               {% endfor %}
             </div>
+          </div>
+          <div class="sk-faq-read-more-btn">
+            <a href="#" class=" sk_primary-button">
+              Les mer
+              <span class="svg-wrapper">
+                {{- 'arrow-right.svg' | inline_asset_content -}}
+              </span>
+            </a>
           </div>
         </div>
         {% if section.settings.faq_image != blank %}

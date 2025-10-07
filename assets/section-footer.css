@@ -7,7 +7,7 @@
 }
 
 .footer__content-top {
-  padding-bottom: 5rem;
+  /* padding-bottom: 5rem; */
   display: block;
 }
 
@@ -117,11 +117,12 @@
   font-size: 1.4rem;
   line-height: 1.4;
   transition: color 0.2s ease;
+  padding-bottom: 5px;
 }
 
 .footer__menu-link:hover {
   color: rgb(var(--color-foreground));
-  text-decoration: underline;
+  border-bottom: 1px solid #fff;
 }
 
 @media screen and (max-width: 749px) {
@@ -246,6 +247,7 @@
   display: flex;
   width: 100%;
   justify-content: flex-start;
+  margin-top: 2rem;
 }
 
 @media screen and (max-width: 749px) {
@@ -482,7 +484,7 @@
   display: flex;
   gap: 1.5rem;
   align-items: start;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-bottom: 3rem;
   flex-direction: row-reverse;
 }
@@ -491,7 +493,7 @@
 .list-shipping-delivery {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -818,4 +820,8 @@ footer .field__input:focus {
   color: #fff;
   padding: 5px 28px;
   border-radius: 20px;
+}
+
+footer .list-social__item a:hover {
+  color: #624f80;
 }

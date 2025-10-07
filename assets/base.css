@@ -2756,6 +2756,7 @@ details[open]>.header__submenu {
   z-index: 1;
   background: #30273e;
   padding: 5px;
+  width: 220px;
 }
 
 @media (prefers-reduced-motion) {
@@ -3624,17 +3625,22 @@ h5,
 .h5,
 h6,
 .h6 {
-  font-family: 'Playfair Display', serif !important;
+  /* font-family: 'Playfair Display', serif !important; */
+  font-family: "covik-sans", sans-serif !important;
 }
 
 a,
 span {
-  font-family: "DM Sans", sans-serif !important;
+  font-family: "ibm-plex-mono", sans-serif !important;
 }
 
 p,
 button {
-  font-family: "Urbanist", sans-serif !important;
+  font-family: "ibm-plex-mono", sans-serif !important;
+}
+
+body {
+  font-family: "ibm-plex-mono", sans-serif !important;
 }
 
 .header-wrapper {
@@ -3649,7 +3655,7 @@ button {
 }
 
 .announcement__bar {
-  background: #6C6C6C;
+  background: #3a3939;
 }
 
 .announcement__bar h5 {
@@ -3667,9 +3673,11 @@ button {
   background: #30273E;
   color: #fff;
   text-decoration: none;
-  padding: 15px 55px;
+  padding: 15px 10px;
   display: flex;
   justify-content: center;
+  text-transform: uppercase;
+  width: 37rem;
 }
 
 

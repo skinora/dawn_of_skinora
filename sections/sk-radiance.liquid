@@ -2,13 +2,13 @@
 
 <style>
   .sk-radiance {
-    background: #F1EFF4;
+    background: #f1eff4;
     padding: 7rem 0;
   }
   .sk-radiance__container {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    align-items: end;
+    gap: 7rem;
     flex-wrap: wrap;
   }
 
@@ -16,7 +16,7 @@
     flex: 0 0 600px;
   }
   .sk-image-content__content {
-    flex: 0 0 400px;
+    flex: 0 0 550px;
   }
 
   .sk-radiance .sk-image-content__bullet-list {
@@ -29,12 +29,12 @@
     align-items: center;
     gap: 1rem;
     margin-bottom: 1rem;
-    color: #30273E;
+    color: #30273e;
     font-weight: 500;
   }
 
   .sk-radiance .sk-image-content__heading {
-    color: #30273E;
+    color: #30273e;
     font-size: 65px;
     line-height: 70px;
     margin-bottom: 25px;
@@ -64,12 +64,12 @@
               alt="{{ section.settings.sk_radiance_image.alt }}"
               width="577"
               height="640"
-              loading="lazy">
+              loading="lazy"
+            >
           {%- else -%}
             {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
           {%- endif -%}
         </div>
-
 
         <!-- Content Section -->
         <div class="sk-image-content__content">
@@ -77,7 +77,10 @@
             {% case block.type %}
               {%- when 'heading' -%}
                 {%- if block.settings.heading != blank -%}
-                  <h2 class="sk-image-content__heading {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+                  <h2
+                    class="sk-image-content__heading {{ block.settings.heading_size }}"
+                    {{ block.shopify_attributes }}
+                  >
                     {{ block.settings.heading }}
                   </h2>
                 {%- endif -%}
@@ -97,7 +100,8 @@
                                 width="20"
                                 height="20"
                                 viewBox="0 0 20 20"
-                                fill="currentColor">
+                                fill="currentColor"
+                              >
                                 <circle
                                   cx="10"
                                   cy="10"
@@ -114,7 +118,10 @@
 
               {%- when 'description' -%}
                 {%- if block.settings.description != blank -%}
-                  <div class="sk-image-content__description rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
+                  <div
+                    class="sk-image-content__description rte {{ block.settings.text_style }}"
+                    {{ block.shopify_attributes }}
+                  >
                     {{ block.settings.description }}
                   </div>
                 {%- endif -%}
@@ -127,196 +134,211 @@
                     </a>
                   </div>
                 {%- endif -%}
-
             {%- endcase -%}
           {%- endfor -%}
         </div>
       </div>
     </div>
   </div>
-
 </section>
 
 {% schema %}
-  {
-    "name": "Image with Content",
-    "tag": "section",
-    "class": "section",
-    "disabled_on": {
-      "groups": ["header", "footer"]
+{
+  "name": "Image with Content",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image Settings"
     },
-    "settings": [
-      {
-        "type": "header",
-        "content": "Image Settings"
-      },
-      {
-        "type": "image_picker",
-        "id": "sk_radiance_image",
-        "label": "Image"
-      },
-      {
-        "type": "range",
-        "id": "image_width",
-        "min": 30,
-        "max": 60,
-        "step": 5,
-        "unit": "%",
-        "label": "Image width",
-        "default": 50
-      },
-      {
-        "type": "header",
-        "content": "Section Settings"
-      }, {
-        "type": "color_scheme",
-        "id": "color_scheme",
-        "label": "Color scheme",
-        "default": "scheme-1"
-      }, {
-        "type": "header",
-        "content": "Section Padding"
-      }, {
-        "type": "range",
-        "id": "padding_top",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Top padding",
-        "default": 36
-      }, {
-        "type": "range",
-        "id": "padding_bottom",
-        "min": 0,
-        "max": 100,
-        "step": 4,
-        "unit": "px",
-        "label": "Bottom padding",
-        "default": 36
-      }
-    ],
-    "blocks": [
-      {
-        "type": "heading",
-        "name": "Heading",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "inline_richtext",
-            "id": "heading",
-            "default": "Image with content",
-            "label": "Heading"
-          }, {
-            "type": "select",
-            "id": "heading_size",
-            "options": [
-              {
-                "value": "h2",
-                "label": "Small"
-              },
-              {
-                "value": "h1",
-                "label": "Medium"
-              },
-              {
-                "value": "h0",
-                "label": "Large"
-              },
-              {
-                "value": "hxl",
-                "label": "Extra large"
-              }, {
-                "value": "hxxl",
-                "label": "XX Large"
-              }
-            ],
-            "default": "h1",
-            "label": "Heading size"
-          }
-        ]
-      }, {
-        "type": "bullet_points",
-        "name": "Bullet Points",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "textarea",
-            "id": "bullet_items",
-            "label": "Bullet points",
-            "info": "Enter each bullet point on a new line or separate with | symbol",
-            "placeholder": "First bullet point\nSecond bullet point\nThird bullet point"
-          }, {
-            "type": "html",
-            "id": "bullet_icon",
-            "label": "Custom bullet icon (SVG)",
-            "info": "Leave empty to use default bullet. Paste SVG code for custom icon."
-          }
-        ]
-      }, {
-        "type": "description",
-        "name": "Description",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "richtext",
-            "id": "description",
-            "default": "<p>Add your description text here. You can use rich text formatting.</p>",
-            "label": "Description"
-          }, {
-            "type": "select",
-            "id": "text_style",
-            "options": [
-              {
-                "value": "body",
-                "label": "Body"
-              }, {
-                "value": "subtitle",
-                "label": "Subtitle"
-              }
-            ],
-            "default": "body",
-            "label": "Text style"
-          }
-        ]
-      }, {
-        "type": "button",
-        "name": "Button",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "text",
-            "id": "button_text",
-            "default": "Learn more",
-            "label": "Button text"
-          }, {
-            "type": "url",
-            "id": "button_url",
-            "label": "Button URL"
-          }, {
-            "type": "checkbox",
-            "id": "button_style_secondary",
-            "default": false,
-            "label": "Use outline button style"
-          }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "Image with Content",
-        "blocks": [
-          {
-            "type": "heading"
-          }, {
-            "type": "bullet_points"
-          }, {
-            "type": "description"
-          }, {
-            "type": "button"
-          }
-        ]
-      }
-    ]
-  }
+    {
+      "type": "image_picker",
+      "id": "sk_radiance_image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "min": 30,
+      "max": 60,
+      "step": 5,
+      "unit": "%",
+      "label": "Image width",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "Image with content",
+          "label": "Heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            {
+              "value": "h2",
+              "label": "Small"
+            },
+            {
+              "value": "h1",
+              "label": "Medium"
+            },
+            {
+              "value": "h0",
+              "label": "Large"
+            },
+            {
+              "value": "hxl",
+              "label": "Extra large"
+            },
+            {
+              "value": "hxxl",
+              "label": "XX Large"
+            }
+          ],
+          "default": "h1",
+          "label": "Heading size"
+        }
+      ]
+    },
+    {
+      "type": "bullet_points",
+      "name": "Bullet Points",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "bullet_items",
+          "label": "Bullet points",
+          "info": "Enter each bullet point on a new line or separate with | symbol",
+          "placeholder": "First bullet point\nSecond bullet point\nThird bullet point"
+        },
+        {
+          "type": "html",
+          "id": "bullet_icon",
+          "label": "Custom bullet icon (SVG)",
+          "info": "Leave empty to use default bullet. Paste SVG code for custom icon."
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "description",
+          "default": "<p>Add your description text here. You can use rich text formatting.</p>",
+          "label": "Description"
+        },
+        {
+          "type": "select",
+          "id": "text_style",
+          "options": [
+            {
+              "value": "body",
+              "label": "Body"
+            },
+            {
+              "value": "subtitle",
+              "label": "Subtitle"
+            }
+          ],
+          "default": "body",
+          "label": "Text style"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "default": "Learn more",
+          "label": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary",
+          "default": false,
+          "label": "Use outline button style"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with Content",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "bullet_points"
+        },
+        {
+          "type": "description"
+        },
+        {
+          "type": "button"
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}

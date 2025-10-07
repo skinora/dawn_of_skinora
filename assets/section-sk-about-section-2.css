@@ -7,10 +7,11 @@
 
 .sk-about-section-2__content {
     display: flex;
-    gap: 10rem;
+    gap: 80px;
     flex-wrap: wrap;
-    justify-content: center;
+    /* justify-content: center; */
     margin-top: 8rem;
+    align-items: end;
 }
 
 
@@ -26,7 +27,7 @@
 .sk-about-section-2__heading {
     font-size: 90px;
     font-weight: 600;
-    line-height: 100px;
+    line-height: 82px;
     color: #30273E;
     margin-bottom: 2.5rem;
     margin-top: 0;
@@ -206,11 +207,11 @@
 
     .sk-about-section-2__image-section {
         position: relative;
-        flex: 0 0 500px;
+        flex: 0 0 550px;
     }
 
     .sk-about-section-2__text-section {
-        flex: 0 0 420px;
+        flex: 0 0 500px;
     }
 
 
@@ -226,4 +227,9 @@
         align-items: center;
         gap: 10px;
     }
+}
+
+
+.sk-about-section-2__main-image img {
+    width: 100%;
 }

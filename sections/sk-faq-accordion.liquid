@@ -1,6 +1,6 @@
 <style>
   .sk-faq-accordion {
-    background: linear-gradient(to bottom, #30273E, #070707);
+    background: linear-gradient(to bottom, #30273e, #070707);
     color: #ffffff;
     padding: 7rem 0;
   }
@@ -8,12 +8,12 @@
   .sk-faq-accordion__container {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 80px;
     flex-wrap: wrap;
   }
 
   .sk-faq-accordion__image {
-    flex: 0 0 440px;
+    flex: 0 0 550px;
   }
 
   .sk-faq-accordion__image img {
@@ -32,7 +32,6 @@
     border-bottom: 1px solid #fff;
     padding-bottom: 14px;
   }
-
 
   .sk-faq-accordion__accordion {
     border: none;
@@ -112,7 +111,7 @@
     transition: all 0.3s ease;
   }
 
-  .sk-faq-accordion__button[aria-expanded="true"] .sk-faq-accordion__icon::before {
+  .sk-faq-accordion__button[aria-expanded='true'] .sk-faq-accordion__icon::before {
     content: '−';
   }
 
@@ -219,6 +218,15 @@
     box-shadow: none !important;
     border: none !important;
   }
+
+  .sk-faq-read-more-btn .sk_primary-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+    width: 18rem;
+    padding: 13px;
+  }
 </style>
 
 <section class="sk-faq-accordion">
@@ -231,7 +239,8 @@
             alt="{{ section.settings.faq_image.alt | default: section.settings.title }}"
             width="500"
             height="600"
-            loading="lazy">
+            loading="lazy"
+          >
         </div>
       {% endif %}
 
@@ -253,7 +262,8 @@
                         data-bs-toggle="collapse"
                         data-bs-target="#collapse-{{ block.id }}-{{ section.id }}"
                         aria-expanded="{% if section.settings.open_first_item and forloop.first %}true{% else %}false{% endif %}"
-                        aria-controls="collapse-{{ block.id }}-{{ section.id }}">
+                        aria-controls="collapse-{{ block.id }}-{{ section.id }}"
+                      >
                         <span class="sk-faq-accordion__question">{{ block.settings.question }}</span>
                         <div class="sk-faq-accordion__icon"></div>
                       </button>
@@ -262,7 +272,8 @@
                       id="collapse-{{ block.id }}-{{ section.id }}"
                       class="accordion-collapse collapse sk-faq-accordion__collapse {% if section.settings.open_first_item and forloop.first %}show{% endif %}"
                       aria-labelledby="heading-{{ block.id }}-{{ section.id }}"
-                      data-bs-parent="#faqAccordion-{{ section.id }}">
+                      data-bs-parent="#faqAccordion-{{ section.id }}"
+                    >
                       <div class="accordion-body sk-faq-accordion__body">
                         <div class="sk-faq-accordion__answer">
                           {{ block.settings.answer }}
@@ -274,131 +285,146 @@
             {% endfor %}
           </div>
         </div>
+        <div class="sk-faq-read-more-btn">
+          <a href="#" class=" sk_primary-button">
+            Les mer
+            <span class="svg-wrapper">
+              {{- 'arrow-right.svg' | inline_asset_content -}}
+            </span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 {% schema %}
-  {
-    "name": "SK FAQ Accordion",
-    "settings": [
-      {
-        "type": "image_picker",
-        "id": "faq_image",
-        "label": "FAQ Image"
-      },
-      {
-        "type": "text",
-        "id": "title",
-        "label": "Section Title",
-        "default": "Alt Du Lurte På Om Skinora Radiance"
-      },
-      {
-        "type": "checkbox",
-        "id": "open_first_item",
-        "label": "Open first FAQ item by default",
-        "default": false
-      },
-      {
-        "type": "color",
-        "id": "background_color",
-        "label": "Background Color",
-        "default": "#3a3052"
-      }, {
-        "type": "header",
-        "content": "Section Padding"
-      }, {
-        "type": "range",
-        "id": "padding_top",
-        "min": 0,
-        "max": 120,
-        "step": 4,
-        "unit": "px",
-        "label": "Top padding",
-        "default": 80
-      }, {
-        "type": "range",
-        "id": "padding_bottom",
-        "min": 0,
-        "max": 120,
-        "step": 4,
-        "unit": "px",
-        "label": "Bottom padding",
-        "default": 80
-      }
-    ],
-    "blocks": [
-      {
-        "type": "faq_item",
-        "name": "FAQ Item",
-        "settings": [
-          {
-            "type": "text",
-            "id": "question",
-            "label": "Question",
-            "default": "Hvor ofte og hvor lenge bør jeg bruke led-masken for å se synlige resultater?"
-          }, {
-            "type": "richtext",
-            "id": "answer",
-            "label": "Answer",
-            "default": "<p>Vi anbefaler å bruke masken 3-5 ganger per uke i 10-20 minutter per gang. Mange opplever at huden får mer glød etter bare noen få behandlinger, mens reduksjon av fine linjer og jevnere hudtone vanligvis blir synlig etter 4-6 uker med regelmessig bruk.</p>"
+{
+  "name": "SK FAQ Accordion",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "faq_image",
+      "label": "FAQ Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Alt Du Lurte På Om Skinora Radiance"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first_item",
+      "label": "Open first FAQ item by default",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#3a3052"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Hvor ofte og hvor lenge bør jeg bruke led-masken for å se synlige resultater?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Vi anbefaler å bruke masken 3-5 ganger per uke i 10-20 minutter per gang. Mange opplever at huden får mer glød etter bare noen få behandlinger, mens reduksjon av fine linjer og jevnere hudtone vanligvis blir synlig etter 4-6 uker med regelmessig bruk.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK FAQ Accordion",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Hvor ofte og hvor lenge bør jeg bruke led-masken for å se synlige resultater?",
+            "answer": "<p>Vi anbefaler å bruke masken 3-5 ganger per uke i 10-20 minutter per gang. Mange opplever at huden får mer glød etter bare noen få behandlinger, mens reduksjon av fine linjer og jevnere hudtone vanligvis blir synlig etter 4-6 uker med regelmessig bruk.</p>"
           }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "SK FAQ Accordion",
-        "blocks": [
-          {
-            "type": "faq_item",
-            "settings": {
-              "question": "Hvor ofte og hvor lenge bør jeg bruke led-masken for å se synlige resultater?",
-              "answer": "<p>Vi anbefaler å bruke masken 3-5 ganger per uke i 10-20 minutter per gang. Mange opplever at huden får mer glød etter bare noen få behandlinger, mens reduksjon av fine linjer og jevnere hudtone vanligvis blir synlig etter 4-6 uker med regelmessig bruk.</p>"
-            }
-          },
-          {
-            "type": "faq_item",
-            "settings": {
-              "question": "Hvilke typer lysbølgelengder bruker masken, og hvilke hudproblemer retter de seg mot?",
-              "answer": "<p>Masken bruker tre forskjellige lysbølgelengder: 415nm blått lys for akne-bakterier, 650nm rødt lys for inflammasjon og kollagenproduksjon, og 850nm nær-infrarødt lys for dyp vevsreparasjon og forbedret sirkulasjon.</p>"
-            }
-          },
-          {
-            "type": "faq_item",
-            "settings": {
-              "question": "Er det trygt å bruke led-masken hvis jeg er gravid, ammer eller bruker bestemte medisiner?",
-              "answer": "<p>LED-lysbehandling regnes generelt som trygt, men vi anbefaler alltid å konsultere med lege før bruk hvis du er gravid, ammer, eller bruker fotosensibiliserende medisiner som enkelte antibiotika eller retinoidbehandlinger.</p>"
-            }
-          },
-          {
-            "type": "faq_item",
-            "settings": {
-              "question": "Hvordan rengjør og vedlikeholder jeg masken for best hygiene og holdbarhet?",
-              "answer": "<p>Rengjør masken forsiktig med en fuktig klut og mildt såpevann etter hver bruk. Unngå å dyppe masken i vann. La den tørke helt før oppbevaring i det medfølgende etuiet. Sjekk jevnlig at alle LED-lys fungerer optimalt.</p>"
-            }
-          }, {
-            "type": "faq_item",
-            "settings": {
-              "question": "Kan jeg bruke masken etter kosmetiske behandlinger som botox eller fillere?",
-              "answer": "<p>Vent minst 2 uker etter injeksjonsbehandlinger som botox eller fillere før du bruker LED-masken. Dette gir huden tid til å hele og reduserer risikoen for komplikasjoner. Konsulter alltid med din kosmetiske behandler først.</p>"
-            }
-          }, {
-            "type": "faq_item",
-            "settings": {
-              "question": "Hvilke sikkerhetsfunksjoner har masken (f.eks. øyebeskyttelse, justerbar passform)?",
-              "answer": "<p>Masken har innebygd øyebeskyttelse og automatisk avslåing etter 20 minutter. Den har justerbare stropper for komfortabel passform og er laget av hudvennlige materialer som er testet for sikkerhet og komfort.</p>"
-            }
-          }, {
-            "type": "faq_item",
-            "settings": {
-              "question": "Hvem bør unngå å bruke led-masken (f.eks. visse medisinske tilstander, lysfølsomhet)?",
-              "answer": "<p>Personer med epilepsi, alvorlige øyesykdommer, hudkreft i ansiktet, eller de som bruker sterke fotosensibiliserende medisiner bør unngå LED-behandling. Konsulter alltid med helsepersonell hvis du er usikker på om behandlingen er egnet for deg.</p>"
-            }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Hvilke typer lysbølgelengder bruker masken, og hvilke hudproblemer retter de seg mot?",
+            "answer": "<p>Masken bruker tre forskjellige lysbølgelengder: 415nm blått lys for akne-bakterier, 650nm rødt lys for inflammasjon og kollagenproduksjon, og 850nm nær-infrarødt lys for dyp vevsreparasjon og forbedret sirkulasjon.</p>"
           }
-        ]
-      }
-    ]
-  }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Er det trygt å bruke led-masken hvis jeg er gravid, ammer eller bruker bestemte medisiner?",
+            "answer": "<p>LED-lysbehandling regnes generelt som trygt, men vi anbefaler alltid å konsultere med lege før bruk hvis du er gravid, ammer, eller bruker fotosensibiliserende medisiner som enkelte antibiotika eller retinoidbehandlinger.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Hvordan rengjør og vedlikeholder jeg masken for best hygiene og holdbarhet?",
+            "answer": "<p>Rengjør masken forsiktig med en fuktig klut og mildt såpevann etter hver bruk. Unngå å dyppe masken i vann. La den tørke helt før oppbevaring i det medfølgende etuiet. Sjekk jevnlig at alle LED-lys fungerer optimalt.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Kan jeg bruke masken etter kosmetiske behandlinger som botox eller fillere?",
+            "answer": "<p>Vent minst 2 uker etter injeksjonsbehandlinger som botox eller fillere før du bruker LED-masken. Dette gir huden tid til å hele og reduserer risikoen for komplikasjoner. Konsulter alltid med din kosmetiske behandler først.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Hvilke sikkerhetsfunksjoner har masken (f.eks. øyebeskyttelse, justerbar passform)?",
+            "answer": "<p>Masken har innebygd øyebeskyttelse og automatisk avslåing etter 20 minutter. Den har justerbare stropper for komfortabel passform og er laget av hudvennlige materialer som er testet for sikkerhet og komfort.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Hvem bør unngå å bruke led-masken (f.eks. visse medisinske tilstander, lysfølsomhet)?",
+            "answer": "<p>Personer med epilepsi, alvorlige øyesykdommer, hudkreft i ansiktet, eller de som bruker sterke fotosensibiliserende medisiner bør unngå LED-behandling. Konsulter alltid med helsepersonell hvis du er usikker på om behandlingen er egnet for deg.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}

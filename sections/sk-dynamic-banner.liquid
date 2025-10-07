@@ -1,7 +1,7 @@
 <style>
   .sk-dynamic-banner {
     background: url('{{ 'banner-bg.png' | asset_url }}') no-repeat center center/cover;
-    height: 85vh;
+    height: 65vh;
     width: 100%;
     position: relative;
     display: flex;
@@ -15,19 +15,20 @@
   }
   .sk-dynamic-banner__title {
     font-size: 64px;
-    color: #2C2C2C;
+    color: #2c2c2c;
     font-weight: 600;
     margin-bottom: 20px;
+    line-height: 65px;
   }
 
   .sk-dynamic-banner__content {
     padding-right: 15rem;
   }
   .sk-dynamic-banner__description {
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 600;
-    color: #6C6C6C;
-    line-height: 38px;
+    color: #6c6c6c;
+    line-height: 32px;
     margin-bottom: 30px;
   }
 
@@ -63,48 +64,47 @@
           src="{{ section.settings.sk_banner_img | image_url: width: 555,height: 370 }}"
           alt="{{ section.settings.sk_banner_title }}"
           width="555"
-          height="370">
+          height="370"
+        >
       </div>
-
-
     </div>
   </div>
 </section>
 
-
 {% schema %}
-  {
-    "name": "SK Dynamic Banner",
-    "settings": [
-      {
-        "type": "image_picker",
-        "id": "sk_banner_img",
-        "label": "Banner Img"
-      },
-      {
-        "type": "text",
-        "id": "sk_banner_title",
-        "label": "Title"
-      },
-      {
-        "type": "text",
-        "id": "sk_banner_description",
-        "label": "Description"
-      },
-      {
-        "type": "url",
-        "id": "sk_banner_button_link",
-        "label": "Button Link"
-      }, {
-        "type": "text",
-        "id": "sk_banner_button_text",
-        "label": "Button Text"
-      }
-    ],
-    "presets": [
-      {
-        "name": "SK Dynamic Banner"
-      }
-    ]
-  }
+{
+  "name": "SK Dynamic Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "sk_banner_img",
+      "label": "Banner Img"
+    },
+    {
+      "type": "text",
+      "id": "sk_banner_title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "sk_banner_description",
+      "label": "Description"
+    },
+    {
+      "type": "url",
+      "id": "sk_banner_button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "sk_banner_button_text",
+      "label": "Button Text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Dynamic Banner"
+    }
+  ]
+}
 {% endschema %}

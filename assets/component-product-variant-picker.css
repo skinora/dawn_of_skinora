@@ -226,7 +226,7 @@ variant-selects {
   font-weight: 600;
   color: #fff;
   margin: 0;
-  font-family: "DM Sans", sans-serif !important;
+  /* font-family: "DM Sans", sans-serif !important; */
 }
 
 .sk-radiance-variant-card__price {

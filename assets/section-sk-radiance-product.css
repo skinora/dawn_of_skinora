@@ -157,14 +157,14 @@
     margin: 0;
     font-size: 14px;
     color: #6C6C6C;
-    font-family: "DM Sans", sans-serif !important;
+    /* font-family: "DM Sans", sans-serif !important; */
 }
 
 .sk-radiance-product__text.subtitle {
     font-size: 16px;
     font-weight: 700;
     color: #30273E;
-    font-family: "DM Sans", sans-serif !important;
+    /* font-family: "DM Sans", sans-serif !important; */
 }
 
 .sk-radiance-product__title h1 {
@@ -537,7 +537,7 @@
     font-weight: 700;
     color: #333;
     margin: 0 0 1rem 0;
-    font-family: "DM Sans", sans-serif;
+    /* font-family: "DM Sans", sans-serif; */
 }
 
 .sk-radiance-product-description__content h3 {
@@ -545,7 +545,7 @@
     font-weight: 700;
     color: #333;
     margin: 1.5rem 0 1rem 0;
-    font-family: "DM Sans", sans-serif;
+    /* font-family: "DM Sans", sans-serif; */
 }
 
 .sk-radiance-product-description__content p {
@@ -553,7 +553,7 @@
     line-height: 1.6;
     color: #333;
     margin: 0 0 1rem 0;
-    font-family: "DM Sans", sans-serif !important;
+    /* font-family: "DM Sans", sans-serif !important; */
     margin-bottom: 0;
 }
 
@@ -605,5 +605,5 @@
     line-height: 1.5;
     color: #333;
     flex: 1;
-    font-family: "DM Sans", sans-serif;
+    /* font-family: "DM Sans", sans-serif; */
 }
