@@ -10,44 +10,58 @@
   }
 </style>
 
-
 <section class="sk-led-light-work">
   <div class="container">
     <div class="sk-led-light-work__container">
       <div class="sk-led-light-work__content">
         <h2 class="sk-led-light-work__heading">{{ section.settings.sk_led_light_work_heading }}</h2>
       </div>
-      <div class="sk-led-light-work__img">
-        <img
-          src="{{ section.settings.sk_led_light_work_img | image_url: width: 1200,height: 490 }}"
-          alt="{{ section.settings.sk_led_light_work_img.alt }}"
-          width="1200"
-          height="490">
+      <div class="sk-led-light-work-images-container">
+        {% for block in section.blocks %}
+          <div class="sk-led-light-work-image-item">
+            <img
+              src="{{ block.settings.sk_led_light_work_img | image_url: width: 215,height: 456 }}"
+              alt="{{ block.settings.sk_led_light_work_img.alt }}"
+              width="215"
+              height="456"
+            >
+          </div>
+          {% if forloop.last == false %}
+            {{ 'led-light-works-arrow.svg' | inline_asset_content }}
+          {% endif %}
+        {% endfor %}
       </div>
-
     </div>
   </div>
 </section>
 
-
 {% schema %}
-  {
-    "name": "SK Led Light Work",
-    "settings": [
-      {
-        "type": "image_picker",
-        "id": "sk_led_light_work_img",
-        "label": "Section Img"
-      }, {
-        "type": "text",
-        "id": "sk_led_light_work_heading",
-        "label": "Title"
-      }
-    ],
-    "presets": [
-      {
-        "name": "SK Led Light Work"
-      }
-    ]
-  }
+{
+  "name": "SK Led Light Work",
+  "settings": [
+    {
+      "type": "text",
+      "id": "sk_led_light_work_heading",
+      "label": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "sk_led_light_work_img",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Led Light Work"
+    }
+  ]
+}
 {% endschema %}

@@ -3750,12 +3750,34 @@ div.okeReviews .oke-is-large .oke-w-reviews-list-item {
 }
 
 
-.sk-led-light-work__img {
-  display: flex;
-  justify-content: center;
-}
-
-
 .accordion-button:focus {
   border-color: #fff !important;
 }
+
+h1.header__heading svg,
+.footer-logo svg {
+  width: 172px;
+  height: 50px;
+}
+
+.sk-led-light-work-images-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 3rem 0;
+}
+
+/* .sk-led-light-work-image-item{
+  position: relative;
+}
+
+.sk-led-light-work-image-item::after{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+} */

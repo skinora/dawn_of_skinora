@@ -111,7 +111,9 @@
             >
           </div>
         {%- else -%}
-          {{- 'custom-logo.svg' | inline_asset_content -}}
+          <div class="footer-logo">
+            {{- 'custom-logo.svg' | inline_asset_content -}}
+          </div>
         {%- endif -%}
 
         {% comment %}
