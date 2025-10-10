@@ -105,6 +105,31 @@
     const totalPages = Math.ceil(totalPosts / postsPerPage);
     let currentPage = 1;
 
+    function smoothScrollTo(element, duration = 800) {
+      const targetPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
+      let startTime = null;
+
+      function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const run = ease(timeElapsed, startPosition, distance, duration);
+        window.scrollTo(0, run);
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+      }
+
+      // Easing function for smooth animation
+      function ease(t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return (c / 2) * t * t + b;
+        t--;
+        return (-c / 2) * (t * (t - 2) - 1) + b;
+      }
+
+      requestAnimationFrame(animation);
+    }
+
     function showPage(pageNumber) {
       const startIndex = (pageNumber - 1) * postsPerPage;
       const endIndex = startIndex + postsPerPage;
@@ -121,10 +146,11 @@
       currentPage = pageNumber;
       updatePaginationButtons();
 
-      // Smooth scroll to top of section
+      // Smooth scroll to top of section with custom duration
       const section = postsContainer.closest('.sk-blog-grid');
       if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        section.scrollIntoView({ behavior: 'instant', block: 'start' });
+        // smoothScrollTo(section, 1000); // Duration in milliseconds (1000ms = 1 second)
       }
     }
 
@@ -185,6 +211,7 @@
 
           if (page === currentPage) {
             button.classList.add('sk-blog-grid__pagination-btn--active');
+            button.setAttribute('aria-current', 'page');
           }
 
           button.addEventListener('click', function () {

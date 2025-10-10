@@ -87,7 +87,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    background: linear-gradient(#00000000, rgb(0 0 0));
     padding: 40px 30px 30px 30px;
 }
 

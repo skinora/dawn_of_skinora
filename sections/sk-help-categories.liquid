@@ -7,11 +7,21 @@
   }
 {%- endstyle -%}
 
-<div class="sk-help-categories section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+<div
+  class="sk-help-categories section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}"
+  {% if section.settings.heading != blank %}
+    aria-labelledby="HelpCategories-{{ section.id }}"
+  {% else %}
+    aria-label="Help Categories"
+  {% endif %}
+>
   <div class="container">
     <div class="sk-help-categories__header">
       {%- if section.settings.heading != blank -%}
-        <h2 class="sk-help-categories__heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        <h2
+          id="HelpCategories-{{ section.id }}"
+          class="sk-help-categories__heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+        >
           {{ section.settings.heading | escape }}
         </h2>
       {%- endif -%}
@@ -24,43 +34,50 @@
     </div>
 
     {%- if section.blocks.size > 0 -%}
-      <div class="sk-help-categories__grid">
-        {%- for block in section.blocks -%}
-          {%- case block.type -%}
-            {%- when 'category_item' -%}
-              <div
-                class="sk-help-categories__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-                {{ block.shopify_attributes }}
-              >
-                <a
-                  href="{{ block.settings.link | default: '#' }}"
-                  class="sk-help-categories__link"
-                >
-                  <div class="sk-help-categories__icon-wrapper">
-                    {%- if block.settings.icon_html != blank -%}
-                      <div class="sk-help-categories__icon">
-                        {{ block.settings.icon_html }}
+      <div>
+        <ul class="sk-help-categories__grid">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'category_item' -%}
+                <li class="sk-help-categories__item">
+                  <div
+                    class="{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                    {{ block.shopify_attributes }}
+                  >
+                    <a
+                      href="{{ block.settings.link | default: '#' }}"
+                      class="sk-help-categories__link"
+                      {% if block.settings.title != blank %}
+                        aria-label="{{ block.settings.title | escape }}"
+                      {% endif %}
+                    >
+                      <div class="sk-help-categories__icon-wrapper" aria-hidden="true">
+                        {%- if block.settings.icon_html != blank -%}
+                          <div class="sk-help-categories__icon">
+                            {{ block.settings.icon_html }}
+                          </div>
+                        {%- endif -%}
                       </div>
-                    {%- endif -%}
-                  </div>
 
-                  <div class="sk-help-categories__content">
-                    {%- if block.settings.title != blank -%}
-                      <h3 class="sk-help-categories__title">
-                        {{ block.settings.title | escape }}
-                      </h3>
-                    {%- endif -%}
+                      <div class="sk-help-categories__content">
+                        {%- if block.settings.title != blank -%}
+                          <h3 class="sk-help-categories__title">
+                            {{ block.settings.title | escape }}
+                          </h3>
+                        {%- endif -%}
 
-                    {%- if block.settings.article_count != blank -%}
-                      <p class="sk-help-categories__count">
-                        {{ block.settings.article_count | escape }}
-                      </p>
-                    {%- endif -%}
+                        {%- if block.settings.article_count != blank -%}
+                          <p class="sk-help-categories__count">
+                            {{ block.settings.article_count | escape }}
+                          </p>
+                        {%- endif -%}
+                      </div>
+                    </a>
                   </div>
-                </a>
-              </div>
-          {%- endcase -%}
-        {%- endfor -%}
+                </li>
+            {%- endcase -%}
+          {%- endfor -%}
+        </ul>
       </div>
     {%- endif -%}
   </div>
