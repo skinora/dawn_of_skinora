@@ -361,9 +361,33 @@
     },
     "sk_led_light_work_QHXAbE": {
       "type": "sk-led-light-work",
+      "blocks": {
+        "image_fqA4U9": {
+          "type": "image",
+          "settings": {
+            "sk_led_light_work_img": "shopify://shop_images/ss1.png"
+          }
+        },
+        "image_7PEYr3": {
+          "type": "image",
+          "settings": {
+            "sk_led_light_work_img": "shopify://shop_images/ss2.png"
+          }
+        },
+        "image_Km7nKE": {
+          "type": "image",
+          "settings": {
+            "sk_led_light_work_img": "shopify://shop_images/ss3.png"
+          }
+        }
+      },
+      "block_order": [
+        "image_fqA4U9",
+        "image_7PEYr3",
+        "image_Km7nKE"
+      ],
       "name": "SK Led Light Work",
       "settings": {
-        "sk_led_light_work_img": "shopify://shop_images/Frame_7376.png",
         "sk_led_light_work_heading": "Hvordan Fungerer Skinora Led Lys"
       }
     },
