@@ -15,7 +15,6 @@
       "type": "footer",
       "settings": {
         "color_scheme": "scheme-3",
-        "logo": "shopify://shop_images/LogoFrame.png",
         "logo_width": 150,
         "brand_description": "<p><strong>SUBSCRIBE</strong><br/>Sign up to be the first to know about new expert product launches, the latest beauty trends and more.</p>",
         "newsletter_enable": true,
