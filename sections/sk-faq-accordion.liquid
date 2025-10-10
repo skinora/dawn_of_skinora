@@ -80,7 +80,7 @@
     background: transparent;
     color: #ffffff;
     box-shadow: none;
-    border: none;
+    /* border: none; */
   }
 
   .sk-faq-accordion__question {
@@ -286,7 +286,7 @@
           </div>
         </div>
         <div class="sk-faq-read-more-btn">
-          <a href="#" class=" sk_primary-button">
+          <a href="{{ section.settings.faq_link }}" class=" sk_primary-button">
             Les mer
             <span class="svg-wrapper">
               {{- 'arrow-right.svg' | inline_asset_content -}}
@@ -318,6 +318,12 @@
       "id": "open_first_item",
       "label": "Open first FAQ item by default",
       "default": false
+    },
+    {
+      "type": "url",
+      "id": "faq_link",
+      "label": "FAQ Link",
+      
     },
     {
       "type": "color",

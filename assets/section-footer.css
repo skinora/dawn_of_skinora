@@ -112,7 +112,7 @@
 }
 
 .footer__menu-link {
-  color: rgba(var(--color-foreground), 0.75);
+  color: #fff;
   text-decoration: none;
   font-size: 1.4rem;
   line-height: 1.4;
@@ -121,8 +121,8 @@
 }
 
 .footer__menu-link:hover {
-  color: rgb(var(--color-foreground));
-  border-bottom: 1px solid #fff;
+  color: #cdb7ed;
+  border-bottom: 1px solid #cdb7ed;
 }
 
 @media screen and (max-width: 749px) {
@@ -377,7 +377,7 @@
 }
 
 .newsletter-form__field-wrapper {
-  max-width: 36rem;
+  max-width: 50rem;
 }
 
 @media screen and (min-width: 750px) {
@@ -520,7 +520,7 @@
 } */
 
 .shipping-delivery-icon:hover {
-  background: rgba(var(--color-foreground), 0.1);
+  /* background: rgba(var(--color-foreground), 0.1); */
   color: rgb(var(--color-foreground));
 }
 
@@ -776,7 +776,7 @@ footer .field__input {
   background-color: transparent !important;
   color: #000 !important;
   padding: 0 20px !important;
-  max-width: 190px;
+  max-width: 400px;
 }
 
 footer .field__input::placeholder {

@@ -10,16 +10,16 @@
   }
 }
 
-.newsletter__wrapper > * {
+.newsletter__wrapper>* {
   margin-top: 0;
   margin-bottom: 0;
 }
 
-.newsletter__wrapper > * + * {
+.newsletter__wrapper>*+* {
   margin-top: 2rem;
 }
 
-.newsletter__wrapper > * + .newsletter-form {
+.newsletter__wrapper>*+.newsletter-form {
   margin-top: 3rem;
 }
 

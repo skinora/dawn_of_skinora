@@ -2803,6 +2803,7 @@ details[open]>.header__submenu {
 .header__menu-item {
   padding: 1.2rem;
   text-decoration: none;
+  /* transition-duration: 1s; */
   color: rgba(var(--color-foreground), 0.75);
 }
 
@@ -2812,15 +2813,18 @@ details[open]>.header__submenu {
 
 .header__menu-item span {
   transition: text-decoration var(--duration-short) ease;
+  /* transition-duration: 1s; */
 }
 
 .header__menu-item:hover span {
   text-decoration: underline;
-  text-underline-offset: 0.3rem;
+  text-underline-offset: 1rem;
+  color: #cdb7ed;
+  text-decoration-thickness: 0;
 }
 
 details[open]>.header__menu-item {
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 
 details[open]:hover>.header__menu-item {
@@ -2877,6 +2881,8 @@ details[open]>.header__menu-item .icon-caret {
 
 .header__submenu .header__menu-item:hover {
   text-decoration-line: underline;
+  color: #cdb7ed !important;
+  text-underline-offset: 0.5rem;
 }
 
 .header__menu-item .icon-caret {
@@ -3677,7 +3683,13 @@ body {
   display: flex;
   justify-content: center;
   text-transform: uppercase;
-  width: 37rem;
+  width: 30rem;
+  transition: all 0.3s ease;
+}
+
+.sk_primary-button:hover {
+  background: #30273e96;
+  color: #fff;
 }
 
 
@@ -3735,4 +3747,15 @@ div.okeReviews .oke-is-large .oke-w-reviews-list-item {
 
 .oke-w-reviews-main .oke-w-review-content .oke-reviewContent-top {
   margin-top: 1rem !important;
+}
+
+
+.sk-led-light-work__img {
+  display: flex;
+  justify-content: center;
+}
+
+
+.accordion-button:focus {
+  border-color: #fff !important;
 }

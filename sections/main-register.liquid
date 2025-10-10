@@ -12,9 +12,50 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  .customer__logo-wrapper {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .customer__logo {
+    max-width: {{ section.settings.logo_width }}px;
+    height: auto;
+    display: inline-block;
+  }
+
+  @media screen and (max-width: 749px) {
+    .customer__logo {
+      max-width: {{ section.settings.logo_width | times: 0.75 | round: 0 }}px;
+    }
+  }
 {%- endstyle -%}
 
 <div class="customer register section-{{ section.id }}-padding">
+  {%- if section.settings.show_logo -%}
+    <div class="customer__logo-wrapper">
+      {%- if section.settings.logo_image != blank -%}
+        <img
+          src="{{ section.settings.logo_image | image_url: width: section.settings.logo_width }}"
+          alt="{{ shop.name }}"
+          class="customer__logo"
+          width="{{ section.settings.logo_width }}"
+          height="60"
+          loading="lazy"
+        >
+      {%- else -%}
+        <img
+          src="{{ 'custom-logo.svg' | asset_url }}"
+          alt="{{ shop.name }}"
+          class="customer__logo"
+          width="{{ section.settings.logo_width }}"
+          height="60"
+          loading="lazy"
+        >
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
   <h1>
     {{ 'customer.register.title' | t }}
   </h1>
@@ -137,6 +178,32 @@
 {
   "name": "t:sections.main-register.name",
   "settings": [
+    {
+      "type": "header",
+      "content": "Logo Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_logo",
+      "label": "Show logo",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image",
+      "info": "Recommended: SVG or PNG with transparent background. If not selected, defaults to custom-logo.svg from assets."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 200
+    },
     {
       "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"
