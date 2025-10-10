@@ -3768,16 +3768,6 @@ h1.header__heading svg,
   padding: 3rem 0;
 }
 
-/* .sk-led-light-work-image-item{
-  position: relative;
+footer .footer__column.footer__column--menu a:hover {
+  color: #cdb7ed;
 }
-
-.sk-led-light-work-image-item::after{
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-} */

@@ -10,7 +10,7 @@
 {
   "sections": {
     "banner": {
-      "type": "sk-help-banner",
+      "type": "sk-blogs-banner",
       "settings": {
         "heading": "Blogs",
         "subheading": "",
