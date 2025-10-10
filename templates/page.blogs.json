@@ -92,6 +92,7 @@
         "heading": "Våre Hudinnsikter – For Well-Aging, Hudhelse og Problemfri Hud",
         "description": "<p>Hos Skinora tror vi på hudpleie som gir deg både trygghet og resultater. Med kunnskap, teknologi og gode rutiner hjelper vi deg å møte aldringstegn, akne og andre hudutfordringer – på en naturlig måte.</p>",
         "show_pagination": true,
+        "posts_per_page": 12,
         "color_scheme": "accent-1",
         "padding_top": 80,
         "padding_bottom": 80
