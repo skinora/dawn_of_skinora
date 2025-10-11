@@ -53,7 +53,9 @@
         },
         "quantity_selector": {
           "type": "quantity_selector",
-          "settings": {}
+          "settings": {
+            "show_dynamic_checkout": false
+          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -157,7 +159,8 @@
       "settings": {
         "faq_image": "shopify://shop_images/Image_7.png",
         "title": "",
-        "open_first_item": true
+        "open_first_item": true,
+        "faq_link": ""
       }
     },
     "sk_before_after_mBrdqd": {
