@@ -240,9 +240,13 @@
 }
 
 .sk-radiance-price-item--sale {
-    color: #fff;
+    color: #000;
     font-weight: 700;
     font-size: 26px;
+}
+
+.sk-radiance-sticky-bottom-bar .sk-radiance-price-item--sale {
+    color: #fff;
 }
 
 .sk-radiance-badges {
