@@ -14,9 +14,10 @@
 
 <style>
   .sw-publication-{{ section.id }}{
-    margin-top: 2rem;
-    margin-bottom: 2rem;
     overflow-x: hidden;
+                        background: #F1EFF4;
+                        padding: 2rem 0;
+                        margin-bottom: 3rem;
   }
   .sw-publication-{{ section.id }} .sw-publication__scroll-parent {
       position: relative;
@@ -36,7 +37,7 @@
       justify-content: space-around;
   }
   .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card{
-      flex: 0 0 70px
+      flex: 0 0 100px
   }
   .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card img{
       width:100%;
@@ -82,7 +83,7 @@
         {% for logo in product.metafields.custom.promotion_logos.value %}
           <div class="sw-publication__card">
             <img
-              src="{{ logo | image_url: width: 104, height: 104 }}"
+              src="{{ logo | image_url: width: 300, height: 300 }}"
               alt="Promotion logo {{ forloop.index }}"
               width="104"
               height="104"
@@ -95,7 +96,7 @@
         {% for logo in product.metafields.custom.promotion_logos.value %}
           <div class="sw-publication__card">
             <img
-              src="{{ logo | image_url: width: 104, height: 104 }}"
+              src="{{ logo | image_url: width: 300, height: 300 }}"
               alt="Promotion logo {{ forloop.index }}"
               width="104"
               height="104"

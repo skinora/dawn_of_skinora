@@ -2,6 +2,11 @@
   assign product_form_id = 'product-form-' | append: section_id
   assign current_variant = product.selected_or_first_available_variant
   assign product_form_installment_id = 'product-form-installment-' | append: section_id
+
+  assign show_dynamic_checkout = false
+  if block.settings.show_dynamic_checkout
+    assign show_dynamic_checkout = true
+  endif
 -%}
 
 <div
@@ -9,141 +14,96 @@
   {{ block.shopify_attributes }}
 >
   <div class="sk-radiance-buy-buttons__container">
-    {%- form 'product',
-      product,
-      id: product_form_id,
-      class: 'sk-radiance-product-form',
-      novalidate: 'novalidate',
-      data-type: 'add-to-cart-form'
-    -%}
-      <input type="hidden" name="id" value="{{ current_variant.id }}" disabled>
+    <product-form class="sk-radiance-product-form" data-section-id="{{ section_id }}">
+      <div class="product-form__error-message-wrapper" role="alert" hidden>
+        <span class="svg-wrapper">
+          {{- 'icon-error.svg' | inline_asset_content -}}
+        </span>
+        <span class="product-form__error-message"></span>
+      </div>
 
-      <div class="sk-radiance-buy-buttons__wrapper">
-        <div class="sk-radiance-buy-buttons__buttons">
-          {% comment %}
+      {%- form 'product',
+        product,
+        id: product_form_id,
+        class: 'sk-radiance-product-form__form',
+        novalidate: 'novalidate',
+        data-type: 'add-to-cart-form'
+      -%}
+        <input
+          type="hidden"
+          name="id"
+          value="{{ current_variant.id }}"
+          class="product-variant-id"
+        >
+
+        <div class="sk-radiance-buy-buttons__wrapper">
+          <div class="sk-radiance-buy-buttons__buttons">
             <button
               id="ProductSubmitButton-{{ section_id }}"
               type="submit"
               name="add"
-              class="sk-radiance-buy-buttons__button sk-radiance-buy-buttons__button--primary"
+              class="sk-radiance-buy-buttons__button sk-radiance-buy-buttons__button--primary{% unless show_dynamic_checkout %} sk-radiance-buy-buttons__button--single{% endunless %}"
             >
               <span class="sk-radiance-buy-buttons__button-text">
-                {%- if current_variant.available -%}
-                  {{ 'products.product.add_to_cart' | t }}
-                {%- else -%}
-                  {{ 'products.product.sold_out' | t }}
-                {%- endif -%}
+                {{ 'products.product.add_to_cart' | t }}
               </span>
-              <span class="sk-radiance-buy-buttons__button-loading">
-                <span class="sk-radiance-buy-buttons__button-spinner">
-                  {{- 'icon-loading.svg' | inline_asset_content -}}
-                </span>
-              </span>
+              {%- render 'loading-spinner' -%}
             </button>
-          {% endcomment %}
 
-          {{ form | payment_button }}
-          {% comment %}
-            {%- if block.settings.show_dynamic_checkout -%}
+            {%- if show_dynamic_checkout -%}
               {{ form | payment_button }}
             {%- endif -%}
-          {% endcomment %}
+          </div>
         </div>
-      </div>
 
-      {% comment %}
-        <div class="sk-radiance-buy-buttons__payment-methods">
-          <div class="sk-radiance-buy-buttons__payment-methods-title d-none">
-            {{ 'products.product.payment_methods' | t }}
+        {% comment %}
+          <div class="sk-radiance-buy-buttons__payment-methods">
+            <div class="sk-radiance-buy-buttons__payment-methods-title d-none">
+              {{ 'products.product.payment_methods' | t }}
+            </div>
+            <div class="sk-radiance-buy-buttons__payment-methods-logos">
+              <div class="sk-radiance-buy-buttons__payment-method">
+                <img
+                  src="{{ 'visa-logo.svg' | asset_url }}"
+                  alt="Visa"
+                  class="sk-radiance-buy-buttons__payment-logo"
+                  width="47"
+                  height="34"
+                >
+              </div>
+              <div class="sk-radiance-buy-buttons__payment-method">
+                <img
+                  src="{{ 'mastercard-logo.svg' | asset_url }}"
+                  alt="Mastercard"
+                  class="sk-radiance-buy-buttons__payment-logo"
+                  width="47"
+                  height="34"
+                >
+              </div>
+              <div class="sk-radiance-buy-buttons__payment-method">
+                <img
+                  src="{{ 'apple-pay-logo.svg' | asset_url }}"
+                  alt="Apple Pay"
+                  class="sk-radiance-buy-buttons__payment-logo"
+                  width="47"
+                  height="34"
+                >
+              </div>
+              <div class="sk-radiance-buy-buttons__payment-method">
+                <img
+                  src="{{ 'klarna-logo.svg' | asset_url }}"
+                  alt="Klarna"
+                  class="sk-radiance-buy-buttons__payment-logo"
+                  width="47"
+                  height="34"
+                >
+              </div>
+            </div>
           </div>
-          <div class="sk-radiance-buy-buttons__payment-methods-logos">
-            <div class="sk-radiance-buy-buttons__payment-method">
-              <img
-                src="{{ 'visa-logo.svg' | asset_url }}"
-                alt="Visa"
-                class="sk-radiance-buy-buttons__payment-logo"
-                width="47"
-                height="34"
-              >
-            </div>
-            <div class="sk-radiance-buy-buttons__payment-method">
-              <img
-                src="{{ 'mastercard-logo.svg' | asset_url }}"
-                alt="Mastercard"
-                class="sk-radiance-buy-buttons__payment-logo"
-                width="47"
-                height="34"
-              >
-            </div>
-            <div class="sk-radiance-buy-buttons__payment-method">
-              <img
-                src="{{ 'apple-pay-logo.svg' | asset_url }}"
-                alt="Apple Pay"
-                class="sk-radiance-buy-buttons__payment-logo"
-                width="47"
-                height="34"
-              >
-            </div>
-            <div class="sk-radiance-buy-buttons__payment-method">
-              <img
-                src="{{ 'klarna-logo.svg' | asset_url }}"
-                alt="Klarna"
-                class="sk-radiance-buy-buttons__payment-logo"
-                width="47"
-                height="34"
-              >
-            </div>
-          </div>
-        </div>
-      {% endcomment %}
-    {%- endform -%}
+        {% endcomment %}
+      {%- endform -%}
+    </product-form>
   </div>
 
   {%- comment -%} Pickup availability removed - snippet not available {%- endcomment -%}
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('#{{ product_form_id }}');
-    const submitButton = document.querySelector('#ProductSubmitButton-{{ section_id }}');
-    const quantityInput = document.querySelector('#Quantity-{{ section_id }}');
-    const minusButton = document.querySelector('.sk-radiance-quantity__button--minus');
-    const plusButton = document.querySelector('.sk-radiance-quantity__button--plus');
-
-    // Quantity controls
-    if (minusButton && plusButton && quantityInput) {
-      minusButton.addEventListener('click', function () {
-        const currentValue = parseInt(quantityInput.value);
-        if (currentValue > 1) {
-          quantityInput.value = currentValue - 1;
-        }
-      });
-
-      plusButton.addEventListener('click', function () {
-        const currentValue = parseInt(quantityInput.value);
-        quantityInput.value = currentValue + 1;
-      });
-    }
-
-    // Form submission
-    if (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        if (submitButton) {
-          submitButton.classList.add('sk-radiance-buy-buttons__button--loading');
-          submitButton.disabled = true;
-        }
-
-        // Add to cart logic would go here
-        // This is a simplified version
-        setTimeout(() => {
-          if (submitButton) {
-            submitButton.classList.remove('sk-radiance-buy-buttons__button--loading');
-            submitButton.disabled = false;
-          }
-        }, 2000);
-      });
-    }
-  });
-</script>

@@ -128,7 +128,10 @@ product-info {
 
 .shopify-payment-button__button--unbranded:hover,
 .shopify-payment-button__button--unbranded:hover:not([disabled]) {
-  background-color: rgba(var(--color-button), var(--alpha-button-background));
+  background: #30273E;
+  color: #fff;
+  border: 0;
+  outline: 0;
 }
 
 .shopify-payment-button__more-options {
@@ -214,7 +217,8 @@ product-info {
   font-size: 1.5rem;
   letter-spacing: 0.1rem;
   background: #30273E;
-  width: 280px;
+  width: 250px;
+  height: 55px;
 }
 
 /* Product info */

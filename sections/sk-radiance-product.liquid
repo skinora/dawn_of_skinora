@@ -76,7 +76,7 @@
   {%- endif -%}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
-  <div class="page-width">
+  <div class="container">
     <div class="sk-radiance-product sk-radiance-product--{{ section.settings.media_size }} sk-radiance-product--{{ section.settings.media_position }} sk-radiance-product--{{ section.settings.gallery_layout }} sk-radiance-product--mobile-{{ section.settings.mobile_thumbnails }} {% if product.media.size > 0 %}sk-radiance-product--with-media{% else %}sk-radiance-product--no-media{% endif %}">
       <!-- Product Media Gallery -->
       <div class="sk-radiance-product__media-wrapper">
@@ -300,9 +300,10 @@
                   <div class="sk-product-promotion-logos-block" {{ block.shopify_attributes }}>
                     <style>
                       .sk-product-promotion-logos-block-{{ section.id }} {
-                        margin-top: 2rem;
-                        margin-bottom: 2rem;
                         overflow-x: hidden;
+                        background: #F1EFF4;
+                        padding: 2rem 0;
+                        margin-bottom: 3rem;
                       }
                       .sk-product-promotion-logos-block-{{ section.id }} .sw-publication__scroll-parent {
                         position: relative;
@@ -322,7 +323,7 @@
                         justify-content: space-around;
                       }
                       .sk-product-promotion-logos-block-{{ section.id }} .sw-publication__scroll-element .sw-publication__card {
-                        flex: 0 0 70px;
+                        flex: 0 0 100px;
                       }
                       .sk-product-promotion-logos-block-{{ section.id }} .sw-publication__scroll-element .sw-publication__card img {
                         width: 100%;
@@ -429,6 +430,77 @@
       {{ product | structured_data }}
     </script>
   </div>
+
+  <!-- Sticky Bottom Bar -->
+  <div class="sk-radiance-sticky-bottom-bar" id="stickyBottomBar-{{ section.id }}">
+    <div class="container">
+      <div class="sk-radiance-sticky-bottom-bar__content">
+        <div class="sk-radiance-sticky-bottom-bar__info">
+          <h3 class="sk-radiance-sticky-bottom-bar__product-name">{{ product.title }}</h3>
+          <div class="sk-radiance-sticky-bottom-bar__price">
+            {%- render 'sk-radiance-price',
+              product: product,
+              use_variant: true,
+              show_badges: false,
+              price_class: 'price--small'
+            -%}
+          </div>
+        </div>
+        <button
+          type="button"
+          class="sk-radiance-sticky-bottom-bar__button"
+          data-product-form="{{ product_form_id }}"
+          data-section-id="{{ section.id }}"
+        >
+          <span>{{ 'products.product.add_to_cart' | t }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const stickyBar = document.getElementById('stickyBottomBar-{{ section.id }}');
+      const productForm = document.querySelector('#{{ product_form_id }}');
+      const stickyButton = stickyBar.querySelector('.sk-radiance-sticky-bottom-bar__button');
+      const mainProductSection = document.getElementById('MainProduct-{{ section.id }}');
+
+      // Show/hide sticky bar based on scroll position
+      function toggleStickyBar() {
+        if (!mainProductSection) return;
+
+        const productRect = mainProductSection.getBoundingClientRect();
+        const isProductVisible = productRect.top < window.innerHeight && productRect.bottom > 0;
+
+        // Show sticky bar when product section is not fully visible
+        if (productRect.bottom < 0 || productRect.top > window.innerHeight - 100) {
+          stickyBar.classList.add('visible');
+        } else {
+          stickyBar.classList.remove('visible');
+        }
+      }
+
+      // Handle sticky button click
+      if (stickyButton && productForm) {
+        stickyButton.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          // Trigger the main form submit
+          const submitButton = productForm.querySelector('[type="submit"]');
+          if (submitButton) {
+            submitButton.click();
+          }
+        });
+      }
+
+      // Listen to scroll events
+      window.addEventListener('scroll', toggleStickyBar);
+      window.addEventListener('resize', toggleStickyBar);
+
+      // Initial check
+      toggleStickyBar();
+    })();
+  </script>
 </product-info>
 
 {% schema %}
@@ -490,7 +562,15 @@
     {
       "type": "quantity_selector",
       "name": "Quantity Selector",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "default": true,
+          "label": "Show Dynamic Checkout Buttons"
+        }
+      ]
     },
     {
       "type": "variant_picker",

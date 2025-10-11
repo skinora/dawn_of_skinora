@@ -8,6 +8,7 @@
 /* Product Media Gallery */
 .sk-radiance-product__media-wrapper {
     position: relative;
+    flex: 1;
 }
 
 .sk-radiance-product__media {
@@ -172,7 +173,7 @@
     font-weight: 600;
     margin: 0;
     color: #3A2D32;
-    margin-bottom: 12px;
+    margin-bottom: 3px;
 }
 
 /* Rating */
@@ -239,7 +240,7 @@
 }
 
 .sk-radiance-price-item--sale {
-    color: #000;
+    color: #fff;
     font-weight: 700;
     font-size: 26px;
 }
@@ -319,6 +320,32 @@
     gap: 1rem;
 }
 
+.sk-radiance-product-form {
+    width: 100%;
+}
+
+.sk-radiance-product-form .product-form__error-message-wrapper {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sk-radiance-product-form .product-form__error-message-wrapper .svg-wrapper {
+    width: 20px;
+    height: 20px;
+    color: #856404;
+}
+
+.sk-radiance-product-form .product-form__error-message {
+    color: #856404;
+    font-size: 0.875rem;
+}
+
 .sk-radiance-buy-buttons__wrapper {
     display: flex;
     flex-direction: column;
@@ -344,21 +371,21 @@
 }
 
 .sk-radiance-buy-buttons__button {
-    background: #6c5ce7;
+    background: #30273E;
     color: #fff;
     border: none;
     padding: 1rem 2rem;
-    border-radius: 8px;
-    font-size: 1rem;
+    font-size: 17px;
     font-weight: 600;
-    cursor: pointer;
     transition: background-color 0.2s ease;
     position: relative;
     overflow: hidden;
+    height: 55px;
+    width: 250px;
 }
 
 .sk-radiance-buy-buttons__button:hover {
-    background: #5f3dc4;
+    background: #30273e96;
 }
 
 .sk-radiance-buy-buttons__button:disabled {
@@ -366,34 +393,26 @@
     cursor: not-allowed;
 }
 
-.sk-radiance-buy-buttons__button--loading .sk-radiance-buy-buttons__button-text {
-    opacity: 0;
+.sk-radiance-buy-buttons__button.loading .sk-radiance-buy-buttons__button-text {
+    visibility: hidden;
 }
 
-.sk-radiance-buy-buttons__button-loading {
+.sk-radiance-buy-buttons__button .loading__spinner {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    opacity: 0;
+    width: 1.8rem;
+    height: 1.8rem;
 }
 
-.sk-radiance-buy-buttons__button--loading .sk-radiance-buy-buttons__button-loading {
-    opacity: 1;
+.sk-radiance-buy-buttons__button .loading__spinner svg {
+    width: 100%;
+    height: 100%;
 }
 
-.sk-radiance-buy-buttons__button-spinner {
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
+.sk-radiance-buy-buttons__button .loading__spinner.hidden {
+    display: none;
 }
 
 /* Features */
@@ -448,6 +467,8 @@
 .custom_quantity_input {
     background: #30273E;
     color: #fff;
+    width: 115px;
+    height: 55px;
 }
 
 .sk-radiance-product__info-container .price-per-item__container {
@@ -486,14 +507,14 @@
 }
 
 .sk-radiance-product-features__icon svg {
-    width: 60px;
-    height: 60px;
+    width: 87px;
+    height: 87px;
     transition: transform 0.2s ease;
 }
 
-.sk-radiance-product-features__item:hover .sk-radiance-product-features__icon svg {
+/* .sk-radiance-product-features__item:hover .sk-radiance-product-features__icon svg {
     transform: scale(1.05);
-}
+} */
 
 .sk-radiance-product-features__text {
     display: flex;
@@ -606,4 +627,128 @@
     color: #333;
     flex: 1;
     /* font-family: "DM Sans", sans-serif; */
+}
+
+/* Sticky Bottom Bar */
+.sk-radiance-sticky-bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: linear-gradient(to left, #30273E, #070707) !important;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    padding: 1rem 0;
+}
+
+.sk-radiance-sticky-bottom-bar.visible {
+    transform: translateY(0);
+}
+
+.sk-radiance-sticky-bottom-bar__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.sk-radiance-sticky-bottom-bar__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+}
+
+.sk-radiance-sticky-bottom-bar__product-name {
+    font-size: 28px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-top: 1rem;
+}
+
+.sk-radiance-sticky-bottom-bar__price {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sk-radiance-sticky-bottom-bar__price .sk-radiance-price-item {
+    font-size: 18px;
+}
+
+.sk-radiance-sticky-bottom-bar__button {
+    background: #F1EFF4;
+    color: #1d1925;
+    border: none;
+    padding: 13px 45px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 33px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.sk-radiance-sticky-bottom-bar__button:hover {
+    background: #ababab;
+    box-shadow: 0 4px 12px rgba(48, 39, 62, 0.3);
+}
+
+.sk-radiance-sticky-bottom-bar__button:active {
+    transform: translateY(0);
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 749px) {
+    .sk-radiance-sticky-bottom-bar {
+        padding: 0.75rem 0;
+    }
+
+    .sk-radiance-sticky-bottom-bar__content {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .sk-radiance-sticky-bottom-bar__info {
+        width: 100%;
+        text-align: center;
+    }
+
+    .sk-radiance-sticky-bottom-bar__product-name {
+        font-size: 16px;
+        white-space: normal;
+        line-height: 1.4;
+        max-height: 2.8em;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .sk-radiance-sticky-bottom-bar__price {
+        justify-content: center;
+    }
+
+    .sk-radiance-sticky-bottom-bar__button {
+        width: 100%;
+        min-width: auto;
+    }
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+    .sk-radiance-sticky-bottom-bar__product-name {
+        font-size: 17px;
+    }
+
+    .sk-radiance-sticky-bottom-bar__button {
+        min-width: 180px;
+        padding: 0.875rem 1.5rem;
+    }
 }

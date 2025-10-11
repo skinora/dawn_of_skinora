@@ -6,21 +6,45 @@
 
   .sk-product-technology-{{ section.id }} .sk-technology__main-heading {
     font-size: 42px;
-    line-height:60px;
+    line-height: 60px;
     font-weight: 700;
     color: #30273E;
     text-align: center;
-    width: 45%;
-    margin: auto;
-    margin-bottom: 60px;
+    max-width: 800px;
+    margin: 0 auto 60px;
   }
 
+  .sk-product-technology-{{ section.id }} .sk-technology__container {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 
-  .sk-product-technology-{{ section.id }} .sk-technology__content {
-    flex: 1;
+  .sk-product-technology-{{ section.id }} .sk-technology__left-image {
+    flex: 0 0 auto;
     max-width: 400px;
   }
 
+  .sk-product-technology-{{ section.id }} .sk-technology__left-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .sk-product-technology-{{ section.id }} .sk-technology__content {
+    flex: 1;
+    max-width: 500px;
+    min-width: 300px;
+  }
+
+  .sk-product-technology-{{ section.id }} .sk-technology__content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #30273E;
+    margin: 0 0 16px 0;
+  }
 
   .sk-product-technology-{{ section.id }} .sk-technology__content h3,
   .sk-product-technology-{{ section.id }} .sk-technology__content h4 {
@@ -29,74 +53,72 @@
     color: #30273E;
     margin: 0 0 12px 0;
   }
+
+  .sk-product-technology-{{ section.id }} .sk-technology__right-image {
+    flex: 0 0 auto;
+    max-width: 400px;
+  }
+
+  .sk-product-technology-{{ section.id }} .sk-technology__right-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
 </style>
 
-{%- if product.metafields.custom.technology_content != blank or product.metafields.custom.technology_image != blank -%}
+{%- liquid
+  assign technology_heading = product.metafields.custom.technology_heading
+  assign technology_left_image = product.metafields.custom.technology_left_image
+  assign technology_content = product.metafields.custom.technology_content
+  assign technology_right_image = product.metafields.custom.technology_right_image
+-%}
+
+{%- if technology_heading != blank
+  or technology_left_image != blank
+  or technology_content != blank
+  or technology_right_image != blank
+-%}
   <section class="sk-product-technology-{{ section.id }}">
     <div class="container">
-      {%- if product.metafields.custom.technology_content != blank -%}
-        {%- capture technology_html -%}
-          {{ product.metafields.custom.technology_content | metafield_tag }}
-        {%- endcapture -%}
-
-        {%- comment -%} Extract main heading (first h2 or h3) {%- endcomment -%}
-        {%- assign heading_start = technology_html | split: '<h2>' | first -%}
-        {%- if heading_start == technology_html -%}
-          {%- assign heading_start = technology_html | split: '<h3>' | first -%}
-          {%- assign heading_end = technology_html | split: '</h3>' | last -%}
-          {%- assign heading_full = technology_html
-            | replace: heading_start, ''
-            | replace: heading_end, ''
-            | replace: '<h3>', ''
-            | replace: '</h3>', ''
-            | strip
-          -%}
-          {%- assign content_without_heading = technology_html
-            | replace_first: '<h3>', ''
-            | replace_first: '</h3>', ''
-            | replace_first: heading_full, ''
-          -%}
-        {%- else -%}
-          {%- assign heading_end = technology_html | split: '</h2>' | last -%}
-          {%- assign heading_full = technology_html
-            | replace: heading_start, ''
-            | replace: heading_end, ''
-            | replace: '<h2>', ''
-            | replace: '</h2>', ''
-            | strip
-          -%}
-          {%- assign content_without_heading = technology_html
-            | replace_first: '<h2>', ''
-            | replace_first: '</h2>', ''
-            | replace_first: heading_full, ''
-          -%}
-        {%- endif -%}
-
-        {%- if heading_full != blank -%}
-          <h2 class="sk-technology__main-heading">{{ heading_full }}</h2>
-        {%- endif -%}
+      {%- comment -%} Main Heading {%- endcomment -%}
+      {%- if technology_heading != blank -%}
+        <h2 class="sk-technology__main-heading">
+          {{ technology_heading }}
+        </h2>
       {%- endif -%}
 
       <div class="sk-technology__container">
-        <!-- Diagram Section -->
-        <div class="sk-technology__diagram">
-          {%- if product.metafields.custom.technology_image != blank -%}
+        {%- comment -%} Left Image (Diagram) {%- endcomment -%}
+        {%- if technology_left_image != blank -%}
+          <div class="sk-technology__left-image">
             <img
-              src="{{ product.metafields.custom.technology_image | image_url: width: 1200, height: 400 }}"
-              alt="{{ product.metafields.custom.technology_image.alt | default: 'Technology diagram' }}"
-              width="1200"
-              height="400"
+              src="{{ technology_left_image | image_url: width: 800 }}"
+              alt="{{ technology_left_image.alt | default: 'Technology diagram' }}"
+              width="800"
+              height="auto"
               loading="lazy"
             >
-          {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          {%- endif -%}
-        </div>
+          </div>
+        {%- endif -%}
 
-        <!-- Content Section -->
-        {%- if product.metafields.custom.technology_content != blank -%}
+        {%- comment -%} Center Content {%- endcomment -%}
+        {%- if technology_content != blank -%}
           <div class="sk-technology__content">
-            {{ content_without_heading }}
+            {{ technology_content | metafield_tag }}
+            {{ 'technology-arrow.svg' | inline_asset_content }}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Right Image (Before/After) {%- endcomment -%}
+        {%- if technology_right_image != blank -%}
+          <div class="sk-technology__right-image">
+            <img
+              src="{{ technology_right_image | image_url: width: 800 }}"
+              alt="{{ technology_right_image.alt | default: 'Before and after comparison' }}"
+              width="800"
+              height="auto"
+              loading="lazy"
+            >
           </div>
         {%- endif -%}
       </div>
@@ -116,19 +138,31 @@
     },
     {
       "type": "paragraph",
-      "content": "This section displays technology explanation from product metafields. Add these 2 metafields:"
+      "content": "This section displays technology explanation from product metafields. Add these 4 metafields to your product:"
     },
     {
       "type": "paragraph",
-      "content": "1. 'custom.technology_image' (File) - Upload the technology diagram/visual"
+      "content": "1. 'custom.technology_heading' (Single line text) - Main heading at the top"
     },
     {
       "type": "paragraph",
-      "content": "2. 'custom.technology_content' (Rich text) - Main heading and description text"
+      "content": "2. 'custom.technology_left_image' (File) - Left diagram showing wavelength visualization"
+    },
+    {
+      "type": "paragraph",
+      "content": "3. 'custom.technology_content' (Rich text) - Center text content explaining the technology"
+    },
+    {
+      "type": "paragraph",
+      "content": "4. 'custom.technology_right_image' (File) - Right before/after comparison image"
     },
     {
       "type": "header",
-      "content": "Before/After Comparison (Optional)"
+      "content": "Layout"
+    },
+    {
+      "type": "paragraph",
+      "content": "The section displays: [Left Image] [Center Content] [Right Image] in a horizontal layout (stacks on mobile)"
     }
   ],
   "presets": [

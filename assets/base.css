@@ -1192,8 +1192,7 @@ deferred-media {
 
 .button,
 .shopify-challenge__button,
-.customer button,
-button.shopify-payment-button__button--unbranded {
+.customer button {
   --shadow-horizontal-offset: var(--buttons-shadow-horizontal-offset);
   --shadow-vertical-offset: var(--buttons-shadow-vertical-offset);
   --shadow-blur-radius: var(--buttons-shadow-blur-radius);
@@ -1208,8 +1207,7 @@ button.shopify-payment-button__button--unbranded {
 
 .button,
 .shopify-challenge__button,
-.customer button,
-button.shopify-payment-button__button--unbranded {
+.customer button {
   min-width: calc(12rem + var(--buttons-border-width) * 2);
   min-height: calc(4.5rem + var(--buttons-border-width) * 2);
 }
@@ -1248,7 +1246,7 @@ button.shopify-payment-button__button--unbranded {
   box-shadow: var(--shadow-horizontal-offset) var(--shadow-vertical-offset) var(--shadow-blur-radius) rgba(var(--color-shadow), var(--shadow-opacity));
 }
 
-.button:after,
+/* .button:after,
 .shopify-challenge__button:after,
 .customer button:after,
 .shopify-payment-button__button--unbranded:after {
@@ -1263,7 +1261,7 @@ button.shopify-payment-button__button--unbranded {
   box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset)) rgba(var(--color-button-text), var(--border-opacity)),
     0 0 0 var(--buttons-border-width) rgba(var(--color-button), var(--alpha-button-background));
   transition: box-shadow var(--duration-short) ease;
-}
+} */
 
 .button:not([disabled]):hover::after,
 .shopify-challenge__button:hover::after,
@@ -1960,27 +1958,26 @@ input[type='checkbox'] {
 
 .quantity__button:focus-visible,
 .quantity__input:focus-visible {
-  background-color: rgb(var(--color-background));
-  z-index: 2;
+  outline: 0 !important;
+  box-shadow: none !important;
 }
 
 .quantity__button:focus,
 .quantity__input:focus {
-  background-color: rgb(var(--color-background));
-  z-index: 2;
+  /* background-color: rgb(var(--color-background));
+  z-index: 2; */
 }
 
 .quantity__button:not(:focus-visible):not(.focused),
 .quantity__input:not(:focus-visible):not(.focused) {
-  box-shadow: inherit;
-  background-color: inherit;
+  box-shadow: none;
 }
 
 .quantity__input:-webkit-autofill,
 .quantity__input:-webkit-autofill:hover,
 .quantity__input:-webkit-autofill:active {
-  box-shadow: 0 0 0 10rem rgb(var(--color-background)) inset !important;
-  -webkit-box-shadow: 0 0 0 10rem rgb(var(--color-background)) inset !important;
+  /* box-shadow: 0 0 0 10rem rgb(var(--color-background)) inset !important; */
+  /* -webkit-box-shadow: 0 0 0 10rem rgb(var(--color-background)) inset !important; */
 }
 
 .quantity__input::-webkit-outer-spin-button,
@@ -3770,4 +3767,35 @@ h1.header__heading svg,
 
 footer .footer__column.footer__column--menu a:hover {
   color: #cdb7ed;
+}
+
+
+.sk-faq-accordion__container .accordion {
+  margin-top: 0;
+}
+
+
+.sk-before-after .container {
+  position: relative;
+}
+
+.sk-before-after-prev {
+  left: -50px !important;
+}
+
+.sk-before-after-next {
+  right: -25px !important;
+}
+
+
+.okeReviews[data-oke-container] .oke-button:not(.oke-is-loading):not(.oke-is-active):hover,
+div.okeReviews .oke-button:not(.oke-is-loading):not(.oke-is-active):hover {
+  color: #fff !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.okeReviews[data-oke-container] .oke-w-writeReview:hover:before,
+div.okeReviews .oke-w-writeReview:hover:before {
+  color: #fff !important;
 }

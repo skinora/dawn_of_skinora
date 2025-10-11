@@ -482,9 +482,9 @@
 /* Payment and Shipping/Delivery Styles */
 .footer__payment-shipping-wrapper {
   display: flex;
-  gap: 1.5rem;
-  align-items: start;
-  justify-content: space-around;
+
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 3rem;
   flex-direction: row-reverse;
 }
