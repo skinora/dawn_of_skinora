@@ -122,6 +122,9 @@
       ],
       "settings": {
         "enable_sticky_info": true,
+        "show_guarantee_below_media": true,
+        "guarantee_button_text": "LES MER",
+        "guarantee_button_link": "",
         "color_scheme": "",
         "media_size": "large",
         "constrain_to_viewport": true,
