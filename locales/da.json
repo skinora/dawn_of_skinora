@@ -124,7 +124,7 @@
         "in_cart_aria_label": "Antal ({{ quantity }} i indkøbskurv)"
       },
       "price": {
-        "from_price_html": "Fra {{ price }}",
+        "from_price_html": "{{ price }}",
         "regular_price": "Normalpris",
         "sale_price": "Udsalgspris",
         "unit_price": "Stykpris"
@@ -188,7 +188,7 @@
       "apply": "Anvend",
       "clear": "Ryd",
       "clear_all": "Fjern alle",
-      "from": "Fra",
+      "from": "",
       "filter_and_sort": "Filtrer og sortér",
       "filter_by_label": "Filter:",
       "filter_button": "Filtrer",

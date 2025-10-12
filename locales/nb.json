@@ -137,7 +137,7 @@
         "in_cart_aria_label": "Antall ({{ quantity }} i handlekurven)"
       },
       "price": {
-        "from_price_html": "Fra {{ price }}",
+        "from_price_html": "{{ price }}",
         "regular_price": "Vanlig pris",
         "sale_price": "Salgspris",
         "unit_price": "Enhetspris"
@@ -201,7 +201,7 @@
       "apply": "Bruk",
       "clear": "Fjern",
       "clear_all": "Fjern alle",
-      "from": "Fra",
+      "from": "",
       "filter_and_sort": "Filtrer og sorter",
       "filter_by_label": "Filter:",
       "filter_button": "Filter",

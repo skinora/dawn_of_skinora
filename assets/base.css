@@ -646,10 +646,10 @@ h3 .icon-arrow,
   height: 20px;
 }
 
-.svg-wrapper>svg {
+/* .svg-wrapper>svg {
   height: 100%;
   width: 100%;
-}
+} */
 
 /* base-details-summary */
 summary {
@@ -1872,7 +1872,7 @@ input[type='checkbox'] {
 
 /* component-quantity */
 .quantity {
-  color: rgba(var(--color-foreground));
+  color: #fff;
   position: relative;
   width: calc(14rem / var(--font-body-scale) + var(--inputs-border-width) * 2);
   display: flex;
@@ -3690,6 +3690,12 @@ body {
 }
 
 
+.sk_primary-button.cart-items-pg-btn {
+  display: inline-flex !important;
+  width: 23rem
+}
+
+
 .shopify-pc__banner__dialog {
   display: none !important;
 }
@@ -3798,4 +3804,14 @@ div.okeReviews .oke-button:not(.oke-is-loading):not(.oke-is-active):hover {
 .okeReviews[data-oke-container] .oke-w-writeReview:hover:before,
 div.okeReviews .oke-w-writeReview:hover:before {
   color: #fff !important;
+}
+
+.sk-product-listing-form {
+  display: flex;
+  justify-content: center;
+}
+
+.okeReviews[data-oke-container] .oke-w-review-main,
+div.okeReviews .oke-w-review-main {
+  margin-right: 24px;
 }

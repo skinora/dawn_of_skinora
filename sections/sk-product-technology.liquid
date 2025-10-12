@@ -64,6 +64,12 @@
     height: auto;
     display: block;
   }
+
+  .sk-product-technology-{{ section.id }} .sk-technology__content-arrow {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+  }
 </style>
 
 {%- liquid
@@ -105,7 +111,9 @@
         {%- if technology_content != blank -%}
           <div class="sk-technology__content">
             {{ technology_content | metafield_tag }}
-            {{ 'technology-arrow.svg' | inline_asset_content }}
+            <div class="sk-technology__content-arrow">
+              {{ 'technology-arrow.svg' | inline_asset_content }}
+            </div>
           </div>
         {%- endif -%}
 

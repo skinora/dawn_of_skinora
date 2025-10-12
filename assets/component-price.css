@@ -5,7 +5,7 @@
   color: rgb(var(--color-foreground));
 }
 
-.price > * {
+.price>* {
   display: inline-block;
   vertical-align: top;
 }
@@ -21,6 +21,9 @@
 .price .price-item {
   display: inline-block;
   margin: 0 1rem 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
 }
 
 .price__regular .price-item--regular {
@@ -86,7 +89,7 @@
 
 .price--on-sale .price-item--regular {
   text-decoration: line-through;
-  color: rgba(var(--color-foreground), 0.75);
+  color: #999;
   font-size: 1.3rem;
 }
 
