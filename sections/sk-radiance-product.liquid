@@ -81,6 +81,30 @@
       <!-- Product Media Gallery -->
       <div class="sk-radiance-product__media-wrapper">
         {% render 'sk-radiance-product-media-gallery', variant_images: variant_images %}
+
+        {%- comment -%} Guarantee Banner below media gallery - conditional render {%- endcomment -%}
+        {%- if section.settings.show_guarantee_below_media
+          and product.metafields.custom.guarantee_banner_content != blank
+        -%}
+          <div class="sk-radiance-guarantee-banner sk-radiance-guarantee-banner--below-media">
+            <div class="sk-radiance-guarantee-banner__content">
+              {%- capture guarantee_content -%}
+                {{ product.metafields.custom.guarantee_banner_content | metafield_tag }}
+              {%- endcapture -%}
+              {{ guarantee_content }}
+            </div>
+            {%- if section.settings.guarantee_button_text != blank
+              and section.settings.guarantee_button_link != blank
+            -%}
+              <a href="{{ section.settings.guarantee_button_link }}" class="sk-radiance-guarantee-banner__button">
+                {{ section.settings.guarantee_button_text }}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
       </div>
 
       <!-- Product Info -->
@@ -783,6 +807,28 @@
       "id": "enable_sticky_info",
       "default": true,
       "label": "Enable Sticky Info"
+    },
+    {
+      "type": "header",
+      "content": "Guarantee Banner Below Media Gallery"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_guarantee_below_media",
+      "default": false,
+      "label": "Show Guarantee Banner Below Media Gallery",
+      "info": "Requires product to have 'custom.guarantee_banner_content' metafield"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_button_text",
+      "label": "Guarantee Button Text",
+      "default": "LES MER"
+    },
+    {
+      "type": "url",
+      "id": "guarantee_button_link",
+      "label": "Guarantee Button Link"
     },
     {
       "type": "color_scheme",
