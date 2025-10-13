@@ -8,6 +8,7 @@
     align-items: center;
     margin-bottom: 60px;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .sk-help-categories__heading {
@@ -35,6 +36,7 @@
     flex-wrap: wrap;
     gap: 30px;
     list-style: none;
+    justify-content: center;
 }
 
 .sk-help-categories__item {

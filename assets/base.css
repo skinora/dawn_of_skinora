@@ -3815,3 +3815,152 @@ div.okeReviews .oke-w-writeReview:hover:before {
 div.okeReviews .oke-w-review-main {
   margin-right: 24px;
 }
+
+.menu-drawer__utility-links .svg-wrapper svg {
+  color: #fff;
+}
+
+.menu-drawer__close-button {
+  color: #fff !important;
+}
+
+.menu-drawer__close-button:focus {
+  color: #fff !important;
+}
+
+.icon-hamburger-variants .icon-close {
+  background: #30273e;
+  color: #fff;
+}
+
+.menu-drawer__utility-links .menu-drawer__account {
+  display: none;
+}
+
+
+
+
+
+
+@media only screen and (max-width: 1200px) {
+  .header .list-menu__item {
+    font-size: 16px;
+  }
+
+  .sk-help-categories__description {
+    max-width: 100% !important;
+  }
+}
+
+
+/* mobile devices  */
+@media only screen and (max-width: 700px) {
+  .sk-help-banner {
+    height: 255px !important;
+  }
+
+  .sk-help-banner__heading {
+    font-size: 46px !important;
+  }
+
+  .sk-help-categories__heading {
+    font-size: 50px !important;
+  }
+
+  header {
+    display: flex !important;
+    justify-content: space-between;
+  }
+
+  header-drawer {
+    order: 1 !important;
+  }
+
+  .sk-content-section__heading {
+    font-size: 50px !important;
+  }
+
+  .sk-help-banner__content {
+    max-width: 100% !important;
+  }
+
+  .sk-content-section {
+    padding-bottom: 0 !important;
+  }
+
+}
+
+
+@media only screen and (max-width: 435px) {
+  .sk-help-banner {
+    height: 255px !important;
+  }
+
+  .sk-help-banner__heading {
+    font-size: 40px !important;
+  }
+
+  .sk-help-categories__heading {
+    font-size: 40px !important;
+  }
+
+  .sk-help-categories__description p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  header .header__heading-link svg {
+    width: 145px;
+  }
+
+  header .icon-search {
+    display: none;
+  }
+
+  .footer__main-columns {
+    flex-direction: column;
+  }
+
+  .footer__column--brand {
+    margin-bottom: 4rem;
+  }
+
+  .footer-top_section-content h2 {
+    font-size: 22px !important;
+  }
+
+  .footer-logo svg {
+    width: 145px;
+  }
+
+  .newsletter-form__field-wrapper {
+    width: 90% !important;
+  }
+
+  .list-shipping-delivery,
+  .list-payment {
+    gap: 0.6rem !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .footer__payment-shipping-wrapper {
+    flex-direction: row !important;
+  }
+
+  .footer__payment {
+    margin-bottom: 4rem !important;
+  }
+
+  .footer__content-bottom-wrapper {
+    margin-top: 0 !important;
+  }
+
+  .shipping-delivery-icon svg {
+    width: 120px !important;
+  }
+
+  .sk-content-section__heading {
+    font-size: 40px !important;
+    margin-bottom: 16px;
+  }
+}

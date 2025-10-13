@@ -148,7 +148,7 @@
 
   /* Mobile responsive styles for new layout */
   .footer__main-columns {
-    flex-direction: column;
+    /* flex-direction: column; */
     gap: 3rem;
   }
 
@@ -183,9 +183,9 @@
     font-size: 1.8rem;
   }
 
-  .footer__menu-list {
+  /* .footer__menu-list {
     text-align: center;
-  }
+  } */
 
   .footer__menu-link {
     font-size: 1.6rem;
@@ -214,12 +214,12 @@
     flex-wrap: wrap;
   }
 
-  .footer__column--brand {
+  /* .footer__column--brand {
     flex: 1 1 100%;
     max-width: none;
     text-align: center;
     margin-bottom: 2rem;
-  }
+  } */
 
   .footer__column--menu {
     flex: 1 1 calc(33.333% - 1.5rem);
@@ -487,6 +487,7 @@
   justify-content: space-between;
   margin-bottom: 3rem;
   flex-direction: row-reverse;
+  flex-wrap: wrap;
 }
 
 
