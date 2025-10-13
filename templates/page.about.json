@@ -30,7 +30,6 @@
         "button_label": "Take a Look",
         "button_link": "/collections/all",
         "main_image": "shopify://shop_images/about-sec-2-img-1.png",
-        "accent_image": "shopify://shop_images/Rectangle_2.png",
         "show_glow_effect": true,
         "color_scheme": "background-1",
         "padding_top": 60,
