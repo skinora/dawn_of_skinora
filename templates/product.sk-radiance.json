@@ -122,6 +122,9 @@
       ],
       "settings": {
         "enable_sticky_info": true,
+        "show_guarantee_below_media": true,
+        "guarantee_button_text": "LES MER",
+        "guarantee_button_link": "",
         "color_scheme": "",
         "media_size": "large",
         "constrain_to_viewport": true,
@@ -169,47 +172,47 @@
         "testimonial_W4kX3A": {
           "type": "testimonial",
           "settings": {
-            "before_image": "shopify://shop_images/Image_6.png",
+            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e_1_3c63e0fb-0357-4b41-bfd6-450216bd2d58.png",
             "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
             "show_verified": true,
             "testimonial_title": "Reduced Lines & Wrinkles",
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
         },
-        "testimonial_brQAaU": {
+        "testimonial_FVNJB8": {
           "type": "testimonial",
           "settings": {
-            "before_image": "shopify://shop_images/Image_6.png",
+            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e_1_3c63e0fb-0357-4b41-bfd6-450216bd2d58.png",
             "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
             "show_verified": true,
             "testimonial_title": "Reduced Lines & Wrinkles",
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
         },
-        "testimonial_4QEVTJ": {
+        "testimonial_NxL6Ff": {
           "type": "testimonial",
           "settings": {
-            "before_image": "shopify://shop_images/Image_6.png",
+            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e_1_3c63e0fb-0357-4b41-bfd6-450216bd2d58.png",
             "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
             "show_verified": true,
             "testimonial_title": "Reduced Lines & Wrinkles",
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
         },
-        "testimonial_AeLYyF": {
+        "testimonial_x7K6W4": {
           "type": "testimonial",
           "settings": {
-            "before_image": "shopify://shop_images/Image_6.png",
+            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e_1_3c63e0fb-0357-4b41-bfd6-450216bd2d58.png",
             "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
             "show_verified": true,
             "testimonial_title": "Reduced Lines & Wrinkles",
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
         },
-        "testimonial_LwmiwK": {
+        "testimonial_XyNFDe": {
           "type": "testimonial",
           "settings": {
-            "before_image": "shopify://shop_images/Image_6.png",
+            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e_1_3c63e0fb-0357-4b41-bfd6-450216bd2d58.png",
             "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
             "show_verified": true,
             "testimonial_title": "Reduced Lines & Wrinkles",
@@ -219,10 +222,10 @@
       },
       "block_order": [
         "testimonial_W4kX3A",
-        "testimonial_brQAaU",
-        "testimonial_4QEVTJ",
-        "testimonial_AeLYyF",
-        "testimonial_LwmiwK"
+        "testimonial_FVNJB8",
+        "testimonial_NxL6Ff",
+        "testimonial_x7K6W4",
+        "testimonial_XyNFDe"
       ],
       "name": "SK Before/After Section",
       "settings": {
