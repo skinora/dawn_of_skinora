@@ -9,6 +9,21 @@
  */
 {
   "sections": {
+    "sk_blogs_banner_wNCnkm": {
+      "type": "sk-blogs-banner",
+      "name": "Blogs Banner",
+      "settings": {
+        "background_image": "shopify://shop_images/about-section-bg.png",
+        "heading": "Blogs Detail",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "main": {
       "type": "sk-blog-article",
       "blocks": {
@@ -84,21 +99,11 @@
             "post_excerpt": "Ut laborum incididunt consequat ut qui nostrud eiusmod. Quis exercitation sit enim consectetur eiusmod.",
             "post_link": ""
           }
-        },
-        "featured_post": {
-          "type": "featured_post",
-          "settings": {
-            "post_image": "shopify://shop_images/Rectangle_3.png",
-            "post_title": "Butterfly lighting in photography",
-            "post_excerpt": "Butterfly lighting is a portrait lighting technique that creates a distinctive butterfly-shaped shadow beneath the subject's nose.",
-            "post_link": ""
-          }
         }
       },
       "block_order": [
         "post_1",
-        "post_2",
-        "featured_post"
+        "post_2"
       ],
       "settings": {
         "heading": "Latest Blogs",
@@ -120,6 +125,7 @@
     }
   },
   "order": [
+    "sk_blogs_banner_wNCnkm",
     "main",
     "latest_blogs",
     "explore_button"
