@@ -205,10 +205,10 @@
     }
 
 
-    .sk-about-section-2__image-section {
+    /* .sk-about-section-2__image-section {
         position: relative;
         flex: 0 0 550px;
-    }
+    } */
 
     .sk-about-section-2__text-section {
         flex: 0 0 500px;
@@ -232,4 +232,5 @@
 
 .sk-about-section-2__main-image img {
     width: 100%;
+    height: auto;
 }

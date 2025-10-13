@@ -18,7 +18,7 @@
   class="about-section-banner about-page section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} gradient"
   style="background: url('{{ 'about-section-bg.png' | asset_url }}') no-repeat center center/cover;"
 >
-  <div class="page-width">
+  <div class="container-xl px-xl-0 px-md-5 px-4">
     {%- if section.settings.show_page_title -%}
       <div class="about-page__header">
         <h1 class="about-page__title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
@@ -58,9 +58,11 @@
         </div>
       {%- endif -%}
 
-      <div class="about-page__text rte">
-        {{ page.content }}
-      </div>
+      {% comment %}
+        <div class="about-page__text rte">
+          {{ page.content }}
+        </div>
+      {% endcomment %}
     </div>
 
     {%- if section.blocks.size > 0 -%}

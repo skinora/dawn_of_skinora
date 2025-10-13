@@ -3850,6 +3850,44 @@ div.okeReviews .oke-w-review-main {
   .sk-help-categories__description {
     max-width: 100% !important;
   }
+
+  .sk-about-section-2__text-section {
+    flex: 0 0 425px !important;
+  }
+
+  .sk-about-section-2__content {
+    gap: 50px !important;
+    margin-top: 1rem !important;
+  }
+
+  .sk-product-showcase__wrapper {
+    gap: 50px !important;
+  }
+
+  .sk-product-showcase__content-section {
+    flex: 0 0 425px !important;
+  }
+
+  .sk-about-section-2__image-section {
+    flex: 0 0 455px !important;
+  }
+
+  .sk-product-showcase__image-section {
+    flex: 0 0 455px !important;
+  }
+
+  .sk-numbered-list__wrapper {
+    gap: 50px !important;
+    justify-content: start !important;
+  }
+
+  .sk-numbered-list__image-section {
+    flex: 0 0 425px !important;
+  }
+
+  .sk-numbered-list__content-section {
+    flex: 0 0 425px !important;
+  }
 }
 
 
@@ -3886,6 +3924,111 @@ div.okeReviews .oke-w-review-main {
 
   .sk-content-section {
     padding-bottom: 0 !important;
+  }
+
+  .list-shipping-delivery {
+    gap: 1rem !important;
+  }
+
+  .about-section-banner {
+    height: 35vh !important;
+  }
+
+  .sk-about-section-2__image-section {
+    flex: 0 0 255px !important;
+  }
+
+  .sk-about-section-2__text-section {
+    flex: 0 0 100% !important;
+  }
+
+  .sk-about-section-2__heading {
+    font-size: 40px !important;
+    line-height: 50px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .sk-about-section-2__description {
+    margin: 13px 0;
+  }
+
+  .sk_primary-button {
+    width: 22rem;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .sk-about-section-2 {
+    padding-bottom: 0 !important;
+  }
+
+  .sk-product-showcase__wrapper {
+    align-items: start !important;
+  }
+
+  .sk-product-showcase__image-section {
+    flex: 0 0 290px !important;
+  }
+
+  .sk-product-showcase__content-section {
+    flex: 0 0 315px !important;
+  }
+
+  .sk-product-showcase__wrapper {
+    gap: 20px !important;
+  }
+
+  .sk-content-section__content p {
+    font-size: 15px !important;
+    line-height: 24px !important;
+  }
+
+  .sk-product-showcase__description p {
+    font-size: 15px !important;
+  }
+
+  .sk-product-showcase__title {
+    font-size: 40px !important;
+    line-height: 18px !important;
+  }
+
+  .sk-product-showcase__description {
+    margin-bottom: 12px !important;
+  }
+
+  .sk-product-showcase__project-info {
+    margin-bottom: 18px !important;
+  }
+
+  .sk-numbered-list__number {
+    font-size: 40px !important;
+    line-height: 18px !important;
+  }
+
+  .sk-numbered-list__item {
+    align-items: center !important;
+  }
+
+  .sk-numbered-list__text p {
+    font-size: 15px !important;
+    line-height: 22px !important;
+  }
+
+  .sk-numbered-list__item {
+    gap: 18px !important;
+  }
+
+  .sk-numbered-list__content-section {
+    flex: 0 0 285px !important;
+  }
+
+  .sk-numbered-list__image-section {
+    flex: 0 0 280px !important;
+  }
+
+  .sk-numbered-list {
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
   }
 
 }
@@ -3947,9 +4090,6 @@ div.okeReviews .oke-w-review-main {
     flex-direction: row !important;
   }
 
-  .footer__payment {
-    margin-bottom: 4rem !important;
-  }
 
   .footer__content-bottom-wrapper {
     margin-top: 0 !important;
@@ -3963,4 +4103,72 @@ div.okeReviews .oke-w-review-main {
     font-size: 40px !important;
     margin-bottom: 16px;
   }
+
+  .sk-about-section-2__content {
+    justify-content: center !important;
+  }
+
+  .sk-about-section-2__heading {
+    font-size: 30px !important;
+  }
+
+  .sk-about-section-2__text-section p {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .sk_primary-button {
+    font-size: 12px;
+    padding: 12px;
+    width: 20rem;
+  }
+
+  .sk_primary-button svg {
+    width: 12px;
+  }
+
+  .sk-content-section__content p {
+    font-size: 12px !important;
+    line-height: 20px !important;
+  }
+
+  .sk-product-showcase__wrapper {
+    justify-content: center !important;
+  }
+
+  .sk-product-showcase__content-section {
+    flex: 0 0 100% !important;
+    margin-top: 36px !important;
+  }
+
+  .sk-product-showcase__title {
+    font-size: 30px !important;
+    line-height: 0 !important;
+  }
+
+  .sk-product-showcase__description p {
+    font-size: 12px !important;
+    line-height: 20px !important;
+  }
+
+  .sk-numbered-list__text p {
+    font-size: 12px !important;
+    line-height: 20px !important;
+
+  }
+
+  .sk-numbered-list__wrapper {
+    justify-content: center !important;
+    flex-wrap: wrap-reverse !important;
+  }
+
+  .sk-numbered-list__content-section {
+    flex: 0 0 100% !important;
+  }
+
+  .about-section-banner {
+    height: 28vh !important;
+  }
+
+
 }

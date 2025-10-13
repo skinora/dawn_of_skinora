@@ -486,7 +486,6 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 3rem;
-  flex-direction: row-reverse;
   flex-wrap: wrap;
 }
 
@@ -825,4 +824,8 @@ footer .field__input:focus {
 
 footer .list-social__item a:hover {
   color: #624f80;
+}
+
+.footer__payment {
+  margin-bottom: 26px;
 }
