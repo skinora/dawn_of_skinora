@@ -1,7 +1,7 @@
 {{ 'section-sk-blog-article.css' | asset_url | stylesheet_tag }}
 
 <div class="sk-blog-article section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
-  <div class="container">
+  <div class="container-xl px-xl-0 px-md-5 px-4">
     <div class="sk-blog-article__wrapper">
       {%- if section.settings.show_featured_image and article.image -%}
         <div class="sk-blog-article__featured-image">

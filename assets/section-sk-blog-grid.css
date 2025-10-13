@@ -27,7 +27,6 @@
 
 .sk-blog-grid__content-section {
     flex: 1;
-    padding-top: 20px;
 }
 
 .sk-blog-grid__description p {
@@ -117,14 +116,15 @@
 .sk-blog-grid__pagination {
     display: flex;
     justify-content: center;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 .sk-blog-grid__pagination-wrapper {
     display: flex;
     gap: 12px;
     align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
 }
 
 .sk-blog-grid__pagination-btn {

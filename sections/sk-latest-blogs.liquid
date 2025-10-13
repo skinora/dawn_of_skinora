@@ -1,7 +1,7 @@
 {{ 'section-sk-latest-blogs.css' | asset_url | stylesheet_tag }}
 
 <div class="sk-latest-blogs section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
-  <div class="container">
+  <div class="container-xl px-xl-0 px-md-5 px-4">
     <div class="sk-latest-blogs__header">
       {%- if section.settings.heading != blank -%}
         <h2 class="sk-latest-blogs__heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
