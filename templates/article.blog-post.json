@@ -1,9 +1,65 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "sk-blog-article",
+      "blocks": {
+        "text_block_rCNYM4": {
+          "type": "text_block",
+          "settings": {
+            "heading": "",
+            "content": "<p>Healthy skin starts with balance and care, supported by innovations that make visible changes over time. Skinora Radiance is designed to help improve clarity, texture, and elasticity with clinically proven light therapy. Whether your goal is to soften fine lines, reduce acne breakouts, or restore natural glow, this device provides an effective, gentle solution. Backed by research, it works beneath the surface where results matter most. By stimulating collagen and supporting recovery, it enhances long-term skin wellness. Experience professional-quality treatment at home with confidence.<br/><br/></p>"
+          }
+        },
+        "text_block_A6Jy8D": {
+          "type": "text_block",
+          "settings": {
+            "heading": "",
+            "content": "<p>Healthy skin starts with balance and care, supported by innovations that make visible changes over time. Skinora Radiance is designed to help improve clarity, texture, and elasticity with clinically proven light therapy. Whether your goal is to soften fine lines, reduce acne breakouts, or restore natural glow, this device provides an effective, gentle solution. Backed by research, it works beneath the surface where results matter most. By stimulating collagen and supporting recovery, it enhances long-term skin wellness. Experience professional-quality treatment at home with confidence.<br/><br/></p>"
+          }
+        },
+        "text_block_4YUPwg": {
+          "type": "text_block",
+          "settings": {
+            "heading": "",
+            "content": "<p>Healthy skin starts with balance and care, supported by innovations that make visible changes over time. Skinora Radiance is designed to help improve clarity, texture, and elasticity with clinically proven light therapy. Whether your goal is to soften fine lines, reduce acne breakouts, or restore natural glow, this device provides an effective, gentle solution. Backed by research, it works beneath the surface where results matter most. By stimulating collagen and supporting recovery, it enhances long-term skin wellness. Experience professional-quality treatment at home with confidence.<br/><br/></p>"
+          }
+        },
+        "two_images_content_hLqRYY": {
+          "type": "two_images_content",
+          "settings": {
+            "image_left": "shopify://shop_images/Image_8.png",
+            "image_right_1": "shopify://shop_images/Image_9.png",
+            "image_right_2": "shopify://shop_images/Image_10.png",
+            "content": "<p>Healthy skin starts with balance and care, supported by innovations that make visible changes over time. Skinora Radiance is designed to help improve clarity.</p>"
+          }
+        },
+        "text_block_nGLk39": {
+          "type": "text_block",
+          "settings": {
+            "heading": "",
+            "content": "<p>Healthy skin starts with balance and care, supported by innovations that make visible changes over time. Skinora Radiance is designed to help improve clarity, texture, and elasticity with clinically proven light therapy. Whether your goal is to soften fine lines, reduce acne breakouts, or restore natural glow, this device provides an effective, gentle solution. Backed by research, it works beneath the surface where results matter most. By stimulating collagen and supporting recovery, it enhances long-term skin wellness. Experience professional-quality treatment at home with confidence.<br/><br/></p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_block_rCNYM4",
+        "text_block_A6Jy8D",
+        "text_block_4YUPwg",
+        "two_images_content_hLqRYY",
+        "text_block_nGLk39"
+      ],
       "settings": {
         "show_featured_image": true,
+        "color_scheme": "background-1",
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -14,22 +70,28 @@
         "post_1": {
           "type": "blog_post",
           "settings": {
+            "post_image": "shopify://shop_images/Rectangle_2_4a3aaad1-fc98-4266-87cc-efd129fd31a0.png",
             "post_title": "How to concept great ideas for content",
-            "post_excerpt": "Ut laborum incididunt consequat ut qui nostrud eiusmod. Quis exercitation sit enim consectetur eiusmod."
+            "post_excerpt": "Ut laborum incididunt consequat ut qui nostrud eiusmod. Quis exercitation sit enim consectetur eiusmod.",
+            "post_link": ""
           }
         },
         "post_2": {
           "type": "blog_post",
           "settings": {
+            "post_image": "shopify://shop_images/Rectangle_2_4a3aaad1-fc98-4266-87cc-efd129fd31a0.png",
             "post_title": "How to concept great ideas for content",
-            "post_excerpt": "Ut laborum incididunt consequat ut qui nostrud eiusmod. Quis exercitation sit enim consectetur eiusmod."
+            "post_excerpt": "Ut laborum incididunt consequat ut qui nostrud eiusmod. Quis exercitation sit enim consectetur eiusmod.",
+            "post_link": ""
           }
         },
         "featured_post": {
           "type": "featured_post",
           "settings": {
+            "post_image": "shopify://shop_images/Rectangle_3.png",
             "post_title": "Butterfly lighting in photography",
-            "post_excerpt": "Butterfly lighting is a portrait lighting technique that creates a distinctive butterfly-shaped shadow beneath the subject's nose."
+            "post_excerpt": "Butterfly lighting is a portrait lighting technique that creates a distinctive butterfly-shaped shadow beneath the subject's nose.",
+            "post_link": ""
           }
         }
       },
@@ -41,6 +103,7 @@
       "settings": {
         "heading": "Latest Blogs",
         "description": "Explore effective techniques and tips to elevate your skincare routine and enhance your skin's natural radiance and health.",
+        "color_scheme": "background-1",
         "padding_top": 80,
         "padding_bottom": 80
       }
@@ -50,6 +113,7 @@
       "settings": {
         "button_label": "Explore More Blogs",
         "button_link": "/pages/blogs",
+        "color_scheme": "background-1",
         "padding_top": 40,
         "padding_bottom": 40
       }
