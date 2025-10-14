@@ -4484,6 +4484,10 @@ div.okeReviews .oke-w-review-main {
     padding-left: 0 !important;
   }
 
+  .sk-led-light-work-images-container {
+    width: 355px !important;
+  }
+
 
 }
 
@@ -4492,11 +4496,11 @@ div.okeReviews .oke-w-review-main {
     width: 95% !important;
   }
 
-  .sk-led-light-work-images-container {
+  /* .sk-led-light-work-images-container {
     flex-wrap: nowrap !important;
     gap: 9px !important;
     overflow-x: hidden !important;
-  }
+  } */
 }
 
 
