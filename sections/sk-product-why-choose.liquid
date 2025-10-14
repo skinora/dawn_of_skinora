@@ -60,6 +60,37 @@
   .sk-product-why-choose .sk-why-choose__columns > .sk-why-choose__column{
     display: flex;
     gap: 50px;
+    flex-wrap: wrap;
+  }
+
+
+  @media only screen and (max-width: 700px) {
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
+       display: none;
+    }
+  }
+
+  @media only screen and (max-width: 435px) {
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__main-heading {
+      font-size: 32px;
+      line-height: 37px;
+    }
+
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h3,
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h4 {
+    font-size: 14px;
+    line-height: 20px;
+
+  }
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
+    font-size: 12px;
+    line-height: 20px;
+  }
+  .sk-product-why-choose .sk-why-choose__columns > .sk-why-choose__column{
+    gap: 18px;
+  }
+
+
   }
 </style>
 

@@ -4144,6 +4144,10 @@ div.okeReviews .oke-w-review-main {
   .sk-blog-article__layout-wrapper {
     flex-direction: column !important;
   }
+
+  .sk-radiance-product__media-thumbnails {
+    display: none !important;
+  }
 }
 
 
@@ -4375,6 +4379,113 @@ div.okeReviews .oke-w-review-main {
     height: 84vh !important;
   }
 
+  .sk-radiance-guarantee-banner__content h2 {
+    font-size: 25px !important;
+    line-height: 30px !important;
+  }
+
+  .sk-radiance-guarantee-banner__content p {
+    font-size: 12px !important;
+    line-height: 20px !important;
+  }
+
+  .sk-radiance-guarantee-banner {
+    padding: 16px !important;
+  }
+
+  .sk-radiance-product__text.subtitle {
+    font-size: 12px !important;
+  }
+
+  .oke-sr .oke-is-clickable {
+    font-size: 12px !important;
+    margin-top: 16px;
+  }
+
+  .sk-radiance-price-item--sale {
+    font-size: 14px !important;
+  }
+
+  .sk-radiance-price-item--regular {
+    font-size: 14px !important;
+  }
+
+  .sk-radiance-product__title h1 {
+    margin: 6px 0 !important;
+  }
+
+  .sk-radiance-variant-card {
+    width: 165px !important;
+  }
+
+  .sk-radiance-variant-cards {
+    gap: 10px !important;
+  }
+
+  .sk-radiance-variant-card__title,
+  .sk-radiance-variant-card__current-price,
+  .sk-radiance-variant-card__compare-price,
+  .quantity__input {
+    font-size: 12px !important;
+  }
+
+  .custom_quantity_input {
+    height: 40px !important;
+  }
+
+  .sk-radiance-buy-buttons__button {
+    font-size: 12px !important;
+    height: 47px !important;
+    width: 172px !important;
+  }
+
+  .sk-radiance-product-features__icon svg {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .sk-radiance-product-description__content p,
+  .sk-radiance-product__text {
+    font-size: 12px !important;
+    line-height: 20px !important;
+  }
+
+  .okeReviews[data-oke-container] .oke-button,
+  div.okeReviews .oke-button {
+    font-size: 11px !important;
+    padding: 11px 12px !important;
+  }
+
+  .okeReviews[data-oke-container] .oke-w-reviews-head,
+  div.okeReviews .oke-w-reviews-head {
+    margin-bottom: 18px !important;
+  }
+
+  .oke-w-reviews-main .oke-w-review-content .oke-reviewContent .oke-reviewContent-title,
+  .okeReviews[data-oke-container] p,
+  div.okeReviews p {
+    font-size: 12px !important;
+    line-height: 20px !important;
+  }
+
+  .sk-radiance-product-features__item {
+    align-items: flex-start !important;
+  }
 
 
+}
+
+@media only screen and (max-width: 375px) {
+  .sk-radiance-variant-card {
+    width: 95% !important;
+  }
+}
+
+
+
+
+
+
+.sk-radiance-sticky-bottom-bar {
+  display: none !important;
 }

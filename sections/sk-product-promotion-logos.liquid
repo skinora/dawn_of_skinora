@@ -74,6 +74,28 @@
           transform: translateX(0);
       }
   }
+
+
+  @media only screen and (max-width: 700px) {
+    .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card{
+      flex: 0 0 74px
+    }
+    .sw-publication-{{ section.id }} .sw-publication__scroll-parent {
+      width: 140vw;
+      height: 7rem;
+    }
+  }
+
+
+  @media only screen and (max-width: 435px) {
+    .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card{
+      flex: 0 0 66px
+    }
+    .sw-publication-{{ section.id }} .sw-publication__scroll-parent{
+      width: 208vw;
+
+    }
+  }
 </style>
 
 {%- if product.metafields.custom.promotion_logos.value != blank -%}

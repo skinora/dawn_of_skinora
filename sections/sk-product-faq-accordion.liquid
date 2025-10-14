@@ -167,11 +167,54 @@
     width: 18rem;
     padding: 13px;
   }
+
+  @media only screen and (max-width: 700px) {
+    .sk-faq-accordion__image{
+      display: none;
+    }
+
+    .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__content {
+    flex: 0 0 100%;
+  }
+  }
+
+  @media only screen and (max-width: 435px) {
+    .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button {
+      font-size: 14px !important;
+      line-height: 20px !important;
+      padding: 12px 0 !important;
+    }
+    .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon {
+      width: 20px !important;
+    height: 20px !important;
+    font-size: 10px !important;
+    margin-top: 5px !important;
+    }
+    .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__answer p strong {
+    font-size: 14px !important;
+    margin-top: 20px !important;
+    display: block !important;
+    margin-bottom: 25px !important;
+  }
+
+  .sk-faq-accordion__answer p br{
+    display: none !important;
+  }
+  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__answer p {
+    font-size: 12px !important;
+    line-height: 20px !important;
+  }
+
+  .sk-faq-read-more-btn .sk_primary-button{
+    width: 13rem;
+  }
+
+  }
 </style>
 
 {%- if product.metafields.custom.faq_item.value != blank -%}
   <section class="sk-faq-accordion-{{ section.id }}">
-    <div class="container">
+    <div class="container-xl px-xl-0 px-md-5 px-4">
       <div class="sk-faq-accordion__container">
         <div class="sk-faq-accordion__content">
           {% if section.settings.title != blank %}

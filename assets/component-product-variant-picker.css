@@ -251,21 +251,6 @@ variant-selects {
 
 
 /* Responsive design */
-@media screen and (max-width: 768px) {
-  .sk-radiance-variant-cards {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .sk-radiance-variant-card {
-    max-width: 100%;
-  }
-
-  .sk-radiance-variant-card__image {
-    height: 150px;
-  }
-}
-
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .sk-radiance-variant-cards {
     gap: 1rem;

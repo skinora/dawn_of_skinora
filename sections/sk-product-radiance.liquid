@@ -70,11 +70,60 @@
     font-size: 12px;
     line-height: 17px;
   }
+
+  @media only screen and (max-width: 700px) {
+    .sk-product-radiance-{{ section.id }} .sk-radiance__image {
+      flex: 0 0 100%;
+    }
+    .sk-product-radiance-{{ section.id }} .sk-image-content__content {
+      flex: 0 0 100%;
+    }
+
+    .sk_primary-button{
+      width: 30rem;
+    }
+
+    .sk-radiance__image img{
+      width: 100%;
+      height: auto;
+    }
+    .sk-product-radiance-{{ section.id }} {
+       padding-top: 0;
+    }
+  }
+
+  @media only screen and (max-width: 435px) {
+    .sk-product-radiance-{{ section.id }} .metafield-rich_text_field h2 {
+      font-size: 32px;
+      line-height: 37px;
+      margin-bottom: 12px;
+    }
+
+    .sk-product-radiance-{{ section.id }} .metafield-rich_text_field h2 + p{
+
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .sk-product-radiance-{{ section.id }} .metafield-rich_text_field h2 + p svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .sk-product-radiance-{{ section.id }} .metafield-rich_text_field p:last-child {
+      font-size: 12px;
+      line-height: 20px;
+    }
+
+    .sk-product-radiance-{{ section.id }} .sk-image-content__button .sk_primary-button {
+      width: 20rem;
+    }
+  }
 </style>
 
 {%- if product.metafields.custom.radiance_content != blank or product.metafields.custom.radiance_image != blank -%}
   <section class="sk-product-radiance-{{ section.id }}">
-    <div class="container">
+    <div class="container-xl px-xl-0 px-md-5 px-4">
       <div class="sk-image-content{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <div class="sk-radiance__container">
           <!-- Image Section -->
