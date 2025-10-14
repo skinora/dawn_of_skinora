@@ -4472,12 +4472,30 @@ div.okeReviews .oke-w-review-main {
     align-items: flex-start !important;
   }
 
+  footer .list-social__link {
+    padding-right: 0 !important;
+  }
+
+  footer .list-social {
+    gap: 14px;
+  }
+
+  .sk-help-categories__grid {
+    padding-left: 0 !important;
+  }
+
 
 }
 
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 400px) {
   .sk-radiance-variant-card {
     width: 95% !important;
+  }
+
+  .sk-led-light-work-images-container {
+    flex-wrap: nowrap !important;
+    gap: 9px !important;
+    overflow-x: hidden !important;
   }
 }
 
