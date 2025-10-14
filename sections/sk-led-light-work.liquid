@@ -8,10 +8,53 @@
     text-align: center;
     font-weight: 600;
   }
+
+  @media only screen and (max-width: 700px) {
+    .sk-led-light-work__content {
+      width: 100%;
+    }
+
+    .sk-led-light-work-images-container {
+      padding: 0;
+      justify-content: start;
+      gap: 10px;
+    }
+
+    .sk-led-light-work-image-item {
+      width: 170px;
+    }
+    .sk-led-light-work-image-item img {
+      width: 100%;
+      height: auto;
+    }
+    .sk-led-light-work-images-container svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    .sk-led-light-work {
+      padding: 5rem 0;
+    }
+  }
+
+  @media only screen and (max-width: 435px) {
+    .sk-led-light-work__heading {
+      font-size: 32px;
+      line-height: 37px;
+    }
+
+    .sk-led-light-work-images-container svg {
+      width: 16px;
+      height: 16px;
+    }
+    .sk-led-light-work-image-item {
+      width: 98px;
+    }
+  }
 </style>
 
 <section class="sk-led-light-work">
-  <div class="container">
+  <div class="container-xl px-xl-0 px-md-5 px-4 main-container">
     <div class="sk-led-light-work__container">
       <div class="sk-led-light-work__content">
         <h2 class="sk-led-light-work__heading">{{ section.settings.sk_led_light_work_heading }}</h2>

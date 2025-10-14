@@ -49,10 +49,54 @@
   .sk-image-content__button {
     margin-top: 3rem;
   }
+
+  @media only screen and (max-width: 700px) {
+    .sk-image-content__button .sk_primary-button {
+      width: 30rem;
+    }
+
+    .sk-radiance__image {
+      flex: 0 0 100%;
+    }
+    .sk-radiance__image img {
+      width: 100%;
+      height: auto;
+    }
+
+    .sk-image-content__content {
+      flex: 0 0 100%;
+    }
+  }
+
+  @media only screen and (max-width: 435px) {
+    .sk-radiance .sk-image-content__heading {
+      font-size: 32px;
+      line-height: 37px;
+    }
+
+    .sk-radiance .sk-image-content__bullet-item {
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .sk-image-content__bullet-list svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .sk-image-content__description p {
+      font-size: 12px;
+      line-height: 20px;
+    }
+
+    .sk-image-content__button .sk_primary-button {
+      width: 20rem;
+    }
+  }
 </style>
 
 <section class="sk-radiance">
-  <div class="container">
+  <div class="container-xl px-xl-0 px-md-5 px-4 main-container">
     <div class="sk-image-content{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <div class="sk-radiance__container">
         <!-- Image Section -->

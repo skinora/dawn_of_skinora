@@ -141,28 +141,75 @@
     color: inherit;
   }
 
-  @media screen and (max-width: 768px) {
-    .sk-product-listing {
-      padding: 40px 0;
-    }
-
-    .sk-product-listing__container {
-      padding: 0 15px;
+  @media only screen and (max-width: 700px) {
+    .sk-product-listing__header {
+      width: 100%;
     }
 
     .sk-product-listing__title {
-      font-size: 28px;
+      font-size: 40px;
+      margin-bottom: 20px;
     }
 
     .sk-product-listing__grid {
-      grid-template-columns: 1fr;
-      gap: 25px;
+      gap: 18px;
+      justify-content: start;
+    }
+
+    .sk-product-card {
+      flex: 0 0 300px;
+      overflow: hidden;
+      margin-bottom: 38px;
+    }
+    .sk-product-card__content {
+      padding: 0;
+    }
+  }
+
+  @media only screen and (max-width: 435px) {
+    .sk-product-listing__title {
+      font-size: 32px;
+      line-height: 37px;
+    }
+    .sk-product-listing__subtitle {
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .sk-product-listing__header {
+      margin-bottom: 36px;
+    }
+    .sk-product-card {
+      flex: 0 0 100%;
+      overflow: hidden;
+      margin-bottom: 38px;
+    }
+
+    .buy_prod_btn {
+      font-size: 12px;
+      padding: 12px;
+      width: 15rem;
+    }
+
+    .sk-product-card__title {
+      font-size: 25px;
+    }
+    .sk-product-card__description {
+      font-size: 12px;
+    }
+
+    .sk-product-card__price {
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+
+    .sk-product-listing {
+      padding-bottom: 0;
     }
   }
 </style>
 
 <section class="sk-product-listing">
-  <div class="container">
+  <div class="container-xl px-xl-0 px-md-5 px-4">
     <div class="sk-product-listing__container">
       {% if section.settings.section_title != blank or section.settings.section_subtitle != blank %}
         <div class="sk-product-listing__header">

@@ -38,10 +38,36 @@
     width: auto;
     height: auto;
   }
+
+  @media only screen and (max-width: 700px) {
+    .sk-features {
+      padding: 5rem 0;
+    }
+    .sk-features__item {
+      flex: 0 0 220px;
+    }
+  }
+
+  @media only screen and (max-width: 435px) {
+    .sk-features__item {
+      flex: 0 0 100%;
+      margin-bottom: 50px;
+    }
+
+    .sk-features__title {
+      font-size: 17px;
+      line-height: 24px;
+    }
+
+    .sk-features__icon {
+      width: 97px;
+      height: 97px;
+    }
+  }
 </style>
 
 <section class="sk-features">
-  <div class="container">
+  <div class="container-xl px-xl-0 px-md-5 px-4 main-container">
     <div class="sk-features__container">
       {% for block in section.blocks %}
         <div class="sk-features__item">

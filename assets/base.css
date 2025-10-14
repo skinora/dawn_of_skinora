@@ -3781,7 +3781,7 @@ footer .footer__column.footer__column--menu a:hover {
 }
 
 
-.sk-before-after .container {
+.sk-before-after .main-container {
   position: relative;
 }
 
@@ -3916,6 +3916,14 @@ div.okeReviews .oke-w-review-main {
 
   .sk-blog-article__left-image {
     flex: 0 0 380px !important;
+  }
+
+  .sk-dynamic-banner__content {
+    padding-right: 5rem !important;
+  }
+
+  .sk-dynamic-banner__container {
+    flex-direction: column-reverse !important;
   }
 }
 
@@ -4091,6 +4099,34 @@ div.okeReviews .oke-w-review-main {
 
   .sk-blog-article__meta {
     gap: 16px !important;
+  }
+
+  .sk-dynamic-banner__img {
+    width: 360px !important;
+  }
+
+  .sk-dynamic-banner__img img {
+    width: 100%;
+    height: auto;
+  }
+
+  .sk-dynamic-banner__content {
+    padding-right: 0 !important;
+    margin-top: 78px !important;
+  }
+
+  .sk-dynamic-banner__title {
+    font-size: 45px !important;
+    line-height: 55px !important;
+  }
+
+  .sk-dynamic-banner__description {
+    font-size: 18px !important;
+    line-height: 28px !important;
+  }
+
+  .sk-dynamic-banner__button {
+    width: 30rem !important;
   }
 
 }
@@ -4319,6 +4355,24 @@ div.okeReviews .oke-w-review-main {
 
   .sk-latest-blogs__featured-overlay {
     padding: 15px !important;
+  }
+
+  .sk-dynamic-banner__title {
+    font-size: 32px !important;
+    line-height: 37px !important;
+  }
+
+  .sk-dynamic-banner__description {
+    font-size: 12px !important;
+    line-height: 20px !important;
+  }
+
+  .sk-dynamic-banner__button {
+    width: 25rem !important;
+  }
+
+  .sk-dynamic-banner {
+    height: 84vh !important;
   }
 
 

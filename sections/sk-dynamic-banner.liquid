@@ -38,10 +38,17 @@
     align-items: center;
     gap: 2rem;
   }
+
+  @media only screen and (max-width: 700px) {
+    .sk-dynamic-banner {
+      background: url('{{ 'banner-bg-mobile.png' | asset_url }}') no-repeat center center/cover;
+      height: 75vh;
+    }
+  }
 </style>
 
 <section class="sk-dynamic-banner">
-  <div class="container">
+  <div class="container-xl px-xl-0 px-md-5 px-4">
     <div class="sk-dynamic-banner__container">
       <div class="sk-dynamic-banner__content">
         <h2 class="sk-dynamic-banner__title">
