@@ -16,7 +16,7 @@
       "settings": {
         "color_scheme": "scheme-3",
         "logo_width": 150,
-        "brand_description": "<p><strong>SUBSCRIBE</strong><br/>Sign up to be the first to know about new expert product launches, the latest beauty trends and more.</p>",
+        "brand_description": "",
         "newsletter_enable": true,
         "newsletter_heading": "",
         "newsletter_placeholder": "Email",
