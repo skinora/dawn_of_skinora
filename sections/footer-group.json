@@ -16,7 +16,8 @@
       "settings": {
         "color_scheme": "scheme-3",
         "logo_width": 150,
-        "brand_description": "",
+        "show_brand_description": false,
+        "brand_description": "<p><br/>Skinora er et norsk velværemerke som kombinerer hudpleie, teknologi og vitenskap innen well-aging. Merket spesialiserer seg på LED-masker og avanserte hudpleie-enheter som stimulerer hudens naturlige fornyelsesprosesser, øker kollagenproduksjonen og styrker hudbarrieren. Med fokus på trygg, dokumentert og effektiv teknologi hjelper Skinora huden å eldes vakkert, sunt og naturlig.</p>",
         "newsletter_enable": true,
         "newsletter_heading": "",
         "newsletter_placeholder": "Email",
