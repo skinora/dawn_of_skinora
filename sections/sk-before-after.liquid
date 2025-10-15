@@ -135,8 +135,8 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        width: 50px;
-        height: 50px;
+        width: 20px;
+        height: 20px;
         background: none;
         border: none;
         border-radius: 50%;
@@ -147,12 +147,6 @@
         justify-content: center;
         z-index: 2;
         transition: all 0.3s ease;
-      }
-
-      .sk-before-after-prev:hover,
-      .sk-before-after-next:hover {
-        background: #f5f5f5;
-        transform: translateY(-50%) scale(1.1);
       }
 
       .sk-before-after-prev {
@@ -337,16 +331,18 @@
         </div>
 
         <!-- Navigation arrows -->
-        <div class="sk-before-after-prev">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
-            <path d="M30 16.2756L2 16.2756M2 16.2756L16 30.2756M2 16.2756L16 2.27563" stroke="#6C6C6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="sk-before-after-next">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
-            <path d="M2 16.2756H30M30 16.2756L16 2.27563M30 16.2756L16 30.2756" stroke="#6C6C6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
+        {% if section.blocks.size > 3 %}
+          <div class="sk-before-after-prev">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
+              <path d="M30 16.2756L2 16.2756M2 16.2756L16 30.2756M2 16.2756L16 2.27563" stroke="#6C6C6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="sk-before-after-next">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
+              <path d="M2 16.2756H30M30 16.2756L16 2.27563M30 16.2756L16 30.2756" stroke="#6C6C6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        {% endif %}
 
         <!-- Pagination -->
         <div class="swiper-pagination"></div>

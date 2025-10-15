@@ -3763,14 +3763,6 @@ h1.header__heading svg,
   height: 50px;
 }
 
-.sk-led-light-work-images-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 3rem 0;
-}
-
 footer .footer__column.footer__column--menu a:hover {
   color: #cdb7ed;
 }
@@ -4484,9 +4476,15 @@ div.okeReviews .oke-w-review-main {
     padding-left: 0 !important;
   }
 
-  .sk-led-light-work-images-container {
-    width: 355px !important;
+  .newsletter-subtext {
+    font-size: 12px !important;
+    line-height: 20px !important;
+    text-align: center !important;
+    padding: 0 26px !important;
+    margin-bottom: 20px !important;
   }
+
+
 
 
 }
@@ -4495,19 +4493,15 @@ div.okeReviews .oke-w-review-main {
   .sk-radiance-variant-card {
     width: 95% !important;
   }
-
-  /* .sk-led-light-work-images-container {
-    flex-wrap: nowrap !important;
-    gap: 9px !important;
-    overflow-x: hidden !important;
-  } */
 }
 
+.swiper-pagination-bullet-active {
+  background: #4a4458 !important;
+}
 
-
-
-
-
-.sk-radiance-sticky-bottom-bar {
-  display: none !important;
+.sk-before-after-next,
+.sk-before-after-prev,
+.sk-led-light-work-next,
+.sk-led-light-work-prev {
+  z-index: 1000 !important;
 }

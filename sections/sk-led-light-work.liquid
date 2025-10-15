@@ -1,12 +1,104 @@
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
 <style>
+  .sk-led-light-work {
+    padding: 7rem 0;
+    position: relative;
+  }
+
   .sk-led-light-work__content {
     width: 50%;
     margin: 15px auto 50px;
   }
+
   .sk-led-light-work__heading {
     font-size: 48px;
     text-align: center;
     font-weight: 600;
+  }
+
+  .sk-led-light-work-images-container {
+    position: relative;
+  }
+
+  .sk-led-light-work-image-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .sk-led-light-work-image-item img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+  }
+
+  .sk-led-light-work-image-item svg {
+    flex-shrink: 0;
+  }
+
+  /* Navigation Arrows */
+  .sk-led-light-work-prev,
+  .sk-led-light-work-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    box-shadow: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: all 0.3s ease;
+  }
+
+  .sk-led-light-work-prev {
+    left: 40px;
+  }
+
+  .sk-led-light-work-next {
+    right: 65px;
+  }
+
+  .sk-led-light-work-prev svg,
+  .sk-led-light-work-next svg {
+    width: 24px;
+    height: 24px;
+    fill: #333;
+  }
+
+  /* Pagination */
+  .sk-led-light-work .swiper-pagination {
+    position: relative !important;
+    margin-top: 40px;
+  }
+
+  .sk-led-light-work .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: #ddd;
+    opacity: 1;
+    transition: all 0.3s ease;
+  }
+
+  .sk-led-light-work .swiper-pagination-bullet-active {
+    background: #4a4458;
+    transform: scale(1.2);
+  }
+
+  .sk-led-light-work .swiper-wrapper {
+    position: unset;
+  }
+
+  .sk-led-light-work .swiper {
+    position: unset;
   }
 
   @media only screen and (max-width: 700px) {
@@ -14,31 +106,27 @@
       width: 100%;
     }
 
-    .sk-led-light-work-images-container {
-      padding: 0;
-      justify-content: start;
-      gap: 10px;
-      width: 480px;
-      overflow-x: scroll;
-      flex-wrap: nowrap;
-      overflow-y: hidden;
+    .sk-led-light-work {
+      padding: 5rem 0;
     }
 
     .sk-led-light-work-image-item {
-      flex: 0 0 237px;
-    }
-    .sk-led-light-work-image-item img {
-      width: 100%;
-      height: auto;
-    }
-    .sk-led-light-work-images-container svg {
-      width: 25px;
-      height: 25px;
-      flex: 0 0 26px;
+      gap: 10px;
     }
 
-    .sk-led-light-work {
-      padding: 5rem 0;
+    .sk-led-light-work-image-item svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    .sk-led-light-work-next {
+      top: 94%;
+      right: 100px !important;
+    }
+
+    .sk-led-light-work-prev {
+      top: 94%;
+      left: 100px !important;
     }
   }
 
@@ -48,12 +136,25 @@
       line-height: 37px;
     }
 
-    .sk-led-light-work-images-container svg {
+    .sk-led-light-work-image-item svg {
       width: 16px;
       height: 16px;
     }
-    .sk-led-light-work-image-item {
-      width: 98px;
+
+    .sk-led-light-work-prev {
+      top: 97%;
+      left: 60px !important;
+    }
+
+    .sk-led-light-work-next {
+      top: 97%;
+      right: 60px !important;
+    }
+
+    .sk-led-light-work-prev svg,
+    .sk-led-light-work-next svg {
+      width: 16px;
+      height: 16px;
     }
   }
 </style>
@@ -64,33 +165,128 @@
       <div class="sk-led-light-work__content">
         <h2 class="sk-led-light-work__heading">{{ section.settings.sk_led_light_work_heading }}</h2>
       </div>
-      <div class="sk-led-light-work-images-container">
-        {% for block in section.blocks %}
-          <div class="sk-led-light-work-image-item">
-            <img
-              src="{{ block.settings.sk_led_light_work_img | image_url: width: 215,height: 456 }}"
-              alt="{{ block.settings.sk_led_light_work_img.alt }}"
-              width="215"
-              height="456"
-            >
+
+      {% if section.blocks.size > 0 %}
+        <div class="swiper sk-led-light-work-swiper">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+              <div class="swiper-slide" {{ block.shopify_attributes }}>
+                <div class="sk-led-light-work-image-item">
+                  <img
+                    src="{{ block.settings.sk_led_light_work_img | image_url: width: 215, height: 456 }}"
+                    alt="{{ block.settings.sk_led_light_work_img.alt }}"
+                    width="215"
+                    height="456"
+                    loading="lazy"
+                  >
+                  {{ 'led-light-works-arrow.svg' | inline_asset_content }}
+                </div>
+              </div>
+            {% endfor %}
           </div>
-          {% if forloop.last == false %}
-            {{ 'led-light-works-arrow.svg' | inline_asset_content }}
+
+          <!-- Navigation arrows -->
+          {% if section.blocks.size > 3 %}
+            <div class="sk-led-light-work-prev">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
+                <path d="M30 16.2756L2 16.2756M2 16.2756L16 30.2756M2 16.2756L16 2.27563" stroke="#6C6C6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="sk-led-light-work-next">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
+                <path d="M2 16.2756H30M30 16.2756L16 2.27563M30 16.2756L16 30.2756" stroke="#6C6C6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
           {% endif %}
-        {% endfor %}
-      </div>
+
+          <!-- Pagination -->
+          <div class="swiper-pagination"></div>
+        </div>
+      {% else %}
+        <div style="text-align: center; padding: 60px 0; color: #999;">
+          <p>Add image blocks to display LED light work steps here.</p>
+        </div>
+      {% endif %}
     </div>
   </div>
 </section>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const swiper = new Swiper('.sk-led-light-work-swiper', {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      loop: {{ section.settings.enable_loop }},
+      autoplay: {{ section.settings.enable_autoplay }} ? {
+        delay: 3000,
+        disableOnInteraction: false,
+      } : false,
+      pagination: {
+        el: '.sk-led-light-work .swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.sk-led-light-work-next',
+        prevEl: '.sk-led-light-work-prev',
+      },
+      breakpoints: {
+        300: {
+          slidesPerView: 1,
+          spaceBetween: 10,
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        1024: {
+          slidesPerView: {{ section.settings.slides_per_view | default: 3 }},
+          spaceBetween: 30,
+        },
+      },
+    });
+  });
+</script>
 
 {% schema %}
 {
   "name": "SK Led Light Work",
   "settings": [
     {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
       "type": "text",
       "id": "sk_led_light_work_heading",
       "label": "Title"
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "range",
+      "id": "slides_per_view",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Slides Per View (Desktop)",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_loop",
+      "label": "Enable Loop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": false
     }
   ],
   "blocks": [

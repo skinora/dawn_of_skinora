@@ -790,13 +790,6 @@ footer .svg-wrapper {
 }
 
 
-footer .footer_submit_btn {
-  display: flex;
-  gap: 5px;
-  width: 98px !important;
-}
-
-
 footer .field__input:focus {
   box-shadow: none !important;
 
