@@ -790,13 +790,6 @@ footer .svg-wrapper {
 }
 
 
-footer .footer_submit_btn {
-  display: flex;
-  gap: 5px;
-  width: 98px !important;
-}
-
-
 footer .field__input:focus {
   box-shadow: none !important;
 
@@ -828,4 +821,18 @@ footer .list-social__item a:hover {
 
 .footer__payment {
   margin-bottom: 26px;
+}
+
+footer .footer_submit_btn {
+  display: flex;
+  gap: 5px;
+  width: 136px !important;
+  font-size: 14px !important;
+}
+
+p.newsletter-subtext {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 25px;
 }
