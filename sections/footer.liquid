@@ -30,7 +30,10 @@
   -%}
   <section class="footer-top_section">
     <div class="footer-top_section-content">
-      <h2>Let's Join To Our News Letter</h2>
+      <h2>{{ section.settings.newsletter_top_heading | default: 'Join our newsletter' }}</h2>
+      {% if section.settings.newsletter_top_subtext != blank %}
+  <p class="newsletter-subtext">{{ section.settings.newsletter_top_subtext }}</p>
+{% endif %}
       {%- form 'customer', id: 'ContactFooterTop', class: 'footer__newsletter-form newsletter-form' -%}
         <input type="hidden" name="contact[tags]" value="newsletter">
         <div class="newsletter-form__field-wrapper">
@@ -62,7 +65,7 @@
               id="Subscribe"
               aria-label="{{ 'newsletter.button_label' | t }}"
             >
-              <span class="news_letter_join-btn">Join</span>
+              <span class="news_letter_join-btn">{{ section.settings.newsletter_top_cta | default: 'Join' }}</span>
               {% comment %}
                 <span class="svg-wrapper">
                   {{- 'icon-arrow.svg' | inline_asset_content -}}
@@ -96,19 +99,16 @@
       {%- endform -%}
     </div>
   </section>
-  <div class="footer__content-top container-xl px-xl-0 px-md-5 px-4">
+  <div class="footer__content-top container">
     <div class="footer__main-columns{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {%- comment -%} First Column: Logo, Description, Newsletter, Social Icons {%- endcomment -%}
       <div class="footer__column footer__column--brand">
         {%- if section.settings.logo != blank -%}
           <div class="footer__logo">
-            <img
-              src="{{ section.settings.logo | image_url: width: 200 }}"
-              alt="{{ shop.name }}"
-              width="{{ section.settings.logo_width | default: 120 }}"
-              height="auto"
-              loading="lazy"
-            >
+            {{ section.settings.logo | image_url: width: section.settings.logo_width | image_tag:
+              alt: shop.name,
+              loading: 'lazy'
+            }}
           </div>
         {%- else -%}
           <div class="footer-logo">
@@ -116,13 +116,11 @@
           </div>
         {%- endif -%}
 
-        {% comment %}
-          {%- if section.settings.brand_description != blank -%}
-            <div class="footer__brand-description">
-              {{ section.settings.brand_description }}
-            </div>
-          {%- endif -%}
-        {% endcomment %}
+        {%- if section.settings.brand_description != blank -%}
+          <div class="footer__brand-description">
+            {{ section.settings.brand_description }}
+          </div>
+        {%- endif -%}
 
         {% comment %}
           {%- if section.settings.newsletter_enable -%}
@@ -233,7 +231,7 @@
       data-cascade
     {% endif %}
   >
-    <div class="footer__content-bottom-wrapper container-xl px-xl-0 px-md-5 px-4">
+    <div class="footer__content-bottom-wrapper container">
       <div class="footer__column footer__localization isolate">
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
           <localization-form>
@@ -448,9 +446,11 @@
         </div>
       </div>
     </div>
-    <div class="footer__content-bottom-wrapper container-xl px-xl-0 px-md-5 px-4{% if section.settings.enable_country_selector == false and section.settings.enable_language_selector == false %} footer__content-bottom-wrapper--center{% endif %}">
+    <div class="footer__content-bottom-wrapper container{% if section.settings.enable_country_selector == false and section.settings.enable_language_selector == false %} footer__content-bottom-wrapper--center{% endif %}">
       <div class="footer__copyright caption">
-        <small class="copyright__content">Skinora v/Providento AS - 933 648 672 MVA </small>
+       <small class="copyright__content">
+       {{ section.settings.copyright_text | default: 'Skinora v/Providento AS - 933 648 672 MVA' }} &copy; {{ 'now' | date: '%Y' }}
+        </small>
         {% comment %} <small class="copyright__content">{{ powered_by_link }}</small> {% endcomment %}
         {%- if section.settings.show_policy -%}
           <ul class="policies list-unstyled">
@@ -468,6 +468,35 @@
       </div>
     </div>
   </div>
+  {%- if section.settings.enable_org_schema -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "logo": {{ section.settings.logo | image_url: width: 400 | json }},
+  "description": {{ section.settings.brand_description | strip_html | strip | json }},
+  "sameAs": [{% assign socials = '' -%}
+    {%- if settings.social_instagram_link != blank -%}{% assign socials = socials | append: settings.social_instagram_link | append: '|' %}{%- endif -%}
+    {%- if settings.social_facebook_link  != blank -%}{% assign socials = socials | append: settings.social_facebook_link  | append: '|' %}{%- endif -%}
+    {%- if settings.social_youtube_link   != blank -%}{% assign socials = socials | append: settings.social_youtube_link   | append: '|' %}{%- endif -%}
+    {%- if settings.social_tiktok_link    != blank -%}{% assign socials = socials | append: settings.social_tiktok_link    | append: '|' %}{%- endif -%}
+    {%- if settings.social_twitter_link   != blank -%}{% assign socials = socials | append: settings.social_twitter_link   | append: '|' %}{%- endif -%}
+    {%- if settings.social_pinterest_link != blank -%}{% assign socials = socials | append: settings.social_pinterest_link | append: '|' %}{%- endif -%}
+    {%- assign sameas = socials | split: '|' | reject: '' -%}
+    {%- for u in sameas -%}{{ u | json }}{% unless forloop.last %}, {% endunless %}{%- endfor -%}
+  ],
+  "contactPoint": [{
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    "email": {{ shop.email | json }},
+    "areaServed": "NO"
+  }]
+}
+</script>
+{%- endif -%}
+
 </footer>
 
 {% schema %}
@@ -693,7 +722,17 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
-    }
+    },
+    { "type": "text", "id": "newsletter_top_heading", "label": "Top newsletter heading", "default": "Join our newsletter" },
+{ "type": "text", "id": "newsletter_top_cta", "label": "Top newsletter button label", "default": "Join" },
+{ "type": "text", "id": "copyright_text", "label": "Copyright text", "default": "Skinora v/Providento AS - 933 648 672 MVA" },
+{ "type": "checkbox", "id": "enable_org_schema", "label": "Enable Organization schema (JSON-LD)", "default": true },
+{
+  "type": "inline_richtext",
+  "id": "newsletter_top_subtext",
+  "label": "Top newsletter subtext",
+  "default": "Få inspirasjon, velvære-tips og eksklusive tilbud rett i innboksen. Vi deler kun det som får huden – og deg – til å stråle."
+}
   ]
 }
 {% endschema %}
