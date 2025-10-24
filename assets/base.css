@@ -2454,13 +2454,13 @@ input[type='checkbox'] {
 
 .header__heading-logo {
   height: auto;
-  max-width: 100%;
+  max-width: var(--header-logo-width, 260px);
 }
 
 .header__heading-logo-wrapper {
-  width: 100%;
+  width: auto;
   display: inline-block;
-  transition: width 0.3s cubic-bezier(0.52, 0, 0.61, 0.99);
+  transition: transform 0.22s cubic-bezier(0.2, 0, 0, 1);
 }
 
 @media screen and (max-width: 989px) {
@@ -3764,9 +3764,24 @@ div.okeReviews .oke-is-large .oke-w-reviews-list-item {
   border-color: #fff !important;
 }
 
-h1.header__heading svg {
-  width: 260px;
+/* Logo sizing: use a CSS variable set on the logo wrapper. The wrapper
+   may be an <h1> on the homepage or a <div>/<a> on other pages, so
+   prefer class-based selectors. */
+.header__heading-logo-wrapper img,
+.header__heading-logo-wrapper svg,
+.header__heading-logo img,
+.header__heading-logo svg {
+  width: 100%;
+  max-width: var(--header-logo-width, 260px);
   height: auto;
+  display: block;
+}
+
+.scrolled-past-header .header__heading-logo-wrapper .header__heading-logo,
+.scrolled-past-header .header__heading-logo {
+  /* prefer transform-based scaling for sticky header */
+  transform: scale(0.85);
+  transform-origin: left center;
 }
 
 .footer-logo svg {
