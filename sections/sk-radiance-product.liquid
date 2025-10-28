@@ -484,45 +484,166 @@
 
   <script>
     (function () {
-      const stickyBar = document.getElementById('stickyBottomBar-{{ section.id }}');
-      const productForm = document.querySelector('#{{ product_form_id }}');
-      const stickyButton = stickyBar.querySelector('.sk-radiance-sticky-bottom-bar__button');
-      const mainProductSection = document.getElementById('MainProduct-{{ section.id }}');
+      const sectionId = '{{ section.id }}';
+      const templateId = 'stickyBottomBar-' + sectionId;
+      const portalId = templateId + '-portal';
+      const productFormSelector = '#{{ product_form_id }}';
 
-      // Show/hide sticky bar based on scroll position
-      function toggleStickyBar() {
-        if (!mainProductSection) return;
+      // Create or update a portal node appended to document.body.
+      function createOrUpdatePortal() {
+        const template = document.getElementById(templateId);
+        if (!template) return null;
 
-        const productRect = mainProductSection.getBoundingClientRect();
-        const isProductVisible = productRect.top < window.innerHeight && productRect.bottom > 0;
+        let portal = document.getElementById(portalId);
+        if (!portal) {
+          portal = document.createElement('div');
+          portal.id = portalId;
+          portal.className = 'sk-radiance-sticky-bottom-bar sk-radiance-sticky-bottom-bar--portal';
+          document.body.appendChild(portal);
+        }
 
-        // Show sticky bar when product section is not fully visible
-        if (productRect.bottom < 0 || productRect.top > window.innerHeight - 100) {
-          stickyBar.classList.add('visible');
+        // Copy the template content into the portal so markup stays server-driven
+        portal.innerHTML = template.innerHTML;
+
+        // Ensure portal inline styles to guarantee viewport fixed positioning
+        Object.assign(portal.style, {
+          position: 'fixed',
+          left: '0px',
+          right: '0px',
+          bottom: '0px',
+          zIndex: '2147483000',
+          transform: portal.classList.contains('visible') ? 'translateY(0)' : 'translateY(100%)',
+          transition: 'transform 0.3s ease-in-out',
+          display: 'block',
+        });
+
+        return portal;
+      }
+
+      function getVisibilityTarget() {
+        return document.querySelector(productFormSelector) || document.getElementById('MainProduct-' + sectionId);
+      }
+
+      let portal = null;
+      let intersectionObserver = null;
+
+      function togglePortal() {
+        if (!portal) portal = createOrUpdatePortal();
+        if (!portal) return;
+
+        const target = getVisibilityTarget();
+        if (!target) return;
+
+        const rect = target.getBoundingClientRect();
+        const shouldShow = rect.bottom < 0 || rect.top > window.innerHeight - 100;
+
+        if (shouldShow) {
+          portal.classList.add('visible');
+          portal.style.transform = 'translateY(0)';
         } else {
-          stickyBar.classList.remove('visible');
+          portal.classList.remove('visible');
+          portal.style.transform = 'translateY(100%)';
         }
       }
 
-      // Handle sticky button click
-      if (stickyButton && productForm) {
-        stickyButton.addEventListener('click', function (e) {
-          e.preventDefault();
-
-          // Trigger the main form submit
-          const submitButton = productForm.querySelector('[type="submit"]');
-          if (submitButton) {
-            submitButton.click();
-          }
-        });
+      // Click handling: delegate from the portal element so it always references current form
+      function onPortalClick(e) {
+        const btn = e.target.closest && e.target.closest('.sk-radiance-sticky-bottom-bar__button');
+        if (!btn) return;
+        e.preventDefault();
+        const form = document.querySelector(productFormSelector);
+        const submitButton = form && form.querySelector && form.querySelector('[type="submit"]');
+        if (submitButton) {
+          submitButton.click();
+        } else if (form && typeof form.requestSubmit === 'function') {
+          form.requestSubmit();
+        } else if (form && typeof form.submit === 'function') {
+          form.submit();
+        }
       }
 
-      // Listen to scroll events
-      window.addEventListener('scroll', toggleStickyBar);
-      window.addEventListener('resize', toggleStickyBar);
+      function bindPortalEvents() {
+        portal = createOrUpdatePortal();
+        if (!portal) return;
+        // remove any previous handler then bind
+        portal.removeEventListener('click', onPortalClick);
+        portal.addEventListener('click', onPortalClick);
+      }
 
-      // Initial check
-      toggleStickyBar();
+      function setupObservers() {
+        const target = getVisibilityTarget();
+        if ('IntersectionObserver' in window && target) {
+          if (intersectionObserver)
+            try {
+              intersectionObserver.disconnect();
+            } catch (err) {}
+          intersectionObserver = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.intersectionRatio >= 0.99) {
+                  portal && portal.classList.remove('visible');
+                  portal && (portal.style.transform = 'translateY(100%)');
+                } else {
+                  portal && portal.classList.add('visible');
+                  portal && (portal.style.transform = 'translateY(0)');
+                }
+              });
+            },
+            { threshold: [0, 0.5, 0.99] }
+          );
+          try {
+            intersectionObserver.observe(target);
+          } catch (er) {
+            /* ignore */
+          }
+        }
+
+        // Always keep scroll/resize fallback
+        window.removeEventListener('scroll', togglePortal);
+        window.removeEventListener('resize', togglePortal);
+        window.addEventListener('scroll', togglePortal, { passive: true });
+        window.addEventListener('resize', togglePortal);
+      }
+
+      // Re-sync portal markup and bindings when product-info content changes
+      document.addEventListener('product-info:loaded', function (e) {
+        const mainId = 'MainProduct-' + sectionId;
+        if (!e || !e.target || e.target.id === mainId || (e.target.closest && e.target.closest('#' + mainId))) {
+          // rebind portal and observers
+          bindPortalEvents();
+          setupObservers();
+          togglePortal();
+        }
+      });
+
+      // Ensure portal is created on DOM ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+          bindPortalEvents();
+          setupObservers();
+          togglePortal();
+        });
+      } else {
+        bindPortalEvents();
+        setupObservers();
+        togglePortal();
+      }
+
+      // Watch for late insertion of the template (theme editor or async render)
+      const templateObserver = new MutationObserver((mutations) => {
+        for (const m of mutations) {
+          for (const n of m.addedNodes) {
+            if (n && n.nodeType === 1) {
+              if (n.id === templateId || (n.querySelector && n.querySelector('#' + templateId))) {
+                bindPortalEvents();
+                togglePortal();
+                return;
+              }
+            }
+          }
+        }
+      });
+      templateObserver.observe(document.documentElement || document.body, { childList: true, subtree: true });
     })();
   </script>
 </product-info>
