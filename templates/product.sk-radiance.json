@@ -95,13 +95,6 @@
           "type": "promotion_logos",
           "disabled": true,
           "settings": {}
-        },
-        "comfort_feature": {
-          "type": "text",
-          "settings": {
-            "text": "Komfortbriller følger med – ekstra komfort, samme effekt",
-            "text_style": "body"
-          }
         }
       },
       "block_order": [
@@ -117,8 +110,7 @@
         "product_features",
         "product_description",
         "guarantee_banner",
-        "promotion_logos",
-        "comfort_feature"
+        "promotion_logos"
       ],
       "settings": {
         "enable_sticky_info": true,
