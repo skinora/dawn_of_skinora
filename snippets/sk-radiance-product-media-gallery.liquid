@@ -1,40 +1,11 @@
 {%- liquid
   assign media_count = product.media.size
-  if media_count == 0
-    assign single_media_visible = true
-  endif
-
-  assign media_count = product.media.size
-  if media_count == 0
-    assign single_media_visible = true
-  endif
 
   assign media_aspect_ratio = product.featured_media.aspect_ratio
   unless media_aspect_ratio
     assign media_aspect_ratio = 1
   endunless
-
-  assign desktop_columns = 1
-  assign desktop_carousel = false
-  assign mobile_carousel = false
-  assign media_contains_model = false
-
-  if media_count > 1
-    assign mobile_carousel = true
-  endif
-
-  if media_count > 1
-    assign desktop_carousel = true
-  endif
-
-  for media in product.media
-    if media.media_type == 'model'
-      assign media_contains_model = true
-      break
-    endif
-  endfor
 -%}
-
 <div class="sk-radiance-product__media-wrapper">
   <div class="sk-radiance-product__media sk-radiance-product__media--{{ section.settings.media_size }} sk-radiance-product__media--{{ section.settings.media_position }} sk-radiance-product__media--{{ section.settings.gallery_layout }} sk-radiance-product__media--mobile-{{ section.settings.mobile_thumbnails }}">
     <!-- Main Media Display -->

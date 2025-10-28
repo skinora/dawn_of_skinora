@@ -482,6 +482,8 @@
       const templateId = 'stickyBottomBar-' + sectionId;
       const portalId = templateId + '-portal';
       const productFormSelector = '#{{ product_form_id }}';
+      const productId = '{{ product.id }}';
+      const debug = {{ request.design_mode | json }} || false;
 
       // Create or update a portal node appended to document.body.
       function createOrUpdatePortal() {
@@ -497,6 +499,7 @@
         }
 
         // Copy the template content into the portal so markup stays server-driven
+        // (use innerHTML because template may be re-rendered by theme editor)
         portal.innerHTML = template.innerHTML;
 
         // Ensure portal inline styles to guarantee viewport fixed positioning
@@ -507,15 +510,29 @@
           bottom: '0px',
           zIndex: '2147483000',
           transform: portal.classList.contains('visible') ? 'translateY(0)' : 'translateY(100%)',
-          transition: 'transform 0.3s ease-in-out',
+          transition: 'transform 0.28s ease-in-out',
           display: 'block',
         });
 
         return portal;
       }
 
+      // Try to find the best visibility target for this product section.
       function getVisibilityTarget() {
-        return document.querySelector(productFormSelector) || document.getElementById('MainProduct-' + sectionId);
+        // Prefer explicit product form for this section
+        let el = document.querySelector(productFormSelector);
+        if (el) return el;
+
+        // Fallbacks: container with the MainProduct id
+        el = document.getElementById('MainProduct-' + sectionId);
+        if (el) return el;
+
+        // Fallback to any element that declares the same product id
+        el = document.querySelector('[data-product-id="' + productId + '"]');
+        if (el) return el;
+
+        // Last resort: body (will keep portal visible when scroll moves)
+        return document.body;
       }
 
       let portal = null;
@@ -532,7 +549,9 @@
         // Calculate visibility using the portal's real height and a small margin
         const portalElem = portal || document.getElementById(portalId);
         const portalHeight = portalElem && portalElem.offsetHeight ? portalElem.offsetHeight : 72;
-        const margin = 24;
+        const margin = 28; // a small breathing room
+
+        // If the target is scrolled out of view (either above or below the viewport) show the sticky
         const isAbove = rect.bottom <= margin;
         const isBelow = rect.top >= window.innerHeight - portalHeight - margin;
         const shouldShow = isAbove || isBelow;
@@ -544,22 +563,83 @@
           portal.classList.remove('visible');
           portal.style.transform = 'translateY(100%)';
         }
+
+        if (debug) console.debug('[SK Sticky] togglePortal', { sectionId, rect, portalHeight, shouldShow });
       }
 
       // Click handling: delegate from the portal element so it always references current form
+      function findProductForm(btn) {
+        // 1) If button has an explicit data-product-form attribute, prefer that
+        try {
+          if (btn && btn.dataset && btn.dataset.productForm) {
+            const maybe = document.getElementById(btn.dataset.productForm);
+            if (maybe && maybe.tagName === 'FORM') return maybe;
+          }
+        } catch (e) {}
+
+        // 2) Look for the form specifically for this section
+        const sectionForm = document.querySelector(productFormSelector);
+        if (sectionForm) return sectionForm;
+
+        // 3) Try to find a form inside the MainProduct container
+        const mainForm = document.querySelector('#MainProduct-' + sectionId + ' form');
+        if (mainForm) return mainForm;
+
+        // 4) Try any form within an element with matching data-product-id
+        const anyContainer = document.querySelector('[data-product-id="' + productId + '"]');
+        if (anyContainer) {
+          const f = anyContainer.querySelector('form');
+          if (f) return f;
+        }
+
+        // 5) Last resort: first form on the page that looks like a product form (heuristic)
+        const fallback = document.querySelector('form[action*="/cart"], form[action*="/cart/add"]');
+        if (fallback) return fallback;
+
+        return null;
+      }
+
+      function safeSubmitForm(form) {
+        if (!form) return false;
+        // prefer an explicit submit button if present
+        const submitButton = form.querySelector('button[type="submit"], input[type="submit"], [data-add-to-cart], .add-to-cart, .product-form__submit');
+        if (submitButton) {
+          if (debug) console.debug('[SK Sticky] clicking submitButton', submitButton);
+          try { submitButton.click(); } catch (e) { /* ignore click failure */ }
+          return true;
+        }
+
+        // use requestSubmit if available (preserves form validation/handlers)
+        if (typeof form.requestSubmit === 'function') {
+          if (debug) console.debug('[SK Sticky] requestSubmit on form', form);
+          try { form.requestSubmit(); } catch (e) { /* ignore */ }
+          return true;
+        }
+
+        // as a last resort, call native submit
+        if (typeof form.submit === 'function') {
+          if (debug) console.debug('[SK Sticky] fallback form.submit()', form);
+          try { form.submit(); } catch (e) { /* ignore */ }
+          return true;
+        }
+
+        return false;
+      }
+
       function onPortalClick(e) {
         const btn = e.target.closest && e.target.closest('.sk-radiance-sticky-bottom-bar__button');
         if (!btn) return;
         e.preventDefault();
-        const form = document.querySelector(productFormSelector);
-        const submitButton = form && form.querySelector && form.querySelector('[type="submit"]');
-        if (submitButton) {
-          submitButton.click();
-        } else if (form && typeof form.requestSubmit === 'function') {
-          form.requestSubmit();
-        } else if (form && typeof form.submit === 'function') {
-          form.submit();
+
+        const form = findProductForm(btn);
+        if (!form) {
+          if (debug) console.warn('[SK Sticky] could not find product form for section', sectionId);
+          return;
         }
+
+        // attempt to submit safely
+        const ok = safeSubmitForm(form);
+        if (!ok && debug) console.warn('[SK Sticky] submit attempt failed for form', form);
       }
 
       function bindPortalEvents() {

@@ -1,8 +1,5 @@
 {%- liquid
   assign media_count = product.media.size
-  if media_count == 0
-    assign single_media_visible = true
-  endif
 
   assign media_aspect_ratio = product.featured_media.aspect_ratio
   unless media_aspect_ratio

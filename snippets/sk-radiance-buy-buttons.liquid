@@ -1,7 +1,6 @@
 {%- liquid
   assign product_form_id = 'product-form-' | append: section_id
   assign current_variant = product.selected_or_first_available_variant
-  assign product_form_installment_id = 'product-form-installment-' | append: section_id
 
   assign show_dynamic_checkout = false
   if block.settings.show_dynamic_checkout
