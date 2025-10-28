@@ -267,8 +267,7 @@
                     {%- for i in (1..10) -%}
                       {%- assign feature_enabled = 'feature_' | append: i | append: '_enabled' -%}
                       {%- assign feature_svg = 'feature_' | append: i | append: '_svg' -%}
-                      {%- assign feature_top_text = 'feature_' | append: i | append: '_top_text' -%}
-                      {%- assign feature_bottom_text = 'feature_' | append: i | append: '_bottom_text' -%}
+                      {%- comment -%} feature top/bottom text keys reserved for future use {%- endcomment -%}
 
                       {%- if block.settings[feature_enabled] -%}
                         <div class="sk-radiance-product-features__item">
@@ -441,46 +440,41 @@
       <script src="{{ 'product-model.js' | asset_url }}" defer></script>
     {%- endif -%}
 
-    {%- liquid
-      if product.selected_or_first_available_variant.featured_media
-        assign seo_media = product.selected_or_first_available_variant.featured_media
-      else
-        assign seo_media = product.featured_media
-      endif
-    -%}
-    {%- comment -%} SEO media variable available for future use {%- endcomment -%}
+    {%- comment -%} SEO media assignment removed (unused). Keep here if future SEO media logic is added. {%- endcomment -%}
 
     <script type="application/ld+json">
       {{ product | structured_data }}
     </script>
   </div>
 
-  <!-- Sticky Bottom Bar -->
-  <div class="sk-radiance-sticky-bottom-bar" id="stickyBottomBar-{{ section.id }}">
-    <div class="container">
-      <div class="sk-radiance-sticky-bottom-bar__content">
-        <div class="sk-radiance-sticky-bottom-bar__info">
-          <h3 class="sk-radiance-sticky-bottom-bar__product-name">{{ product.title }}</h3>
-          <div class="sk-radiance-sticky-bottom-bar__price">
-            {%- render 'sk-radiance-price',
-              product: product,
-              use_variant: true,
-              show_badges: false,
-              price_class: 'price--small'
-            -%}
+  <!-- Sticky Bottom Bar (server-rendered template only) -->
+  <template id="stickyBottomBar-{{ section.id }}">
+    <div class="sk-radiance-sticky-bottom-bar">
+      <div class="container">
+        <div class="sk-radiance-sticky-bottom-bar__content">
+          <div class="sk-radiance-sticky-bottom-bar__info">
+            <h3 class="sk-radiance-sticky-bottom-bar__product-name">{{ product.title }}</h3>
+            <div class="sk-radiance-sticky-bottom-bar__price">
+              {%- render 'sk-radiance-price',
+                product: product,
+                use_variant: true,
+                show_badges: false,
+                price_class: 'price--small'
+              -%}
+            </div>
           </div>
+          <button
+            type="button"
+            class="sk-radiance-sticky-bottom-bar__button"
+            data-product-form="{{ product_form_id }}"
+            data-section-id="{{ section.id }}"
+          >
+            <span>{{ 'products.product.add_to_cart' | t }}</span>
+          </button>
         </div>
-        <button
-          type="button"
-          class="sk-radiance-sticky-bottom-bar__button"
-          data-product-form="{{ product_form_id }}"
-          data-section-id="{{ section.id }}"
-        >
-          <span>{{ 'products.product.add_to_cart' | t }}</span>
-        </button>
       </div>
     </div>
-  </div>
+  </template>
 
   <script>
     (function () {
@@ -535,7 +529,13 @@
         if (!target) return;
 
         const rect = target.getBoundingClientRect();
-        const shouldShow = rect.bottom < 0 || rect.top > window.innerHeight - 100;
+        // Calculate visibility using the portal's real height and a small margin
+        const portalElem = portal || document.getElementById(portalId);
+        const portalHeight = portalElem && portalElem.offsetHeight ? portalElem.offsetHeight : 72;
+        const margin = 24;
+        const isAbove = rect.bottom <= margin;
+        const isBelow = rect.top >= window.innerHeight - portalHeight - margin;
+        const shouldShow = isAbove || isBelow;
 
         if (shouldShow) {
           portal.classList.add('visible');
@@ -654,9 +654,6 @@
   "tag": "section",
   "class": "section",
   "blocks": [
-    {
-      "type": "@app"
-    },
     {
       "type": "text",
       "name": "Text",
