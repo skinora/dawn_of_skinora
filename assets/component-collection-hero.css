@@ -1,42 +1,35 @@
+/* base: make hero stack by default */
+.collection-hero {
+  padding: 0;
+}
+
 .collection-hero__inner {
   display: flex;
   flex-direction: column;
+  gap: 0;
 }
 
-.collection-hero--with-image .collection-hero__inner {
-  margin-bottom: 0;
-  padding-bottom: 2rem;
+/* full-width image on top */
+.collection-hero__image-full {
+  width: 100%;
 }
 
-@media screen and (min-width: 750px) {
-  .collection-hero.collection-hero--with-image {
-    padding: calc(4rem + var(--page-width-margin)) 0 calc(4rem + var(--page-width-margin));
-    overflow: hidden;
-  }
-
-  .collection-hero--with-image .collection-hero__inner {
-    padding-bottom: 0;
-  }
+.collection-hero__image-full img {
+  width: 100%;
+  height: 200px; /* mobile height */
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
+/* text wrapper under image */
 .collection-hero__text-wrapper {
   flex-basis: 100%;
-}
-
-@media screen and (min-width: 750px) {
-  .collection-hero {
-    padding: 0;
-  }
-
-  .collection-hero__inner {
-    align-items: center;
-    flex-direction: row;
-    padding-bottom: 0;
-  }
+  padding: 2.5rem 0 2.5rem;
 }
 
 .collection-hero__title {
-  margin: 2.5rem 0;
+  margin: 0 0 1.5rem 0;
 }
 
 .collection-hero__title + .collection-hero__description {
@@ -46,53 +39,58 @@
   line-height: calc(1 + 0.5 / var(--font-body-scale));
 }
 
+/* remove Dawn's old image-container styling (box on the right) */
+.collection-hero__image-container {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* MOBILE FIRST -------------------------------------------------- */
+@media screen and (max-width: 749px) {
+  .collection-hero {
+    padding: 0;
+  }
+
+  .collection-hero__inner {
+    padding: 0 1.5rem 2rem;
+  }
+
+  .collection-hero__image-full img {
+    height: 200px;
+  }
+}
+
+/* DESKTOP ------------------------------------------------------- */
 @media screen and (min-width: 750px) {
+  /* no 2-column layout, stay stacked */
+  .collection-hero__inner {
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 0;
+  }
+
+  .collection-hero__text-wrapper {
+    padding: 3rem 0 3.5rem;
+    text-align: left; /* change to center if you want */
+    width: min(100%, var(--page-width));
+  }
+
   .collection-hero__title + .collection-hero__description {
     font-size: 1.8rem;
     margin-top: 2rem;
     margin-bottom: 2rem;
+    max-width: 58rem;
   }
 
-  .collection-hero__description {
-    max-width: 66.67%;
-  }
-
-  .collection-hero--with-image .collection-hero__description {
-    max-width: 100%;
+  .collection-hero__image-full img {
+    height: 320px; /* desktop banner height */
   }
 }
 
-.collection-hero--with-image .collection-hero__title {
-  margin: 0;
-}
-
-.collection-hero--with-image .collection-hero__text-wrapper {
-  padding: 5rem 0 4rem;
-}
-
-.collection-hero__image-container {
-  border: var(--media-border-width) solid rgba(var(--color-foreground), var(--media-border-opacity));
-  border-radius: var(--media-radius);
-  box-shadow: var(--media-shadow-horizontal-offset) var(--media-shadow-vertical-offset) var(--media-shadow-blur-radius)
-    rgba(var(--color-shadow), var(--media-shadow-opacity));
-}
-
-@media screen and (max-width: 749px) {
-  .collection-hero__image-container {
-    height: 20rem;
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .collection-hero--with-image .collection-hero__text-wrapper {
-    padding: 4rem 2rem 4rem 0;
-    flex-basis: 50%;
-  }
-
-  .collection-hero__image-container {
-    align-self: stretch;
-    flex: 1 0 50%;
-    margin-left: 3rem;
-    min-height: 20rem;
+/* VERY WIDE SCREENS -------------------------------------------- */
+@media screen and (min-width: 1200px) {
+  .collection-hero__image-full img {
+    height: 360px;
   }
 }
