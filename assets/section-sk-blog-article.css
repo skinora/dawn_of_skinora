@@ -239,7 +239,7 @@
 /* mobile: keep article title bigger than subheaders */
 @media (max-width: 749px) {
   .sk-blog-article__title {
-    font-size: 30px;   /* or 32px if you like it bold */
+    font-size: 30px; !important;   /* or 32px if you like it bold */
     line-height: 1.2;
   }
 
