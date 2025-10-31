@@ -13,7 +13,7 @@
       "type": "sk-blogs-banner",
       "settings": {
         "background_image": "shopify://shop_images/about-section-bg.png",
-        "heading": "Blogs",
+        "heading": "",
         "subheading": "",
         "description": "",
         "button_label": "",
