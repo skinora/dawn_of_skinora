@@ -12,27 +12,6 @@
     "main": {
       "type": "sk-blog-article",
       "blocks": {
-        "text_block_rCNYM4": {
-          "type": "text_block",
-          "settings": {
-            "heading": "",
-            "content": "<p>Healthy skin starts with balance and care, supported by innovations that make visible changes over time. Skinora Radiance is designed to help improve clarity, texture, and elasticity with clinically proven light therapy. Whether your goal is to soften fine lines, reduce acne breakouts, or restore natural glow, this device provides an effective, gentle solution. Backed by research, it works beneath the surface where results matter most. By stimulating collagen and supporting recovery, it enhances long-term skin wellness. Experience professional-quality treatment at home with confidence.<br/><br/></p>"
-          }
-        },
-        "text_block_A6Jy8D": {
-          "type": "text_block",
-          "settings": {
-            "heading": "",
-            "content": "<p>Healthy skin starts with balance and care, supported by innovations that make visible changes over time. Skinora Radiance is designed to help improve clarity, texture, and elasticity with clinically proven light therapy. Whether your goal is to soften fine lines, reduce acne breakouts, or restore natural glow, this device provides an effective, gentle solution. Backed by research, it works beneath the surface where results matter most. By stimulating collagen and supporting recovery, it enhances long-term skin wellness. Experience professional-quality treatment at home with confidence.<br/><br/></p>"
-          }
-        },
-        "text_block_4YUPwg": {
-          "type": "text_block",
-          "settings": {
-            "heading": "",
-            "content": "<p>Healthy skin starts with balance and care, supported by innovations that make visible changes over time. Skinora Radiance is designed to help improve clarity, texture, and elasticity with clinically proven light therapy. Whether your goal is to soften fine lines, reduce acne breakouts, or restore natural glow, this device provides an effective, gentle solution. Backed by research, it works beneath the surface where results matter most. By stimulating collagen and supporting recovery, it enhances long-term skin wellness. Experience professional-quality treatment at home with confidence.<br/><br/></p>"
-          }
-        },
         "two_images_content_hLqRYY": {
           "type": "two_images_content",
           "settings": {
@@ -41,21 +20,10 @@
             "image_right_2": "shopify://shop_images/Image_10.png",
             "content": "<p>Healthy skin starts with balance and care, supported by innovations that make visible changes over time. Skinora Radiance is designed to help improve clarity.</p>"
           }
-        },
-        "text_block_nGLk39": {
-          "type": "text_block",
-          "settings": {
-            "heading": "",
-            "content": "<p>Healthy skin starts with balance and care, supported by innovations that make visible changes over time. Skinora Radiance is designed to help improve clarity, texture, and elasticity with clinically proven light therapy. Whether your goal is to soften fine lines, reduce acne breakouts, or restore natural glow, this device provides an effective, gentle solution. Backed by research, it works beneath the surface where results matter most. By stimulating collagen and supporting recovery, it enhances long-term skin wellness. Experience professional-quality treatment at home with confidence.<br/><br/></p>"
-          }
         }
       },
       "block_order": [
-        "text_block_rCNYM4",
-        "text_block_A6Jy8D",
-        "text_block_4YUPwg",
-        "two_images_content_hLqRYY",
-        "text_block_nGLk39"
+        "two_images_content_hLqRYY"
       ],
       "settings": {
         "show_featured_image": true,
@@ -90,6 +58,7 @@
         "post_1",
         "post_2"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Latest Blogs",
         "description": "Explore effective techniques and tips to elevate your skincare routine and enhance your skin's natural radiance and health.",
