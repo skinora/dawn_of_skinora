@@ -21,6 +21,10 @@
   border-radius: 12px;
 }
 
+.sk-blog-article__featured-image img {
+  object-fit: cover;
+  object-position: center top; /* crop focus */
+}
 
 .sk-blog-article__image {
     width: 100%;
