@@ -184,7 +184,7 @@
 .sk-blog-article__main-image {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9; /* You can change this ratio: 4/3, 3/2, 1/1 for square */
+    aspect-ratio: 4 / 3; /* You can change this ratio: 4/3, 3/2, 1/1 for square */
     overflow: hidden;
     border-radius: 12px;
     margin-bottom: 40px;
