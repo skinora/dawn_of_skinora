@@ -9,21 +9,6 @@
  */
 {
   "sections": {
-    "sk_blogs_banner_wNCnkm": {
-      "type": "sk-blogs-banner",
-      "name": "Blogs Banner",
-      "settings": {
-        "background_image": "shopify://shop_images/about-section-bg.png",
-        "heading": "Blogs Detail",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "color_scheme": "background-1",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
     "main": {
       "type": "sk-blog-article",
       "blocks": {
@@ -125,7 +110,6 @@
     }
   },
   "order": [
-    "sk_blogs_banner_wNCnkm",
     "main",
     "latest_blogs",
     "explore_button"
