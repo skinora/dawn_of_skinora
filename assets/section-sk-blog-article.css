@@ -6,7 +6,7 @@
 /* Make blog featured image fill parent width, crop vertically for consistency */
 .sk-blog-article__featured-image {
   width: 100%;
-  height: 420px; /* Adjust this value for your desired visual height */
+  height: 440px; /* Adjust this value for your desired visual height */
   overflow: hidden;
   border-radius: 12px;
   margin-bottom: 40px;
