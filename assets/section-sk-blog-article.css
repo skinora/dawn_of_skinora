@@ -28,14 +28,9 @@
     line-height: 1.2;
 }
 
-.sk-blog-article__meta {
-    display: flex;
-    align-items: center;
-    gap: 70px;
-    color: #6C6C6C;
-    font-size: 14px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
+/* Hide blog metadata: author, date, tags */
+  .sk-blog-article__meta {
+    display: none !important;
 }
 
 .sk-blog-article__date,
