@@ -17,6 +17,7 @@
 
 .sk-blog-article__header {
     margin-bottom: 40px;
+    text-align: center;
 }
 
 .sk-blog-article__title {
@@ -32,16 +33,6 @@
   .sk-blog-article__meta {
     display: none !important;
 }
-
-.sk-blog-article__date,
-.sk-blog-article__author,
-.sk-blog-article__tag {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
 
 .sk-blog-article__body {
     font-size: 16px;
