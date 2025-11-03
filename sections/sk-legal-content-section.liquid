@@ -22,7 +22,7 @@
             Output the content escaped so pasted HTML is shown as literal text
             (useful for legal pages where users paste HTML but want it rendered as text)
           {%- endcomment -%}
-          {{ section.settings.content | escape }}
+          {{ section.settings.content | raw }}
         </div>
       {%- endif -%}
 
@@ -53,7 +53,7 @@
       "default": "Legal Document"
     },
     {
-      "type": "richtext",
+      "type": "html",
       "id": "content",
       "label": "Content",
       "default": "<p>Add your legal content here.</p>"
