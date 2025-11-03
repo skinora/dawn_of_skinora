@@ -13,7 +13,7 @@
       "type": "sk-help-banner",
       "settings": {
         "background_image": "shopify://shop_images/about-section-bg.png",
-        "heading": "Legal Document",
+        "heading": "",
         "subheading": "",
         "description": "",
         "button_label": "",
@@ -51,7 +51,7 @@
             "icon_html": "<svg width=\"48\" height=\"48\" viewbox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z\" fill=\"currentColor\"></path></svg>",
             "title": "Bestilling & Betaling",
             "article_count": "8 Articles",
-            "link": ""
+            "link": "shopify://pages/betaling-og-bestilling"
           }
         },
         "category_item_amYMN4": {
