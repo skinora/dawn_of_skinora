@@ -1,0 +1,251 @@
+{%- comment -%}
+  Sticky bottom bar template + portal script for SK Radiance product section.
+
+  Expects:
+  - section: {Object}
+  - product: {Object}
+  - product_form_id: {String}
+{%- endcomment -%}
+
+<template id="stickyBottomBar-{{ section.id }}">
+  <div class="sk-radiance-sticky-bottom-bar">
+    <div class="container">
+      <div class="sk-radiance-sticky-bottom-bar__content">
+        <div class="sk-radiance-sticky-bottom-bar__info">
+          <h3 class="sk-radiance-sticky-bottom-bar__product-name">{{ product.title }}</h3>
+          <div class="sk-radiance-sticky-bottom-bar__price">
+            {%- render 'sk-radiance-price',
+              product: product,
+              use_variant: true,
+              show_badges: false,
+              price_class: 'price--small'
+            -%}
+          </div>
+        </div>
+        <button
+          type="button"
+          class="sk-radiance-sticky-bottom-bar__button"
+          data-product-form="{{ product_form_id }}"
+          data-section-id="{{ section.id }}"
+        >
+          <span>{{ 'products.product.add_to_cart' | t }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  (function () {
+    const sectionId = '{{ section.id }}';
+    const templateId = 'stickyBottomBar-' + sectionId;
+    const portalId = templateId + '-portal';
+    const productFormSelector = '#{{ product_form_id }}';
+    const productId = '{{ product.id }}';
+    const debug = {{ request.design_mode | json }} || false;
+
+    function createOrUpdatePortal() {
+      const template = document.getElementById(templateId);
+      if (!template) return null;
+
+      let portal = document.getElementById(portalId);
+      if (!portal) {
+        portal = document.createElement('div');
+        portal.id = portalId;
+        portal.className = 'sk-radiance-sticky-bottom-bar sk-radiance-sticky-bottom-bar--portal';
+        document.body.appendChild(portal);
+      }
+
+      portal.innerHTML = template.innerHTML;
+
+      Object.assign(portal.style, {
+        position: 'fixed',
+        left: '0px',
+        right: '0px',
+        bottom: '0px',
+        zIndex: '2147483000',
+        transform: portal.classList.contains('visible') ? 'translateY(0)' : 'translateY(100%)',
+        transition: 'transform 0.28s ease-in-out',
+        display: 'block',
+      });
+
+      return portal;
+    }
+
+    function getVisibilityTarget() {
+      let el = document.querySelector(productFormSelector);
+      if (el) return el;
+      el = document.getElementById('MainProduct-' + sectionId);
+      if (el) return el;
+      el = document.querySelector('[data-product-id="' + productId + '"]');
+      if (el) return el;
+      return document.body;
+    }
+
+    let portal = null;
+    let intersectionObserver = null;
+
+    function togglePortal() {
+      if (!portal) portal = createOrUpdatePortal();
+      if (!portal) return;
+
+      const target = getVisibilityTarget();
+      if (!target) return;
+
+      const rect = target.getBoundingClientRect();
+      const portalElem = portal || document.getElementById(portalId);
+      const portalHeight = portalElem && portalElem.offsetHeight ? portalElem.offsetHeight : 72;
+      const margin = 28;
+
+      const isAbove = rect.bottom <= margin;
+      const isBelow = rect.top >= window.innerHeight - portalHeight - margin;
+      const shouldShow = isAbove || isBelow;
+
+      if (shouldShow) {
+        portal.classList.add('visible');
+        portal.style.transform = 'translateY(0)';
+      } else {
+        portal.classList.remove('visible');
+        portal.style.transform = 'translateY(100%)';
+      }
+
+      if (debug) console.debug('[SK Sticky] togglePortal', { sectionId, rect, portalHeight, shouldShow });
+    }
+
+    function findProductForm(btn) {
+      try {
+        if (btn && btn.dataset && btn.dataset.productForm) {
+          const maybe = document.getElementById(btn.dataset.productForm);
+          if (maybe && maybe.tagName === 'FORM') return maybe;
+        }
+      } catch (e) {}
+
+      const sectionForm = document.querySelector(productFormSelector);
+      if (sectionForm) return sectionForm;
+
+      const mainForm = document.querySelector('#MainProduct-' + sectionId + ' form');
+      if (mainForm) return mainForm;
+
+      const anyContainer = document.querySelector('[data-product-id="' + productId + '"]');
+      if (anyContainer) {
+        const f = anyContainer.querySelector('form');
+        if (f) return f;
+      }
+
+      const fallback = document.querySelector('form[action*="/cart"], form[action*="/cart/add"]');
+      if (fallback) return fallback;
+
+      return null;
+    }
+
+    function safeSubmitForm(form) {
+      if (!form) return false;
+      const submitButton = form.querySelector('button[type="submit"], input[type="submit"], [data-add-to-cart], .add-to-cart, .product-form__submit');
+      if (submitButton) {
+        if (debug) console.debug('[SK Sticky] clicking submitButton', submitButton);
+        try { submitButton.click(); } catch (e) {}
+        return true;
+      }
+
+      if (typeof form.requestSubmit === 'function') {
+        if (debug) console.debug('[SK Sticky] requestSubmit on form', form);
+        try { form.requestSubmit(); } catch (e) {}
+        return true;
+      }
+
+      if (typeof form.submit === 'function') {
+        if (debug) console.debug('[SK Sticky] fallback form.submit()', form);
+        try { form.submit(); } catch (e) {}
+        return true;
+      }
+
+      return false;
+    }
+
+    function onPortalClick(e) {
+      const btn = e.target.closest && e.target.closest('.sk-radiance-sticky-bottom-bar__button');
+      if (!btn) return;
+      e.preventDefault();
+
+      const form = findProductForm(btn);
+      if (!form) {
+        if (debug) console.warn('[SK Sticky] could not find product form for section', sectionId);
+        return;
+      }
+
+      const ok = safeSubmitForm(form);
+      if (!ok && debug) console.warn('[SK Sticky] submit attempt failed for form', form);
+    }
+
+    function bindPortalEvents() {
+      portal = createOrUpdatePortal();
+      if (!portal) return;
+      portal.removeEventListener('click', onPortalClick);
+      portal.addEventListener('click', onPortalClick);
+    }
+
+    function setupObservers() {
+      const target = getVisibilityTarget();
+      if ('IntersectionObserver' in window && target) {
+        if (intersectionObserver)
+          try { intersectionObserver.disconnect(); } catch (err) {}
+        intersectionObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.intersectionRatio >= 0.99) {
+                portal && portal.classList.remove('visible');
+                portal && (portal.style.transform = 'translateY(100%)');
+              } else {
+                portal && portal.classList.add('visible');
+                portal && (portal.style.transform = 'translateY(0)');
+              }
+            });
+          },
+          { threshold: [0, 0.5, 0.99] }
+        );
+        try { intersectionObserver.observe(target); } catch (er) {}
+      }
+
+      window.removeEventListener('scroll', togglePortal);
+      window.removeEventListener('resize', togglePortal);
+      window.addEventListener('scroll', togglePortal, { passive: true });
+      window.addEventListener('resize', togglePortal);
+    }
+
+    document.addEventListener('product-info:loaded', function (e) {
+      const mainId = 'MainProduct-' + sectionId;
+      if (!e || !e.target || e.target.id === mainId || (e.target.closest && e.target.closest('#' + mainId))) {
+        bindPortalEvents();
+        setupObservers();
+        togglePortal();
+      }
+    });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () {
+        bindPortalEvents();
+        setupObservers();
+        togglePortal();
+      });
+    } else {
+      bindPortalEvents();
+      setupObservers();
+      togglePortal();
+    }
+
+    const templateObserver = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        for (const n of m.addedNodes) {
+          if (n && n.nodeType === 1) {
+            if (n.id === templateId || (n.querySelector && n.querySelector('#' + templateId))) {
+              bindPortalEvents();
+              togglePortal();
+              return;
+            }
+          }
+        }
+      }
+    });
+    templateObserver.observe(document.documentElement || document.body, { childList: true, subtree: true });
+  })();
+</script>

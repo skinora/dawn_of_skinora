@@ -1,0 +1,40 @@
+{%- comment -%}
+  Renders the promotion logos scroller used by SK Radiance product section.
+
+  Accepts:
+  - logos: {Array} array of logo image references
+  - section: {Object}
+{%- endcomment -%}
+
+{%- if logos != empty -%}
+  <div class="sk-product-promotion-logos-block-{{ section.id }}">
+    <div class="sw-publication__scroll-parent">
+      <div class="sw-publication__scroll-element primary">
+        {% for logo in logos %}
+          <div class="sw-publication__card">
+            <img
+              src="{{ logo | image_url: width: 104, height: 104 }}"
+              alt="Promotion logo {{ forloop.index }}"
+              width="104"
+              height="104"
+              loading="lazy"
+            >
+          </div>
+        {% endfor %}
+      </div>
+      <div class="sw-publication__scroll-element secondary">
+        {% for logo in logos %}
+          <div class="sw-publication__card">
+            <img
+              src="{{ logo | image_url: width: 104, height: 104 }}"
+              alt="Promotion logo {{ forloop.index }}"
+              width="104"
+              height="104"
+              loading="lazy"
+            >
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{%- endif -%}

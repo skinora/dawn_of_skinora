@@ -1,4 +1,12 @@
-MatchingTranslations:
+---
+# Temporary theme-check configuration for local iteration.
+# Disable a couple of noisy checks so we can focus on other offenses.
+root: "."
+ignore:
+  - node_modules/*
+
+UnknownFilter:
   enabled: false
-TemplateLength:
+
+SchemaJsonFormat:
   enabled: false

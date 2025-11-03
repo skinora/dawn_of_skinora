@@ -1,0 +1,22 @@
+{%- comment -%}
+  Product features list for SK Radiance product section.
+  Receives: product, block
+{%- endcomment -%}
+
+{%- if product.metafields.custom.show_product_features == true -%}
+  <div class="sk-radiance-product-features" {{ block.shopify_attributes }}>
+    {%- for i in (1..10) -%}
+      {%- assign feature_enabled = 'feature_' | append: i | append: '_enabled' -%}
+      {%- assign feature_svg = 'feature_' | append: i | append: '_svg' -%}
+      {%- comment -%} feature top/bottom text keys reserved for future use {%- endcomment -%}
+
+      {%- if block.settings[feature_enabled] -%}
+        <div class="sk-radiance-product-features__item">
+          <div class="sk-radiance-product-features__icon">
+            {{ block.settings[feature_svg] }}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

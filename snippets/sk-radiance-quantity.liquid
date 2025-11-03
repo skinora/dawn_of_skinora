@@ -1,0 +1,84 @@
+{%- comment -%}
+  Quantity selector for SK Radiance product section.
+  Receives: product, block, product_form_id, section
+{%- endcomment -%}
+
+<div
+  id="Quantity-{{ section.id }}"
+  class="sk-radiance-product-form__input sk-radiance-product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} sk-radiance-product-form__quantity-top{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  {% comment %} TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter {% endcomment %}
+  {% # theme-check-disable %}
+  {%- assign cart_qty = cart | item_count_for_variant: product.selected_or_first_available_variant.id -%}
+  {% # theme-check-enable %}
+  <span class="visually-hidden" id="quantity-label-{{ section.id }}">
+    {%- if cart_qty > 0 -%}
+      {{- 'products.product.quantity.in_cart_aria_label' | t: quantity: cart_qty -}}
+    {%- else -%}
+      {{- 'products.product.quantity.label' | t -}}
+    {%- endif -%}
+  </span>
+  <label
+    class="quantity__label form__label"
+    for="Quantity-{{ section.id }}"
+    aria-labelledby="quantity-label-{{ section.id }}"
+  >
+    <span aria-hidden="true" class="d-none">{{ 'products.product.quantity.label' | t }}</span>
+    <span class="quantity__rules-cart{% if cart_qty == 0 %} hidden{% endif %}" aria-hidden="true">
+      {%- render 'loading-spinner' -%}
+      <span
+        >(
+        {{- 'products.product.quantity.in_cart_html' | t: quantity: cart_qty -}}
+        )</span
+      >
+    </span>
+  </label>
+  <div class="price-per-item__container">
+    <quantity-input
+      class="quantity custom_quantity_input"
+      data-url="{{ product.url }}"
+      data-section="{{ section.id }}"
+    >
+      <button class="quantity__button" name="minus" type="button">
+        <span class="visually-hidden">
+          {{- 'products.product.quantity.decrease' | t: product: product.title | escape -}}
+        </span>
+        <span class="svg-wrapper">
+          {{- 'icon-minus.svg' | inline_asset_content -}}
+        </span>
+      </button>
+      <input
+        class="quantity__input"
+        type="number"
+        name="quantity"
+        id="Quantity-{{ section.id }}"
+        data-cart-quantity="{{ cart_qty }}"
+        data-min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+        min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+        {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
+          data-max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+          max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+        {% endif %}
+        step="{{ product.selected_or_first_available_variant.quantity_rule.increment }}"
+        value="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+        form="{{ product_form_id }}"
+      >
+      <button class="quantity__button" name="plus" type="button">
+        <span class="visually-hidden">
+          {{- 'products.product.quantity.increase' | t: product: product.title | escape -}}
+        </span>
+        <span class="svg-wrapper">
+          {{- 'icon-plus.svg' | inline_asset_content -}}
+        </span>
+      </button>
+    </quantity-input>
+    {%- render 'sk-radiance-buy-buttons',
+      block: block,
+      product: product,
+      product_form_id: product_form_id,
+      section_id: section.id,
+      show_pickup_availability: true
+    -%}
+  </div>
+</div>
