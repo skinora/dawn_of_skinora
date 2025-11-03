@@ -23,6 +23,18 @@
         "padding_bottom": 0
       }
     },
+    "content_section": {
+      "type": "sk-legal-content-section",
+      "settings": {
+        "heading": "Legal Document",
+        "content": "",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "background-1",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
     "main": {
       "type": "main-page",
       "custom_css": [
@@ -36,6 +48,7 @@
   },
   "order": [
     "banner",
+    "content_section",
     "main"
   ]
 }
