@@ -32,106 +32,10 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
-    },
-    "sk_help_categories_rfz4BH": {
-      "type": "sk-help-categories",
-      "blocks": {
-        "category_item_WDUjKP": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewbox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V7h2v4z\" fill=\"currentColor\"></path></svg>",
-            "title": "Produkt-FAQ",
-            "article_count": "8 Articles",
-            "link": ""
-          }
-        },
-        "category_item_RKybFa": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewbox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z\" fill=\"currentColor\"></path></svg>",
-            "title": "Bestilling & Betaling",
-            "article_count": "8 Articles",
-            "link": "shopify://pages/betaling-og-bestilling"
-          }
-        },
-        "category_item_amYMN4": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewbox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\" fill=\"currentColor\"></path></svg>",
-            "title": "Frakt & Levering",
-            "article_count": "8 Articles",
-            "link": ""
-          }
-        },
-        "category_item_jQiWc3": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewbox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7v2H4V4h3.5l1-1h7l1 1H20z\" fill=\"currentColor\"></path></svg>",
-            "title": "Retur & Angrerett",
-            "article_count": "8 Articles",
-            "link": ""
-          }
-        },
-        "category_item_AFY3iH": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewbox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7v2H4V4h3.5l1-1h7l1 1H20z\" fill=\"currentColor\"></path></svg>",
-            "title": "Retur & Angrerett",
-            "article_count": "8 Articles",
-            "link": ""
-          }
-        },
-        "category_item_iTLgwd": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewbox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7v2H4V4h3.5l1-1h7l1 1H20z\" fill=\"currentColor\"></path></svg>",
-            "title": "Retur & Angrerett",
-            "article_count": "8 Articles",
-            "link": ""
-          }
-        },
-        "category_item_DMFQ6q": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewbox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7v2H4V4h3.5l1-1h7l1 1H20z\" fill=\"currentColor\"></path></svg>",
-            "title": "Retur & Angrerett",
-            "article_count": "8 Articles",
-            "link": ""
-          }
-        },
-        "category_item_wbA46L": {
-          "type": "category_item",
-          "settings": {
-            "icon_html": "<svg width=\"48\" height=\"48\" viewbox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7v2H4V4h3.5l1-1h7l1 1H20z\" fill=\"currentColor\"></path></svg>",
-            "title": "Retur & Angrerett",
-            "article_count": "8 Articles",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "category_item_WDUjKP",
-        "category_item_RKybFa",
-        "category_item_amYMN4",
-        "category_item_jQiWc3",
-        "category_item_AFY3iH",
-        "category_item_iTLgwd",
-        "category_item_DMFQ6q",
-        "category_item_wbA46L"
-      ],
-      "name": "Help Categories",
-      "settings": {
-        "heading": "Hjelpesenter",
-        "description": "<p>Vi Har Samlet Alt Du Trenger Å Vite Om Bestilling, Levering Og Bruk Av Våre Produkter.</p>",
-        "color_scheme": "background-1",
-        "padding_top": 80,
-        "padding_bottom": 80
-      }
     }
   },
   "order": [
     "banner",
-    "main",
-    "sk_help_categories_rfz4BH"
+    "main"
   ]
 }
