@@ -7,22 +7,25 @@
   }
 {%- endstyle -%}
 
+{%- assign page_title = page.metafields.custom.legal_title -%}
+{%- assign page_content = page.metafields.custom.legal_content -%}
+
 <div class="sk-content-section section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="container-xl px-xl-0 px-md-5 px-4">
     <div class="sk-content-section__wrapper">
-      {%- if section.settings.heading != blank -%}
+      {%- if page_title != blank or section.settings.heading != blank -%}
         <h2 class="sk-content-section__heading">
-          {{ section.settings.heading | escape }}
+          {{ page_title | default: section.settings.heading | escape }}
         </h2>
       {%- endif -%}
 
-      {%- if section.settings.content != blank -%}
+      {%- if page_content != blank or section.settings.content != blank -%}
         <div class="sk-content-section__content">
-          {%- comment -%}
-            Output the content escaped so pasted HTML is shown as literal text
-            (useful for legal pages where users paste HTML but want it rendered as text)
-          {%- endcomment -%}
-          {{ section.settings.content | raw }}
+          {%- if page_content != blank -%}
+            {{ page_content | metafield_tag }}
+          {%- else -%}
+            {{ section.settings.content | raw }}
+          {%- endif -%}
         </div>
       {%- endif -%}
 
@@ -72,26 +75,11 @@
       "type": "select",
       "id": "color_scheme",
       "options": [
-        {
-          "value": "accent-1",
-          "label": "t:sections.all.colors.accent_1.label"
-        },
-        {
-          "value": "accent-2",
-          "label": "t:sections.all.colors.accent_2.label"
-        },
-        {
-          "value": "background-1",
-          "label": "t:sections.all.colors.background_1.label"
-        },
-        {
-          "value": "background-2",
-          "label": "t:sections.all.colors.background_2.label"
-        },
-        {
-          "value": "inverse",
-          "label": "t:sections.all.colors.inverse.label"
-        }
+        { "value": "accent-1", "label": "t:sections.all.colors.accent_1.label" },
+        { "value": "accent-2", "label": "t:sections.all.colors.accent_2.label" },
+        { "value": "background-1", "label": "t:sections.all.colors.background_1.label" },
+        { "value": "background-2", "label": "t:sections.all.colors.background_2.label" },
+        { "value": "inverse", "label": "t:sections.all.colors.inverse.label" }
       ],
       "default": "background-1",
       "label": "t:sections.all.colors.label"
