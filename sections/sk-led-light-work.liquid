@@ -1,59 +1,108 @@
 <style>
-  .sk-led-light-work__content {
-    width: 50%;
-    margin: 15px auto 50px;
-  }
-  .sk-led-light-work__heading {
-    font-size: 48px;
-    text-align: center;
-    font-weight: 600;
+  .sk-led-light-work {
+    padding: 5rem 0;
   }
 
-  @media only screen and (max-width: 700px) {
+  .sk-led-light-work__content {
+    width: min(760px, 90%);
+    margin: 15px auto 50px;
+    text-align: center;
+  }
+
+  .sk-led-light-work__heading {
+    font-size: 48px;
+    line-height: 1.15;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .sk-led-light-work-images-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .sk-led-light-work-image-item {
+    /* Keep all tiles visually uniform */
+    width: 215px;
+    aspect-ratio: 215 / 456;
+    border-radius: 8px;
+    overflow: hidden;
+    /* optional subtle shadow */
+    /* box-shadow: 0 6px 24px rgba(0,0,0,.06); */
+  }
+
+  .sk-led-light-work-image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .sk-led-light-work-images-container svg {
+    width: 26px;
+    height: 26px;
+    flex: 0 0 26px;
+    color: #30273E; /* or currentColor; match theme */
+  }
+
+  /* Mobile */
+  @media (max-width: 700px) {
     .sk-led-light-work__content {
       width: 100%;
+      margin-bottom: 32px;
     }
 
     .sk-led-light-work-images-container {
-      padding: 0;
-      justify-content: start;
-      gap: 10px;
-      width: 480px;
-      overflow-x: scroll;
-      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 12px;
+      overflow-x: auto;
       overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 16px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .sk-led-light-work-image-item,
+    .sk-led-light-work-images-container svg {
+      scroll-snap-align: start;
     }
 
     .sk-led-light-work-image-item {
-      flex: 0 0 237px;
+      width: 180px;
+      aspect-ratio: 215 / 456;
+      flex: 0 0 auto;
+      border-radius: 8px;
     }
-    .sk-led-light-work-image-item img {
-      width: 100%;
-      height: auto;
-    }
+
     .sk-led-light-work-images-container svg {
-      width: 25px;
-      height: 25px;
-      flex: 0 0 26px;
+      width: 22px;
+      height: 22px;
+      flex: 0 0 22px;
+      opacity: .9;
     }
 
     .sk-led-light-work {
-      padding: 5rem 0;
+      padding: 4rem 0;
     }
   }
 
-  @media only screen and (max-width: 435px) {
+  /* Small phones */
+  @media (max-width: 435px) {
     .sk-led-light-work__heading {
       font-size: 32px;
-      line-height: 37px;
+      line-height: 1.15;
+    }
+
+    .sk-led-light-work-image-item {
+      width: 150px;
     }
 
     .sk-led-light-work-images-container svg {
       width: 16px;
       height: 16px;
-    }
-    .sk-led-light-work-image-item {
-      width: 98px;
+      flex: 0 0 16px;
     }
   }
 </style>
@@ -61,26 +110,44 @@
 <section class="sk-led-light-work">
   <div class="container-xl px-xl-0 px-md-5 px-4 main-container">
     <div class="sk-led-light-work__container">
-      <div class="sk-led-light-work__content">
-        <h2 class="sk-led-light-work__heading sk-section-heading sk-section-heading--h1">
-          {{ section.settings.sk_led_light_work_heading }}
-        </h2>
-      </div>
-      <div class="sk-led-light-work-images-container">
-        {% for block in section.blocks %}
-          <div class="sk-led-light-work-image-item">
-            <img
-              src="{{ block.settings.sk_led_light_work_img | image_url: width: 215, height: 456 }}"
-              alt="{{ block.settings.sk_led_light_work_img.alt }}"
-              width="215"
-              height="456"
-            >
-          </div>
-          {% if forloop.last == false %}
-            {{ 'led-light-works-arrow.svg' | inline_asset_content }}
-          {% endif %}
-        {% endfor %}
-      </div>
+      {% if section.settings.sk_led_light_work_heading != blank %}
+        <div class="sk-led-light-work__content">
+          <h2 class="sk-led-light-work__heading sk-section-heading sk-section-heading--h1">
+            {{ section.settings.sk_led_light_work_heading | escape }}
+          </h2>
+        </div>
+      {% endif %}
+
+      {% if section.blocks.size > 0 %}
+        <div class="sk-led-light-work-images-container">
+          {% for block in section.blocks %}
+            <div class="sk-led-light-work-image-item">
+              {% if block.settings.sk_led_light_work_img != blank %}
+                {%- assign img = block.settings.sk_led_light_work_img -%}
+                <img
+                  srcset="
+                    {{ img | image_url: width: 220 }} 220w,
+                    {{ img | image_url: width: 330 }} 330w,
+                    {{ img | image_url: width: 440 }} 440w
+                  "
+                  sizes="(max-width: 700px) 180px, 215px"
+                  src="{{ img | image_url: width: 330 }}"
+                  alt="{{ img.alt | escape }}"
+                  loading="lazy"
+                  decoding="async"
+                  width="215"
+                  height="456"
+                >
+              {% endif %}
+            </div>
+
+            {% unless forloop.last %}
+              {%- capture arrow -%}{{ 'led-light-works-arrow.svg' | inline_asset_content }}{%- endcapture -%}
+              {{ arrow | replace: '<svg', '<svg aria-hidden="true" focusable="false" role="presentation"' }}
+            {% endunless %}
+          {% endfor %}
+        </div>
+      {% endif %}
     </div>
   </div>
 </section>
@@ -92,13 +159,15 @@
     {
       "type": "text",
       "id": "sk_led_light_work_heading",
-      "label": "Title"
+      "label": "Title",
+      "default": "Hvordan Fungerer Skinora LED Lys"
     }
   ],
   "blocks": [
     {
       "type": "image",
       "name": "Image",
+      "limit": 6,
       "settings": [
         {
           "type": "image_picker",
@@ -110,7 +179,12 @@
   ],
   "presets": [
     {
-      "name": "SK Led Light Work"
+      "name": "SK Led Light Work",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
     }
   ]
 }
