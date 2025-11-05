@@ -40,6 +40,15 @@
     display: block;
   }
 
+  /* Avoid upscaling artifacts on high-DPR displays. Provide a hint to the browser
+     and ensure images stay crisp when possible. */
+  .sk-led-light-work-image-item img {
+    image-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
   .sk-led-light-work-images-container svg {
     width: 26px;
     height: 26px;
@@ -96,7 +105,8 @@
     }
 
     .sk-led-light-work-image-item {
-      width: 150px;
+      width: 150px; /* small phones */
+      aspect-ratio: 215 / 456;
     }
 
     .sk-led-light-work-images-container svg {
@@ -127,11 +137,12 @@
                 <img
                   srcset="
                     {{ img | image_url: width: 220 }} 220w,
-                    {{ img | image_url: width: 330 }} 330w,
-                    {{ img | image_url: width: 440 }} 440w
+                    {{ img | image_url: width: 440 }} 440w,
+                    {{ img | image_url: width: 660 }} 660w,
+                    {{ img | image_url: width: 880 }} 880w
                   "
                   sizes="(max-width: 700px) 180px, 215px"
-                  src="{{ img | image_url: width: 330 }}"
+                  src="{{ img | image_url: width: 660 }}"
                   alt="{{ img.alt | escape }}"
                   loading="lazy"
                   decoding="async"
