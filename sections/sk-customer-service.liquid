@@ -18,7 +18,10 @@
 
     <div class="sk-customer-service__form">
       <h2>Send oss en melding</h2>
-      <form method="post" action="mailto:hello@skinora.no" enctype="text/plain">
+      <form method="post" action="/contact#contact_form" id="contact_form" class="contact-form">
+      <input type="hidden" name="form_type" value="contact">
+      <input type="hidden" name="utf8" value="✓">
+
         <label for="name">Navn</label>
         <input type="text" id="name" name="name" placeholder="Ditt navn" required>
 
