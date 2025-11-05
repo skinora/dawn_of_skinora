@@ -15,7 +15,7 @@
   {%- render 'sk-radiance-product-assets', section: section, product: product -%}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
-  <div class="container-xl px-xl-0 px-md-5 px-4">
+  <div class="page-width">
     <div class="sk-radiance-product sk-radiance-product--{{ section.settings.media_size }} sk-radiance-product--{{ section.settings.media_position }} sk-radiance-product--{{ section.settings.gallery_layout }} sk-radiance-product--mobile-{{ section.settings.mobile_thumbnails }} {% if product.media.size > 0 %}sk-radiance-product--with-media{% else %}sk-radiance-product--no-media{% endif %}">
       <!-- Product Media Gallery -->
       <div class="sk-radiance-product__media-wrapper">

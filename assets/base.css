@@ -122,6 +122,17 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
     padding: 0;
   }
 
+  /* Utility: make a section expand full-bleed while preserving centered content
+     Use by adding the class `section--full-bleed` to a section wrapper.
+     This lets the inner `.page-width` stop constraining to var(--page-width)
+     so the section can expand up to the full viewport while keeping
+     centered content when needed. It's opt-in and non-destructive.
+  */
+  .section--full-bleed .page-width {
+    max-width: 100%;
+    padding: 0;
+  }
+
   .page-width-tablet {
     padding: 0 5rem;
   }
@@ -134,7 +145,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   }
 
   .page-width--narrow {
-    max-width: 72.6rem;
+    max-width: min(var(--page-width), 72.6rem);
     padding: 0;
   }
 
@@ -184,7 +195,8 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 }
 
 .rte-width {
-  max-width: 82rem;
+  /* Respect the global page width but cap at a comfortable readable measure */
+  max-width: min(var(--page-width), 82rem);
   margin: 0 auto 2rem;
 }
 

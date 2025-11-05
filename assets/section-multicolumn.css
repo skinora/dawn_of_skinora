@@ -61,10 +61,10 @@
 }
 
 .multicolumn-list__item:only-child {
-  max-width: 72rem;
+  /* Keep the readable cap but respect the global page width */
+  max-width: min(var(--page-width), 72rem);
 }
-
-.multicolumn-list__item--empty {
+*** End Patch .multicolumn-list__item--empty {
   display: none;
 }
 

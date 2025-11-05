@@ -1,8 +1,8 @@
 {{ 'section-sk-customer-service.css' | asset_url | stylesheet_tag }}
 
-<div class="sk-customer-service container-xl px-md-5 px-4 py-10">
+<div class="sk-customer-service page-width py-10">
   <h1 class="sk-customer-service__title">Kundeservice</h1>
-  
+
   <div class="sk-customer-service__grid">
     <div class="sk-customer-service__info">
       <h2>Kontakt oss</h2>
@@ -16,8 +16,8 @@
     <div class="sk-customer-service__form">
       <h2>Send oss en melding</h2>
       <form method="post" action="/contact#contact_form" id="contact_form" class="contact-form">
-      <input type="hidden" name="form_type" value="contact">
-      <input type="hidden" name="utf8" value="✓">
+        <input type="hidden" name="form_type" value="contact">
+        <input type="hidden" name="utf8" value="✓">
 
         <label for="name">Navn</label>
         <input type="text" id="name" name="name" placeholder="Ditt navn" required>

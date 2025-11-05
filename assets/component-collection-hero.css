@@ -80,7 +80,8 @@
     font-size: 1.8rem;
     margin-top: 2rem;
     margin-bottom: 2rem;
-    max-width: 58rem;
+    /* Cap the description width but allow a larger global page width to take effect */
+    max-width: min(var(--page-width), 58rem);
   }
 
   .collection-hero__image-full img {
