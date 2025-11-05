@@ -1,0 +1,49 @@
+{{ 'section-sk-customer-service.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-customer-service container-xl px-md-5 px-4 py-10">
+  <h1 class="sk-customer-service__title">Kundeservice</h1>
+  
+  <div class="sk-customer-service__grid">
+    <div class="sk-customer-service__info">
+      <h2>Kontakt oss</h2>
+      <p>Har du spørsmål om produkter, bestilling eller levering? Vi hjelper deg gjerne.</p>
+
+      <ul class="sk-customer-service__details">
+        <li><strong>E-post:</strong> <a href="mailto:hello@skinora.no">hello@skinora.no</a></li>
+        <li><strong>Telefon:</strong> +47 400 00 000</li>
+        <li><strong>Adresse:</strong> Håvevegen 45, 3830 Ulefoss</li>
+        <li><strong>Åpningstider:</strong> Man–Fre 09:00–17:00</li>
+      </ul>
+    </div>
+
+    <div class="sk-customer-service__form">
+      <h2>Send oss en melding</h2>
+      <form method="post" action="mailto:hello@skinora.no" enctype="text/plain">
+        <label for="name">Navn</label>
+        <input type="text" id="name" name="name" placeholder="Ditt navn" required>
+
+        <label for="email">E-post</label>
+        <input type="email" id="email" name="email" placeholder="Din e-post" required>
+
+        <label for="message">Melding</label>
+        <textarea id="message" name="message" placeholder="Hva kan vi hjelpe deg med?" required></textarea>
+
+        <button type="submit" class="sk-customer-service__button">Send melding</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SK Kundeservice",
+  "tag": "section",
+  "class": "section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "SK Kundeservice"
+    }
+  ]
+}
+{% endschema %}
