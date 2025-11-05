@@ -44,7 +44,7 @@
     width: 26px;
     height: 26px;
     flex: 0 0 26px;
-    color: #30273E; /* or currentColor; match theme */
+    color: var(--color-brand); /* brand color */
   }
 
   /* Mobile */
@@ -80,7 +80,7 @@
       width: 22px;
       height: 22px;
       flex: 0 0 22px;
-      opacity: .9;
+      opacity: 0.9;
     }
 
     .sk-led-light-work {
@@ -180,11 +180,7 @@
   "presets": [
     {
       "name": "SK Led Light Work",
-      "blocks": [
-        { "type": "image" },
-        { "type": "image" },
-        { "type": "image" }
-      ]
+      "blocks": [{ "type": "image" }, { "type": "image" }, { "type": "image" }]
     }
   ]
 }
