@@ -21,7 +21,7 @@
   <div class="container-xl px-xl-0 px-md-5 px-4">
     {%- if section.settings.show_page_title -%}
       <div class="about-page__header">
-        <h1 class="about-page__title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        <h1 class="about-page__title h0 sk-section-heading sk-section-heading--hxl{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
           {%- if section.settings.custom_title != blank -%}
             {{ section.settings.custom_title | escape }}
           {%- else -%}

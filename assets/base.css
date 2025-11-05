@@ -6,7 +6,7 @@
   --focused-base-outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
   --focused-base-outline-offset: 0.3rem;
   --focused-base-box-shadow: 0 0 0 0.3rem rgb(var(--color-background)),
-    0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
+    0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.45);
 }
 
 .product-card-wrapper .card,
@@ -239,6 +239,72 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   background-color: rgba(var(--color-foreground), 0.2);
 }
 
+/* ---------------------------------------------
+   Home page section headings — harmonization
+   Purpose: align weight, spacing and line-height
+   across home page sections without changing
+   colors or section-specific font-sizes.
+   Non-invasive: avoids overriding explicit color
+   rules (for example dark-section titles).
+----------------------------------------------*/
+.sk-dynamic-banner__title,
+.sk-product-listing__title,
+.sk-before-after__title,
+.sk-features__title,
+.sk-radiance .sk-image-content__heading,
+.sk-led-light-work__heading,
+.sk-led-mask__title,
+.sk-faq-accordion__title {
+  font-weight: 600;
+  line-height: 1.08;
+  margin: 0 0 0.6rem;
+}
+
+/* Subtitles under section headings (lighter, slightly muted) */
+.sk-product-listing__subtitle,
+.sk-before-after__subtitle {
+  color: rgba(var(--color-foreground), 0.72);
+  margin: 0 0 1rem;
+  font-weight: 400;
+}
+
+/* Heading size variables (used by .sk-section-heading modifiers)
+   hxl = hero / largest, h1 = large, h2 = medium, h3 = small */
+:root {
+  --section-heading-hxl: 64px;
+  --section-heading-hxl-line: 1.02;
+  --section-heading-h1: 48px;
+  --section-heading-h1-line: 1.06;
+  --section-heading-h2: 36px;
+  --section-heading-h2-line: 1.08;
+  --section-heading-h3: 28px;
+  --section-heading-h3-line: 1.12;
+}
+
+/* Reusable section heading utility */
+.sk-section-heading {
+  font-weight: 600;
+  margin: 0 0 0.6rem;
+  color: inherit; /* do not override section-specific colors */
+}
+
+.sk-section-heading--hxl {
+  font-size: var(--section-heading-hxl);
+  line-height: var(--section-heading-hxl-line);
+}
+.sk-section-heading--h1 {
+  font-size: var(--section-heading-h1);
+  line-height: var(--section-heading-h1-line);
+}
+.sk-section-heading--h2 {
+  font-size: var(--section-heading-h2);
+  line-height: var(--section-heading-h2-line);
+}
+.sk-section-heading--h3 {
+  font-size: var(--section-heading-h3);
+  line-height: var(--section-heading-h3-line);
+}
+
 .text-body {
   font-size: 1.5rem;
   letter-spacing: 0.06rem;
@@ -249,15 +315,14 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 }
 
 h1,
-h2,
-h3,
-h4,
-h5,
-.h0,
 .h1,
+h2,
 .h2,
+h3,
 .h3,
+h4,
 .h4,
+h5,
 .h5 {
   /* font-family: var(--font-heading-family); */
   font-style: var(--font-heading-style);
@@ -351,15 +416,15 @@ h5,
 
 h6,
 .h6 {
-  color: rgba(var(--color-foreground), 0.75);
+  color: rgba(var(--color-foreground), 0.9);
   margin-block-start: 1.67em;
   margin-block-end: 1.67em;
 }
 
 blockquote {
   font-style: italic;
-  color: rgba(var(--color-foreground), 0.75);
-  border-left: 0.2rem solid rgba(var(--color-foreground), 0.2);
+  color: rgba(var(--color-foreground), 0.9);
+  border-left: 0.2rem solid rgba(var(--color-foreground), 0.28);
   padding-left: 1rem;
 }
 
@@ -418,14 +483,14 @@ table:not([class]) {
   border-collapse: collapse;
   font-size: 1.4rem;
   border-style: hidden;
-  box-shadow: 0 0 0 0.1rem rgba(var(--color-foreground), 0.2);
+  box-shadow: 0 0 0 0.1rem rgba(var(--color-foreground), 0.28);
   /* draws the table border  */
 }
 
 table:not([class]) td,
 table:not([class]) th {
   padding: 1em;
-  border: 0.1rem solid rgba(var(--color-foreground), 0.2);
+  border: 0.1rem solid rgba(var(--color-foreground), 0.28);
 }
 
 @media screen and (max-width: 749px) {
@@ -501,7 +566,7 @@ h6:empty {
 }
 
 .link--text:hover {
-  color: rgba(var(--color-foreground), 0.75);
+  color: rgba(var(--color-foreground), 0.9);
 }
 
 .link-with-icon {
@@ -535,7 +600,7 @@ a:not([href]) {
 hr {
   border: none;
   height: 0.1rem;
-  background-color: rgba(var(--color-foreground), 0.2);
+  background-color: rgba(var(--color-foreground), 0.28);
   display: block;
   margin: 5rem 0;
 }
@@ -553,9 +618,9 @@ hr {
 }
 
 .placeholder {
-  background-color: rgba(var(--color-foreground), 0.04);
-  color: rgba(var(--color-foreground), 0.55);
-  fill: rgba(var(--color-foreground), 0.55);
+  background-color: rgba(var(--color-foreground), 0.06);
+  color: rgba(var(--color-foreground), 0.78);
+  fill: rgba(var(--color-foreground), 0.78);
 }
 
 details > * {
@@ -1965,23 +2030,14 @@ input[type='checkbox'] {
   box-shadow: none !important;
 }
 
-.quantity__button:focus,
-.quantity__input:focus {
-  /* background-color: rgb(var(--color-background));
-  z-index: 2; */
-}
+/* Removed empty focus rule for quantity inputs - kept no-op behavior (handled via :focus-visible) */
 
 .quantity__button:not(:focus-visible):not(.focused),
 .quantity__input:not(:focus-visible):not(.focused) {
   box-shadow: none;
 }
 
-.quantity__input:-webkit-autofill,
-.quantity__input:-webkit-autofill:hover,
-.quantity__input:-webkit-autofill:active {
-  /* box-shadow: 0 0 0 10rem rgb(var(--color-background)) inset !important; */
-  /* -webkit-box-shadow: 0 0 0 10rem rgb(var(--color-background)) inset !important; */
-}
+/* Intentionally removed empty -webkit-autofill rules to avoid empty-ruleset linter warnings. */
 
 .quantity__input::-webkit-outer-spin-button,
 .quantity__input::-webkit-inner-spin-button {
@@ -1990,6 +2046,7 @@ input[type='checkbox'] {
 }
 
 .quantity__input[type='number'] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 
@@ -2835,7 +2892,7 @@ details[open] > .header__submenu {
 }
 
 details[open] > .header__menu-item {
-  /* text-decoration: underline; */
+  text-decoration: underline;
 }
 
 details[open]:hover > .header__menu-item {

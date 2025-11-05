@@ -280,7 +280,9 @@
     {% if section.settings.section_title != blank or section.settings.section_subtitle != blank %}
       <div class="sk-before-after__header">
         {% if section.settings.section_title != blank %}
-          <h2 class="sk-before-after__title">{{ section.settings.section_title }}</h2>
+          <h2 class="sk-before-after__title sk-section-heading sk-section-heading--h2">
+            {{ section.settings.section_title }}
+          </h2>
         {% endif %}
         {% if section.settings.section_subtitle != blank %}
           <p class="sk-before-after__subtitle">{{ section.settings.section_subtitle }}</p>

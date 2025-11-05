@@ -47,7 +47,7 @@
 
 .facet-filters__label {
   display: block;
-  color: rgba(var(--color-foreground), 0.85);
+  color: rgba(var(--color-foreground), 0.9);
   font-size: 1.4rem;
   margin: 0 2rem 0 0;
 }
@@ -62,7 +62,7 @@
   padding: 0 1.5rem;
   min-width: 25rem;
   margin-top: 2.4rem;
-  border: 0.1rem solid rgba(var(--color-foreground), 0.55);
+  border: 0.1rem solid rgba(var(--color-foreground), 0.78);
 }
 
 .facet-filters__summary::after {
@@ -133,9 +133,9 @@
 }
 
 .mobile-facets__sort .select__select:focus-visible {
-  outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
+  outline: 0.2rem solid rgba(var(--color-foreground), 0.6);
   outline-offset: 0.3rem;
-  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
+  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.45);
 }
 
 .mobile-facets__sort .select__select.focused {
@@ -179,7 +179,7 @@
 
 .facets__heading {
   display: block;
-  color: rgba(var(--color-foreground), 0.85);
+  color: rgba(var(--color-foreground), 0.9);
   font-size: 1.4rem;
   margin: -1.5rem 2rem 0 0;
 }
@@ -193,7 +193,7 @@
 }
 
 .facets__summary {
-  color: rgba(var(--color-foreground), 0.75);
+  color: rgba(var(--color-foreground), 0.9);
   font-size: 1.4rem;
   padding: 0 1.75rem 0 0;
   margin-bottom: 1.5rem;
@@ -230,7 +230,7 @@
 }
 
 .facets__and-helptext {
-  color: rgba(var(--color-foreground), 0.5);
+  color: rgba(var(--color-foreground), 0.78);
   font-size: calc(var(--font-heading-scale) * 1.2rem);
   line-height: calc(var(--font-heading-scale) * 1.2rem);
 }
@@ -378,23 +378,23 @@
 
 /* Hover state */
 .facets-layout-grid--image .facets__label:hover {
-  outline-color: rgba(var(--color-foreground), 0.4);
+  outline-color: rgba(var(--color-foreground), 0.5);
   outline-width: 0.2rem;
 }
 
 /* Focus visible */
 .facets-layout-grid--image .facets__label:has(:focus-visible) {
-  outline-color: rgba(var(--color-foreground), 0.5);
+  outline-color: rgba(var(--color-foreground), 0.6);
   outline-width: 0.2rem;
-  box-shadow: 0px 0px 3px 1px rgba(var(--color-foreground), 0.25);
+  box-shadow: 0px 0px 3px 1px rgba(var(--color-foreground), 0.35);
 }
 
 /* Focused state */
 .facets-layout-grid--image .facets__label.active:has(:focus-visible) {
   outline-color: rgb(var(--color-foreground));
   outline-width: 0.1rem;
-  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0 0.5rem rgba(var(--color-foreground), 0.5),
-    0 0 0.7rem 0.1rem rgba(var(--color-foreground), 0.25);
+  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0 0.5rem rgba(var(--color-foreground), 0.65),
+    0 0 0.7rem 0.1rem rgba(var(--color-foreground), 0.35);
 }
 
 /* Disabled state */

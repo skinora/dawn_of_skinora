@@ -9,12 +9,14 @@
   font-size: 48px;
   line-height: 1.15;
   color: var(--color-foreground, #30273e);
+  color: rgb(var(--color-foreground));
 }
 
 .sk-cs__subtitle {
   max-width: 760px;
   margin: 0 auto;
   color: var(--color-muted, #4f4f4f);
+  color: rgba(var(--color-foreground), 0.75);
   font-size: 16px;
   line-height: 24px;
   opacity: 0.95;
@@ -56,6 +58,7 @@
 .sk-cs__field label {
   font-size: 0.95rem;
   color: var(--color-foreground-muted, #6b6b6b);
+  color: rgba(var(--color-foreground), 0.75);
 }
 .sk-cs__field input,
 .sk-cs__field select,
@@ -66,6 +69,7 @@
   border-radius: 10px;
   background: var(--color-input-background, #fff);
   color: var(--color-foreground, #222);
+  color: rgb(var(--color-foreground));
   font-size: 15px;
 }
 .sk-cs__checkbox {
@@ -110,6 +114,7 @@
 .sk-cs__card h3 {
   margin: 0 0 0.6rem 0;
   color: var(--color-foreground, #30273e);
+  color: rgb(var(--color-foreground));
 }
 .sk-cs__list {
   margin: 0;
@@ -131,6 +136,7 @@
   border-radius: 12px;
   text-decoration: none;
   color: var(--color-foreground, inherit);
+  color: rgb(var(--color-foreground));
 }
 .sk-cs__link:hover {
   background: rgba(0, 0, 0, 0.04);
@@ -155,6 +161,7 @@
   display: grid;
   gap: 6px;
   color: var(--color-foreground, inherit);
+  color: rgb(var(--color-foreground));
 }
 .sk-cs__topic-title {
   font-weight: 700;

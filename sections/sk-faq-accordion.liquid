@@ -216,7 +216,9 @@
 
       <div class="sk-faq-accordion__content">
         {% if section.settings.title != blank %}
-          <h2 class="sk-faq-accordion__title">{{ section.settings.title }}</h2>
+          <h2 class="sk-faq-accordion__title sk-section-heading sk-section-heading--h1">
+            {{ section.settings.title }}
+          </h2>
         {% endif %}
 
         <div class="sk-faq-accordion__questions">

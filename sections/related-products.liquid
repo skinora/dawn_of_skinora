@@ -28,7 +28,7 @@
     data-product-id="{{ product.id }}"
   >
     {% if recommendations.performed and recommendations.products_count > 0 %}
-      <h2 class="related-products__heading inline-richtext {{ section.settings.heading_size }}">
+      <h2 class="related-products__heading inline-richtext {{ section.settings.heading_size }} sk-section-heading sk-section-heading--h1">
         {{ section.settings.heading }}
       </h2>
       <ul
@@ -134,7 +134,7 @@
           "value": "2",
           "label": "t:sections.related-products.settings.columns_mobile.options__2.label"
         }
-      ]    
+      ]
     },
     {
       "type": "color_scheme",
