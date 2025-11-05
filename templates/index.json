@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "sk_dynamic_banner_AEb7NJ": {
@@ -313,29 +322,29 @@
     "sk_led_light_work_QHXAbE": {
       "type": "sk-led-light-work",
       "blocks": {
-        "image_fqA4U9": {
+        "image_YRbgCE": {
           "type": "image",
           "settings": {
-            "sk_led_light_work_img": "shopify://shop_images/ss1.png"
+            "sk_led_light_work_img": "shopify://shop_images/630nm.jpg"
           }
         },
-        "image_7PEYr3": {
+        "image_tmt9Tn": {
           "type": "image",
           "settings": {
-            "sk_led_light_work_img": "shopify://shop_images/ss2.png"
+            "sk_led_light_work_img": "shopify://shop_images/830nm.jpg"
           }
         },
-        "image_Km7nKE": {
+        "image_LUYxgB": {
           "type": "image",
           "settings": {
-            "sk_led_light_work_img": "shopify://shop_images/ss3.png"
+            "sk_led_light_work_img": "shopify://shop_images/1072nm.jpg"
           }
         }
       },
       "block_order": [
-        "image_fqA4U9",
-        "image_7PEYr3",
-        "image_Km7nKE"
+        "image_YRbgCE",
+        "image_tmt9Tn",
+        "image_LUYxgB"
       ],
       "name": "SK Led Light Work",
       "settings": {
