@@ -351,47 +351,6 @@
         "sk_led_light_work_heading": "Hvordan Fungerer Skinora Led Lys"
       }
     },
-    "sk_led_mask_8PtnrV": {
-      "type": "sk-led-mask",
-      "blocks": {
-        "wavelength_QNiqmg": {
-          "type": "wavelength",
-          "settings": {
-            "wavelength_value": "415 nm",
-            "wavelength_description": "<p>Blått lys (415 nm): Retter seg mot C. acnes-bakterier ved å aktivere porfyriner → bakteriene ødelegges.</p>"
-          }
-        },
-        "wavelength_nJpf8t": {
-          "type": "wavelength",
-          "settings": {
-            "wavelength_value": "650 nm",
-            "wavelength_description": "<p>Trenger dypere enn blått, roer inflammasjon og stimulerer hudens naturlige regenerering.</p>"
-          }
-        },
-        "wavelength_QDwzch": {
-          "type": "wavelength",
-          "settings": {
-            "wavelength_value": "850 nm",
-            "wavelength_description": "<p>Går enda dypere i vevet, forbedrer mikrosirkulasjon, fremmer heling og kan bidra til å redusere arrdannelse.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "wavelength_QNiqmg",
-        "wavelength_nJpf8t",
-        "wavelength_QDwzch"
-      ],
-      "name": "SK LED Mask",
-      "settings": {
-        "led_mask_image": "shopify://shop_images/415_630__830_nm.jpg",
-        "title": "Skinora Clear Mask kombinerer tre bølgelengder",
-        "study_info": "<p>Kliniske studier har vist at kombinasjonen av blått og rødt lys gir en signifikant bedre reduksjon av akne enn blått lys alene (Papageorgiou et al., Br J Dermatol 2000; Goldberg & Russell 2006). Tillegg av nær-infrarødt lys forsterker vevsreparasjon og langtidseffekt.</p>",
-        "result_label": "Resultatet?",
-        "result_text": "Klarere hud, mindre rødhet og forbedret hudhelse – helt uten kjemikalier eller aggressive behandlinger.",
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
-    },
     "sk_faq_accordion_GcMDDq": {
       "type": "sk-faq-accordion",
       "blocks": {
@@ -405,8 +364,8 @@
         "faq_item_Epi3pT": {
           "type": "faq_item",
           "settings": {
-            "question": "Hvilke typer lysbølgelengder bruker masken, og hvilke hudproblemer retter de seg mot?",
-            "answer": "<p>Masken bruker tre forskjellige lysbølgelengder: 415nm blått lys for akne-bakterier, 650nm rødt lys for inflammasjon og kollagenproduksjon, og 850nm nær-infrarødt lys for dyp vevsreparasjon og forbedret sirkulasjon.</p>"
+            "question": "Hva er forskjellen mellom Skinora Radiance og Skinora Clear?",
+            "answer": "<ul><li><strong>Skinora Radiance</strong> (630, 830, 1072 nm) er utviklet for <strong>anti-age, spenst og glød</strong>.<br/><br/>Den kombinerer rødt, nær-infrarødt og dypt infrarødt lys som stimulerer <strong>kollagen, cellefornyelse og sirkulasjon</strong>.<br/></li><li><strong>Skinora Clear</strong> (415, 630, 830 nm) er laget for <strong>akne, urenheter og rødhet</strong>.<br/><br/>Den kombinerer blått og rødt lys for å <strong>drepe aknebakterier og roe inflammasjon</strong>, mens 830 nm støtter heling.<br/></li></ul><p>Begge gir dokumenterte resultater, men de retter seg mot ulike hudbehov.</p>"
           }
         },
         "faq_item_DLiryE": {
@@ -457,7 +416,7 @@
       "name": "SK FAQ Accordion",
       "settings": {
         "faq_image": "shopify://shop_images/Image_3.png",
-        "title": "Alt Du Lurte På Om Skinora Radiance",
+        "title": "Alt Du Lurte På Om Skinora LED-masker",
         "open_first_item": false,
         "faq_link": "",
         "background_color": "#3a3052",
@@ -474,7 +433,6 @@
     "sk_features_pHkfMf",
     "sk_radiance_meq7Gb",
     "sk_led_light_work_QHXAbE",
-    "sk_led_mask_8PtnrV",
     "sk_faq_accordion_GcMDDq"
   ]
 }

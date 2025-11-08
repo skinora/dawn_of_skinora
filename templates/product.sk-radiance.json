@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -19,12 +28,6 @@
           "settings": {
             "text": "Reduced Lines & Wrinkles",
             "text_style": "subtitle"
-          }
-        },
-        "okendo_star_rating_qmwibi": {
-          "type": "shopify://apps/okendo/blocks/star-rating/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
-          "settings": {
-            "product": "{{product}}"
           }
         },
         "rating": {
@@ -92,7 +95,6 @@
         "category_tag",
         "title",
         "text_xAmerL",
-        "okendo_star_rating_qmwibi",
         "rating",
         "price",
         "variant_picker",
