@@ -299,7 +299,7 @@
           "type": "button",
           "settings": {
             "button_text": "Kjøp Skinora Radiance",
-            "button_url": "#",
+            "button_url": "shopify://products/skinora-radiance",
             "button_style_secondary": false
           }
         }
