@@ -1,103 +1,106 @@
 <style>
-  .sk-product-why-choose-{{ section.id }} {
-    background: var(--color-ghost-3, #f8f8f8);
-    padding: 7rem 0;
-  }
+    .sk-product-why-choose-{{ section.id }} {
+      background: var(--color-ghost-3, #f8f8f8);
+      padding: 7rem 0;
+    }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__container {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 60px;
-  }
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__container {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 60px;
+    }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
-    flex: 0 0 280px;
-  }
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
+      flex: 0 0 280px;
+    }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__image img {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    display: block;
-  }
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__image img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+    }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__content {
-    flex: 1;
-    min-width: 300px;
-    max-width: 820px;
-  }
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__content {
+      flex: 1;
+      min-width: 300px;
+      max-width: 820px;
+    }
 
-  /* Main heading */
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__main-heading {
-    font-size: 48px;   /* increased from 42px */
-    line-height: 1.25;
-    font-weight: 700;
-    color: var(--color-brand, #30273e);
-    margin: 0 0 48px 0;
-    text-align: center;
-  }
+    /* Main heading */
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__main-heading {
+      font-size: 48px;   /* increased from 42px */
+      line-height: 1.25;
+      font-weight: 700;
+      color: var(--color-brand, #30273e);
+      margin: 0 0 48px 0;
+      text-align: center;
+    }
 
-  /* Columns wrapper */
+    /* Columns wrapper */
   .sk-product-why-choose-{{ section.id }} .sk-why-choose__columns {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 32px;
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    gap: 60px; /* litt mer mellomrom */
+    max-width: 1100px; /* sentrert grid for bedre balanse */
+    margin: 0 auto;
   }
 
-  /* Column items */
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column {
-    text-align: center;
-  }
 
-  /* Column titles */
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h3,
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h4 {
-    font-size: 20px;   /* increased from 16px */
-    line-height: 1.5;
-    font-weight: 700;
-    color: var(--color-brand, #30273e);
-    margin: 0 0 12px 0;
-    text-transform: uppercase;
-  }
-
-  /* Column text */
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
-    font-size: 16px;   /* increased from 13px */
-    line-height: 1.8;
-    color: var(--color-neutral-3, #333333);
-    margin: 0;
-  }
-
-  /* Responsive */
-  @media (max-width: 990px) {
-    .sk-product-why-choose-{{ section.id }} .sk-why-choose__columns {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* Column items */
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__column {
+      text-align: center;
     }
-  }
 
-  @media (max-width: 700px) {
-    .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
-      display: none; /* hide side image on small screens */
-    }
-  }
-
-  @media (max-width: 435px) {
-    .sk-product-why-choose-{{ section.id }} .sk-why-choose__main-heading {
-      font-size: 34px;
-      line-height: 40px;
-    }
+    /* Column titles */
     .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h3,
     .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h4 {
-      font-size: 16px;
-      line-height: 22px;
+      font-size: 20px;   /* increased from 16px */
+      line-height: 1.5;
+      font-weight: 700;
+      color: var(--color-brand, #30273e);
+      margin: 0 0 12px 0;
+      text-transform: uppercase;
     }
+
+    /* Column text */
     .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
-      font-size: 14px;
-      line-height: 22px;
+      font-size: 16px;   /* increased from 13px */
+      line-height: 1.8;
+      color: var(--color-neutral-3, #333333);
+      margin: 0;
     }
-  }
+
+    /* Responsive */
+    @media (max-width: 990px) {
+      .sk-product-why-choose-{{ section.id }} .sk-why-choose__columns {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 700px) {
+      .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
+        display: none; /* hide side image on small screens */
+      }
+    }
+
+    @media (max-width: 435px) {
+      .sk-product-why-choose-{{ section.id }} .sk-why-choose__main-heading {
+        font-size: 34px;
+        line-height: 40px;
+      }
+      .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h3,
+      .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h4 {
+        font-size: 16px;
+        line-height: 22px;
+      }
+      .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
+        font-size: 14px;
+        line-height: 22px;
+      }
+    }
 </style>
 
 <section class="sk-product-why-choose sk-product-why-choose-{{ section.id }}">
