@@ -354,44 +354,37 @@
     "sk_product_why_choose_8a4LNx": {
       "type": "sk-product-why-choose",
       "blocks": {
-        "column_WWH3rX": {
-          "type": "column",
+        "item_fPf9kk": {
+          "type": "item",
           "settings": {
-            "title": "Et nivå ingen andre LED-masker i Norge kan tilby",
-            "text": "<p><br/>Masken med klinisk dokumentert 1072 nm. Når dypere i huden der kollagen og elastin dannes.</p>"
+            "title": "LED-lys i klinisk klasse",
+            "text": "<p>Utviklet med bølgelengder brukt i studier for synlige resultater over tid.</p>"
           }
         },
-        "column_aXhtky": {
-          "type": "column",
+        "item_JiLUMn": {
+          "type": "item",
           "settings": {
-            "title": "Klinisk bevist teknologi",
-            "text": "<p></p><p>Dokumentert effekt gjennom uavhengige studier ved universitetssykehus i UK og Asia.</p>"
+            "title": "KLINISK INSPIRERT",
+            "text": "<p>Utviklet med bølgelengder brukt i studier for synlige resultater over tid.</p>"
           }
         },
-        "column_idwfTg": {
-          "type": "column",
+        "item_RFzKBM": {
+          "type": "item",
           "settings": {
-            "title": "Resultater du ser – og føler",
-            "text": "<p><br/>Redusert rødhet, fastere hud og forbedret glød på bare få uker.<br/><br/></p>"
+            "title": "KLINISK INSPIRERT",
+            "text": "<p>Utviklet med bølgelengder brukt i studier for synlige resultater over tid.</p>"
           }
         }
       },
       "block_order": [
-        "column_WWH3rX",
-        "column_aXhtky",
-        "column_idwfTg"
+        "item_fPf9kk",
+        "item_JiLUMn",
+        "item_RFzKBM"
       ],
       "name": "SK Product Why Choose",
       "settings": {
-        "heading": "Tror du Skinora Radiance er enda en LED-maske?",
-        "image": "shopify://shop_images/Frame_7428-removebg-preview.png",
-        "show_image": true,
-        "hide_image_mobile": false,
-        "layout": "image-left",
-        "image_width": 280,
-        "columns_desktop": 3,
-        "pad_top": 84,
-        "pad_bottom": 84
+        "main_heading": "Hvorfor velge Skinora?",
+        "side_image": "shopify://shop_images/Frame_7428-removebg-preview.png"
       }
     },
     "sk_faq_accordion_GcMDDq": {
