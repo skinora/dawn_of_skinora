@@ -1,202 +1,223 @@
 <style>
-  .sk-product-why-choose-{{ section.id }} {
+  .sk-why-choose-{{ section.id }} {
     background: var(--color-ghost-3, #f8f8f8);
-    padding: 7rem 0;
+    padding: {{ section.settings.pad_top }}px 0 {{ section.settings.pad_bottom }}px;
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__container {
+  .sk-why-choose-{{ section.id }} .sk-why-choose__container {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
     justify-content: space-around;
+    gap: 48px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
-    flex: 0 0 280px;
+  .sk-why-choose-{{ section.id }} .sk-why-choose__image {
+    flex: 0 0 {{ section.settings.image_width }}px;
+    {% if section.settings.layout == 'image-right' %}
+      order: 2;
+    {% else %}
+      order: 0;
+    {% endif %}
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__image img {
+  .sk-why-choose-{{ section.id }} .sk-why-choose__image img {
     width: 100%;
     height: auto;
+    display: block;
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__content {
+  .sk-why-choose-{{ section.id }} .sk-why-choose__content {
     flex: 1;
+    min-width: 320px;
     max-width: 700px;
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__main-heading {
+  .sk-why-choose-{{ section.id }} .sk-why-choose__main-heading {
     font-size: 42px;
     line-height: 1.2;
     font-weight: 700;
-  color: var(--color-brand, #30273e);
-    margin-bottom: 48px;
+    color: var(--color-brand, #30273e);
+    margin: 0 0 32px 0;
     text-align: center;
   }
 
+  .sk-why-choose-{{ section.id }} .sk-why-choose__columns {
+    display: grid;
+    grid-template-columns: repeat( {{ section.settings.columns_desktop }}, minmax(0,1fr) );
+    gap: 28px;
+  }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h3,
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h4 {
+  .sk-why-choose-{{ section.id }} .sk-why-choose__column {
+    text-align: center;
+    padding: 0 8px;
+  }
+
+  .sk-why-choose-{{ section.id }} .sk-why-choose__column h3,
+  .sk-why-choose-{{ section.id }} .sk-why-choose__column h4 {
     font-size: 16px;
     line-height: 1.4;
     font-weight: 700;
-  color: var(--color-brand, #30273e);
-    margin: 0 0 12px 0;
+    color: var(--color-brand, #30273e);
+    margin: 0 0 10px 0;
     text-transform: uppercase;
-    text-align: center;
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
+  .sk-why-choose-{{ section.id }} .sk-why-choose__column p {
     font-size: 13px;
     line-height: 1.6;
-  color: var(--color-neutral-3, #333333);
+    color: var(--color-neutral-3, #333333);
     margin: 0;
-    text-align: center;
   }
 
-  .sk-product-why-choose .metafield-rich_text_field{
-    display: none;
-  }
-  .sk-product-why-choose .sk-why-choose__columns > .sk-why-choose__column{
-    display: flex;
-    gap: 50px;
-    flex-wrap: wrap;
-  }
-
-
-  @media only screen and (max-width: 700px) {
-    .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
-       display: none;
+  @media (max-width: 900px) {
+    .sk-why-choose-{{ section.id }} .sk-why-choose__columns {
+      grid-template-columns: repeat(2, minmax(0,1fr));
     }
   }
 
-  @media only screen and (max-width: 435px) {
-    .sk-product-why-choose-{{ section.id }} .sk-why-choose__main-heading {
+  @media (max-width: 700px) {
+    .sk-why-choose-{{ section.id }} .sk-why-choose__image {
+      {% if section.settings.hide_image_mobile %} display: none; {% endif %}
+      order: 0;
+      flex-basis: 100%;
+    }
+    .sk-why-choose-{{ section.id }} .sk-why-choose__main-heading {
       font-size: 32px;
       line-height: 37px;
     }
-
-    .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h3,
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h4 {
-    font-size: 14px;
-    line-height: 20px;
-
-  }
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
-    font-size: 12px;
-    line-height: 20px;
-  }
-  .sk-product-why-choose .sk-why-choose__columns > .sk-why-choose__column{
-    gap: 18px;
   }
 
-
+  @media (max-width: 480px) {
+    .sk-why-choose-{{ section.id }} .sk-why-choose__columns {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    .sk-why-choose-{{ section.id }} .sk-why-choose__column h3,
+    .sk-why-choose-{{ section.id }} .sk-why-choose__column h4 {
+      font-size: 14px;
+      line-height: 20px;
+    }
+    .sk-why-choose-{{ section.id }} .sk-why-choose__column p {
+      font-size: 12px;
+      line-height: 20px;
+    }
   }
 </style>
 
-{%- if product.metafields.custom.why_choose_content != blank or product.metafields.custom.why_choose_image != blank -%}
-  <section class="sk-product-why-choose sk-product-why-choose-{{ section.id }}">
-    <div class="container">
-      <div class="sk-why-choose__container">
-        <!-- Image Section -->
-        <div class="sk-why-choose__image">
-          {%- if product.metafields.custom.why_choose_image != blank -%}
-            <img
-              src="{{ product.metafields.custom.why_choose_image | image_url: width: 280, height: 380 }}"
-              alt="{{ product.metafields.custom.why_choose_image.alt | default: product.title }}"
-              width="280"
-              height="380"
-              loading="lazy"
-            >
-          {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          {%- endif -%}
-        </div>
+<section class="sk-why-choose-{{ section.id }}">
+  <div class="sk-why-choose__container">
+    {% if section.settings.image != blank and section.settings.show_image %}
+      <div class="sk-why-choose__image">
+        <img
+          src="{{ section.settings.image | image_url: width: section.settings.image_width | default: 280 }}"
+          srcset="
+            {{ section.settings.image | image_url: width: section.settings.image_width | default: 280 }} 1x,
+            {{ section.settings.image | image_url: width: section.settings.image_width | times: 2 }} 2x
+          "
+          sizes="(max-width: 700px) 100vw, {{ section.settings.image_width }}px"
+          alt="{{ section.settings.image.alt | escape | default: section.settings.heading }}"
+          loading="lazy"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+        >
+      </div>
+    {% endif %}
 
-        <!-- Content Section -->
-        <div class="sk-why-choose__content">
-          {%- if product.metafields.custom.why_choose_content != blank -%}
-            {%- capture why_choose_html -%}
-              {{ product.metafields.custom.why_choose_content | metafield_tag }}
-            {%- endcapture -%}
+    <div class="sk-why-choose__content">
+      {% if section.settings.heading != blank %}
+        <h2 class="sk-why-choose__main-heading">{{ section.settings.heading }}</h2>
+      {% endif %}
 
-            {%- comment -%} Extract main heading (first h2 or h3) {%- endcomment -%}
-            {%- assign heading_start = why_choose_html | split: '<h2>' | first -%}
-            {%- if heading_start == why_choose_html -%}
-              {%- assign heading_start = why_choose_html | split: '<h3>' | first -%}
-              {%- assign heading_end = why_choose_html | split: '</h3>' | last -%}
-              {%- assign heading_full = why_choose_html
-                | replace: heading_start, ''
-                | replace: heading_end, ''
-                | replace: '<h3>', ''
-                | replace: '</h3>', ''
-                | strip
-              -%}
-            {%- else -%}
-              {%- assign heading_end = why_choose_html | split: '</h2>' | last -%}
-              {%- assign heading_full = why_choose_html
-                | replace: heading_start, ''
-                | replace: heading_end, ''
-                | replace: '<h2>', ''
-                | replace: '</h2>', ''
-                | strip
-              -%}
-            {%- endif -%}
-
-            {%- if heading_full != blank -%}
-              <h2 class="sk-why-choose__main-heading">{{ heading_full }}</h2>
-            {%- endif -%}
-
-            {%- comment -%} Parse columns separated by || {%- endcomment -%}
-            {%- assign columns_content = why_choose_html | split: '||' -%}
-
-            <div class="sk-why-choose__columns">
-              {%- for column in columns_content -%}
-                {%- if column contains '<h3>' or column contains '<h4>' or column contains '<p>' -%}
-                  <div class="sk-why-choose__column">
-                    {{ column }}
-                  </div>
-                {%- endif -%}
-              {%- endfor -%}
+      <div class="sk-why-choose__columns">
+        {% for block in section.blocks %}
+          {% if block.type == 'column' %}
+            <div class="sk-why-choose__column" {{ block.shopify_attributes }}>
+              {% if block.settings.title != blank %}
+                <h3>{{ block.settings.title }}</h3>
+              {% endif %}
+              {% if block.settings.text != blank %}
+                <div class="rte">{{ block.settings.text }}</div>
+              {% endif %}
             </div>
-          {%- endif -%}
-        </div>
+          {% endif %}
+        {% endfor %}
       </div>
     </div>
-  </section>
-{%- endif -%}
+  </div>
+</section>
 
 {% schema %}
 {
-  "name": "SK Product Why Choose",
+  "name": "SK Why Choose (Home)",
   "tag": "section",
   "class": "section",
   "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Hvorfor velge Skinora?" },
+
+    { "type": "image_picker", "id": "image", "label": "Sidebilde" },
+    { "type": "checkbox", "id": "show_image", "label": "Vis bilde", "default": true },
+    { "type": "checkbox", "id": "hide_image_mobile", "label": "Skjul bilde på mobil", "default": false },
     {
-      "type": "header",
-      "content": "Product-Specific Control"
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "image-left",
+      "options": [
+        { "value": "image-left", "label": "Bilde til venstre" },
+        { "value": "image-right", "label": "Bilde til høyre" }
+      ]
     },
     {
-      "type": "paragraph",
-      "content": "This section displays why-choose content from product metafields. Add these 2 metafields:"
+      "type": "range",
+      "id": "image_width",
+      "label": "Bildebredde (px)",
+      "min": 200,
+      "max": 520,
+      "step": 10,
+      "default": 280
     },
+
     {
-      "type": "paragraph",
-      "content": "1. 'custom.why_choose_image' (File) - Upload the product image"
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Kolonner på desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
     },
+
+    { "type": "range", "id": "pad_top", "label": "Padding topp (px)", "min": 0, "max": 120, "step": 4, "default": 84 },
     {
-      "type": "paragraph",
-      "content": "2. 'custom.why_choose_content' (Rich text) - Format: Main heading, then columns separated by ||"
-    },
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Padding bunn (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 84
+    }
+  ],
+  "blocks": [
     {
-      "type": "paragraph",
-      "content": "Example: <h2>Main Heading</h2> ||<h3>Column 1 Title</h3><p>Description...</p> ||<h3>Column 2 Title</h3><p>Description...</p> ||<h3>Column 3 Title</h3><p>Description...</p>"
+      "type": "column",
+      "name": "Kolonne",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Tittel", "default": "Klinisk dokumentert" },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Tekst",
+          "default": "<p>1072 nm, 830 nm og 630 nm for målrettet effekt – dokumentert i studier.</p>"
+        }
+      ]
     }
   ],
   "presets": [
-    {
-      "name": "SK Product Why Choose"
-    }
+    { "name": "SK Why Choose (Home)", "blocks": [{ "type": "column" }, { "type": "column" }, { "type": "column" }] }
   ]
 }
 {% endschema %}
