@@ -103,12 +103,12 @@
   font-weight: 600;
 }
 .sk-cs__notice--success {
-  background: #e8f6ee;
-  color: #0b7a4b;
+  background: var(--color-success-bg, #e8f6ee);
+  color: var(--color-success, #0b7a4b);
 }
 .sk-cs__notice--error {
-  background: #fdeaea;
-  color: #a31616;
+  background: var(--color-danger-bg, #fdeaea);
+  color: var(--color-danger-strong, #a31616);
 }
 
 .sk-cs__card h3 {

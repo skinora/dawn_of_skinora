@@ -1,6 +1,6 @@
 .sk-blog-article {
-    background-color: #ffffff;
-    padding: 60px 0;
+  background-color: var(--color-white, #ffffff);
+  padding: 60px 0;
 }
 
 /* Make blog featured image fill parent width, crop vertically for consistency */
@@ -27,36 +27,36 @@
 }
 
 .sk-blog-article__image {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .sk-blog-article__header {
-    margin: 48px;
-    text-align: center;
+  margin: 48px;
+  text-align: center;
 }
 
 .sk-blog-article__title {
-    font-size: 48px;
-    font-weight: 600;
-    color: #30273E;
-    margin-bottom: 20px;
-    margin-top: 0;
-    line-height: 1.2;
+  font-size: 48px;
+  font-weight: 600;
+  color: var(--color-brand, #30273e);
+  margin-bottom: 20px;
+  margin-top: 0;
+  line-height: 1.2;
 }
 
 /* Hide blog metadata: author, date, tags */
-  .sk-blog-article__meta {
-    display: none !important;
+.sk-blog-article__meta {
+  display: none !important;
 }
 
 .sk-blog-article__body {
-    font-size: 16px;
-    line-height: 28px;
-    color: #4F4F4F;
-    margin-bottom: 40px;
+  font-size: 16px;
+  line-height: 28px;
+  color: var(--color-neutral-4, #4f4f4f);
+  margin-bottom: 40px;
 }
 
 .sk-blog-article__body h1,
@@ -65,181 +65,181 @@
 .sk-blog-article__body h4,
 .sk-blog-article__body h5,
 .sk-blog-article__body h6 {
-    color: #30273E;
-    font-weight: 600;
-    margin-top: 40px;
-    margin-bottom: 20px;
-    line-height: 1.3;
+  color: var(--color-brand, #30273e);
+  font-weight: 600;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  line-height: 1.3;
 }
 
 .sk-blog-article__body h1 {
-    font-size: 36px;
+  font-size: 36px;
 }
 
 .sk-blog-article__body h2 {
-    font-size: 28px;
+  font-size: 28px;
 }
 
 .sk-blog-article__body h3 {
-    font-size: 24px;
+  font-size: 24px;
 }
 
 .sk-blog-article__body p {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .sk-blog-article__body p:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .sk-blog-article__body img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin: 30px 0;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 30px 0;
 }
 
 .sk-blog-article__body ul,
 .sk-blog-article__body ol {
-    margin-bottom: 20px;
-    padding-left: 30px;
+  margin-bottom: 20px;
+  padding-left: 30px;
 }
 
 .sk-blog-article__body li {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 .sk-blog-article__custom-content {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 .sk-blog-article__text-block {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .sk-blog-article__block-heading {
-    font-size: 24px;
-    font-weight: 600;
-    color: #30273E;
-    margin-bottom: 20px;
-    margin-top: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-brand, #30273e);
+  margin-bottom: 20px;
+  margin-top: 0;
 }
 
 .sk-blog-article__block-content {
-    font-size: 16px;
-    line-height: 28px;
-    color: #4F4F4F;
+  font-size: 16px;
+  line-height: 28px;
+  color: var(--color-neutral-4, #4f4f4f);
 }
 
 .sk-blog-article__block-content p {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 .sk-blog-article__block-content p:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .sk-blog-article__image-block {
-    margin-bottom: 40px;
-    text-align: center;
+  margin-bottom: 40px;
+  text-align: center;
 }
 
 .sk-blog-article__block-image-wrapper {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .sk-blog-article__block-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .sk-blog-article__image-caption {
-    font-size: 14px;
-    color: #6C6C6C;
-    font-style: italic;
-    margin: 0;
+  font-size: 14px;
+  color: var(--color-neutral-3, #6c6c6c);
+  font-style: italic;
+  margin: 0;
 }
 
 .sk-blog-article__image-grid {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .sk-blog-article__grid-wrapper {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .sk-blog-article__grid-item {
-    flex: 0 0 calc(33.333% - 14px);
-    min-width: 200px;
+  flex: 0 0 calc(33.333% - 14px);
+  min-width: 200px;
 }
 
 .sk-blog-article__grid-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .sk-blog-article__two-images-content {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .sk-blog-article__layout-wrapper {
-    display: flex;
-    gap: 30px;
-    align-items: center;
+  display: flex;
+  gap: 30px;
+  align-items: center;
 }
 
 .sk-blog-article__left-image {
-    flex: 0 0 445px;
+  flex: 0 0 445px;
 }
 
 .sk-blog-article__main-image {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
 }
 
 .sk-blog-article__right-images {
-    display: flex;
-    gap: 15px;
+  display: flex;
+  gap: 15px;
 }
 
 .sk-blog-article__right-image-item {
-    width: 100%;
+  width: 100%;
 }
 
 .sk-blog-article__right-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 .sk-blog-article__right-content {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .sk-blog-article__right-content p {
-    font-size: 16px;
-    line-height: 24px;
-    color: #6C6C6C;
-    margin-bottom: 16px;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-neutral-3, #6c6c6c);
+  margin-bottom: 16px;
 }
 
 .sk-blog-article__right-content p:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 /* mobile: keep article title bigger than subheaders */
 @media (max-width: 749px) {
   .sk-blog-article__title {
-    font-size: 40px; !important;  
+    font-size: 40px !important;
     line-height: 1.2;
   }
 

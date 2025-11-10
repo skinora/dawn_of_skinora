@@ -5,6 +5,43 @@
   --alpha-badge-border: 0.1;
   /* Brand color */
   --color-brand: #30273e;
+  /* Common color tokens */
+  --color-white: #ffffff;
+  --color-foreground: #121212; /* sensible default, overridden by theme settings */
+  --color-bg-light: #f1eff4;
+  --color-dark: #3a3939;
+  --color-lilac: #cdb7ed;
+  /* RGB fallbacks for alpha usage */
+  --color-brand-rgb: 48, 39, 62; /* 0x30 0x27 0x3e */
+  --color-white-rgb: 255, 255, 255;
+  /* Extended palette */
+  --color-black: #000000;
+  --color-neutral-1: #6c6c6c;
+  --color-neutral-2: #666666;
+  --color-neutral-3: #333333;
+  --color-neutral-4: #49494a;
+  --color-danger: #e74c3c;
+  --color-danger-weak: #df4040c7; /* includes alpha hex in original */
+  --color-muted: #95a5a6;
+  --color-ghost: #f8f9fa;
+  --color-ghost-2: #f8f9fa; /* fallback duplicate */
+  /* Additional semantic tokens */
+  --color-warning: #ffc107;
+  --color-warning-dark: #856404;
+  --color-success: #27ae60;
+  --color-border: #dddddd;
+  --color-border-light: #ababab;
+  --color-ink-dark: #1d1925;
+  --color-surface: #e9ecef;
+  --color-warning-bg: #fff3cd;
+  /* Exact-match tokens for remaining literals found in CSS/ SVGs */
+  --color-border-2: #e0e0e0; /* used by variant cards */
+  --color-ghost-3: #f8f8f8; /* slight variant used in card thumbnails */
+  --color-neutral-5: #999999; /* used for muted price */
+  --color-footer-accent: #f5e8da; /* used in footer SVG fills */
+  --color-almost-black: #070707; /* used in some gradients */
+  --color-cream: #fffaf8; /* subtle warm background used in guarantee banner */
+  --color-danger-strong: #eb001b; /* icon/error */
   --focused-base-outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
   --focused-base-outline-offset: 0.3rem;
   --focused-base-box-shadow: 0 0 0 0.3rem rgb(var(--color-background)),
@@ -1953,7 +1990,7 @@ input[type='checkbox'] {
 
 /* component-quantity */
 .quantity {
-  color: #fff;
+  color: var(--color-white);
   position: relative;
   width: calc(14rem / var(--font-body-scale) + var(--inputs-border-width) * 2);
   display: flex;
@@ -2025,12 +2062,12 @@ input[type='checkbox'] {
 
 .quantity__button:first-child {
   margin-left: calc(var(--inputs-border-width));
-  color: #fff;
+  color: var(--color-white);
 }
 
 .quantity__button:last-child {
   margin-right: calc(var(--inputs-border-width));
-  color: #fff;
+  color: var(--color-white);
 }
 
 .quantity__button .svg-wrapper {
@@ -2621,7 +2658,7 @@ input[type='checkbox'] {
 .header__icon .svg-wrapper {
   width: 44px;
   height: 44px;
-  color: #fff;
+  color: var(--color-white);
 }
 
 .header__icon::after {
@@ -2836,7 +2873,7 @@ details[open] > .header__submenu {
   animation: animateMenuOpen var(--duration-default) ease;
   animation-fill-mode: forwards;
   z-index: 1;
-  background: #30273e;
+  background: var(--color-brand);
   padding: 5px;
   width: 220px;
 }
@@ -2901,7 +2938,7 @@ details[open] > .header__submenu {
 .header__menu-item:hover span {
   text-decoration: underline;
   text-underline-offset: 1rem;
-  color: #cdb7ed;
+  color: var(--color-lilac);
   text-decoration-thickness: 0;
 }
 
@@ -2919,7 +2956,7 @@ details[open] > .header__menu-item .icon-caret {
 
 .header__active-menu-item {
   transition: text-decoration-thickness var(--duration-short) ease;
-  color: #fff;
+  color: var(--color-white);
   text-decoration: underline;
   text-underline-offset: 0.3rem;
 }
@@ -2964,7 +3001,7 @@ details[open] > .header__menu-item .icon-caret {
 
 .header__submenu .header__menu-item:hover {
   text-decoration-line: underline;
-  color: #cdb7ed !important;
+  color: var(--color-lilac) !important;
   text-underline-offset: 0.5rem;
 }
 
@@ -3742,18 +3779,18 @@ body {
 }
 
 .header-wrapper {
-  background: #30273e !important;
+  background: var(--color-brand) !important;
 }
 
 .header .list-menu__item {
-  color: #fff !important;
+  color: var(--color-white) !important;
   font-size: 20px;
   text-transform: uppercase;
   font-style: italic;
 }
 
 .announcement__bar {
-  background: #3a3939;
+  background: var(--color-dark);
 }
 
 .announcement__bar h5 {
@@ -3767,8 +3804,8 @@ body {
 }
 
 .sk_primary-button {
-  background: #30273e;
-  color: #fff;
+  background: var(--color-brand);
+  color: var(--color-white);
   text-decoration: none;
   padding: 15px 10px;
   display: flex;
@@ -3779,8 +3816,8 @@ body {
 }
 
 .sk_primary-button:hover {
-  background: #30273e96;
-  color: #fff;
+  background: rgba(var(--color-brand-rgb), 0.59); /* approx alpha from 0x96 */
+  color: var(--color-white);
 }
 
 .sk_primary-button.cart-items-pg-btn {
@@ -3805,7 +3842,7 @@ a {
 
 .okeReviews[data-oke-container] .oke-is-large .oke-w-reviews-list-item,
 div.okeReviews .oke-is-large .oke-w-reviews-list-item {
-  background: #f1eff4 !important;
+  background: var(--color-bg-light) !important;
   margin-bottom: 18px !important;
 }
 
@@ -3846,7 +3883,7 @@ div.okeReviews .oke-is-large .oke-w-reviews-list-item {
 }
 
 .accordion-button:focus {
-  border-color: #fff !important;
+  border-color: var(--color-white) !important;
 }
 
 .header__heading-logo-wrapper img,
@@ -3879,7 +3916,7 @@ div.okeReviews .oke-is-large .oke-w-reviews-list-item {
 }
 
 footer .footer__column.footer__column--menu a:hover {
-  color: #cdb7ed;
+  color: var(--color-lilac);
 }
 
 .sk-faq-accordion__container .accordion {
@@ -3912,14 +3949,14 @@ footer .footer__column.footer__column--menu a:hover {
 
 .okeReviews[data-oke-container] .oke-button:not(.oke-is-loading):not(.oke-is-active):hover,
 div.okeReviews .oke-button:not(.oke-is-loading):not(.oke-is-active):hover {
-  color: #fff !important;
+  color: var(--color-white) !important;
   border-color: transparent !important;
   box-shadow: none !important;
 }
 
 .okeReviews[data-oke-container] .oke-w-writeReview:hover:before,
 div.okeReviews .oke-w-writeReview:hover:before {
-  color: #fff !important;
+  color: var(--color-white) !important;
 }
 
 .sk-product-listing-form {

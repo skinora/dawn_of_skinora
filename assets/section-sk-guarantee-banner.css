@@ -1,17 +1,16 @@
 .sk-radiance-guarantee-banner {
-    display: flex;
+  display: flex;
 
-    justify-content: space-between;
-    padding: 24px 32px;
-    background-color: #FFFAF8;
-    border-radius: 8px;
-    margin-top: 24px;
-    flex-direction: column;
-
+  justify-content: space-between;
+  padding: 24px 32px;
+  background-color: var(--color-cream, #fffaf8);
+  border-radius: 8px;
+  margin-top: 24px;
+  flex-direction: column;
 }
 
 .sk-radiance-guarantee-banner__content {
-    flex: 1;
+  flex: 1;
 }
 
 .sk-radiance-guarantee-banner__content h1,
@@ -20,44 +19,44 @@
 .sk-radiance-guarantee-banner__content h4,
 .sk-radiance-guarantee-banner__content h5,
 .sk-radiance-guarantee-banner__content h6 {
-    font-size: 30px;
-    font-weight: 600;
-    line-height: 1.4;
-    margin: 0 0 0px 0;
-    color: #000000;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 0px 0;
+  color: var(--color-black, #000000);
 }
 
 .sk-radiance-guarantee-banner__content p {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.6;
-    margin: 0;
-    color: #666666;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0;
+  color: var(--color-neutral-5, #666666);
 }
 
 .sk-radiance-guarantee-banner__button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0;
-    background: transparent;
-    border: none;
-    font-size: 18px;
-    font-weight: 500;
-    color: #000000;
-    text-decoration: underline;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: opacity 0.2s ease;
-    margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-black, #000000);
+  text-decoration: underline;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+  margin-top: 2rem;
 }
 
 .sk-radiance-guarantee-banner__button:hover {
-    opacity: 0.7;
+  opacity: 0.7;
 }
 
 .sk-radiance-guarantee-banner__button svg {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }

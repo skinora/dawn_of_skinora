@@ -98,7 +98,7 @@
   font-weight: bold;
   margin-bottom: 1.5rem;
   margin-top: 0;
-  color: #F5E8DA;
+  color: var(--color-footer-accent, #f5e8da);
 }
 
 .footer__menu-list {
@@ -112,7 +112,7 @@
 }
 
 .footer__menu-link {
-  color: #fff;
+  color: var(--color-white, #fff);
   text-decoration: none;
   font-size: 1.4rem;
   line-height: 1.4;
@@ -121,8 +121,8 @@
 }
 
 .footer__menu-link:hover {
-  color: #cdb7ed;
-  border-bottom: 1px solid #cdb7ed;
+  color: var(--color-footer-accent, #cdb7ed);
+  border-bottom: 1px solid var(--color-footer-accent, #cdb7ed);
 }
 
 @media screen and (max-width: 749px) {
@@ -195,7 +195,6 @@
   .footer__payment-shipping-wrapper {
     align-items: center;
   }
-
 
   .list-shipping-delivery {
     justify-content: center;
@@ -272,12 +271,12 @@
   }
 }
 
-.footer__localization:empty+.footer__column--info {
+.footer__localization:empty + .footer__column--info {
   align-items: center;
 }
 
 @media screen and (max-width: 749px) {
-  .footer__localization:empty+.footer__column {
+  .footer__localization:empty + .footer__column {
     padding-top: 1.5rem;
   }
 }
@@ -381,7 +380,6 @@
 }
 
 @media screen and (min-width: 750px) {
-
   /* Pushes other components to the right of the flexbox */
   .footer-block__newsletter:not(:only-child) {
     text-align: left;
@@ -419,7 +417,6 @@
 }
 
 @media screen and (max-width: 749px) {
-
   /*
     On a small screen we want all the items to be centered
     because they will be stacked.
@@ -445,7 +442,7 @@
 }
 
 @media screen and (min-width: 750px) {
-  .footer-block__newsletter+.footer__list-social {
+  .footer-block__newsletter + .footer__list-social {
     margin-top: 0;
   }
 }
@@ -488,7 +485,6 @@
   margin-bottom: 3rem;
   flex-wrap: wrap;
 }
-
 
 .list-shipping-delivery {
   display: flex;
@@ -541,9 +537,6 @@
   font-weight: 500;
 }
 
-
-
-
 .footer__copyright {
   text-align: center;
   margin-top: 1.5rem;
@@ -576,8 +569,8 @@
     margin-bottom: 0;
   }
 
-  .footer-block__details-content>p,
-  .footer-block__details-content>li {
+  .footer-block__details-content > p,
+  .footer-block__details-content > li {
     padding: 0;
   }
 
@@ -585,7 +578,7 @@
     display: inline;
   }
 
-  .footer-block__details-content>li:not(:last-child) {
+  .footer-block__details-content > li:not(:last-child) {
     margin-right: 1.5rem;
   }
 }
@@ -601,7 +594,6 @@
 }
 
 @media screen and (min-width: 750px) {
-
   .footer-block__details-content .list-menu__item--link:hover,
   .copyright__content a:hover {
     color: rgb(var(--color-foreground));
@@ -627,7 +619,7 @@
     font-size: 1.4rem;
   }
 
-  .footer-block__details-content> :first-child .list-menu__item--link {
+  .footer-block__details-content > :first-child .list-menu__item--link {
     padding-top: 0;
   }
 }
@@ -649,7 +641,6 @@
 }
 
 @media screen and (max-width: 749px) {
-
   .footer-block-image,
   .footer-block-image.left,
   .footer-block-image.center,
@@ -677,13 +668,13 @@
   text-align: center;
 }
 
-.footer-block:only-child>.footer-block__brand-info>.footer-block__image-wrapper {
+.footer-block:only-child > .footer-block__brand-info > .footer-block__image-wrapper {
   margin-left: auto;
   margin-right: auto;
 }
 
-.footer-block-image>img,
-.footer-block__brand-info>img {
+.footer-block-image > img,
+.footer-block__brand-info > img {
   height: auto;
 }
 
@@ -765,22 +756,21 @@
   }
 }
 
-
 footer {
   margin: 0;
   padding-top: 48px;
-  background: linear-gradient(to top, #30273E, #070707) !important;
+  background: linear-gradient(to top, var(--color-brand, #30273e), var(--color-almost-black, #070707)) !important;
 }
 
 footer .field__input {
   background-color: transparent !important;
-  color: #000 !important;
+  color: var(--color-black, #000) !important;
   padding: 0 20px !important;
   max-width: 400px;
 }
 
 footer .field__input::placeholder {
-  color: #000 !important;
+  color: var(--color-black, #000) !important;
   opacity: 1 !important;
 }
 
@@ -789,10 +779,8 @@ footer .svg-wrapper {
   height: 28px;
 }
 
-
 footer .field__input:focus {
   box-shadow: none !important;
-
 }
 
 .footer-top_section-content {
@@ -809,14 +797,14 @@ footer .field__input:focus {
 }
 
 .news_letter_join-btn {
-  background: #30273E;
-  color: #fff;
+  background: var(--color-brand, #30273e);
+  color: var(--color-white, #fff);
   padding: 5px 28px;
   border-radius: 20px;
 }
 
 footer .list-social__item a:hover {
-  color: #624f80;
+  color: var(--color-muted-2, #624f80);
 }
 
 .footer__payment {

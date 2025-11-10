@@ -34,7 +34,7 @@ variant-selects {
   width: 1px;
 }
 
-.product-form__input input[type='radio']:not(.disabled):not(.visually-disabled)+label>.label-unavailable {
+.product-form__input input[type='radio']:not(.disabled):not(.visually-disabled) + label > .label-unavailable {
   display: none;
 }
 
@@ -43,7 +43,7 @@ variant-selects {
   margin-bottom: 1.6rem;
 }
 
-.product-form__input--dropdown .dropdown-swatch+select {
+.product-form__input--dropdown .dropdown-swatch + select {
   padding-left: calc(2.4rem + var(--swatch-input--size));
 }
 
@@ -57,7 +57,7 @@ variant-selects {
 }
 
 /* Custom styles for Pill display type */
-.product-form__input--pill input[type='radio']+label {
+.product-form__input--pill input[type='radio'] + label {
   border: var(--variant-pills-border-width) solid rgba(var(--color-foreground), var(--variant-pills-border-opacity));
   background-color: rgb(var(--color-background));
   color: rgba(var(--color-foreground));
@@ -75,7 +75,7 @@ variant-selects {
   position: relative;
 }
 
-.product-form__input--pill input[type='radio']+label:before {
+.product-form__input--pill input[type='radio'] + label:before {
   content: '';
   position: absolute;
   top: calc(var(--variant-pills-border-width) * -1);
@@ -84,51 +84,52 @@ variant-selects {
   left: calc(var(--variant-pills-border-width) * -1);
   z-index: -1;
   border-radius: var(--variant-pills-radius);
-  box-shadow: var(--variant-pills-shadow-horizontal-offset) var(--variant-pills-shadow-vertical-offset) var(--variant-pills-shadow-blur-radius) rgba(var(--color-shadow), var(--variant-pills-shadow-opacity));
+  box-shadow: var(--variant-pills-shadow-horizontal-offset) var(--variant-pills-shadow-vertical-offset)
+    var(--variant-pills-shadow-blur-radius) rgba(var(--color-shadow), var(--variant-pills-shadow-opacity));
 }
 
-.product-form__input--pill input[type='radio']+label:hover {
+.product-form__input--pill input[type='radio'] + label:hover {
   border-color: rgb(var(--color-foreground));
 }
 
-.product-form__input--pill input[type='radio']:checked+label {
+.product-form__input--pill input[type='radio']:checked + label {
   background-color: rgb(var(--color-foreground));
   color: rgb(var(--color-background));
 }
 
 @media screen and (forced-colors: active) {
-  .product-form__input--pill input[type='radio']:checked+label {
+  .product-form__input--pill input[type='radio']:checked + label {
     text-decoration: underline;
   }
 
-  .product-form__input--pill input[type='radio']:focus-visible+label {
+  .product-form__input--pill input[type='radio']:focus-visible + label {
     outline: transparent solid 1px;
     outline-offset: 2px;
   }
 }
 
-.product-form__input--pill input[type='radio']:checked+label::selection {
+.product-form__input--pill input[type='radio']:checked + label::selection {
   background-color: rgba(var(--color-background), 0.3);
 }
 
-.product-form__input--pill input[type='radio']:disabled+label,
-.product-form__input--pill input[type='radio'].disabled+label {
+.product-form__input--pill input[type='radio']:disabled + label,
+.product-form__input--pill input[type='radio'].disabled + label {
   border-color: rgba(var(--color-foreground), 0.1);
   color: rgba(var(--color-foreground), 0.6);
   text-decoration: line-through;
 }
 
-.product-form__input--pill input[type='radio'].disabled:checked+label,
-.product-form__input--pill input[type='radio']:disabled:checked+label {
+.product-form__input--pill input[type='radio'].disabled:checked + label,
+.product-form__input--pill input[type='radio']:disabled:checked + label {
   color: rgba(var(--color-background), 0.6);
 }
 
-.product-form__input--pill input[type='radio']:focus-visible+label {
+.product-form__input--pill input[type='radio']:focus-visible + label {
   box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0 0.5rem rgba(var(--color-foreground), 0.55);
 }
 
 /* Fallback */
-.product-form__input--pill input[type='radio'].focused+label {
+.product-form__input--pill input[type='radio'].focused + label {
   box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0 0.5rem rgba(var(--color-foreground), 0.55);
 }
 
@@ -138,14 +139,14 @@ variant-selects {
   flex-wrap: wrap;
 }
 
-.product-form__input--swatch .swatch-input__input+.swatch-input__label {
+.product-form__input--swatch .swatch-input__input + .swatch-input__label {
   --swatch-input--size: 3.6rem;
 
   margin: 0.7rem 1.2rem 0.2rem 0;
 }
 
 @media screen and (min-width: 750px) {
-  .product-form__input--swatch .swatch-input__input+.swatch-input__label {
+  .product-form__input--swatch .swatch-input__input + .swatch-input__label {
     --swatch-input--size: 2.8rem;
   }
 }
@@ -166,11 +167,11 @@ variant-selects {
 
 .sk-radiance-variant-card__link {
   display: block;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-2);
   /* border-radius: 12px; */
   cursor: pointer;
   transition: all 0.3s ease;
-  background: #fff;
+  background: var(--color-white);
   position: relative;
   height: 100%;
   text-decoration: none;
@@ -178,14 +179,14 @@ variant-selects {
 }
 
 .sk-radiance-variant-card__link:hover {
-  border-color: #333;
+  border-color: var(--color-neutral-3);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   text-decoration: none;
   color: inherit;
 }
 
 .sk-radiance-variant-card--active .sk-radiance-variant-card__link {
-  border-color: #000;
+  border-color: var(--color-black);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -198,7 +199,7 @@ variant-selects {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8f8f8;
+  background: var(--color-ghost-3);
   padding: 15px;
 }
 
@@ -210,7 +211,7 @@ variant-selects {
 }
 
 .sk-radiance-variant-card__content {
-  background: #30273E;
+  background: var(--color-brand);
   text-align: center;
   padding: 10px 0;
 }
@@ -225,7 +226,7 @@ variant-selects {
 .sk-radiance-variant-card__title {
   font-size: 14px;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-white);
   margin: 0;
   /* font-family: "DM Sans", sans-serif !important; */
 }
@@ -238,7 +239,7 @@ variant-selects {
 
 .sk-radiance-variant-card__compare-price {
   font-size: 14px;
-  color: #DF4040C7;
+  color: var(--color-danger-weak);
   text-decoration: line-through;
   font-weight: 600;
 }
@@ -246,9 +247,8 @@ variant-selects {
 .sk-radiance-variant-card__current-price {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #000;
+  color: var(--color-black);
 }
-
 
 /* Responsive design */
 @media screen and (min-width: 769px) and (max-width: 1024px) {

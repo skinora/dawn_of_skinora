@@ -5,7 +5,7 @@
   color: rgb(var(--color-foreground));
 }
 
-.price>* {
+.price > * {
   display: inline-block;
   vertical-align: top;
 }
@@ -23,7 +23,7 @@
   margin: 0 1rem 0 0;
   font-size: 16px;
   font-weight: 600;
-  color: #333;
+  color: var(--color-neutral-3);
 }
 
 .price__regular .price-item--regular {
@@ -89,7 +89,7 @@
 
 .price--on-sale .price-item--regular {
   text-decoration: line-through;
-  color: #999;
+  color: var(--color-neutral-5);
   font-size: 1.3rem;
 }
 

@@ -1,116 +1,116 @@
 .sk-help-categories {
-    background-color: #ffffff;
-    padding: 80px 0;
+  background-color: var(--color-white, #ffffff);
+  padding: 80px 0;
 }
 
 .sk-help-categories__header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 60px;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .sk-help-categories__heading {
-    font-size: 64px;
-    font-weight: 600;
-    color: #30273E;
-    margin-bottom: 20px;
-    margin-top: 0;
-    line-height: 1.1;
+  font-size: 64px;
+  font-weight: 600;
+  color: var(--color-brand, #30273e);
+  margin-bottom: 20px;
+  margin-top: 0;
+  line-height: 1.1;
 }
 
 .sk-help-categories__description {
-    max-width: 600px;
+  max-width: 600px;
 }
 
 .sk-help-categories__description p {
-    font-size: 18px;
-    line-height: 28px;
-    color: #6C6C6C;
-    margin: 0;
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--color-neutral-3, #6c6c6c);
+  margin: 0;
 }
 
 .sk-help-categories__grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    list-style: none;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  list-style: none;
+  justify-content: center;
 }
 
 .sk-help-categories__item {
-    flex: 0 0 calc(25% - 22.5px);
-    min-width: 280px;
+  flex: 0 0 calc(25% - 22.5px);
+  min-width: 280px;
 }
 
 .sk-help-categories__link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 40px 30px;
-    background-color: #ffffff;
-    border: 2px solid #000;
-    border-radius: 16px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    height: 100%;
-    min-height: 200px;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 30px;
+  background-color: var(--color-white, #ffffff);
+  border: 2px solid var(--color-black, #000);
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  height: 100%;
+  min-height: 200px;
+  justify-content: center;
 }
 
 .sk-help-categories__link:hover {
-    border-color: #30273E;
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(48, 39, 62, 0.15);
+  border-color: var(--color-brand, #30273e);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(48, 39, 62, 0.15);
 }
 
 .sk-help-categories__icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 80px;
-    height: 80px;
-    background-color: #30273E;
-    border-radius: 12px;
-    margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background-color: var(--color-brand, #30273e);
+  border-radius: 12px;
+  margin-bottom: 24px;
 }
 
 .sk-help-categories__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white, #ffffff);
 }
 
 .sk-help-categories__icon svg {
-    width: 50px;
-    height: 50px;
-    fill: currentColor;
+  width: 50px;
+  height: 50px;
+  fill: currentColor;
 }
 
 .sk-help-categories__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .sk-help-categories__title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #30273E;
-    padding-bottom: 3px;
-    margin-top: 0;
-    line-height: 1.3;
-    position: relative;
-    /* border-bottom: 1px solid #d3d3d3; */
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-brand, #30273e);
+  padding-bottom: 3px;
+  margin-top: 0;
+  line-height: 1.3;
+  position: relative;
+  /* border-bottom: 1px solid #d3d3d3; */
 }
 
 .sk-help-categories__count {
-    font-size: 18px;
-    font-weight: 400;
-    color: #000;
-    margin: 0;
-    margin-top: 6px;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-black, #000);
+  margin: 0;
+  margin-top: 6px;
 }
