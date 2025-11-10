@@ -353,6 +353,34 @@
     },
     "sk_product_why_choose_8a4LNx": {
       "type": "sk-product-why-choose",
+      "blocks": {
+        "column_WWH3rX": {
+          "type": "column",
+          "settings": {
+            "title": "Et nivå ingen andre LED-masker i Norge kan tilby",
+            "text": "<p><br/>Masken med klinisk dokumentert 1072 nm. Når dypere i huden der kollagen og elastin dannes.</p>"
+          }
+        },
+        "column_aXhtky": {
+          "type": "column",
+          "settings": {
+            "title": "Klinisk bevist teknologi",
+            "text": "<p>Dokumentert effekt gjennom uavhengige studier ved universitetssykehus i UK og Asia.</p>"
+          }
+        },
+        "column_idwfTg": {
+          "type": "column",
+          "settings": {
+            "title": "Klinisk dokumentert",
+            "text": "<p>1072 nm, 830 nm og 630 nm for målrettet effekt – dokumentert i studier.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_WWH3rX",
+        "column_aXhtky",
+        "column_idwfTg"
+      ],
       "name": "SK Product Why Choose",
       "settings": {
         "heading": "Hvorfor velge Skinora?",
