@@ -354,7 +354,17 @@
     "sk_product_why_choose_8a4LNx": {
       "type": "sk-product-why-choose",
       "name": "SK Product Why Choose",
-      "settings": {}
+      "settings": {
+        "heading": "Hvorfor velge Skinora?",
+        "image": "shopify://shop_images/Frame_7428-removebg-preview.png",
+        "show_image": true,
+        "hide_image_mobile": false,
+        "layout": "image-left",
+        "image_width": 280,
+        "columns_desktop": 3,
+        "pad_top": 84,
+        "pad_bottom": 84
+      }
     },
     "sk_faq_accordion_GcMDDq": {
       "type": "sk-faq-accordion",
