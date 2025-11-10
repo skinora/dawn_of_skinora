@@ -1,260 +1,193 @@
-{% comment %}
-  SK Why-Choose (Standalone)
-  - Use this on ANY page (no metafields).
-  - You can set: main heading, image, and any number of text columns via blocks.
-{% endcomment %}
-
 <style>
-  .sk-why-choose-{{ section.id }} {
+  .sk-product-why-choose-{{ section.id }} {
     background: var(--color-ghost-3, #f8f8f8);
-    padding: {{ section.settings.padding_top | default: 64 }}px 0 {{ section.settings.padding_bottom | default: 64 }}px;
+    padding: 7rem 0;
   }
 
-  .sk-why-choose-{{ section.id }} .sk-why-choose__container {
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__container {
     display: flex;
     align-items: center;
-    gap: 56px;
     flex-wrap: wrap;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
+    justify-content: space-around;
+    gap: 60px;
   }
 
-  .sk-why-choose-{{ section.id }} .sk-why-choose__image {
-    flex: 0 0 320px;
-    order: {% if section.settings.image_position == 'left' %}0{% else %}2{% endif %};
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
+    flex: 0 0 280px;
   }
 
-  .sk-why-choose-{{ section.id }} .sk-why-choose__image img {
-    display: block;
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__image img {
     width: 100%;
     height: auto;
+    border-radius: 12px;
+    display: block;
   }
 
-  .sk-why-choose-{{ section.id }} .sk-why-choose__content {
-    flex: 1 1 560px;
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__content {
+    flex: 1;
     min-width: 300px;
-    order: 1;
+    max-width: 820px;
   }
 
-  .sk-why-choose-{{ section.id }} .sk-why-choose__main-heading {
-    margin: 0 0 28px 0;
+  /* Main heading */
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__main-heading {
+    font-size: 48px;   /* increased from 42px */
+    line-height: 1.25;
     font-weight: 700;
-    line-height: 1.2;
     color: var(--color-brand, #30273e);
-    font-size: clamp(28px, 3.2vw, 42px);
+    margin: 0 0 48px 0;
     text-align: center;
   }
 
-  .sk-why-choose-{{ section.id }} .sk-why-choose__columns {
+  /* Columns wrapper */
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__columns {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 28px 36px;
+    gap: 32px;
   }
 
-  .sk-why-choose-{{ section.id }} .sk-why-choose__column h3,
-  .sk-why-choose-{{ section.id }} .sk-why-choose__column h4 {
-    margin: 0 0 10px 0;
-    font-weight: 800;
-    text-transform: uppercase;
+  /* Column items */
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column {
+    text-align: center;
+  }
+
+  /* Column titles */
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h3,
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h4 {
+    font-size: 20px;   /* increased from 16px */
+    line-height: 1.5;
+    font-weight: 700;
     color: var(--color-brand, #30273e);
-    font-size: 15px;
-    text-align: center;
+    margin: 0 0 12px 0;
+    text-transform: uppercase;
   }
 
-  .sk-why-choose-{{ section.id }} .sk-why-choose__column p {
-    margin: 0;
+  /* Column text */
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
+    font-size: 16px;   /* increased from 13px */
+    line-height: 1.8;
     color: var(--color-neutral-3, #333333);
-    line-height: 1.6;
-    font-size: 14px;
-    text-align: center;
+    margin: 0;
   }
 
-  @media (max-width: 900px) {
-    .sk-why-choose-{{ section.id }} .sk-why-choose__columns {
+  /* Responsive */
+  @media (max-width: 990px) {
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__columns {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
-  @media (max-width: 640px) {
-    .sk-why-choose-{{ section.id }} .sk-why-choose__container {
-      gap: 28px;
+  @media (max-width: 700px) {
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
+      display: none; /* hide side image on small screens */
     }
-    .sk-why-choose-{{ section.id }} .sk-why-choose__image {
-      flex-basis: 100%;
-      order: 0 !important;
-      max-width: 420px;
-      margin: 0 auto;
+  }
+
+  @media (max-width: 435px) {
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__main-heading {
+      font-size: 34px;
+      line-height: 40px;
     }
-    .sk-why-choose-{{ section.id }} .sk-why-choose__columns {
-      grid-template-columns: 1fr;
-      gap: 18px;
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h3,
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h4 {
+      font-size: 16px;
+      line-height: 22px;
     }
-    .sk-why-choose-{{ section.id }} .sk-why-choose__column h3,
-    .sk-why-choose-{{ section.id }} .sk-why-choose__column h4 {
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
       font-size: 14px;
-    }
-    .sk-why-choose-{{ section.id }} .sk-why-choose__column p {
-      font-size: 13px;
-      line-height: 1.5;
+      line-height: 22px;
     }
   }
 </style>
 
-<section class="sk-why-choose-{{ section.id }} color-{{ section.settings.color_scheme }}">
-  <div class="sk-why-choose__container">
-    {% if section.settings.image != blank %}
-      <div class="sk-why-choose__image">
-        <img
-          srcset="
-            {{ section.settings.image | image_url: width: 320 }} 320w,
-            {{ section.settings.image | image_url: width: 480 }} 480w,
-            {{ section.settings.image | image_url: width: 640 }} 640w,
-            {{ section.settings.image | image_url: width: 800 }} 800w
-          "
-          sizes="(max-width: 640px) 90vw, 320px"
-          src="{{ section.settings.image | image_url: width: 480 }}"
-          alt="{{ section.settings.image.alt | escape | default: section.settings.heading }}"
-          width="{{ section.settings.image.width }}"
-          height="{{ section.settings.image.height }}"
-          loading="lazy"
-        >
-      </div>
-    {% endif %}
-
-    <div class="sk-why-choose__content">
-      {% if section.settings.heading != blank %}
-        <h2 class="sk-why-choose__main-heading">{{ section.settings.heading | escape }}</h2>
+<section class="sk-product-why-choose sk-product-why-choose-{{ section.id }}">
+  <div class="container">
+    <div class="sk-why-choose__container">
+      <!-- Image (optional) -->
+      {% if section.settings.side_image != blank %}
+        <div class="sk-why-choose__image">
+          <img
+            src="{{ section.settings.side_image | image_url: width: 560, height: 760, crop: 'center' }}"
+            alt="{{ section.settings.side_image.alt | default: section.settings.main_heading | escape }}"
+            width="560"
+            height="760"
+            loading="lazy"
+          >
+        </div>
       {% endif %}
 
-      {% if section.blocks.size > 0 %}
+      <!-- Content -->
+      <div class="sk-why-choose__content">
+        {% if section.settings.main_heading != blank %}
+          <h2 class="sk-why-choose__main-heading">
+            {{ section.settings.main_heading | escape }}
+          </h2>
+        {% endif %}
+
         <div class="sk-why-choose__columns">
           {% for block in section.blocks %}
             {% case block.type %}
-              {% when 'column' %}
+              {% when 'item' %}
                 <div class="sk-why-choose__column" {{ block.shopify_attributes }}>
                   {% if block.settings.title != blank %}
                     <h3>{{ block.settings.title | escape }}</h3>
                   {% endif %}
                   {% if block.settings.text != blank %}
-                    <p>{{ block.settings.text }}</p>
+                    <div class="sk-why-choose__column-text">
+                      {{ block.settings.text }}
+                    </div>
                   {% endif %}
                 </div>
             {% endcase %}
           {% endfor %}
         </div>
-      {% endif %}
+      </div>
     </div>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "SK Why-Choose (Standalone)",
+  "name": "SK Product Why Choose",
   "tag": "section",
   "class": "section",
   "settings": [
     {
       "type": "text",
-      "id": "heading",
+      "id": "main_heading",
       "label": "Main heading",
-      "default": "Tror du Skinora Radiance er enda en LED-maske?"
+      "default": "Hvorfor velge Skinora?"
     },
     {
       "type": "image_picker",
-      "id": "image",
-      "label": "Side image"
-    },
-    {
-      "type": "select",
-      "id": "image_position",
-      "label": "Image position (desktop)",
-      "default": "left",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "right", "label": "Right" }
-      ]
-    },
-    {
-      "type": "select",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "background-1",
-      "options": [
-        { "value": "background-1", "label": "Background 1" },
-        { "value": "background-2", "label": "Background 2" },
-        { "value": "accent-1", "label": "Accent 1" },
-        { "value": "accent-2", "label": "Accent 2" },
-        { "value": "inverse", "label": "Inverse" }
-      ]
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Padding top",
-      "min": 0,
-      "max": 140,
-      "step": 4,
-      "unit": "px",
-      "default": 64
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Padding bottom",
-      "min": 0,
-      "max": 140,
-      "step": 4,
-      "unit": "px",
-      "default": 64
+      "id": "side_image",
+      "label": "Side image (desktop)"
     }
   ],
   "blocks": [
     {
-      "type": "column",
-      "name": "Kolonne",
+      "type": "item",
+      "name": "Text column",
       "settings": [
         {
           "type": "text",
           "id": "title",
-          "label": "Title",
-          "default": "ET NIVÅ INGEN ANDRE LED-MASKER I NORGE KAN TILBY"
+          "label": "Column title",
+          "default": "KLINISK INSPIRERT"
         },
         {
-          "type": "richtext",
+          "type": "html",
           "id": "text",
-          "label": "Text",
-          "default": "<p>Eneste masken i Norge med klinisk dokumentert 1072&nbsp;nm. Når dypere i huden der kollagen og elastin dannes.</p>"
+          "label": "Column text",
+          "default": "<p>Utviklet med bølgelengder brukt i studier for synlige resultater over tid.</p>"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "SK Why-Choose (Standalone)",
-      "blocks": [
-        {
-          "type": "column",
-          "settings": {
-            "title": "ET NIVÅ INGEN ANDRE LED-MASKER I NORGE KAN TILBY",
-            "text": "<p>Eneste masken i Norge med klinisk dokumentert 1072&nbsp;nm. Når dypere i huden der kollagen og elastin dannes.</p>"
-          }
-        },
-        {
-          "type": "column",
-          "settings": {
-            "title": "DOKUMENTERT TEKNOLOGI",
-            "text": "<p>Rødt (630&nbsp;nm) og NIR (830/1072&nbsp;nm) jobber sammen for å dempe inflammasjon og stimulere hudens egen reparasjon.</p>"
-          }
-        },
-        {
-          "type": "column",
-          "settings": {
-            "title": "RESULTATER DU SER",
-            "text": "<p>Jevnere hudtone, forbedret fasthet og roligere hud. Skånsomt – ingen nedetid.</p>"
-          }
-        }
-      ]
+      "name": "SK Product Why Choose",
+      "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }]
     }
   ]
 }
