@@ -1,3 +1,6 @@
+<!-- Swiper CSS (for mobile slider only) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
 <style>
   .sk-product-why-choose-{{ section.id }} {
     background: var(--color-ghost-3, #f8f8f8);
@@ -40,8 +43,8 @@
     max-width: 1100px; /* aligns heading with grid width */
   }
 
-  /* Columns wrapper - wider and centered */
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__columns {
+  /* Desktop grid */
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__columns--grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(280px, 1fr));
     gap: 60px;
@@ -49,12 +52,10 @@
     margin: 0 auto;
   }
 
-  /* Column content - left-aligned */
   .sk-product-why-choose-{{ section.id }} .sk-why-choose__column {
     text-align: left;
   }
 
-  /* Column titles */
   .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h3,
   .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h4 {
     font-size: 20px;
@@ -66,7 +67,6 @@
     text-align: left;
   }
 
-  /* Column text */
   .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
     font-size: 16px;
     line-height: 1.8;
@@ -75,20 +75,46 @@
     text-align: left;
   }
 
+  /* Mobile slider wrapper (hidden on desktop) */
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__columns--swiper {
+    display: none;
+  }
+
   /* Responsive */
   @media (max-width: 990px) {
-    .sk-product-why-choose-{{ section.id }} .sk-why-choose__columns {
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__columns--grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 40px;
     }
   }
 
   @media (max-width: 700px) {
-    .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
-      display: none;
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__image { display: none; }
+
+    /* Hide grid, show slider on mobile */
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__columns--grid { display: none; }
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__columns--swiper {
+      display: block;
+      max-width: 600px;
+      margin: 0 auto;
     }
-    .sk-product-why-choose-{{ section.id }} .sk-why-choose__columns {
-      grid-template-columns: 1fr;
-      gap: 40px;
+
+    .sk-product-why-choose-{{ section.id }} .swiper-slide {
+      padding: 0 8px;
+    }
+
+    /* Center dots */
+    .sk-product-why-choose-{{ section.id }} .swiper-pagination {
+      position: static;
+      margin-top: 18px;
+      text-align: center;
+    }
+    .sk-product-why-choose-{{ section.id }} .swiper-pagination-bullet {
+      width: 10px; height: 10px; background: #ddd; opacity: 1;
+    }
+    .sk-product-why-choose-{{ section.id }} .swiper-pagination-bullet-active {
+      background: #4a4458;
+      transform: scale(1.15);
     }
   }
 
@@ -112,7 +138,6 @@
 <section class="sk-product-why-choose sk-product-why-choose-{{ section.id }}">
   <div class="container">
     <div class="sk-why-choose__container">
-      <!-- Image (optional) -->
       {% if section.settings.side_image != blank %}
         <div class="sk-why-choose__image">
           <img
@@ -125,7 +150,6 @@
         </div>
       {% endif %}
 
-      <!-- Content -->
       <div class="sk-why-choose__content">
         {% if section.settings.main_heading != blank %}
           <h2 class="sk-why-choose__main-heading">
@@ -133,7 +157,10 @@
           </h2>
         {% endif %}
 
-        <div class="sk-why-choose__columns">
+        {%- comment -%}
+          DESKTOP/TABLET GRID
+        {%- endcomment -%}
+        <div class="sk-why-choose__columns sk-why-choose__columns--grid">
           {% for block in section.blocks %}
             {% case block.type %}
               {% when 'item' %}
@@ -150,10 +177,70 @@
             {% endcase %}
           {% endfor %}
         </div>
+
+        {%- comment -%}
+          MOBILE SWIPER
+        {%- endcomment -%}
+        <div class="sk-why-choose__columns--swiper">
+          <div class="swiper why-choose-swiper-{{ section.id }}">
+            <div class="swiper-wrapper">
+              {% for block in section.blocks %}
+                {% case block.type %}
+                  {% when 'item' %}
+                    <div class="swiper-slide" {{ block.shopify_attributes }}>
+                      <div class="sk-why-choose__column">
+                        {% if block.settings.title != blank %}
+                          <h3>{{ block.settings.title | escape }}</h3>
+                        {% endif %}
+                        {% if block.settings.text != blank %}
+                          <div class="sk-why-choose__column-text">
+                            {{ block.settings.text }}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                {% endcase %}
+              {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Swiper JS (for mobile slider only) -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var el = document.querySelector('.why-choose-swiper-{{ section.id }}');
+    if (!el) return;
+
+    // Only init on mobile to avoid duplicate UI with the desktop grid
+    var mql = window.matchMedia('(max-width: 700px)');
+    var instance = null;
+
+    function initOrDestroy() {
+      if (mql.matches && !instance) {
+        instance = new Swiper(el, {
+          slidesPerView: 1,
+          spaceBetween: 16,
+          pagination: {
+            el: el.querySelector('.swiper-pagination'),
+            clickable: true,
+          },
+        });
+      } else if (!mql.matches && instance) {
+        instance.destroy(true, true);
+        instance = null;
+      }
+    }
+
+    initOrDestroy();
+    mql.addEventListener ? mql.addEventListener('change', initOrDestroy) : mql.addListener(initOrDestroy);
+  });
+</script>
 
 {% schema %}
 {
