@@ -358,7 +358,7 @@
           "type": "item",
           "settings": {
             "title": "LED-lys i klinisk klasse",
-            "text": "<p>Skinora-maskene bruker bølgelengder fra <strong>415–1072 nm</strong> – et nivå du normalt bare finner i profesjonelle klinikker. Lyset stimulerer huden i dybden og aktiverer cellenes naturlige fornyelse – ikke bare overflaten. Resultatet er forbedret hudstruktur, mindre inflammasjon og varig glød.</p>"
+            "text": "<p>Skinora-maskene bruker bølgelengder fra <strong>415–1072 nm</strong> – et nivå du normalt bare finner kun i profesjonelle klinikker.</p>"
           }
         },
         "item_JiLUMn": {
@@ -371,7 +371,7 @@
         "item_RFzKBM": {
           "type": "item",
           "settings": {
-            "title": "KLINISK INSPIRERT",
+            "title": "Synlig effekt på få uker",
             "text": "<p>Utviklet med bølgelengder brukt i studier for synlige resultater over tid.</p>"
           }
         }
