@@ -365,14 +365,14 @@
           "type": "item",
           "settings": {
             "title": "Teknologi ingen andre tilbyr",
-            "text": "<p>Skinora kombinerer rødt, blått og nær-infrarødt lys i klinisk dokumenterte styrker. Ingen andre norske merker tilbyr samme lysintensitet eller bølgelengdekombinasjon – dette er lysbehandling på nivå med medisinsk utstyr, utviklet for trygg bruk hjemme.</p>"
+            "text": "<p>Ingen andre norske merker tilbyr samme lysintensitet eller bølgelengdekombinasjon – dette er lysbehandling på nivå med medisinsk utstyr, utviklet for trygg bruk hjemme.</p>"
           }
         },
         "item_RFzKBM": {
           "type": "item",
           "settings": {
-            "title": "Synlig effekt på få uker",
-            "text": "<p>Utviklet med bølgelengder brukt i studier for synlige resultater over tid.</p>"
+            "title": "Ingen andre tilbyr dette nivået av LED-teknologi",
+            "text": "<p>Skinora-maskene bruker lysbølgelengder og intensitet som vanligvis kun finnes i profesjonelle klinikker. Denne teknologien er utviklet for trygg bruk hjemme – og <strong>ingen andre norske merker</strong> tilbyr samme dokumenterte effekt eller lysstyrke.</p>"
           }
         }
       },
