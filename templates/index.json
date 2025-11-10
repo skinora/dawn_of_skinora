@@ -358,21 +358,21 @@
           "type": "item",
           "settings": {
             "title": "LED-lys i klinisk klasse",
-            "text": "<p>Skinora-maskene bruker bølgelengder fra <strong>415–1072 nm</strong> – et nivå du normalt bare finner kun i profesjonelle klinikker.</p>"
+            "text": "<p>Skinora-maskene bruker dokumenterte bølgelengder fra kliniske studier og gir jevn dekning med stabil lysstyrke – utviklet for synlige resultater hjemme.</p>"
           }
         },
         "item_JiLUMn": {
           "type": "item",
           "settings": {
             "title": "Teknologi ingen andre tilbyr",
-            "text": "<p>Ingen andre norske merker tilbyr samme lysintensitet eller bølgelengdekombinasjon – dette er lysbehandling på nivå med medisinsk utstyr, utviklet for trygg bruk hjemme.</p>"
+            "text": "<p>De fleste LED-masker på markedet har lav effekt og lyser kun overfladisk. <strong>Skinora</strong> bruker profesjonelle dioder med høyere lysintensitet og optimal energitetthet – slik at lyset faktisk <em>når</em> ned i hudlaget der kollagen dannes. Resultatet er reell effekt, ikke bare glød.</p>"
           }
         },
         "item_RFzKBM": {
           "type": "item",
           "settings": {
-            "title": "Ingen andre tilbyr dette nivået av LED-teknologi",
-            "text": "<p>Skinora-maskene bruker lysbølgelengder og intensitet som vanligvis kun finnes i profesjonelle klinikker. Denne teknologien er utviklet for trygg bruk hjemme – og <strong>ingen andre norske merker</strong> tilbyr samme dokumenterte effekt eller lysstyrke.</p>"
+            "title": "Eksklusiv 1072 nm (Radiance & Neck)",
+            "text": "<p>Den dype nær-IR-bølgelengden <strong>1072 nm</strong> støtter reparasjon, kollagen og roer inflammasjon – et nivå <strong>ingen andre</strong> LED-masker i Norge tilbyr.</p>"
           }
         }
       },
