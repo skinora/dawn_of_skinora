@@ -351,6 +351,11 @@
         "sk_led_light_work_heading": "Hvordan Fungerer Skinora Led Lys"
       }
     },
+    "sk_product_why_choose_8a4LNx": {
+      "type": "sk-product-why-choose",
+      "name": "SK Product Why Choose",
+      "settings": {}
+    },
     "sk_faq_accordion_GcMDDq": {
       "type": "sk-faq-accordion",
       "blocks": {
@@ -433,6 +438,7 @@
     "sk_features_pHkfMf",
     "sk_radiance_meq7Gb",
     "sk_led_light_work_QHXAbE",
+    "sk_product_why_choose_8a4LNx",
     "sk_faq_accordion_GcMDDq"
   ]
 }
