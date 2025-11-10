@@ -19,7 +19,7 @@
     margin: 0;
   }
 
-  /* DESKTOP/TABLET: original rad med piler */
+  /* DESKTOP/TABLET */
   .sk-led-light-work-images-container {
     display: flex;
     align-items: center;
@@ -39,10 +39,6 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    image-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    will-change: transform;
-    backface-visibility: hidden;
   }
 
   .sk-led-light-work-images-container svg {
@@ -52,21 +48,24 @@
     color: var(--color-brand);
   }
 
-  /* MOBIL SLIDER: skjult på desktop, vises på <=700px */
+  /* MOBIL SWIPER */
   .sk-llw-swiper-{{ section.id }} {
     display: none;
   }
 
   .sk-llw-swiper-{{ section.id }} .swiper-slide {
+    display: flex;
+    justify-content: center;
     padding: 0 8px;
   }
 
   .sk-llw-swiper-{{ section.id }} .llw-slide {
-    width: 215px;
-    aspect-ratio: 215 / 456;
-    border-radius: 8px;
+    width: 80%;
+    max-width: 320px;
+    aspect-ratio: 1 / 1.1; /* gjør bilder mer kvadratiske */
+    border-radius: 12px;
     overflow: hidden;
-    margin: 0 auto;
+    box-shadow: 0 6px 18px rgba(0,0,0,.08);
   }
 
   .sk-llw-swiper-{{ section.id }} img {
@@ -78,37 +77,27 @@
 
   .sk-llw-swiper-{{ section.id }} .swiper-pagination {
     position: static;
-    margin-top: 16px;
+    margin-top: 20px;
     text-align: center;
   }
 
   .sk-llw-swiper-{{ section.id }} .swiper-pagination-bullet {
-    width: 10px; height: 10px; background: #ddd; opacity: 1;
+    width: 10px; height: 10px;
+    background: #ddd;
+    opacity: 1;
   }
   .sk-llw-swiper-{{ section.id }} .swiper-pagination-bullet-active {
-    background: #4a4458; transform: scale(1.15);
+    background: #4a4458;
+    transform: scale(1.15);
   }
 
-  /* Responsivitet */
+  /* RESPONSIVITET */
   @media (max-width: 700px) {
-    /* Skjul desktop-layout, vis swiper */
     .sk-led-light-work-images-container { display: none; }
+    .sk-llw-swiper-{{ section.id }} { display: block; max-width: 600px; margin: 0 auto; }
 
-    .sk-llw-swiper-{{ section.id }} {
-      display: block;
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 0 8px;
-    }
-
-    .sk-led-light-work__content {
-      width: 100%;
-      margin-bottom: 32px;
-    }
-
-    .sk-led-light-work {
-      padding: 4rem 0;
-    }
+    .sk-led-light-work__content { width: 100%; margin-bottom: 32px; }
+    .sk-led-light-work { padding: 4rem 0; }
   }
 
   @media (max-width: 435px) {
@@ -116,9 +105,10 @@
       font-size: 32px;
       line-height: 1.15;
     }
+
     .sk-llw-swiper-{{ section.id }} .llw-slide {
-      width: 150px;
-      aspect-ratio: 215 / 456;
+      width: 90%;
+      aspect-ratio: 1 / 1.1;
     }
   }
 </style>
@@ -134,21 +124,14 @@
         </div>
       {% endif %}
 
-      {%- comment -%} DESKTOP/TABLET: original rad med piler {%- endcomment -%}
+      {%- comment -%} DESKTOP: original layout {%- endcomment -%}
       {% if section.blocks.size > 0 %}
         <div class="sk-led-light-work-images-container">
           {% for block in section.blocks %}
             <div class="sk-led-light-work-image-item">
               {% if block.settings.sk_led_light_work_img != blank %}
-                {%- assign img = block.settings.sk_led_light_work_img -%}
+                {% assign img = block.settings.sk_led_light_work_img %}
                 <img
-                  srcset="
-                    {{ img | image_url: width: 220 }} 220w,
-                    {{ img | image_url: width: 440 }} 440w,
-                    {{ img | image_url: width: 660 }} 660w,
-                    {{ img | image_url: width: 880 }} 880w
-                  "
-                  sizes="(max-width: 700px) 180px, 215px"
                   src="{{ img | image_url: width: 660 }}"
                   alt="{{ img.alt | escape }}"
                   loading="lazy"
@@ -158,39 +141,31 @@
                 >
               {% endif %}
             </div>
-
             {% unless forloop.last %}
-              {%- capture arrow -%}{{ 'led-light-works-arrow.svg' | inline_asset_content }}{%- endcapture -%}
+              {% capture arrow %}{{ 'led-light-works-arrow.svg' | inline_asset_content }}{% endcapture %}
               {{ arrow | replace: '<svg', '<svg aria-hidden="true" focusable="false" role="presentation"' }}
             {% endunless %}
           {% endfor %}
         </div>
       {% endif %}
 
-      {%- comment -%} MOBIL: swiper med prikker (uten midtpiler mellom slides for renere UX) {%- endcomment -%}
+      {%- comment -%} MOBIL SWIPER {%- endcomment -%}
       {% if section.blocks.size > 0 %}
         <div class="sk-llw-swiper-{{ section.id }}">
           <div class="swiper llw-swiper-{{ section.id }}">
             <div class="swiper-wrapper">
               {% for block in section.blocks %}
                 {% if block.settings.sk_led_light_work_img != blank %}
-                  {%- assign img = block.settings.sk_led_light_work_img -%}
+                  {% assign img = block.settings.sk_led_light_work_img %}
                   <div class="swiper-slide">
                     <div class="llw-slide">
                       <img
-                        srcset="
-                          {{ img | image_url: width: 220 }} 220w,
-                          {{ img | image_url: width: 440 }} 440w,
-                          {{ img | image_url: width: 660 }} 660w,
-                          {{ img | image_url: width: 880 }} 880w
-                        "
-                        sizes="(max-width: 435px) 150px, 180px"
                         src="{{ img | image_url: width: 660 }}"
                         alt="{{ img.alt | escape }}"
                         loading="lazy"
                         decoding="async"
-                        width="215"
-                        height="456"
+                        width="320"
+                        height="320"
                       >
                     </div>
                   </div>
@@ -218,17 +193,12 @@
     function initOrDestroy() {
       if (mql.matches && !swiperInstance) {
         swiperInstance = new Swiper(container, {
-          slidesPerView: 1.2,
-          spaceBetween: 14,
-          centeredSlides: false,
+          slidesPerView: 1,
+          spaceBetween: 24,
+          centeredSlides: true,
           pagination: {
             el: container.querySelector('.swiper-pagination'),
             clickable: true,
-          },
-          breakpoints: {
-            0: { slidesPerView: 1.2, spaceBetween: 12 },
-            360: { slidesPerView: 1.4, spaceBetween: 14 },
-            480: { slidesPerView: 2, spaceBetween: 16 },
           },
         });
       } else if (!mql.matches && swiperInstance) {
@@ -241,7 +211,7 @@
     if (mql.addEventListener) {
       mql.addEventListener('change', initOrDestroy);
     } else {
-      mql.addListener(initOrDestroy); // eldre Safari
+      mql.addListener(initOrDestroy);
     }
   });
 </script>
