@@ -3970,20 +3970,20 @@ div.okeReviews .oke-w-review-main {
 }
 
 .menu-drawer__utility-links .svg-wrapper svg {
-  color: #fff;
+  color: var(--color-white, #ffffff);
 }
 
 .menu-drawer__close-button {
-  color: #fff !important;
+  color: var(--color-white, #ffffff) !important;
 }
 
 .menu-drawer__close-button:focus {
-  color: #fff !important;
+  color: var(--color-white, #ffffff) !important;
 }
 
 .icon-hamburger-variants .icon-close {
-  background: #30273e;
-  color: #fff;
+  background: var(--color-brand, #30273e);
+  color: var(--color-white, #ffffff);
 }
 
 .menu-drawer__utility-links .menu-drawer__account {

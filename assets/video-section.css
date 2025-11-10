@@ -40,7 +40,7 @@
 }
 
 .video-section__media video {
-  background: #000000;
+  background: var(--color-black, #000000);
 }
 
 .video-section__media.media-fit-cover video {
