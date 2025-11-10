@@ -358,7 +358,7 @@
           "type": "item",
           "settings": {
             "title": "LED-lys i klinisk klasse",
-            "text": "<p>Utviklet med bølgelengder brukt i studier for synlige resultater over tid.</p>"
+            "text": "<p>&lt;p&gt;Skinora-maskene bruker bølgelengder fra &lt;strong&gt;415–1072 nm&lt;/strong&gt; – et nivå du vanligvis bare finner i profesjonelle klinikker.  <br/>Lyset stimulerer huden i dybden og aktiverer cellenes naturlige fornyelse – ikke bare overflaten.&lt;/p&gt;<br/><br/></p>"
           }
         },
         "item_JiLUMn": {
@@ -383,7 +383,7 @@
       ],
       "name": "SK Product Why Choose",
       "settings": {
-        "main_heading": "Hvorfor velge Skinora?",
+        "main_heading": "Klinikkresultater hjemme – med teknologi ingen andre i Norge tilbyr",
         "side_image": "shopify://shop_images/Frame_7428-removebg-preview.png"
       }
     },
