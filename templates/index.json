@@ -365,14 +365,14 @@
           "type": "column",
           "settings": {
             "title": "Klinisk bevist teknologi",
-            "text": "<p>Dokumentert effekt gjennom uavhengige studier ved universitetssykehus i UK og Asia.</p>"
+            "text": "<p></p><p>Dokumentert effekt gjennom uavhengige studier ved universitetssykehus i UK og Asia.</p>"
           }
         },
         "column_idwfTg": {
           "type": "column",
           "settings": {
-            "title": "Klinisk dokumentert",
-            "text": "<p>1072 nm, 830 nm og 630 nm for målrettet effekt – dokumentert i studier.</p>"
+            "title": "Resultater du ser – og føler",
+            "text": "<p><br/>Redusert rødhet, fastere hud og forbedret glød på bare få uker.<br/><br/></p>"
           }
         }
       },
@@ -383,7 +383,7 @@
       ],
       "name": "SK Product Why Choose",
       "settings": {
-        "heading": "Hvorfor velge Skinora?",
+        "heading": "Tror du Skinora Radiance er enda en LED-maske?",
         "image": "shopify://shop_images/Frame_7428-removebg-preview.png",
         "show_image": true,
         "hide_image_mobile": false,
