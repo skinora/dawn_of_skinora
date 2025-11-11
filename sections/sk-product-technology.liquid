@@ -1,197 +1,141 @@
 <style>
-  .sk-product-technology-{{ section.id }} {
-    background: #FFF9F5;
-    padding: 7rem 0;
+  .sk-tech-{{ section.id }}{
+    background: {{ section.settings.bg_color }};
+    padding: {{ section.settings.pad_y_mobile }}px 0;
+  }
+  @media (min-width: 701px){
+    .sk-tech-{{ section.id }}{ padding: {{ section.settings.pad_y_desktop }}px 0; }
   }
 
-  .sk-product-technology-{{ section.id }} .sk-technology__main-heading {
-    font-size: 42px;
-    line-height: 60px;
-    font-weight: 700;
-    color: #30273E;
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto 60px;
+  .sk-tech-{{ section.id }} .sk-tech__heading{
+    font-size: 42px; line-height: 60px; font-weight: 700; color: #30273E;
+    text-align: center; max-width: 800px; margin: 0 auto 40px;
+  }
+  @media (max-width:435px){
+    .sk-tech-{{ section.id }} .sk-tech__heading{ font-size: 32px; line-height: 38px; margin-bottom: 16px; }
   }
 
-  .sk-product-technology-{{ section.id }} .sk-technology__container {
-    display: flex;
-    gap: 40px;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
+  .sk-tech-{{ section.id }} .sk-tech__row{
+    display:flex; gap:40px; align-items:center; justify-content:center; flex-wrap:wrap;
   }
 
-  .sk-product-technology-{{ section.id }} .sk-technology__left-image {
-    flex: 0 0 auto;
-    max-width: 400px;
+  .sk-tech-{{ section.id }} .sk-tech__img{
+    flex:0 0 auto; max-width: 400px;
+  }
+  .sk-tech-{{ section.id }} .sk-tech__img img{
+    width:100%; height:auto; display:block; border-radius:12px;
   }
 
-  .sk-product-technology-{{ section.id }} .sk-technology__left-image img {
-    width: 100%;
-    height: auto;
-    display: block;
+  .sk-tech-{{ section.id }} .sk-tech__content{
+    flex:1; min-width:300px; max-width: {{ section.settings.content_max_width }}px;
   }
+  .sk-tech-{{ section.id }} .sk-tech__content :where(p){ font-size:16px; line-height:1.6; color:#30273E; margin:0 0 16px 0; }
+  .sk-tech-{{ section.id }} .sk-tech__content :where(h3,h4){ font-size:18px; font-weight:600; color:#30273E; margin:0 0 12px 0; }
 
-  .sk-product-technology-{{ section.id }} .sk-technology__content {
-    flex: 1;
-    max-width: 500px;
-    min-width: 300px;
-  }
+  .sk-tech-{{ section.id }} .sk-tech__arrow{ display:flex; justify-content:center; margin-top: 8px; }
 
-  .sk-product-technology-{{ section.id }} .sk-technology__content p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #30273E;
-    margin: 0 0 16px 0;
-  }
-
-  .sk-product-technology-{{ section.id }} .sk-technology__content h3,
-  .sk-product-technology-{{ section.id }} .sk-technology__content h4 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #30273E;
-    margin: 0 0 12px 0;
-  }
-
-  .sk-product-technology-{{ section.id }} .sk-technology__right-image {
-    flex: 0 0 auto;
-    max-width: 400px;
-  }
-
-  .sk-product-technology-{{ section.id }} .sk-technology__right-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .sk-product-technology-{{ section.id }} .sk-technology__content-arrow {
-    display: flex;
-    justify-content: center;
-    /* align-items: center; */
-  }
-
-
-  @media only screen and (max-width: 435px) {
-    .sk-product-technology-{{ section.id }} .sk-technology__main-heading {
-    font-size: 32px;
-    line-height: 37px;
-    margin: 0 auto 10px;
-  }
-  .sk-product-technology-{{ section.id }} .sk-technology__content p {
-    font-size: 12px;
-    line-height: 20px;
-    margin: 0 0 10px 0;
-  }
-
+  /* Mobile order controls */
+  @media (max-width:700px){
+    .sk-tech-{{ section.id }} .sk-tech__row{ gap:24px; }
+    .sk-tech-{{ section.id }} .sk-tech__img{ max-width: 100%; }
+    .sk-tech-{{ section.id }} .sk-tech__content :where(p){ font-size:12px; line-height:20px; margin-bottom:10px; }
+    {% if section.settings.mobile_stack_order == 'image-first' %}
+      .sk-tech-{{ section.id }} .sk-tech__left{ order:1; }
+      .sk-tech-{{ section.id }} .sk-tech__center{ order:2; }
+      .sk-tech-{{ section.id }} .sk-tech__right{ order:3; }
+    {% elsif section.settings.mobile_stack_order == 'content-first' %}
+      .sk-tech-{{ section.id }} .sk-tech__center{ order:1; }
+      .sk-tech-{{ section.id }} .sk-tech__left{ order:2; }
+      .sk-tech-{{ section.id }} .sk-tech__right{ order:3; }
+    {% else %}
+      .sk-tech-{{ section.id }} .sk-tech__right{ order:1; }
+      .sk-tech-{{ section.id }} .sk-tech__center{ order:2; }
+      .sk-tech-{{ section.id }} .sk-tech__left{ order:3; }
+    {% endif %}
   }
 </style>
 
-{%- liquid
-  assign technology_heading = product.metafields.custom.technology_heading
-  assign technology_left_image = product.metafields.custom.technology_left_image
-  assign technology_content = product.metafields.custom.technology_content
-  assign technology_right_image = product.metafields.custom.technology_right_image
--%}
+<section class="sk-tech-{{ section.id }}">
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <h2 class="sk-tech__heading">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
 
-{%- if technology_heading != blank
-  or technology_left_image != blank
-  or technology_content != blank
-  or technology_right_image != blank
--%}
-  <section class="sk-product-technology-{{ section.id }}">
-    <div class="container">
-      {%- comment -%} Main Heading {%- endcomment -%}
-      {%- if technology_heading != blank -%}
-        <h2 class="sk-technology__main-heading">
-          {{ technology_heading }}
-        </h2>
-      {%- endif -%}
+    <div class="sk-tech__row">
+      {% if section.settings.left_image != blank %}
+        <div class="sk-tech__img sk-tech__left">
+          {%- assign li = section.settings.left_image -%}
+          <img
+            srcset="
+              {{ li | image_url: width: 400 }} 400w,
+              {{ li | image_url: width: 600 }} 600w,
+              {{ li | image_url: width: 800 }} 800w
+            "
+            sizes="(max-width: 700px) 100vw, 400px"
+            src="{{ li | image_url: width: 600 }}"
+            alt="{{ li.alt | default: section.settings.heading | escape }}"
+            loading="lazy" width="400" height="400">
+        </div>
+      {% endif %}
 
-      <div class="sk-technology__container">
-        {%- comment -%} Left Image (Diagram) {%- endcomment -%}
-        {%- if technology_left_image != blank -%}
-          <div class="sk-technology__left-image">
-            <img
-              src="{{ technology_left_image | image_url: width: 800 }}"
-              alt="{{ technology_left_image.alt | default: 'Technology diagram' }}"
-              width="800"
-              height="auto"
-              loading="lazy"
-            >
+      <div class="sk-tech__content sk-tech__center">
+        {% if section.settings.content_html != blank %}
+          {{ section.settings.content_html }}
+        {% endif %}
+        {% if section.settings.show_arrow %}
+          <div class="sk-tech__arrow">
+            {{ 'technology-arrow.svg' | inline_asset_content }}
           </div>
-        {%- endif -%}
-
-        {%- comment -%} Center Content {%- endcomment -%}
-        {%- if technology_content != blank -%}
-          <div class="sk-technology__content">
-            {{ technology_content | metafield_tag }}
-            <div class="sk-technology__content-arrow">
-              {{ 'technology-arrow.svg' | inline_asset_content }}
-            </div>
-          </div>
-        {%- endif -%}
-
-        {%- comment -%} Right Image (Before/After) {%- endcomment -%}
-        {%- if technology_right_image != blank -%}
-          <div class="sk-technology__right-image">
-            <img
-              src="{{ technology_right_image | image_url: width: 800 }}"
-              alt="{{ technology_right_image.alt | default: 'Before and after comparison' }}"
-              width="800"
-              height="auto"
-              loading="lazy"
-            >
-          </div>
-        {%- endif -%}
+        {% endif %}
       </div>
+
+      {% if section.settings.right_image != blank %}
+        <div class="sk-tech__img sk-tech__right">
+          {%- assign ri = section.settings.right_image -%}
+          <img
+            srcset="
+              {{ ri | image_url: width: 400 }} 400w,
+              {{ ri | image_url: width: 600 }} 600w,
+              {{ ri | image_url: width: 800 }} 800w
+            "
+            sizes="(max-width: 700px) 100vw, 400px"
+            src="{{ ri | image_url: width: 600 }}"
+            alt="{{ ri.alt | default: section.settings.heading | escape }}"
+            loading="lazy" width="400" height="400">
+        </div>
+      {% endif %}
     </div>
-  </section>
-{%- endif -%}
+  </div>
+</section>
 
 {% schema %}
 {
-  "name": "SK Product Technology",
+  "name": "SK Technology (Generic)",
   "tag": "section",
   "class": "section",
   "settings": [
-    {
-      "type": "header",
-      "content": "Product-Specific Control"
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Teknologien bak Skinora" },
+    { "type": "image_picker", "id": "left_image", "label": "Left image" },
+    { "type": "html", "id": "content_html", "label": "Center content", "default": "<p>Vår LED-teknologi kombinerer bølgelengder som støttes av forskning for å forbedre hudkvalitet, redusere inflammasjon og støtte hudens egen reparasjon.</p>" },
+    { "type": "image_picker", "id": "right_image", "label": "Right image" },
+
+    { "type": "checkbox", "id": "show_arrow", "label": "Show center arrow", "default": true },
+
+    { "type": "header", "content": "Layout & Style" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#FFF9F5" },
+    { "type": "range", "id": "content_max_width", "label": "Center content max width", "min": 360, "max": 720, "step": 20, "default": 500 },
+    { "type": "select", "id": "mobile_stack_order", "label": "Mobile stack order", "default": "image-first",
+      "options": [
+        { "value": "image-first", "label": "Left image → Content → Right image" },
+        { "value": "content-first", "label": "Content → Left image → Right image" },
+        { "value": "right-first", "label": "Right image → Content → Left image" }
+      ]
     },
-    {
-      "type": "paragraph",
-      "content": "This section displays technology explanation from product metafields. Add these 4 metafields to your product:"
-    },
-    {
-      "type": "paragraph",
-      "content": "1. 'custom.technology_heading' (Single line text) - Main heading at the top"
-    },
-    {
-      "type": "paragraph",
-      "content": "2. 'custom.technology_left_image' (File) - Left diagram showing wavelength visualization"
-    },
-    {
-      "type": "paragraph",
-      "content": "3. 'custom.technology_content' (Rich text) - Center text content explaining the technology"
-    },
-    {
-      "type": "paragraph",
-      "content": "4. 'custom.technology_right_image' (File) - Right before/after comparison image"
-    },
-    {
-      "type": "header",
-      "content": "Layout"
-    },
-    {
-      "type": "paragraph",
-      "content": "The section displays: [Left Image] [Center Content] [Right Image] in a horizontal layout (stacks on mobile)"
-    }
+    { "type": "range", "id": "pad_y_desktop", "label": "Padding Y (desktop)", "min": 20, "max": 160, "step": 4, "default": 112 },
+    { "type": "range", "id": "pad_y_mobile", "label": "Padding Y (mobile)", "min": 16, "max": 120, "step": 4, "default": 60 }
   ],
   "presets": [
-    {
-      "name": "SK Product Technology"
-    }
+    { "name": "SK Technology (Generic)" }
   ]
 }
 {% endschema %}
