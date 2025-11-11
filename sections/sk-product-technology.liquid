@@ -1,56 +1,115 @@
 <style>
-  .sk-tech-{{ section.id }}{
+  .sk-tech-{{ section.id }} {
     background: {{ section.settings.bg_color }};
     padding: {{ section.settings.pad_y_mobile }}px 0;
   }
-  @media (min-width: 701px){
-    .sk-tech-{{ section.id }}{ padding: {{ section.settings.pad_y_desktop }}px 0; }
+  @media (min-width: 701px) {
+    .sk-tech-{{ section.id }} {
+      padding: {{ section.settings.pad_y_desktop }}px 0;
+    }
   }
 
-  .sk-tech-{{ section.id }} .sk-tech__heading{
-    font-size: 42px; line-height: 60px; font-weight: 700; color: #30273E;
-    text-align: center; max-width: 800px; margin: 0 auto 40px;
-  }
-  @media (max-width:435px){
-    .sk-tech-{{ section.id }} .sk-tech__heading{ font-size: 32px; line-height: 38px; margin-bottom: 16px; }
-  }
-
-  .sk-tech-{{ section.id }} .sk-tech__row{
-    display:flex; gap:40px; align-items:center; justify-content:center; flex-wrap:wrap;
+  .sk-tech-{{ section.id }} .sk-tech__heading {
+    font-size: 42px;
+    line-height: 60px;
+    font-weight: 700;
+    color: #30273E;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
   }
 
-  .sk-tech-{{ section.id }} .sk-tech__img{
-    flex:0 0 auto; max-width: 400px;
-  }
-  .sk-tech-{{ section.id }} .sk-tech__img img{
-    width:100%; height:auto; display:block; border-radius:12px;
+  @media (max-width: 435px) {
+    .sk-tech-{{ section.id }} .sk-tech__heading {
+      font-size: 32px;
+      line-height: 38px;
+      margin-bottom: 16px;
+    }
   }
 
-  .sk-tech-{{ section.id }} .sk-tech__content{
-    flex:1; min-width:300px; max-width: {{ section.settings.content_max_width }}px;
+  /* Layout */
+  .sk-tech-{{ section.id }} .sk-tech__row {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
   }
-  .sk-tech-{{ section.id }} .sk-tech__content :where(p){ font-size:16px; line-height:1.6; color:#30273E; margin:0 0 16px 0; }
-  .sk-tech-{{ section.id }} .sk-tech__content :where(h3,h4){ font-size:18px; font-weight:600; color:#30273E; margin:0 0 12px 0; }
 
-  .sk-tech-{{ section.id }} .sk-tech__arrow{ display:flex; justify-content:center; margin-top: 8px; }
+  /* Larger image blocks */
+  .sk-tech-{{ section.id }} .sk-tech__img {
+    flex: 0 0 auto;
+    max-width: 460px; /* was 400px → now larger */
+  }
 
-  /* Mobile order controls */
-  @media (max-width:700px){
-    .sk-tech-{{ section.id }} .sk-tech__row{ gap:24px; }
-    .sk-tech-{{ section.id }} .sk-tech__img{ max-width: 100%; }
-    .sk-tech-{{ section.id }} .sk-tech__content :where(p){ font-size:12px; line-height:20px; margin-bottom:10px; }
+  .sk-tech-{{ section.id }} .sk-tech__img img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+
+  /* Center content */
+  .sk-tech-{{ section.id }} .sk-tech__content {
+    flex: 1;
+    min-width: 300px;
+    max-width: {{ section.settings.content_max_width }}px;
+  }
+
+  .sk-tech-{{ section.id }} .sk-tech__content :where(p) {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #30273E;
+    margin: 0 0 16px 0;
+  }
+
+  .sk-tech-{{ section.id }} .sk-tech__content :where(h3, h4) {
+    font-size: 18px;
+    font-weight: 600;
+    color: #30273E;
+    margin: 0 0 12px 0;
+  }
+
+  /* Center arrow - hidden on mobile */
+  .sk-tech-{{ section.id }} .sk-tech__arrow {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  @media (max-width: 700px) {
+    .sk-tech-{{ section.id }} .sk-tech__arrow {
+      display: none; /* 🔥 hides arrow on mobile */
+    }
+
+    .sk-tech-{{ section.id }} .sk-tech__row {
+      gap: 20px;
+    }
+
+    /* Make images take more space on mobile */
+    .sk-tech-{{ section.id }} .sk-tech__img {
+      max-width: 90%; /* stretch wider */
+      flex: 0 0 90%;
+    }
+
+    .sk-tech-{{ section.id }} .sk-tech__content :where(p) {
+      font-size: 14px;
+      line-height: 22px;
+      margin-bottom: 12px;
+    }
+
     {% if section.settings.mobile_stack_order == 'image-first' %}
-      .sk-tech-{{ section.id }} .sk-tech__left{ order:1; }
-      .sk-tech-{{ section.id }} .sk-tech__center{ order:2; }
-      .sk-tech-{{ section.id }} .sk-tech__right{ order:3; }
+      .sk-tech-{{ section.id }} .sk-tech__left { order: 1; }
+      .sk-tech-{{ section.id }} .sk-tech__center { order: 2; }
+      .sk-tech-{{ section.id }} .sk-tech__right { order: 3; }
     {% elsif section.settings.mobile_stack_order == 'content-first' %}
-      .sk-tech-{{ section.id }} .sk-tech__center{ order:1; }
-      .sk-tech-{{ section.id }} .sk-tech__left{ order:2; }
-      .sk-tech-{{ section.id }} .sk-tech__right{ order:3; }
+      .sk-tech-{{ section.id }} .sk-tech__center { order: 1; }
+      .sk-tech-{{ section.id }} .sk-tech__left { order: 2; }
+      .sk-tech-{{ section.id }} .sk-tech__right { order: 3; }
     {% else %}
-      .sk-tech-{{ section.id }} .sk-tech__right{ order:1; }
-      .sk-tech-{{ section.id }} .sk-tech__center{ order:2; }
-      .sk-tech-{{ section.id }} .sk-tech__left{ order:3; }
+      .sk-tech-{{ section.id }} .sk-tech__right { order: 1; }
+      .sk-tech-{{ section.id }} .sk-tech__center { order: 2; }
+      .sk-tech-{{ section.id }} .sk-tech__left { order: 3; }
     {% endif %}
   }
 </style>
@@ -67,14 +126,16 @@
           {%- assign li = section.settings.left_image -%}
           <img
             srcset="
-              {{ li | image_url: width: 400 }} 400w,
-              {{ li | image_url: width: 600 }} 600w,
-              {{ li | image_url: width: 800 }} 800w
+              {{ li | image_url: width: 500 }} 500w,
+              {{ li | image_url: width: 800 }} 800w,
+              {{ li | image_url: width: 1000 }} 1000w
             "
-            sizes="(max-width: 700px) 100vw, 400px"
-            src="{{ li | image_url: width: 600 }}"
+            sizes="(max-width: 700px) 90vw, 460px"
+            src="{{ li | image_url: width: 800 }}"
             alt="{{ li.alt | default: section.settings.heading | escape }}"
-            loading="lazy" width="400" height="400">
+            loading="lazy"
+            width="460"
+            height="auto">
         </div>
       {% endif %}
 
@@ -94,14 +155,16 @@
           {%- assign ri = section.settings.right_image -%}
           <img
             srcset="
-              {{ ri | image_url: width: 400 }} 400w,
-              {{ ri | image_url: width: 600 }} 600w,
-              {{ ri | image_url: width: 800 }} 800w
+              {{ ri | image_url: width: 500 }} 500w,
+              {{ ri | image_url: width: 800 }} 800w,
+              {{ ri | image_url: width: 1000 }} 1000w
             "
-            sizes="(max-width: 700px) 100vw, 400px"
-            src="{{ ri | image_url: width: 600 }}"
+            sizes="(max-width: 700px) 90vw, 460px"
+            src="{{ ri | image_url: width: 800 }}"
             alt="{{ ri.alt | default: section.settings.heading | escape }}"
-            loading="lazy" width="400" height="400">
+            loading="lazy"
+            width="460"
+            height="auto">
         </div>
       {% endif %}
     </div>
@@ -118,8 +181,7 @@
     { "type": "image_picker", "id": "left_image", "label": "Left image" },
     { "type": "html", "id": "content_html", "label": "Center content", "default": "<p>Vår LED-teknologi kombinerer bølgelengder som støttes av forskning for å forbedre hudkvalitet, redusere inflammasjon og støtte hudens egen reparasjon.</p>" },
     { "type": "image_picker", "id": "right_image", "label": "Right image" },
-
-    { "type": "checkbox", "id": "show_arrow", "label": "Show center arrow", "default": true },
+    { "type": "checkbox", "id": "show_arrow", "label": "Show center arrow (hidden on mobile)", "default": true },
 
     { "type": "header", "content": "Layout & Style" },
     { "type": "color", "id": "bg_color", "label": "Background", "default": "#FFF9F5" },
