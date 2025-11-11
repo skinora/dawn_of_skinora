@@ -30,16 +30,16 @@
   /* Layout */
   .sk-tech-{{ section.id }} .sk-tech__row {
     display: flex;
-    gap: 30px;
+    gap: 48px;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
   }
 
-  /* Larger image blocks */
+  /* Bigger image blocks */
   .sk-tech-{{ section.id }} .sk-tech__img {
-    flex: 0 0 auto;
-    max-width: 460px; /* was 400px → now larger */
+    flex: 1 1 560px;
+    max-width: 640px;
   }
 
   .sk-tech-{{ section.id }} .sk-tech__img img {
@@ -51,8 +51,8 @@
 
   /* Center content */
   .sk-tech-{{ section.id }} .sk-tech__content {
-    flex: 1;
-    min-width: 300px;
+    flex: 0 1 {{ section.settings.content_max_width }}px;
+    min-width: 320px;
     max-width: {{ section.settings.content_max_width }}px;
   }
 
@@ -70,7 +70,7 @@
     margin: 0 0 12px 0;
   }
 
-  /* Center arrow - hidden on mobile */
+  /* Arrow (hidden on mobile) */
   .sk-tech-{{ section.id }} .sk-tech__arrow {
     display: flex;
     justify-content: center;
@@ -78,18 +78,13 @@
   }
 
   @media (max-width: 700px) {
-    .sk-tech-{{ section.id }} .sk-tech__arrow {
-      display: none; /* 🔥 hides arrow on mobile */
-    }
+    .sk-tech-{{ section.id }} .sk-tech__arrow { display: none; }
 
-    .sk-tech-{{ section.id }} .sk-tech__row {
-      gap: 20px;
-    }
+    .sk-tech-{{ section.id }} .sk-tech__row { gap: 20px; }
 
-    /* Make images take more space on mobile */
     .sk-tech-{{ section.id }} .sk-tech__img {
-      max-width: 90%; /* stretch wider */
-      flex: 0 0 90%;
+      max-width: 95vw;
+      flex: 1 1 95vw;
     }
 
     .sk-tech-{{ section.id }} .sk-tech__content :where(p) {
@@ -115,7 +110,7 @@
 </style>
 
 <section class="sk-tech-{{ section.id }}">
-  <div class="container">
+  <div class="page-width"><!-- 🔥 Wider parent container -->
     {% if section.settings.heading != blank %}
       <h2 class="sk-tech__heading">{{ section.settings.heading | escape }}</h2>
     {% endif %}
@@ -126,16 +121,14 @@
           {%- assign li = section.settings.left_image -%}
           <img
             srcset="
-              {{ li | image_url: width: 500 }} 500w,
-              {{ li | image_url: width: 800 }} 800w,
-              {{ li | image_url: width: 1000 }} 1000w
+              {{ li | image_url: width: 700 }} 700w,
+              {{ li | image_url: width: 900 }} 900w,
+              {{ li | image_url: width: 1200 }} 1200w
             "
-            sizes="(max-width: 700px) 90vw, 460px"
-            src="{{ li | image_url: width: 800 }}"
+            sizes="(min-width: 1200px) 600px, (min-width: 701px) 45vw, 95vw"
+            src="{{ li | image_url: width: 900 }}"
             alt="{{ li.alt | default: section.settings.heading | escape }}"
-            loading="lazy"
-            width="460"
-            height="auto">
+            loading="lazy">
         </div>
       {% endif %}
 
@@ -155,16 +148,14 @@
           {%- assign ri = section.settings.right_image -%}
           <img
             srcset="
-              {{ ri | image_url: width: 500 }} 500w,
-              {{ ri | image_url: width: 800 }} 800w,
-              {{ ri | image_url: width: 1000 }} 1000w
+              {{ ri | image_url: width: 700 }} 700w,
+              {{ ri | image_url: width: 900 }} 900w,
+              {{ ri | image_url: width: 1200 }} 1200w
             "
-            sizes="(max-width: 700px) 90vw, 460px"
-            src="{{ ri | image_url: width: 800 }}"
+            sizes="(min-width: 1200px) 600px, (min-width: 701px) 45vw, 95vw"
+            src="{{ ri | image_url: width: 900 }}"
             alt="{{ ri.alt | default: section.settings.heading | escape }}"
-            loading="lazy"
-            width="460"
-            height="auto">
+            loading="lazy">
         </div>
       {% endif %}
     </div>
@@ -179,13 +170,13 @@
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Teknologien bak Skinora" },
     { "type": "image_picker", "id": "left_image", "label": "Left image" },
-    { "type": "html", "id": "content_html", "label": "Center content", "default": "<p>Vår LED-teknologi kombinerer bølgelengder som støttes av forskning for å forbedre hudkvalitet, redusere inflammasjon og støtte hudens egen reparasjon.</p>" },
+    { "type": "html", "id": "content_html", "label": "Center content", "default": "<p>Klinisk LED-teknologi som aktiverer hudens egen fornyelse – for fastere, klarere og sterkere hud.</p>" },
     { "type": "image_picker", "id": "right_image", "label": "Right image" },
     { "type": "checkbox", "id": "show_arrow", "label": "Show center arrow (hidden on mobile)", "default": true },
 
     { "type": "header", "content": "Layout & Style" },
     { "type": "color", "id": "bg_color", "label": "Background", "default": "#FFF9F5" },
-    { "type": "range", "id": "content_max_width", "label": "Center content max width", "min": 360, "max": 720, "step": 20, "default": 500 },
+    { "type": "range", "id": "content_max_width", "label": "Center content max width", "min": 360, "max": 720, "step": 20, "default": 520 },
     { "type": "select", "id": "mobile_stack_order", "label": "Mobile stack order", "default": "image-first",
       "options": [
         { "value": "image-first", "label": "Left image → Content → Right image" },
