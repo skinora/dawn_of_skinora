@@ -2,16 +2,24 @@
 {{ 'section-sk-guarantee-banner.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%}
-Scoped styles for the small “pill” badges. Move to your CSS file later if you prefer.
+Bigger “pill” badges (desktop before price, mobile under hero).
 {%- endcomment -%}
 <style>
-  .sk-radiance-pills{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0 1rem}
+  .sk-radiance-pills{
+    display:flex;
+    gap:.6rem .6rem;
+    flex-wrap:wrap;
+    align-items:center;
+    margin:.75rem 0 1.25rem;
+  }
   .sk-radiance-pills .sk-pill{
     background:var(--color-ghost-2,#f8f9fa);
-    padding:.5rem .75rem;
-    border-radius:999px;
-    font-size:.875rem;
-    line-height:1;
+    border:1px solid var(--color-border-2,#e0e0e0);
+    border-radius:9999px;
+    padding:.65rem 1rem;               /* bigger */
+    font-size:1rem;                    /* bigger */
+    line-height:1.1;
+    font-weight:600;                   /* bolder */
     white-space:nowrap;
   }
   /* visibility/placement */
