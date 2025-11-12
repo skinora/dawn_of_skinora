@@ -2,8 +2,7 @@
 {{ 'section-sk-guarantee-banner.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%}
-Minimal, scoped styles for the pills and responsive show/hide.
-You can move these into section-sk-radiance-product.css later.
+Scoped styles for the small “pill” badges. Move to your CSS file later if you prefer.
 {%- endcomment -%}
 <style>
   .sk-radiance-pills{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0 1rem}
@@ -15,7 +14,7 @@ You can move these into section-sk-radiance-product.css later.
     line-height:1;
     white-space:nowrap;
   }
-  /* placement visibility */
+  /* visibility/placement */
   .sk-radiance-pills--desktop{display:none}
   @media (min-width:750px){
     .sk-radiance-pills--mobile{display:none}
@@ -35,7 +34,11 @@ You can move these into section-sk-radiance-product.css later.
   {%- render 'sk-radiance-product-assets', section: section, product: product -%}
 
   {%- assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' -%}
-  {%- assign pills_block = section.blocks | where: 'type', 'benefit_pills' | first -%}
+  {%- assign pill_1 = section.settings.pill_1 -%}
+  {%- assign pill_2 = section.settings.pill_2 -%}
+  {%- assign pill_3 = section.settings.pill_3 -%}
+  {%- assign has_pills = false -%}
+  {%- if pill_1 != blank or pill_2 != blank or pill_3 != blank -%}{%- assign has_pills = true -%}{%- endif -%}
 
   <div class="page-width">
     <div class="sk-radiance-product sk-radiance-product--{{ section.settings.media_size }} sk-radiance-product--{{ section.settings.media_position }} sk-radiance-product--{{ section.settings.gallery_layout }} sk-radiance-product--mobile-{{ section.settings.mobile_thumbnails }} {% if product.media.size > 0 %}sk-radiance-product--with-media{% else %}sk-radiance-product--no-media{% endif %}">
@@ -43,12 +46,12 @@ You can move these into section-sk-radiance-product.css later.
       <div class="sk-radiance-product__media-wrapper">
         {% render 'sk-radiance-product-media-gallery', variant_images: variant_images %}
 
-        {%- if pills_block -%}
-          <!-- MOBILE pills under hero -->
+        {%- if has_pills -%}
+          <!-- MOBILE: pills under hero -->
           <div class="sk-radiance-pills sk-radiance-pills--mobile" role="list" aria-label="Product highlights">
-            {%- if pills_block.settings.pill_1 != blank -%}<span class="sk-pill" role="listitem">{{ pills_block.settings.pill_1 }}</span>{%- endif -%}
-            {%- if pills_block.settings.pill_2 != blank -%}<span class="sk-pill" role="listitem">{{ pills_block.settings.pill_2 }}</span>{%- endif -%}
-            {%- if pills_block.settings.pill_3 != blank -%}<span class="sk-pill" role="listitem">{{ pills_block.settings.pill_3 }}</span>{%- endif -%}
+            {%- if pill_1 != blank -%}<span class="sk-pill" role="listitem">{{ pill_1 }}</span>{%- endif -%}
+            {%- if pill_2 != blank -%}<span class="sk-pill" role="listitem">{{ pill_2 }}</span>{%- endif -%}
+            {%- if pill_3 != blank -%}<span class="sk-pill" role="listitem">{{ pill_3 }}</span>{%- endif -%}
           </div>
         {%- endif -%}
 
@@ -90,12 +93,12 @@ You can move these into section-sk-radiance-product.css later.
                 {%- render 'sk-radiance-rating', product: product, block: block -%}
 
               {%- when 'price' -%}
-                {%- if pills_block -%}
-                  <!-- DESKTOP pills just before price -->
+                {%- if has_pills -%}
+                  <!-- DESKTOP/TABLET: pills before price -->
                   <div class="sk-radiance-pills sk-radiance-pills--desktop" role="list" aria-label="Product highlights">
-                    {%- if pills_block.settings.pill_1 != blank -%}<span class="sk-pill" role="listitem">{{ pills_block.settings.pill_1 }}</span>{%- endif -%}
-                    {%- if pills_block.settings.pill_2 != blank -%}<span class="sk-pill" role="listitem">{{ pills_block.settings.pill_2 }}</span>{%- endif -%}
-                    {%- if pills_block.settings.pill_3 != blank -%}<span class="sk-pill" role="listitem">{{ pills_block.settings.pill_3 }}</span>{%- endif -%}
+                    {%- if pill_1 != blank -%}<span class="sk-pill" role="listitem">{{ pill_1 }}</span>{%- endif -%}
+                    {%- if pill_2 != blank -%}<span class="sk-pill" role="listitem">{{ pill_2 }}</span>{%- endif -%}
+                    {%- if pill_3 != blank -%}<span class="sk-pill" role="listitem">{{ pill_3 }}</span>{%- endif -%}
                   </div>
                 {%- endif -%}
 
@@ -265,24 +268,21 @@ You can move these into section-sk-radiance-product.css later.
         { "type": "paragraph", "content": "Metafield: 'custom.promotion_logos' (List of files)" },
         { "type": "paragraph", "content": "Add multiple logo images to the list, and they will automatically scroll across the screen with animation." }
       ]
-    },
-    {
-      "type": "benefit_pills",
-      "name": "Benefit pills",
-      "limit": 1,
-      "settings": [
-        { "type": "text", "id": "pill_1", "label": "Pill 1", "default": "3 Highly Precise Wavelengths" },
-        { "type": "text", "id": "pill_2", "label": "Pill 2", "default": "Best Fit For Every Face" },
-        { "type": "text", "id": "pill_3", "label": "Pill 3", "default": "Guaranteed Quality, Safety & Results" }
-      ]
     }
   ],
   "settings": [
     { "type": "checkbox", "id": "enable_sticky_info", "default": true, "label": "Enable Sticky Info" },
+
+    { "type": "header", "content": "Benefit pills" },
+    { "type": "text", "id": "pill_1", "label": "Pill 1", "default": "3 Highly Precise Wavelengths" },
+    { "type": "text", "id": "pill_2", "label": "Pill 2", "default": "Best Fit For Every Face" },
+    { "type": "text", "id": "pill_3", "label": "Pill 3", "default": "Guaranteed Quality, Safety & Results" },
+
     { "type": "header", "content": "Guarantee Banner Below Media Gallery" },
     { "type": "checkbox", "id": "show_guarantee_below_media", "default": false, "label": "Show Guarantee Banner Below Media Gallery", "info": "Requires product to have 'custom.guarantee_banner_content' metafield" },
     { "type": "text", "id": "guarantee_button_text", "label": "Guarantee Button Text", "default": "LES MER" },
     { "type": "url", "id": "guarantee_button_link", "label": "Guarantee Button Link" },
+
     { "type": "color_scheme", "id": "color_scheme", "label": "Color Scheme", "default": "scheme-1" },
     { "type": "select", "id": "media_size",
       "options": [
