@@ -190,6 +190,8 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   .page-width--narrow {
     max-width: min(var(--page-width), 72.6rem);
     padding: 0;
+    margin-inline: auto;
+    padding-inline: var(--sk-page-gutter);
   }
 
   .page-width-desktop {
