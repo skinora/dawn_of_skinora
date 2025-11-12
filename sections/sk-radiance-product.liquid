@@ -76,13 +76,6 @@
                   product_form_id: product_form_id
                 %}
 
-              {%- when 'buy_buttons' -%}
-                {%- render 'sk-radiance-buy-buttons',
-                  product: product,
-                  block: block,
-                  product_form_id: product_form_id
-                -%}
-
               {%- when 'product_features' -%}
                 {%- render 'sk-radiance-features', product: product, block: block -%}
 
@@ -133,15 +126,19 @@
   "tag": "section",
   "class": "section",
   "blocks": [
-    { "type": "text", "name": "Text",
+    {
+      "type": "text",
+      "name": "Text",
       "settings": [
         { "type": "inline_richtext", "id": "text", "default": "Text content", "label": "Text" },
-        { "type": "select", "id": "text_style", "options": [
+        { "type": "select", "id": "text_style",
+          "options": [
             { "value": "body", "label": "Body" },
             { "value": "subtitle", "label": "Subtitle" },
             { "value": "uppercase", "label": "Uppercase" }
           ],
-          "default": "body", "label": "Text Style"
+          "default": "body",
+          "label": "Text Style"
         }
       ]
     },
@@ -166,17 +163,9 @@
             { "value": "dropdown", "label": "Dropdown" },
             { "value": "button", "label": "Button" }
           ],
-          "default": "button", "label": "Picker Type"
+          "default": "button",
+          "label": "Picker Type"
         }
-      ]
-    },
-    {
-      "type": "buy_buttons",
-      "name": "Buy Buttons",
-      "limit": 1,
-      "settings": [
-        { "type": "checkbox", "id": "show_dynamic_checkout", "default": true, "label": "Show Dynamic Checkout" },
-        { "type": "checkbox", "id": "show_gift_card_recipient", "default": true, "label": "Show Gift Card Recipient" }
       ]
     },
     {
