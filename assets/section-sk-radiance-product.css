@@ -390,8 +390,17 @@
   position: relative;
   overflow: hidden;
   height: 55px;
-  width: 250px;
+  width: 100%;
+  max-width: 420px;  
 }
+
+@media (min-width: 990px) {
+  .sk-radiance-buy-buttons__button {
+    width: auto;
+    min-width: 240px;
+  }
+}
+
 .sk-radiance-buy-buttons__button:hover {
   background: rgba(var(--color-brand-rgb), 0.59);
 }
@@ -774,4 +783,10 @@
 
 .sk-radiance-sticky-bottom-bar--portal.visible {
   transform: translateY(0) !important;
+}
+
+.sk-radiance-product-form,
+.sk-radiance-buy-buttons__wrapper {
+  width: 100%;
+  gap: var(--sk-gap-sm);
 }
