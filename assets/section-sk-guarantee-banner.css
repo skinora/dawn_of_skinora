@@ -1,87 +1,233 @@
+/* ========================================================================== *
+   SK Guarantee Banner (external CSS source of truth)
+   Targets markup from the SK Guarantee Banner section
+   Classes covered:
+   - .sk-radiance-guarantee-banner (+ __content, __button)
+   - .sk-guarantee and its BEM elements (when ~ is transformed to a list)
+ * ========================================================================== */
+
+/* ---- Base wrapper ------------------------------------------------------- */
 .sk-radiance-guarantee-banner {
   display: flex;
-
-  justify-content: space-between;
-  padding: 24px 32px;
-  background-color: var(--color-cream, #fffaf8);
-  border-radius: 8px;
-  margin-top: 24px;
   flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 24px 28px;
+  margin-top: 24px;
+
+  background: var(--sk-gb-bg, #fffaf8);      /* cream */
+  border: 1px solid var(--sk-gb-border, #efe7ff);
+  border-radius: 12px;
 }
 
+/* If your theme uses color schemes, this plays nicer on dark/inverse */
+.color-inverse .sk-radiance-guarantee-banner {
+  --sk-gb-bg: #2b2436;
+  --sk-gb-border: #3b324a;
+}
+
+/* ---- Content area (free rich text) ------------------------------------- */
 .sk-radiance-guarantee-banner__content {
   flex: 1;
 }
 
+/* Headings inside the banner */
 .sk-radiance-guarantee-banner__content h1,
 .sk-radiance-guarantee-banner__content h2,
 .sk-radiance-guarantee-banner__content h3,
 .sk-radiance-guarantee-banner__content h4,
 .sk-radiance-guarantee-banner__content h5,
 .sk-radiance-guarantee-banner__content h6 {
-  font-size: 30px;
-  font-weight: 600;
-  line-height: 1.4;
-  margin: 0 0 0px 0;
-  color: var(--color-black, #000000);
+  margin: 0 0 6px 0;
+  color: var(--sk-gb-heading, #30273E);
+  font-weight: 700;
+  line-height: 1.35;
+  font-size: clamp(20px, 2.2vw, 28px);
 }
 
+/* Paragraphs inside the banner */
 .sk-radiance-guarantee-banner__content p {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.6;
   margin: 0;
-  color: var(--color-neutral-5, #666666);
+  color: var(--sk-gb-text, #4F4F4F);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
+/* Lists inside the banner (free text mode) */
+.sk-radiance-guarantee-banner__content ul,
+.sk-radiance-guarantee-banner__content ol {
+  margin: 10px 0 0 1.1em;
+  padding: 0;
+  color: var(--sk-gb-text, #4F4F4F);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ---- CTA button --------------------------------------------------------- */
 .sk-radiance-guarantee-banner__button {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 0;
-  background: transparent;
-  border: none;
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--color-black, #000000);
-  text-decoration: underline;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: opacity 0.2s ease;
-  margin-top: 2rem;
+
+  width: fit-content;
+  margin-top: 10px;
+
+  padding: 10px 16px;
+  border-radius: 10px;
+
+  background: var(--sk-gb-cta-bg, #4B0082);      /* brand indigo */
+  color: var(--sk-gb-cta-fg, #ffffff);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+
+  transition: transform .15s ease, opacity .15s ease, box-shadow .15s ease;
+  box-shadow: 0 4px 14px rgba(75, 0, 130, 0.12);
 }
 
 .sk-radiance-guarantee-banner__button:hover {
-  opacity: 0.7;
+  transform: translateY(-1px);
+  opacity: .95;
+}
+
+.sk-radiance-guarantee-banner__button:focus-visible {
+  outline: 2px solid #a78bfa; /* accessible focus */
+  outline-offset: 2px;
 }
 
 .sk-radiance-guarantee-banner__button svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
 }
 
+/* ========================================================================== *
+   Structured “Guarantee” layout (when ~ is converted to list items)
+   Classes are created by the Liquid transform in the section.
+ * ========================================================================== */
+
 .sk-guarantee {
-    background: #F5F3FA;
-    border-radius: 12px;
+  background: var(--sk-gb-struct-bg, #F5F3FA);
+  border: 1px solid var(--sk-gb-struct-border, #E7E1F2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 8px;
+}
+
+.sk-guarantee__inner {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Heading + subheading */
+.sk-guarantee__heading {
+  margin: 0 0 6px 0;
+  color: var(--sk-gb-heading, #30273E);
+  font-weight: 800;
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.35;
+}
+
+.sk-guarantee__sub {
+  margin: 0 0 12px 0;
+  color: var(--sk-gb-text, #4F4F4F);
+  font-size: 14px;
+}
+
+/* Items (checklist) */
+.sk-guarantee__list {
+  display: grid;
+  gap: 8px;
+}
+
+.sk-guarantee__item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.sk-guarantee__icon {
+  color: var(--sk-gb-accent, #4B0082);
+  line-height: 1;
+  margin-top: 2px; /* align icon with first text line */
+  flex: 0 0 auto;
+}
+
+.sk-guarantee__item-text,
+.sk-guarantee__paragraph {
+  color: var(--sk-gb-text-strong, #333333);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* CTA area (if used within structured layout) */
+.sk-guarantee__cta {
+  flex: 0 0 auto;
+}
+
+.sk-guarantee__button {
+  display: inline-block;
+  padding: 10px 16px;
+  background: var(--sk-gb-cta-bg, #4B0082);
+  color: var(--sk-gb-cta-fg, #fff);
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 14px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(75, 0, 130, 0.12);
+  transition: transform .15s ease, opacity .15s ease;
+}
+
+.sk-guarantee__button:hover {
+  transform: translateY(-1px);
+  opacity: .95;
+}
+
+/* ========================================================================== *
+   Responsive tweaks
+ * ========================================================================== */
+
+@media (max-width: 900px) {
+  .sk-radiance-guarantee-banner {
     padding: 20px;
-    margin-top: 16px;
   }
+}
+
+@media (max-width: 700px) {
   .sk-guarantee__inner {
-    display: flex; gap: 20px; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
   }
-  .sk-guarantee__heading { margin: 0 0 6px 0; font-weight: 700; color: #30273E; font-size: 20px; }
-  .sk-guarantee__sub { margin: 0 0 12px 0; color: #4F4F4F; font-size: 14px; }
-  .sk-guarantee__list { display: grid; gap: 8px; }
-  .sk-guarantee__item { display: flex; gap: 10px; align-items: flex-start; }
-  .sk-guarantee__icon { color: #4B0082; line-height: 1; margin-top: 2px; }
-  .sk-guarantee__item-text { color: #333; font-size: 14px; line-height: 1.6; }
-  .sk-guarantee__paragraph { color: #333; font-size: 14px; line-height: 1.6; margin: 0; }
-  .sk-guarantee__cta { flex: 0 0 auto; }
+  .sk-guarantee__cta {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 435px) {
+  .sk-radiance-guarantee-banner {
+    gap: 12px;
+    padding: 16px 14px;
+    border-radius: 10px;
+  }
+
+  .sk-radiance-guarantee-banner__content h1,
+  .sk-radiance-guarantee-banner__content h2,
+  .sk-radiance-guarantee-banner__content h3,
+  .sk-radiance-guarantee-banner__content h4,
+  .sk-radiance-guarantee-banner__content h5,
+  .sk-radiance-guarantee-banner__content h6 {
+    font-size: 20px;
+  }
+
+  .sk-radiance-guarantee-banner__button,
   .sk-guarantee__button {
-    display: inline-block; padding: 10px 16px; background: #4B0082; color: #fff; border-radius: 8px; font-weight: 700;
+    padding: 9px 14px;
+    border-radius: 9px;
+    font-size: 13px;
   }
-  @media (max-width: 700px){
-    .sk-guarantee__inner { flex-direction: column; align-items: stretch; }
-    .sk-guarantee__cta { margin-top: 8px; }
-  }
+}
