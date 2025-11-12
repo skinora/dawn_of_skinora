@@ -46,6 +46,12 @@
   --focused-base-outline-offset: 0.3rem;
   --focused-base-box-shadow: 0 0 0 0.3rem rgb(var(--color-background)),
     0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.45);
+  --sk-page-gutter: 24px;
+  --sk-gap-sm: 16px;
+  --sk-gap-md: 24px;
+  --sk-gap-lg: 48px;
+  --sk-media-max: 620px;   /* cap the gallery width */
+  --sk-info-min: 420px;
 }
 
 .product-card-wrapper .card,
