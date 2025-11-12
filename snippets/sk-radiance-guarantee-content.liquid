@@ -1,0 +1,52 @@
+{%- comment -%}
+  Sub-snippet for rendering guarantee banner body.
+  Receives: lines (array), has_tilde (bool), button_text, button_link
+{%- endcomment -%}
+
+<div class="sk-guarantee">
+  <div class="sk-guarantee__inner">
+    <div class="sk-guarantee__copy">
+      {%- for l in lines -%}
+        {%- assign t = l | strip -%}
+        {%- if t != '' -%}
+          {%- assign first_char = t | slice: 0 -%}
+          {%- if first_char != '~' -%}
+            <p class="sk-guarantee__paragraph">{{ t }}</p>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if has_tilde -%}
+        <div class="sk-guarantee__list">
+          {%- for l in lines -%}
+            {%- assign t = l | strip -%}
+            {%- if t != '' -%}
+              {%- assign first_char = t | slice: 0 -%}
+              {%- if first_char == '~' -%}
+                <div class="sk-guarantee__item">
+                  <span class="sk-guarantee__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" role="img" focusable="false">
+                      <path d="M9 16.17 5.12 12.3 3.7 13.71l5 5 11-11-1.41-1.41z"/>
+                    </svg>
+                  </span>
+                  <span class="sk-guarantee__item-text">{{ t | remove_first: '~' | strip }}</span>
+                </div>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if button_text != blank and button_link != blank -%}
+      <div class="sk-guarantee__cta">
+        <a href="{{ button_link }}" class="sk-radiance-guarantee-banner__button">
+          {{ button_text }}
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>

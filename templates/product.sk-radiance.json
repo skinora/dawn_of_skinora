@@ -123,17 +123,6 @@
         "padding_bottom": 12
       }
     },
-    "sk_guarantee_banner_wzpk4H": {
-      "type": "sk-guarantee-banner",
-      "name": "SK Guarantee Banner",
-      "settings": {
-        "button_text": "LES MER",
-        "button_link": "#",
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "sk_product_promotion_logos_r9MTbH": {
       "type": "sk-product-promotion-logos",
       "name": "SK Product Promotion Logos",
@@ -247,6 +236,11 @@
       "name": "SK Product Why Choose",
       "settings": {}
     },
+    "sk_product_how_to_use_zaEacQ": {
+      "type": "sk-product-how-to-use",
+      "name": "SK Product How to Use",
+      "settings": {}
+    },
     "sk_product_technology_iXTDFn": {
       "type": "sk-product-technology",
       "name": "SK Product Technology",
@@ -289,13 +283,13 @@
   },
   "order": [
     "main",
-    "sk_guarantee_banner_wzpk4H",
     "sk_product_promotion_logos_r9MTbH",
     "sk_product_faq_accordion_EPRXLb",
     "sk_before_after_mBrdqd",
     "sk_product_radiance_TCYaUL",
     "sk_product_how_to_use_dbAJA9",
     "sk_product_why_choose_pwJz83",
+    "sk_product_how_to_use_zaEacQ",
     "sk_product_technology_iXTDFn",
     "sk_product_specifications_cJY9VW",
     "1759515838eeeda580"
