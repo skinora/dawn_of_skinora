@@ -36,6 +36,7 @@
   --color-warning-bg: #fff3cd;
   /* Exact-match tokens for remaining literals found in CSS/ SVGs */
   --color-border-2: #e0e0e0; /* used by variant cards */
+  --color-ghost-1: var(--color-bg-light);
   --color-ghost-3: #f8f8f8; /* slight variant used in card thumbnails */
   --color-neutral-5: #999999; /* used for muted price */
   --color-footer-accent: #f5e8da; /* used in footer SVG fills */
