@@ -60,3 +60,28 @@
   height: 20px;
   flex-shrink: 0;
 }
+
+.sk-guarantee {
+    background: #F5F3FA;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 16px;
+  }
+  .sk-guarantee__inner {
+    display: flex; gap: 20px; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  }
+  .sk-guarantee__heading { margin: 0 0 6px 0; font-weight: 700; color: #30273E; font-size: 20px; }
+  .sk-guarantee__sub { margin: 0 0 12px 0; color: #4F4F4F; font-size: 14px; }
+  .sk-guarantee__list { display: grid; gap: 8px; }
+  .sk-guarantee__item { display: flex; gap: 10px; align-items: flex-start; }
+  .sk-guarantee__icon { color: #4B0082; line-height: 1; margin-top: 2px; }
+  .sk-guarantee__item-text { color: #333; font-size: 14px; line-height: 1.6; }
+  .sk-guarantee__paragraph { color: #333; font-size: 14px; line-height: 1.6; margin: 0; }
+  .sk-guarantee__cta { flex: 0 0 auto; }
+  .sk-guarantee__button {
+    display: inline-block; padding: 10px 16px; background: #4B0082; color: #fff; border-radius: 8px; font-weight: 700;
+  }
+  @media (max-width: 700px){
+    .sk-guarantee__inner { flex-direction: column; align-items: stretch; }
+    .sk-guarantee__cta { margin-top: 8px; }
+  }
