@@ -1,15 +1,33 @@
 /* SK Radiance Product Section Styles */
 .sk-radiance-product {
-  display: flex;
-  color: var(--color-neutral-5, #666);
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr;         /* mobile: single column */
+  gap: var(--sk-gap-md);
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 750px) {
+  .sk-radiance-product {
+    grid-template-columns: minmax(0, 1fr);  /* still single on small tablets */
+    gap: var(--sk-gap-lg);
+  }
+}
+
+@media (min-width: 990px) {
+  .sk-radiance-product {
+    grid-template-columns: minmax(0, var(--sk-media-max)) minmax(var(--sk-info-min), 1fr);
+    align-items: start;
+    gap: var(--sk-gap-lg);
+  }
 }
 
 /* Product Media Gallery */
 .sk-radiance-product__media-wrapper {
   color: var(--color-neutral-3, #333);
   flex: 1;
+  max-width: var(--sk-media-max);
+  width: 100%;
+  margin: 0 auto;
 }
 
 .sk-radiance-product__media {
@@ -152,6 +170,14 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  padding-left: 0;
+  gap: var(--sk-gap-md);
+}
+
+@media (min-width: 990px) {
+  .sk-radiance-product__info-wrapper {
+    padding-left: 8px; /* tiny nudge so columns don't touch */
+  }
 }
 
 .sk-radiance-product__text {
@@ -169,11 +195,12 @@
 }
 
 .sk-radiance-product__title h1 {
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 600;
   margin: 0;
   color: var(--color-dark);
-  margin-bottom: 3px;
+  line-height: 1.2;
+  margin-bottom: 8px;
 }
 
 /* Rating */
@@ -213,10 +240,7 @@
 }
 
 .sk-radiance-price__wrapper {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .sk-radiance-price__sale {
@@ -236,13 +260,12 @@
   color: var(--color-danger-weak);
   text-decoration: line-through;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .sk-radiance-price-item--sale {
   color: var(--color-black);
-  font-weight: 700;
-  font-size: 26px;
+  font-weight: 24px;
 }
 
 .sk-radiance-sticky-bottom-bar .sk-radiance-price-item--sale {
