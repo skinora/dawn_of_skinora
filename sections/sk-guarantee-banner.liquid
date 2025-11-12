@@ -5,7 +5,6 @@
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
-
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
@@ -20,79 +19,83 @@
       <div class="sk-radiance-guarantee-banner">
         <div class="page-width">
           <div class="sk-radiance-guarantee-banner__content">
-            {%- assign raw_content = product.metafields.custom.guarantee_banner_content.value | strip | strip_html -%}
+            {%- comment -%}
+              Normalize rich text to lines:
+              - Convert </p> and <br> variants to newlines
+              - Strip remaining tags
+              - Split into lines
+            {%- endcomment -%}
+            {%- assign raw_html = product.metafields.custom.guarantee_banner_content.value | default: '' -%}
+            {%- assign normalized = raw_html
+              | replace: '</p>', '\n'
+              | replace: '<br>', '\n'
+              | replace: '<br/>', '\n'
+              | replace: '<br />', '\n'
+              | strip_html
+            -%}
+            {%- assign lines_html = normalized | newline_to_br -%}
+            {%- assign lines = lines_html | split: '<br />' -%}
 
-            {%- if raw_content contains '~' -%}
-              {%- assign lines = raw_content | newline_to_br | split: '<br />' -%}
+            {%- assign has_tilde = false -%}
+            {%- for l in lines -%}
+              {%- assign t = l | strip -%}
+              {%- if t != '' -%}
+                {%- assign first_char = t | slice: 0 -%}
+                {%- if first_char == '~' -%}
+                  {%- assign has_tilde = true -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
 
-              <div class="sk-guarantee">
-                <div class="sk-guarantee__inner">
-                  <div class="sk-guarantee__copy">
-                    {%- assign has_list = false -%}
-                    {%- for l in lines -%}
-                      {%- assign t = l | strip -%}
-                      {%- if t != '' -%}
-                        {%- assign first_char = t | slice: 0, 1 -%}
-                        {%- if first_char == '~' -%}
-                          {%- assign has_list = true -%}
-                        {%- endif -%}
+            <div class="sk-guarantee">
+              <div class="sk-guarantee__inner">
+                <div class="sk-guarantee__copy">
+                  {%- comment -%} Plain paragraphs (lines that don't start with ~) {%- endcomment -%}
+                  {%- for l in lines -%}
+                    {%- assign t = l | strip -%}
+                    {%- if t != '' -%}
+                      {%- assign first_char = t | slice: 0 -%}
+                      {%- if first_char != '~' -%}
+                        <p class="sk-guarantee__paragraph">{{ t }}</p>
                       {%- endif -%}
-                    {%- endfor -%}
-
-                    {%- for l in lines -%}
-                      {%- assign t = l | strip -%}
-                      {%- if t != '' -%}
-                        {%- assign first_char = t | slice: 0, 1 -%}
-                        {%- if first_char != '~' -%}
-                          <p class="sk-guarantee__paragraph">{{ t }}</p>
-                        {%- endif -%}
-                      {%- endif -%}
-                    {%- endfor -%}
-
-                    {%- if has_list -%}
-                      <div class="sk-guarantee__list">
-                        {%- for l in lines -%}
-                          {%- assign t = l | strip -%}
-                          {%- if t != '' -%}
-                            {%- assign first_char = t | slice: 0, 1 -%}
-                            {%- if first_char == '~' -%}
-                              <div class="sk-guarantee__item">
-                                <span class="sk-guarantee__icon" aria-hidden="true">
-                                  <svg
-                                    viewBox="0 0 24 24"
-                                    width="18"
-                                    height="18"
-                                    fill="currentColor"
-                                    role="img"
-                                    focusable="false"
-                                    aria-label="OK"
-                                  >
-                                    <path d="M9 16.17 5.12 12.3 3.7 13.71l5 5 11-11-1.41-1.41z"/>
-                                  </svg>
-                                </span>
-                                <span class="sk-guarantee__item-text">{{ t | remove_first: '~' | strip }}</span>
-                              </div>
-                            {%- endif -%}
-                          {%- endif -%}
-                        {%- endfor -%}
-                      </div>
                     {%- endif -%}
-                  </div>
-                </div>
-              </div>
+                  {%- endfor -%}
 
-            {%- else -%}
-              {{ product.metafields.custom.guarantee_banner_content | metafield_tag }}
-            {%- endif -%}
+                  {%- if has_tilde -%}
+                    <div class="sk-guarantee__list">
+                      {%- for l in lines -%}
+                        {%- assign t = l | strip -%}
+                        {%- if t != '' -%}
+                          {%- assign first_char = t | slice: 0 -%}
+                          {%- if first_char == '~' -%}
+                            <div class="sk-guarantee__item">
+                              <span class="sk-guarantee__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" role="img" focusable="false" aria-label="OK">
+                                  <path d="M9 16.17 5.12 12.3 3.7 13.71l5 5 11-11-1.41-1.41z"/>
+                                </svg>
+                              </span>
+                              <span class="sk-guarantee__item-text">{{ t | remove_first: '~' | strip }}</span>
+                            </div>
+                          {%- endif -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                {%- if section.settings.button_text != blank and section.settings.button_link != blank -%}
+                  <div class="sk-guarantee__cta">
+                    <a href="{{ section.settings.button_link }}" class="sk-radiance-guarantee-banner__button">
+                      {{ section.settings.button_text }}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </a>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
           </div>
-          {%- if section.settings.button_text != blank and section.settings.button_link != blank -%}
-            <a href="{{ section.settings.button_link }}" class="sk-radiance-guarantee-banner__button">
-              {{ section.settings.button_text }}
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          {%- endif -%}
         </div>
       </div>
     {%- endif -%}
@@ -105,68 +108,19 @@
   "tag": "section",
   "class": "section",
   "settings": [
-    {
-      "type": "header",
-      "content": "Product-Specific Control"
-    },
-    {
-      "type": "paragraph",
-      "content": "This section displays content from product metafields. To show guarantee banner on specific products, add this metafield:"
-    },
-    {
-      "type": "paragraph",
-      "content": "Metafield: 'custom.guarantee_banner_content' (Rich text)"
-    },
-    {
-      "type": "header",
-      "content": "Button Settings"
-    },
-    {
-      "type": "text",
-      "id": "button_text",
-      "label": "Button Text",
-      "default": "LES MER"
-    },
-    {
-      "type": "url",
-      "id": "button_link",
-      "label": "Button Link"
-    },
-    {
-      "type": "header",
-      "content": "Section Settings"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color Scheme",
-      "default": "scheme-1"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "Padding Top",
-      "default": 36
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "Padding Bottom",
-      "default": 36
-    }
+    { "type": "header", "content": "Product-Specific Control" },
+    { "type": "paragraph", "content": "This section displays content from product metafields. To show guarantee banner on specific products, add this metafield:" },
+    { "type": "paragraph", "content": "Metafield: 'custom.guarantee_banner_content' (Rich text). Use lines starting with '~' to render check items." },
+    { "type": "header", "content": "Button Settings" },
+    { "type": "text", "id": "button_text", "label": "Button Text", "default": "LES MER" },
+    { "type": "url", "id": "button_link", "label": "Button Link" },
+    { "type": "header", "content": "Section Settings" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color Scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding Top", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding Bottom", "default": 36 }
   ],
   "presets": [
-    {
-      "name": "SK Guarantee Banner"
-    }
+    { "name": "SK Guarantee Banner" }
   ]
 }
 {% endschema %}
