@@ -15,23 +15,91 @@
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
-  <div class="">
+  <div>
     {%- if product.metafields.custom.guarantee_banner_content != blank -%}
       <div class="sk-radiance-guarantee-banner">
         <div class="page-width">
-          <div class="sk-radiance-guarantee-banner__content">
-            {%- capture guarantee_content -%}
+          {%- assign raw_content = product.metafields.custom.guarantee_banner_content.value | strip -%}
+
+          {%- if raw_content contains '~' -%}
+            {%- comment -%}
+              Structured mode:
+              Lines starting with "~" become checklist items (with icon).
+              Other non-empty lines render as paragraphs above the list.
+            {%- endcomment -%}
+
+            {%- assign lines = raw_content | newline_to_br | split: '<br />' -%}
+
+            <div class="sk-guarantee">
+              <div class="sk-guarantee__inner">
+                <div class="sk-guarantee__copy">
+                  {%- assign has_list = false -%}
+                  {%- for l in lines -%}
+                    {%- assign t = l | strip -%}
+                    {%- if t != '' -%}
+                      {%- assign first_char = t | slice: 0 -%}
+                      {%- if first_char == '~' -%}
+                        {%- assign has_list = true -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {%- comment -%} Top paragraphs (non-tilde lines) {%- endcomment -%}
+                  {%- for l in lines -%}
+                    {%- assign t = l | strip -%}
+                    {%- if t != '' -%}
+                      {%- assign first_char = t | slice: 0 -%}
+                      {%- if first_char != '~' -%}
+                        <p class="sk-guarantee__paragraph">{{ t }}</p>
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {%- if has_list -%}
+                    <div class="sk-guarantee__list">
+                      {%- for l in lines -%}
+                        {%- assign t = l | strip -%}
+                        {%- if t != '' -%}
+                          {%- assign first_char = t | slice: 0 -%}
+                          {%- if first_char == '~' -%}
+                            <div class="sk-guarantee__item">
+                              <span class="sk-guarantee__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" role="img" focusable="false" aria-label="OK">
+                                  <path d="M9 16.17 5.12 12.3 3.7 13.71l5 5 11-11-1.41-1.41z"/>
+                                </svg>
+                              </span>
+                              <span class="sk-guarantee__item-text">{{ t | remove_first: '~' | strip }}</span>
+                            </div>
+                          {%- endif -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                {%- if section.settings.button_text != blank and section.settings.button_link != blank -%}
+                  <div class="sk-guarantee__cta">
+                    <a href="{{ section.settings.button_link }}" class="sk-guarantee__button">
+                      {{ section.settings.button_text }}
+                    </a>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- else -%}
+            {%- comment -%} Simple rich text mode {%- endcomment -%}
+            <div class="sk-radiance-guarantee-banner__content">
               {{ product.metafields.custom.guarantee_banner_content | metafield_tag }}
-            {%- endcapture -%}
-            {{ guarantee_content }}
-          </div>
-          {%- if section.settings.button_text != blank and section.settings.button_link != blank -%}
-            <a href="{{ section.settings.button_link }}" class="sk-radiance-guarantee-banner__button">
-              {{ section.settings.button_text }}
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
+            </div>
+
+            {%- if section.settings.button_text != blank and section.settings.button_link != blank -%}
+              <a href="{{ section.settings.button_link }}" class="sk-radiance-guarantee-banner__button">
+                {{ section.settings.button_text }}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+                  <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            {%- endif -%}
           {%- endif -%}
         </div>
       </div>
@@ -55,7 +123,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Metafield: 'custom.guarantee_banner_content' (Rich text)"
+      "content": "Metafield: 'custom.guarantee_banner_content' (Rich text). Tip: start a line with '~' to render it as a checklist item."
     },
     {
       "type": "header",
