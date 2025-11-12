@@ -1,6 +1,28 @@
 {{ 'section-sk-radiance-product.css' | asset_url | stylesheet_tag }}
 {{ 'section-sk-guarantee-banner.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%}
+Minimal, scoped styles for the pills and responsive show/hide.
+You can move these into section-sk-radiance-product.css later.
+{%- endcomment -%}
+<style>
+  .sk-radiance-pills{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0 1rem}
+  .sk-radiance-pills .sk-pill{
+    background:var(--color-ghost-2,#f8f9fa);
+    padding:.5rem .75rem;
+    border-radius:999px;
+    font-size:.875rem;
+    line-height:1;
+    white-space:nowrap;
+  }
+  /* placement visibility */
+  .sk-radiance-pills--desktop{display:none}
+  @media (min-width:750px){
+    .sk-radiance-pills--mobile{display:none}
+    .sk-radiance-pills--desktop{display:flex}
+  }
+</style>
+
 <product-info
   id="MainProduct-{{ section.id }}"
   class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}"
@@ -12,12 +34,23 @@
 >
   {%- render 'sk-radiance-product-assets', section: section, product: product -%}
 
-  {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
+  {%- assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' -%}
+  {%- assign pills_block = section.blocks | where: 'type', 'benefit_pills' | first -%}
+
   <div class="page-width">
     <div class="sk-radiance-product sk-radiance-product--{{ section.settings.media_size }} sk-radiance-product--{{ section.settings.media_position }} sk-radiance-product--{{ section.settings.gallery_layout }} sk-radiance-product--mobile-{{ section.settings.mobile_thumbnails }} {% if product.media.size > 0 %}sk-radiance-product--with-media{% else %}sk-radiance-product--no-media{% endif %}">
       <!-- Product Media Gallery -->
       <div class="sk-radiance-product__media-wrapper">
         {% render 'sk-radiance-product-media-gallery', variant_images: variant_images %}
+
+        {%- if pills_block -%}
+          <!-- MOBILE pills under hero -->
+          <div class="sk-radiance-pills sk-radiance-pills--mobile" role="list" aria-label="Product highlights">
+            {%- if pills_block.settings.pill_1 != blank -%}<span class="sk-pill" role="listitem">{{ pills_block.settings.pill_1 }}</span>{%- endif -%}
+            {%- if pills_block.settings.pill_2 != blank -%}<span class="sk-pill" role="listitem">{{ pills_block.settings.pill_2 }}</span>{%- endif -%}
+            {%- if pills_block.settings.pill_3 != blank -%}<span class="sk-pill" role="listitem">{{ pills_block.settings.pill_3 }}</span>{%- endif -%}
+          </div>
+        {%- endif -%}
 
         {%- if section.settings.show_guarantee_below_media and product.metafields.custom.guarantee_banner_content != blank -%}
           {%- render 'sk-radiance-guarantee',
@@ -57,6 +90,15 @@
                 {%- render 'sk-radiance-rating', product: product, block: block -%}
 
               {%- when 'price' -%}
+                {%- if pills_block -%}
+                  <!-- DESKTOP pills just before price -->
+                  <div class="sk-radiance-pills sk-radiance-pills--desktop" role="list" aria-label="Product highlights">
+                    {%- if pills_block.settings.pill_1 != blank -%}<span class="sk-pill" role="listitem">{{ pills_block.settings.pill_1 }}</span>{%- endif -%}
+                    {%- if pills_block.settings.pill_2 != blank -%}<span class="sk-pill" role="listitem">{{ pills_block.settings.pill_2 }}</span>{%- endif -%}
+                    {%- if pills_block.settings.pill_3 != blank -%}<span class="sk-pill" role="listitem">{{ pills_block.settings.pill_3 }}</span>{%- endif -%}
+                  </div>
+                {%- endif -%}
+
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                   {%- render 'sk-radiance-price', product: product, use_variant: true, show_badges: false, price_class: 'price--large' -%}
                 </div>
@@ -222,6 +264,16 @@
         { "type": "paragraph", "content": "To show promotion logos on specific products only, add this metafield to each product:" },
         { "type": "paragraph", "content": "Metafield: 'custom.promotion_logos' (List of files)" },
         { "type": "paragraph", "content": "Add multiple logo images to the list, and they will automatically scroll across the screen with animation." }
+      ]
+    },
+    {
+      "type": "benefit_pills",
+      "name": "Benefit pills",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "pill_1", "label": "Pill 1", "default": "3 Highly Precise Wavelengths" },
+        { "type": "text", "id": "pill_2", "label": "Pill 2", "default": "Best Fit For Every Face" },
+        { "type": "text", "id": "pill_3", "label": "Pill 3", "default": "Guaranteed Quality, Safety & Results" }
       ]
     }
   ],
