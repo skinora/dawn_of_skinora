@@ -1,8 +1,27 @@
 /* ================================
-   PREMIUM CONTENT SECTION
+   SK Content Section
    ================================ */
 
-/* Heading – mindre hard, mer premium */
+/* Selve seksjonen – sikre ingen horisontal scroll */
+.sk-content-section {
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Wrapper – styrer bredde + kolonneplassering */
+.sk-content-section__wrapper {
+  max-width: 700px;
+}
+
+/* Desktop: align med venstre kant på bildet i about-seksjonen */
+@media screen and (min-width: 990px) {
+  .sk-content-section__wrapper {
+    max-width: 550px;   /* ca. samme bredde som bildet */
+    margin-left: -40px; /* samme “dra litt til venstre” som bildet */
+  }
+}
+
+/* Heading – litt nedtonet, mer premium */
 .sk-content-section__heading {
   font-size: 42px;
   font-weight: 700;
@@ -13,7 +32,7 @@
   max-width: 640px;
 }
 
-/* Paragraphs – max width + bedre line-height + ikke justify */
+/* Avsnitt – bedre line-height + max-width, ikke justify */
 .sk-content-section__content p {
   font-size: 16px;
   line-height: 1.7;
@@ -22,16 +41,13 @@
   max-width: 700px;
 }
 
-/* Remove margin from last paragraph */
+/* Siste avsnitt uten ekstra margin */
 .sk-content-section__content p:last-child {
   margin-bottom: 0;
 }
 
-/* ----- 
-   Premium bullet list 
-   --------------------------------------- */
+/* ------- Premium bullets ------- */
 
-/* Remove Shopify richtext default margins */
 .sk-content-section__content ul {
   padding-left: 0;
   margin: 28px 0;
@@ -48,7 +64,7 @@
   color: var(--color-neutral-4, #4f4f4f);
 }
 
-/* Custom premium bullet */
+/* Custom bullet – liten, stram, ikke standard dot */
 .sk-content-section__content ul li::before {
   content: "";
   position: absolute;
@@ -57,28 +73,27 @@
   width: 8px;
   height: 8px;
   background-color: var(--color-brand, #30273e);
-  border-radius: 2px; /* gjør den mer eksklusiv enn en dot */
+  border-radius: 2px;
 }
 
-/* Last bullet */
 .sk-content-section__content ul li:last-child {
   margin-bottom: 0;
 }
 
-/* Button wrapper */
+/* Knapp-wrapper – venstrejustert (ser mer high-end ut enn senter) */
 .sk-content-section__button-wrapper {
   display: flex;
-  justify-content: flex-start; /* ikke i midten – mer premium */
+  justify-content: flex-start;
   margin-top: 40px;
 }
 
-/* CTA button */
+/* Knapp – mer luft mellom tekst og pil (hvis du legger til ikon senere) */
 .sk-content-section__button {
   display: inline-flex;
   align-items: center;
-  gap: 12px; /* MER luft mellom tekst og pil */
+  gap: 12px;
   background-color: var(--color-brand, #30273e);
-  color: white;
+  color: #ffffff;
   padding: 16px 34px;
   border-radius: 8px;
   font-size: 16px;
@@ -88,7 +103,7 @@
   border: 2px solid var(--color-brand, #30273e);
 }
 
-/* Hover */
+/* Hover-effekt */
 .sk-content-section__button:hover {
   background-color: transparent;
   color: var(--color-brand, #30273e);
@@ -96,12 +111,17 @@
   box-shadow: 0 6px 20px rgba(48, 39, 62, 0.15);
 }
 
-/* Mobile adjustments */
+/* Mobil-justeringer */
 @media screen and (max-width: 749px) {
   .sk-content-section__heading {
     font-size: 32px;
     line-height: 1.15;
     margin-bottom: 24px;
+  }
+
+  .sk-content-section__wrapper {
+    max-width: 100%;
+    margin-left: 0;
   }
 
   .sk-content-section__button-wrapper {
