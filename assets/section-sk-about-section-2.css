@@ -1,10 +1,10 @@
-/* Clamp overflow so accent/glow can't cause horizontal scroll */
+/* Clamp overflow så accent/glow ikke lager horisontal scroll */
 .sk-about-section-2 {
   position: relative;
   overflow-x: hidden;
 }
 
-/* Optional container – not used in markup, but fine to keep */
+/* Optional container – ikke brukt i markup, men greit å ha */
 .sk-about-section-2__container {
   width: 100%;
   max-width: 140rem;
@@ -36,7 +36,7 @@
   flex: 1 1 320px;
 }
 
-/* Typography */
+/* Typografi */
 .sk-about-section-2__subheading {
   font-size: 18px;
   font-weight: 700;
@@ -45,26 +45,39 @@
   margin-bottom: 1rem;
 }
 
+/* Heading litt mindre + bedre line-height */
 .sk-about-section-2__heading {
-  font-size: 90px;
+  font-size: 72px;
   font-weight: 600;
-  line-height: 82px;
+  line-height: 1.05;
   color: var(--color-brand, #30273e);
   margin-bottom: 2.5rem;
   margin-top: 0;
 }
 
+/* Mer luft i tekst + kortere linjelengde */
+.sk-about-section-2__description {
+  max-width: 640px;
+}
+
 .sk-about-section-2__description p {
   font-size: 16px;
-  line-height: 22px;
-  margin-top: 15px;
-  margin-bottom: 3rem;
+  line-height: 1.7;
+  margin-top: 20px;
+  margin-bottom: 3.5rem;
   color: var(--color-neutral-4, #4f4f4f);
 }
 
-/* Button */
+/* Button-wrapper */
 .sk-about-section-2__button-wrapper {
   margin-top: 3rem;
+}
+
+/* Brukes sammen med theme-knappen .sk_primary-button */
+.about-sec-2-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px; /* mer plass mellom tekst og pil */
 }
 
 /* Accent image & glow */
@@ -102,8 +115,14 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.8;
+  }
 }
 
 /* Images */
@@ -114,15 +133,28 @@
   display: block;
 }
 
-/* Tablet and up */
+/* Tablet og oppover */
 @media screen and (min-width: 750px) {
-  .sk-about-section-2__heading { margin-bottom: 4rem; }
-  .sk-about-section-2__glow-effect { width: 50rem; height: 50rem; }
+  .sk-about-section-2__heading {
+    margin-bottom: 4rem;
+  }
+
+  .sk-about-section-2__glow-effect {
+    width: 50rem;
+    height: 50rem;
+  }
 }
 
 /* Desktop */
 @media screen and (min-width: 990px) {
-  .sk-about-section-2__text-section { flex: 0 0 500px; }
+  .sk-about-section-2__text-section {
+    flex: 0 0 500px;
+  }
+
+  /* Dra bildet litt til venstre for mer editorial følelse */
+  .sk-about-section-2__image-wrapper {
+    margin-left: -40px;
+  }
 
   @media (prefers-reduced-motion: no-preference) {
     .sk-about-section-2__accent-image {
@@ -131,12 +163,16 @@
   }
 
   @keyframes float-reverse {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(10px); }
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(10px);
+    }
   }
 }
 
-/* MOBILE ONLY — stack layout */
+/* Mobil – stack layout og mindre heading */
 @media screen and (max-width: 749px) {
   .sk-about-section-2__content {
     flex-direction: column;
@@ -146,8 +182,8 @@
   }
 
   .sk-about-section-2__heading {
-    font-size: 42px;
-    line-height: 1.1;
+    font-size: 36px;
+    line-height: 1.15;
   }
 
   .sk-about-section-2__accent-image {
