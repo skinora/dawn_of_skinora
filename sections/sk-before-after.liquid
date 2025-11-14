@@ -53,12 +53,22 @@
   .sk-testimonial-card__title { font-size:18px; font-weight:700; margin-bottom:8px; color: var(--color-text-strong, #000); }
   .sk-testimonial-card__text { font-size:13px; line-height:1.5; color: var(--color-text, #000); font-weight:500; }
   .sk-before-after-prev, .sk-before-after-next {
-    position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; background:none; border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:5; transition:background .3s ease, transform .3s ease;
+    position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:5; transition:background .25s ease, transform .25s ease, opacity .25s ease;
+    background:rgba(255,255,255,.55);
+    backdrop-filter:blur(4px);
   }
-  .sk-before-after-prev:hover, .sk-before-after-next:hover { background: var(--color-surface-hover, #f5f5f5); transform:translateY(-50%) scale(1.08); }
+  /* Hide disabled arrows (no slide in that direction) */
+  .sk-before-after-prev.swiper-button-disabled,
+  .sk-before-after-next.swiper-button-disabled { opacity:0; pointer-events:none; }
+  .sk-before-after-prev:not(.swiper-button-disabled):hover,
+  .sk-before-after-next:not(.swiper-button-disabled):hover { background:rgba(255,255,255,.75); transform:translateY(-50%) scale(1.08); }
+  }
+  /* Removed generic hover; using conditional hover above */
   .sk-before-after-prev { left: 0.5rem; }
   .sk-before-after-next { right: 0.5rem; }
   .sk-before-after-prev svg, .sk-before-after-next svg { width:24px; height:24px; stroke: var(--color-neutral-3, #6C6C6C); }
+  .sk-before-after-prev:not(.swiper-button-disabled) svg,
+  .sk-before-after-next:not(.swiper-button-disabled) svg { stroke: var(--color-neutral-2, #666); }
   /* Keyboard accessibility focus styles */
   .sk-before-after-prev:focus-visible, .sk-before-after-next:focus-visible {
     outline:2px solid var(--color-brand, #4a4458);
@@ -214,6 +224,29 @@
         1024: { slidesPerView: 3, spaceBetween: 28 }
       }
     });
+
+    // Dynamically center arrows relative to image height (not including text content)
+    const positionArrows = () => {
+      const firstImageContainer = document.querySelector('.sk-before-after .sk-testimonial-card__images');
+      if (!firstImageContainer) return;
+      const rect = firstImageContainer.getBoundingClientRect();
+      // Use container offset within section instead of viewport for stable positioning
+      const sectionRect = document.querySelector('.sk-before-after')?.getBoundingClientRect();
+      const localTop = rect.top - (sectionRect?.top || 0) + rect.height / 2;
+      document.querySelectorAll('.sk-before-after-prev, .sk-before-after-next').forEach(btn => {
+        btn.style.top = localTop + 'px';
+        btn.style.transform = 'translateY(-50%)';
+      });
+    };
+    // Initial and responsive repositioning
+    positionArrows();
+    window.addEventListener('resize', positionArrows);
+    swiper.on('slideChangeTransitionEnd', positionArrows);
+    swiper.on('imagesReady', positionArrows);
+    // Mutation observer in case images load async and resize events miss
+    const imgObserver = new MutationObserver(positionArrows);
+    const imgContainer = document.querySelector('.sk-before-after .sk-testimonial-card__images');
+    if (imgContainer) imgObserver.observe(imgContainer, { childList: true, subtree: true });
   });
 </script>
 
