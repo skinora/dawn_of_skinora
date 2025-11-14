@@ -51,9 +51,9 @@
     "product_showcase": {
       "type": "sk-product-showcase",
       "settings": {
-        "subheading": "REFLECTION YOUR STYLE",
-        "heading": "Clear skin here and now!",
-        "description": "",
+        "subheading": "",
+        "heading": "Hvorfor vi bygde Skinora selv",
+        "description": "<p>Vi fant fort ut hvorfor gode masker er dyre i Norge: store markups og lite ekte effekt.<br/><br/>Og de maskene som faktisk virker – riktige bølgelengder, riktig styrke – var nesten umulige å få tak i.</p><p>Så vi lagde dem selv.</p><p>Skinora-maskene gir klinisk dokumentert lys, jevn styrke og ekte resultater ingen andre tilbyr i Norge – uten overpris.</p>",
         "button_label": "Utforsk skinora",
         "button_link": "",
         "main_image": "shopify://shop_images/enecta-cannabis-extracts-80wCkpt-IKE-unsplash.webp",
