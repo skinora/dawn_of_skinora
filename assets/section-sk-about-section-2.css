@@ -1,214 +1,164 @@
-{{ 'section-sk-about-section-2.css' | asset_url | stylesheet_tag }}
-
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-{%- endstyle -%}
-
-<div class="sk-about-section-2 section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
-  <div class="page-width">
-    <div class="sk-about-section-2__content">
-      <div class="sk-about-section-2__image-section">
-        <div class="sk-about-section-2__image-wrapper">
-          {%- if section.settings.main_image != blank -%}
-            <div class="sk-about-section-2__main-image{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-              <img
-                srcset="
-                  {%- if section.settings.main_image.width >= 375 -%}{{ section.settings.main_image | image_url: width: 375 }} 375w,{%- endif -%}
-                  {%- if section.settings.main_image.width >= 550 -%}{{ section.settings.main_image | image_url: width: 550 }} 550w,{%- endif -%}
-                  {%- if section.settings.main_image.width >= 750 -%}{{ section.settings.main_image | image_url: width: 750 }} 750w,{%- endif -%}
-                  {{ section.settings.main_image | image_url }} {{ section.settings.main_image.width }}w
-                "
-                src="{{ section.settings.main_image | image_url: width: 550 }}"
-                sizes="(min-width: 990px) 550px, (min-width: 750px) calc(50vw - 5rem), calc(100vw - 3rem)"
-                alt="{{ section.settings.main_image.alt | escape }}"
-                class="sk-about-section-2__image"
-                width="{{ section.settings.main_image.width }}"
-                height="{{ section.settings.main_image.height }}"
-                loading="eager"
-              >
-            </div>
-          {%- endif -%}
-
-          {%- if section.settings.accent_image != blank -%}
-            <div class="sk-about-section-2__accent-image{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-              <img
-                srcset="
-                  {%- if section.settings.accent_image.width >= 200 -%}{{ section.settings.accent_image | image_url: width: 200 }} 200w,{%- endif -%}
-                  {%- if section.settings.accent_image.width >= 300 -%}{{ section.settings.accent_image | image_url: width: 300 }} 300w,{%- endif -%}
-                  {%- if section.settings.accent_image.width >= 400 -%}{{ section.settings.accent_image | image_url: width: 400 }} 400w,{%- endif -%}
-                  {{ section.settings.accent_image | image_url }} {{ section.settings.accent_image.width }}w
-                "
-                src="{{ section.settings.accent_image | image_url: width: 300 }}"
-                sizes="300px"
-                alt="{{ section.settings.accent_image.alt | escape }}"
-                class="sk-about-section-2__accent"
-                width="{{ section.settings.accent_image.width }}"
-                height="{{ section.settings.accent_image.height }}"
-                loading="eager"
-              >
-            </div>
-          {%- endif -%}
-
-          {%- if section.settings.show_glow_effect -%}
-            <div class="sk-about-section-2__glow-effect"></div>
-          {%- endif -%}
-        </div>
-      </div>
-
-      <div class="sk-about-section-2__text-section">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="sk-about-section-2__heading h0 sk-section-heading sk-section-heading--hxl{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-            {{ section.settings.heading | escape }}
-          </h2>
-        {%- endif -%}
-
-        {%- if section.settings.subheading != blank -%}
-          <span class="sk-about-section-2__subheading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-            {{ section.settings.subheading | escape }}
-          </span>
-        {%- endif -%}
-
-        {%- if section.settings.description != blank -%}
-          <div class="sk-about-section-2__description{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-            {{ section.settings.description }}
-          </div>
-        {%- endif -%}
-
-        {%- if section.settings.button_label != blank -%}
-          <div class="sk-about-section-2__button-wrapper">
-            <a href="{{ section.settings.button_link }}" class="sk_primary-button about-sec-2-btn">
-              {{ section.settings.button_label }}
-              <span class="svg-wrapper">
-                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="29" viewBox="0 0 23 29" fill="none">
-                  <path d="M22.1904 13.8521L21.5352 14.5132L22.1904 15.1763L9.02734 28.4858L6.39453 25.8247L15.6016 16.5142H0.499023V12.5142H15.6016L6.39453 3.20361L9.02734 0.541504L22.1904 13.8521Z" fill="white"/>
-                </svg>
-              </span>
-            </a>
-          </div>
-        {%- endif -%}
-      </div>
-    </div>
-  </div>
-</div>
-
-{% schema %}
-{
-  "name": "About Section 2",
-  "tag": "section",
-  "class": "section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "REFLECTION YOUR STYLE"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Main Heading",
-      "default": "Clear skin here and now!"
-    },
-    {
-      "type": "richtext",
-      "id": "description",
-      "label": "Description",
-      "default": "<p>If relaxation is what you seek, massage therapy can soothe your muscles and ease tension, while body treatments can leave you feeling pampered and rejuvenated. Whether you're preparing for a special occasion or simply want to treat yourself to some self-care, beauty services offer a chance to feel confident and look your best.</p>"
-    },
-    {
-      "type": "text",
-      "id": "button_label",
-      "label": "Button Label",
-      "default": "Take a Look"
-    },
-    {
-      "type": "url",
-      "id": "button_link",
-      "label": "Button Link"
-    },
-    {
-      "type": "image_picker",
-      "id": "main_image",
-      "label": "Main Image (Hand with mask)"
-    },
-    {
-      "type": "image_picker",
-      "id": "accent_image",
-      "label": "Accent Image (Product/Logo)"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_glow_effect",
-      "label": "Show Glow Effect",
-      "default": true
-    },
-    {
-      "type": "select",
-      "id": "color_scheme",
-      "options": [
-        {
-          "value": "accent-1",
-          "label": "t:sections.all.colors.accent_1.label"
-        },
-        {
-          "value": "accent-2",
-          "label": "t:sections.all.colors.accent_2.label"
-        },
-        {
-          "value": "background-1",
-          "label": "t:sections.all.colors.background_1.label"
-        },
-        {
-          "value": "background-2",
-          "label": "t:sections.all.colors.background_2.label"
-        },
-        {
-          "value": "inverse",
-          "label": "t:sections.all.colors.inverse.label"
-        }
-      ],
-      "default": "background-1",
-      "label": "t:sections.all.colors.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 60
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 60
-    }
-  ],
-  "presets": [
-    {
-      "name": "About Section 2"
-    }
-  ]
+/* Clamp overflow so accent/glow can't cause horizontal scroll */
+.sk-about-section-2 {
+  position: relative;
+  overflow-x: hidden;
 }
-{% endschema %}
+
+/* Optional container – not used in markup, but fine to keep */
+.sk-about-section-2__container {
+  width: 100%;
+  max-width: 140rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Layout */
+.sk-about-section-2__content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 80px;
+  margin-top: 8rem;
+  align-items: flex-end;
+}
+
+.sk-about-section-2__image-section {
+  position: relative;
+  flex: 1 1 320px;
+}
+
+.sk-about-section-2__image-wrapper {
+  position: relative;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+.sk-about-section-2__text-section {
+  flex: 1 1 320px;
+}
+
+/* Typography */
+.sk-about-section-2__subheading {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-neutral-1, #6c6c6c);
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.sk-about-section-2__heading {
+  font-size: 90px;
+  font-weight: 600;
+  line-height: 82px;
+  color: var(--color-brand, #30273e);
+  margin-bottom: 2.5rem;
+  margin-top: 0;
+}
+
+.sk-about-section-2__description p {
+  font-size: 16px;
+  line-height: 22px;
+  margin-top: 15px;
+  margin-bottom: 3rem;
+  color: var(--color-neutral-4, #4f4f4f);
+}
+
+/* Button */
+.sk-about-section-2__button-wrapper {
+  margin-top: 3rem;
+}
+
+/* Accent image & glow */
+.sk-about-section-2__accent-image {
+  position: absolute;
+  top: -9rem;
+  left: -10rem;
+  z-index: 4;
+  width: 24rem;
+  height: 24rem;
+}
+
+.sk-about-section-2__accent {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.sk-about-section-2__glow-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40rem;
+  height: 40rem;
+  background: radial-gradient(
+    circle,
+    rgba(255, 165, 0, 0.3) 0%,
+    rgba(255, 69, 0, 0.2) 50%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  z-index: 1;
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+}
+
+/* Images */
+.sk-about-section-2__main-image img,
+.sk-about-section-2__image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Tablet and up */
+@media screen and (min-width: 750px) {
+  .sk-about-section-2__heading { margin-bottom: 4rem; }
+  .sk-about-section-2__glow-effect { width: 50rem; height: 50rem; }
+}
+
+/* Desktop */
+@media screen and (min-width: 990px) {
+  .sk-about-section-2__text-section { flex: 0 0 500px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sk-about-section-2__accent-image {
+      animation: float-reverse 4s ease-in-out infinite;
+    }
+  }
+
+  @keyframes float-reverse {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+  }
+}
+
+/* MOBILE ONLY — stack layout */
+@media screen and (max-width: 749px) {
+  .sk-about-section-2__content {
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 4rem;
+    align-items: flex-start;
+  }
+
+  .sk-about-section-2__heading {
+    font-size: 42px;
+    line-height: 1.1;
+  }
+
+  .sk-about-section-2__accent-image {
+    top: -4rem;
+    left: 0;
+    width: 18rem;
+    height: 18rem;
+  }
+
+  .sk-about-section-2__glow-effect {
+    width: 32rem;
+    height: 32rem;
+  }
+}
