@@ -143,15 +143,36 @@
           {% endfor %}
         </div>
 
-        <!-- Navigation arrows -->
-        <div class="sk-before-after-prev">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
-            <path d="M30 16.2756L2 16.2756M2 16.2756L16 30.2756M2 16.2756L16 2.27563" stroke="#6C6C6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Navigation arrows (restored & accessible) -->
+        <div
+          class="sk-before-after-prev swiper-button-prev"
+          role="button"
+          aria-label="Previous testimonials"
+          tabindex="0"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="33"
+            viewBox="0 0 32 33"
+            fill="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M30 16.2756L2 16.2756M2 16.2756L16 30.2756M2 16.2756L16 2.27563" stroke="var(--color-neutral-2,#666666)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <div class="sk-before-after-next">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
-            <path d="M2 16.2756H30M30 16.2756L16 2.27563M30 16.2756L16 30.2756" stroke="#6C6C6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <div class="sk-before-after-next swiper-button-next" role="button" aria-label="Next testimonials" tabindex="0">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="33"
+            viewBox="0 0 32 33"
+            fill="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M2 16.2756H30M30 16.2756L16 2.27563M30 16.2756L16 30.2756" stroke="var(--color-neutral-2,#666666)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
 
