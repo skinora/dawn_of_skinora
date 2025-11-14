@@ -64,6 +64,7 @@
           {%- endif -%}
         </div>
       </div>
+
       <div class="sk-about-section-2__text-section">
         {%- if section.settings.heading != blank -%}
           <h2 class="sk-about-section-2__heading h0 sk-section-heading sk-section-heading--hxl{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
@@ -84,7 +85,7 @@
         {%- endif -%}
 
         {%- if section.settings.button_label != blank -%}
-          <div>
+          <div class="sk-about-section-2__button-wrapper">
             <a href="{{ section.settings.button_link }}" class="sk_primary-button about-sec-2-btn">
               {{ section.settings.button_label }}
               <span class="svg-wrapper">
