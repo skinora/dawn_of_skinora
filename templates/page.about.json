@@ -51,14 +51,13 @@
     "product_showcase": {
       "type": "sk-product-showcase",
       "settings": {
-        "product_image": "shopify://shop_images/Image_Placeholder_1.png",
-        "product_title": "En familiebedrift med kompromissløs kvalitet",
-        "product_description": "<p>Som et familieeid merke er det vi selv som setter standarden. Uten investorer som presser oss for marginer kan vi prioritere det som betyr noe:</p><ol><li><strong>Transparente prosesser</strong> – vi forteller deg hva produktene kan, og hva de ikke kan.<br/></li><li><strong>Høykvalitetskomponenter</strong> – uten ekstravagante markups.<br/></li><li><strong>Tett oppfølging</strong> – vi tester alt på oss selv og våre nærmeste før vi anbefaler det til deg.</li></ol>",
-        "project_title": "",
-        "project_subtitle": "",
-        "project_date": "",
+        "subheading": "REFLECTION YOUR STYLE",
+        "heading": "Clear skin here and now!",
+        "description": "",
         "button_label": "View Product",
         "button_link": "",
+        "main_image": "shopify://shop_images/enecta-cannabis-extracts-80wCkpt-IKE-unsplash.webp",
+        "show_glow_effect": true,
         "color_scheme": "background-1",
         "padding_top": 80,
         "padding_bottom": 80
@@ -104,14 +103,12 @@
     "sk_product_showcase_xciGiE": {
       "type": "sk-product-showcase",
       "settings": {
-        "product_image": "shopify://shop_images/Rectangle_2.png",
-        "product_title": "Skinora handler om mer enn hud",
-        "product_description": "<p><br/>Skinora er mer enn produkter. Det handler om en hel livsstil der velvære, kunnskap og personlig vekst står i sentrum. Å ta vare på huden sin er et naturlig steg i denne helheten – og vi er her for å hjelpe deg gjennom hele reisen.<br/><br/></p>",
-        "project_title": "",
-        "project_subtitle": "",
-        "project_date": "",
+        "subheading": "REFLECTION YOUR STYLE",
+        "heading": "Clear skin here and now!",
+        "description": "",
         "button_label": "Utforsk Skinora-universet",
         "button_link": "",
+        "show_glow_effect": true,
         "color_scheme": "background-1",
         "padding_top": 80,
         "padding_bottom": 80
