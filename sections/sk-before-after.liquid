@@ -41,7 +41,10 @@
   }
   /* Single image layout (before/after combined request) */
   .sk-testimonial-card__images { position: relative; border-radius: 20px 20px 0 0; overflow: hidden; }
-  .sk-testimonial-card__image { width:100%; height:auto; object-fit:cover; position:static; display:block; }
+  /* Constrain image aspect & prevent overflow */
+  .sk-testimonial-card__image { width:100%; display:block; aspect-ratio: 334 / 360; height: auto; object-fit: cover; }
+  .sk-before-after .sk-testimonial-card__images { height: clamp(260px, 30vw, 360px); }
+  .sk-before-after .sk-testimonial-card__images img { height:100%; width:100%; object-fit:cover; }
   .sk-testimonial-card__image--before, .sk-testimonial-card__image--after { border-radius:0; }
   .sk-testimonial-card__divider { display:none; }
   .sk-testimonial-card__content {
@@ -63,23 +66,42 @@
   .sk-before-after-next.swiper-button-disabled { opacity:0; pointer-events:none; }
   .sk-before-after-prev:not(.swiper-button-disabled):hover,
   .sk-before-after-next:not(.swiper-button-disabled):hover { background:rgba(255,255,255,.75); transform:translateY(-50%) scale(1.08); }
-  }
   /* Removed generic hover; using conditional hover above */
   /* Position arrows just inside the centered .page-width content edge so they never get clipped
     (page-width uses max-width: var(--page-width) in base.css). */
-  .sk-before-after-prev { left: calc((100% - var(--page-width)) / 2 + 8px); }
-  .sk-before-after-next { right: calc((100% - var(--page-width)) / 2 + 8px); }
+  /* Flush arrows to content edge (remove extra 8px inset). Fallback JS will adjust if var(--page-width) undefined */
+  .sk-before-after-prev { left: calc((100% - var(--page-width)) / 2); }
+  .sk-before-after-next { right: calc((100% - var(--page-width)) / 2); }
   .sk-before-after-prev svg, .sk-before-after-next svg { width:24px; height:24px; stroke: var(--color-neutral-3, #6C6C6C); }
   .sk-before-after-prev:not(.swiper-button-disabled) svg,
-  .sk-before-after-next:not(.swiper-button-disabled) svg { stroke: var(--color-neutral-2, #666); }
+  .sk-before-after-next:not(.swiper-button-disabled) svg { stroke: #555; }
+  /* Remove any unexpected UA focus fill */
+  .sk-before-after-prev svg path,
+  .sk-before-after-next svg path { fill: none; }
+  .sk-before-after-prev:hover svg path,
+  .sk-before-after-next:hover svg path { stroke: #444; }
   /* Keyboard accessibility focus styles */
   .sk-before-after-prev:focus-visible, .sk-before-after-next:focus-visible {
     outline:2px solid var(--color-brand, #4a4458);
     outline-offset:4px;
   }
   /* Prevent vertical overflow but let arrows render horizontally */
-  /* Let the swiper show visual overflow horizontally if needed, but outer section prevents scroll */
-  .sk-before-after .swiper { overflow: visible; }
+  /* Tighten horizontal overflow: hide any stray slide width spill while arrows remain positioned by absolute calc */
+  .sk-before-after .swiper { overflow: hidden; }
+  .sk-before-after .swiper-wrapper { box-sizing: border-box; }
+  /* Ensure slides cannot exceed container width due to flex shrink behavior */
+  .sk-before-after .swiper-slide { flex: 0 0 auto; max-width: 100%; }
+  @media (min-width:1024px){
+    /* When 3-up, guard against rounding overflow: subtract aggregated gap (2 * 28px) */
+    .sk-before-after .swiper-slide { width: calc((100% - 56px) / 3); }
+  }
+  @media (min-width:700px) and (max-width:1023.98px){
+    /* When 2-up, subtract one gap (24px) */
+    .sk-before-after .swiper-slide { width: calc((100% - 24px) / 2); }
+  }
+  @media (max-width:699.98px){
+    .sk-before-after .swiper-slide { width: 100%; }
+  }
   .swiper-pagination { position:relative !important; margin-top:34px; }
   .swiper-pagination-bullet { width:12px; height:12px; background:#ddd; opacity:1; transition:all .3s ease; }
   .swiper-pagination-bullet-active { background:#4a4458; transform:scale(1.2); }
@@ -213,6 +235,12 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Swiper safely (only if Swiper lib present)
+    if (typeof Swiper === 'undefined') {
+      console.warn('Swiper not found; sk-before-after slider not initialized');
+      return;
+    }
+
     const swiper = new Swiper('.sk-before-after-swiper', {
       slidesPerView: 1,
       spaceBetween: 20,
@@ -229,28 +257,64 @@
       }
     });
 
-    // Dynamically center arrows relative to image height (not including text content)
-    const positionArrows = () => {
-      const firstImageContainer = document.querySelector('.sk-before-after .sk-testimonial-card__images');
-      if (!firstImageContainer) return;
-      const rect = firstImageContainer.getBoundingClientRect();
-      // Use container offset within section instead of viewport for stable positioning
-      const sectionRect = document.querySelector('.sk-before-after')?.getBoundingClientRect();
-      const localTop = rect.top - (sectionRect?.top || 0) + rect.height / 2;
-      document.querySelectorAll('.sk-before-after-prev, .sk-before-after-next').forEach(btn => {
-        btn.style.top = localTop + 'px';
-        btn.style.transform = 'translateY(-50%)';
+    // Robust arrow positioning: centers arrows to the image midpoint, updates on resize,
+    // after images load, and when Swiper changes slides. Uses defensive DOM queries.
+    function positionArrows() {
+      const section = document.getElementsByClassName('sk-before-after')[0];
+      if (!section) return;
+      const imgContainer = section.getElementsByClassName('sk-testimonial-card__images')[0];
+      if (!imgContainer) return;
+      const rect = imgContainer.getBoundingClientRect();
+      const sectionRect = section.getBoundingClientRect();
+      const localTop = rect.top - sectionRect.top + rect.height / 2;
+      const prevBtns = document.getElementsByClassName('sk-before-after-prev');
+      const nextBtns = document.getElementsByClassName('sk-before-after-next');
+      const allBtns = [];
+      for (let i=0;i<prevBtns.length;i++) allBtns.push(prevBtns[i]);
+      for (let i=0;i<nextBtns.length;i++) allBtns.push(nextBtns[i]);
+      if (allBtns.length === 0) return;
+      allBtns.forEach(btn => {
+        try {
+          btn.style.top = localTop + 'px';
+          btn.style.transform = 'translateY(-50%)';
+          btn.style.willChange = 'top';
+          btn.style.zIndex = '6';
+        } catch (e) {}
       });
-    };
-    // Initial and responsive repositioning
+    }
+
+    // initial positioning
     positionArrows();
+    // Horizontal fallback: if CSS calc returns unrealistic value (e.g., var(--page-width) missing), nudge arrows inward by 16px.
+    function horizontalFallback() {
+      const prev = document.querySelector('.sk-before-after-prev');
+      const next = document.querySelector('.sk-before-after-next');
+      if (!prev || !next) return;
+      const prevRect = prev.getBoundingClientRect();
+      const nextRect = next.getBoundingClientRect();
+      // If arrow sits at or beyond viewport edge (<=2px) apply inset.
+      if (prevRect.left <= 2) prev.style.left = '16px';
+      if (window.innerWidth - nextRect.right <= 2) next.style.right = '16px';
+    }
+    horizontalFallback();
+    window.addEventListener('resize', horizontalFallback);
+    // reposition on resize and when swiper updates
     window.addEventListener('resize', positionArrows);
     swiper.on('slideChangeTransitionEnd', positionArrows);
-    swiper.on('imagesReady', positionArrows);
-    // Mutation observer in case images load async and resize events miss
-    const imgObserver = new MutationObserver(positionArrows);
-    const imgContainer = document.querySelector('.sk-before-after .sk-testimonial-card__images');
-    if (imgContainer) imgObserver.observe(imgContainer, { childList: true, subtree: true });
+
+    // Reposition when images finish loading
+    const imgs = Array.from(document.querySelectorAll('.sk-before-after .sk_before_img'));
+    imgs.forEach(img => {
+      if (img.complete) return;
+      img.addEventListener('load', () => setTimeout(positionArrows, 50));
+    });
+
+    // Fallback: observe structural changes inside the first image container
+    const firstImgContainer = document.querySelector('.sk-before-after .sk-testimonial-card__images');
+    if (firstImgContainer) {
+      const mo = new MutationObserver(() => setTimeout(positionArrows, 30));
+      mo.observe(firstImgContainer, { childList: true, subtree: true, attributes: true });
+    }
   });
 </script>
 
