@@ -4,8 +4,10 @@
   }
 
   .sk-led-light-work__content {
-    width: min(760px, 90%);
-    margin: 15px auto 50px;
+    /* Unify section content width with global .page-width; remove narrower constraint */
+    width: 100%;
+    max-width: none; /* rely solely on outer .page-width */
+    margin: 15px 0 50px;
     text-align: center;
   }
 
@@ -93,7 +95,7 @@
     .sk-led-light-work-images-container { display: none; }
     .sk-llw-swiper-{{ section.id }} { display: block; max-width: 600px; margin: 0 auto; }
 
-    .sk-led-light-work__content { width: 100%; margin-bottom: 32px; }
+  .sk-led-light-work__content { width: 100%; margin-bottom: 32px; }
     .sk-led-light-work { padding: 4rem 0; }
   }
 
