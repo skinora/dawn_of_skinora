@@ -78,7 +78,7 @@
 .about-sec-2-btn {
   display: inline-flex;
   align-items: center;
-  gap: 12px; /* mer plass mellom tekst og pil */
+  gap: 12px;
 }
 
 /* Accent image & glow */
@@ -220,6 +220,7 @@
       <!-- IMAGE SECTION -->
       <div class="sk-about-section-2__image-section">
         <div class="sk-about-section-2__image-wrapper">
+
           {% if section.settings.main_image != blank %}
             <div class="sk-about-section-2__main-image{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
               <img
