@@ -41,6 +41,7 @@
 
 .video-section__media video {
   background: var(--color-black, #000000);
+  /* fallback retained, already tokenized; ensure no stray literal opacity usages */
 }
 
 .video-section__media.media-fit-cover video {

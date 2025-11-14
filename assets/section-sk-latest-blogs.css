@@ -97,7 +97,7 @@
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  background-color: #f5f5f5;
+  background-color: var(--color-ghost-2, #f5f5f5);
 }
 
 .sk-latest-blogs__featured-image {
@@ -110,7 +110,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  /* Use foreground RGB token with alpha for dark gradient instead of hard-coded black */
+  background: linear-gradient(transparent, rgba(var(--color-foreground-rgb, 0, 0, 0), 0.8));
   padding: 60px 30px 30px 30px;
 }
 
@@ -132,6 +133,6 @@
 .sk-latest-blogs__featured-excerpt {
   font-size: 14px;
   line-height: 20px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(var(--color-white-rgb, 255, 255, 255), 0.8);
   margin: 0;
 }

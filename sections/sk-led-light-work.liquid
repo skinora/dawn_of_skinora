@@ -4,9 +4,6 @@
   }
 
   .sk-led-light-work__content {
-    /* Unify section content width with global .page-width; remove narrower constraint */
-    width: 100%;
-    max-width: none; /* rely solely on outer .page-width */
     margin: 15px 0 50px;
     text-align: center;
   }
@@ -116,7 +113,7 @@
   <div class="page-width">
     <div class="sk-led-light-work__container">
       {% if section.settings.sk_led_light_work_heading != blank %}
-        <div class="sk-led-light-work__content">
+        <div class="sk-led-light-work__content sk-section-content">
           <h2 class="sk-led-light-work__heading sk-section-heading sk-section-heading--h1">
             {{ section.settings.sk_led_light_work_heading | escape }}
           </h2>

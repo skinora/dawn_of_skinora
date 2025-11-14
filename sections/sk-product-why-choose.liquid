@@ -23,8 +23,6 @@
 
                             .sk-product-why-choose-{{ section.id }} .sk-why-choose__content {
                               flex: 1;
-                              /* Remove narrow max-width to align with global widest content area */
-                              max-width: none;
                             }
 
                                   .sk-product-why-choose-{{ section.id }} .sk-why-choose__main-heading {
@@ -115,8 +113,8 @@
           {%- endif -%}
         </div>
 
-        <!-- Content Section -->
-        <div class="sk-why-choose__content">
+        <!-- Content Section (apply readable default width instead of wide) -->
+        <div class="sk-why-choose__content sk-section-content">
           {%- if product.metafields.custom.why_choose_content != blank -%}
             {%- capture why_choose_html -%}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ product.metafields.custom.why_choose_content | metafield_tag }}

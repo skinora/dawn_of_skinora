@@ -10,8 +10,7 @@
     padding: 5rem 0;
     background-color: {{ section.settings.background_color | default: '#f1eff4' }};
     position: relative;
-    /* Removed overflow:hidden to prevent navigation arrows from being clipped */
-    overflow: visible;
+    overflow: clip; /* contain visuals without creating horizontal scroll */
   }
   .sk-before-after__header { text-align: center; margin-bottom: 48px; }
   .sk-before-after__title {
@@ -25,19 +24,19 @@
     font-size: {{ section.settings.subtitle_size }}px;
     color: {{ section.settings.subtitle_color }};
     font-weight: {{ section.settings.subtitle_weight }};
-    max-width: 620px;
     margin: 0 auto;
     line-height: 1.4;
   }
   .swiper-slide { display: flex; justify-content: center; }
   .sk-testimonial-card {
     box-sizing: border-box;
-    flex: 1 1 340px;
+    flex: 0 0 340px;
     max-width: 340px;
-    width: 100%;
+    width: 340px; /* fixed width prevents cumulative flex growth causing overflow */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin: 0 12px;
   }
+  /* Use gap instead of margins to avoid adding width beyond container */
+  .sk-before-after .swiper-wrapper { display:flex; gap:24px; }
   .sk-testimonial-card__images { position: relative; border-radius: 20px; overflow: hidden; min-height: 180px; }
   .sk-testimonial-card__image { width:50%; height:100%; object-fit:cover; position:absolute; top:0; display:block; }
   .sk-testimonial-card__image--before { left:0; border-radius:16px 0 0 0; }
@@ -54,27 +53,26 @@
   .sk-testimonial-card__text { font-size:14px; line-height:1.5; color:#000; font-weight:500; }
   .sk-before-after-prev, .sk-before-after-next {
     position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; background:none; border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:5; transition:background .3s ease, transform .3s ease;
-    /* Allow arrows to sit slightly outside inner slider without clipping */
   }
   .sk-before-after-prev:hover, .sk-before-after-next:hover { background:#f5f5f5; transform:translateY(-50%) scale(1.08); }
-  .sk-before-after-prev { left:1.25rem; }
-  .sk-before-after-next { right:1.25rem; }
+  .sk-before-after-prev { left: 0.75rem; }
+  .sk-before-after-next { right: 0.75rem; }
   .sk-before-after-prev svg, .sk-before-after-next svg { width:24px; height:24px; stroke:#6C6C6C; }
   /* Keyboard accessibility focus styles */
   .sk-before-after-prev:focus-visible, .sk-before-after-next:focus-visible {
     outline:2px solid var(--color-brand, #4a4458);
     outline-offset:4px;
   }
-  /* Ensure internal swiper does not clip absolutely positioned arrows */
-  .sk-before-after .swiper { overflow: visible; }
+  /* Prevent internal track from causing page width growth */
+  .sk-before-after .swiper { overflow: hidden; }
   .swiper-pagination { position:relative !important; margin-top:34px; }
   .swiper-pagination-bullet { width:12px; height:12px; background:#ddd; opacity:1; transition:all .3s ease; }
   .swiper-pagination-bullet-active { background:#4a4458; transform:scale(1.2); }
   .sk_before_img { width:100%; height:auto; display:block; }
   .sk-before-after .swiper, .sk-before-after .swiper-wrapper { position:relative; }
-  @media (max-width:1024px){ .sk-testimonial-card{ flex:1 1 calc(50% - 24px); max-width:none; } }
+  @media (max-width:1024px){ .sk-testimonial-card{ flex:0 0 calc(50% - 12px); width:calc(50% - 12px); max-width:none; } }
   @media (max-width:700px){
-    .sk-testimonial-card{ flex:1 1 100%; max-width:100%; margin:0 0 34px; }
+  .sk-testimonial-card{ flex:0 0 100%; width:100%; max-width:100%; }
     .sk-testimonial-card__content{ margin-top:0; }
     .sk-before-after-prev, .sk-before-after-next{ top:auto; bottom:10px; transform:none; }
     .sk-before-after-prev{ left:1rem; }
@@ -92,7 +90,7 @@
 <section class="sk-before-after">
   <div class="page-width">
     {% if section.settings.section_title != blank or section.settings.section_subtitle != blank %}
-      <div class="sk-before-after__header">
+      <div class="sk-before-after__header sk-section-content">
         {% if section.settings.section_title != blank %}
           <h2 class="sk-before-after__title sk-section-heading sk-section-heading--h2">
             {{ section.settings.section_title }}

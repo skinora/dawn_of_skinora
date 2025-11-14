@@ -51,7 +51,7 @@
   --sk-gap-sm: 16px;
   --sk-gap-md: 24px;
   --sk-gap-lg: 48px;
-  --sk-media-max: 620px;   /* cap the gallery width */
+  --sk-media-max: 620px; /* cap the gallery width */
   --sk-info-min: 420px;
 }
 
@@ -127,6 +127,28 @@
   max-width: var(--page-width);
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+/* Section content width utilities (unified readable widths) */
+/* Wide: full design width, Default: constrained text width, Narrow: extra small blocks */
+.sk-section-content {
+  width: 100%;
+  max-width: 64rem; /* ~1024px readable text column */
+  margin-inline: auto;
+  padding-inline: var(--sk-page-gutter);
+}
+
+@media screen and (min-width: 990px) {
+  .sk-section-content {
+    max-width: 68rem;
+  }
+}
+
+.sk-section-content--wide {
+  max-width: var(--page-width);
+}
+.sk-section-content--narrow {
+  max-width: 48rem;
 }
 
 body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
