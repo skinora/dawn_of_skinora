@@ -1,0 +1,115 @@
+/**
+ * Swiper 11.2.10 (local minimal stylesheet)
+ * Source: https://swiperjs.com
+ * License: MIT (Copyright 2014-2025 Vladimir Kharlampidi)
+ * NOTE: This is a pared-down CSS subset to eliminate external CDN usage.
+ * If advanced Swiper effects (cube, flip, coverflow, creative, cards, fade) or
+ * embedded icon font are needed, replace this file with the full upstream minified bundle.
+ */
+:root {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --swiper-pagination-bullet-size: 8px;
+  --swiper-pagination-bullet-border-radius: 50%;
+}
+.swiper {
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transition-property: transform;
+  box-sizing: content-box;
+}
+.swiper-slide {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: block;
+}
+/* Navigation */
+.swiper-button-next,
+.swiper-button-prev {
+  position: absolute;
+  top: 50%;
+  width: calc(var(--swiper-navigation-size) / 44 * 27);
+  height: var(--swiper-navigation-size);
+  margin-top: calc(-1 * var(--swiper-navigation-size) / 2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--swiper-theme-color);
+  z-index: 10;
+}
+.swiper-button-prev {
+  left: 10px;
+}
+.swiper-button-next {
+  right: 10px;
+}
+.swiper-button-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+/* Basic Pagination Bullets */
+.swiper-pagination {
+  position: absolute;
+  text-align: center;
+  left: 0;
+  bottom: 8px;
+  width: 100%;
+  z-index: 10;
+}
+.swiper-pagination-bullet {
+  width: var(--swiper-pagination-bullet-size);
+  height: var(--swiper-pagination-bullet-size);
+  background: rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  border-radius: var(--swiper-pagination-bullet-border-radius);
+  margin: 0 4px;
+  opacity: 0.5;
+  transition: opacity 0.25s, background-color 0.25s;
+}
+.swiper-pagination-bullet-active {
+  background: var(--swiper-theme-color);
+  opacity: 1;
+}
+/* Lazy preloader placeholder */
+.swiper-lazy-preloader {
+  width: 42px;
+  height: 42px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -21px;
+  margin-top: -21px;
+  border: 4px solid var(--swiper-theme-color);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: swiper-preloader-spin 1s linear infinite;
+}
+@keyframes swiper-preloader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* Accessibility helper (notification region placeholder) */
+.swiper-notification {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: -1000;
+}
