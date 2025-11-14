@@ -11,13 +11,14 @@
 /* Wrapper – styrer bredde + kolonneplassering */
 .sk-content-section__wrapper {
   max-width: 700px;
+  margin-inline: auto; /* center horizontally while keeping left-aligned text inside */
 }
 
 /* Desktop: align med venstre kant på bildet i about-seksjonen */
 @media screen and (min-width: 990px) {
   .sk-content-section__wrapper {
-    max-width: 550px;   /* ca. samme bredde som bildet */
-    margin-left: -40px; /* samme “dra litt til venstre” som bildet */
+    max-width: 640px; /* comfortable readable width */
+    margin: auto;
   }
 }
 
@@ -66,7 +67,7 @@
 
 /* Custom bullet – liten, stram, ikke standard dot */
 .sk-content-section__content ul li::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 9px;
   left: 0;
