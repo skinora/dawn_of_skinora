@@ -1,38 +1,85 @@
+/* ================================
+   PREMIUM CONTENT SECTION
+   ================================ */
+
+/* Heading – mindre hard, mer premium */
 .sk-content-section__heading {
-  font-size: 48px;
+  font-size: 42px;
   font-weight: 700;
   color: var(--color-brand, #30273e);
-  margin-bottom: 40px;
+  margin-bottom: 32px;
   margin-top: 0;
-  line-height: 1.2;
+  line-height: 1.1;
+  max-width: 640px;
 }
 
+/* Paragraphs – max width + bedre line-height + ikke justify */
 .sk-content-section__content p {
   font-size: 16px;
-  line-height: 24px;
+  line-height: 1.7;
   color: var(--color-neutral-4, #4f4f4f);
-  margin-bottom: 20px;
-  text-align: justify;
-  width: 100%;
+  margin-bottom: 22px;
+  max-width: 700px;
 }
 
+/* Remove margin from last paragraph */
 .sk-content-section__content p:last-child {
   margin-bottom: 0;
 }
 
+/* ----- 
+   Premium bullet list 
+   --------------------------------------- */
+
+/* Remove Shopify richtext default margins */
+.sk-content-section__content ul {
+  padding-left: 0;
+  margin: 28px 0;
+  list-style: none;
+  max-width: 700px;
+}
+
+.sk-content-section__content ul li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 14px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--color-neutral-4, #4f4f4f);
+}
+
+/* Custom premium bullet */
+.sk-content-section__content ul li::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-brand, #30273e);
+  border-radius: 2px; /* gjør den mer eksklusiv enn en dot */
+}
+
+/* Last bullet */
+.sk-content-section__content ul li:last-child {
+  margin-bottom: 0;
+}
+
+/* Button wrapper */
 .sk-content-section__button-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start; /* ikke i midten – mer premium */
   margin-top: 40px;
 }
 
+/* CTA button */
 .sk-content-section__button {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 12px; /* MER luft mellom tekst og pil */
   background-color: var(--color-brand, #30273e);
   color: white;
-  padding: 16px 32px;
+  padding: 16px 34px;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
@@ -41,9 +88,23 @@
   border: 2px solid var(--color-brand, #30273e);
 }
 
+/* Hover */
 .sk-content-section__button:hover {
   background-color: transparent;
   color: var(--color-brand, #30273e);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(48, 39, 62, 0.2);
+  box-shadow: 0 6px 20px rgba(48, 39, 62, 0.15);
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 749px) {
+  .sk-content-section__heading {
+    font-size: 32px;
+    line-height: 1.15;
+    margin-bottom: 24px;
+  }
+
+  .sk-content-section__button-wrapper {
+    justify-content: flex-start;
+  }
 }
