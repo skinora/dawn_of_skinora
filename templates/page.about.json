@@ -80,11 +80,19 @@
             "number": "02",
             "text": "<p><br/>Vi velger bort korte trendbølger<br/><br/></p>"
           }
+        },
+        "numbered_item_nMHP4b": {
+          "type": "numbered_item",
+          "settings": {
+            "number": "03",
+            "text": "<p><br/>Vi investerer i kvalitet, men unngår unødvendige mellomledd<br/><br/></p>"
+          }
         }
       },
       "block_order": [
         "item_1",
-        "item_2"
+        "item_2",
+        "numbered_item_nMHP4b"
       ],
       "settings": {
         "featured_image": "shopify://shop_images/about-sec-2-img-1.png",
