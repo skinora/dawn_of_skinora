@@ -217,7 +217,40 @@
 <div class="sk-about-section-2 section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="page-width">
     <div class="sk-about-section-2__content">
-      <!-- IMAGE SECTION -->
+        <!-- TEXT SECTION -->
+      <div class="sk-about-section-2__text-section">
+        {% if section.settings.heading != blank %}
+          <h2 class="sk-about-section-2__heading h0 sk-section-heading sk-section-heading--hxl{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ section.settings.heading | escape }}
+          </h2>
+        {% endif %}
+
+        {% if section.settings.subheading != blank %}
+          <span class="sk-about-section-2__subheading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ section.settings.subheading | escape }}
+          </span>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <div class="sk-about-section-2__description{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+            {{ section.settings.description }}
+          </div>
+        {% endif %}
+
+        {% if section.settings.button_label != blank %}
+          <div class="sk-about-section-2__button-wrapper">
+            <a href="{{ section.settings.button_link }}" class="sk_primary-button about-sec-2-btn">
+              {{ section.settings.button_label }}
+              <span class="svg-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="29" viewBox="0 0 23 29" fill="none">
+                  <path d="M22.1904 13.8521L21.5352 14.5132L22.1904 15.1763L9.02734 28.4858L6.39453 25.8247L15.6016 16.5142H0.499023V12.5142H15.6016L6.39453 3.20361L9.02734 0.541504L22.1904 13.8521Z" fill="white"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+        {% endif %}
+      </div>
+          <!-- IMAGE SECTION -->
       <div class="sk-about-section-2__image-section">
         <div class="sk-about-section-2__image-wrapper">
 
@@ -265,40 +298,6 @@
             <div class="sk-about-section-2__glow-effect"></div>
           {% endif %}
         </div>
-      </div>
-
-      <!-- TEXT SECTION -->
-      <div class="sk-about-section-2__text-section">
-        {% if section.settings.heading != blank %}
-          <h2 class="sk-about-section-2__heading h0 sk-section-heading sk-section-heading--hxl{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-            {{ section.settings.heading | escape }}
-          </h2>
-        {% endif %}
-
-        {% if section.settings.subheading != blank %}
-          <span class="sk-about-section-2__subheading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-            {{ section.settings.subheading | escape }}
-          </span>
-        {% endif %}
-
-        {% if section.settings.description != blank %}
-          <div class="sk-about-section-2__description{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-            {{ section.settings.description }}
-          </div>
-        {% endif %}
-
-        {% if section.settings.button_label != blank %}
-          <div class="sk-about-section-2__button-wrapper">
-            <a href="{{ section.settings.button_link }}" class="sk_primary-button about-sec-2-btn">
-              {{ section.settings.button_label }}
-              <span class="svg-wrapper">
-                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="29" viewBox="0 0 23 29" fill="none">
-                  <path d="M22.1904 13.8521L21.5352 14.5132L22.1904 15.1763L9.02734 28.4858L6.39453 25.8247L15.6016 16.5142H0.499023V12.5142H15.6016L6.39453 3.20361L9.02734 0.541504L22.1904 13.8521Z" fill="white"/>
-                </svg>
-              </span>
-            </a>
-          </div>
-        {% endif %}
       </div>
     </div>
   </div>
