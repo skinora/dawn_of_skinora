@@ -114,6 +114,7 @@
         "card_bVYxDb",
         "card_zfxKWX"
       ],
+      "disabled": true,
       "name": "SK Promotion",
       "settings": {
         "sk_promotion_bgColor": "#ffffff"
@@ -152,6 +153,7 @@
         "product_Km3at8",
         "product_fRgkE9"
       ],
+      "disabled": true,
       "name": "SK Product Listing",
       "settings": {
         "section_title": "Finn Skinora Led-Maske Som Passer Akkurat Deg",
@@ -219,6 +221,7 @@
         "testimonial_EbbgMm",
         "testimonial_rWEGVc"
       ],
+      "disabled": true,
       "name": "SK Before/After Section",
       "settings": {
         "section_title": "",
@@ -266,6 +269,7 @@
         "card_UCy7PJ",
         "card_XrpM6T"
       ],
+      "disabled": true,
       "name": "SK Features",
       "settings": {
         "sk_features_bgColor": "#ffffff"
@@ -310,6 +314,7 @@
         "description_NNfKke",
         "button_4eVJnT"
       ],
+      "disabled": true,
       "name": "Image with Content",
       "settings": {
         "sk_radiance_image": "shopify://shop_images/Rectangle_1.png",
@@ -346,6 +351,7 @@
         "image_tmt9Tn",
         "image_LUYxgB"
       ],
+      "disabled": true,
       "name": "SK Led Light Work",
       "settings": {
         "sk_led_light_work_heading": "Hvordan Fungerer Skinora Led Lys"
@@ -353,6 +359,7 @@
     },
     "sk_product_why_choose_8a4LNx": {
       "type": "sk-product-why-choose",
+      "disabled": true,
       "name": "SK Product Why Choose",
       "settings": {}
     },
@@ -418,6 +425,7 @@
         "faq_item_hMtjky",
         "faq_item_Djcpbr"
       ],
+      "disabled": true,
       "name": "SK FAQ Accordion",
       "settings": {
         "faq_image": "shopify://shop_images/Image_3.png",
