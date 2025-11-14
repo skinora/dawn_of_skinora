@@ -10,7 +10,9 @@
     padding: 5rem 0;
     background-color: {{ section.settings.background_color | default: '#f1eff4' }};
     position: relative;
-    overflow: hidden; /* contain visuals and prevent page horizontal scroll */
+    /* Allow arrows outside inner track without triggering horizontal scroll */
+    overflow-x: visible;
+    overflow-y: hidden;
     --slide-gap: 16px;
     --slides-desktop: {{ section.settings.slides_per_view | default: 3 }};
   }
@@ -64,8 +66,8 @@
   .sk-before-after-next:not(.swiper-button-disabled):hover { background:rgba(255,255,255,.75); transform:translateY(-50%) scale(1.08); }
   }
   /* Removed generic hover; using conditional hover above */
-  .sk-before-after-prev { left: 0.5rem; }
-  .sk-before-after-next { right: 0.5rem; }
+  .sk-before-after-prev { left: 0.75rem; }
+  .sk-before-after-next { right: 0.75rem; }
   .sk-before-after-prev svg, .sk-before-after-next svg { width:24px; height:24px; stroke: var(--color-neutral-3, #6C6C6C); }
   .sk-before-after-prev:not(.swiper-button-disabled) svg,
   .sk-before-after-next:not(.swiper-button-disabled) svg { stroke: var(--color-neutral-2, #666); }
@@ -74,8 +76,8 @@
     outline:2px solid var(--color-brand, #4a4458);
     outline-offset:4px;
   }
-  /* Prevent internal track from causing page width growth */
-  .sk-before-after .swiper { overflow: hidden; }
+  /* Prevent vertical overflow but let arrows render horizontally */
+  .sk-before-after .swiper { overflow-x: visible; overflow-y: hidden; }
   .swiper-pagination { position:relative !important; margin-top:34px; }
   .swiper-pagination-bullet { width:12px; height:12px; background:#ddd; opacity:1; transition:all .3s ease; }
   .swiper-pagination-bullet-active { background:#4a4458; transform:scale(1.2); }
