@@ -627,6 +627,11 @@ body {
 .sk-product-features__item svg,
 .sk-product-features__item img {
   display: block;
-  width: clamp(40px, 14vw, 96px);
+  width: clamp(52px, 18vw, 96px);
   height: auto;
+}
+
+.sk-product-features__item svg * {
+  fill: #30273e !important;
+  stroke: #30273e !important;
 }
