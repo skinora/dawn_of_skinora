@@ -661,24 +661,40 @@ body {
 }
 
 /* === New metafield-based SVG feature icons === */
+/* === Metafield-based SVG Feature Icons (Responsive) === */
+
 .sk-product-features {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 16px;
-  margin-top: 2rem;
+  gap: 16px 24px;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
   align-items: center;
 }
 
-/* For file-based icons (img) */
-.sk-product-features__item img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-/* For inline SVG markup from metafield (list.single_line_text_field) */
+/* Desktop icons */
 .sk-product-features__item svg {
   display: block;
-  width: 56px; /* tweak to your taste */
-  height: 56px; /* tweak to your taste */
+  width: 96px;
+  height: 96px;
+}
+
+/* Apply brand color to all inner SVG shapes */
+.sk-product-features__item svg * {
+  fill: #30273e !important; /* SKINORA brand color */
+  stroke: #30273e !important;
+}
+
+/* === Mobile === */
+@media (max-width: 749px) {
+  .sk-product-features {
+    gap: 12px 16px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .sk-product-features__item svg {
+    width: 52px; /* smaller on mobile */
+    height: 52px;
+  }
 }
