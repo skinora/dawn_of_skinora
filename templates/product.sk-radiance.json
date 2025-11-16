@@ -51,10 +51,6 @@
             "show_dynamic_checkout": false
           }
         },
-        "product_features_98XiWd": {
-          "type": "product_features",
-          "settings": {}
-        },
         "product_description": {
           "type": "product_description",
           "settings": {}
@@ -81,7 +77,6 @@
         "price",
         "variant_picker",
         "quantity_selector",
-        "product_features_98XiWd",
         "product_description",
         "guarantee_banner",
         "promotion_logos"
