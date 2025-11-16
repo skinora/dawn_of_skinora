@@ -50,11 +50,24 @@
   {%- render 'sk-radiance-product-assets', section: section, product: product -%}
 
   {%- assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' -%}
-  {%- assign pill_1 = section.settings.pill_1 -%}
-  {%- assign pill_2 = section.settings.pill_2 -%}
-  {%- assign pill_3 = section.settings.pill_3 -%}
+  {%- assign product_pills_meta = product.metafields.custom.product_pills -%}
+  {%- assign product_pills = blank -%}
+  {%- if product_pills_meta and product_pills_meta.value != blank -%}
+    {%- if product_pills_meta.type contains 'list.' -%}
+      {%- assign product_pills = product_pills_meta.value -%}
+    {%- else -%}
+      {%- assign product_pills = product_pills_meta.value | split: '\n' -%}
+    {%- endif -%}
+  {%- endif -%}
   {%- assign has_pills = false -%}
-  {%- if pill_1 != blank or pill_2 != blank or pill_3 != blank -%}{%- assign has_pills = true -%}{%- endif -%}
+  {%- if product_pills != blank -%}
+    {%- for pill in product_pills -%}
+      {%- if pill != blank -%}
+        {%- assign has_pills = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
 
   <div class="page-width">
     <div class="sk-radiance-product sk-radiance-product--{{ section.settings.media_size }} sk-radiance-product--{{ section.settings.media_position }} sk-radiance-product--{{ section.settings.gallery_layout }} sk-radiance-product--mobile-{{ section.settings.mobile_thumbnails }} {% if product.media.size > 0 %}sk-radiance-product--with-media{% else %}sk-radiance-product--no-media{% endif %}">
@@ -65,15 +78,11 @@
         {%- if has_pills -%}
           <!-- MOBILE: pills under hero -->
           <div class="sk-radiance-pills sk-radiance-pills--mobile" role="list" aria-label="Product highlights">
-            {%- if pill_1 != blank -%}
-              <span class="sk-pill" role="listitem">{{ pill_1 }}</span>
-            {%- endif -%}
-            {%- if pill_2 != blank -%}
-              <span class="sk-pill" role="listitem">{{ pill_2 }}</span>
-            {%- endif -%}
-            {%- if pill_3 != blank -%}
-              <span class="sk-pill" role="listitem">{{ pill_3 }}</span>
-            {%- endif -%}
+            {%- for pill in product_pills -%}
+              {%- if pill != blank -%}
+                <span class="sk-pill" role="listitem">{{ pill }}</span>
+              {%- endif -%}
+            {%- endfor -%}
           </div>
         {%- endif -%}
 
@@ -123,15 +132,11 @@
                 {%- if has_pills -%}
                   <!-- DESKTOP/TABLET: pills before price -->
                   <div class="sk-radiance-pills sk-radiance-pills--desktop" role="list" aria-label="Product highlights">
-                    {%- if pill_1 != blank -%}
-                      <span class="sk-pill" role="listitem">{{ pill_1 }}</span>
-                    {%- endif -%}
-                    {%- if pill_2 != blank -%}
-                      <span class="sk-pill" role="listitem">{{ pill_2 }}</span>
-                    {%- endif -%}
-                    {%- if pill_3 != blank -%}
-                      <span class="sk-pill" role="listitem">{{ pill_3 }}</span>
-                    {%- endif -%}
+                    {%- for pill in product_pills -%}
+                      {%- if pill != blank -%}
+                        <span class="sk-pill" role="listitem">{{ pill }}</span>
+                      {%- endif -%}
+                    {%- endfor -%}
                   </div>
                 {%- endif -%}
 
@@ -398,11 +403,6 @@
   ],
   "settings": [
     { "type": "checkbox", "id": "enable_sticky_info", "default": true, "label": "Enable Sticky Info" },
-
-    { "type": "header", "content": "Benefit pills" },
-    { "type": "text", "id": "pill_1", "label": "Pill 1", "default": "3 Highly Precise Wavelengths" },
-    { "type": "text", "id": "pill_2", "label": "Pill 2", "default": "Best Fit For Every Face" },
-    { "type": "text", "id": "pill_3", "label": "Pill 3", "default": "Guaranteed Quality, Safety & Results" },
 
     { "type": "header", "content": "Guarantee Banner Below Media Gallery" },
     {
