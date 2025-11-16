@@ -247,7 +247,7 @@
 }
 .sk-radiance-price-item--sale {
   color: var(--color-black);
-  font-weight: 700; /* FIX: was 24px */
+  font-weight: 700;
   font-size: 24px;
 }
 .sk-radiance-sticky-bottom-bar .sk-radiance-price-item--sale {
@@ -395,7 +395,7 @@
   display: none;
 }
 
-/* Features */
+/* Features under buy button */
 .sk-radiance-buy-buttons__features {
   display: flex;
   flex-direction: column;
@@ -450,59 +450,6 @@
   align-items: center;
   gap: 2rem;
   margin-bottom: 10px;
-}
-
-/* Product Features Section (kept simple/flexible) */
-.sk-radiance-product-features {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin: 2rem 0;
-  padding: 1.5rem 0;
-  border-top: 1px solid var(--color-border-2, #e0e0e0);
-  border-bottom: 1px solid var(--color-border-2, #e0e0e0);
-  flex-wrap: wrap;
-}
-.sk-radiance-product-features__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  flex: 1;
-  max-width: 120px;
-}
-.sk-radiance-product-features__icon {
-  margin-bottom: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.sk-radiance-product-features__icon svg {
-  width: 87px;
-  height: 87px;
-  transition: transform 0.2s ease;
-}
-.sk-radiance-product-features__text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-.sk-radiance-product-features__text-top,
-.sk-radiance-product-features__text-bottom {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--color-neutral-3, #333);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  line-height: 1.2;
-}
-.sk-radiance-product-features__text-top {
-  color: var(--color-neutral-5, #999999);
-}
-.sk-radiance-product-features__text-bottom {
-  color: var(--color-neutral-3, #333);
-  font-weight: 700;
 }
 
 /* Sticky Bottom Bar */
@@ -594,7 +541,7 @@
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    line-clamp: 2; /* non-prefixed for future compatibility */
+    line-clamp: 2;
   }
   .sk-radiance-sticky-bottom-bar__price {
     justify-content: center;
@@ -660,41 +607,26 @@ body {
   }
 }
 
-/* === New metafield-based SVG feature icons === */
-/* === Metafield-based SVG Feature Icons (Responsive) === */
-
+/* === FLUID FEATURE BADGES UNDER BUY BUTTON === */
 .sk-product-features {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px 24px;
+  align-items: center;
+  gap: 12px 20px;
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
+}
+
+.sk-product-features__item {
+  display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-/* Desktop icons */
-.sk-product-features__item svg {
+/* Fluid size: smaller on mobil, større på desktop */
+.sk-product-features__item svg,
+.sk-product-features__item img {
   display: block;
-  width: 96px;
-  height: 96px;
-}
-
-/* Apply brand color to all inner SVG shapes */
-.sk-product-features__item svg * {
-  fill: #30273e !important; /* SKINORA brand color */
-  stroke: #30273e !important;
-}
-
-/* === Mobile === */
-@media (max-width: 749px) {
-  .sk-product-features {
-    gap: 12px 16px;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .sk-product-features__item svg {
-    width: 52px; /* smaller on mobile */
-    height: 52px;
-  }
+  width: clamp(40px, 14vw, 96px);
+  height: auto;
 }
