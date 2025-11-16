@@ -13,14 +13,15 @@
     margin: 0.75rem 0 1.25rem;
   }
   .sk-radiance-pills .sk-pill {
-    background: var(--color-ghost-2, #f8f9fa);
-    border: 1px solid var(--color-border-2, #e0e0e0);
+    background: var(--color-white, #ffffff);
+    border: 2px solid var(--color-border-2, #d4d4dc);
     border-radius: 9999px;
-    padding: 0.65rem 1rem; /* bigger */
-    font-size: 1rem; /* bigger */
-    line-height: 1.1;
-    font-weight: 600; /* bolder */
+    padding: 0.75rem 1.35rem; /* more padding */
+    font-size: 1.1rem; /* larger text */
+    line-height: 1.2;
+    font-weight: 700; /* heavier weight */
     white-space: nowrap;
+    box-shadow: 0 6px 14px rgba(48, 39, 62, 0.12);
   }
   /* visibility/placement */
   .sk-radiance-pills--desktop {
@@ -79,8 +80,9 @@
           <!-- MOBILE: pills under hero -->
           <div class="sk-radiance-pills sk-radiance-pills--mobile" role="list" aria-label="Product highlights">
             {%- for pill in product_pills -%}
-              {%- if pill != blank -%}
-                <span class="sk-pill" role="listitem">{{ pill }}</span>
+              {%- assign pill_text = pill | strip -%}
+              {%- if pill_text != blank -%}
+                <span class="sk-pill" role="listitem">{{ pill_text }}</span>
               {%- endif -%}
             {%- endfor -%}
           </div>
@@ -133,8 +135,9 @@
                   <!-- DESKTOP/TABLET: pills before price -->
                   <div class="sk-radiance-pills sk-radiance-pills--desktop" role="list" aria-label="Product highlights">
                     {%- for pill in product_pills -%}
-                      {%- if pill != blank -%}
-                        <span class="sk-pill" role="listitem">{{ pill }}</span>
+                      {%- assign pill_text = pill | strip -%}
+                      {%- if pill_text != blank -%}
+                        <span class="sk-pill" role="listitem">{{ pill_text }}</span>
                       {%- endif -%}
                     {%- endfor -%}
                   </div>
