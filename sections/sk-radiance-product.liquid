@@ -130,7 +130,52 @@ Bigger “pill” badges (desktop before price, mobile under hero).
                 %}
 
               {%- when 'product_features' -%}
-                {%- render 'sk-radiance-features', product: product, block: block -%}
+                <div class="sk-product-features" {{ block.shopify_attributes }}>
+                  {%- assign svg_list = product.metafields.custom.feature_svgs_2.value -%}
+
+                  {%- if svg_list and svg_list.size > 0 -%}
+                    {%- comment -%} Use SVGs from product metafield list {%- endcomment -%}
+                    {%- for svg in svg_list -%}
+                      {%- if svg != blank -%}
+                        <div class="sk-product-features__item">
+                          {{ svg }}
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- else -%}
+                    {%- comment -%}
+                      Fallback: use section feature SVG fields if metafield list is empty
+                    {%- endcomment -%}
+
+                    {%- assign fallback_svgs = "" | split: "," -%}
+
+                    {%- if block.settings.feature_1_enabled and block.settings.feature_1_svg != blank -%}
+                      {%- assign fallback_svgs = fallback_svgs | push: block.settings.feature_1_svg -%}
+                    {%- endif -%}
+
+                    {%- if block.settings.feature_2_enabled and block.settings.feature_2_svg != blank -%}
+                      {%- assign fallback_svgs = fallback_svgs | push: block.settings.feature_2_svg -%}
+                    {%- endif -%}
+
+                    {%- if block.settings.feature_3_enabled and block.settings.feature_3_svg != blank -%}
+                      {%- assign fallback_svgs = fallback_svgs | push: block.settings.feature_3_svg -%}
+                    {%- endif -%}
+
+                    {%- if block.settings.feature_4_enabled and block.settings.feature_4_svg != blank -%}
+                      {%- assign fallback_svgs = fallback_svgs | push: block.settings.feature_4_svg -%}
+                    {%- endif -%}
+
+                    {%- if block.settings.feature_5_enabled and block.settings.feature_5_svg != blank -%}
+                      {%- assign fallback_svgs = fallback_svgs | push: block.settings.feature_5_svg -%}
+                    {%- endif -%}
+
+                    {%- for svg in fallback_svgs -%}
+                      <div class="sk-product-features__item">
+                        {{ svg }}
+                      </div>
+                    {%- endfor -%}
+                  {%- endif -%}
+                </div>
 
               {%- when 'product_description' -%}
                 {%- render 'sk-radiance-product-description', product: product, block: block, section: section -%}
