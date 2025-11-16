@@ -125,7 +125,7 @@
         "product_azBm9j": {
           "type": "product",
           "settings": {
-            "product": "skinora-radiance",
+            "product": "skinora-radiance-face",
             "show_description": true,
             "button_text": "KJØP"
           }
@@ -299,7 +299,7 @@
           "type": "button",
           "settings": {
             "button_text": "Kjøp Skinora Radiance",
-            "button_url": "shopify://products/skinora-radiance",
+            "button_url": "shopify://products/skinora-radiance-face",
             "button_style_secondary": false
           }
         }
