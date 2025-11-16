@@ -160,17 +160,37 @@
                 %}
 
               {%- when 'product_features' -%}
+                {%- comment -%}
+                  Product Features block
+                  Uses metafield: custom.feature_svg
+                  Type: List → Single-line text
+                  Each item should contain one SVG or HTML snippet, e.g. <svg>...</svg>
+                {%- endcomment -%}
+
+                {% comment %} {%- assign mf = product.metafields.custom.feature_svg -%} {% endcomment %}
+
                 <div class="sk-product-features" {{ block.shopify_attributes }}>
-                  {%- assign svg_list = product.metafields.custom.feature_svgs_2.value -%}
-                  {%- if svg_list and svg_list.size > 0 -%}
-                    {%- comment -%} Render only metafield-provided SVGs {%- endcomment -%}
-                    {%- for svg in svg_list -%}
-                      {%- if svg != blank -%}
-                        <div class="sk-product-features__item">{{ svg }}</div>
+                  <p>hei jeg er dritt</p>
+                  {% comment %}
+                    {%- if mf and mf.value and mf.value.size > 0 -%}
+                      {%- for svg in mf.value -%}
+                        {%- if svg != blank -%}
+                          <div class="sk-product-features__item">
+                            {{ svg | raw }}
+                          </div>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- else -%}
+                      {%- if block.settings.empty_state != blank -%}
+                        <div class="sk-product-features__empty">
+                          {{ block.settings.empty_state }}
+                        </div>
                       {%- endif -%}
-                    {%- endfor -%}
-                  {%- endif -%}
-                  {%- comment -%} Fallback settings removed; ensure product metafield 'custom.feature_svgs_2' (list of HTML/SVG) is populated. {%- endcomment -%}
+                    {%- endif -%}
+                  {% endcomment %}
+                  <script>
+                    console.log('hei');
+                  </script>
                 </div>
 
               {%- when 'product_description' -%}
@@ -273,7 +293,13 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "This block now renders only the product metafield 'custom.feature_svgs_2' (list of HTML/SVG snippets). Add or edit SVGs via product metafields."
+          "content": "Renders the metafield custom.feature_svg. Type: List of single-line text, each containing one SVG or HTML snippet."
+        },
+        {
+          "type": "text",
+          "id": "empty_state",
+          "label": "Empty State Text",
+          "default": ""
         }
       ]
     },
