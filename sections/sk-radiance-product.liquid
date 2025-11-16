@@ -16,12 +16,13 @@
     background: var(--color-ghost-2, #f8f9fa);
     border: 1px solid var(--color-border-2, #e0e0e0);
     border-radius: 9999px;
-    padding: 0.65rem 1rem;
-    font-size: 1rem;
+    padding: 0.65rem 1rem; /* bigger */
+    font-size: 1rem; /* bigger */
     line-height: 1.1;
-    font-weight: 600;
+    font-weight: 600; /* bolder */
     white-space: nowrap;
   }
+  /* visibility/placement */
   .sk-radiance-pills--desktop {
     display: none;
   }
@@ -53,9 +54,7 @@
   {%- assign pill_2 = section.settings.pill_2 -%}
   {%- assign pill_3 = section.settings.pill_3 -%}
   {%- assign has_pills = false -%}
-  {%- if pill_1 != blank or pill_2 != blank or pill_3 != blank -%}
-    {%- assign has_pills = true -%}
-  {%- endif -%}
+  {%- if pill_1 != blank or pill_2 != blank or pill_3 != blank -%}{%- assign has_pills = true -%}{%- endif -%}
 
   <div class="page-width">
     <div class="sk-radiance-product sk-radiance-product--{{ section.settings.media_size }} sk-radiance-product--{{ section.settings.media_position }} sk-radiance-product--{{ section.settings.gallery_layout }} sk-radiance-product--mobile-{{ section.settings.mobile_thumbnails }} {% if product.media.size > 0 %}sk-radiance-product--with-media{% else %}sk-radiance-product--no-media{% endif %}">
@@ -161,102 +160,17 @@
                 %}
 
               {%- when 'product_features' -%}
-                {%- assign mf = product.metafields.custom.feature_svgs_2 -%}
-
                 <div class="sk-product-features" {{ block.shopify_attributes }}>
-                  {%- if mf and mf.value and mf.value.size > 0 -%}
-                    {%- assign metafield_type = mf.type -%}
-
-                    {%- if metafield_type contains 'list.file_reference' -%}
-                      {%- for f in mf.value -%}
-                        {%- if f != blank and f.preview_image != blank -%}
-                          {%- assign img = f.preview_image -%}
-
-                          <figure class="sk-product-features__item">
-                            <img
-                              src="{{ img | image_url }}"
-                              width="100"
-                              height="{{ 100 | divided_by: img.aspect_ratio | round }}"
-                              alt="{{ f.alt | escape }}"
-                              loading="lazy"
-                            >
-                          </figure>
-                        {%- endif -%}
-                      {%- endfor -%}
-
-                    {%- else -%}
-                      {{ mf.value | json }}
-                    {%- endif -%}
-
-                  {%- else -%}
-                    {%- if block.settings.empty_state != blank -%}
-                      <div class="sk-product-features__empty">{{ block.settings.empty_state }}</div>
-                    {%- endif -%}
+                  {%- assign svg_list = product.metafields.custom.feature_svgs_2.value -%}
+                  {%- if svg_list and svg_list.size > 0 -%}
+                    {%- comment -%} Render only metafield-provided SVGs {%- endcomment -%}
+                    {%- for svg in svg_list -%}
+                      {%- if svg != blank -%}
+                        <div class="sk-product-features__item">{{ svg }}</div>
+                      {%- endif -%}
+                    {%- endfor -%}
                   {%- endif -%}
-                </div>
-
-                {%- comment -%}
-                  Product Features block
-                  Renders product.metafields.custom.feature_svgs_2
-
-                  Supports:
-                  - list.file_reference (SVG / image files)
-                  - list.text / list.rich_text (inline SVG/HTML snippets)
-                  - rich_text / single HTML
-                {%- endcomment -%}
-
-                {%- assign mf = product.metafields.custom.feature_svgs_2 -%}
-
-                <div class="sk-product-features" {{ block.shopify_attributes }}>
-                  {%- if mf != blank -%}
-                    {%- assign t = mf.type -%}
-
-                    {%- if t contains 'list.file_reference' -%}
-                      {%- for f in mf.value -%}
-                        {%- if f != blank -%}
-                          {%- assign img = f.preview_image -%}
-                          {%- assign ext = img.src | split: '?' | first | split: '.' | last | downcase -%}
-                          <figure class="sk-product-features__item">
-                            {%- if ext == 'svg' -%}
-                              <img
-                                src="{{ img | image_url }}"
-                                width="120"
-                                height="{{ 120 | divided_by: img.aspect_ratio | round }}"
-                                alt="{{ f.alt | escape }}"
-                                loading="lazy"
-                              >
-                            {%- else -%}
-                              <img
-                                src="{{ img | image_url: width: 120 }}"
-                                width="120"
-                                height="{{ 120 | divided_by: img.aspect_ratio | round }}"
-                                alt="{{ f.alt | escape }}"
-                                loading="lazy"
-                              >
-                            {%- endif -%}
-                          </figure>
-                        {%- endif -%}
-                      {%- endfor -%}
-
-                    {%- elsif t contains 'list.' -%}
-                      {%- for item in mf.value -%}
-                        {%- if item != blank -%}
-                          <div class="sk-product-features__item">{{ item | raw }}</div>
-                        {%- endif -%}
-                      {%- endfor -%}
-
-                    {%- elsif t == 'rich_text' -%}
-                      <div class="sk-product-features__item">{{ mf.value }}</div>
-
-                    {%- else -%}
-                      <div class="sk-product-features__item">{{ mf.value | raw }}</div>
-                    {%- endif -%}
-
-                  {%- else -%}
-                    {%- if block.settings.empty_state != blank -%}
-                      <div class="sk-product-features__empty">{{ block.settings.empty_state }}</div>
-                    {%- endif -%}
-                  {%- endif -%}
+                  {%- comment -%} Fallback settings removed; ensure product metafield 'custom.feature_svgs_2' (list of HTML/SVG) is populated. {%- endcomment -%}
                 </div>
 
               {%- when 'product_description' -%}
@@ -296,6 +210,7 @@
     </script>
   </div>
 
+  <!-- Sticky Bottom Bar (server-rendered template only) -->
   {%- render 'sk-radiance-sticky-bar', section: section, product: product, product_form_id: product_form_id -%}
 </product-info>
 
@@ -353,18 +268,12 @@
     },
     {
       "type": "product_features",
-      "name": "Product Features (SVG / icons)",
+      "name": "Product Features",
       "limit": 1,
       "settings": [
         {
           "type": "paragraph",
-          "content": "Renders the metafield custom.feature_svgs_2. Supports list of files (SVG/images) or list.text / rich_text with inline SVG/HTML."
-        },
-        {
-          "type": "text",
-          "id": "empty_state",
-          "label": "Empty State Text",
-          "default": ""
+          "content": "This block now renders only the product metafield 'custom.feature_svgs_2' (list of HTML/SVG snippets). Add or edit SVGs via product metafields."
         }
       ]
     },
