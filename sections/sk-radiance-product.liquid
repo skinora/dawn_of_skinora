@@ -175,6 +175,13 @@
                     {%- assign feature_meta = feature_group[feature_key] -%}
                   {%- endif -%}
                 {%- endif -%}
+                {%- assign svg_items = blank -%}
+                {%- if feature_meta and feature_meta.type contains 'list.' -%}
+                  {%- assign svg_items = feature_meta.value -%}
+                  {%- if svg_items == blank and feature_meta.value == blank and feature_meta.value != null -%}
+                    {%- assign svg_items = feature_meta | parse_json -%}
+                  {%- endif -%}
+                {%- endif -%}
                 <div
                   class="sk-product-features"
                   {{ block.shopify_attributes }}
@@ -203,9 +210,15 @@
                       {%- endfor -%}
 
                     {%- elsif feature_type contains 'list.' -%}
-                      {%- for svg_markup in feature_meta.value -%}
-                        {%- if svg_markup != blank -%}
-                          <div class="sk-product-features__item" role="listitem">{{ svg_markup | raw }}</div>
+                      {%- for svg_markup in svg_items -%}
+                        {%- assign svg_string = svg_markup.value -%}
+                        {%- if svg_string == blank -%}
+                          {%- assign svg_string = svg_markup -%}
+                        {%- endif -%}
+                        {%- if svg_string != blank -%}
+                          <div class="sk-product-features__item" role="listitem">
+                            {{ svg_string | strip | replace: '\r', '' | raw }}
+                          </div>
                         {%- endif -%}
                       {%- endfor -%}
 
@@ -227,13 +240,22 @@
                   {%- endif -%}
 
                   <script>
-                    window.console && console.info('[Radiance] product metafield %s.%s:', '{{ feature_namespace }}', '{{ feature_key }}', {{ feature_meta | json }});
-                  </script>
-                </div>
+                    window.console && console.info('[Radiance] product metafield %s.%s:', '{{ feature_namespace }}', '
+                    {{- feature_key -}}
+                    ', {{ feature_meta | json }});
+                    {%- if request.params.features_debug == '1' -%}
+                      <script>
+                        console.info('[Radiance] product metafield %s.%s', '{{ feature_namespace }}', '{{ feature_key }}', {{ feature_meta | json }});
+                      </script>
+                      <details class="sk-product-features__debug" style="margin-top:0.75rem; font-size:0.75rem;">
+                        <summary>Feature metafield debug</summary>
+                        <pre style="white-space:pre-wrap; word-break:break-word;">namespace: {{ feature_namespace }}
+key: {{ feature_key }}
 
-              {%- when 'product_description' -%}
-                {%- render 'sk-radiance-product-description', product: product, block: block, section: section -%}
-
+                    {%- when 'product_description' -%}
+                      {%- render 'sk-radiance-product-description', product: product, block: block, section: section -%}
+                      </details>
+                    {%- endif -%}
               {%- when 'guarantee_banner' -%}
                 {%- if product.metafields.custom.guarantee_banner_content != blank -%}
                   {%- render 'sk-radiance-guarantee', section: section, product: product, block: block -%}
