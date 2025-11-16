@@ -2,31 +2,37 @@
 {{ 'section-sk-guarantee-banner.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%}
-Bigger “pill” badges (desktop before price, mobile under hero).
+  Bigger “pill” badges (desktop before price, mobile under hero).
 {%- endcomment -%}
 <style>
-  .sk-radiance-pills{
-    display:flex;
-    gap:.6rem .6rem;
-    flex-wrap:wrap;
-    align-items:center;
-    margin:.75rem 0 1.25rem;
+  .sk-radiance-pills {
+    display: flex;
+    gap: 0.6rem 0.6rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0.75rem 0 1.25rem;
   }
-  .sk-radiance-pills .sk-pill{
-    background:var(--color-ghost-2,#f8f9fa);
-    border:1px solid var(--color-border-2,#e0e0e0);
-    border-radius:9999px;
-    padding:.65rem 1rem;               /* bigger */
-    font-size:1rem;                    /* bigger */
-    line-height:1.1;
-    font-weight:600;                   /* bolder */
-    white-space:nowrap;
+  .sk-radiance-pills .sk-pill {
+    background: var(--color-ghost-2, #f8f9fa);
+    border: 1px solid var(--color-border-2, #e0e0e0);
+    border-radius: 9999px;
+    padding: 0.65rem 1rem; /* bigger */
+    font-size: 1rem; /* bigger */
+    line-height: 1.1;
+    font-weight: 600; /* bolder */
+    white-space: nowrap;
   }
   /* visibility/placement */
-  .sk-radiance-pills--desktop{display:none}
-  @media (min-width:750px){
-    .sk-radiance-pills--mobile{display:none}
-    .sk-radiance-pills--desktop{display:flex}
+  .sk-radiance-pills--desktop {
+    display: none;
+  }
+  @media (min-width: 750px) {
+    .sk-radiance-pills--mobile {
+      display: none;
+    }
+    .sk-radiance-pills--desktop {
+      display: flex;
+    }
   }
 </style>
 
@@ -37,7 +43,9 @@ Bigger “pill” badges (desktop before price, mobile under hero).
   data-product-id="{{ product.id }}"
   data-update-url="true"
   data-url="{{ product.url }}"
-  {% if section.settings.image_zoom == 'hover' %}data-zoom-on-hover{% endif %}
+  {% if section.settings.image_zoom == 'hover' %}
+    data-zoom-on-hover
+  {% endif %}
 >
   {%- render 'sk-radiance-product-assets', section: section, product: product -%}
 
@@ -57,13 +65,21 @@ Bigger “pill” badges (desktop before price, mobile under hero).
         {%- if has_pills -%}
           <!-- MOBILE: pills under hero -->
           <div class="sk-radiance-pills sk-radiance-pills--mobile" role="list" aria-label="Product highlights">
-            {%- if pill_1 != blank -%}<span class="sk-pill" role="listitem">{{ pill_1 }}</span>{%- endif -%}
-            {%- if pill_2 != blank -%}<span class="sk-pill" role="listitem">{{ pill_2 }}</span>{%- endif -%}
-            {%- if pill_3 != blank -%}<span class="sk-pill" role="listitem">{{ pill_3 }}</span>{%- endif -%}
+            {%- if pill_1 != blank -%}
+              <span class="sk-pill" role="listitem">{{ pill_1 }}</span>
+            {%- endif -%}
+            {%- if pill_2 != blank -%}
+              <span class="sk-pill" role="listitem">{{ pill_2 }}</span>
+            {%- endif -%}
+            {%- if pill_3 != blank -%}
+              <span class="sk-pill" role="listitem">{{ pill_3 }}</span>
+            {%- endif -%}
           </div>
         {%- endif -%}
 
-        {%- if section.settings.show_guarantee_below_media and product.metafields.custom.guarantee_banner_content != blank -%}
+        {%- if section.settings.show_guarantee_below_media
+          and product.metafields.custom.guarantee_banner_content != blank
+        -%}
           {%- render 'sk-radiance-guarantee',
             section: section,
             product: product,
@@ -88,7 +104,10 @@ Bigger “pill” badges (desktop before price, mobile under hero).
                 {% render block %}
 
               {%- when 'text' -%}
-                <p class="sk-radiance-product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}" {{ block.shopify_attributes }}>
+                <p
+                  class="sk-radiance-product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
+                  {{ block.shopify_attributes }}
+                >
                   {{- block.settings.text -}}
                 </p>
 
@@ -104,14 +123,25 @@ Bigger “pill” badges (desktop before price, mobile under hero).
                 {%- if has_pills -%}
                   <!-- DESKTOP/TABLET: pills before price -->
                   <div class="sk-radiance-pills sk-radiance-pills--desktop" role="list" aria-label="Product highlights">
-                    {%- if pill_1 != blank -%}<span class="sk-pill" role="listitem">{{ pill_1 }}</span>{%- endif -%}
-                    {%- if pill_2 != blank -%}<span class="sk-pill" role="listitem">{{ pill_2 }}</span>{%- endif -%}
-                    {%- if pill_3 != blank -%}<span class="sk-pill" role="listitem">{{ pill_3 }}</span>{%- endif -%}
+                    {%- if pill_1 != blank -%}
+                      <span class="sk-pill" role="listitem">{{ pill_1 }}</span>
+                    {%- endif -%}
+                    {%- if pill_2 != blank -%}
+                      <span class="sk-pill" role="listitem">{{ pill_2 }}</span>
+                    {%- endif -%}
+                    {%- if pill_3 != blank -%}
+                      <span class="sk-pill" role="listitem">{{ pill_3 }}</span>
+                    {%- endif -%}
                   </div>
                 {%- endif -%}
 
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
-                  {%- render 'sk-radiance-price', product: product, use_variant: true, show_badges: false, price_class: 'price--large' -%}
+                  {%- render 'sk-radiance-price',
+                    product: product,
+                    use_variant: true,
+                    show_badges: false,
+                    price_class: 'price--large'
+                  -%}
                 </div>
 
               {%- when 'quantity_selector' -%}
@@ -132,49 +162,15 @@ Bigger “pill” badges (desktop before price, mobile under hero).
               {%- when 'product_features' -%}
                 <div class="sk-product-features" {{ block.shopify_attributes }}>
                   {%- assign svg_list = product.metafields.custom.feature_svgs_2.value -%}
-
                   {%- if svg_list and svg_list.size > 0 -%}
-                    {%- comment -%} Use SVGs from product metafield list {%- endcomment -%}
+                    {%- comment -%} Render only metafield-provided SVGs {%- endcomment -%}
                     {%- for svg in svg_list -%}
                       {%- if svg != blank -%}
-                        <div class="sk-product-features__item">
-                          {{ svg }}
-                        </div>
+                        <div class="sk-product-features__item">{{ svg }}</div>
                       {%- endif -%}
                     {%- endfor -%}
-                  {%- else -%}
-                    {%- comment -%}
-                      Fallback: use section feature SVG fields if metafield list is empty
-                    {%- endcomment -%}
-
-                    {%- assign fallback_svgs = "" | split: "," -%}
-
-                    {%- if block.settings.feature_1_enabled and block.settings.feature_1_svg != blank -%}
-                      {%- assign fallback_svgs = fallback_svgs | push: block.settings.feature_1_svg -%}
-                    {%- endif -%}
-
-                    {%- if block.settings.feature_2_enabled and block.settings.feature_2_svg != blank -%}
-                      {%- assign fallback_svgs = fallback_svgs | push: block.settings.feature_2_svg -%}
-                    {%- endif -%}
-
-                    {%- if block.settings.feature_3_enabled and block.settings.feature_3_svg != blank -%}
-                      {%- assign fallback_svgs = fallback_svgs | push: block.settings.feature_3_svg -%}
-                    {%- endif -%}
-
-                    {%- if block.settings.feature_4_enabled and block.settings.feature_4_svg != blank -%}
-                      {%- assign fallback_svgs = fallback_svgs | push: block.settings.feature_4_svg -%}
-                    {%- endif -%}
-
-                    {%- if block.settings.feature_5_enabled and block.settings.feature_5_svg != blank -%}
-                      {%- assign fallback_svgs = fallback_svgs | push: block.settings.feature_5_svg -%}
-                    {%- endif -%}
-
-                    {%- for svg in fallback_svgs -%}
-                      <div class="sk-product-features__item">
-                        {{ svg }}
-                      </div>
-                    {%- endfor -%}
                   {%- endif -%}
+                  {%- comment -%} Fallback settings removed; ensure product metafield 'custom.feature_svgs_2' (list of HTML/SVG) is populated. {%- endcomment -%}
                 </div>
 
               {%- when 'product_description' -%}
@@ -229,7 +225,9 @@ Bigger “pill” badges (desktop before price, mobile under hero).
       "name": "Text",
       "settings": [
         { "type": "inline_richtext", "id": "text", "default": "Text content", "label": "Text" },
-        { "type": "select", "id": "text_style",
+        {
+          "type": "select",
+          "id": "text_style",
           "options": [
             { "value": "body", "label": "Body" },
             { "value": "subtitle", "label": "Subtitle" },
@@ -256,7 +254,9 @@ Bigger “pill” badges (desktop before price, mobile under hero).
       "name": "Variant Picker",
       "limit": 1,
       "settings": [
-        { "type": "select", "id": "picker_type",
+        {
+          "type": "select",
+          "id": "picker_type",
           "options": [
             { "value": "dropdown", "label": "Dropdown" },
             { "value": "button", "label": "Button" }
@@ -271,21 +271,10 @@ Bigger “pill” badges (desktop before price, mobile under hero).
       "name": "Product Features",
       "limit": 1,
       "settings": [
-        { "type": "header", "content": "Feature 1" },
-        { "type": "checkbox", "id": "feature_1_enabled", "default": true, "label": "Enable Feature 1" },
-        { "type": "html", "id": "feature_1_svg", "label": "Feature 1 SVG Code" },
-        { "type": "header", "content": "Feature 2" },
-        { "type": "checkbox", "id": "feature_2_enabled", "default": true, "label": "Enable Feature 2" },
-        { "type": "html", "id": "feature_2_svg", "label": "Feature 2 SVG Code" },
-        { "type": "header", "content": "Feature 3" },
-        { "type": "checkbox", "id": "feature_3_enabled", "default": true, "label": "Enable Feature 3" },
-        { "type": "html", "id": "feature_3_svg", "label": "Feature 3 SVG Code" },
-        { "type": "header", "content": "Feature 4" },
-        { "type": "checkbox", "id": "feature_4_enabled", "default": true, "label": "Enable Feature 4" },
-        { "type": "html", "id": "feature_4_svg", "label": "Feature 4 SVG Code" },
-        { "type": "header", "content": "Feature 5" },
-        { "type": "checkbox", "id": "feature_5_enabled", "default": true, "label": "Enable Feature 5" },
-        { "type": "html", "id": "feature_5_svg", "label": "Feature 5 SVG Code" }
+        {
+          "type": "paragraph",
+          "content": "This block now renders only the product metafield 'custom.feature_svgs_2' (list of HTML/SVG snippets). Add or edit SVGs via product metafields."
+        }
       ]
     },
     {
@@ -294,8 +283,14 @@ Bigger “pill” badges (desktop before price, mobile under hero).
       "limit": 1,
       "settings": [
         { "type": "header", "content": "Product-Specific Control" },
-        { "type": "paragraph", "content": "To show description on specific products only, add these metafields to each product:" },
-        { "type": "paragraph", "content": "1. 'custom.product_description_content' (Rich text) - Use the rich text editor to format your content with headings, paragraphs, and lists" }
+        {
+          "type": "paragraph",
+          "content": "To show description on specific products only, add these metafields to each product:"
+        },
+        {
+          "type": "paragraph",
+          "content": "1. 'custom.product_description_content' (Rich text) - Use the rich text editor to format your content with headings, paragraphs, and lists"
+        }
       ]
     },
     {
@@ -304,8 +299,14 @@ Bigger “pill” badges (desktop before price, mobile under hero).
       "limit": 1,
       "settings": [
         { "type": "header", "content": "Product-Specific Control" },
-        { "type": "paragraph", "content": "To show guarantee banner on specific products only, add this metafield to each product:" },
-        { "type": "paragraph", "content": "1. 'custom.guarantee_banner_content' (Rich text) - Use the rich text editor to add your guarantee text and subtitle" },
+        {
+          "type": "paragraph",
+          "content": "To show guarantee banner on specific products only, add this metafield to each product:"
+        },
+        {
+          "type": "paragraph",
+          "content": "1. 'custom.guarantee_banner_content' (Rich text) - Use the rich text editor to add your guarantee text and subtitle"
+        },
         { "type": "header", "content": "Button Settings" },
         { "type": "text", "id": "button_text", "label": "Button Text", "default": "LES MER" },
         { "type": "url", "id": "button_link", "label": "Button Link" }
@@ -317,9 +318,15 @@ Bigger “pill” badges (desktop before price, mobile under hero).
       "limit": 1,
       "settings": [
         { "type": "header", "content": "Product-Specific Control" },
-        { "type": "paragraph", "content": "To show promotion logos on specific products only, add this metafield to each product:" },
+        {
+          "type": "paragraph",
+          "content": "To show promotion logos on specific products only, add this metafield to each product:"
+        },
         { "type": "paragraph", "content": "Metafield: 'custom.promotion_logos' (List of files)" },
-        { "type": "paragraph", "content": "Add multiple logo images to the list, and they will automatically scroll across the screen with animation." }
+        {
+          "type": "paragraph",
+          "content": "Add multiple logo images to the list, and they will automatically scroll across the screen with animation."
+        }
       ]
     }
   ],
@@ -332,56 +339,95 @@ Bigger “pill” badges (desktop before price, mobile under hero).
     { "type": "text", "id": "pill_3", "label": "Pill 3", "default": "Guaranteed Quality, Safety & Results" },
 
     { "type": "header", "content": "Guarantee Banner Below Media Gallery" },
-    { "type": "checkbox", "id": "show_guarantee_below_media", "default": false, "label": "Show Guarantee Banner Below Media Gallery", "info": "Requires product to have 'custom.guarantee_banner_content' metafield" },
+    {
+      "type": "checkbox",
+      "id": "show_guarantee_below_media",
+      "default": false,
+      "label": "Show Guarantee Banner Below Media Gallery",
+      "info": "Requires product to have 'custom.guarantee_banner_content' metafield"
+    },
     { "type": "text", "id": "guarantee_button_text", "label": "Guarantee Button Text", "default": "LES MER" },
     { "type": "url", "id": "guarantee_button_link", "label": "Guarantee Button Link" },
 
     { "type": "color_scheme", "id": "color_scheme", "label": "Color Scheme", "default": "scheme-1" },
-    { "type": "select", "id": "media_size",
+    {
+      "type": "select",
+      "id": "media_size",
       "options": [
         { "value": "small", "label": "Small" },
         { "value": "medium", "label": "Medium" },
         { "value": "large", "label": "Large" }
       ],
-      "default": "large", "label": "Media Size"
+      "default": "large",
+      "label": "Media Size"
     },
     { "type": "checkbox", "id": "constrain_to_viewport", "default": true, "label": "Constrain to Viewport" },
-    { "type": "select", "id": "gallery_layout",
+    {
+      "type": "select",
+      "id": "gallery_layout",
       "options": [
         { "value": "stacked", "label": "Stacked" },
         { "value": "columns", "label": "Columns" },
         { "value": "thumbnail", "label": "Thumbnail" },
         { "value": "thumbnail_slider", "label": "Thumbnail Slider" }
       ],
-      "default": "thumbnail_slider", "label": "Gallery Layout"
+      "default": "thumbnail_slider",
+      "label": "Gallery Layout"
     },
-    { "type": "select", "id": "mobile_thumbnails",
+    {
+      "type": "select",
+      "id": "mobile_thumbnails",
       "options": [
         { "value": "columns", "label": "Columns" },
         { "value": "show", "label": "Show" },
         { "value": "hide", "label": "Hide" }
       ],
-      "default": "show", "label": "Mobile Thumbnails"
+      "default": "show",
+      "label": "Mobile Thumbnails"
     },
-    { "type": "select", "id": "media_position",
+    {
+      "type": "select",
+      "id": "media_position",
       "options": [
         { "value": "left", "label": "Left" },
         { "value": "right", "label": "Right" }
       ],
-      "default": "left", "label": "Media Position"
+      "default": "left",
+      "label": "Media Position"
     },
-    { "type": "select", "id": "image_zoom",
+    {
+      "type": "select",
+      "id": "image_zoom",
       "options": [
         { "value": "lightbox", "label": "Lightbox" },
         { "value": "hover", "label": "Hover" },
         { "value": "none", "label": "None" }
       ],
-      "default": "lightbox", "label": "Image Zoom"
+      "default": "lightbox",
+      "label": "Image Zoom"
     },
     { "type": "checkbox", "id": "hide_variants", "default": false, "label": "Hide Variants" },
     { "type": "checkbox", "id": "enable_video_looping", "default": false, "label": "Enable Video Looping" },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding Top", "default": 36 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding Bottom", "default": 12 }
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 12
+    }
   ]
 }
 {% endschema %}
