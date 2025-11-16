@@ -162,34 +162,72 @@
               {%- when 'product_features' -%}
                 {%- comment -%}
                   Product Features block
-                  Uses metafield: custom.feature_svg
-                  Type: List → Single-line text
-                  Each item should contain one SVG or HTML snippet, e.g. <svg>...</svg>
+                  Renders metafield: configurable (defaults to custom.feature_svg)
+                  Recommended type: list.single_line_text_field (each item contains SVG markup) OR list.file_reference for uploaded SVG/image files.
                 {%- endcomment -%}
 
-                {% comment %} {%- assign mf = product.metafields.custom.feature_svg -%} {% endcomment %}
+                {%- assign feature_namespace = block.settings.metafield_namespace | default: 'custom' -%}
+                {%- assign feature_key = block.settings.metafield_key | default: 'feature_svg' -%}
+                {%- assign feature_meta = null -%}
+                {%- if feature_namespace != blank and feature_key != blank -%}
+                  {%- assign feature_group = product.metafields[feature_namespace] -%}
+                  {%- if feature_group -%}
+                    {%- assign feature_meta = feature_group[feature_key] -%}
+                  {%- endif -%}
+                {%- endif -%}
+                <div
+                  class="sk-product-features"
+                  {{ block.shopify_attributes }}
+                  data-feature-namespace="{{ feature_namespace }}"
+                  data-feature-key="{{ feature_key }}"
+                  data-feature-type="{{ feature_meta.type | default: 'blank' }}"
+                  role="list"
+                >
+                  {%- if feature_meta and feature_meta.value != blank -%}
+                    {%- assign feature_type = feature_meta.type -%}
 
-                <div class="sk-product-features" {{ block.shopify_attributes }}>
-                  <p>hei jeg er dritt</p>
-                  {% comment %}
-                    {%- if mf and mf.value and mf.value.size > 0 -%}
-                      {%- for svg in mf.value -%}
-                        {%- if svg != blank -%}
-                          <div class="sk-product-features__item">
-                            {{ svg | raw }}
+                    {%- if feature_type contains 'list.file_reference' -%}
+                      {%- for file_ref in feature_meta.value -%}
+                        {%- if file_ref != blank -%}
+                          {%- assign img = file_ref.preview_image -%}
+                          <div class="sk-product-features__item" role="listitem">
+                            <img
+                              src="{{ img | image_url: width: 160 }}"
+                              width="160"
+                              height="{{ 160 | divided_by: img.aspect_ratio | round }}"
+                              alt="{{ file_ref.alt | default: 'Feature icon' | escape }}"
+                              loading="lazy"
+                            >
                           </div>
                         {%- endif -%}
                       {%- endfor -%}
+
+                    {%- elsif feature_type contains 'list.' -%}
+                      {%- for svg_markup in feature_meta.value -%}
+                        {%- if svg_markup != blank -%}
+                          <div class="sk-product-features__item" role="listitem">{{ svg_markup | raw }}</div>
+                        {%- endif -%}
+                      {%- endfor -%}
+
+                    {%- elsif feature_type == 'rich_text' -%}
+                      <div class="sk-product-features__item" role="listitem">{{ feature_meta.value }}</div>
+
                     {%- else -%}
-                      {%- if block.settings.empty_state != blank -%}
-                        <div class="sk-product-features__empty">
-                          {{ block.settings.empty_state }}
-                        </div>
-                      {%- endif -%}
+                      <div class="sk-product-features__item" role="listitem">{{ feature_meta.value | raw }}</div>
                     {%- endif -%}
-                  {% endcomment %}
+
+                  {%- else -%}
+                    {%- if block.settings.empty_state != blank -%}
+                      <div class="sk-product-features__empty">{{ block.settings.empty_state }}</div>
+                    {%- else -%}
+                      <div class="sk-product-features__empty">
+                        Add SVGs to metafield {{ feature_namespace }}.{{ feature_key }}.
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+
                   <script>
-                    console.log('hei');
+                    window.console && console.info('[Radiance] product metafield %s.%s:', '{{ feature_namespace }}', '{{ feature_key }}', {{ feature_meta | json }});
                   </script>
                 </div>
 
@@ -293,13 +331,15 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "Renders the metafield custom.feature_svg. Type: List of single-line text, each containing one SVG or HTML snippet."
+          "content": "Renders a product metafield (default custom.feature_svg). Recommended types: list.single_line_text_field (inline SVG markup) or list.file_reference (uploaded SVG/image files)."
         },
+        { "type": "text", "id": "metafield_namespace", "label": "Metafield namespace", "default": "custom" },
+        { "type": "text", "id": "metafield_key", "label": "Metafield key", "default": "feature_svg" },
         {
           "type": "text",
           "id": "empty_state",
           "label": "Empty State Text",
-          "default": ""
+          "default": "Legg til SVG-ikon i metafeltet"
         }
       ]
     },
