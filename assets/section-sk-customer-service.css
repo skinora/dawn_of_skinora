@@ -1,53 +1,153 @@
-/* === SAFE PATCH: scope to customer service only === */
-.sk-customer-service .contact-form select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+/* =============================
+   Skinora — Kundeservice styles
+   ============================= */
 
+/* Brand tokens (fra paletten din) */
+:root{
+  --sk-bg-2: #f2f2f2;      /* secondary bg */
+  --sk-text: #333333;      /* primary text */
+  --sk-accent: #a8a5c3;    /* accent/icon */
+  --sk-brand: #30273E;     /* dark brand */
+  --sk-cta: #4b0082;       /* CTA */
+  --sk-cta-hover: #6a0dad; /* CTA hover */
+  --sk-error: #c0392b;     /* error */
+  --sk-alt: #7ba6a1;       /* alt accent */
+  --sk-radius: 20px;
+  --sk-gap: clamp(18px, 2.5vw, 28px);
+}
+
+/* Section wrapper */
+.sk-customer-service{
+  color: var(--sk-text);
+  padding-block: clamp(28px, 5vw, 56px);
+}
+
+/* Title */
+.sk-customer-service__title{
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.1;
+  color: var(--sk-brand);
+  letter-spacing: .3px;
+  margin: 0 0 clamp(12px, 1.6vw, 16px);
+}
+
+/* Grid */
+.sk-customer-service__grid{
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: var(--sk-gap);
+}
+@media (max-width: 960px){
+  .sk-customer-service__grid{ grid-template-columns: 1fr; }
+}
+
+/* Cards */
+.sk-customer-service__info,
+.sk-customer-service__form{
+  background: #fff;
+  border: 1.5px solid rgba(48, 39, 62, .14);
+  border-radius: var(--sk-radius);
+  padding: clamp(18px, 2.4vw, 28px);
+  box-shadow: 0 8px 22px rgba(48, 39, 62, .08);
+}
+
+/* Headings inside cards */
+.sk-customer-service__info h2,
+.sk-customer-service__form h2{
+  font-size: clamp(18px, 2.2vw, 22px);
+  color: var(--sk-brand);
+  margin: 0 0 10px;
+}
+
+/* Info list */
+.sk-customer-service__details{
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+}
+.sk-customer-service__details li + li{ margin-top: 8px; }
+.sk-customer-service__details a{
+  color: var(--sk-cta);
+  text-decoration: none;
+}
+.sk-customer-service__details a:hover{ text-decoration: underline; }
+
+/* Form layout */
+.sk-customer-service__form .contact-form{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sk-gap);
+}
+
+.sk-customer-service__form label{
+  grid-column: span 1;
+  font-size: .95rem;
+  color: var(--sk-brand);
+  margin-bottom: 6px;
+}
+
+/* Inputs */
+.sk-customer-service__form input[type="text"],
+.sk-customer-service__form input[type="email"],
+.sk-customer-service__form textarea{
+  grid-column: span 1;
   width: 100%;
-  min-height: 44px;
   border-radius: 16px;
   border: 1.5px solid rgba(48,39,62,.22);
-  padding: 12px 44px 12px 14px;
+  padding: 12px 14px;
   font-size: 1rem;
-  background-color: #fff;
-
-  /* fallback if CSS vars missing */
-  color: var(--sk-text, #333333);
-
-  /* custom caret (uses brand dark) */
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2330273E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  background-size: 14px;
-
-  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+  background: #fff;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
 }
-.sk-customer-service .contact-form select:focus {
+
+.sk-customer-service__form textarea{
+  grid-column: 1 / -1;   /* full width */
+  min-height: 160px;
+  resize: vertical;
+}
+
+.sk-customer-service__form input::placeholder,
+.sk-customer-service__form textarea::placeholder{ color: #9aa; }
+
+/* Focus states (tilgjengelighet) */
+.sk-customer-service__form input:focus,
+.sk-customer-service__form textarea:focus{
   outline: none;
-  border-color: var(--sk-cta, #4b0082);
+  border-color: var(--sk-cta);
   box-shadow: 0 0 0 3px rgba(75,0,130,.15);
 }
-.sk-customer-service .contact-form select::-ms-expand { display: none; }
-.sk-customer-service .contact-form select option[disabled][selected] { color: #9aa; }
 
-/* Keep inputs normal; just ensure consistent height */
-.sk-customer-service .contact-form input[type="text"],
-.sk-customer-service .contact-form input[type="email"]{
-  min-height: 44px;
-}
-
-/* Button: square corners + brand color (scoped) */
-.sk-customer-service .sk-customer-service__button{
-  border-radius: 0;                    /* 0 corner radius */
-  background: var(--sk-brand, #30273E);
+/* Button */
+.sk-customer-service__button{
+  grid-column: 1 / -1;
+  justify-self: start;
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: var(--sk-cta);
   color: #fff;
-  box-shadow: 0 10px 22px rgba(48,39,62,.22);
+  padding: 12px 20px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(75,0,130,.25);
+  transition: background .15s ease, transform .05s ease, box-shadow .15s ease;
 }
-.sk-customer-service .sk-customer-service__button:hover{
-  background: #221b2d;                 /* slightly darker brand */
+.sk-customer-service__button:hover{ background: var(--sk-cta-hover); }
+.sk-customer-service__button:active{ transform: translateY(1px); }
+
+/* Small screens: stack fields */
+@media (max-width: 720px){
+  .sk-customer-service__form .contact-form{
+    grid-template-columns: 1fr;
+  }
+  .sk-customer-service__button{ justify-self: stretch; text-align: center; }
 }
-.sk-customer-service .sk-customer-service__button:active{
-  transform: translateY(1px);
-  box-shadow: 0 6px 16px rgba(48,39,62,.26);
+
+/* Optional helper states (hvis du vil vise suksess/feil) */
+.skcs-status{
+  grid-column: 1 / -1;
+  margin: 0 0 8px; padding: 10px 14px; border-radius: 12px; font-size: .95rem;
+  border: 1px solid transparent;
 }
+.skcs-status--success{ color: #0a4; background: #e9f6ee; border-color: #cfead8; }
+.skcs-status--error{ color: #a11919; background: #fdeeee; border-color: #f9d0d0; }
