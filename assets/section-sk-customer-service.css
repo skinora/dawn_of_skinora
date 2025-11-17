@@ -150,4 +150,4 @@
   border: 1px solid transparent;
 }
 .skcs-status--success{ color: #0a4; background: #e9f6ee; border-color: #cfead8; font-size: 1.3rem; }
-.skcs-status--error{ color: #a11919; background: #fdeeee; border-color: #f9d0d0; }
+.skcs-status--error{ color: #a11919; background: #fdeeee; border-color: #f9d0d0; font-size: 1.3rem;}
