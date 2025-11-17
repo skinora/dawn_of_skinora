@@ -149,5 +149,5 @@
   margin: 0 0 8px; padding: 10px 14px; border-radius: 12px; font-size: .95rem;
   border: 1px solid transparent;
 }
-.skcs-status--success{ color: #0a4; background: #e9f6ee; border-color: #cfead8; }
+.skcs-status--success{ color: #0a4; background: #e9f6ee; border-color: #cfead8; font-size: 1.3rem; }
 .skcs-status--error{ color: #a11919; background: #fdeeee; border-color: #f9d0d0; }
