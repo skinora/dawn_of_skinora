@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -6,9 +15,23 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "sk_legal_content_section_nb7QQ8": {
+      "type": "sk-legal-content-section",
+      "name": "Legal Content Section",
+      "settings": {
+        "heading": "Legal Document",
+        "content": "Retur og AngrerettHos Skinora ønsker vi at du skal føle deg trygg når du handler hos oss. Dersom et produkt ikke lever opp til forventningene dine, har du alltid rett til å angre kjøpet.Angrerett – 14 dagerI henhold til angrerettloven har du 14 dagers angrerett fra den dagen du mottar varen.For å benytte angreretten må:produktet være i tilnærmet samme stand som ved mottakalle tilbehør, ladekabler, bruksanvisninger og originalemballasje følge medhygieneplomber være intakte (der dette gjelder)Når angreretten benyttes, tilbakebetaler vi kjøpesummen innen 7–10 virkedager etter mottatt og godkjent retur.Utvidet 60-dagers prøveperiode for Skinora LED-maskerWell-aging tar tid, derfor får du en utvidet 60-dagers prøvetid på alle Skinora LED-enheter.Dette innebærer at:du kan teste produktet hjemme i 60 dagerdersom du ikke er fornøyd med resultatet, refunderer vi kjøpsbeløpetproduktet må returneres komplett og uten betydelig skadeDenne prøveperioden gjelder kun LED-masker og andre Skinora enheter, ikke hudpleie eller hygieneprodukter.Hvordan returnereSend oss en e-post på hello@skinora.no med ordrenummer og returønske.Du mottar returinstruksjoner og returadresse.Send varen tilbake godt emballert.Refundering utbetales når returen er mottatt og godkjent.Kunden dekker returkostnad ved angrerett eller 60-dagers prøveperiode, med mindre varen er defekt.Defekt eller feil vareHvis produktet er skadet, defekt eller feil levert, ordner vi dette uten kostnad for deg. Vi sender nytt produkt eller tilbyr full refusjon.UnntakRetur og angrerett gjelder ikke for:brukte hygieneprodukter (hudpleie, serum, kosmetikk)produkter med brutt hygieneplombevarer som er betydelig skadet på grunn av feil brukDette er i tråd med norsk lovgivning om angrerett og hygieneprodukter.Refundering vil alltid bli utbetalt via samme betalingsmetode som du benyttet ved kjøpet.",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "background-1",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "sk_legal_content_section_nb7QQ8"
   ]
 }
