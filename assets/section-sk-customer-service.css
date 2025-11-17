@@ -95,7 +95,7 @@
   border-radius: 16px;
   border: 1.5px solid rgba(48,39,62,.22);
   padding: 12px 14px;
-  font-size: 1rem;
+  font-size: 1.3rem;
   background: #fff;
   transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
 }
