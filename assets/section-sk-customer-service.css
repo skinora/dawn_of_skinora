@@ -1,172 +1,153 @@
-.sk-cs__header {
-  text-align: center;
-  margin-bottom: 2.5rem;
+/* =============================
+   Skinora — Kundeservice styles
+   ============================= */
+
+/* Brand tokens (fra paletten din) */
+:root{
+  --sk-bg-2: #f2f2f2;      /* secondary bg */
+  --sk-text: #333333;      /* primary text */
+  --sk-accent: #a8a5c3;    /* accent/icon */
+  --sk-brand: #30273E;     /* dark brand */
+  --sk-cta: #4b0082;       /* CTA */
+  --sk-cta-hover: #6a0dad; /* CTA hover */
+  --sk-error: #c0392b;     /* error */
+  --sk-alt: #7ba6a1;       /* alt accent */
+  --sk-radius: 20px;
+  --sk-gap: clamp(18px, 2.5vw, 28px);
 }
 
-.sk-cs__title {
-  margin: 0 0 0.5rem 0;
-  font-weight: 700;
-  font-size: 48px;
-  line-height: 1.15;
-  color: var(--color-foreground, #30273e);
-  color: rgb(var(--color-foreground));
+/* Section wrapper */
+.sk-customer-service{
+  color: var(--sk-text);
+  padding-block: clamp(28px, 5vw, 56px);
 }
 
-.sk-cs__subtitle {
-  max-width: 760px;
-  margin: 0 auto;
-  color: var(--color-muted, #4f4f4f);
-  color: rgba(var(--color-foreground), 0.75);
-  font-size: 16px;
-  line-height: 24px;
-  opacity: 0.95;
+/* Title */
+.sk-customer-service__title{
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.1;
+  color: var(--sk-brand);
+  letter-spacing: .3px;
+  margin: 0 0 clamp(12px, 1.6vw, 16px);
 }
 
-.sk-cs__grid {
+/* Grid */
+.sk-customer-service__grid{
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 32px;
+  grid-template-columns: 1fr 1.3fr;
+  gap: var(--sk-gap);
 }
-@media (max-width: 990px) {
-  .sk-cs__grid {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 960px){
+  .sk-customer-service__grid{ grid-template-columns: 1fr; }
 }
 
-.sk-cs__col {
-  background: var(--color-surface, var(--color-background, #fff));
+/* Cards */
+.sk-customer-service__info,
+.sk-customer-service__form{
+  background: #fff;
+  border: 1.5px solid rgba(48, 39, 62, .14);
+  border-radius: var(--sk-radius);
+  padding: clamp(18px, 2.4vw, 28px);
+  box-shadow: 0 8px 22px rgba(48, 39, 62, .08);
+}
+
+/* Headings inside cards */
+.sk-customer-service__info h2,
+.sk-customer-service__form h2{
+  font-size: clamp(18px, 2.2vw, 22px);
+  color: var(--sk-brand);
+  margin: 0 0 10px;
+}
+
+/* Info list */
+.sk-customer-service__details{
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+}
+.sk-customer-service__details li + li{ margin-top: 8px; }
+.sk-customer-service__details a{
+  color: var(--sk-cta);
+  text-decoration: none;
+}
+.sk-customer-service__details a:hover{ text-decoration: underline; }
+
+/* Form layout */
+.sk-customer-service__form .contact-form{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sk-gap);
+}
+
+.sk-customer-service__form label{
+  grid-column: span 1;
+  font-size: .95rem;
+  color: var(--sk-brand);
+  margin-bottom: 6px;
+}
+
+/* Inputs */
+.sk-customer-service__form input[type="text"],
+.sk-customer-service__form input[type="email"],
+.sk-customer-service__form textarea{
+  grid-column: span 1;
+  width: 100%;
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  padding: 28px;
-}
-
-.sk-cs__fields {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.sk-cs__field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.sk-cs__field:nth-child(5),
-.sk-cs__field:nth-child(6),
-.sk-cs__field textarea {
-  grid-column: 1 / -1;
-}
-.sk-cs__field label {
-  font-size: 0.95rem;
-  color: var(--color-foreground-muted, #6b6b6b);
-  color: rgba(var(--color-foreground), 0.75);
-}
-.sk-cs__field input,
-.sk-cs__field select,
-.sk-cs__field textarea {
-  width: 100%;
+  border: 1.5px solid rgba(48,39,62,.22);
   padding: 12px 14px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 10px;
-  background: var(--color-input-background, #fff);
-  color: var(--color-foreground, #222);
-  color: rgb(var(--color-foreground));
-  font-size: 15px;
-}
-.sk-cs__checkbox {
-  display: flex;
-  gap: 0.6rem;
-  align-items: flex-start;
-  grid-column: 1 / -1;
+  font-size: 1rem;
+  background: #fff;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
 }
 
-.sk-cs__btn {
-  width: 100%;
-  margin-top: 12px;
-  padding: 14px 18px;
-  border-radius: 12px;
+.sk-customer-service__form textarea{
+  grid-column: 1 / -1;   /* full width */
+  min-height: 160px;
+  resize: vertical;
+}
+
+.sk-customer-service__form input::placeholder,
+.sk-customer-service__form textarea::placeholder{ color: #9aa; }
+
+/* Focus states (tilgjengelighet) */
+.sk-customer-service__form input:focus,
+.sk-customer-service__form textarea:focus{
+  outline: none;
+  border-color: var(--sk-cta);
+  box-shadow: 0 0 0 3px rgba(75,0,130,.15);
+}
+
+/* Button */
+.sk-customer-service__button{
+  grid-column: 1 / -1;
+  justify-self: start;
+  appearance: none;
   border: 0;
-  background: var(--color-accent-1, #30273e);
-  color: var(--color-button-foreground, #fff);
+  border-radius: 999px;
+  background: var(--sk-cta);
+  color: #fff;
+  padding: 12px 20px;
   font-weight: 700;
   cursor: pointer;
-  font-size: 16px;
+  box-shadow: 0 10px 22px rgba(75,0,130,.25);
+  transition: background .15s ease, transform .05s ease, box-shadow .15s ease;
 }
-.sk-cs__btn:hover {
-  opacity: 0.95;
-  transform: translateY(-1px);
-}
+.sk-customer-service__button:hover{ background: var(--sk-cta-hover); }
+.sk-customer-service__button:active{ transform: translateY(1px); }
 
-.sk-cs__notice {
-  padding: 12px 14px;
-  border-radius: 10px;
-  margin-bottom: 14px;
-  font-weight: 600;
-}
-.sk-cs__notice--success {
-  background: var(--color-success-bg, #e8f6ee);
-  color: var(--color-success, #0b7a4b);
-}
-.sk-cs__notice--error {
-  background: var(--color-danger-bg, #fdeaea);
-  color: var(--color-danger-strong, #a31616);
-}
-
-.sk-cs__card h3 {
-  margin: 0 0 0.6rem 0;
-  color: var(--color-foreground, #30273e);
-  color: rgb(var(--color-foreground));
-}
-.sk-cs__list {
-  margin: 0;
-  padding-left: 0;
-  list-style: none;
-  display: grid;
-  gap: 0.4rem;
-}
-
-.sk-cs__links {
-  display: grid;
-  gap: 10px;
-  margin-top: 18px;
-}
-.sk-cs__link {
-  display: block;
-  padding: 12px 14px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
-  text-decoration: none;
-  color: var(--color-foreground, inherit);
-  color: rgb(var(--color-foreground));
-}
-.sk-cs__link:hover {
-  background: rgba(0, 0, 0, 0.04);
-}
-
-.sk-cs__topics {
-  margin-top: 36px;
-  display: grid;
-  gap: 14px;
-  grid-template-columns: repeat(4, 1fr);
-}
-@media (max-width: 990px) {
-  .sk-cs__topics {
-    grid-template-columns: 1fr 1fr;
+/* Small screens: stack fields */
+@media (max-width: 720px){
+  .sk-customer-service__form .contact-form{
+    grid-template-columns: 1fr;
   }
+  .sk-customer-service__button{ justify-self: stretch; text-align: center; }
 }
-.sk-cs__topic {
-  text-decoration: none;
-  padding: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 14px;
-  display: grid;
-  gap: 6px;
-  color: var(--color-foreground, inherit);
-  color: rgb(var(--color-foreground));
+
+/* Optional helper states (hvis du vil vise suksess/feil) */
+.skcs-status{
+  grid-column: 1 / -1;
+  margin: 0 0 8px; padding: 10px 14px; border-radius: 12px; font-size: .95rem;
+  border: 1px solid transparent;
 }
-.sk-cs__topic-title {
-  font-weight: 700;
-}
-.sk-cs__topic-desc {
-  opacity: 0.8;
-  font-size: 0.95rem;
-}
+.skcs-status--success{ color: #0a4; background: #e9f6ee; border-color: #cfead8; }
+.skcs-status--error{ color: #a11919; background: #fdeeee; border-color: #f9d0d0; }
