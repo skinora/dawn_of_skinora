@@ -52,7 +52,7 @@
   padding: 40px 30px;
   background-color: var(--color-white, #ffffff);
   border: 2px solid var(--color-black, #000);
-  border-radius: 16px;
+  border-radius: 0;
   text-decoration: none;
   transition: all 0.3s ease;
   height: 100%;
@@ -73,7 +73,7 @@
   width: 80px;
   height: 80px;
   background-color: var(--color-brand, #30273e);
-  border-radius: 12px;
+  border-radius: 0;
   margin-bottom: 24px;
 }
 
