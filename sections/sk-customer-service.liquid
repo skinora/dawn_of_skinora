@@ -10,26 +10,66 @@
 
       <ul class="sk-customer-service__details">
         <li><strong>E-post:</strong> <a href="mailto:hello@skinora.no">hello@skinora.no</a></li>
+        <li><strong>Svartid:</strong> innen 24–48 timer (hverdager)</li>
+        <li><strong>Åpningstid:</strong> 09–16 (CET)</li>
       </ul>
     </div>
 
     <div class="sk-customer-service__form">
       <h2>Send oss en melding</h2>
-      <form method="post" action="/contact#contact_form" id="contact_form" class="contact-form">
-        <input type="hidden" name="form_type" value="contact">
-        <input type="hidden" name="utf8" value="✓">
 
-        <label for="name">Navn</label>
-        <input type="text" id="name" name="name" placeholder="Ditt navn" required>
+      {% form 'contact', id: 'contact_form', class: 'contact-form' %}
+        {%- if form.posted_successfully? -%}
+          <p class="skcs-status skcs-status--success">Takk! Meldingen din er sendt. Vi svarer så fort vi kan.</p>
 
-        <label for="email">E-post</label>
-        <input type="email" id="email" name="email" placeholder="Din e-post" required>
+          {%- comment -%}
+            Ønsker du redirect til en takk-side i stedet?
+            Fjern kommentaren under og sett riktig URL (f.eks. /pages/takk)
+          {%- endcomment -%}
+          {%- comment -%}
+          <script>window.location='/pages/takk';</script>
+          {%- endcomment -%}
 
-        <label for="message">Melding</label>
-        <textarea id="message" name="message" placeholder="Hva kan vi hjelpe deg med?" required></textarea>
+        {%- elsif form.errors -%}
+          <p class="skcs-status skcs-status--error">Oi! Noe gikk galt. Sjekk feltene og prøv igjen.</p>
+        {%- endif -%}
+
+        {%- comment -%}
+          Disse skjulte feltene gjør innboksemnet tydeligere og lar deg filtrere i e-post.
+        {%- endcomment -%}
+        <input type="hidden" name="contact[subject]" value="Kundeservice – ny henvendelse fra {{ shop.name }}">
+        <input type="hidden" name="contact[tags]" value="Kundeservice, Kontakt">
+
+        {%- comment -%}
+          Honeypot (anti-spam). Skjult for brukere, synlig for roboter.
+        {%- endcomment -%}
+        <input type="text" name="contact[website]" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;padding:0;border:0;">
+
+        <label for="ContactFormName">Navn</label>
+        <input type="text" id="ContactFormName" name="contact[name]" placeholder="Ditt navn" autocomplete="name" required>
+
+        <label for="ContactFormEmail">E-post</label>
+        <input type="email" id="ContactFormEmail" name="contact[email]" placeholder="din@epost.no" autocomplete="email" required>
+
+        <label for="ContactFormOrder">Ordrenummer (valgfritt)</label>
+        <input type="text" id="ContactFormOrder" name="contact[order_number]" placeholder="#1234" inputmode="numeric" pattern="[0-9#\- ]*">
+
+        <label for="ContactFormTopic">Emne</label>
+        <select id="ContactFormTopic" name="contact[topic]" required>
+          <option value="" disabled selected>Velg emne …</option>
+          <option>Produktspørsmål</option>
+          <option>Bestilling &amp; betaling</option>
+          <option>Frakt &amp; levering</option>
+          <option>Retur &amp; angrerett</option>
+          <option>Garanti &amp; support</option>
+          <option>Annet</option>
+        </select>
+
+        <label for="ContactFormMessage">Melding</label>
+        <textarea id="ContactFormMessage" name="contact[body]" rows="6" placeholder="Hva kan vi hjelpe deg med?" required></textarea>
 
         <button type="submit" class="sk-customer-service__button">Send melding</button>
-      </form>
+      {% endform %}
     </div>
   </div>
 </div>
