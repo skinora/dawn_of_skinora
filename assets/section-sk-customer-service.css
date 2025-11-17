@@ -1,61 +1,53 @@
-/* === PATCH: Select (Velg emne …) matcher feltene === */
-.sk-customer-service__form select{
-  /* fjern default look */
+/* === SAFE PATCH: scope to customer service only === */
+.sk-customer-service .contact-form select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
 
   width: 100%;
+  min-height: 44px;
   border-radius: 16px;
   border: 1.5px solid rgba(48,39,62,.22);
-  padding: 12px 44px 12px 14px; /* plass til pil til høyre */
+  padding: 12px 44px 12px 14px;
   font-size: 1rem;
   background-color: #fff;
 
-  /* custom pil (SVG) */
+  /* fallback if CSS vars missing */
+  color: var(--sk-text, #333333);
+
+  /* custom caret (uses brand dark) */
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2330273E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
   background-repeat: no-repeat;
   background-position: right 14px center;
   background-size: 14px;
+
   transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
 }
-.sk-customer-service__form select:focus{
+.sk-customer-service .contact-form select:focus {
   outline: none;
   border-color: var(--sk-cta, #4b0082);
   box-shadow: 0 0 0 3px rgba(75,0,130,.15);
 }
-.sk-customer-service__form select:disabled{
-  opacity: .7;
-  cursor: not-allowed;
-}
-/* skjul IE/Edge gammel pil */
-.sk-customer-service__form select::-ms-expand{ display:none; }
+.sk-customer-service .contact-form select::-ms-expand { display: none; }
+.sk-customer-service .contact-form select option[disabled][selected] { color: #9aa; }
 
-/* Placeholder-lignende stil for disabled first option */
-.sk-customer-service__form select option[disabled][selected]{
-  color: #9aa;
+/* Keep inputs normal; just ensure consistent height */
+.sk-customer-service .contact-form input[type="text"],
+.sk-customer-service .contact-form input[type="email"]{
+  min-height: 44px;
 }
 
-/* === PATCH: Ensartet høyde for inputs/selects === */
-.sk-customer-service__form input[type="text"],
-.sk-customer-service__form input[type="email"],
-.sk-customer-service__form select{
-  min-height: 44px; /* behagelig tappestørrelse på mobil */
-}
-
-/* === PATCH: Knapp – 0 radius + brand-farge === */
-:root{
-  --sk-brand-hover: #221b2d; /* litt mørkere enn #30273E */
-}
-.sk-customer-service__button{
-  border-radius: 0;                /* 0 corner radius */
-  background: var(--sk-brand);     /* bruk brand-fargen */
+/* Button: square corners + brand color (scoped) */
+.sk-customer-service .sk-customer-service__button{
+  border-radius: 0;                    /* 0 corner radius */
+  background: var(--sk-brand, #30273E);
+  color: #fff;
   box-shadow: 0 10px 22px rgba(48,39,62,.22);
 }
-.sk-customer-service__button:hover{
-  background: var(--sk-brand-hover);
+.sk-customer-service .sk-customer-service__button:hover{
+  background: #221b2d;                 /* slightly darker brand */
 }
-.sk-customer-service__button:active{
+.sk-customer-service .sk-customer-service__button:active{
   transform: translateY(1px);
   box-shadow: 0 6px 16px rgba(48,39,62,.26);
 }
