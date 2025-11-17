@@ -81,7 +81,7 @@
 
 .sk-customer-service__form label{
   grid-column: span 1;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   color: var(--sk-brand);
   margin-bottom: 6px;
 }
