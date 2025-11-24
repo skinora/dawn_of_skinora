@@ -33,9 +33,18 @@
     </h3>
 
     <!-- SUBTITLE (uses product.description OR metafield if you prefer later) -->
-    {%- if product.description != blank -%}
+    {%- assign short_description = product.description | strip_html | replace: '\n', ' ' | strip -%}
+    {%- if short_description == blank and product.metafields.custom.product_subtitle != blank -%}
+      {%- assign short_description = product.metafields.custom.product_subtitle.value
+        | strip_html
+        | replace: '\n', ' '
+        | strip
+      -%}
+    {%- endif -%}
+
+    {%- if short_description != blank -%}
       <p class="cb-card__subtitle">
-        {{ product.description | strip_html | truncate: 90 }}
+        {{ short_description | truncate: 110 }}
       </p>
     {%- endif -%}
 
