@@ -53,6 +53,13 @@
   --sk-gap-lg: 48px;
   --sk-media-max: 620px; /* cap the gallery width */
   --sk-info-min: 420px;
+  --sk-font-size-base: 1.0625rem; /* ~17px */
+  --sk-font-size-small: 0.9375rem; /* ~15px */
+  --sk-font-size-caption: 0.875rem; /* 14px */
+  --sk-font-size-button: 0.95rem;
+  --sk-line-height-base: 1.65;
+  --sk-line-height-tight: 1.3;
+  --sk-letter-spacing-button: 0.08em;
 }
 
 .product-card-wrapper .card,
@@ -3785,6 +3792,26 @@ body {
   font-family: var(--font-body-family);
   font-style: var(--font-body-style);
   font-weight: var(--font-body-weight);
+  font-size: var(--sk-font-size-base);
+  line-height: var(--sk-line-height-base);
+  letter-spacing: 0.01em;
+}
+
+p,
+li,
+label,
+input,
+textarea,
+select,
+button {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+small,
+.caption-with-letter-spacing {
+  font-size: var(--sk-font-size-caption);
+  line-height: var(--sk-line-height-tight);
 }
 
 .header-wrapper {
