@@ -668,7 +668,7 @@
 }
 
 .sk-rating .sk-rating-count {
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   color: var(--color-neutral-2);
   margin-left: 4px;
 }
@@ -728,7 +728,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   font-weight: 600;
   color: var(--color-neutral-3);
   background: transparent;
@@ -832,4 +832,5 @@
     font-size: calc(var(--sk-font-size-base) * 0.98);
   }
 }
+
 

@@ -178,7 +178,7 @@
 /* === Text & Title === */
 .sk-radiance-product__text {
   margin: 0;
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   color: var(--color-neutral-1);
 }
 .sk-radiance-product__text.subtitle {
@@ -635,6 +635,7 @@ body {
   fill: #30273e !important;
   stroke: #30273e !important;
 }
+
 
 
 

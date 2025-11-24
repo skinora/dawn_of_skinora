@@ -106,7 +106,7 @@
 }
 
 .sk-blog-grid__post-subtitle {
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   font-weight: 400;
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
@@ -159,6 +159,7 @@
   border-color: var(--color-muted-2, #4a3d5c);
   color: var(--color-white, #ffffff);
 }
+
 
 
 

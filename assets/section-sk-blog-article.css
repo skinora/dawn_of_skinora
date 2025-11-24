@@ -156,7 +156,7 @@
 }
 
 .sk-blog-article__image-caption {
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   color: var(--color-neutral-3, #6c6c6c);
   font-style: italic;
   margin: 0;
@@ -247,6 +247,7 @@
     font-size: calc(var(--sk-font-size-large) * 1.1);
   }
 }
+
 
 
 

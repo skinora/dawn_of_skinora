@@ -3822,7 +3822,7 @@ button {
 
 small,
 .caption-with-letter-spacing {
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   line-height: var(--sk-line-height-tight);
 }
 
@@ -4211,12 +4211,12 @@ div.okeReviews .oke-w-review-main {
   }
 
   .sk-content-section__content p {
-    font-size: var(--sk-font-size-caption) !important;
+    font-size: var(--sk-font-size-medium) !important;
     line-height: 24px !important;
   }
 
   .sk-product-showcase__description p {
-    font-size: var(--sk-font-size-caption) !important;
+    font-size: var(--sk-font-size-medium) !important;
   }
 
   .sk-product-showcase__title {
@@ -4242,7 +4242,7 @@ div.okeReviews .oke-w-review-main {
   }
 
   .sk-numbered-list__text p {
-    font-size: var(--sk-font-size-caption) !important;
+    font-size: var(--sk-font-size-medium) !important;
     line-height: 22px !important;
   }
 
@@ -4593,11 +4593,11 @@ div.okeReviews .oke-w-review-main {
   }
 
   .sk-radiance-price-item--sale {
-    font-size: var(--sk-font-size-caption) !important;
+    font-size: var(--sk-font-size-medium) !important;
   }
 
   .sk-radiance-price-item--regular {
-    font-size: var(--sk-font-size-caption) !important;
+    font-size: var(--sk-font-size-medium) !important;
   }
 
   .sk-radiance-product__title h1 {
@@ -4694,3 +4694,4 @@ div.okeReviews .oke-w-review-main {
 .sk-radiance-sticky-bottom-bar {
   display: none !important;
 }
+

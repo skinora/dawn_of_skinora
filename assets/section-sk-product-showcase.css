@@ -69,7 +69,7 @@
 }
 
 .sk-product-showcase__project-date {
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   font-weight: 400;
   color: var(--color-black, #000);
   margin: 0;
@@ -107,6 +107,7 @@
 .sk-product-showcase__button:hover .sk-product-showcase__button-arrow {
   transform: translateX(4px);
 }
+
 
 
 

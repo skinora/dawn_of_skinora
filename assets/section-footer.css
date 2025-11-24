@@ -815,7 +815,7 @@ footer .footer_submit_btn {
   display: flex;
   gap: 5px;
   width: 136px !important;
-  font-size: var(--sk-font-size-caption) !important;
+  font-size: var(--sk-font-size-medium) !important;
 }
 
 p.newsletter-subtext {
@@ -824,4 +824,5 @@ p.newsletter-subtext {
   text-align: center;
   margin-bottom: 25px;
 }
+
 

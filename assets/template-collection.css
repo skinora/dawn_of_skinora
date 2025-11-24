@@ -92,7 +92,7 @@
   border-radius: 18px;
   font-weight: 600 !important;
   padding: 4px 12px !important;
-  font-size: var(--sk-font-size-xs) !important;
+  font-size: var(--sk-font-size-medium) !important;
   letter-spacing: 0.3px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
@@ -124,6 +124,7 @@
 /*******************************
  END SKINORA COLLECTION GRID
 *******************************/
+
 
 
 

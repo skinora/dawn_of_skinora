@@ -50,7 +50,7 @@
 .sk-radiance-guarantee-banner__content p {
   margin: 0;
   color: var(--sk-gb-text, #4F4F4F);
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   line-height: 1.6;
 }
 
@@ -60,7 +60,7 @@
   margin: 10px 0 0 1.1em;
   padding: 0;
   color: var(--sk-gb-text, #4F4F4F);
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   line-height: 1.6;
 }
 
@@ -79,7 +79,7 @@
   background: var(--sk-gb-cta-bg, #4B0082);      /* brand indigo */
   color: var(--sk-gb-cta-fg, #ffffff);
   font-weight: 700;
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   text-decoration: none;
 
   transition: transform .15s ease, opacity .15s ease, box-shadow .15s ease;
@@ -135,7 +135,7 @@
 .sk-guarantee__sub {
   margin: 0 0 12px 0;
   color: var(--sk-gb-text, #4F4F4F);
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
 }
 
 /* Items (checklist) */
@@ -160,7 +160,7 @@
 .sk-guarantee__item-text,
 .sk-guarantee__paragraph {
   color: var(--sk-gb-text-strong, #333333);
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   line-height: 1.6;
   margin: 0;
 }
@@ -177,7 +177,7 @@
   color: var(--sk-gb-cta-fg, #fff);
   border-radius: 10px;
   font-weight: 800;
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   text-decoration: none;
   box-shadow: 0 4px 14px rgba(75, 0, 130, 0.12);
   transition: transform .15s ease, opacity .15s ease;
@@ -228,9 +228,11 @@
   .sk-guarantee__button {
     padding: 9px 14px;
     border-radius: 9px;
-    font-size: var(--sk-font-size-xs);
+    font-size: var(--sk-font-size-medium);
   }
 }
+
+
 
 
 

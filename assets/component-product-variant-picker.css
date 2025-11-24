@@ -224,7 +224,7 @@ variant-selects {
 }
 
 .sk-radiance-variant-card__title {
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   font-weight: 600;
   color: var(--color-white);
   margin: 0;
@@ -238,7 +238,7 @@ variant-selects {
 }
 
 .sk-radiance-variant-card__compare-price {
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   color: var(--color-danger-weak);
   text-decoration: line-through;
   font-weight: 600;
@@ -261,4 +261,5 @@ variant-selects {
     max-width: 250px;
   }
 }
+
 

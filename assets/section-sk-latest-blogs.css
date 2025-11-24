@@ -73,7 +73,7 @@
 }
 
 .sk-latest-blogs__post-excerpt {
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   line-height: 20px;
   color: var(--color-neutral-1, #6c6c6c);
   margin: 0;
@@ -131,11 +131,12 @@
 }
 
 .sk-latest-blogs__featured-excerpt {
-  font-size: var(--sk-font-size-caption);
+  font-size: var(--sk-font-size-medium);
   line-height: 20px;
   color: rgba(var(--color-white-rgb, 255, 255, 255), 0.8);
   margin: 0;
 }
+
 
 
 
