@@ -825,4 +825,13 @@ p.newsletter-subtext {
   margin-bottom: 25px;
 }
 
+footer .footer-top_section-content h2,
+footer .newsletter-subtext {
+  color: #30273E !important; /* Brand-lilla */
+}
+
+footer .newsletter-subtext {
+  color: rgba(48, 39, 62, 0.75) !important;
+}
+
 
