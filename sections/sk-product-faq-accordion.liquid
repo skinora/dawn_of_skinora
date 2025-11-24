@@ -1,215 +1,170 @@
 <style>
-  .sk-faq-accordion-{{ section.id }} {
-    background: linear-gradient(to bottom, #30273E, #070707);
-    color: #ffffff;
-    padding: 7rem 0;
-  }
+  /* ============================================
+   SKINORA — SEXY LUXURY FAQ DESIGN (REVAMPED)
+   ============================================ */
 
+.sk-faq-accordion-{{ section.id }} {
+  background: linear-gradient(to bottom, #30273E, #0B0B0B);
+  padding: 5rem 0 6rem;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Main container --- */
+.sk-faq-accordion-{{ section.id }} .sk-faq-accordion__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 100px;
+  align-items: start;
+  position: relative;
+}
+
+/* --- Right decorative image --- */
+.sk-faq-accordion-{{ section.id }} .sk-faq-accordion__image {
+  opacity: 0.35;
+  position: sticky;
+  top: 120px;
+}
+
+.sk-faq-accordion-{{ section.id }} .sk-faq-accordion__image img {
+  width: auto;
+  height: 75vh;
+  object-fit: contain;
+  filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.4));
+}
+
+/* --- Title --- */
+.sk-faq-accordion-{{ section.id }} .sk-faq-accordion__title {
+  font-size: 42px;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  letter-spacing: -0.5px;
+  border: none;
+}
+
+/* --- Accordion list --- */
+.sk-faq-accordion__accordion {
+  border: none;
+  margin-top: 1rem;
+}
+
+/* One FAQ item */
+.sk-faq-accordion__item {
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  margin-bottom: 0;
+}
+
+/* --- FAQ Question header --- */
+.sk-faq-accordion__button {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 22px 0;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: color 0.25s ease;
+}
+
+.sk-faq-accordion__button:hover {
+  color: #DCD4EA;
+}
+
+/* --- Icon --- */
+.sk-faq-accordion__icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 4px;
+  transition: all .3s ease;
+}
+
+.sk-faq-accordion__icon::before {
+  content: "+";
+  line-height: 1;
+}
+
+.sk-faq-accordion__button[aria-expanded="true"] .sk-faq-accordion__icon {
+  border-color: #A8A5C3;
+  color: #A8A5C3;
+}
+
+.sk-faq-accordion__button[aria-expanded="true"] .sk-faq-accordion__icon::before {
+  content: "−";
+}
+
+/* --- The expanded text --- */
+.sk-faq-accordion__body {
+  padding: 0 0 18px;
+  color: rgba(255,255,255,0.85);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.sk-faq-accordion__answer p {
+  margin-bottom: 1rem;
+}
+
+.sk-faq-accordion__answer p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- Read more button --- */
+.sk-faq-read-more-btn .sk_primary-button {
+  background: #4B0082;
+  color: #fff;
+  margin-top: 2.3rem;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background .25s ease;
+}
+
+.sk-faq-read-more-btn .sk_primary-button:hover {
+  background: #6A0DAD;
+}
+
+/* --- Mobile --- */
+@media(max-width: 900px) {
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__container {
-    display: flex;
-    align-items: start;
-    gap: 80px;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__image {
-    flex: 0 0 210px;
-  }
+  .sk-faq-accordion__image { display: none; }
 
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__image img {
-    width: 100%;
-    height: auto;
+  .sk-faq-accordion__title {
+    font-size: 32px;
   }
+}
 
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__content {
-    flex: 0 0 590px;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__title {
-    font-size: 48px;
-    font-weight: 600;
-    color: #ffffff;
-    border-bottom: 1px solid #fff;
-    padding-bottom: 14px;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__accordion {
-    border: none;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    margin-bottom: 0;
-    background: transparent;
-    border: none;
-    border-radius: 0;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__item:last-child {
-    border-bottom: none;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__header {
-    padding: 0;
-    margin: 0;
-    background: transparent;
-    border: none;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button {
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    width: 100%;
-    padding: 25px 0;
-    background: transparent;
-    border: none;
-    font-size: 20px;
-    font-weight: 600;
-    color: #ffffff;
-    line-height: 1.4;
-    text-align: left;
-    cursor: pointer;
-    outline: none;
-    box-shadow: none;
-    border-bottom: 1px solid #fff;
-    /* font-family: 'Playfair Display', serif !important; */
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button:hover,
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button:focus {
-    background: transparent;
-    color: #ffffff;
-    box-shadow: none;
-    /* border: none; */
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__question {
-    flex: 1;
-    margin: 0;
-    padding-right: 20px;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon {
-    flex-shrink: 0;
-    width: 24px;
-    height: 24px;
-    border: 2px solid #ffffff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    position: relative;
-    font-size: 14px;
-    font-weight: bold;
-    color: #ffffff;
-    display: flex !important;
-    margin-top: 13px;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon::before {
-    content: '+';
-    transition: all 0.3s ease;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button[aria-expanded="true"] .sk-faq-accordion__icon::before {
-    content: '−';
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__collapse {
-    border: none;
-    background: transparent;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__body {
-    padding: 0 0 25px;
-    background: transparent;
-    border: none;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__answer {
-    font-size: 14px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__answer p {
-    margin: 0 0 15px;
+@media(max-width: 480px) {
+  .sk-faq-accordion__button {
     font-size: 16px;
-  }
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__answer p strong {
-    font-size: 18px;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__answer p:last-child {
-    margin-bottom: 0;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .accordion-button::after {
-    background-image: none !important;
-  }
-
-  .sk-faq-accordion-{{ section.id }} .accordion-button:not(.collapsed) {
-    color: #fff !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
+    padding: 16px 0;
   }
 
   .sk-faq-read-more-btn .sk_primary-button {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 30px;
-    width: 18rem;
-    padding: 13px;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
+}
 
-  @media only screen and (max-width: 700px) {
-    .sk-faq-accordion__image{
-      display: none;
-    }
-
-    .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__content {
-    flex: 0 0 100%;
-  }
-  }
-
-  @media only screen and (max-width: 435px) {
-    .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button {
-      font-size: 14px !important;
-      line-height: 20px !important;
-      padding: 12px 0 !important;
-    }
-    .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon {
-      width: 20px !important;
-    height: 20px !important;
-    font-size: 10px !important;
-    margin-top: 5px !important;
-    }
-    .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__answer p strong {
-    font-size: 14px !important;
-    margin-top: 20px !important;
-    display: block !important;
-    margin-bottom: 25px !important;
-  }
-
-  .sk-faq-accordion__answer p br{
-    display: none !important;
-  }
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__answer p {
-    font-size: 12px !important;
-    line-height: 20px !important;
-  }
-
-  .sk-faq-read-more-btn .sk_primary-button{
-    width: 13rem;
-  }
-
-  }
 </style>
 
 {%- if product.metafields.custom.faq_item.value != blank -%}
