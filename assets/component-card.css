@@ -602,140 +602,134 @@
   text-decoration: none;
 }
 
-/*****************************************
-   SKINORA — PREMIUM CARD OVERRIDE LAYER
-   Replaces Dawn’s messy card layout
-******************************************/
+/**********************************************
+   SKINORA — CURRENTBODY STYLE PRODUCT CARDS
+**********************************************/
 
-/* ====== CARD WRAPPER ====== */
+/* --- CARD WRAPPER --- */
 .card-wrapper {
-  background: #F2F2F2 !important;
-  border-radius: 24px !important;
-  padding: 18px !important;
+  background: #ffffff !important;
+  border-radius: 28px !important;      /* soft large radius */
+  padding: 22px !important;
   display: flex !important;
   flex-direction: column !important;
-  height: 100% !important;
+  gap: 18px !important;
+  box-shadow: 0 4px 22px rgba(0,0,0,0.06) !important;
   transition: transform .25s ease, box-shadow .25s ease;
 }
 
 .card-wrapper:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 26px rgba(0,0,0,0.10) !important;
 }
 
-/* Remove Dawn’s borders & shadows */
+/* Remove Dawn clutter */
 .card,
 .card--card,
 .card--standard .card__inner {
+  background: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  background: transparent !important;
 }
 
-/* ====== MEDIA / IMAGE ====== */
-.card__inner {
-  border-radius: 22px !important;
-  height: auto !important;
-  overflow: hidden !important;
-}
-
+/* --- IMAGE CONTAINER --- */
 .card__media {
-  aspect-ratio: 4/5 !important;
-  width: 100%;
-  border-radius: 22px !important;
-  overflow: hidden;
+  aspect-ratio: 4/5 !important;       /* matches CurrentBody */
+  background: #f5f5f5 !important;     /* soft neutral */
+  border-radius: 28px !important;
+  overflow: hidden !important;
   position: relative;
-  background: #F2F2F2;
 }
 
 .card__media img {
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
-  border-radius: 22px !important;
-  transition: transform .4s ease;
+  border-radius: 28px !important;
+  transition: transform .35s ease;
 }
 
-/* Hover zoom — luxury subtle */
+/* Hover zoom */
 .card-wrapper:hover .card__media img {
   transform: scale(1.04);
 }
 
-/* ====== BADGE / SALE ====== */
-.card__badge {
-  top: 12px !important;
-  right: 12px !important;
-}
-
-.badge,
-.badge--bottom-left,
-.badge--top-left,
-.badge--bottom-right,
-.badge--top-right {
+/* --- SALE BADGE (CurrentBody round style) --- */
+.badge {
   background: #487AB7 !important;
-  color: #fff !important;
-  border-radius: 18px !important;
+  color: white !important;
+  border-radius: 50px !important;
+  padding: 6px 14px !important;
   font-size: 13px !important;
-  padding: 4px 12px !important;
   font-weight: 600 !important;
-  letter-spacing: 0.2px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-/* ====== CONTENT AREA ====== */
+/* --- TEXT AREA --- */
 .card__content {
-  padding: 16px 4px !important;
+  padding: 0 !important;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
-/* ====== TITLE ====== */
+/* Main product title */
 .card__heading {
   font-size: 17px !important;
   font-weight: 600 !important;
-  line-height: 1.3;
   color: #30273E !important;
   margin: 0 !important;
+  line-height: 1.3;
 }
 
-/* Remove double titles (Dawn bug) */
+/* Remove duplicated title (Dawn bug) */
 .card__heading + .card__heading {
   display: none !important;
 }
 
-/* ====== PRICE ====== */
-.card-information .price,
-.price-item,
-.price__container .price-item {
-  font-size: 16px !important;
-  font-weight: 500 !important;
-  color: #333333 !important;
-  margin-top: 0 !important;
-}
-
-/* ====== QUICK ADD BUTTON ====== */
-.quick-add__submit,
-.quick-add__submit.button,
-.card__information .quick-add__submit {
-  border-radius: 14px !important;
-  padding: 10px !important;
+/* Short description (matches CurrentBody style) */
+.card-information .product-excerpt,
+.card-information .card__description {
   font-size: 14px !important;
-  background: #4B0082 !important;
-  color: white !important;
-  border: none !important;
-  width: 100%;
-  margin-top: 10px;
-  transition: background .2s ease;
+  color: #666 !important;
+  line-height: 1.4;
+  margin: 0;
 }
 
-.quick-add__submit:hover {
-  background: #6A0DAD !important;
+/* Price formatting */
+.price-item {
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: #333 !important;
 }
 
-/* ====== GRID SPACING ====== */
+/* Ratings row */
+.rating,
+.card-information .rating {
+  display: flex !important;
+  align-items: center;
+  gap: 4px !important;
+  margin-top: 4px !important;
+}
+
+.rating .icon {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* Align price + rating like CurrentBody */
+.card-information > * {
+  margin: 0 !important;
+}
+
+/* Add spacing before customer avatars if you use them */
+.card-information .social-proof {
+  margin-top: 8px !important;
+}
+
+/* --- GRID SPACING --- */
 .product-grid {
-  gap: 24px !important;
+  gap: 28px !important;
 }
 
 @media (max-width: 749px) {
@@ -744,27 +738,11 @@
   }
 
   .card-wrapper {
-    padding: 14px !important;
-    border-radius: 20px !important;
+    padding: 18px !important;
+    border-radius: 22px !important;
   }
 
-  .card__heading {
-    font-size: 16px !important;
+  .card__media {
+    border-radius: 22px !important;
   }
 }
-
-/* ====== REMOVE DAWN STRESS-TRACES ====== */
-.card__inner:after,
-.card--card:after,
-.card--standard .card__inner:after {
-  display: none !important;
-}
-
-.card__inner.gradient,
-.card--card.gradient {
-  background: transparent !important;
-}
-
-/*****************************************
-   END OF SKINORA CARD OVERRIDE LAYER
-******************************************/
