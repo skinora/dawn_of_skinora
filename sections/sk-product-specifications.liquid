@@ -6,8 +6,8 @@
     }
 
     .sk-product-specifications-{{ section.id }} .sk-specifications__main-heading {
-      font-size: 42px;
-      line-height: 1.2;
+      font-size: var(--section-heading-h2);
+      line-height: var(--section-heading-h2-line);
       font-weight: 600;
       color: #30273E;
       margin-bottom: 30px;
@@ -131,8 +131,8 @@
     }
     @media only screen and (max-width: 435px) {
       .sk-product-specifications-{{ section.id }} .sk-specifications__main-heading {
-        font-size: calc(var(--sk-font-size-2xl) * 1.0667);
-        line-height: 37px;
+        font-size: calc(var(--section-heading-h2) * 0.9);
+        line-height: var(--section-heading-h2-line);
       }
       .sk-product-specifications-{{ section.id }} .sk-specifications__icon svg {
       width: 18px;
@@ -211,7 +211,9 @@
             {%- endif -%}
 
             {%- if heading_full != blank -%}
-              <h2 class="sk-specifications__main-heading">{{ heading_full }}</h2>
+              <h2 class="sk-specifications__main-heading sk-section-heading sk-section-heading--h2">
+                {{ heading_full }}
+              </h2>
             {%- endif -%}
 
             {%- comment -%} Parse specifications with icon patterns {%- endcomment -%}
@@ -392,9 +394,3 @@
   ]
 }
 {% endschema %}
-
-
-
-
-
-

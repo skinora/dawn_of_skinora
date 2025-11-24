@@ -372,13 +372,13 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 /* Heading size variables (used by .sk-section-heading modifiers)
    hxl = hero / largest, h1 = large, h2 = medium, h3 = small */
 :root {
-  --section-heading-hxl: 72px;
+  --section-heading-hxl: var(--sk-font-size-hero);
   --section-heading-hxl-line: 1.05;
-  --section-heading-h1: 54px;
+  --section-heading-h1: var(--sk-font-size-3xl);
   --section-heading-h1-line: 1.08;
-  --section-heading-h2: 40px;
+  --section-heading-h2: var(--sk-font-size-2xl);
   --section-heading-h2-line: 1.1;
-  --section-heading-h3: 30px;
+  --section-heading-h3: var(--sk-font-size-large);
   --section-heading-h3-line: 1.16;
 }
 
@@ -4130,11 +4130,11 @@ div.okeReviews .oke-w-review-main {
   }
 
   .sk-help-banner__heading {
-    font-size: 46px !important;
+    font-size: calc(var(--section-heading-hxl) * 0.6) !important;
   }
 
   .sk-help-categories__heading {
-    font-size: 50px !important;
+    font-size: calc(var(--section-heading-h1) * 0.8) !important;
   }
 
   header {
@@ -4147,7 +4147,7 @@ div.okeReviews .oke-w-review-main {
   }
 
   .sk-content-section__heading {
-    font-size: 50px !important;
+    font-size: calc(var(--section-heading-h2) * 1.05) !important;
   }
 
   .sk-help-banner__content {
@@ -4175,8 +4175,8 @@ div.okeReviews .oke-w-review-main {
   }
 
   .sk-about-section-2__heading {
-    font-size: 40px !important;
-    line-height: 50px !important;
+    font-size: calc(var(--section-heading-hxl) * 0.53) !important;
+    line-height: var(--section-heading-hxl-line);
     margin-bottom: 10px !important;
   }
 
@@ -4220,8 +4220,8 @@ div.okeReviews .oke-w-review-main {
   }
 
   .sk-product-showcase__title {
-    font-size: 40px !important;
-    line-height: 18px !important;
+    font-size: calc(var(--section-heading-h1) * 0.65) !important;
+    line-height: var(--section-heading-h1-line);
   }
 
   .sk-product-showcase__description {
@@ -4233,8 +4233,8 @@ div.okeReviews .oke-w-review-main {
   }
 
   .sk-numbered-list__number {
-    font-size: 40px !important;
-    line-height: 18px !important;
+    font-size: var(--section-heading-h2) !important;
+    line-height: 1 !important;
   }
 
   .sk-numbered-list__item {
@@ -4311,8 +4311,8 @@ div.okeReviews .oke-w-review-main {
   }
 
   .sk-dynamic-banner__title {
-    font-size: 45px !important;
-    line-height: 55px !important;
+    font-size: calc(var(--section-heading-hxl) * 0.6) !important;
+    line-height: var(--section-heading-hxl-line);
   }
 
   .sk-dynamic-banner__description {
@@ -4349,11 +4349,11 @@ div.okeReviews .oke-w-review-main {
   }
 
   .sk-help-banner__heading {
-    font-size: 40px !important;
+    font-size: calc(var(--section-heading-hxl) * 0.52) !important;
   }
 
   .sk-help-categories__heading {
-    font-size: 40px !important;
+    font-size: calc(var(--section-heading-h1) * 0.65) !important;
   }
 
   .sk-help-categories__description p {
@@ -4378,7 +4378,7 @@ div.okeReviews .oke-w-review-main {
   }
 
   .footer-top_section-content h2 {
-    font-size: calc(var(--sk-font-size-large) * 1.1) !important;
+    font-size: calc(var(--section-heading-h1) * 0.75) !important;
   }
 
   .footer-logo svg {
@@ -4408,7 +4408,7 @@ div.okeReviews .oke-w-review-main {
   }
 
   .sk-content-section__heading {
-    font-size: 40px !important;
+    font-size: calc(var(--section-heading-h2) * 0.85) !important;
     margin-bottom: 16px;
   }
 
@@ -4694,5 +4694,3 @@ div.okeReviews .oke-w-review-main {
 .sk-radiance-sticky-bottom-bar {
   display: none !important;
 }
-
-

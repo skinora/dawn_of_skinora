@@ -27,8 +27,8 @@
   }
 
   .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__heading {
-    font-size: 48px;
-    line-height: 1.2;
+    font-size: var(--section-heading-h2);
+    line-height: var(--section-heading-h2-line);
     font-weight: 700;
     color: #30273E;
     margin-bottom: 40px;
@@ -65,7 +65,7 @@
   }
 
   .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-number {
-    font-size: 64px;
+    font-size: var(--section-heading-h1);
     line-height: 1;
     font-weight: 700;
     color: #30273E;
@@ -98,10 +98,10 @@
   }
 
   .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-number{
-     /* font-family: "Anton"; */
-     font-size: 64px;
-     font-weight: 400;
-     color: #30273E;
+    /* font-family: "Anton"; */
+    font-size: var(--section-heading-h1);
+    font-weight: 400;
+    color: #30273E;
   }
 
   @media only screen and (max-width: 700px) {
@@ -117,15 +117,14 @@
 
   @media only screen and (max-width: 435px) {
     .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__heading {
-      font-size: calc(var(--sk-font-size-2xl) * 1.0667);
-      line-height: 37px;
+      font-size: calc(var(--section-heading-h2) * 0.9);
+      line-height: var(--section-heading-h2-line);
       margin: 24px 0;
     }
-
     .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-number {
-    font-size: 40px;
-    width: 55px;
-  }
+      font-size: var(--section-heading-h2);
+      width: 55px;
+    }
 
   .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step .sk-how-to-use__step-content strong {
     font-size: var(--sk-font-size-medium);
@@ -190,7 +189,7 @@
             {%- endif -%}
 
             {%- if heading_full != blank -%}
-              <h2 class="sk-how-to-use__heading">{{ heading_full }}</h2>
+              <h2 class="sk-how-to-use__heading sk-section-heading sk-section-heading--h2">{{ heading_full }}</h2>
             {%- endif -%}
 
             {%- comment -%} Parse numbered steps {%- endcomment -%}
@@ -253,11 +252,3 @@
   ]
 }
 {% endschema %}
-
-
-
-
-
-
-
-

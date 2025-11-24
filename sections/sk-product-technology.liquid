@@ -10,8 +10,8 @@
   }
 
   .sk-tech-{{ section.id }} .sk-tech__heading {
-    font-size: 42px;
-    line-height: 60px;
+    font-size: var(--section-heading-h2);
+    line-height: var(--section-heading-h2-line);
     font-weight: 700;
     color: #30273E;
     text-align: center;
@@ -21,8 +21,8 @@
 
   @media (max-width: 435px) {
     .sk-tech-{{ section.id }} .sk-tech__heading {
-      font-size: calc(var(--sk-font-size-2xl) * 1.0667);
-      line-height: 38px;
+      font-size: calc(var(--section-heading-h2) * 0.9);
+      line-height: var(--section-heading-h2-line);
       margin-bottom: 16px;
     }
   }
@@ -110,9 +110,12 @@
 </style>
 
 <section class="sk-tech-{{ section.id }}">
-  <div class="page-width"><!-- 🔥 Wider parent container -->
+  <div class="page-width">
+    <!-- 🔥 Wider parent container -->
     {% if section.settings.heading != blank %}
-      <h2 class="sk-tech__heading">{{ section.settings.heading | escape }}</h2>
+      <h2 class="sk-tech__heading sk-section-heading sk-section-heading--h2">
+        {{ section.settings.heading | escape }}
+      </h2>
     {% endif %}
 
     <div class="sk-tech__row">
@@ -128,7 +131,8 @@
             sizes="(min-width: 1200px) 600px, (min-width: 701px) 45vw, 95vw"
             src="{{ li | image_url: width: 900 }}"
             alt="{{ li.alt | default: section.settings.heading | escape }}"
-            loading="lazy">
+            loading="lazy"
+          >
         </div>
       {% endif %}
 
@@ -155,7 +159,8 @@
             sizes="(min-width: 1200px) 600px, (min-width: 701px) 45vw, 95vw"
             src="{{ ri | image_url: width: 900 }}"
             alt="{{ ri.alt | default: section.settings.heading | escape }}"
-            loading="lazy">
+            loading="lazy"
+          >
         </div>
       {% endif %}
     </div>
@@ -170,31 +175,56 @@
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Teknologien bak Skinora" },
     { "type": "image_picker", "id": "left_image", "label": "Left image" },
-    { "type": "html", "id": "content_html", "label": "Center content", "default": "<p>Klinisk LED-teknologi som aktiverer hudens egen fornyelse – for fastere, klarere og sterkere hud.</p>" },
+    {
+      "type": "html",
+      "id": "content_html",
+      "label": "Center content",
+      "default": "<p>Klinisk LED-teknologi som aktiverer hudens egen fornyelse – for fastere, klarere og sterkere hud.</p>"
+    },
     { "type": "image_picker", "id": "right_image", "label": "Right image" },
     { "type": "checkbox", "id": "show_arrow", "label": "Show center arrow (hidden on mobile)", "default": true },
 
     { "type": "header", "content": "Layout & Style" },
     { "type": "color", "id": "bg_color", "label": "Background", "default": "#FFF9F5" },
-    { "type": "range", "id": "content_max_width", "label": "Center content max width", "min": 360, "max": 720, "step": 20, "default": 520 },
-    { "type": "select", "id": "mobile_stack_order", "label": "Mobile stack order", "default": "image-first",
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Center content max width",
+      "min": 360,
+      "max": 720,
+      "step": 20,
+      "default": 520
+    },
+    {
+      "type": "select",
+      "id": "mobile_stack_order",
+      "label": "Mobile stack order",
+      "default": "image-first",
       "options": [
         { "value": "image-first", "label": "Left image → Content → Right image" },
         { "value": "content-first", "label": "Content → Left image → Right image" },
         { "value": "right-first", "label": "Right image → Content → Left image" }
       ]
     },
-    { "type": "range", "id": "pad_y_desktop", "label": "Padding Y (desktop)", "min": 20, "max": 160, "step": 4, "default": 112 },
-    { "type": "range", "id": "pad_y_mobile", "label": "Padding Y (mobile)", "min": 16, "max": 120, "step": 4, "default": 60 }
+    {
+      "type": "range",
+      "id": "pad_y_desktop",
+      "label": "Padding Y (desktop)",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "default": 112
+    },
+    {
+      "type": "range",
+      "id": "pad_y_mobile",
+      "label": "Padding Y (mobile)",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "default": 60
+    }
   ],
-  "presets": [
-    { "name": "SK Technology (Generic)" }
-  ]
+  "presets": [{ "name": "SK Technology (Generic)" }]
 }
 {% endschema %}
-
-
-
-
-
-

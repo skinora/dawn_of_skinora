@@ -14,7 +14,7 @@
   <div class="page-width">
     <div class="sk-content-section__wrapper">
       {%- if page_title != blank or section.settings.heading != blank -%}
-        <h2 class="sk-content-section__heading">
+        <h2 class="sk-content-section__heading sk-section-heading sk-section-heading--h2">
           {{ page_title | default: section.settings.heading | escape }}
         </h2>
       {%- endif -%}

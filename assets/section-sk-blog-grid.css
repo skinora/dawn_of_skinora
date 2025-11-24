@@ -18,11 +18,11 @@
 }
 
 .sk-blog-grid__heading {
-  font-size: 48px;
+  font-size: var(--section-heading-h1);
+  line-height: var(--section-heading-h1-line);
   font-weight: 600;
   color: var(--color-brand, #30273e);
   margin: 0;
-  line-height: 1.2;
 }
 
 .sk-blog-grid__content-section {
@@ -159,8 +159,3 @@
   border-color: var(--color-muted-2, #4a3d5c);
   color: var(--color-white, #ffffff);
 }
-
-
-
-
-

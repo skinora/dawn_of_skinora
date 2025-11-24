@@ -24,12 +24,12 @@
 
 /* Heading – litt nedtonet, mer premium */
 .sk-content-section__heading {
-  font-size: 42px;
+  font-size: var(--section-heading-h2);
+  line-height: var(--section-heading-h2-line);
   font-weight: 700;
   color: var(--color-brand, #30273e);
   margin-bottom: 32px;
   margin-top: 0;
-  line-height: 1.1;
   max-width: 640px;
 }
 
@@ -115,8 +115,8 @@
 /* Mobil-justeringer */
 @media screen and (max-width: 749px) {
   .sk-content-section__heading {
-    font-size: calc(var(--sk-font-size-2xl) * 1.0667);
-    line-height: 1.15;
+    font-size: calc(var(--section-heading-h2) * 0.9);
+    line-height: var(--section-heading-h2-line);
     margin-bottom: 24px;
   }
 
@@ -129,6 +129,3 @@
     justify-content: flex-start;
   }
 }
-
-
-

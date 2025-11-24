@@ -30,7 +30,9 @@
   -%}
   <section class="footer-top_section">
     <div class="footer-top_section-content">
-      <h2>{{ section.settings.newsletter_top_heading | default: 'Join our newsletter' }}</h2>
+      <h2 class="sk-section-heading sk-section-heading--h1">
+        {{ section.settings.newsletter_top_heading | default: 'Join our newsletter' }}
+      </h2>
       {% if section.settings.newsletter_top_subtext != blank %}
         <p class="newsletter-subtext">{{ section.settings.newsletter_top_subtext }}</p>
       {% endif %}

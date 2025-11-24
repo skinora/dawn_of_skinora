@@ -25,12 +25,12 @@
 }
 
 .sk-product-showcase__title {
-  font-size: 64px;
+  font-size: var(--section-heading-h1);
+  line-height: var(--section-heading-h1-line);
   font-weight: 600;
   color: var(--color-brand, #30273e);
   margin-bottom: 30px;
   margin-top: 0;
-  line-height: 1.1;
 }
 
 .sk-product-showcase__description {
@@ -107,8 +107,3 @@
 .sk-product-showcase__button:hover .sk-product-showcase__button-arrow {
   transform: translateX(4px);
 }
-
-
-
-
-
