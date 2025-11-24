@@ -53,7 +53,11 @@
         },
         "product_features_ghNmHf": {
           "type": "product_features",
-          "settings": {}
+          "settings": {
+            "metafield_namespace": "custom",
+            "metafield_key": "feature_svg",
+            "empty_state": "Legg til SVG-ikon i metafeltet"
+          }
         },
         "product_description": {
           "type": "product_description",
@@ -88,9 +92,6 @@
       ],
       "settings": {
         "enable_sticky_info": true,
-        "pill_1": "3 Highly Precise Wavelengths",
-        "pill_2": "Best Fit For Every Face",
-        "pill_3": "Guaranteed Quality, Safety & Results",
         "show_guarantee_below_media": true,
         "guarantee_button_text": "LES MER",
         "guarantee_button_link": "",
@@ -112,16 +113,6 @@
       "name": "SK Product Promotion Logos",
       "settings": {
         "sk_promotion_bgColor": "#f1eff4"
-      }
-    },
-    "sk_product_faq_accordion_EPRXLb": {
-      "type": "sk-product-faq-accordion",
-      "name": "SK Product FAQ",
-      "settings": {
-        "faq_image": "shopify://shop_images/Image_7.png",
-        "title": "",
-        "open_first_item": true,
-        "faq_link": ""
       }
     },
     "sk_before_after_mBrdqd": {
@@ -207,7 +198,7 @@
       "name": "SK Product Radiance",
       "settings": {
         "button_text": "Kjøp Skinora Radiance",
-        "button_url": "#"
+        "button_url": "shopify://products/skinora-radiance-face"
       }
     },
     "sk_product_how_to_use_dbAJA9": {
@@ -230,11 +221,11 @@
       "name": "SK Product Technology",
       "settings": {
         "heading": "Teknologien bak Skinora",
-        "left_image": "shopify://shop_images/ChatGPT_Image_Aug_26_2025_12_26_39_PM_1.png",
+        "left_image": "shopify://shop_images/630nm.jpg",
         "content_html": "<p>Klinisk LED-teknologi som aktiverer hudens egen fornyelse – for fastere, klarere og sterkere hud</p>",
-        "right_image": "shopify://shop_images/ChatGPT_Image_26._aug._2025_15_32_41_1.png",
+        "right_image": "shopify://shop_images/1072nm.jpg",
         "show_arrow": true,
-        "bg_color": "#fff9f5",
+        "bg_color": "#ffffff",
         "content_max_width": 500,
         "mobile_stack_order": "image-first",
         "pad_y_desktop": 112,
@@ -245,6 +236,16 @@
       "type": "sk-product-specifications",
       "name": "SK Product Specifications",
       "settings": {}
+    },
+    "sk_product_faq_accordion_EPRXLb": {
+      "type": "sk-product-faq-accordion",
+      "name": "SK Product FAQ",
+      "settings": {
+        "faq_image": "shopify://shop_images/Image_7.png",
+        "title": "",
+        "open_first_item": true,
+        "faq_link": ""
+      }
     },
     "1759515838eeeda580": {
       "type": "apps",
@@ -268,7 +269,6 @@
   "order": [
     "main",
     "sk_product_promotion_logos_r9MTbH",
-    "sk_product_faq_accordion_EPRXLb",
     "sk_before_after_mBrdqd",
     "sk_product_radiance_TCYaUL",
     "sk_product_how_to_use_dbAJA9",
@@ -276,6 +276,7 @@
     "sk_product_how_to_use_zaEacQ",
     "sk_product_technology_iXTDFn",
     "sk_product_specifications_cJY9VW",
+    "sk_product_faq_accordion_EPRXLb",
     "1759515838eeeda580"
   ]
 }
