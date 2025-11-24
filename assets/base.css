@@ -53,12 +53,12 @@
   --sk-gap-lg: 48px;
   --sk-media-max: 620px; /* cap the gallery width */
   --sk-info-min: 420px;
-  --sk-font-size-base: 1.0625rem; /* ~17px */
-  --sk-font-size-small: 0.9375rem; /* ~15px */
-  --sk-font-size-caption: 0.875rem; /* 14px */
-  --sk-font-size-button: 0.95rem;
-  --sk-line-height-base: 1.65;
-  --sk-line-height-tight: 1.3;
+  --sk-font-size-base: 1.2rem; /* ~19px */
+  --sk-font-size-small: 1.05rem; /* ~17px */
+  --sk-font-size-caption: 0.975rem; /* ~15.6px */
+  --sk-font-size-button: 1.12rem;
+  --sk-line-height-base: 1.75;
+  --sk-line-height-tight: 1.45;
   --sk-letter-spacing-button: 0.08em;
 }
 
@@ -360,14 +360,14 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 /* Heading size variables (used by .sk-section-heading modifiers)
    hxl = hero / largest, h1 = large, h2 = medium, h3 = small */
 :root {
-  --section-heading-hxl: 64px;
-  --section-heading-hxl-line: 1.02;
-  --section-heading-h1: 48px;
-  --section-heading-h1-line: 1.06;
-  --section-heading-h2: 36px;
-  --section-heading-h2-line: 1.08;
-  --section-heading-h3: 28px;
-  --section-heading-h3-line: 1.12;
+  --section-heading-hxl: 72px;
+  --section-heading-hxl-line: 1.05;
+  --section-heading-h1: 54px;
+  --section-heading-h1-line: 1.08;
+  --section-heading-h2: 40px;
+  --section-heading-h2-line: 1.1;
+  --section-heading-h3: 30px;
+  --section-heading-h3-line: 1.16;
 }
 
 /* Reusable section heading utility */
@@ -395,9 +395,9 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 }
 
 .text-body {
-  font-size: 1.5rem;
-  letter-spacing: 0.06rem;
-  line-height: calc(1 + 0.8 / var(--font-body-scale));
+  font-size: calc(var(--sk-font-size-base) * 1.28);
+  letter-spacing: 0.02rem;
+  line-height: var(--sk-line-height-base);
   font-family: var(--font-body-family);
   font-style: var(--font-body-style);
   font-weight: var(--font-body-weight);
