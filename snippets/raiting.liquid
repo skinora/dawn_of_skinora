@@ -1,0 +1,73 @@
+{%- comment -%}
+  Simple standalone rating snippet (0–5 stars)
+  Usage: {% render 'rating', product: product %}
+{%- endcomment -%}
+
+{%- assign rating_value = 0 -%}
+{%- assign rating_count = 0 -%}
+
+{%- if product.metafields.reviews.rating != blank -%}
+  {%- assign rating_value = product.metafields.reviews.rating | plus: 0 -%}
+{%- endif -%}
+
+{%- if product.metafields.reviews.count != blank -%}
+  {%- assign rating_count = product.metafields.reviews.count | plus: 0 -%}
+{%- endif -%}
+
+{%- assign full_stars = rating_value | floor -%}
+
+{%- comment %}
+  Liquid cannot compare complex conditions with "and",
+  so we detect half-star in two steps.
+{% endcomment -%}
+
+{%- assign next_full = full_stars | plus: 1 -%}
+{%- assign half_star = 0 -%}
+
+{%- if rating_value > full_stars -%}
+  {%- if rating_value < next_full -%}
+    {%- assign half_star = 1 -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- assign empty_stars = 5 | minus: full_stars | minus: half_star -%}
+
+<div class="sk-rating">
+  {%- for i in (1..full_stars) -%}
+    <span class="sk-star sk-star--full">★</span>
+  {%- endfor -%}
+
+  {%- if half_star == 1 -%}
+    <span class="sk-star sk-star--half">★</span>
+  {%- endif -%}
+
+  {%- for i in (1..empty_stars) -%}
+    <span class="sk-star sk-star--empty">☆</span>
+  {%- endfor -%}
+
+  {%- if rating_count > 0 -%}
+    <span class="sk-rating-count">({{ rating_count }})</span>
+  {%- endif -%}
+</div>
+
+<style>
+  .sk-rating {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 16px;
+    color: #f5b000;
+    line-height: 1;
+  }
+  .sk-star--half {
+    opacity: 0.55;
+  }
+  .sk-star--empty {
+    color: #ccc;
+  }
+  .sk-rating-count {
+    font-size: 14px;
+    color: #666;
+    margin-left: 4px;
+  }
+</style>
