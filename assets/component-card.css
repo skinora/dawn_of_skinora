@@ -759,89 +759,174 @@
 }
 
 /***********************************************
-   SKINORA — CurrentBody-style Buttons
-   Works inside cb-card layout
-************************************************/
+  SKINORA – CurrentBody-style product cards
+***********************************************/
 
-/* WRAPPER around the button row (if quick_add is used) */
+.cb-card {
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.cb-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.10);
+}
+
+/* Image wrapper */
+.cb-card__media-wrapper {
+  border-radius: 28px;
+  overflow: hidden;
+  background: #f5f5f5;
+  position: relative;
+}
+
+.cb-card__media-wrapper .card__media {
+  border-radius: 28px !important;
+  overflow: hidden;
+}
+
+.cb-card__media-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 28px !important;
+  transition: transform .35s ease;
+}
+
+.cb-card:hover .cb-card__media-wrapper img {
+  transform: scale(1.04);
+}
+
+/* Badges on top of image */
+.cb-card__media-wrapper .badge {
+  background: #487AB7 !important;
+  color: #fff !important;
+  border-radius: 50px !important;
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  top: 12px !important;
+  left: 12px !important;
+}
+
+/* Content */
+.cb-card__content {
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Title */
+.cb-card__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #30273E;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* Description */
+.cb-card__excerpt {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Price + rating row */
+.cb-card__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.cb-card__price .price-item {
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: #333 !important;
+}
+
+.cb-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.cb-card__rating .icon {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* Add to cart button */
 .cb-card__button {
   margin-top: 12px;
   width: 100%;
 }
 
-/* Standard Shopify “Add to Cart” button inside card */
-.cb-card .quick-add__submit,
-.cb-card .quick-add__submit.button {
+.cb-card__addtocart {
   width: 100%;
-  background: #4B0082 !important;        /* Skinora CTA (violet) */
-  color: #ffffff !important;
-  border: none !important;
-  padding: 14px 16px !important;
-  font-size: 15px !important;
-  font-weight: 600 !important;
-  border-radius: 12px !important;        /* CurrentBody uses soft radius */
-  text-align: center;
-  cursor: pointer;
-  transition: background .25s ease, transform .25s ease;
-  margin-top: 8px;
 }
 
-/* Hover effect — clean + premium */
-.cb-card .quick-add__submit:hover {
-  background: #6A0DAD !important;        /* Skinora hover */
+.cb-card__button-el {
+  width: 100%;
+  background: #4B0082;
+  color: #fff;
+  border: none;
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background .25s ease, transform .25s ease;
+}
+
+.cb-card__button-el:hover:not(:disabled) {
+  background: #6A0DAD;
   transform: translateY(-2px);
 }
 
-/* “Add to cart” text alignment fix */
-.cb-card .quick-add__submit span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+.cb-card__button-el:disabled,
+.cb-card__button--disabled .cb-card__button-el {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-/* For the small icon-based Quick Add button (if Dawn shows it) */
-.cb-card .quick-add__toggle {
-  width: 100%;
-  background: #4B0082;
-  color: white;
-  padding: 12px !important;
-  border-radius: 12px;
-  font-weight: 600;
-  border: none;
+/* Grid spacing tuning */
+.product-grid {
+  gap: 28px !important;
 }
 
-.cb-card .quick-add__toggle:hover {
-  background: #6A0DAD;
-}
-
-/* Fix for quantity popover styling inside card */
-.cb-card .quantity-popover {
-  border-radius: 14px;
-  padding: 12px;
-}
-
-/* Bulk quick add compatibility */
-.cb-card .quantity__button {
-  border-radius: 8px !important;
-}
-
-/* Make sure button never stretches outside card */
-.cb-card .card__content {
-  display: flex;
-  flex-direction: column;
-}
-
-.cb-card .cb-card__bottom {
-  margin-bottom: 4px;
-}
-
-/* Button spacing for mobile */
 @media (max-width: 749px) {
-  .cb-card .quick-add__submit {
-    padding: 13px !important;
-    font-size: 14.5px !important;
+  .cb-card {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .cb-card__media-wrapper {
+    border-radius: 22px;
+  }
+
+  .cb-card__media-wrapper img {
+    border-radius: 22px !important;
+  }
+
+  .cb-card__title {
+    font-size: 16.5px;
+  }
+
+  .cb-card__excerpt {
+    font-size: 13.5px;
   }
 }
+
 
 
