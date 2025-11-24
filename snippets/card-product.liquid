@@ -1,20 +1,5 @@
 {%- comment -%}
   SKINORA — CurrentBody-style product card
-
-  Layout:
-  - Image wrapper (rounded, large)
-  - Badges (sale etc.)
-  - Title
-  - Short description (from product description)
-  - Price
-  - Rating (optional)
-  - Add to cart button (quick add system)
-
-  Uses Shopify core snippets for:
-  - Price
-  - Rating
-  - Product image
-  - Quick Add
 {%- endcomment -%}
 
 {%- unless skip_styles -%}
@@ -26,14 +11,15 @@
 {%- endunless -%}
 
 {%- if card_product and card_product != empty -%}
-
   {%- liquid
     assign ratio = 1
+
     if card_product.featured_media and media_aspect_ratio == 'portrait'
       assign ratio = 0.8
     elsif card_product.featured_media and media_aspect_ratio == 'adapt'
       assign ratio = card_product.featured_media.aspect_ratio
     endif
+
     if ratio == 0 or ratio == null
       assign ratio = 1
     endif
@@ -41,11 +27,12 @@
 
   <div class="card-wrapper product-card-wrapper underline-links-hover">
     <article class="cb-card" style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
-
-      <!-- IMAGE WRAPPER -->
+      {%- comment -%} IMAGE WRAPPER {%- endcomment -%}
       <a href="{{ card_product.url }}" class="cb-card__media-link">
-        <div class="cb-card__media-wrapper ratio"
-          style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
+        <div
+          class="cb-card__media-wrapper ratio"
+          style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
+        >
           {%- render 'card-product-image',
             card_product: card_product,
             media_aspect_ratio: media_aspect_ratio,
@@ -58,29 +45,27 @@
         </div>
       </a>
 
-      <!-- CONTENT AREA -->
+      {%- comment -%} CONTENT {%- endcomment -%}
       <div class="cb-card__content card__content">
         <div class="card__information">
-
-          <!-- TITLE -->
           <h3 class="cb-card__title">
             <a href="{{ card_product.url }}" class="full-unstyled-link">
               {{ card_product.title | escape }}
             </a>
           </h3>
 
-          <!-- DESCRIPTION (CurrentBody-style excerpt) -->
           {%- if card_product.description != blank -%}
             <p class="cb-card__excerpt">
               {{ card_product.description | strip_html | truncate: 120 }}
             </p>
           {%- endif -%}
 
-          <!-- PRICE + RATING -->
           <div class="cb-card__bottom">
-
             <div class="cb-card__price">
-              {%- render 'price', product: card_product, price_class: 'price--large' -%}
+              {%- render 'price',
+                product: card_product,
+                price_class: 'price--large'
+              -%}
             </div>
 
             {%- if show_rating -%}
@@ -88,39 +73,46 @@
                 {%- render 'rating', product: card_product -%}
               </div>
             {%- endif -%}
-
-          </div> <!-- /bottom row -->
-
-          <!-- BUTTON AREA -->
-          <div class="cb-card__button">
-            {%- if quick_add != 'none' -%}
-              {%- render 'quick-add-button',
-                product: card_product,
-                section_id: section_id
-              -%}
-            {%- endif -%}
           </div>
 
+          {%- comment -%} ADD TO CART BUTTON (no quick-add dependency) {%- endcomment -%}
+          {%- if card_product.available -%}
+            <div class="cb-card__button">
+              <form method="post" action="/cart/add" class="cb-card__addtocart">
+                <input
+                  type="hidden"
+                  name="id"
+                  value="{{ card_product.selected_or_first_available_variant.id }}"
+                >
+                <button type="submit" class="cb-card__button-el">
+                  {{ 'products.product.add_to_cart' | t }}
+                </button>
+              </form>
+            </div>
+          {%- else -%}
+            <div class="cb-card__button cb-card__button--disabled">
+              <button type="button" class="cb-card__button-el" disabled>
+                {{ 'products.product.sold_out' | t }}
+              </button>
+            </div>
+          {%- endif -%}
         </div>
       </div>
-
     </article>
   </div>
 
 {%- else -%}
-
   {%- liquid
     assign ratio = 1
     assign placeholder = true
+
     if media_aspect_ratio == 'portrait'
       assign ratio = 0.8
     endif
   -%}
 
   <div class="card-wrapper product-card-wrapper underline-links-hover">
-    <article class="cb-card cb-card--placeholder"
-      style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
-
+    <article class="cb-card cb-card--placeholder" style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
       <div class="cb-card__media-wrapper ratio">
         <div class="card__media">
           <div class="media media--transparent">
@@ -146,8 +138,6 @@
           </div>
         </div>
       </div>
-
     </article>
   </div>
-
 {%- endif -%}
