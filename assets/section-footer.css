@@ -759,7 +759,7 @@
 footer {
   margin: 0;
   padding-top: 48px;
-  background: linear-gradient(to top, var(--color-brand, #30273e), var(--color-almost-black, #070707)) !important;
+  background: linear-gradient(to top, var(--color-brand, #ffffff), var(--color-almost-black, #30273e)) !important;
 }
 
 footer .field__input {
