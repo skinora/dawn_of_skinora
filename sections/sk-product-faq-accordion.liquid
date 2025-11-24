@@ -1,10 +1,18 @@
 <style>
   /* ============================================
-     SKINORA — PRODUCT FAQ (SAFE, BOOTSTRAP-PROOF)
-     Option C: Keep Bootstrap JS, kill its visuals
+     SKINORA — PRODUCT FAQ (LIGHT VERSION)
      ============================================ */
 
-  /* --- Scope + reset Bootstrap inside this section only --- */
+  /* Nøytral lys bakgrunn + mørk tekst */
+  .sk-faq-accordion-{{ section.id }} {
+    background: #F7F7FA; /* subtilt, ikke helt hvit */
+    padding: 5rem 0 6rem;
+    color: #30273E;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Kill Bootstrap-visuals inne i denne sekjsonen, beholder JS */
   .sk-faq-accordion-{{ section.id }} .accordion,
   .sk-faq-accordion-{{ section.id }} .accordion-item,
   .sk-faq-accordion-{{ section.id }} .accordion-header,
@@ -25,25 +33,13 @@
     outline: none !important;
   }
 
-  /* ============================================
-     SKINORA — LUXURY FAQ DESIGN
-     ============================================ */
-
-  .sk-faq-accordion-{{ section.id }} {
-    background: linear-gradient(to bottom, #30273E, #0B0B0B);
-    padding: 5rem 0 6rem;
-    color: #fff;
-    position: relative;
-    overflow: hidden;
-  }
-
   /* --- Main container --- */
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__container {
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 100px;
+    gap: 80px;
     align-items: flex-start;
     position: relative;
   }
@@ -52,27 +48,27 @@
     max-width: 640px;
   }
 
-  /* --- Right decorative image --- */
+  /* --- Right decorative image, nå mer subtil --- */
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__image {
-    opacity: 0.35;
+    opacity: 0.6;
     position: sticky;
     top: 120px;
   }
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__image img {
     width: auto;
-    height: 75vh;
+    height: 70vh;
     object-fit: contain;
-    filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.4));
+    filter: drop-shadow(0px 0px 18px rgba(72, 122, 183, 0.18));
   }
 
   /* --- Title --- */
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__title {
-    font-size: 42px;
+    font-size: 38px;
     font-weight: 600;
-    margin-bottom: 2rem;
-    letter-spacing: -0.5px;
-    border: none;
+    margin-bottom: 2.6rem;
+    letter-spacing: -0.4px;
+    color: #30273E;
   }
 
   /* --- Accordion list --- */
@@ -82,7 +78,7 @@
   }
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(168, 165, 195, 0.7); /* Lavender linje */
     margin-bottom: 0;
   }
 
@@ -95,20 +91,21 @@
     width: 100%;
     background: transparent;
     border: none;
-    padding: 22px 0;
-    color: #ffffff;
+    padding: 24px 0;
+    color: #30273E;
     font-size: 18px;
     font-weight: 500;
     text-align: left;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    transition: color 0.25s ease;
+    transition: color 0.25s ease, background 0.25s ease;
     cursor: pointer;
   }
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button:hover {
-    color: #DCD4EA;
+    color: #4B0082;
+    background: rgba(72, 122, 183, 0.04);
   }
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__question {
@@ -117,12 +114,12 @@
     margin: 0;
   }
 
-  /* --- Icon --- */
+  /* --- Icon (brand-lilla) --- */
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon {
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    border: 2px solid #ffffff;
+    border: 2px solid #4B0082; /* CTA lilla */
     display: flex !important;
     align-items: center;
     justify-content: center;
@@ -130,6 +127,9 @@
     font-weight: bold;
     margin-top: 4px;
     transition: all 0.3s ease;
+    color: #4B0082;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
   }
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon::before {
@@ -140,6 +140,8 @@
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button[aria-expanded="true"] .sk-faq-accordion__icon {
     border-color: #A8A5C3;
     color: #A8A5C3;
+    background: #F7F7FA;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
   }
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button[aria-expanded="true"] .sk-faq-accordion__icon::before {
@@ -149,8 +151,8 @@
   /* --- The expanded text --- */
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__body {
     padding: 0 0 18px;
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 15px;
+    color: #333333;
+    font-size: 16px;
     line-height: 1.7;
   }
 
@@ -168,17 +170,20 @@
     color: #fff;
     margin-top: 2.3rem;
     padding: 14px 24px;
-    border-radius: 8px;
+    border-radius: 999px;
     font-size: 15px;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    transition: background 0.25s ease;
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    box-shadow: 0 8px 18px rgba(75, 0, 130, 0.22);
   }
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-read-more-btn .sk_primary-button:hover {
     background: #6A0DAD;
+    box-shadow: 0 10px 22px rgba(75, 0, 130, 0.3);
+    transform: translateY(-1px);
   }
 
   /* --- Mobile --- */
@@ -193,14 +198,14 @@
     }
 
     .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__title {
-      font-size: 32px;
+      font-size: 30px;
     }
   }
 
   @media (max-width: 480px) {
     .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button {
       font-size: 16px;
-      padding: 16px 0;
+      padding: 18px 0;
     }
 
     .sk-faq-accordion-{{ section.id }} .sk-faq-read-more-btn .sk_primary-button {
@@ -210,6 +215,7 @@
     }
   }
 </style>
+
 
 {%- if product.metafields.custom.faq_item.value != blank -%}
   <section class="sk-faq-accordion-{{ section.id }}">
