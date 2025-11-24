@@ -5,7 +5,6 @@
 {%- assign product = card_product -%}
 
 <div class="cb-card">
-
   <!-- IMAGE -->
   <a href="{{ product.url }}" class="cb-card__image-link">
     <div class="cb-card__image-wrapper">
@@ -26,7 +25,6 @@
 
   <!-- CONTENT -->
   <div class="cb-card__content">
-
     <!-- TITLE -->
     <h3 class="cb-card__title">
       <a href="{{ product.url }}">
@@ -52,35 +50,74 @@
       {%- endif -%}
     </div>
 
-    <!-- VARIANT PICKER (only if multiple variants) -->
+    <!-- ADD TO CART BUTTON & VARIANTS -->
     {%- assign variant_count = product.variants | size -%}
-    {%- if variant_count > 1 -%}
-      <form class="cb-card__variants">
-        <select name="id" class="cb-card__variant-select">
-          {%- for v in product.variants -%}
-            <option value="{{ v.id }}"{% if v == product.selected_or_first_available_variant %} selected{% endif %}>
-              {{ v.title }}
-            </option>
-          {%- endfor -%}
-        </select>
-      </form>
-    {%- endif -%}
+    {% form 'product', product, class: 'cb-card__cart' %}
+      {%- if variant_count > 1 -%}
+        {%- assign option_count = product.options | size -%}
+        {%- if option_count == 1 -%}
+          <div class="cb-card__variants" role="radiogroup" aria-label="{{ product.options.first }}">
+            {%- for variant in product.variants -%}
+              <label
+                class="cb-card__variant-swatch{% unless variant.available %} is-disabled{% endunless %}"
+                title="{{ variant.option1 | escape }}"
+                aria-label="{{ variant.option1 | escape }}"
+              >
+                <input
+                  class="cb-card__variant-input"
+                  type="radio"
+                  name="id"
+                  value="{{ variant.id }}"
+                  {% if variant == product.selected_or_first_available_variant %}
+                    checked
+                  {% endif %}
+                  {% unless variant.available %}
+                    disabled
+                  {% endunless %}
+                >
+                <span class="cb-card__variant-chip">{{ variant.option1 | truncate: 6, '' }}</span>
+              </label>
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <div class="cb-card__variants cb-card__variants--dropdown">
+            <label class="visually-hidden" for="CardVariantSelect-{{ product.id }}">
+              {{ 'products.product.choose_options' | t }}
+            </label>
+            <select id="CardVariantSelect-{{ product.id }}" name="id" class="cb-card__variant-select">
+              {%- for variant in product.variants -%}
+                <option
+                  value="{{ variant.id }}"
+                  {% if variant == product.selected_or_first_available_variant %}
+                    selected
+                  {% endif %}
+                  {% unless variant.available %}
+                    disabled
+                  {% endunless %}
+                >
+                  {{ variant.title }}
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      {%- endif -%}
 
-    <!-- ADD TO CART BUTTON -->
-    <form method="post" action="/cart/add" class="cb-card__cart">
-      <input
-        type="hidden"
-        name="id"
-        value="{{ product.selected_or_first_available_variant.id }}"
+      <button
+        type="submit"
+        class="cb-card__button"
+        {% unless product.available %}
+          disabled
+        {% endunless %}
       >
-      <button type="submit" class="cb-card__button" {% unless product.available %}disabled{% endunless %}>
         {% if product.available %}
           {{ 'products.product.add_to_cart' | t }}
         {% else %}
           {{ 'products.product.sold_out' | t }}
         {% endif %}
       </button>
-    </form>
-
+    {% endform %}
   </div>
 </div>

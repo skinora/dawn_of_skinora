@@ -5,83 +5,6 @@
   text-decoration: none;
 }
 
-.card {
-  text-decoration: none;
-  text-align: var(--text-alignment);
-  border-radius: 15px;
-  overflow: hidden;
-}
-
-.card:not(.ratio) {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.card.card--horizontal {
-  --text-alignment: left;
-  --image-padding: 0rem;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 1.5rem;
-}
-
-.card--horizontal.ratio:before {
-  padding-bottom: 0;
-}
-
-.card--card.card--horizontal {
-  padding: 1.2rem;
-}
-
-.card--card.card--horizontal.card--text {
-  column-gap: 0;
-}
-
-.card--card {
-  height: 100%;
-}
-
-.card--card,
-.card--standard .card__inner {
-  position: relative;
-  box-sizing: border-box;
-  border-radius: var(--border-radius);
-  border: var(--border-width) solid rgba(var(--color-foreground), var(--border-opacity));
-}
-
-.card--card:after,
-.card--standard .card__inner:after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  width: calc(var(--border-width) * 2 + 100%);
-  height: calc(var(--border-width) * 2 + 100%);
-  top: calc(var(--border-width) * -1);
-  left: calc(var(--border-width) * -1);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-horizontal-offset) var(--shadow-vertical-offset) var(--shadow-blur-radius)
-    rgba(var(--color-shadow), var(--shadow-opacity));
-}
-
-/* Needed for gradient continuity with or without animation, the transform scopes the gradient to its container which happens already when animation are turned on */
-.card--card.gradient,
-.card__inner.gradient {
-  transform: perspective(0);
-}
-
-/* Needed for gradient continuity with or without animation so that transparent PNG images come up as we would expect */
-.card__inner.color-scheme-1 {
-  background: transparent;
-}
-
-.card .card__inner .card__media {
-  overflow: hidden;
-  /* Fix for Safari border bug on hover */
-  z-index: 0;
-  border-radius: calc(var(--border-radius) - var(--border-width) - var(--image-padding));
-}
-
 .card--card .card__inner .card__media {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
@@ -649,7 +572,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 0;          /* no round corners */
+  border-radius: 0; /* no round corners */
 }
 
 /* Remove any underline styling from link wrapping image */
@@ -673,16 +596,27 @@
 }
 
 .cb-card__title a {
-  color: #000;
+  color: var(--color-neutral-4);
   text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.cb-card__title a:hover {
+  color: var(--color-brand);
 }
 
 /* Subtitle / short description */
 .cb-card__subtitle {
   margin: 0 0 10px 0;
   font-size: 14px;
-  line-height: 1.4;
-  color: #666;
+  line-height: 1.2;
+  color: var(--color-neutral-2);
+  line-clamp: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ================= PRICE + RATING ROW ================= */
@@ -703,42 +637,129 @@
 .cb-card__price .price__sale .price-item--sale {
   font-size: 18px;
   font-weight: 700;
-  color: #000;
+  color: var(--color-neutral-3);
 }
 
 .cb-card__price .price__sale .price-item--regular {
   font-size: 14px;
-  color: #999;
+  color: var(--color-neutral-5);
   text-decoration: line-through;
   margin-right: 6px;
 }
 
-/* Rating snippet (your rating.liquid outputs .sk-rating) */
+/* Rating snippet */
 .sk-rating {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   font-size: 14px;
+  color: var(--color-brand);
+  line-height: 1;
 }
 
-.sk-star--full,
-.sk-star--half {
-  color: #e63946; /* reddish like CB */
+.sk-rating .sk-star--half {
+  opacity: 0.6;
+}
+
+.sk-rating .sk-star--empty {
+  color: rgba(var(--color-foreground, 18, 18, 18), 0.25);
+}
+
+.sk-rating .sk-rating-count {
+  font-size: 12px;
+  color: var(--color-neutral-2);
+  margin-left: 4px;
+}
+
+.cb-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 /* ================= VARIANT PICKER ================= */
 
 .cb-card__variants {
-  margin-bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 14px;
+}
+
+.cb-card__variants--dropdown {
+  width: 100%;
+}
+
+.cb-card__variant-swatch {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cb-card__variant-swatch:hover {
+  border-color: var(--color-brand);
+}
+
+.cb-card__variant-swatch:focus-within {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px rgba(var(--color-brand-rgb), 0.15);
+}
+
+.cb-card__variant-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cb-card__variant-chip {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-neutral-3);
+  background: transparent;
+  transition: color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cb-card__variant-swatch:hover .cb-card__variant-chip {
+  color: var(--color-brand);
+}
+
+.cb-card__variant-input:checked + .cb-card__variant-chip {
+  color: var(--color-brand);
+  background: rgba(var(--color-brand-rgb), 0.08);
+  box-shadow: 0 0 0 2px var(--color-brand) inset;
+}
+
+.cb-card__variant-swatch.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.cb-card__variant-swatch.is-disabled:hover {
+  border-color: var(--color-border);
 }
 
 .cb-card__variant-select {
   width: 100%;
   padding: 7px 10px;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--color-border);
   font-size: 14px;
-  background: #fff;
-  border-radius: 0; /* no round corners */
+  background: var(--color-white);
+  border-radius: 0;
 }
 
 /* ================= BUTTON ================= */
@@ -753,21 +774,26 @@
   text-align: center;
   padding: 12px 14px;
   border: none;
-  border-radius: 0;          /* no round corners */
-  background: #30273E;       /* Skinora brand */
-  color: #fff;
+  border-radius: 0; /* no round corners */
+  background: var(--color-brand);
+  color: var(--color-white);
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 /* Disabled state */
 .cb-card__button[disabled] {
-  background: #c3c3c3;
-  color: #666;
+  background: rgba(var(--color-brand-rgb), 0.2);
+  color: var(--color-neutral-2);
   cursor: not-allowed;
+}
+
+.cb-card__button:hover {
+  background: color-mix(in srgb, var(--color-brand) 92%, var(--color-white) 8%);
 }
 
 /* ================= MOBILE TUNING ================= */
@@ -790,9 +816,3 @@
     font-size: 16px;
   }
 }
-
-
-
-
-
-

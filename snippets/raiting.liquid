@@ -19,7 +19,7 @@
 {%- comment %}
   Liquid cannot compare complex conditions with "and",
   so we detect half-star in two steps.
-{% endcomment -%}
+{%- endcomment %}
 
 {%- assign next_full = full_stars | plus: 1 -%}
 {%- assign half_star = 0 -%}
@@ -52,22 +52,22 @@
 
 <style>
   .sk-rating {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 3px;
-    font-size: 16px;
-    color: #f5b000;
+    gap: 4px;
+    font-size: 14px;
+    color: var(--color-brand);
     line-height: 1;
   }
   .sk-star--half {
-    opacity: 0.55;
+    opacity: 0.6;
   }
   .sk-star--empty {
-    color: #ccc;
+    color: rgba(var(--color-foreground, 18, 18, 18), 0.25);
   }
   .sk-rating-count {
-    font-size: 14px;
-    color: #666;
+    font-size: 12px;
+    color: var(--color-neutral-2);
     margin-left: 4px;
   }
 </style>
