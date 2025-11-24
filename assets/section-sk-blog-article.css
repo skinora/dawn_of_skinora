@@ -53,7 +53,7 @@
 }
 
 .sk-blog-article__body {
-  font-size: var(--sk-font-size-small);
+  font-size: var(--sk-font-size-medium);
   line-height: 28px;
   color: var(--color-neutral-4, #4f4f4f);
   margin-bottom: 40px;
@@ -126,7 +126,7 @@
 }
 
 .sk-blog-article__block-content {
-  font-size: var(--sk-font-size-small);
+  font-size: var(--sk-font-size-medium);
   line-height: 28px;
   color: var(--color-neutral-4, #4f4f4f);
 }
@@ -226,7 +226,7 @@
 }
 
 .sk-blog-article__right-content p {
-  font-size: var(--sk-font-size-small);
+  font-size: var(--sk-font-size-medium);
   line-height: 24px;
   color: var(--color-neutral-3, #6c6c6c);
   margin-bottom: 16px;
@@ -247,6 +247,7 @@
     font-size: calc(var(--sk-font-size-large) * 1.1);
   }
 }
+
 
 
 

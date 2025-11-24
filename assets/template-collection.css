@@ -67,7 +67,7 @@
 
 /* Price */
 .price-item {
-  font-size: var(--sk-font-size-small);
+  font-size: var(--sk-font-size-medium);
   font-weight: 500;
   color: #333333 !important;
 }
@@ -110,7 +110,7 @@
   }
 
   .card__information .card__heading {
-    font-size: var(--sk-font-size-small);
+    font-size: var(--sk-font-size-medium);
   }
 }
 
@@ -124,6 +124,7 @@
 /*******************************
  END SKINORA COLLECTION GRID
 *******************************/
+
 
 
 

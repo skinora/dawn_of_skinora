@@ -18,7 +18,7 @@
 }
 
 .sk-latest-blogs__description {
-  font-size: var(--sk-font-size-small);
+  font-size: var(--sk-font-size-medium);
   line-height: 24px;
   color: var(--color-neutral-1, #6c6c6c);
   margin: 0;
@@ -136,6 +136,7 @@
   color: rgba(var(--color-white-rgb, 255, 255, 255), 0.8);
   margin: 0;
 }
+
 
 
 

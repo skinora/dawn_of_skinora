@@ -4040,7 +4040,7 @@ div.okeReviews .oke-w-review-main {
 
 @media only screen and (max-width: 1200px) {
   .header .list-menu__item {
-    font-size: var(--sk-font-size-small);
+    font-size: var(--sk-font-size-medium);
   }
 
   .sk-help-categories__description {
@@ -4357,7 +4357,7 @@ div.okeReviews .oke-w-review-main {
   }
 
   .sk-help-categories__description p {
-    font-size: var(--sk-font-size-small);
+    font-size: var(--sk-font-size-medium);
     line-height: 24px;
   }
 
@@ -4694,4 +4694,5 @@ div.okeReviews .oke-w-review-main {
 .sk-radiance-sticky-bottom-bar {
   display: none !important;
 }
+
 

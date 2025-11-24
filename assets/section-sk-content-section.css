@@ -35,7 +35,7 @@
 
 /* Avsnitt – bedre line-height + max-width, ikke justify */
 .sk-content-section__content p {
-  font-size: var(--sk-font-size-small);
+  font-size: var(--sk-font-size-medium);
   line-height: 1.7;
   color: var(--color-neutral-4, #4f4f4f);
   margin-bottom: 22px;
@@ -60,7 +60,7 @@
   position: relative;
   padding-left: 22px;
   margin-bottom: 14px;
-  font-size: var(--sk-font-size-small);
+  font-size: var(--sk-font-size-medium);
   line-height: 1.65;
   color: var(--color-neutral-4, #4f4f4f);
 }
@@ -97,7 +97,7 @@
   color: #ffffff;
   padding: 16px 34px;
   border-radius: 8px;
-  font-size: var(--sk-font-size-small);
+  font-size: var(--sk-font-size-medium);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -129,5 +129,6 @@
     justify-content: flex-start;
   }
 }
+
 
 

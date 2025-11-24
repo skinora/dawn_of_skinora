@@ -21,7 +21,7 @@
 .price .price-item {
   display: inline-block;
   margin: 0 1rem 0 0;
-  font-size: var(--sk-font-size-small);
+  font-size: var(--sk-font-size-medium);
   font-weight: 600;
   color: var(--color-neutral-3);
 }
@@ -101,4 +101,5 @@
   margin-top: 0.2rem;
   color: rgba(var(--color-foreground), 0.7);
 }
+
 

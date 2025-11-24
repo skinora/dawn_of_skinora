@@ -30,7 +30,7 @@
 }
 
 .sk-blog-grid__description p {
-  font-size: var(--sk-font-size-small);
+  font-size: var(--sk-font-size-medium);
   line-height: 24px;
   color: var(--color-neutral-3, #6c6c6c);
   margin: 0;
@@ -133,7 +133,7 @@
   border: 2px solid var(--color-border-2, #e5e5e5);
   background-color: var(--color-white, #ffffff);
   color: var(--color-neutral-1, #6c6c6c);
-  font-size: var(--sk-font-size-small);
+  font-size: var(--sk-font-size-medium);
   font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
@@ -159,6 +159,7 @@
   border-color: var(--color-muted-2, #4a3d5c);
   color: var(--color-white, #ffffff);
 }
+
 
 
 
