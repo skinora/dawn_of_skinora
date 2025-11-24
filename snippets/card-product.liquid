@@ -1,12 +1,17 @@
 {%- comment -%}
-  Compact product card wrapper that delegates to sub-snippets.
+  SKINORA – CurrentBody-style product card
 
-  Sub-snippets:
-  - snippets/card-product-image.liquid
-  - snippets/card-product-meta.liquid
-  - snippets/card-product-price.liquid
+  Compact product card with:
+  - Large rounded image
+  - Title
+  - Short description
+  - Price
+  - Rating (if enabled)
 
-  Preserves the original parameters used by the calling sections.
+  Still uses Shopify's core snippets:
+  - snippets/card-product-image.liquid  (image + badges)
+  - snippets/price.liquid               (price logic)
+  - snippets/rating.liquid              (rating logic, if present)
 {%- endcomment -%}
 
 {%- unless skip_styles -%}
@@ -31,46 +36,63 @@
   -%}
 
   <div class="card-wrapper product-card-wrapper underline-links-hover">
-    <div
-      class="card card--{{ settings.card_style }} {% if card_product.featured_media %} card--media{% else %} card--text{% endif %} {% if image_shape and image_shape != 'default' %} card--shape{% endif %}{% if extend_height %} card--extend-height{% endif %}"
-      style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
-    >
-      <div
-        class="card__inner {% if settings.card_style == 'standard' %}color-{{ settings.card_color_scheme }} gradient{% endif %}{% if card_product.featured_media or settings.card_style == 'standard' %} ratio{% endif %}"
-        style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
-      >
-        {%- render 'card-product-image',
-          card_product: card_product,
-          media_aspect_ratio: media_aspect_ratio,
-          image_shape: image_shape,
-          lazy_load: lazy_load,
-          settings: settings,
-          section_id: section_id,
-          show_secondary_image: show_secondary_image
-        -%}
-        {%- render 'card-product-meta',
-          card_product: card_product,
-          section_id: section_id,
-          settings: settings,
-          show_vendor: show_vendor,
-          block: block
-        -%}
-      </div>
+    <article class="card cb-card"
+      style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
+      {%- comment %}
+        IMAGE AREA – big rounded image like CurrentBody
+      {% endcomment -%}
+      <a href="{{ card_product.url }}" class="cb-card__media-link">
+        <div class="cb-card__media-wrapper ratio"
+          style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
+          {%- render 'card-product-image',
+            card_product: card_product,
+            media_aspect_ratio: media_aspect_ratio,
+            image_shape: image_shape,
+            lazy_load: lazy_load,
+            settings: settings,
+            section_id: section_id,
+            show_secondary_image: show_secondary_image
+          -%}
+        </div>
+      </a>
 
-      {%- render 'card-product-price',
-        card_product: card_product,
-        section_id: section_id,
-        settings: settings,
-        quick_add: quick_add,
-        horizontal_quick_add: horizontal_quick_add,
-        show_rating: show_rating,
-        block: block,
-        media_aspect_ratio: media_aspect_ratio,
-        image_shape: image_shape,
-        lazy_load: lazy_load,
-        show_secondary_image: show_secondary_image
-      -%}
-    </div>
+      {%- comment %}
+        CONTENT AREA – title, description, price, rating
+      {% endcomment -%}
+      <div class="cb-card__content card__content">
+        <div class="card__information">
+          <h3 class="card__heading cb-card__title">
+            <a href="{{ card_product.url }}"
+               class="full-unstyled-link">
+              {{ card_product.title | escape }}
+            </a>
+          </h3>
+
+          {%- if card_product.description != blank -%}
+            <p class="cb-card__excerpt">
+              {{ card_product.description | strip_html | truncate: 120 }}
+            </p>
+          {%- endif -%}
+
+          <div class="cb-card__bottom">
+            <div class="cb-card__price">
+              {%- render 'price',
+                product: card_product,
+                price_class: 'price--large'
+              -%}
+            </div>
+
+            {%- if show_rating -%}
+              <div class="cb-card__rating">
+                {%- render 'rating',
+                  product: card_product
+                -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </article>
   </div>
 
 {%- else -%}
@@ -83,12 +105,11 @@
   -%}
 
   <div class="card-wrapper product-card-wrapper underline-links-hover">
-    <div
-      class="card card--{{ settings.card_style }} {% if extend_height %} card--extend-height{% endif %} {% if image_shape and image_shape != 'default' %} card--shape{% endif %} {% if settings.card_style == 'card' %} color-{{ settings.card_color_scheme }} gradient{% endif %}"
-      style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
-    >
-      <div class="card__inner{% if settings.card_style == 'standard' %} color-{{ settings.card_color_scheme }} gradient{% endif %} ratio">
-        <div class="card__media {% if image_shape and image_shape != 'default' %} shape--{{ image_shape }} color-{{ settings.card_color_scheme }} gradient{% endif %}">
+    <article class="card cb-card cb-card--placeholder"
+      style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
+      <div class="cb-card__media-wrapper ratio"
+        style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
+        <div class="card__media">
           <div class="media media--transparent">
             {%- if placeholder_image -%}
               {{ placeholder_image | placeholder_svg_tag: 'placeholder-svg' }}
@@ -99,20 +120,21 @@
         </div>
       </div>
 
-      <div class="card__content">
+      <div class="cb-card__content card__content">
         <div class="card__information">
-          <h3 class="card__heading card__heading--placeholder{% if settings.card_style == 'standard' %} h5{% endif %}">
-            <a role="link" aria-disabled="true" class="full-unstyled-link">{{ 'onboarding.product_title' | t }}</a>
+          <h3 class="card__heading cb-card__title card__heading--placeholder">
+            <a role="link" aria-disabled="true" class="full-unstyled-link">
+              {{ 'onboarding.product_title' | t }}
+            </a>
           </h3>
-          <div class="card-information">
-            {%- if show_vendor -%}
-              <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
-              <div class="caption-with-letter-spacing light">{{ 'products.product.vendor' | t }}</div>
-            {%- endif -%}
-            {% render 'price', placeholder: placeholder, show_compare_at_price: true %}
+          <div class="cb-card__bottom">
+            {% render 'price',
+              placeholder: placeholder,
+              show_compare_at_price: true
+            %}
           </div>
         </div>
       </div>
-    </div>
+    </article>
   </div>
 {%- endif -%}
