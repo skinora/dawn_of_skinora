@@ -38,7 +38,7 @@
 }
 
 .sk-product-showcase__description p {
-  font-size: 16px;
+  font-size: var(--sk-font-size-small);
   line-height: 24px;
   color: var(--color-neutral-4, #4f4f4f);
   margin-bottom: 16px;
@@ -53,7 +53,7 @@
 }
 
 .sk-product-showcase__project-title {
-  font-size: 18px;
+  font-size: var(--sk-font-size-medium);
   font-weight: 700;
   color: var(--color-brand, #30273e);
   margin-bottom: 8px;
@@ -61,7 +61,7 @@
 }
 
 .sk-product-showcase__project-subtitle {
-  font-size: 16px;
+  font-size: var(--sk-font-size-small);
   font-weight: 500;
   color: var(--color-neutral-4, #4f4f4f);
   margin-bottom: 4px;
@@ -69,7 +69,7 @@
 }
 
 .sk-product-showcase__project-date {
-  font-size: 14px;
+  font-size: var(--sk-font-size-caption);
   font-weight: 400;
   color: var(--color-black, #000);
   margin: 0;
@@ -87,7 +87,7 @@
   color: var(--color-white, white);
   padding: 16px 32px;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: var(--sk-font-size-small);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -107,3 +107,6 @@
 .sk-product-showcase__button:hover .sk-product-showcase__button-arrow {
   transform: translateX(4px);
 }
+
+
+

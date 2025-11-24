@@ -19,7 +19,7 @@
   color: var(--color-white, #ffffff);
   padding: 16px 32px;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: var(--sk-font-size-small);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -33,3 +33,4 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(var(--color-brand-rgb), 0.3);
 }
+

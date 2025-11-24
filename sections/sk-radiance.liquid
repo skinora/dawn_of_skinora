@@ -42,7 +42,7 @@
   }
 
   .sk-image-content__description p {
-    font-size: 14px;
+    font-size: var(--sk-font-size-caption);
     line-height: 21px;
   }
 
@@ -70,12 +70,12 @@
 
   @media only screen and (max-width: 435px) {
     .sk-radiance .sk-image-content__heading {
-      font-size: 32px;
+      font-size: calc(var(--sk-font-size-2xl) * 1.0667);
       line-height: 37px;
     }
 
     .sk-radiance .sk-image-content__bullet-item {
-      font-size: 12px;
+      font-size: var(--sk-font-size-xxs);
       margin-bottom: 5px;
     }
 
@@ -85,7 +85,7 @@
     }
 
     .sk-image-content__description p {
-      font-size: 12px;
+      font-size: var(--sk-font-size-xxs);
       line-height: 20px;
     }
 
@@ -386,3 +386,6 @@
   ]
 }
 {% endschema %}
+
+
+

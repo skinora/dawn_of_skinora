@@ -178,16 +178,16 @@
 /* === Text & Title === */
 .sk-radiance-product__text {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--sk-font-size-caption);
   color: var(--color-neutral-1);
 }
 .sk-radiance-product__text.subtitle {
-  font-size: 16px;
+  font-size: var(--sk-font-size-small);
   font-weight: 700;
   color: var(--color-brand);
 }
 .sk-radiance-product__title h1 {
-  font-size: 32px;
+  font-size: calc(var(--sk-font-size-2xl) * 1.0667);
   font-weight: 600;
   margin: 0 0 8px 0;
   color: var(--color-dark);
@@ -243,12 +243,12 @@
   color: var(--color-danger-weak);
   text-decoration: line-through;
   font-weight: 600;
-  font-size: 18px;
+  font-size: var(--sk-font-size-medium);
 }
 .sk-radiance-price-item--sale {
   color: var(--color-black);
   font-weight: 700;
-  font-size: 24px;
+  font-size: calc(var(--sk-font-size-xl) * 0.95);
 }
 .sk-radiance-sticky-bottom-bar .sk-radiance-price-item--sale {
   color: var(--color-white);
@@ -354,7 +354,7 @@
   color: var(--color-white);
   border: none;
   padding: 1rem 2rem;
-  font-size: 17px;
+  font-size: var(--sk-font-size-medium);
   font-weight: 600;
   transition: background-color 0.2s ease;
   position: relative;
@@ -498,14 +498,14 @@
   gap: 0.5rem;
 }
 .sk-radiance-sticky-bottom-bar__price .sk-radiance-price-item {
-  font-size: 18px;
+  font-size: var(--sk-font-size-medium);
 }
 .sk-radiance-sticky-bottom-bar__button {
   background: var(--color-ghost-1, #f1eff4);
   color: var(--color-almost-black, #070707);
   border: none;
   padding: 13px 45px;
-  font-size: 16px;
+  font-size: var(--sk-font-size-small);
   font-weight: 600;
   border-radius: 33px;
   transition: all 0.2s ease;
@@ -533,7 +533,7 @@
     text-align: center;
   }
   .sk-radiance-sticky-bottom-bar__product-name {
-    font-size: 16px;
+    font-size: var(--sk-font-size-small);
     white-space: normal;
     line-height: 1.4;
     max-height: 2.8em;
@@ -553,7 +553,7 @@
 }
 @media screen and (min-width: 750px) and (max-width: 989px) {
   .sk-radiance-sticky-bottom-bar__product-name {
-    font-size: 17px;
+    font-size: var(--sk-font-size-medium);
   }
   .sk-radiance-sticky-bottom-bar__button {
     min-width: 180px;
@@ -635,3 +635,9 @@ body {
   fill: #30273e !important;
   stroke: #30273e !important;
 }
+
+
+
+
+
+

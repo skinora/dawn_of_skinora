@@ -25,7 +25,7 @@
 }
 
 .sk-help-categories__description p {
-  font-size: 18px;
+  font-size: var(--sk-font-size-medium);
   line-height: 28px;
   color: var(--color-neutral-3, #6c6c6c);
   margin: 0;
@@ -97,7 +97,7 @@
 }
 
 .sk-help-categories__title {
-  font-size: 20px;
+  font-size: var(--sk-font-size-large);
   font-weight: 600;
   color: var(--color-brand, #30273e);
   padding-bottom: 3px;
@@ -108,9 +108,11 @@
 }
 
 .sk-help-categories__count {
-  font-size: 18px;
+  font-size: var(--sk-font-size-medium);
   font-weight: 400;
   color: var(--color-black, #000);
   margin: 0;
   margin-top: 6px;
 }
+
+

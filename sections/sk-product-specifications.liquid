@@ -69,14 +69,14 @@
 
     .sk-product-specifications-{{ section.id }} .sk-specifications__text h3,
     .sk-product-specifications-{{ section.id }} .sk-specifications__text h4 {
-      font-size: 14px;
+      font-size: var(--sk-font-size-caption);
       font-weight: 700;
       color: #6C6C6C;
       margin: 0 0 4px 0;
     }
 
     .sk-product-specifications-{{ section.id }} .sk-specifications__text p {
-      font-size: 14px;
+      font-size: var(--sk-font-size-caption);
       line-height: 1.6;
       color: #666666;
       margin: 0;
@@ -97,7 +97,7 @@
       align-items: center;
       gap: 12px;
       margin-bottom: 8px;
-      font-size: 13px;
+      font-size: var(--sk-font-size-xs);
       color: #666666;
     }
 
@@ -131,7 +131,7 @@
     }
     @media only screen and (max-width: 435px) {
       .sk-product-specifications-{{ section.id }} .sk-specifications__main-heading {
-        font-size: 32px;
+        font-size: calc(var(--sk-font-size-2xl) * 1.0667);
         line-height: 37px;
       }
       .sk-product-specifications-{{ section.id }} .sk-specifications__icon svg {
@@ -139,11 +139,11 @@
       height: 18px;
     }
     .sk-product-specifications-{{ section.id }} .sk-specifications__text p {
-      font-size: 12px;
+      font-size: var(--sk-font-size-xxs);
       line-height: 20px;
     }
     .sk-product-specifications-{{ section.id }} .sk-specifications__sub-item {
-      font-size: 12px;
+      font-size: var(--sk-font-size-xxs);
     }
     .sk-product-specifications-{{ section.id }} .sk-specifications__sub-item svg {
       width: 14px;
@@ -392,3 +392,7 @@
   ]
 }
 {% endschema %}
+
+
+
+

@@ -37,7 +37,7 @@
 
                                                 .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h3,
                                                 .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h4 {
-                                                  font-size: 16px;
+                                                  font-size: var(--sk-font-size-small);
                                                   line-height: 1.4;
                                                   font-weight: 700;
                                                   color: var(--color-brand-contrast, #30273E);
@@ -47,7 +47,7 @@
                                                 }
 
                                                                   .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
-                                                                    font-size: 13px;
+                                                                    font-size: var(--sk-font-size-xs);
                                                                     line-height: 1.6;
                                                                     color: var(--color-neutral-7, #333333);
                                                                     margin: 0;
@@ -72,18 +72,18 @@
 
                                                                                                                                                                                                      @media only screen and (max-width: 435px) {
                                                                      .sk-product-why-choose-{{ section.id }} .sk-why-choose__main-heading {
-                                                                       font-size: 32px;
+                                                                       font-size: calc(var(--sk-font-size-2xl) * 1.0667);
                                                                          line-height: 37px;
                                                                          }
 
                                                                                                                                                                                                                              .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h3,
                                                                                                                                                                                                                                .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h4 {
-                                                                                                                                                                                                                                   font-size: 14px;
+                                                                                                                                                                                                                                   font-size: var(--sk-font-size-caption);
                                                                                                                                                                                                                                        line-height: 20px;
 
                                                                                                                                                                                                                                          }
                                                                                                                                                                                                                                            .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
-                                                                                                                                                                                                                                               font-size: 12px;
+                                                                                                                                                                                                                                               font-size: var(--sk-font-size-xxs);
                                                                                                                                                                                                                                                    line-height: 20px;
                                                                                                                                                                                                                                                      }
                                                                                                                                                                                                                                                        .sk-product-why-choose .sk-why-choose__columns > .sk-why-choose__column{
@@ -201,3 +201,8 @@
 }
 {% endschema %}
 >
+
+
+
+
+

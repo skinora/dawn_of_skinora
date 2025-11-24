@@ -220,7 +220,7 @@
 .card__heading {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 20px;
+  font-size: var(--sk-font-size-large);
   font-weight: 700;
   margin-bottom: 3px;
   color: var(--color-neutral-3);
@@ -832,3 +832,4 @@
     font-size: calc(var(--sk-font-size-base) * 0.98);
   }
 }
+

@@ -58,7 +58,7 @@
 }
 
 .sk-help-banner__subheading {
-  font-size: 24px;
+  font-size: calc(var(--sk-font-size-xl) * 0.95);
   font-weight: 400;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 30px;
@@ -71,7 +71,7 @@
 }
 
 .sk-help-banner__description p {
-  font-size: 18px;
+  font-size: var(--sk-font-size-medium);
   line-height: 28px;
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 16px;
@@ -94,7 +94,7 @@
   color: var(--color-brand, #30273e);
   padding: 18px 36px;
   border-radius: 8px;
-  font-size: 18px;
+  font-size: var(--sk-font-size-medium);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -108,3 +108,5 @@
   transform: translateY(-2px);
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
 }
+
+
