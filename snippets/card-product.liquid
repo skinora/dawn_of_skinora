@@ -1,17 +1,20 @@
 {%- comment -%}
-  SKINORA – CurrentBody-style product card
+  SKINORA — CurrentBody-style product card
 
-  Compact product card with:
-  - Large rounded image
+  Layout:
+  - Image wrapper (rounded, large)
+  - Badges (sale etc.)
   - Title
-  - Short description
+  - Short description (from product description)
   - Price
-  - Rating (if enabled)
+  - Rating (optional)
+  - Add to cart button (quick add system)
 
-  Still uses Shopify's core snippets:
-  - snippets/card-product-image.liquid  (image + badges)
-  - snippets/price.liquid               (price logic)
-  - snippets/rating.liquid              (rating logic, if present)
+  Uses Shopify core snippets for:
+  - Price
+  - Rating
+  - Product image
+  - Quick Add
 {%- endcomment -%}
 
 {%- unless skip_styles -%}
@@ -23,6 +26,7 @@
 {%- endunless -%}
 
 {%- if card_product and card_product != empty -%}
+
   {%- liquid
     assign ratio = 1
     if card_product.featured_media and media_aspect_ratio == 'portrait'
@@ -36,11 +40,9 @@
   -%}
 
   <div class="card-wrapper product-card-wrapper underline-links-hover">
-    <article class="card cb-card"
-      style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
-      {%- comment %}
-        IMAGE AREA – big rounded image like CurrentBody
-      {% endcomment -%}
+    <article class="cb-card" style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
+
+      <!-- IMAGE WRAPPER -->
       <a href="{{ card_product.url }}" class="cb-card__media-link">
         <div class="cb-card__media-wrapper ratio"
           style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
@@ -56,46 +58,57 @@
         </div>
       </a>
 
-      {%- comment %}
-        CONTENT AREA – title, description, price, rating
-      {% endcomment -%}
+      <!-- CONTENT AREA -->
       <div class="cb-card__content card__content">
         <div class="card__information">
-          <h3 class="card__heading cb-card__title">
-            <a href="{{ card_product.url }}"
-               class="full-unstyled-link">
+
+          <!-- TITLE -->
+          <h3 class="cb-card__title">
+            <a href="{{ card_product.url }}" class="full-unstyled-link">
               {{ card_product.title | escape }}
             </a>
           </h3>
 
+          <!-- DESCRIPTION (CurrentBody-style excerpt) -->
           {%- if card_product.description != blank -%}
             <p class="cb-card__excerpt">
               {{ card_product.description | strip_html | truncate: 120 }}
             </p>
           {%- endif -%}
 
+          <!-- PRICE + RATING -->
           <div class="cb-card__bottom">
+
             <div class="cb-card__price">
-              {%- render 'price',
-                product: card_product,
-                price_class: 'price--large'
-              -%}
+              {%- render 'price', product: card_product, price_class: 'price--large' -%}
             </div>
 
             {%- if show_rating -%}
               <div class="cb-card__rating">
-                {%- render 'rating',
-                  product: card_product
-                -%}
+                {%- render 'rating', product: card_product -%}
               </div>
             {%- endif -%}
+
+          </div> <!-- /bottom row -->
+
+          <!-- BUTTON AREA -->
+          <div class="cb-card__button">
+            {%- if quick_add != 'none' -%}
+              {%- render 'quick-add-button',
+                product: card_product,
+                section_id: section_id
+              -%}
+            {%- endif -%}
           </div>
+
         </div>
       </div>
+
     </article>
   </div>
 
 {%- else -%}
+
   {%- liquid
     assign ratio = 1
     assign placeholder = true
@@ -105,10 +118,10 @@
   -%}
 
   <div class="card-wrapper product-card-wrapper underline-links-hover">
-    <article class="card cb-card cb-card--placeholder"
+    <article class="cb-card cb-card--placeholder"
       style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
-      <div class="cb-card__media-wrapper ratio"
-        style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
+
+      <div class="cb-card__media-wrapper ratio">
         <div class="card__media">
           <div class="media media--transparent">
             {%- if placeholder_image -%}
@@ -122,19 +135,19 @@
 
       <div class="cb-card__content card__content">
         <div class="card__information">
-          <h3 class="card__heading cb-card__title card__heading--placeholder">
+          <h3 class="cb-card__title card__heading--placeholder">
             <a role="link" aria-disabled="true" class="full-unstyled-link">
               {{ 'onboarding.product_title' | t }}
             </a>
           </h3>
+
           <div class="cb-card__bottom">
-            {% render 'price',
-              placeholder: placeholder,
-              show_compare_at_price: true
-            %}
+            {% render 'price', placeholder: placeholder, show_compare_at_price: true %}
           </div>
         </div>
       </div>
+
     </article>
   </div>
+
 {%- endif -%}
