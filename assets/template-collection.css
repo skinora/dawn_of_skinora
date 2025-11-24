@@ -1,99 +1,126 @@
-@media screen and (max-width: 749px) {
-  .collection .grid__item:only-child {
-    flex: 0 0 100%;
-    max-width: 100%;
+/*******************************
+ SKINORA — COLLECTION GRID OVERRIDE
+ Premium product card styling
+*******************************/
+
+/* ====== PRODUCT GRID SPACING ====== */
+.product-grid {
+  gap: 24px !important; /* uniform, clean spacing */
+}
+
+@media (max-width: 749px) {
+  .product-grid {
+    gap: 18px !important;
   }
 }
 
-@media screen and (max-width: 989px) {
-  .collection .slider.slider--tablet {
-    margin-bottom: 1.5rem;
-  }
+/* ====== PRODUCT CARD WRAPPER ====== */
+.card-wrapper {
+  background: #F2F2F2;            /* Skinora soft grey background */
+  border-radius: 24px;            /* luxury smooth shape */
+  padding: 18px;
+  transition: transform .2s ease;
 }
 
-.collection .loading-overlay {
-  position: absolute;
-  z-index: 1;
-  width: 1.8rem;
+.card-wrapper:hover {
+  transform: translateY(-4px);     /* subtle premium hover */
 }
 
-@media screen and (max-width: 749px) {
-  .collection .loading-overlay {
-    top: 0;
-    right: 0;
-  }
+/* Remove Dawn’s ugly borders if active */
+.card {
+  border: none !important;
+  box-shadow: none !important;
 }
 
-@media screen and (min-width: 750px) {
-  .collection .loading-overlay {
-    left: 0;
-  }
+/* ====== IMAGE RATIO & CONSISTENCY ====== */
+.product-grid .card__media {
+  aspect-ratio: 4/5 !important;    /* classic beauty ratio */
+  background: #F2F2F2;             /* neutral frame */
+  border-radius: 22px;
+  overflow: hidden;
 }
 
-.collection .loading-overlay {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: none;
+/* Image inside frame */
+.product-grid .card__media img {
   width: 100%;
-  padding: 0 1.5rem;
-  opacity: 0.7;
+  height: 100%;
+  object-fit: cover;               /* consistent crop */
+  border-radius: 22px;
+  transition: transform .35s ease;
 }
 
-@media screen and (min-width: 750px) {
-  .collection .loading-overlay {
-    padding-left: 5rem;
-    padding-right: 5rem;
+/* Subtle zoom on hover (luxury feel) */
+.card-wrapper:hover img {
+  transform: scale(1.04);
+}
+
+/* ====== TYPOGRAPHY ====== */
+
+/* Product title */
+.card__information .card__heading {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #30273E;                  /* Skinora dark iris */
+  margin-top: 12px;
+}
+
+/* Price */
+.price-item {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333333 !important;
+}
+
+/* Remove duplicate product titles that Dawn sometimes prints */
+.card__heading + .card__heading {
+  display: none !important;
+}
+
+/* Vendor off (if Dawn tries to inject it) */
+.card__information .caption-with-letter-spacing {
+  display: none !important;
+}
+
+/* ====== SALE BADGE ====== */
+.badge--bottom-left,
+.badge--top-left,
+.badge--bottom-right,
+.badge--top-right {
+  background: #487AB7 !important; /* Skinora Regatta blue */
+  color: white !important;
+  border-radius: 18px;
+  font-weight: 600 !important;
+  padding: 4px 12px !important;
+  font-size: 13px !important;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* ====== CARD SPACING ====== */
+.grid__item {
+  margin-bottom: 12px;
+}
+
+/* ====== MOBILE CLEANUP ====== */
+@media (max-width: 749px) {
+  .card-wrapper {
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .card__information .card__heading {
+    font-size: 16px;
   }
 }
 
-.collection.loading .loading-overlay {
-  display: block;
+/* ====== REMOVE UGLY FOCUS OUTLINES (Dawn default) ====== */
+.card-wrapper:focus-visible,
+.card-wrapper a:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-.collection--empty .title-wrapper {
-  margin-top: 10rem;
-  margin-bottom: 15rem;
-}
-
-@media screen and (max-width: 989px) {
-  .collection .slider--tablet.product-grid {
-    scroll-padding-left: 1.5rem;
-  }
-}
-
-.collection__description > * {
-  margin: 0;
-}
-
-.collection__title.title-wrapper {
-  margin-bottom: 2.5rem;
-}
-
-.collection__title .title:not(:only-child) {
-  margin-bottom: 1rem;
-}
-
-@media screen and (min-width: 990px) {
-  .collection__title--desktop-slider .title {
-    margin-bottom: 2.5rem;
-  }
-
-  .collection__title.title-wrapper--self-padded-tablet-down {
-    padding: 0 5rem;
-  }
-
-  .collection slider-component:not(.page-width-desktop) {
-    padding: 0;
-  }
-
-  .collection--full-width slider-component:not(.slider-component-desktop) {
-    padding: 0 1.5rem;
-    max-width: none;
-  }
-}
-
-.collection__view-all a:not(.link) {
-  margin-top: 1rem;
-}
+/*******************************
+ END SKINORA COLLECTION GRID
+*******************************/
