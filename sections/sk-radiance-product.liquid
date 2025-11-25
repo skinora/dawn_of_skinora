@@ -16,26 +16,20 @@
     background: var(--color-white, #ffffff);
     border: 2px solid var(--color-border-2, #d4d4dc);
     border-radius: 9999px;
-    padding: 0.75rem 1.35rem; /* more padding */
-    font-size: 1.1rem; /* larger text */
+    padding: 0.75rem 1.35rem;
+    font-size: 1.1rem;
     line-height: 1.2;
-    font-weight: 700; /* heavier weight */
+    font-weight: 700;
     white-space: nowrap;
     box-shadow: 0 6px 14px rgba(48, 39, 62, 0.12);
   }
-  /* visibility/placement */
-  .sk-radiance-pills--desktop {
-    display: none;
-  }
+  .sk-radiance-pills--desktop { display: none; }
   @media (min-width: 750px) {
-    .sk-radiance-pills--mobile {
-      display: none;
-    }
-    .sk-radiance-pills--desktop {
-      display: flex;
-    }
+    .sk-radiance-pills--mobile { display: none; }
+    .sk-radiance-pills--desktop { display: flex; }
   }
 </style>
+
 
 <product-info
   id="MainProduct-{{ section.id }}"
@@ -44,15 +38,15 @@
   data-product-id="{{ product.id }}"
   data-update-url="true"
   data-url="{{ product.url }}"
-  {% if section.settings.image_zoom == 'hover' %}
-    data-zoom-on-hover
-  {% endif %}
+  {% if section.settings.image_zoom == 'hover' %}data-zoom-on-hover{% endif %}
 >
-  {%- render 'sk-radiance-product-assets', section: section, product: product -%}
+
+  {% render 'sk-radiance-product-assets', section: section, product: product %}
 
   {%- assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' -%}
   {%- assign product_pills_meta = product.metafields.custom.product_pills -%}
   {%- assign product_pills = blank -%}
+
   {%- if product_pills_meta and product_pills_meta.value != blank -%}
     {%- if product_pills_meta.type contains 'list.' -%}
       {%- assign product_pills = product_pills_meta.value -%}
@@ -60,225 +54,221 @@
       {%- assign product_pills = product_pills_meta.value | split: '\n' -%}
     {%- endif -%}
   {%- endif -%}
+
   {%- assign has_pills = false -%}
   {%- if product_pills != blank -%}
-    {%- for pill in product_pills -%}
-      {%- if pill != blank -%}
+    {% for pill in product_pills %}
+      {% if pill != blank %}
         {%- assign has_pills = true -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endfor -%}
+        {% break %}
+      {% endif %}
+    {% endfor %}
   {%- endif -%}
 
+
   <div class="page-width">
-    <div class="sk-radiance-product sk-radiance-product--{{ section.settings.media_size }} sk-radiance-product--{{ section.settings.media_position }} sk-radiance-product--{{ section.settings.gallery_layout }} sk-radiance-product--mobile-{{ section.settings.mobile_thumbnails }} {% if product.media.size > 0 %}sk-radiance-product--with-media{% else %}sk-radiance-product--no-media{% endif %}">
-      <!-- Product Media Gallery -->
+    <div class="sk-radiance-product
+      sk-radiance-product--{{ section.settings.media_size }}
+      sk-radiance-product--{{ section.settings.media_position }}
+      sk-radiance-product--{{ section.settings.gallery_layout }}
+      sk-radiance-product--mobile-{{ section.settings.mobile_thumbnails }}
+      {% if product.media.size > 0 %}sk-radiance-product--with-media{% else %}sk-radiance-product--no-media{% endif %}
+    ">
+
+      <!-- =======================
+           MEDIA WRAPPER
+      ======================== -->
       <div class="sk-radiance-product__media-wrapper">
         {% render 'sk-radiance-product-media-gallery', variant_images: variant_images %}
 
-        {%- if has_pills -%}
-          <!-- MOBILE: pills under hero -->
-          <div class="sk-radiance-pills sk-radiance-pills--mobile" role="list" aria-label="Product highlights">
-            {%- for pill in product_pills -%}
-              {%- assign pill_text = pill | strip -%}
-              {%- if pill_text != blank -%}
-                <span class="sk-pill" role="listitem">{{ pill_text }}</span>
-              {%- endif -%}
-            {%- endfor -%}
+        {% if has_pills %}
+          <div class="sk-radiance-pills sk-radiance-pills--mobile" role="list">
+            {% for pill in product_pills %}
+              {% assign pill_text = pill | strip %}
+              {% if pill_text != blank %}
+                <span class="sk-pill">{{ pill_text }}</span>
+              {% endif %}
+            {% endfor %}
           </div>
-        {%- endif -%}
+        {% endif %}
 
-        {%- if section.settings.show_guarantee_below_media
-          and product.metafields.custom.guarantee_banner_content != blank
-        -%}
-          {%- render 'sk-radiance-guarantee',
+        {% if section.settings.show_guarantee_below_media and product.metafields.custom.guarantee_banner_content != blank %}
+          {% render 'sk-radiance-guarantee',
             section: section,
             product: product,
             show_below_media: true,
             button_text: section.settings.guarantee_button_text,
             button_link: section.settings.guarantee_button_link
-          -%}
-        {%- endif -%}
+          %}
+        {% endif %}
       </div>
 
-      <!-- Product Info -->
+
+      <!-- =======================
+           PRODUCT INFO
+      ======================== -->
       <div class="sk-radiance-product__info-wrapper{% if settings.page_width > 1400 and section.settings.media_size == "small" %} sk-radiance-product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+
         <section
           id="ProductInfo-{{ section.id }}"
           class="sk-radiance-product__info-container{% if section.settings.enable_sticky_info %} sk-radiance-product__column-sticky{% endif %}"
         >
+
           {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
-          {%- for block in section.blocks -%}
-            {%- case block.type -%}
-              {%- when '@app' -%}
+          {% for block in section.blocks %}
+            {% case block.type %}
+
+              {% when '@app' %}
                 {% render block %}
 
-              {%- when 'text' -%}
-                <p
-                  class="sk-radiance-product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
-                  {{ block.shopify_attributes }}
-                >
-                  {{- block.settings.text -}}
+              {% when 'text' %}
+                <p class="sk-radiance-product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
+                  {{ block.shopify_attributes }}>
+                  {{ block.settings.text }}
                 </p>
 
-              {%- when 'title' -%}
+              {% when 'title' %}
                 <div class="sk-radiance-product__title" {{ block.shopify_attributes }}>
                   <h1>{{ product.title | escape }}</h1>
                 </div>
 
-              {%- when 'rating' -%}
-                {%- render 'sk-radiance-rating', product: product, block: block -%}
+              {% when 'rating' %}
+                {% render 'sk-radiance-rating', product: product, block: block %}
 
-              {%- when 'price' -%}
-                {%- if has_pills -%}
-                  <!-- DESKTOP/TABLET: pills before price -->
-                  <div class="sk-radiance-pills sk-radiance-pills--desktop" role="list" aria-label="Product highlights">
-                    {%- for pill in product_pills -%}
-                      {%- assign pill_text = pill | strip -%}
-                      {%- if pill_text != blank -%}
-                        <span class="sk-pill" role="listitem">{{ pill_text }}</span>
-                      {%- endif -%}
-                    {%- endfor -%}
+              {% when 'price' %}
+                {% if has_pills %}
+                  <div class="sk-radiance-pills sk-radiance-pills--desktop" role="list">
+                    {% for pill in product_pills %}
+                      {% assign pill_text = pill | strip %}
+                      {% if pill_text != blank %}
+                        <span class="sk-pill">{{ pill_text }}</span>
+                      {% endif %}
+                    {% endfor %}
                   </div>
-                {%- endif -%}
+                {% endif %}
 
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
-                  {%- render 'sk-radiance-price',
+                  {% render 'sk-radiance-price',
                     product: product,
                     use_variant: true,
                     show_badges: false,
                     price_class: 'price--large'
-                  -%}
+                  %}
                 </div>
 
-              {%- when 'quantity_selector' -%}
-                {%- render 'sk-radiance-quantity',
+              {% when 'quantity_selector' %}
+                {% render 'sk-radiance-quantity',
                   product: product,
                   block: block,
                   product_form_id: product_form_id,
                   section: section
-                -%}
+                %}
 
-              {%- when 'variant_picker' -%}
+              {% when 'variant_picker' %}
                 {% render 'sk-radiance-product-variant-picker',
                   product: product,
                   block: block,
                   product_form_id: product_form_id
                 %}
 
-              {%- when 'product_features' -%}
-                {%- comment -%}
-                  Product Features block
-                  Renders metafield: configurable (defaults to custom.feature_svg)
-                  Recommended type: list.single_line_text_field (each item contains SVG markup) OR list.file_reference for uploaded SVG/image files.
-                {%- endcomment -%}
+              {% when 'product_features' %}
+                {% assign feature_namespace = block.settings.metafield_namespace | default: 'custom' %}
+                {% assign feature_key = block.settings.metafield_key | default: 'feature_svg' %}
+                {% assign feature_group = product.metafields[feature_namespace] %}
+                {% assign feature_meta = feature_group[feature_key] %}
 
-                {%- assign feature_namespace = block.settings.metafield_namespace | default: 'custom' -%}
-                {%- assign feature_key = block.settings.metafield_key | default: 'feature_svg' -%}
-                {%- assign feature_meta = null -%}
-                {%- if feature_namespace != blank and feature_key != blank -%}
-                  {%- assign feature_group = product.metafields[feature_namespace] -%}
-                  {%- if feature_group -%}
-                    {%- assign feature_meta = feature_group[feature_key] -%}
-                  {%- endif -%}
-                {%- endif -%}
-                <div
-                  class="sk-product-features"
-                  {{ block.shopify_attributes }}
-                  data-feature-namespace="{{ feature_namespace }}"
-                  data-feature-key="{{ feature_key }}"
-                  data-feature-type="{{ feature_meta.type | default: 'blank' }}"
-                  role="list"
-                >
-                  {%- if feature_meta and feature_meta.value != blank -%}
-                    {%- assign feature_type = feature_meta.type -%}
+                <div class="sk-product-features" {{ block.shopify_attributes }} role="list">
 
-                    {%- if feature_type contains 'list.file_reference' -%}
-                      {%- for file_ref in feature_meta.value -%}
-                        {%- if file_ref != blank -%}
-                          {%- assign img = file_ref.preview_image -%}
+                  {% if feature_meta and feature_meta.value != blank %}
+
+                    {% assign feature_type = feature_meta.type %}
+
+                    {% if feature_type contains 'list.file_reference' %}
+                      {% for file_ref in feature_meta.value %}
+                        {% if file_ref != blank %}
+                          {% assign img = file_ref.preview_image %}
                           <div class="sk-product-features__item" role="listitem">
                             <img
                               src="{{ img | image_url: width: 160 }}"
                               width="160"
                               height="{{ 160 | divided_by: img.aspect_ratio | round }}"
-                              alt="{{ file_ref.alt | default: 'Feature icon' | escape }}"
-                              loading="lazy"
                             >
                           </div>
-                        {%- endif -%}
-                      {%- endfor -%}
+                        {% endif %}
+                      {% endfor %}
 
-                    {%- elsif feature_type contains 'list.' -%}
-                      {%- for svg_markup in feature_meta.value -%}
-                        {%- if svg_markup != blank -%}
-                          <div class="sk-product-features__item" role="listitem">{{ svg_markup | raw }}</div>
-                        {%- endif -%}
-                      {%- endfor -%}
+                    {% elsif feature_type contains 'list.' %}
+                      {% for svg_markup in feature_meta.value %}
+                        {% if svg_markup != blank %}
+                          <div class="sk-product-features__item" role="listitem">{{ svg_markup }}</div>
+                        {% endif %}
+                      {% endfor %}
 
-                    {%- elsif feature_type == 'rich_text' -%}
-                      <div class="sk-product-features__item" role="listitem">{{ feature_meta.value }}</div>
+                    {% elsif feature_type == 'rich_text' %}
+                      <div class="sk-product-features__item">{{ feature_meta.value }}</div>
 
-                    {%- else -%}
-                      <div class="sk-product-features__item" role="listitem">{{ feature_meta.value | raw }}</div>
-                    {%- endif -%}
+                    {% else %}
+                      <div class="sk-product-features__item">{{ feature_meta.value }}</div>
 
-                  {%- else -%}
-                    {%- if block.settings.empty_state != blank -%}
+                    {% endif %}
+
+                  {% else %}
+                    {% if block.settings.empty_state != blank %}
                       <div class="sk-product-features__empty">{{ block.settings.empty_state }}</div>
-                    {%- else -%}
+                    {% else %}
                       <div class="sk-product-features__empty">
                         Add SVGs to metafield {{ feature_namespace }}.{{ feature_key }}.
                       </div>
-                    {%- endif -%}
-                  {%- endif -%}
-
-                  <script>
-                    window.console && console.info('[Radiance] product metafield %s.%s:', '{{ feature_namespace }}', '{{ feature_key }}', {{ feature_meta | json }});
-                  </script>
+                    {% endif %}
+                  {% endif %}
                 </div>
 
-              {%- when 'product_description' -%}
-                {%- render 'sk-radiance-product-description', product: product, block: block, section: section -%}
+              {% when 'product_description' %}
+                {% render 'sk-radiance-product-description', product: product, block: block, section: section %}
 
-              {%- when 'guarantee_banner' -%}
-                {%- if product.metafields.custom.guarantee_banner_content != blank -%}
-                  {%- render 'sk-radiance-guarantee', section: section, product: product, block: block -%}
-                {%- endif -%}
+              {% when 'guarantee_banner' %}
+                {% if product.metafields.custom.guarantee_banner_content != blank %}
+                  {% render 'sk-radiance-guarantee', section: section, product: product, block: block %}
+                {% endif %}
 
-              {%- when 'promotion_logos' -%}
-                {%- assign logos = product.metafields.custom.promotion_logos.value -%}
-                {%- render 'sk-radiance-promotion-logos', logos: logos, section: section -%}
-            {%- endcase -%}
-          {%- endfor -%}
+              {% when 'promotion_logos' %}
+                {% assign logos = product.metafields.custom.promotion_logos.value %}
+                {% render 'sk-radiance-promotion-logos', logos: logos, section: section %}
+
+            {% endcase %}
+          {% endfor %}
         </section>
       </div>
+
     </div>
+
 
     {% render 'sk-radiance-product-media-modal', variant_images: variant_images %}
 
-    {%- if product.media.size > 0 -%}
-      <script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
-      <script src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
+    {% if product.media.size > 0 %}
+      <script src="{{ 'product-modal.js' | asset_url }}" defer></script>
+      <script src="{{ 'media-gallery.js' | asset_url }}" defer></script>
+    {% endif %}
 
-    {%- assign first_3d_model = product.media | where: 'media_type', 'model' | first -%}
-    {%- if first_3d_model -%}
-      <script type="application/json" id="ProductJSON-{{ product.id }}">
+    {% assign first_3d_model = product.media | where: 'media_type', 'model' | first %}
+    {% if first_3d_model %}
+      <script id="ProductJSON-{{ product.id }}" type="application/json">
         {{ product.media | where: 'media_type', 'model' | json }}
       </script>
       <script src="{{ 'product-model.js' | asset_url }}" defer></script>
-    {%- endif -%}
+    {% endif %}
 
     <script type="application/ld+json">
       {{ product | structured_data }}
     </script>
+
   </div>
 
-  <!-- Sticky Bottom Bar (server-rendered template only) -->
-  {%- render 'sk-radiance-sticky-bar', section: section, product: product, product_form_id: product_form_id -%}
+  {% render 'sk-radiance-sticky-bar', section: section, product: product, product_form_id: product_form_id %}
+
 </product-info>
+
 
 {% schema %}
 {
@@ -286,14 +276,10 @@
   "tag": "section",
   "class": "section",
   "blocks": [
-    {
-      "type": "text",
-      "name": "Text",
+    { "type": "text", "name": "Text",
       "settings": [
         { "type": "inline_richtext", "id": "text", "default": "Text content", "label": "Text" },
-        {
-          "type": "select",
-          "id": "text_style",
+        { "type": "select", "id": "text_style",
           "options": [
             { "value": "body", "label": "Body" },
             { "value": "subtitle", "label": "Subtitle" },
@@ -304,9 +290,11 @@
         }
       ]
     },
+
     { "type": "title", "name": "Title", "limit": 1 },
     { "type": "price", "name": "Price", "limit": 1 },
     { "type": "rating", "name": "Rating", "limit": 1 },
+
     {
       "type": "quantity_selector",
       "name": "Quantity Selector",
@@ -315,14 +303,13 @@
         { "type": "checkbox", "id": "show_dynamic_checkout", "default": true, "label": "Show Dynamic Checkout Buttons" }
       ]
     },
+
     {
       "type": "variant_picker",
       "name": "Variant Picker",
       "limit": 1,
       "settings": [
-        {
-          "type": "select",
-          "id": "picker_type",
+        { "type": "select", "id": "picker_type",
           "options": [
             { "value": "dropdown", "label": "Dropdown" },
             { "value": "button", "label": "Button" }
@@ -332,96 +319,54 @@
         }
       ]
     },
+
     {
       "type": "product_features",
       "name": "Product Features",
       "limit": 1,
       "settings": [
-        {
-          "type": "paragraph",
-          "content": "Renders a product metafield (default custom.feature_svg). Recommended types: list.single_line_text_field (inline SVG markup) or list.file_reference (uploaded SVG/image files)."
-        },
         { "type": "text", "id": "metafield_namespace", "label": "Metafield namespace", "default": "custom" },
         { "type": "text", "id": "metafield_key", "label": "Metafield key", "default": "feature_svg" },
-        {
-          "type": "text",
-          "id": "empty_state",
-          "label": "Empty State Text",
-          "default": "Legg til SVG-ikon i metafeltet"
-        }
+        { "type": "text", "id": "empty_state", "label": "Empty State Text", "default": "Legg til SVG-ikon i metafeltet" }
       ]
     },
+
     {
       "type": "product_description",
       "name": "Product Description",
       "limit": 1,
-      "settings": [
-        { "type": "header", "content": "Product-Specific Control" },
-        {
-          "type": "paragraph",
-          "content": "To show description on specific products only, add these metafields to each product:"
-        },
-        {
-          "type": "paragraph",
-          "content": "1. 'custom.product_description_content' (Rich text) - Use the rich text editor to format your content with headings, paragraphs, and lists"
-        }
-      ]
+      "settings": []
     },
+
     {
       "type": "guarantee_banner",
       "name": "Guarantee Banner",
       "limit": 1,
       "settings": [
-        { "type": "header", "content": "Product-Specific Control" },
-        {
-          "type": "paragraph",
-          "content": "To show guarantee banner on specific products only, add this metafield to each product:"
-        },
-        {
-          "type": "paragraph",
-          "content": "1. 'custom.guarantee_banner_content' (Rich text) - Use the rich text editor to add your guarantee text and subtitle"
-        },
-        { "type": "header", "content": "Button Settings" },
         { "type": "text", "id": "button_text", "label": "Button Text", "default": "LES MER" },
         { "type": "url", "id": "button_link", "label": "Button Link" }
       ]
     },
+
     {
       "type": "promotion_logos",
       "name": "Promotion Logos",
       "limit": 1,
-      "settings": [
-        { "type": "header", "content": "Product-Specific Control" },
-        {
-          "type": "paragraph",
-          "content": "To show promotion logos on specific products only, add this metafield to each product:"
-        },
-        { "type": "paragraph", "content": "Metafield: 'custom.promotion_logos' (List of files)" },
-        {
-          "type": "paragraph",
-          "content": "Add multiple logo images to the list, and they will automatically scroll across the screen with animation."
-        }
-      ]
+      "settings": []
     }
   ],
+
   "settings": [
     { "type": "checkbox", "id": "enable_sticky_info", "default": true, "label": "Enable Sticky Info" },
 
-    { "type": "header", "content": "Guarantee Banner Below Media Gallery" },
-    {
-      "type": "checkbox",
-      "id": "show_guarantee_below_media",
-      "default": false,
-      "label": "Show Guarantee Banner Below Media Gallery",
-      "info": "Requires product to have 'custom.guarantee_banner_content' metafield"
-    },
+    { "type": "checkbox", "id": "show_guarantee_below_media", "default": false, "label": "Show Guarantee Banner Below Media Gallery" },
+
     { "type": "text", "id": "guarantee_button_text", "label": "Guarantee Button Text", "default": "LES MER" },
     { "type": "url", "id": "guarantee_button_link", "label": "Guarantee Button Link" },
 
     { "type": "color_scheme", "id": "color_scheme", "label": "Color Scheme", "default": "scheme-1" },
-    {
-      "type": "select",
-      "id": "media_size",
+
+    { "type": "select", "id": "media_size",
       "options": [
         { "value": "small", "label": "Small" },
         { "value": "medium", "label": "Medium" },
@@ -430,10 +375,10 @@
       "default": "large",
       "label": "Media Size"
     },
+
     { "type": "checkbox", "id": "constrain_to_viewport", "default": true, "label": "Constrain to Viewport" },
-    {
-      "type": "select",
-      "id": "gallery_layout",
+
+    { "type": "select", "id": "gallery_layout",
       "options": [
         { "value": "stacked", "label": "Stacked" },
         { "value": "columns", "label": "Columns" },
@@ -443,9 +388,8 @@
       "default": "thumbnail_slider",
       "label": "Gallery Layout"
     },
-    {
-      "type": "select",
-      "id": "mobile_thumbnails",
+
+    { "type": "select", "id": "mobile_thumbnails",
       "options": [
         { "value": "columns", "label": "Columns" },
         { "value": "show", "label": "Show" },
@@ -454,9 +398,8 @@
       "default": "show",
       "label": "Mobile Thumbnails"
     },
-    {
-      "type": "select",
-      "id": "media_position",
+
+    { "type": "select", "id": "media_position",
       "options": [
         { "value": "left", "label": "Left" },
         { "value": "right", "label": "Right" }
@@ -464,9 +407,8 @@
       "default": "left",
       "label": "Media Position"
     },
-    {
-      "type": "select",
-      "id": "image_zoom",
+
+    { "type": "select", "id": "image_zoom",
       "options": [
         { "value": "lightbox", "label": "Lightbox" },
         { "value": "hover", "label": "Hover" },
@@ -475,28 +417,14 @@
       "default": "lightbox",
       "label": "Image Zoom"
     },
+
     { "type": "checkbox", "id": "hide_variants", "default": false, "label": "Hide Variants" },
+
     { "type": "checkbox", "id": "enable_video_looping", "default": false, "label": "Enable Video Looping" },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "Padding Top",
-      "default": 36
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "Padding Bottom",
-      "default": 12
-    }
+
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding Top", "default": 36 },
+
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding Bottom", "default": 12 }
   ]
 }
 {% endschema %}
