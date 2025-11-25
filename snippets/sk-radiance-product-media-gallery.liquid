@@ -6,8 +6,11 @@
     assign media_aspect_ratio = 1
   endunless
 -%}
-<div class="sk-radiance-product__media-wrapper">
-  <div class="sk-radiance-product__media sk-radiance-product__media--{{ section.settings.media_size }} sk-radiance-product__media--{{ section.settings.media_position }} sk-radiance-product__media--{{ section.settings.gallery_layout }} sk-radiance-product__media--mobile-{{ section.settings.mobile_thumbnails }}">
+
+<div id="SkMedia-{{ section.id }}" class="sk-radiance-product__media-wrapper">
+  <div
+    class="sk-radiance-product__media sk-radiance-product__media--{{ section.settings.media_size }} sk-radiance-product__media--{{ section.settings.media_position }} sk-radiance-product__media--{{ section.settings.gallery_layout }} sk-radiance-product__media--mobile-{{ section.settings.mobile_thumbnails }}"
+  >
     <!-- Main Media Display -->
     <div class="sk-radiance-product__media-main">
       <div class="sk-radiance-product__media-container">
@@ -17,6 +20,7 @@
               <div
                 class="sk-radiance-product__media-item{% if forloop.first %} sk-radiance-product__media-item--active{% endif %}"
                 data-media-id="{{ media.id }}"
+                data-media-index="{{ forloop.index0 }}"
               >
                 {%- case media.media_type -%}
                   {%- when 'image' -%}
@@ -31,8 +35,8 @@
                           {%- if media.width >= 1066 -%}{{ media | image_url: width: 1066 }} 1066w,{%- endif -%}
                           {{ media | image_url }} {{ media.width }}w
                         "
-                        src="{{ media | image_url: width: 533 }}"
-                        sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                        src="{{ media | image_url: width: 720 }}"
+                        sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 2 }}px, (min-width: 990px) calc((100vw - 130px) / 2), (min-width: 750px) calc((100vw - 120px) / 2), 100vw"
                         alt="{{ media.alt | escape }}"
                         class="sk-radiance-product__media-image-element"
                         loading="lazy"
@@ -40,6 +44,7 @@
                         height="{{ media.height }}"
                       >
                     </div>
+
                   {%- when 'video' -%}
                     <div class="sk-radiance-product__media-video">
                       {{
@@ -51,10 +56,12 @@
                           muted: true
                       }}
                     </div>
+
                   {%- when 'external_video' -%}
                     <div class="sk-radiance-product__media-external-video">
                       {{ media | external_video_tag }}
                     </div>
+
                   {%- when 'model' -%}
                     <div class="sk-radiance-product__media-model">
                       {{ media | model_viewer_tag: image_size: '2048x', reveal: 'interaction', toggleable: true }}
@@ -64,8 +71,8 @@
             {%- endfor -%}
           </div>
 
-          <!-- Navigation Arrows -->
           {%- if media_count > 1 -%}
+            <!-- Navigation Arrows -->
             <button
               class="sk-radiance-product__media-nav sk-radiance-product__media-nav--prev"
               type="button"
@@ -96,61 +103,67 @@
     <!-- Thumbnail Gallery -->
     {%- if media_count > 1 and section.settings.gallery_layout == 'thumbnail_slider' -%}
       <div class="sk-radiance-product__media-thumbnails">
-        <div class="sk-radiance-product__media-thumbnails-container">
+        <div class="sk-radiance-product__media-thumbnails-container" role="list">
           {%- for media in product.media -%}
             <button
               class="sk-radiance-product__media-thumbnail{% if forloop.first %} sk-radiance-product__media-thumbnail--active{% endif %}"
               type="button"
               data-media-id="{{ media.id }}"
-              aria-label="View media {{ forloop.index }}"
+              data-media-index="{{ forloop.index0 }}"
+              aria-label="Vis media {{ forloop.index }}"
+              {% if forloop.first %}aria-current="true"{% endif %}
+              role="listitem"
             >
               {%- case media.media_type -%}
                 {%- when 'image' -%}
                   <img
-                    src="{{ media | image_url: width: 100 }}"
+                    src="{{ media | image_url: width: 140 }}"
                     alt="{{ media.alt | escape }}"
                     class="sk-radiance-product__media-thumbnail-image"
                     loading="lazy"
-                    width="100"
-                    height="100"
+                    width="140"
+                    height="140"
                   >
+
                 {%- when 'video' -%}
                   <div class="sk-radiance-product__media-thumbnail-video">
                     <img
-                      src="{{ media.preview_image | image_url: width: 100 }}"
+                      src="{{ media.preview_image | image_url: width: 140 }}"
                       alt="{{ media.alt | escape }}"
                       class="sk-radiance-product__media-thumbnail-image"
                       loading="lazy"
-                      width="100"
-                      height="100"
+                      width="140"
+                      height="140"
                     >
                     <div class="sk-radiance-product__media-thumbnail-play">
                       {{- 'icon-play.svg' | inline_asset_content -}}
                     </div>
                   </div>
+
                 {%- when 'external_video' -%}
                   <div class="sk-radiance-product__media-thumbnail-external-video">
                     <img
-                      src="{{ media.preview_image | image_url: width: 100 }}"
+                      src="{{ media.preview_image | image_url: width: 140 }}"
                       alt="{{ media.alt | escape }}"
                       class="sk-radiance-product__media-thumbnail-image"
                       loading="lazy"
-                      width="100"
-                      height="100"
+                      width="140"
+                      height="140"
                     >
                     <div class="sk-radiance-product__media-thumbnail-play">
                       {{- 'icon-play.svg' | inline_asset_content -}}
                     </div>
                   </div>
+
                 {%- when 'model' -%}
                   <div class="sk-radiance-product__media-thumbnail-model">
                     <img
-                      src="{{ media.preview_image | image_url: width: 100 }}"
+                      src="{{ media.preview_image | image_url: width: 140 }}"
                       alt="{{ media.alt | escape }}"
                       class="sk-radiance-product__media-thumbnail-image"
                       loading="lazy"
-                      width="100"
-                      height="100"
+                      width="140"
+                      height="140"
                     >
                     <div class="sk-radiance-product__media-thumbnail-model-icon">
                       {{- 'icon-3d.svg' | inline_asset_content -}}
@@ -167,61 +180,99 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const mediaSlider = document.querySelector('.sk-radiance-product__media-slider');
-    const thumbnails = document.querySelectorAll('.sk-radiance-product__media-thumbnail');
-    const prevBtn = document.querySelector('.sk-radiance-product__media-nav--prev');
-    const nextBtn = document.querySelector('.sk-radiance-product__media-nav--next');
-    const mediaItems = document.querySelectorAll('.sk-radiance-product__media-item');
+    const wrapper = document.getElementById('SkMedia-{{ section.id }}');
+    if (!wrapper) return;
+
+    const slider      = wrapper.querySelector('.sk-radiance-product__media-slider');
+    const mediaItems  = wrapper.querySelectorAll('.sk-radiance-product__media-item');
+    const thumbnails  = wrapper.querySelectorAll('.sk-radiance-product__media-thumbnail');
+    const prevBtn     = wrapper.querySelector('.sk-radiance-product__media-nav--prev');
+    const nextBtn     = wrapper.querySelector('.sk-radiance-product__media-nav--next');
+    const mainArea    = wrapper.querySelector('.sk-radiance-product__media-main');
+
+    if (!slider || mediaItems.length === 0) return;
 
     let currentIndex = 0;
     const totalItems = mediaItems.length;
 
     function updateActiveMedia(index) {
-      // Update main media
+      if (index < 0 || index >= totalItems) return;
+      currentIndex = index;
+
       mediaItems.forEach((item, i) => {
-        item.classList.toggle('sk-radiance-product__media-item--active', i === index);
+        item.classList.toggle('sk-radiance-product__media-item--active', i === currentIndex);
       });
 
-      // Update thumbnails
       thumbnails.forEach((thumb, i) => {
-        thumb.classList.toggle('sk-radiance-product__media-thumbnail--active', i === index);
+        const isActive = i === currentIndex;
+        thumb.classList.toggle('sk-radiance-product__media-thumbnail--active', isActive);
+        if (isActive) {
+          thumb.setAttribute('aria-current', 'true');
+        } else {
+          thumb.removeAttribute('aria-current');
+        }
       });
     }
 
     function showNext() {
-      currentIndex = (currentIndex + 1) % totalItems;
-      updateActiveMedia(currentIndex);
+      const newIndex = (currentIndex + 1) % totalItems;
+      updateActiveMedia(newIndex);
     }
 
     function showPrev() {
-      currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-      updateActiveMedia(currentIndex);
+      const newIndex = (currentIndex - 1 + totalItems) % totalItems;
+      updateActiveMedia(newIndex);
     }
 
     // Thumbnail click handlers
-    thumbnails.forEach((thumb, index) => {
+    thumbnails.forEach((thumb) => {
       thumb.addEventListener('click', () => {
-        currentIndex = index;
-        updateActiveMedia(currentIndex);
+        const idx = parseInt(thumb.getAttribute('data-media-index'), 10);
+        if (!isNaN(idx)) updateActiveMedia(idx);
       });
     });
 
-    // Navigation button handlers
-    if (nextBtn) {
-      nextBtn.addEventListener('click', showNext);
-    }
+    // Navigation buttons
+    if (nextBtn) nextBtn.addEventListener('click', showNext);
+    if (prevBtn) prevBtn.addEventListener('click', showPrev);
 
-    if (prevBtn) {
-      prevBtn.addEventListener('click', showPrev);
-    }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
+    // Keyboard navigation (only when focus is inside wrapper)
+    wrapper.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') {
+        e.preventDefault();
         showPrev();
       } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
         showNext();
       }
     });
+
+    // Basic touch swipe on main hero
+    if (mainArea && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
+      let startX = 0;
+      let isSwiping = false;
+
+      mainArea.addEventListener('touchstart', (e) => {
+        if (!e.touches || e.touches.length !== 1) return;
+        startX = e.touches[0].clientX;
+        isSwiping = true;
+      }, { passive: true });
+
+      mainArea.addEventListener('touchend', (e) => {
+        if (!isSwiping || !e.changedTouches || e.changedTouches.length !== 1) return;
+        const endX = e.changedTouches[0].clientX;
+        const deltaX = endX - startX;
+        const threshold = 40; // px
+
+        if (Math.abs(deltaX) > threshold) {
+          if (deltaX < 0) {
+            showNext();
+          } else {
+            showPrev();
+          }
+        }
+        isSwiping = false;
+      });
+    }
   });
 </script>
