@@ -101,76 +101,109 @@
     </div>
 
     <!-- Thumbnail Gallery -->
-    {%- if media_count > 1 and section.settings.gallery_layout == 'thumbnail_slider' -%}
-      <div class="sk-radiance-product__media-thumbnails">
-        <div class="sk-radiance-product__media-thumbnails-container" role="list">
+    {%- if media_count > 1 -%}
+      {%- if section.settings.gallery_layout == 'thumbnail_slider' -%}
+        <div class="sk-radiance-product__media-thumbnails">
+          <button
+            class="sk-radiance-product__thumb-nav sk-radiance-product__thumb-nav--prev"
+            type="button"
+            aria-label="Forrige miniatyr"
+          >
+            <span class="svg-wrapper">{{- 'icon-chevron-left.svg' | inline_asset_content -}}</span>
+          </button>
+          <div class="sk-radiance-product__media-thumbnails-viewport">
+            <div class="sk-radiance-product__media-thumbnails-container" role="list">
+              {%- for media in product.media -%}
+                <button
+                  class="sk-radiance-product__media-thumbnail{% if forloop.first %} sk-radiance-product__media-thumbnail--active{% endif %}"
+                  type="button"
+                  data-media-id="{{ media.id }}"
+                  data-media-index="{{ forloop.index0 }}"
+                  aria-label="Vis media {{ forloop.index }}"
+                  {% if forloop.first %}
+                    aria-current="true"
+                  {% endif %}
+                  role="listitem"
+                >
+                  {%- case media.media_type -%}
+                    {%- when 'image' -%}
+                      <img
+                        src="{{ media | image_url: width: 200 }}"
+                        alt="{{ media.alt | escape }}"
+                        class="sk-radiance-product__media-thumbnail-image"
+                        loading="lazy"
+                        width="200"
+                        height="200"
+                      >
+
+                    {%- when 'video' -%}
+                      <div class="sk-radiance-product__media-thumbnail-video">
+                        <img
+                          src="{{ media.preview_image | image_url: width: 200 }}"
+                          alt="{{ media.alt | escape }}"
+                          class="sk-radiance-product__media-thumbnail-image"
+                          loading="lazy"
+                          width="200"
+                          height="200"
+                        >
+                        <div class="sk-radiance-product__media-thumbnail-play">
+                          {{- 'icon-play.svg' | inline_asset_content -}}
+                        </div>
+                      </div>
+
+                    {%- when 'external_video' -%}
+                      <div class="sk-radiance-product__media-thumbnail-external-video">
+                        <img
+                          src="{{ media.preview_image | image_url: width: 200 }}"
+                          alt="{{ media.alt | escape }}"
+                          class="sk-radiance-product__media-thumbnail-image"
+                          loading="lazy"
+                          width="200"
+                          height="200"
+                        >
+                        <div class="sk-radiance-product__media-thumbnail-play">
+                          {{- 'icon-play.svg' | inline_asset_content -}}
+                        </div>
+                      </div>
+
+                    {%- when 'model' -%}
+                      <div class="sk-radiance-product__media-thumbnail-model">
+                        <img
+                          src="{{ media.preview_image | image_url: width: 200 }}"
+                          alt="{{ media.alt | escape }}"
+                          class="sk-radiance-product__media-thumbnail-image"
+                          loading="lazy"
+                          width="200"
+                          height="200"
+                        >
+                        <div class="sk-radiance-product__media-thumbnail-model-icon">
+                          {{- 'icon-3d.svg' | inline_asset_content -}}
+                        </div>
+                      </div>
+                  {%- endcase -%}
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+          <button
+            class="sk-radiance-product__thumb-nav sk-radiance-product__thumb-nav--next"
+            type="button"
+            aria-label="Neste miniatyr"
+          >
+            <span class="svg-wrapper">{{- 'icon-chevron-right.svg' | inline_asset_content -}}</span>
+          </button>
+        </div>
+      {%- endif -%}
+
+      <div class="sk-radiance-product__media-progress" role="status" aria-live="polite">
+        <div class="sk-radiance-product__media-progress-squares" role="tablist" aria-label="Media progress">
           {%- for media in product.media -%}
             <button
-              class="sk-radiance-product__media-thumbnail{% if forloop.first %} sk-radiance-product__media-thumbnail--active{% endif %}"
               type="button"
-              data-media-id="{{ media.id }}"
+              class="sk-radiance-product__media-progress-square{% if forloop.first %} sk-radiance-product__media-progress-square--active{% endif %}"
               data-media-index="{{ forloop.index0 }}"
               aria-label="Vis media {{ forloop.index }}"
-              {% if forloop.first %}aria-current="true"{% endif %}
-              role="listitem"
-            >
-              {%- case media.media_type -%}
-                {%- when 'image' -%}
-                  <img
-                    src="{{ media | image_url: width: 140 }}"
-                    alt="{{ media.alt | escape }}"
-                    class="sk-radiance-product__media-thumbnail-image"
-                    loading="lazy"
-                    width="140"
-                    height="140"
-                  >
-
-                {%- when 'video' -%}
-                  <div class="sk-radiance-product__media-thumbnail-video">
-                    <img
-                      src="{{ media.preview_image | image_url: width: 140 }}"
-                      alt="{{ media.alt | escape }}"
-                      class="sk-radiance-product__media-thumbnail-image"
-                      loading="lazy"
-                      width="140"
-                      height="140"
-                    >
-                    <div class="sk-radiance-product__media-thumbnail-play">
-                      {{- 'icon-play.svg' | inline_asset_content -}}
-                    </div>
-                  </div>
-
-                {%- when 'external_video' -%}
-                  <div class="sk-radiance-product__media-thumbnail-external-video">
-                    <img
-                      src="{{ media.preview_image | image_url: width: 140 }}"
-                      alt="{{ media.alt | escape }}"
-                      class="sk-radiance-product__media-thumbnail-image"
-                      loading="lazy"
-                      width="140"
-                      height="140"
-                    >
-                    <div class="sk-radiance-product__media-thumbnail-play">
-                      {{- 'icon-play.svg' | inline_asset_content -}}
-                    </div>
-                  </div>
-
-                {%- when 'model' -%}
-                  <div class="sk-radiance-product__media-thumbnail-model">
-                    <img
-                      src="{{ media.preview_image | image_url: width: 140 }}"
-                      alt="{{ media.alt | escape }}"
-                      class="sk-radiance-product__media-thumbnail-image"
-                      loading="lazy"
-                      width="140"
-                      height="140"
-                    >
-                    <div class="sk-radiance-product__media-thumbnail-model-icon">
-                      {{- 'icon-3d.svg' | inline_asset_content -}}
-                    </div>
-                  </div>
-              {%- endcase -%}
-            </button>
+            ></button>
           {%- endfor -%}
         </div>
       </div>
@@ -183,17 +216,32 @@
     const wrapper = document.getElementById('SkMedia-{{ section.id }}');
     if (!wrapper) return;
 
-    const slider      = wrapper.querySelector('.sk-radiance-product__media-slider');
-    const mediaItems  = wrapper.querySelectorAll('.sk-radiance-product__media-item');
-    const thumbnails  = wrapper.querySelectorAll('.sk-radiance-product__media-thumbnail');
-    const prevBtn     = wrapper.querySelector('.sk-radiance-product__media-nav--prev');
-    const nextBtn     = wrapper.querySelector('.sk-radiance-product__media-nav--next');
-    const mainArea    = wrapper.querySelector('.sk-radiance-product__media-main');
+    const slider = wrapper.querySelector('.sk-radiance-product__media-slider');
+    const mediaItems = wrapper.querySelectorAll('.sk-radiance-product__media-item');
+    const thumbnails = wrapper.querySelectorAll('.sk-radiance-product__media-thumbnail');
+    const prevBtn = wrapper.querySelector('.sk-radiance-product__media-nav--prev');
+    const nextBtn = wrapper.querySelector('.sk-radiance-product__media-nav--next');
+    const mainArea = wrapper.querySelector('.sk-radiance-product__media-main');
+    const thumbViewport = wrapper.querySelector('.sk-radiance-product__media-thumbnails-viewport');
+    const thumbPrevNav = wrapper.querySelector('.sk-radiance-product__thumb-nav--prev');
+    const thumbNextNav = wrapper.querySelector('.sk-radiance-product__thumb-nav--next');
+    const hasThumbNav = Boolean(thumbPrevNav || thumbNextNav);
+    const progressBar = wrapper.querySelector('.sk-radiance-product__media-progress');
+    const progressSquares = progressBar
+      ? Array.from(progressBar.querySelectorAll('.sk-radiance-product__media-progress-square'))
+      : [];
+    const progressCurrent = null;
+    const progressTotal = null;
 
     if (!slider || mediaItems.length === 0) return;
 
     let currentIndex = 0;
     const totalItems = mediaItems.length;
+    if (progressBar) {
+      const hideProgress = totalItems <= 1;
+      progressBar.classList.toggle('sk-radiance-product__media-progress--hidden', hideProgress);
+      progressBar.setAttribute('aria-hidden', hideProgress ? 'true' : 'false');
+    }
 
     function updateActiveMedia(index) {
       if (index < 0 || index >= totalItems) return;
@@ -208,10 +256,26 @@
         thumb.classList.toggle('sk-radiance-product__media-thumbnail--active', isActive);
         if (isActive) {
           thumb.setAttribute('aria-current', 'true');
+          scrollThumbIntoView(i);
         } else {
           thumb.removeAttribute('aria-current');
         }
       });
+
+      if (progressSquares.length) {
+        progressSquares.forEach((square, i) => {
+          const isActive = i === currentIndex;
+          square.classList.toggle('sk-radiance-product__media-progress-square--active', isActive);
+          if (isActive) {
+            square.setAttribute('aria-current', 'true');
+          } else {
+            square.removeAttribute('aria-current');
+          }
+        });
+      }
+      if (progressBar) {
+        progressBar.setAttribute('data-progress', `${currentIndex + 1} of ${totalItems}`);
+      }
     }
 
     function showNext() {
@@ -232,9 +296,135 @@
       });
     });
 
+    progressSquares.forEach((square) => {
+      square.addEventListener('click', () => {
+        const idx = parseInt(square.getAttribute('data-media-index'), 10);
+        if (!isNaN(idx)) updateActiveMedia(idx);
+      });
+    });
+
     // Navigation buttons
     if (nextBtn) nextBtn.addEventListener('click', showNext);
     if (prevBtn) prevBtn.addEventListener('click', showPrev);
+
+    // Thumbnail carousel controls
+    const getThumbsPerView = () => {
+      if (window.matchMedia('(max-width: 599px)').matches) return 3;
+      if (window.matchMedia('(max-width: 899px)').matches) return 4;
+      return 5;
+    };
+
+    function scrollThumbIntoView(index, smooth = true) {
+      if (!thumbViewport) return;
+      const thumb = thumbnails[index];
+      if (!thumb) return;
+      const viewportRect = thumbViewport.getBoundingClientRect();
+      const thumbRect = thumb.getBoundingClientRect();
+      const withinView = thumbRect.left >= viewportRect.left && thumbRect.right <= viewportRect.right;
+      if (!withinView) {
+        const offset =
+          thumbRect.left < viewportRect.left
+            ? thumbRect.left - viewportRect.left - 6
+            : thumbRect.right - viewportRect.right + 6;
+        thumbViewport.scrollBy({ left: offset, behavior: smooth ? 'smooth' : 'auto' });
+      }
+      updateThumbNavButtons();
+    }
+
+    function scrollThumbsByPage(direction) {
+      if (!thumbViewport) return;
+      const step = thumbViewport.clientWidth || 0;
+      if (!step) return;
+      const maxScroll = Math.max(0, thumbViewport.scrollWidth - thumbViewport.clientWidth);
+      const target =
+        direction < 0
+          ? Math.max(0, thumbViewport.scrollLeft - step)
+          : Math.min(maxScroll, thumbViewport.scrollLeft + step);
+      thumbViewport.scrollTo({ left: target, behavior: 'smooth' });
+    }
+
+    function updateThumbNavButtons() {
+      if (!hasThumbNav || !thumbViewport) return;
+      const maxScroll = Math.max(0, thumbViewport.scrollWidth - thumbViewport.clientWidth - 4);
+      if (thumbPrevNav) thumbPrevNav.disabled = thumbViewport.scrollLeft <= 4;
+      if (thumbNextNav) thumbNextNav.disabled = thumbViewport.scrollLeft >= maxScroll;
+    }
+
+    function toggleThumbNavVisibility() {
+      if (!hasThumbNav || !thumbViewport) return;
+      const shouldShow = thumbnails.length > getThumbsPerView();
+      [thumbPrevNav, thumbNextNav].forEach((btn) => {
+        if (!btn) return;
+        btn.classList.toggle('sk-thumb-nav--hidden', !shouldShow);
+        btn.tabIndex = shouldShow ? 0 : -1;
+        btn.setAttribute('aria-hidden', shouldShow ? 'false' : 'true');
+      });
+      if (!shouldShow) {
+        thumbViewport.scrollTo({ left: 0, behavior: 'auto' });
+      }
+      updateThumbNavButtons();
+    }
+
+    function updateThumbMetrics() {
+      if (!mainArea) return;
+      const rect = mainArea.getBoundingClientRect();
+      if (!rect.width) return;
+      const heroWidth = rect.width;
+      const desiredVisibleThumbs = 5;
+      const maxThumbSize = 220;
+      const minThumbSize = 56;
+      const minGap = 10;
+      const maxGap = 28;
+
+      let gap = heroWidth * 0.016;
+      gap = Math.min(Math.max(gap, minGap), maxGap);
+
+      let size = (heroWidth - gap * (desiredVisibleThumbs - 1)) / desiredVisibleThumbs;
+      if (size > maxThumbSize) {
+        size = maxThumbSize;
+      }
+
+      if (size < minThumbSize) {
+        // make sure very small viewports still show five thumbnails without overflow
+        gap = Math.max(minGap * 0.5, gap * 0.8);
+        size = Math.max((heroWidth - gap * (desiredVisibleThumbs - 1)) / desiredVisibleThumbs, minThumbSize * 0.75);
+      }
+
+      const totalWidth = size * desiredVisibleThumbs + gap * (desiredVisibleThumbs - 1);
+      if (totalWidth > heroWidth) {
+        size = Math.max((heroWidth - gap * (desiredVisibleThumbs - 1)) / desiredVisibleThumbs, minThumbSize * 0.6);
+      }
+
+      wrapper.style.setProperty('--sk-thumb-size', `${size}px`);
+      wrapper.style.setProperty('--sk-thumb-gap', `${gap}px`);
+    }
+
+    if (hasThumbNav) {
+      thumbPrevNav?.addEventListener('click', () => scrollThumbsByPage(-1));
+      thumbNextNav?.addEventListener('click', () => scrollThumbsByPage(1));
+    }
+    thumbViewport?.addEventListener('scroll', () => window.requestAnimationFrame(updateThumbNavButtons));
+
+    let resizeRaf;
+    window.addEventListener('resize', () => {
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      resizeRaf = window.requestAnimationFrame(() => {
+        updateThumbMetrics();
+        toggleThumbNavVisibility();
+        updateThumbNavButtons();
+      });
+    });
+
+    if (window.ResizeObserver && mainArea) {
+      const ro = new ResizeObserver(() => updateThumbMetrics());
+      ro.observe(mainArea);
+    } else {
+      window.addEventListener('load', updateThumbMetrics, { once: true });
+    }
+
+    toggleThumbNavVisibility();
+    updateThumbNavButtons();
+    updateThumbMetrics();
 
     // Keyboard navigation (only when focus is inside wrapper)
     wrapper.addEventListener('keydown', (e) => {
@@ -252,11 +442,15 @@
       let startX = 0;
       let isSwiping = false;
 
-      mainArea.addEventListener('touchstart', (e) => {
-        if (!e.touches || e.touches.length !== 1) return;
-        startX = e.touches[0].clientX;
-        isSwiping = true;
-      }, { passive: true });
+      mainArea.addEventListener(
+        'touchstart',
+        (e) => {
+          if (!e.touches || e.touches.length !== 1) return;
+          startX = e.touches[0].clientX;
+          isSwiping = true;
+        },
+        { passive: true }
+      );
 
       mainArea.addEventListener('touchend', (e) => {
         if (!isSwiping || !e.changedTouches || e.changedTouches.length !== 1) return;
