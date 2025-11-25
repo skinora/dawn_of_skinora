@@ -2,10 +2,16 @@
 
 /* === Layout: use robust two-column flex with hard caps === */
 .sk-radiance-product {
+  --sk-product-row-gap: clamp(1.75rem, 4vw, 3.5rem);
+  --sk-product-column-gap: clamp(1.25rem, 3vw, 3rem);
+  --sk-product-padding-block: clamp(1.5rem, 4vw, 3.5rem);
   display: flex !important;
   flex-wrap: wrap;
-  gap: var(--sk-gap-lg);
-  margin-bottom: 2.5rem;
+  gap: var(--sk-product-row-gap);
+  row-gap: var(--sk-product-row-gap);
+  column-gap: var(--sk-product-column-gap);
+  margin-bottom: var(--sk-product-row-gap);
+  padding-block: var(--sk-product-padding-block);
 }
 
 /* Left column: media (fixed cap) */
@@ -24,8 +30,19 @@
 .sk-radiance-product > .sk-radiance-product__info-wrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--sk-gap-md);
-  padding-left: 8px;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  padding-left: clamp(0.5rem, 1.6vw, 2rem);
+  padding-right: clamp(0rem, 1vw, 1rem);
+}
+
+.sk-radiance-product__info-wrapper--extra-padding {
+  padding-left: clamp(1.25rem, 2.5vw, 3rem);
+}
+
+.sk-radiance-product__info-container {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.85rem, 1.6vw, 1.75rem);
 }
 
 /* Mobile stack */
@@ -36,6 +53,10 @@
     width: 100%;
     max-width: 100%;
     padding-left: 0;
+  }
+
+  .sk-radiance-product > .sk-radiance-product__info-wrapper {
+    padding-right: 0;
   }
 }
 
@@ -53,7 +74,7 @@
   }
 
   .sk-radiance-product > .sk-radiance-product__info-wrapper {
-    padding-left: clamp(12px, 2vw, 32px);
+    padding-left: clamp(1rem, 1.8vw, 2.75rem);
     max-width: clamp(360px, 40vw, 580px);
   }
 }
@@ -420,12 +441,12 @@
 .sk-radiance-buy-buttons {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: clamp(0.75rem, 1.6vw, 1.25rem);
 }
 .sk-radiance-buy-buttons__container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: clamp(0.75rem, 1.6vw, 1.25rem);
 }
 .sk-radiance-product-form {
   width: 100%;
@@ -454,7 +475,7 @@
 .sk-radiance-buy-buttons__wrapper {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: clamp(0.75rem, 1.6vw, 1.25rem);
 }
 .sk-radiance-buy-buttons__button {
   background: var(--color-brand);
@@ -720,8 +741,7 @@ body {
   flex-wrap: wrap;
   align-items: center;
   gap: 12px 20px;
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
+  margin-block: clamp(1.5rem, 4vw, 3rem);
 }
 
 .sk-product-features__item {

@@ -7,29 +7,34 @@
 <style>
   .sk-radiance-pills {
     display: flex;
-    gap: 0.6rem 0.6rem;
+    gap: clamp(0.45rem, 1.5vw, 0.9rem);
     flex-wrap: wrap;
     align-items: center;
-    margin: 0.75rem 0 1.25rem;
+    margin: clamp(0.5rem, 2vw, 1rem) 0 clamp(1rem, 2.5vw, 1.5rem);
   }
   .sk-radiance-pills .sk-pill {
     background: var(--color-white, #ffffff);
     border: 2px solid var(--color-border-2, #d4d4dc);
     border-radius: 9999px;
-    padding: 0.75rem 1.35rem;
+    padding: clamp(0.55rem, 1.6vw, 0.85rem) clamp(1rem, 2vw, 1.35rem);
     font-size: 1.1rem;
     line-height: 1.2;
     font-weight: 700;
     white-space: nowrap;
     box-shadow: 0 6px 14px rgba(48, 39, 62, 0.12);
   }
-  .sk-radiance-pills--desktop { display: none; }
+  .sk-radiance-pills--desktop {
+    display: none;
+  }
   @media (min-width: 750px) {
-    .sk-radiance-pills--mobile { display: none; }
-    .sk-radiance-pills--desktop { display: flex; }
+    .sk-radiance-pills--mobile {
+      display: none;
+    }
+    .sk-radiance-pills--desktop {
+      display: flex;
+    }
   }
 </style>
-
 
 <product-info
   id="MainProduct-{{ section.id }}"
@@ -38,9 +43,10 @@
   data-product-id="{{ product.id }}"
   data-update-url="true"
   data-url="{{ product.url }}"
-  {% if section.settings.image_zoom == 'hover' %}data-zoom-on-hover{% endif %}
+  {% if section.settings.image_zoom == 'hover' %}
+    data-zoom-on-hover
+  {% endif %}
 >
-
   {% render 'sk-radiance-product-assets', section: section, product: product %}
 
   {%- assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' -%}
@@ -65,19 +71,22 @@
     {% endfor %}
   {%- endif -%}
 
-
   <div class="page-width">
-    <div class="sk-radiance-product
-      sk-radiance-product--{{ section.settings.media_size }}
-      sk-radiance-product--{{ section.settings.media_position }}
-      sk-radiance-product--{{ section.settings.gallery_layout }}
-      sk-radiance-product--mobile-{{ section.settings.mobile_thumbnails }}
-      {% if product.media.size > 0 %}sk-radiance-product--with-media{% else %}sk-radiance-product--no-media{% endif %}
-    ">
-
-      <!-- =======================
-           MEDIA WRAPPER
-      ======================== -->
+    <div
+      class="
+        sk-radiance-product
+        sk-radiance-product--{{ section.settings.media_size }}
+        sk-radiance-product--{{ section.settings.media_position }}
+        sk-radiance-product--{{ section.settings.gallery_layout }}
+        sk-radiance-product--mobile-{{ section.settings.mobile_thumbnails }}
+        {% if product.media.size > 0 %}sk-radiance-product--with-media{% else %}sk-radiance-product--no-media{% endif %}
+      "
+    >
+      <!--
+        =======================
+             MEDIA WRAPPER
+        ========================
+      -->
       <div class="sk-radiance-product__media-wrapper">
         {% render 'sk-radiance-product-media-gallery', variant_images: variant_images %}
 
@@ -92,7 +101,9 @@
           </div>
         {% endif %}
 
-        {% if section.settings.show_guarantee_below_media and product.metafields.custom.guarantee_banner_content != blank %}
+        {% if section.settings.show_guarantee_below_media
+          and product.metafields.custom.guarantee_banner_content != blank
+        %}
           {% render 'sk-radiance-guarantee',
             section: section,
             product: product,
@@ -103,28 +114,28 @@
         {% endif %}
       </div>
 
-
-      <!-- =======================
-           PRODUCT INFO
-      ======================== -->
+      <!--
+        =======================
+             PRODUCT INFO
+        ========================
+      -->
       <div class="sk-radiance-product__info-wrapper{% if settings.page_width > 1400 and section.settings.media_size == "small" %} sk-radiance-product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-
         <section
           id="ProductInfo-{{ section.id }}"
           class="sk-radiance-product__info-container{% if section.settings.enable_sticky_info %} sk-radiance-product__column-sticky{% endif %}"
         >
-
           {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
           {% for block in section.blocks %}
             {% case block.type %}
-
               {% when '@app' %}
                 {% render block %}
 
               {% when 'text' %}
-                <p class="sk-radiance-product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
-                  {{ block.shopify_attributes }}>
+                <p
+                  class="sk-radiance-product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
+                  {{ block.shopify_attributes }}
+                >
                   {{ block.settings.text }}
                 </p>
 
@@ -179,9 +190,7 @@
                 {% assign feature_meta = feature_group[feature_key] %}
 
                 <div class="sk-product-features" {{ block.shopify_attributes }} role="list">
-
                   {% if feature_meta and feature_meta.value != blank %}
-
                     {% assign feature_type = feature_meta.type %}
 
                     {% if feature_type contains 'list.file_reference' %}
@@ -210,7 +219,6 @@
 
                     {% else %}
                       <div class="sk-product-features__item">{{ feature_meta.value }}</div>
-
                     {% endif %}
 
                   {% else %}
@@ -235,14 +243,11 @@
               {% when 'promotion_logos' %}
                 {% assign logos = product.metafields.custom.promotion_logos.value %}
                 {% render 'sk-radiance-promotion-logos', logos: logos, section: section %}
-
             {% endcase %}
           {% endfor %}
         </section>
       </div>
-
     </div>
-
 
     {% render 'sk-radiance-product-media-modal', variant_images: variant_images %}
 
@@ -262,13 +267,10 @@
     <script type="application/ld+json">
       {{ product | structured_data }}
     </script>
-
   </div>
 
   {% render 'sk-radiance-sticky-bar', section: section, product: product, product_form_id: product_form_id %}
-
 </product-info>
-
 
 {% schema %}
 {
@@ -276,10 +278,14 @@
   "tag": "section",
   "class": "section",
   "blocks": [
-    { "type": "text", "name": "Text",
+    {
+      "type": "text",
+      "name": "Text",
       "settings": [
         { "type": "inline_richtext", "id": "text", "default": "Text content", "label": "Text" },
-        { "type": "select", "id": "text_style",
+        {
+          "type": "select",
+          "id": "text_style",
           "options": [
             { "value": "body", "label": "Body" },
             { "value": "subtitle", "label": "Subtitle" },
@@ -309,7 +315,9 @@
       "name": "Variant Picker",
       "limit": 1,
       "settings": [
-        { "type": "select", "id": "picker_type",
+        {
+          "type": "select",
+          "id": "picker_type",
           "options": [
             { "value": "dropdown", "label": "Dropdown" },
             { "value": "button", "label": "Button" }
@@ -327,7 +335,12 @@
       "settings": [
         { "type": "text", "id": "metafield_namespace", "label": "Metafield namespace", "default": "custom" },
         { "type": "text", "id": "metafield_key", "label": "Metafield key", "default": "feature_svg" },
-        { "type": "text", "id": "empty_state", "label": "Empty State Text", "default": "Legg til SVG-ikon i metafeltet" }
+        {
+          "type": "text",
+          "id": "empty_state",
+          "label": "Empty State Text",
+          "default": "Legg til SVG-ikon i metafeltet"
+        }
       ]
     },
 
@@ -359,14 +372,21 @@
   "settings": [
     { "type": "checkbox", "id": "enable_sticky_info", "default": true, "label": "Enable Sticky Info" },
 
-    { "type": "checkbox", "id": "show_guarantee_below_media", "default": false, "label": "Show Guarantee Banner Below Media Gallery" },
+    {
+      "type": "checkbox",
+      "id": "show_guarantee_below_media",
+      "default": false,
+      "label": "Show Guarantee Banner Below Media Gallery"
+    },
 
     { "type": "text", "id": "guarantee_button_text", "label": "Guarantee Button Text", "default": "LES MER" },
     { "type": "url", "id": "guarantee_button_link", "label": "Guarantee Button Link" },
 
     { "type": "color_scheme", "id": "color_scheme", "label": "Color Scheme", "default": "scheme-1" },
 
-    { "type": "select", "id": "media_size",
+    {
+      "type": "select",
+      "id": "media_size",
       "options": [
         { "value": "small", "label": "Small" },
         { "value": "medium", "label": "Medium" },
@@ -378,7 +398,9 @@
 
     { "type": "checkbox", "id": "constrain_to_viewport", "default": true, "label": "Constrain to Viewport" },
 
-    { "type": "select", "id": "gallery_layout",
+    {
+      "type": "select",
+      "id": "gallery_layout",
       "options": [
         { "value": "stacked", "label": "Stacked" },
         { "value": "columns", "label": "Columns" },
@@ -389,7 +411,9 @@
       "label": "Gallery Layout"
     },
 
-    { "type": "select", "id": "mobile_thumbnails",
+    {
+      "type": "select",
+      "id": "mobile_thumbnails",
       "options": [
         { "value": "columns", "label": "Columns" },
         { "value": "show", "label": "Show" },
@@ -399,7 +423,9 @@
       "label": "Mobile Thumbnails"
     },
 
-    { "type": "select", "id": "media_position",
+    {
+      "type": "select",
+      "id": "media_position",
       "options": [
         { "value": "left", "label": "Left" },
         { "value": "right", "label": "Right" }
@@ -408,7 +434,9 @@
       "label": "Media Position"
     },
 
-    { "type": "select", "id": "image_zoom",
+    {
+      "type": "select",
+      "id": "image_zoom",
       "options": [
         { "value": "lightbox", "label": "Lightbox" },
         { "value": "hover", "label": "Hover" },
@@ -422,9 +450,27 @@
 
     { "type": "checkbox", "id": "enable_video_looping", "default": false, "label": "Enable Video Looping" },
 
-    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding Top", "default": 36 },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
 
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding Bottom", "default": 12 }
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 12
+    }
   ]
 }
 {% endschema %}
