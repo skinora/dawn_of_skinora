@@ -130,8 +130,6 @@
     assign social_links = false
     assign localization_forms = false
     assign nav_links_count = 0
-    assign nav_split_at = 0
-    assign right_nav_count = 0
 
     if settings.social_twitter_link != blank or settings.social_facebook_link != blank or settings.social_pinterest_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_vimeo_link != blank or settings.social_tiktok_link != blank or settings.social_tumblr_link != blank or settings.social_snapchat_link != blank
       assign social_links = true
@@ -143,10 +141,6 @@
 
     if section.settings.menu != blank
       assign nav_links_count = section.settings.menu.links | size
-      if nav_links_count > 0
-        assign nav_split_at = nav_links_count | plus: 1 | divided_by: 2
-        assign right_nav_count = nav_links_count | minus: nav_split_at
-      endif
     endif
   -%}
   <header class="header sk-header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
@@ -191,44 +185,22 @@
     {%- endif -%}
 
     {%- if nav_links_count > 0 -%}
-      {%- if nav_split_at > 0 -%}
-        <div class="sk-header__nav sk-header__nav--left small-hide medium-hide">
-          {%- case section.settings.menu_type_desktop -%}
-            {%- when 'dropdown', 'drawer' -%}
-              {% render 'header-dropdown-menu',
-                nav_limit: nav_split_at,
-                nav_variant_class: 'sk-header__inline-menu sk-header__inline-menu--left',
-                nav_id_prefix: 'Left-'
-              %}
-            {%- when 'mega' -%}
-              {% render 'header-mega-menu',
-                nav_limit: nav_split_at,
-                nav_variant_class: 'sk-header__inline-menu sk-header__inline-menu--left',
-                nav_id_prefix: 'Left-'
-              %}
-          {%- endcase -%}
-        </div>
-      {%- endif -%}
-      {%- if right_nav_count > 0 -%}
-        <div class="sk-header__nav sk-header__nav--right small-hide medium-hide">
-          {%- case section.settings.menu_type_desktop -%}
-            {%- when 'dropdown', 'drawer' -%}
-              {% render 'header-dropdown-menu',
-                nav_offset: nav_split_at,
-                nav_limit: right_nav_count,
-                nav_variant_class: 'sk-header__inline-menu sk-header__inline-menu--right',
-                nav_id_prefix: 'Right-'
-              %}
-            {%- when 'mega' -%}
-              {% render 'header-mega-menu',
-                nav_offset: nav_split_at,
-                nav_limit: right_nav_count,
-                nav_variant_class: 'sk-header__inline-menu sk-header__inline-menu--right',
-                nav_id_prefix: 'Right-'
-              %}
-          {%- endcase -%}
-        </div>
-      {%- endif -%}
+      <div class="sk-header__nav sk-header__nav--primary small-hide medium-hide">
+        {%- case section.settings.menu_type_desktop -%}
+          {%- when 'dropdown', 'drawer' -%}
+            {% render 'header-dropdown-menu',
+              nav_limit: nav_links_count,
+              nav_variant_class: 'sk-header__inline-menu sk-header__inline-menu--primary',
+              nav_id_prefix: 'Primary-'
+            %}
+          {%- when 'mega' -%}
+            {% render 'header-mega-menu',
+              nav_limit: nav_links_count,
+              nav_variant_class: 'sk-header__inline-menu sk-header__inline-menu--primary',
+              nav_id_prefix: 'Primary-'
+            %}
+        {%- endcase -%}
+      </div>
     {%- endif -%}
 
     <div class="header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
