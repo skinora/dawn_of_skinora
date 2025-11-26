@@ -180,7 +180,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   max-width: 100%;
 }
 
-.section-header .header.page-width {
+.section-header .sk-header {
   max-width: 100%;
   width: 100%;
   margin-inline: 0;
@@ -201,7 +201,6 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
     padding-inline: clamp(2rem, 4.5vw, 4rem);
   }
 
-  .header.page-width,
   .utility-bar__grid.page-width {
     padding-inline: clamp(2rem, 4vw, 3.6rem);
   }
@@ -231,10 +230,6 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 }
 
 @media screen and (min-width: 990px) {
-  .header:not(.drawer-menu).page-width {
-    padding-inline: clamp(2.5rem, 4vw, 5rem);
-  }
-
   .page-width--narrow {
     max-width: min(var(--page-width), 72.6rem);
     padding: 0;
@@ -2522,6 +2517,8 @@ input[type='checkbox'] {
   background-color: #fff;
   background-image: none;
   position: relative;
+  --sk-header-logo-width: clamp(140px, 14vw, 210px);
+  --sk-header-center-guard: clamp(1.6rem, 2.6vw, 3.6rem);
 }
 
 .header-wrapper--sk::after {
@@ -2551,9 +2548,7 @@ input[type='checkbox'] {
 
 .header {
   display: grid;
-  grid-template-areas: 'left-icons heading icons';
-  grid-template-columns: 1fr 2fr 1fr;
-  align-items: center;
+  grid-template-columns: 1fr;
 }
 
 .header.sk-header {
@@ -2561,6 +2556,26 @@ input[type='checkbox'] {
   row-gap: 0.8rem;
   padding-inline: clamp(1.6rem, 4vw, 5.6rem);
   background-color: #fff;
+}
+
+.sk-header__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: clamp(1.6rem, 3vw, 4.4rem);
+}
+
+.sk-header__grid > .sk-header__nav {
+  justify-self: start;
+}
+
+.sk-header__grid > .sk-header__brand {
+  justify-self: center;
+  text-align: center;
+}
+
+.sk-header__grid > .header__icons {
+  justify-self: end;
 }
 
 .header.sk-header .header__heading,
@@ -2571,7 +2586,7 @@ input[type='checkbox'] {
 }
 
 .header.sk-header .header__heading-logo-wrapper {
-  max-width: clamp(140px, 14vw, 210px);
+  max-width: var(--sk-header-logo-width, clamp(140px, 14vw, 210px));
 }
 
 @media screen and (max-width: 749px) {
@@ -2581,19 +2596,14 @@ input[type='checkbox'] {
 }
 
 @media screen and (min-width: 990px) {
-  .header {
-    grid-template-columns: 1fr auto 1fr;
-  }
-
   .header.sk-header {
-    grid-template-areas: 'nav-left heading icons';
-    grid-template-columns: minmax(0, 2.4fr) auto auto;
-    align-items: end;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
     column-gap: clamp(1.6rem, 3vw, 4.4rem);
   }
 
   .header.sk-header .header__heading-logo-wrapper {
-    width: clamp(140px, 14vw, 210px);
+    width: var(--sk-header-logo-width, clamp(140px, 14vw, 210px));
   }
 
   .header--top-left,
@@ -2643,6 +2653,12 @@ input[type='checkbox'] {
   }
 }
 
+@media screen and (min-width: 990px) {
+  .header.sk-header {
+    display: grid;
+  }
+}
+
 .sk-header__nav {
   display: none;
   align-items: center;
@@ -2652,7 +2668,6 @@ input[type='checkbox'] {
 }
 
 .sk-header__nav--primary {
-  grid-area: nav-left;
   justify-content: flex-start;
   width: 100%;
 }
@@ -2675,6 +2690,12 @@ input[type='checkbox'] {
     display: flex;
   }
 
+  .sk-header__nav--primary {
+    justify-self: start;
+    width: auto;
+    max-width: min(90rem, 60vw);
+  }
+
   .header.sk-header .header__heading,
   .header.sk-header .header__heading-link {
     justify-self: center;
@@ -2683,6 +2704,31 @@ input[type='checkbox'] {
 
   .header.sk-header .header__heading-link {
     margin-left: 0;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .sk-header__grid {
+    display: grid;
+    grid-template-columns: minmax(0, max-content) auto minmax(0, max-content);
+    width: 100%;
+    align-items: center;
+    gap: clamp(1.6rem, 3vw, 4.4rem);
+  }
+
+  .sk-header__grid > .sk-header__nav {
+    justify-self: start;
+    max-width: clamp(260px, 30vw, 420px);
+  }
+
+  .sk-header__grid > .header__icons {
+    justify-self: end;
+    max-width: clamp(220px, 25vw, 420px);
+  }
+
+  .sk-header__brand {
+    justify-self: center;
+    text-align: center;
   }
 }
 
