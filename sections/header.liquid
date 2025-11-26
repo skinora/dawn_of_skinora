@@ -76,6 +76,48 @@
       padding-top: 0.5rem;
     }
   }
+  /* ============================================================
+   SKINORA HEADER — 3-COLUMN LUXURY LAYOUT
+   ============================================================ */
+
+.header {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: center;
+  width: 100%;
+}
+
+/* Left navigation (menu) */
+.header__menu {
+  display: flex;
+  gap: 32px; /* fixes crowded look */
+  align-items: center;
+}
+
+/* Make sure the left menu stays left-aligned */
+.header--has-menu .header__menu {
+  justify-self: start;
+}
+
+/* Center the logo perfectly */
+.header__heading {
+  justify-self: center !important;
+  margin: 0 !important;
+}
+
+/* Right icons */
+.header__icons {
+  justify-self: end !important;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+/* Prevent menu items from squishing */
+.list-menu--inline {
+  gap: 32px !important;
+}
+
 </style>
 
 {%- style -%}
