@@ -5,15 +5,41 @@
   {% render 'header-mega-menu' %}
 {% endcomment %}
 
-<nav class="header__inline-menu">
+{%- liquid
+  assign nav_offset = nav_offset | default: 0 | plus: 0
+  if nav_offset < 0
+    assign nav_offset = 0
+  endif
+  assign total_links = section.settings.menu.links | size
+  assign nav_limit = nav_limit | default: total_links | plus: 0
+  if nav_limit < 0
+    assign nav_limit = 0
+  endif
+  if nav_offset > total_links
+    assign nav_offset = total_links
+  endif
+  assign calculated_limit = total_links | minus: nav_offset
+  if nav_limit > calculated_limit
+    assign nav_limit = calculated_limit
+  endif
+  assign nav_variant_class = nav_variant_class | default: ''
+  assign nav_id_prefix = nav_id_prefix | default: ''
+-%}
+
+{%- assign nav_classes = 'header__inline-menu' -%}
+{%- if nav_variant_class != blank -%}
+  {%- assign nav_classes = nav_classes | append: ' ' | append: nav_variant_class -%}
+{%- endif -%}
+
+<nav class="{{ nav_classes }}">
   <ul class="list-menu list-menu--inline" role="list">
-    {%- for link in section.settings.menu.links -%}
+    {%- for link in section.settings.menu.links limit: nav_limit offset: nav_offset -%}
       <li>
         {%- if link.links != blank -%}
           <header-menu>
-            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
+            <details id="Details-HeaderMenu-{{ nav_id_prefix }}{{ forloop.index }}" class="mega-menu">
               <summary
-                id="HeaderMenu-{{ link.handle }}"
+                id="HeaderMenu-{{ nav_id_prefix }}{{ link.handle }}"
                 class="header__menu-item list-menu__item link focus-inset"
               >
                 <span
@@ -26,7 +52,7 @@
                 {{- 'icon-caret.svg' | inline_asset_content -}}
               </summary>
               <div
-                id="MegaMenu-Content-{{ forloop.index }}"
+                id="MegaMenu-Content-{{ nav_id_prefix }}{{ forloop.index }}"
                 class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
                 tabindex="-1"
               >
