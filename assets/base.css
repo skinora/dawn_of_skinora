@@ -47,12 +47,15 @@
   --focused-base-outline-offset: 0.3rem;
   --focused-base-box-shadow: 0 0 0 0.3rem rgb(var(--color-background)),
     0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.45);
-  --sk-page-gutter: 24px;
+  --sk-page-gutter: clamp(16px, 2vw, 32px);
   --sk-gap-sm: 16px;
   --sk-gap-md: 24px;
   --sk-gap-lg: 48px;
   --sk-media-max: 620px; /* cap the gallery width */
   --sk-info-min: 420px;
+  --sk-layout-expanded-width: clamp(118rem, 95vw, 156rem);
+  --page-width: var(--sk-layout-expanded-width);
+  --page-width-margin: clamp(0rem, 1.5vw, 2.4rem);
   --sk-font-size-base: 1.9rem; /* ~30px */
   --sk-font-size-small: 1.5833rem; /* ~25px */
   --sk-font-size-medium: 1.7813rem; /* ~28px */
@@ -145,7 +148,7 @@
 .page-width {
   max-width: var(--page-width);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding-inline: clamp(1.2rem, 4vw, 3.2rem);
 }
 
 /* Section content width utilities (unified readable widths) */
@@ -179,32 +182,30 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 }
 
 .page-width-desktop {
-  padding: 0;
+  padding-inline: clamp(1.2rem, 4vw, 3.2rem);
   margin: 0 auto;
 }
 
 .utility-bar__grid.page-width {
-  padding-left: 3rem;
-  padding-right: 3rem;
+  padding-inline: clamp(1.5rem, 4vw, 3.5rem);
 }
 
 @media screen and (min-width: 750px) {
   .page-width {
-    padding: 0 5rem;
+    padding-inline: clamp(2rem, 4.5vw, 4rem);
   }
 
   .header.page-width,
   .utility-bar__grid.page-width {
-    padding-left: 3.2rem;
-    padding-right: 3.2rem;
+    padding-inline: clamp(2rem, 4vw, 3.6rem);
   }
 
   .page-width--narrow {
-    padding: 0 9rem;
+    padding-inline: clamp(2.4rem, 6vw, 5.5rem);
   }
 
   .page-width-desktop {
-    padding: 0;
+    padding-inline: clamp(2rem, 4.5vw, 4rem);
   }
 
   /* Utility: make a section expand full-bleed while preserving centered content
@@ -219,14 +220,13 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   }
 
   .page-width-tablet {
-    padding: 0 5rem;
+    padding-inline: clamp(2rem, 4.5vw, 4rem);
   }
 }
 
 @media screen and (min-width: 990px) {
   .header:not(.drawer-menu).page-width {
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding-inline: clamp(2.5rem, 4vw, 5rem);
   }
 
   .page-width--narrow {
@@ -238,7 +238,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 
   .page-width-desktop {
     max-width: var(--page-width);
-    padding: 0 5rem;
+    padding-inline: clamp(2.5rem, 4vw, 4.5rem);
   }
 }
 
