@@ -2588,6 +2588,36 @@ input[type='checkbox'] {
   pointer-events: none;
 }
 
+@media screen and (max-width: 989px) {
+  .sk-header__grid {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .sk-header__grid > .sk-header__brand {
+    position: static;
+    transform: none;
+    width: auto;
+    pointer-events: auto;
+  }
+
+  .sk-header__grid > .sk-header__nav,
+  .sk-header__grid > .header__icons {
+    width: auto;
+  }
+
+  header.sk-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+
+  .sk-header__grid > header-drawer {
+    grid-area: nav;
+    justify-self: start;
+    width: 100%;
+  }
+}
+
 .sk-header__grid > .header__icons {
   grid-area: icons;
   justify-self: end;
@@ -4375,6 +4405,33 @@ div.okeReviews .oke-w-review-main {
 
   header-drawer {
     order: 1 !important;
+  }
+
+  header.sk-header,
+  header.sk-header .header__heading-link,
+  header.sk-header .header__icon,
+  header.sk-header .header__icon .svg-wrapper,
+  header.sk-header header-drawer,
+  header.sk-header header-drawer summary {
+    color: var(--color-brand) !important;
+  }
+
+  header.sk-header .header__icon .icon,
+  header.sk-header .header__icon .svg-wrapper svg,
+  header.sk-header .header__icon .svg-wrapper svg path,
+  header.sk-header .header__icon .svg-wrapper svg polygon,
+  header.sk-header .header__icon .svg-wrapper svg circle,
+  header.sk-header .header__icon .svg-wrapper svg polyline,
+  header.sk-header header-drawer summary .icon-hamburger-variants svg,
+  header.sk-header header-drawer summary .icon-hamburger-variants svg path,
+  header.sk-header header-drawer summary .icon-hamburger-variants svg circle,
+  header.sk-header header-drawer summary .icon-hamburger-variants svg polygon,
+  header.sk-header header-drawer summary .icon-hamburger-variants svg polyline,
+  header.sk-header .header__heading-logo-wrapper svg path,
+  header.sk-header .header__heading-logo-wrapper svg polygon,
+  header.sk-header .header__heading-logo-wrapper svg circle {
+    fill: var(--color-brand) !important;
+    stroke: var(--color-brand) !important;
   }
 
   .sk-content-section__heading {
