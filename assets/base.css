@@ -2518,6 +2518,7 @@ input[type='checkbox'] {
   background-image: none;
   position: relative;
   --sk-header-logo-width: clamp(140px, 14vw, 210px);
+  --sk-logo-visual-width: calc(var(--header-logo-width, 260px) * 1.2);
   --sk-header-center-guard: clamp(1.6rem, 2.6vw, 3.6rem);
 }
 
@@ -2566,6 +2567,8 @@ input[type='checkbox'] {
   column-gap: clamp(1.6rem, 3vw, 4.4rem);
   width: 100%;
   grid-column: 1 / -1;
+  position: relative;
+  overflow: visible;
 }
 
 .sk-header__grid > .sk-header__nav {
@@ -2575,13 +2578,13 @@ input[type='checkbox'] {
 }
 
 .sk-header__grid > .sk-header__brand {
-  grid-area: brand;
-  justify-self: center;
+  width: var(--sk-logo-visual-width);
   text-align: center;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: var(--sk-header-logo-width, clamp(140px, 14vw, 210px));
+  --sk-logo-visual-width: calc(var(--header-logo-width, 260px) * 1.1);
+  width: var(--sk-logo-visual-width);
   pointer-events: none;
 }
 
@@ -2777,8 +2780,19 @@ input[type='checkbox'] {
   width: auto;
   display: inline-block;
   transition: transform 0.22s cubic-bezier(0.2, 0, 0, 1);
-  max-width: min(var(--header-logo-width, 260px), 90vw);
+  max-width: min(var(--sk-logo-visual-width, var(--header-logo-width, 260px)), 90vw);
   box-sizing: border-box;
+}
+
+.header__heading-logo-wrapper svg {
+  width: 100%;
+  height: auto;
+}
+
+.header__heading-logo-wrapper svg path,
+.header__heading-logo-wrapper svg polygon,
+.header__heading-logo-wrapper svg circle {
+  fill: var(--color-brand, #30273e);
 }
 
 /* Desktop: give the logo wrapper the exact theme-controlled width so
@@ -2786,9 +2800,15 @@ input[type='checkbox'] {
    header layout cannot accommodate it, but prefer the explicit width. */
 @media screen and (min-width: 990px) {
   .header__heading-logo-wrapper {
-    width: var(--header-logo-width, auto);
-    max-width: var(--header-logo-width, 260px);
+    width: var(--sk-logo-visual-width, var(--header-logo-width, auto));
+    max-width: var(--sk-logo-visual-width, var(--header-logo-width, 260px));
   }
+}
+
+.header__heading-logo-wrapper svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 @media screen and (max-width: 989px) {
