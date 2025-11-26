@@ -124,7 +124,7 @@
   {% if header_tag == 'sticky-header' %}
     data-sticky-type="{{ section.settings.sticky_header_type }}"
   {% endif %}
-  class="header-wrapper header-wrapper--sk color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
+  class="header-wrapper header-wrapper--sk color-{{ section.settings.color_scheme }}{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
 >
   {%- liquid
     assign social_links = false
@@ -141,7 +141,7 @@
       assign localization_forms = true
     endif
 
-    if section.settings.menu != blank and section.settings.menu_type_desktop != 'drawer'
+    if section.settings.menu != blank
       assign nav_links_count = section.settings.menu.links | size
       if nav_links_count > 0
         assign nav_split_at = nav_links_count | plus: 1 | divided_by: 2
@@ -194,7 +194,7 @@
       {%- if nav_split_at > 0 -%}
         <div class="sk-header__nav sk-header__nav--left small-hide medium-hide">
           {%- case section.settings.menu_type_desktop -%}
-            {%- when 'dropdown' -%}
+            {%- when 'dropdown', 'drawer' -%}
               {% render 'header-dropdown-menu',
                 nav_limit: nav_split_at,
                 nav_variant_class: 'sk-header__inline-menu sk-header__inline-menu--left',
@@ -212,7 +212,7 @@
       {%- if right_nav_count > 0 -%}
         <div class="sk-header__nav sk-header__nav--right small-hide medium-hide">
           {%- case section.settings.menu_type_desktop -%}
-            {%- when 'dropdown' -%}
+            {%- when 'dropdown', 'drawer' -%}
               {% render 'header-dropdown-menu',
                 nav_offset: nav_split_at,
                 nav_limit: right_nav_count,
