@@ -180,6 +180,13 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   max-width: 100%;
 }
 
+.section-header .header.page-width {
+  max-width: 100%;
+  width: 100%;
+  margin-inline: 0;
+  padding-inline: clamp(1.8rem, 4vw, 5.6rem);
+}
+
 .page-width-desktop {
   padding-inline: clamp(1.2rem, 4vw, 3.2rem);
   margin: 0 auto;
@@ -2552,7 +2559,7 @@ input[type='checkbox'] {
 .header.sk-header {
   position: relative;
   row-gap: 0.8rem;
-  padding-inline: clamp(1.2rem, 3vw, 3.6rem);
+  padding-inline: clamp(1.6rem, 4vw, 5.6rem);
   background-color: #fff;
 }
 
