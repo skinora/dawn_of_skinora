@@ -75,7 +75,7 @@
 
   .sk-radiance-product > .sk-radiance-product__info-wrapper {
     padding-left: clamp(1rem, 1.8vw, 2.75rem);
-    max-width: clamp(360px, 40vw, 580px);
+    max-width: min(100%, var(--sk-info-max, 820px));
   }
 }
 
