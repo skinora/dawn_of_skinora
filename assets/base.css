@@ -2570,16 +2570,25 @@ input[type='checkbox'] {
 
 .sk-header__grid > .sk-header__nav {
   grid-area: nav;
+  justify-self: start;
+  width: 100%;
 }
 
 .sk-header__grid > .sk-header__brand {
   grid-area: brand;
   justify-self: center;
   text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--sk-header-logo-width, clamp(140px, 14vw, 210px));
+  pointer-events: none;
 }
 
 .sk-header__grid > .header__icons {
   grid-area: icons;
+  justify-self: end;
+  max-width: min(26rem, 35vw);
 }
 
 .header.sk-header .header__heading,
