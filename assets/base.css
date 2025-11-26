@@ -53,9 +53,8 @@
   --sk-gap-lg: 48px;
   --sk-media-max: 620px; /* cap the gallery width */
   --sk-info-min: 420px;
-  --sk-layout-expanded-width: clamp(118rem, 95vw, 156rem);
-  --page-width: var(--sk-layout-expanded-width);
-  --page-width-margin: clamp(0rem, 1.5vw, 2.4rem);
+  --sk-info-max: clamp(420px, 48vw, 860px);
+  --sk-layout-expanded-width: clamp(118rem, 95vw, 190rem);
   --sk-font-size-base: 1.9rem; /* ~30px */
   --sk-font-size-small: 1.5833rem; /* ~25px */
   --sk-font-size-medium: 1.7813rem; /* ~28px */
@@ -146,7 +145,7 @@
 /* base */
 
 .page-width {
-  max-width: var(--page-width);
+  max-width: var(--page-width, var(--sk-layout-expanded-width));
   margin: 0 auto;
   padding-inline: clamp(1.2rem, 4vw, 3.2rem);
 }
@@ -263,7 +262,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 
 @media screen and (min-width: 750px) {
   .element-margin {
-    margin-top: calc(5rem + var(--page-width-margin));
+    margin-top: calc(5rem + var(--page-width-margin, 0rem));
   }
 }
 
