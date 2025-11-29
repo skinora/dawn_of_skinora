@@ -1,3 +1,15 @@
+.section-header.menu-open {
+  isolation: isolate;
+  position: relative;
+  z-index: 10000;
+}
+
+.section-header.shopify-section-header-sticky.menu-open {
+  isolation: isolate;
+  position: sticky;
+  z-index: 10000;
+}
+
 .header__icon--menu {
   position: initial;
 }
@@ -5,17 +17,16 @@
 .js menu-drawer > details > summary::before,
 .js menu-drawer > details[open]:not(.menu-opening) > summary::before {
   content: '';
-  position: absolute;
+  position: fixed;
   cursor: default;
-  width: 100%;
-  height: calc(100vh - 100%);
+  inset: auto 0 0;
+  top: var(--header-bottom-position, 100%);
   height: calc(var(--viewport-height, 100vh) - (var(--header-bottom-position, 100%)));
-  top: 100%;
-  left: 0;
+  width: 100%;
   background: rgba(var(--color-foreground), 0.5);
   opacity: 0;
   visibility: hidden;
-  z-index: 2;
+  z-index: 10000;
   transition: opacity 0s, visibility 0s;
 }
 
@@ -26,12 +37,13 @@ menu-drawer > details[open] > summary::before {
 }
 
 .menu-drawer {
-  position: absolute;
+  position: fixed;
   transform: translateX(-100%);
   visibility: hidden;
-  z-index: 3;
+  z-index: 10001;
   left: 0;
-  top: 100%;
+  right: 0;
+  top: var(--header-bottom-position, 100%);
   width: 100%;
   padding: 0;
   background-color: var(--color-brand);
