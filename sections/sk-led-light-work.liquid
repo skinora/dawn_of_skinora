@@ -1,81 +1,69 @@
 <style>
-  .sk-led-light-work {
+  .sk-wavelengths {
     padding: 5rem 0;
   }
 
-  .sk-led-light-work__content {
+  .sk-wavelengths__content {
     text-align: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
   }
 
-  .sk-led-light-work__heading {
+  .sk-wavelengths__heading {
     font-size: clamp(32px, 2.5vw, 42px);
-    color: #30273E;
+    color: #30273e;
     margin: 0;
     line-height: 1.1;
     font-weight: 600;
   }
 
-  .sk-led-light-work__grid {
+  .sk-wavelengths__grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
     gap: 48px;
-    align-items: stretch;
+    align-items: start;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(calc(100vw / var(--sk-wavelength-block-count, 4)), 1fr));
   }
 
-  .sk-led-light-work__grid--three {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .sk-led-light-work__grid--two {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .sk-led-light-work__grid--single {
-    grid-template-columns: 1fr;
-  }
-
-  .sk-led-light-work__step {
+  .sk-wavelength {
     background-color: #fff;
     border-radius: 16px;
     padding: 1.75rem;
     box-shadow: 0 18px 45px rgba(16, 10, 37, 0.08);
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
     animation: skFade 0.8s ease both;
-    align-items: center;
+    width: calc(100vw / var(--sk-wavelength-block-count, 4));
+    max-width: 100%;
+    box-sizing: border-box;
+    position: relative;
   }
 
-  .sk-led-light-work__image {
-    width: 430px;
-    max-width: 100%;
-    height: 400px;
+  .sk-wavelength__image {
+    width: 100%;
+    aspect-ratio: 4 / 5;
     border-radius: 12px;
     overflow: hidden;
-    background: #F7F7F7;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: #f7f7f7;
+    display: block;
   }
 
-  .sk-led-light-work__image img {
+  .sk-wavelength__image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
 
-  .sk-led-light-work__title {
+  .sk-wavelength__title {
     font-size: 22px;
-    color: #30273E;
+    color: #30273e;
     margin: 0;
     line-height: 1.3;
     font-weight: 600;
-    text-align: center;
   }
 
-  .sk-led-light-work__benefits {
+  .sk-wavelength__benefits {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -84,37 +72,38 @@
     line-height: 1.55;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.65rem;
   }
 
-  .sk-led-light-work__benefits li {
+  .sk-wavelength__benefits li {
     position: relative;
-    padding-left: 1.35rem;
+    padding-left: 1.4rem;
   }
 
-  .sk-led-light-work__benefits li::before {
+  .sk-wavelength__benefits li::before {
     content: '\2022';
     position: absolute;
     left: 0;
     top: 0;
-    color: var(--color-brand, #F05D23);
+    color: var(--color-brand, #f05d23);
     font-size: 1.25rem;
     line-height: 1;
   }
 
-  .sk-led-light-work__arrow {
+  .sk-wavelengths__arrow {
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0.6;
   }
 
-  .sk-led-light-work__slider {
+  .sk-wavelengths__slider {
     display: none;
   }
 
-  .sk-led-light-work__step--slide {
-    box-shadow: 0 10px 25px rgba(16, 10, 37, 0.08);
+  .sk-wavelengths--animated .sk-wavelength {
+    opacity: 0;
+    animation: skFade 0.8s ease forwards;
   }
 
   @keyframes skFade {
@@ -128,53 +117,38 @@
     }
   }
 
-  @media (max-width: 1100px) {
-    .sk-led-light-work__grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  @media (max-width: 950px) {
-    .sk-led-light-work__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
   @media (max-width: 750px) {
-    .sk-led-light-work {
+    .sk-wavelengths {
       padding: 4rem 0;
     }
 
-    .sk-led-light-work__grid {
+    .sk-wavelengths__grid {
       display: none;
     }
 
-    .sk-led-light-work__slider {
+    .sk-wavelengths__slider {
       display: block;
     }
   }
 
   @media (max-width: 500px) {
-    .sk-led-light-work__heading {
+    .sk-wavelengths__heading {
       font-size: 28px;
     }
-    .sk-led-light-work__title {
+    .sk-wavelength__title {
       font-size: 20px;
     }
-    .sk-led-light-work__benefits {
+    .sk-wavelength__benefits {
       font-size: 15px;
-    }
-    .sk-led-light-work__slider .swiper-slide {
-      padding: 0 4px;
     }
   }
 </style>
 
-<section class="sk-led-light-work section--full-bleed">
+<section class="sk-wavelengths section--full-bleed">
   <div class="page-width">
     {% if section.settings.sk_led_light_work_heading != blank %}
-      <div class="sk-led-light-work__content sk-section-content">
-        <h2 class="sk-led-light-work__heading sk-section-heading sk-section-heading--h1">
+      <div class="sk-wavelengths__content sk-section-content">
+        <h2 class="sk-wavelengths__heading sk-section-heading sk-section-heading--h1">
           {{ section.settings.sk_led_light_work_heading | escape }}
         </h2>
       </div>
@@ -183,86 +157,99 @@
     {% capture arrow_svg %}
       {{ 'led-light-works-arrow.svg' | inline_asset_content }}
     {% endcapture %}
-    <div class="sk-led-light-work__grid {% case section.blocks.size %}{% when 1 %}sk-led-light-work__grid--single{% when 2 %}sk-led-light-work__grid--two{% when 3 %}sk-led-light-work__grid--three{% endif %}">
-      {% for block in section.blocks %}
-        <div class="sk-led-light-work__step">
-          {% if block.settings.sk_wavelength_image != blank %}
-            {% assign wavelength_img = block.settings.sk_wavelength_image %}
-            <figure class="sk-led-light-work__image">
-              <img
-                src="{{ wavelength_img | image_url: width: 1000 }}"
-                alt="{{ wavelength_img.alt | escape }}"
-                loading="lazy"
-                decoding="async"
-                    width="430"
-                    height="400"
-              >
-            </figure>
-          {% endif %}
-          <h3 class="sk-led-light-work__title">{{ block.settings.sk_wavelength_heading | escape }}</h3>
-          <ul class="sk-led-light-work__benefits" role="list">
-            {%- assign items = block.settings.sk_wavelength_benefits | split: '\n' -%}
-            {%- for item in items -%}
-              {%- assign trimmed = item | strip -%}
-              {%- if trimmed != blank -%}
-                <li>{{ trimmed }}</li>
-              {%- endif -%}
-            {%- endfor -%}
-          </ul>
-        </div>
-        {% unless forloop.last %}
-          <div class="sk-led-light-work__arrow" aria-hidden="true">
-            {{ arrow_svg | replace: '<svg', '<svg aria-hidden="true" focusable="false" role="presentation"' }}
+    {% assign visible_blocks = section.blocks | where: 'settings.sk_wavelength_visible', true %}
+    {% assign visible_blocks_count = visible_blocks.size %}
+    {% assign grid_block_count = visible_blocks_count %}
+    {% if grid_block_count == 0 %}
+      {% assign grid_block_count = 4 %}
+    {% endif %}
+    {% if visible_blocks_count > 0 %}
+      <div class="sk-wavelengths__grid" style="--sk-wavelength-block-count: {{ grid_block_count }};">
+        {% for block in visible_blocks %}
+          <div class="sk-wavelength">
+            {% if block.settings.sk_wavelength_image != blank %}
+              {% assign wavelength_img = block.settings.sk_wavelength_image %}
+              <figure class="sk-wavelength__image">
+                <img
+                  src="{{ wavelength_img | image_url: width: 1000 }}"
+                  alt="{{ wavelength_img.alt | escape }}"
+                  loading="lazy"
+                  decoding="async"
+                  width="340"
+                  height="425"
+                >
+              </figure>
+            {% endif %}
+            <h3 class="sk-wavelength__title">{{ block.settings.sk_wavelength_heading | escape }}</h3>
+            <ul class="sk-wavelength__benefits" role="list">
+              {%- assign items = block.settings.sk_wavelength_benefits | split: '\n' -%}
+              {%- for item in items -%}
+                {%- assign trimmed = item | strip -%}
+                {%- if trimmed != blank -%}
+                  <li>{{ trimmed }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
           </div>
-        {% endunless %}
-      {% endfor %}
-    </div>
-
-    <div class="sk-led-light-work__slider sk-wavelengths-swiper-{{ section.id }}">
-      <div class="swiper llw-swiper-{{ section.id }}">
-        <div class="swiper-wrapper">
-          {% for block in section.blocks %}
-            <div class="swiper-slide">
-              <div class="sk-led-light-work__step sk-led-light-work__step--slide">
-                {% if block.settings.sk_wavelength_image != blank %}
-                  {% assign wavelength_img = block.settings.sk_wavelength_image %}
-                  <figure class="sk-led-light-work__image">
-                    <img
-                      src="{{ wavelength_img | image_url: width: 1000 }}"
-                      alt="{{ wavelength_img.alt | escape }}"
-                      loading="lazy"
-                      decoding="async"
-                      width="430"
-                      height="400"
-                    >
-                  </figure>
-                {% endif %}
-                <h3 class="sk-led-light-work__title">{{ block.settings.sk_wavelength_heading | escape }}</h3>
-                <ul class="sk-led-light-work__benefits" role="list">
-                  {%- assign items = block.settings.sk_wavelength_benefits | split: '\n' -%}
-                  {%- for item in items -%}
-                    {%- assign trimmed = item | strip -%}
-                    {%- if trimmed != blank -%}
-                      <li>{{ trimmed }}</li>
-                    {%- endif -%}
-                  {%- endfor -%}
-                </ul>
-              </div>
+          {% unless forloop.last %}
+            <div class="sk-wavelengths__arrow" aria-hidden="true">
+              {{ arrow_svg | replace: '<svg', '<svg aria-hidden="true" focusable="false" role="presentation"' }}
             </div>
-          {% endfor %}
-        </div>
-        <div class="swiper-pagination"></div>
+          {% endunless %}
+        {% endfor %}
       </div>
-    </div>
+    {% endif %}
+
+    {% if visible_blocks_count > 0 %}
+      <div class="sk-wavelengths__slider sk-wavelengths-swiper-{{ section.id }}">
+        <div class="swiper llw-swiper-{{ section.id }}">
+          <div class="swiper-wrapper">
+            {% for block in visible_blocks %}
+              <div class="swiper-slide">
+                <div class="sk-wavelength sk-wavelength--slide">
+                  {% if block.settings.sk_wavelength_image != blank %}
+                    {% assign wavelength_img = block.settings.sk_wavelength_image %}
+                    <figure class="sk-wavelength__image">
+                      <img
+                        src="{{ wavelength_img | image_url: width: 1000 }}"
+                        alt="{{ wavelength_img.alt | escape }}"
+                        loading="lazy"
+                        decoding="async"
+                        width="340"
+                        height="425"
+                      >
+                    </figure>
+                  {% endif %}
+                  <h3 class="sk-wavelength__title">{{ block.settings.sk_wavelength_heading | escape }}</h3>
+                  <ul class="sk-wavelength__benefits" role="list">
+                    {%- assign items = block.settings.sk_wavelength_benefits | split: '\n' -%}
+                    {%- for item in items -%}
+                      {%- assign trimmed = item | strip -%}
+                      {%- if trimmed != blank -%}
+                        <li>{{ trimmed }}</li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    {% endif %}
   </div>
 </section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    if ({{ visible_blocks_count }} === 0) {
+      return;
+    }
     var sliderContainer = document.querySelector('.sk-wavelengths-swiper-{{ section.id }} .swiper');
     if (!sliderContainer) return;
 
-    var mql = window.matchMedia('(max-width: 750px)');
+    var mql = window.matchMedia('(max-width: 700px)');
     var swiperInstance = null;
 
     function initOrDestroy() {
@@ -312,6 +299,12 @@
           "type": "image_picker",
           "id": "sk_wavelength_image",
           "label": "Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "sk_wavelength_visible",
+          "label": "Display block",
+          "default": true
         },
         {
           "type": "text",
