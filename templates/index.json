@@ -322,16 +322,27 @@
     "sk_led_light_work_QHXAbE": {
       "type": "sk-led-light-work",
       "blocks": {
+        "wavelength_LX8nXF": {
+          "type": "wavelength",
+          "settings": {
+            "sk_wavelength_image": "shopify://shop_images/415_630__830_nm.jpg",
+            "sk_wavelength_visible": true,
+            "sk_wavelength_heading": "630 nm Rødt Lys",
+            "sk_wavelength_benefits": "Stimulerer kollagen\nForbedrer glød\nFremmer redusert fine linjer"
+          }
+        },
         "wavelength_rXJxp9": {
           "type": "wavelength",
           "settings": {
             "sk_wavelength_image": "shopify://shop_images/415_630__830_nm.jpg",
+            "sk_wavelength_visible": true,
             "sk_wavelength_heading": "630 nm Rødt Lys",
             "sk_wavelength_benefits": "Stimulerer kollagen\nForbedrer glød\nFremmer redusert fine linjer"
           }
         }
       },
       "block_order": [
+        "wavelength_LX8nXF",
         "wavelength_rXJxp9"
       ],
       "name": "SK Led Light Work",
