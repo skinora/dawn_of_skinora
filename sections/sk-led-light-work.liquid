@@ -4,194 +4,275 @@
   }
 
   .sk-led-light-work__content {
-    margin: 15px 0 50px;
     text-align: center;
+    margin-bottom: 2.5rem;
   }
 
   .sk-led-light-work__heading {
-    font-size: 48px;
-    line-height: 1.15;
-    font-weight: 600;
+    font-size: clamp(32px, 2.5vw, 42px);
+    color: #30273E;
     margin: 0;
+    line-height: 1.1;
+    font-weight: 600;
   }
 
-  /* DESKTOP/TABLET */
-  .sk-led-light-work-images-container {
+  .sk-led-light-work__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px;
+    align-items: stretch;
+  }
+
+  .sk-led-light-work__grid--three {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sk-led-light-work__grid--two {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sk-led-light-work__grid--single {
+    grid-template-columns: 1fr;
+  }
+
+  .sk-led-light-work__step {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 1.75rem;
+    box-shadow: 0 18px 45px rgba(16, 10, 37, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    animation: skFade 0.8s ease both;
+    align-items: center;
+  }
+
+  .sk-led-light-work__image {
+    width: 430px;
+    max-width: 100%;
+    height: 400px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #F7F7F7;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 18px;
   }
 
-  .sk-led-light-work-image-item {
-    width: 215px;
-    aspect-ratio: 215 / 456;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .sk-led-light-work-image-item img {
+  .sk-led-light-work__image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
 
-  .sk-led-light-work-images-container svg {
-    width: 26px;
-    height: 26px;
-    flex: 0 0 26px;
-    color: var(--color-brand);
-  }
-
-  /* MOBIL SWIPER */
-  .sk-llw-swiper-{{ section.id }} {
-    display: none;
-  }
-
-  .sk-llw-swiper-{{ section.id }} .swiper-slide {
-    display: flex;
-    justify-content: center;
-    padding: 0 8px;
-  }
-
-  .sk-llw-swiper-{{ section.id }} .llw-slide {
-    width: 80%;
-    max-width: 320px;
-    aspect-ratio: 1 / 1.1; /* gjør bilder mer kvadratiske */
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 6px 18px rgba(0,0,0,.08);
-  }
-
-  .sk-llw-swiper-{{ section.id }} img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .sk-llw-swiper-{{ section.id }} .swiper-pagination {
-    position: static;
-    margin-top: 20px;
+  .sk-led-light-work__title {
+    font-size: 22px;
+    color: #30273E;
+    margin: 0;
+    line-height: 1.3;
+    font-weight: 600;
     text-align: center;
   }
 
-  .sk-llw-swiper-{{ section.id }} .swiper-pagination-bullet {
-    width: 10px; height: 10px;
-    background: #ddd;
-    opacity: 1;
-  }
-  .sk-llw-swiper-{{ section.id }} .swiper-pagination-bullet-active {
-    background: #4a4458;
-    transform: scale(1.15);
-  }
-
-  /* RESPONSIVITET */
-  @media (max-width: 700px) {
-    .sk-led-light-work-images-container { display: none; }
-    .sk-llw-swiper-{{ section.id }} { display: block; max-width: 600px; margin: 0 auto; }
-
-  .sk-led-light-work__content { width: 100%; margin-bottom: 32px; }
-    .sk-led-light-work { padding: 4rem 0; }
+  .sk-led-light-work__benefits {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: #333333;
+    font-size: 16px;
+    line-height: 1.55;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
-  @media (max-width: 435px) {
-    .sk-led-light-work__heading {
-      font-size: calc(var(--sk-font-size-2xl) * 1.0667);
-      line-height: 1.15;
+  .sk-led-light-work__benefits li {
+    position: relative;
+    padding-left: 1.35rem;
+  }
+
+  .sk-led-light-work__benefits li::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-brand, #F05D23);
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .sk-led-light-work__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+  }
+
+  .sk-led-light-work__slider {
+    display: none;
+  }
+
+  .sk-led-light-work__step--slide {
+    box-shadow: 0 10px 25px rgba(16, 10, 37, 0.08);
+  }
+
+  @keyframes skFade {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .sk-led-light-work__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 950px) {
+    .sk-led-light-work__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 750px) {
+    .sk-led-light-work {
+      padding: 4rem 0;
     }
 
-    .sk-llw-swiper-{{ section.id }} .llw-slide {
-      width: 90%;
-      aspect-ratio: 1 / 1.1;
+    .sk-led-light-work__grid {
+      display: none;
+    }
+
+    .sk-led-light-work__slider {
+      display: block;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .sk-led-light-work__heading {
+      font-size: 28px;
+    }
+    .sk-led-light-work__title {
+      font-size: 20px;
+    }
+    .sk-led-light-work__benefits {
+      font-size: 15px;
+    }
+    .sk-led-light-work__slider .swiper-slide {
+      padding: 0 4px;
     }
   }
 </style>
 
 <section class="sk-led-light-work section--full-bleed">
   <div class="page-width">
-    <div class="sk-led-light-work__container">
-      {% if section.settings.sk_led_light_work_heading != blank %}
-        <div class="sk-led-light-work__content sk-section-content">
-          <h2 class="sk-led-light-work__heading sk-section-heading sk-section-heading--h1">
-            {{ section.settings.sk_led_light_work_heading | escape }}
-          </h2>
-        </div>
-      {% endif %}
+    {% if section.settings.sk_led_light_work_heading != blank %}
+      <div class="sk-led-light-work__content sk-section-content">
+        <h2 class="sk-led-light-work__heading sk-section-heading sk-section-heading--h1">
+          {{ section.settings.sk_led_light_work_heading | escape }}
+        </h2>
+      </div>
+    {% endif %}
 
-      {%- comment -%} DESKTOP: original layout {%- endcomment -%}
-      {% if section.blocks.size > 0 %}
-        <div class="sk-led-light-work-images-container">
+    {% capture arrow_svg %}
+      {{ 'led-light-works-arrow.svg' | inline_asset_content }}
+    {% endcapture %}
+    <div class="sk-led-light-work__grid {% case section.blocks.size %}{% when 1 %}sk-led-light-work__grid--single{% when 2 %}sk-led-light-work__grid--two{% when 3 %}sk-led-light-work__grid--three{% endif %}">
+      {% for block in section.blocks %}
+        <div class="sk-led-light-work__step">
+          {% if block.settings.sk_wavelength_image != blank %}
+            {% assign wavelength_img = block.settings.sk_wavelength_image %}
+            <figure class="sk-led-light-work__image">
+              <img
+                src="{{ wavelength_img | image_url: width: 1000 }}"
+                alt="{{ wavelength_img.alt | escape }}"
+                loading="lazy"
+                decoding="async"
+                    width="430"
+                    height="400"
+              >
+            </figure>
+          {% endif %}
+          <h3 class="sk-led-light-work__title">{{ block.settings.sk_wavelength_heading | escape }}</h3>
+          <ul class="sk-led-light-work__benefits" role="list">
+            {%- assign items = block.settings.sk_wavelength_benefits | split: '\n' -%}
+            {%- for item in items -%}
+              {%- assign trimmed = item | strip -%}
+              {%- if trimmed != blank -%}
+                <li>{{ trimmed }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+        {% unless forloop.last %}
+          <div class="sk-led-light-work__arrow" aria-hidden="true">
+            {{ arrow_svg | replace: '<svg', '<svg aria-hidden="true" focusable="false" role="presentation"' }}
+          </div>
+        {% endunless %}
+      {% endfor %}
+    </div>
+
+    <div class="sk-led-light-work__slider sk-wavelengths-swiper-{{ section.id }}">
+      <div class="swiper llw-swiper-{{ section.id }}">
+        <div class="swiper-wrapper">
           {% for block in section.blocks %}
-            <div class="sk-led-light-work-image-item">
-              {% if block.settings.sk_led_light_work_img != blank %}
-                {% assign img = block.settings.sk_led_light_work_img %}
-                <img
-                  src="{{ img | image_url: width: 660 }}"
-                  alt="{{ img.alt | escape }}"
-                  loading="lazy"
-                  decoding="async"
-                  width="215"
-                  height="456"
-                >
-              {% endif %}
+            <div class="swiper-slide">
+              <div class="sk-led-light-work__step sk-led-light-work__step--slide">
+                {% if block.settings.sk_wavelength_image != blank %}
+                  {% assign wavelength_img = block.settings.sk_wavelength_image %}
+                  <figure class="sk-led-light-work__image">
+                    <img
+                      src="{{ wavelength_img | image_url: width: 1000 }}"
+                      alt="{{ wavelength_img.alt | escape }}"
+                      loading="lazy"
+                      decoding="async"
+                      width="430"
+                      height="400"
+                    >
+                  </figure>
+                {% endif %}
+                <h3 class="sk-led-light-work__title">{{ block.settings.sk_wavelength_heading | escape }}</h3>
+                <ul class="sk-led-light-work__benefits" role="list">
+                  {%- assign items = block.settings.sk_wavelength_benefits | split: '\n' -%}
+                  {%- for item in items -%}
+                    {%- assign trimmed = item | strip -%}
+                    {%- if trimmed != blank -%}
+                      <li>{{ trimmed }}</li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              </div>
             </div>
-            {% unless forloop.last %}
-              {% capture arrow %}{{ 'led-light-works-arrow.svg' | inline_asset_content }}{% endcapture %}
-              {{ arrow | replace: '<svg', '<svg aria-hidden="true" focusable="false" role="presentation"' }}
-            {% endunless %}
           {% endfor %}
         </div>
-      {% endif %}
-
-      {%- comment -%} MOBIL SWIPER {%- endcomment -%}
-      {% if section.blocks.size > 0 %}
-        <div class="sk-llw-swiper-{{ section.id }}">
-          <div class="swiper llw-swiper-{{ section.id }}">
-            <div class="swiper-wrapper">
-              {% for block in section.blocks %}
-                {% if block.settings.sk_led_light_work_img != blank %}
-                  {% assign img = block.settings.sk_led_light_work_img %}
-                  <div class="swiper-slide">
-                    <div class="llw-slide">
-                      <img
-                        src="{{ img | image_url: width: 660 }}"
-                        alt="{{ img.alt | escape }}"
-                        loading="lazy"
-                        decoding="async"
-                        width="320"
-                        height="320"
-                      >
-                    </div>
-                  </div>
-                {% endif %}
-              {% endfor %}
-            </div>
-            <div class="swiper-pagination"></div>
-          </div>
-        </div>
-      {% endif %}
+        <div class="swiper-pagination"></div>
+      </div>
     </div>
   </div>
 </section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    var container = document.querySelector('.llw-swiper-{{ section.id }}');
-    if (!container) return;
+    var sliderContainer = document.querySelector('.sk-wavelengths-swiper-{{ section.id }} .swiper');
+    if (!sliderContainer) return;
 
-    var mql = window.matchMedia('(max-width: 700px)');
+    var mql = window.matchMedia('(max-width: 750px)');
     var swiperInstance = null;
 
     function initOrDestroy() {
       if (mql.matches && !swiperInstance) {
-        swiperInstance = new Swiper(container, {
+        swiperInstance = new Swiper(sliderContainer, {
           slidesPerView: 1,
           spaceBetween: 24,
           centeredSlides: true,
           pagination: {
-            el: container.querySelector('.swiper-pagination'),
+            el: sliderContainer.querySelector('.swiper-pagination'),
             clickable: true,
           },
         });
@@ -223,14 +304,26 @@
   ],
   "blocks": [
     {
-      "type": "image",
-      "name": "Image",
-      "limit": 6,
+      "type": "wavelength",
+      "name": "Wavelength",
+      "limit": 4,
       "settings": [
         {
           "type": "image_picker",
-          "id": "sk_led_light_work_img",
+          "id": "sk_wavelength_image",
           "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "sk_wavelength_heading",
+          "label": "Heading",
+          "default": "630 nm Rødt Lys"
+        },
+        {
+          "type": "textarea",
+          "id": "sk_wavelength_benefits",
+          "label": "Benefits",
+          "default": "Stimulerer kollagen\nForbedrer glød\nFremmer redusert fine linjer"
         }
       ]
     }
@@ -238,9 +331,30 @@
   "presets": [
     {
       "name": "SK Led Light Work",
-      "blocks": [{ "type": "image" }, { "type": "image" }, { "type": "image" }]
+      "blocks": [
+        {
+          "type": "wavelength",
+          "settings": {
+            "sk_wavelength_heading": "630 nm Rødt Lys",
+            "sk_wavelength_benefits": "Stimulerer kollagen\nForbedrer glød\nFremmer redusert fine linjer"
+          }
+        },
+        {
+          "type": "wavelength",
+          "settings": {
+            "sk_wavelength_heading": "830 nm Nært infrarødt",
+            "sk_wavelength_benefits": "Øker næring til celler\nReduserer hevelse\nStøtter dypere penetrasjon"
+          }
+        },
+        {
+          "type": "wavelength",
+          "settings": {
+            "sk_wavelength_heading": "1072 nm Dyp infrarød",
+            "sk_wavelength_benefits": "Penetrerer dypere vev\nBidrar til avslapning\nStøtter cellefornyelse"
+          }
+        }
+      ]
     }
   ]
 }
 {% endschema %}
-
