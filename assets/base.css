@@ -2569,6 +2569,8 @@ input[type='checkbox'] {
   grid-column: 1 / -1;
   position: relative;
   overflow: visible;
+  padding-block: clamp(0.4rem, 1vw, 0.8rem);
+  min-height: clamp(50px, 6vw, 90px);
 }
 
 .sk-header__grid > .sk-header__nav {
@@ -4398,13 +4400,25 @@ div.okeReviews .oke-w-review-main {
     font-size: calc(var(--section-heading-h1) * 0.8) !important;
   }
 
-  header {
+  header:not(.sk-header) {
     display: flex !important;
     justify-content: space-between;
   }
 
-  header-drawer {
-    order: 1 !important;
+  header.sk-header {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  header.sk-header .sk-header__grid,
+  header.sk-header .sk-header__grid > .sk-header__brand {
+    padding-block: calc(var(--sk-mobile-header-extra, 0px) + 5px);
+  }
+
+  header.sk-header header-drawer {
+    order: 0 !important;
   }
 
   header.sk-header,
