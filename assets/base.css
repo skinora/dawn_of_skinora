@@ -2937,8 +2937,20 @@ input[type='checkbox'] {
 .header__icon .icon {
   height: 2rem;
   width: 2rem;
-  fill: none;
+  fill: currentColor;
   vertical-align: middle;
+  overflow: visible;
+}
+
+.header__icon--cart .icon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  height: 2.4rem;
+  width: 2.4rem;
 }
 
 .header__icon,
@@ -2962,6 +2974,10 @@ input[type='checkbox'] {
   header.sk-header .header__icon .icon {
     height: 1.6rem;
     width: 1.6rem;
+  }
+  header.sk-header .header__icon--cart .icon {
+    height: 1.75rem;
+    width: 1.75rem;
   }
 
   header.sk-header .header__icon,
@@ -4472,24 +4488,6 @@ div.okeReviews .oke-w-review-main {
   header.sk-header header-drawer,
   header.sk-header header-drawer summary {
     color: var(--color-brand) !important;
-  }
-
-  header.sk-header .header__icon .icon,
-  header.sk-header .header__icon .svg-wrapper svg,
-  header.sk-header .header__icon .svg-wrapper svg path,
-  header.sk-header .header__icon .svg-wrapper svg polygon,
-  header.sk-header .header__icon .svg-wrapper svg circle,
-  header.sk-header .header__icon .svg-wrapper svg polyline,
-  header.sk-header header-drawer summary .icon-hamburger-variants svg,
-  header.sk-header header-drawer summary .icon-hamburger-variants svg path,
-  header.sk-header header-drawer summary .icon-hamburger-variants svg circle,
-  header.sk-header header-drawer summary .icon-hamburger-variants svg polygon,
-  header.sk-header header-drawer summary .icon-hamburger-variants svg polyline,
-  header.sk-header .header__heading-logo-wrapper svg path,
-  header.sk-header .header__heading-logo-wrapper svg polygon,
-  header.sk-header .header__heading-logo-wrapper svg circle {
-    fill: var(--color-brand) !important;
-    stroke: var(--color-brand) !important;
   }
 
   .sk-header__grid {
