@@ -180,7 +180,6 @@
 
 .menu-drawer__utility-links {
   padding: 0;
-  background-color: rgba(var(--color-foreground), 0.03);
   position: relative;
 }
 
@@ -213,10 +212,6 @@
 .menu-drawer__utility-links .svg-wrapper svg {
   color: var(--color-brand);
   fill: var(--color-brand);
-}
-
-.menu-drawer__utility-links:has(.menu-drawer__localization) .menu-drawer__account {
-  margin: 0;
 }
 
 .menu-drawer__account account-icon > .svg-wrapper {
