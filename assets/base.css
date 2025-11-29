@@ -1355,6 +1355,11 @@ deferred-media {
   --alpha-button-border: 0.2;
 }
 
+.button--secondary {
+  --alpha-button-background: 0;
+  background-color: transparent;
+}
+
 .button,
 .shopify-challenge__button,
 .customer button {
