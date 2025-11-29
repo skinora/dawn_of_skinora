@@ -37,13 +37,11 @@
   height: 100vh;
 }
 
-.js details[open] > .menu-drawer,
-.js details[open] > .menu-drawer__submenu {
+.js details[open] > .menu-drawer {
   transition: transform var(--duration-default) ease, visibility var(--duration-default) ease;
 }
 
-.js details[open].menu-opening > .menu-drawer,
-details[open].menu-opening > .menu-drawer__submenu {
+.js details[open].menu-opening > .menu-drawer {
   transform: translateX(0);
   visibility: visible;
 }
@@ -103,18 +101,37 @@ details[open].menu-opening > .menu-drawer__submenu {
   padding: 3rem 0;
 }
 
-.menu-drawer__inner-submenu {
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+.menu-drawer__menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.js .menu-drawer__menu li {
+.menu-drawer__menu-item {
+  display: block;
+}
+
+.menu-drawer__submenu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-drawer__submenu-list .menu-drawer__menu-item {
+  padding-left: 4.5rem;
+  font-size: 1.6rem;
+}
+
+.menu-drawer__submenu-list li {
+  border-bottom: none;
+}
+
+.menu-drawer__menu > li {
   margin-bottom: 0;
   border-bottom: 1px solid var(--color-brand);
 }
 
-.menu-drawer__menu li:last-child {
+.menu-drawer__menu > li:last-child {
   border-bottom: none;
 }
 
@@ -122,10 +139,6 @@ details[open].menu-opening > .menu-drawer__submenu {
   padding: 1.1rem 3rem;
   text-decoration: none;
   font-size: 1.8rem;
-}
-
-.menu-drawer summary.menu-drawer__menu-item {
-  padding-right: 5.2rem;
 }
 
 .menu-drawer__menu-item--active,
@@ -143,30 +156,6 @@ details[open].menu-opening > .menu-drawer__submenu {
 
 .js .menu-drawer__menu-item .icon-caret {
   display: none;
-}
-
-.menu-drawer__menu-item > .svg-wrapper {
-  width: 15px;
-  position: absolute;
-  right: 3rem;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.js .menu-drawer__submenu {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  background-color: var(--color-brand);
-  z-index: 1;
-  transform: translateX(100%);
-  visibility: hidden;
-}
-
-.js .menu-drawer__submenu .menu-drawer__submenu {
-  overflow-y: auto;
 }
 
 .menu-drawer__close-button {
