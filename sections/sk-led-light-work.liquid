@@ -1,11 +1,11 @@
 <style>
   .sk-wavelengths {
-    padding: 5rem 0;
+    padding: 3rem 0;
   }
 
   .sk-wavelengths__content {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
   }
 
   .sk-wavelengths__heading {
@@ -18,41 +18,119 @@
 
   .sk-wavelengths__grid {
     display: grid;
-    gap: 48px;
+    gap: clamp(24px, 2vw, 48px);
     align-items: start;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(calc(100vw / var(--sk-wavelength-block-count, 4)), 1fr));
+    justify-content: stretch;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    width: 100%;
   }
 
   .sk-wavelength {
     background-color: #fff;
-    border-radius: 16px;
-    padding: 1.75rem;
-    box-shadow: 0 18px 45px rgba(16, 10, 37, 0.08);
+    border-radius: 20px;
+    padding: 0;
+    box-shadow: 0 20px 40px rgba(7, 15, 20, 0.08);
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0;
     animation: skFade 0.8s ease both;
-    width: calc(100vw / var(--sk-wavelength-block-count, 4));
+    width: 100%;
     max-width: 100%;
     box-sizing: border-box;
     position: relative;
   }
 
-  .sk-wavelength__image {
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #f7f7f7;
-    display: block;
+  .sk-wavelength__visual {
+    border-radius: 20px;
+    background: #fff;
+    padding: 1.5rem 1.25rem;
   }
 
-  .sk-wavelength__image img {
+  .sk-wavelength__diagram {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e3e5e5;
+    position: relative;
+    padding: 1.5rem 1.25rem 2.5rem;
+    height: 220px;
+    overflow: hidden;
+  }
+
+  .sk-wavelength__beams {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 180px;
+    width: 65%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .sk-wavelength__beam {
+    flex: 1;
+    border-radius: 999px;
+    position: relative;
+  }
+
+  .sk-wavelength__beam span {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #30273e;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+  }
+
+  .sk-wavelength__beam--red {
+    background: rgba(224, 50, 69, 0.25);
+    border: 1px solid rgba(224, 50, 69, 0.4);
+    min-height: 120px;
+  }
+
+  .sk-wavelength__beam--near-infrared {
+    background: rgba(200, 96, 187, 0.25);
+    border: 1px solid rgba(200, 96, 187, 0.4);
+    min-height: 140px;
+  }
+
+  .sk-wavelength__beam--deep {
+    background: rgba(32, 78, 152, 0.25);
+    border: 1px solid rgba(32, 78, 152, 0.4);
+    min-height: 170px;
+  }
+
+  .sk-wavelength__layers {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sk-wavelength__layer {
+    flex: 1;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #2f2f2f;
+    background: rgba(255, 170, 140, 0.2);
+    border-bottom: 1px solid rgba(47, 47, 47, 0.08);
+  }
+
+  .sk-wavelength__layer:nth-child(2) {
+    background: rgba(255, 221, 194, 0.3);
+  }
+
+  .sk-wavelength__layer:nth-child(3) {
+    background: rgba(233, 241, 243, 0.35);
   }
 
   .sk-wavelength__title {
@@ -61,6 +139,25 @@
     margin: 0;
     line-height: 1.3;
     font-weight: 600;
+    text-align: center;
+  }
+
+  .sk-wavelength__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: stretch;
+    margin-top: 1.25rem;
+    padding: 0 1.75rem 1.75rem;
+    text-align: left;
+  }
+
+  .sk-wavelength__subtitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2f2f2f;
+    text-align: left;
+    margin: 0;
   }
 
   .sk-wavelength__benefits {
@@ -72,22 +169,35 @@
     line-height: 1.55;
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
+    gap: 0.85rem;
   }
 
   .sk-wavelength__benefits li {
     position: relative;
-    padding-left: 1.4rem;
+    padding-left: 2.6rem;
   }
 
   .sk-wavelength__benefits li::before {
-    content: '\2022';
+    content: '';
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    border: 1px solid #2f2f2f;
     position: absolute;
     left: 0;
-    top: 0;
-    color: var(--color-brand, #f05d23);
-    font-size: 1.25rem;
-    line-height: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+  }
+
+  .sk-wavelength__benefits li::after {
+    content: '✔︎';
+    color: #2f2f2f;
+    font-size: 12px;
+    position: absolute;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .sk-wavelengths__arrow {
@@ -99,6 +209,25 @@
 
   .sk-wavelengths__slider {
     display: none;
+    position: relative;
+  }
+
+  .sk-wavelengths__dot-row {
+    margin-top: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .sk-wavelengths__dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #c4c4c4;
+  }
+
+  .sk-wavelengths__dot--active {
+    background: #30273e;
   }
 
   .sk-wavelengths--animated .sk-wavelength {
@@ -119,7 +248,7 @@
 
   @media (max-width: 750px) {
     .sk-wavelengths {
-      padding: 4rem 0;
+      padding: 4rem 0 3rem;
     }
 
     .sk-wavelengths__grid {
@@ -128,39 +257,49 @@
 
     .sk-wavelengths__slider {
       display: block;
+      padding: 0 12px 24px;
+      max-height: 80vh;
+    }
+
+    .sk-wavelengths__heading {
+      font-size: clamp(36px, 4.2vw, 44px);
+      letter-spacing: 0.6px;
+      line-height: 1.18;
+      margin-bottom: 0.9rem;
     }
 
     .sk-wavelengths__slider .swiper-slide {
       padding: 0;
     }
 
-    .sk-wavelengths__slider .sk-wavelength,
-    .sk-wavelengths__slider .sk-wavelength--slide {
-      background: transparent;
+    .sk-wavelengths__slider .sk-wavelength {
       box-shadow: none;
+      border-radius: 16px;
       padding: 0;
-      width: 100%;
-      max-width: 100%;
     }
 
-    .sk-wavelengths__slider .sk-wavelength__image {
-      border-radius: 0;
-      background: none;
-      width: 100%;
-      height: auto;
-      aspect-ratio: auto;
-      margin-bottom: 0;
+    .sk-wavelengths__slider .sk-wavelength__visual {
+      padding: 1.25rem 1rem 1rem;
     }
 
-    .sk-wavelengths__slider .sk-wavelength__image img {
-      width: 100%;
-      height: auto;
+    .sk-wavelengths__slider .sk-wavelength__diagram {
+      height: 200px;
     }
 
-    .sk-wavelengths__slider .sk-wavelength__title,
-    .sk-wavelengths__slider .sk-wavelength__benefits {
-      background: transparent;
-      padding: 0 1rem 1.5rem;
+    .sk-wavelengths__slider .sk-wavelength__body {
+      padding: 0 1.5rem 1.5rem;
+      gap: 1rem;
+      margin-top: 0;
+    }
+
+    .sk-wavelengths__slider .sk-wavelength__dot-row {
+      margin-top: 12px;
+    }
+
+    .sk-wavelengths__slider .sk-wavelengths__dot {
+      width: 12px;
+      height: 12px;
+      background: #c4c4c4;
     }
   }
 
@@ -168,9 +307,11 @@
     .sk-wavelengths__heading {
       font-size: 28px;
     }
+
     .sk-wavelength__title {
       font-size: 20px;
     }
+
     .sk-wavelength__benefits {
       font-size: 15px;
     }
@@ -200,29 +341,38 @@
       <div class="sk-wavelengths__grid" style="--sk-wavelength-block-count: {{ grid_block_count }};">
         {% for block in visible_blocks %}
           <div class="sk-wavelength">
-            {% if block.settings.sk_wavelength_image != blank %}
-              {% assign wavelength_img = block.settings.sk_wavelength_image %}
-              <figure class="sk-wavelength__image">
-                <img
-                  src="{{ wavelength_img | image_url: width: 1000 }}"
-                  alt="{{ wavelength_img.alt | escape }}"
-                  loading="lazy"
-                  decoding="async"
-                  width="340"
-                  height="425"
-                >
-              </figure>
-            {% endif %}
-            <h3 class="sk-wavelength__title">{{ block.settings.sk_wavelength_heading | escape }}</h3>
-            <ul class="sk-wavelength__benefits" role="list">
-              {%- assign items = block.settings.sk_wavelength_benefits | split: '\n' -%}
-              {%- for item in items -%}
-                {%- assign trimmed = item | strip -%}
-                {%- if trimmed != blank -%}
-                  <li>{{ trimmed }}</li>
-                {%- endif -%}
-              {%- endfor -%}
-            </ul>
+            <div class="sk-wavelength__visual">
+              <div class="sk-wavelength__diagram">
+                <div class="sk-wavelength__beams">
+                  <div class="sk-wavelength__beam sk-wavelength__beam--red">
+                    <span>630 nm Rødt Lys</span>
+                  </div>
+                  <div class="sk-wavelength__beam sk-wavelength__beam--near-infrared">
+                    <span>830 nm NIR-Lys</span>
+                  </div>
+                  <div class="sk-wavelength__beam sk-wavelength__beam--deep">
+                    <span>1072 nm Dypt NIR-Lys</span>
+                  </div>
+                </div>
+                <div class="sk-wavelength__layers">
+                  <span class="sk-wavelength__layer">Epidermis</span>
+                  <span class="sk-wavelength__layer">Dermis</span>
+                  <span class="sk-wavelength__layer">Subcutis</span>
+                </div>
+              </div>
+            </div>
+            <div class="sk-wavelength__body">
+              <h3 class="sk-wavelength__title">{{ block.settings.sk_wavelength_heading | escape }}</h3>
+              <ul class="sk-wavelength__benefits" role="list">
+                {%- assign items = block.settings.sk_wavelength_benefits | split: '\n' -%}
+                {%- for item in items -%}
+                  {%- assign trimmed = item | strip -%}
+                  {%- if trimmed != blank -%}
+                    <li>{{ trimmed }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            </div>
           </div>
           {% unless forloop.last %}
             <div class="sk-wavelengths__arrow" aria-hidden="true">
@@ -240,34 +390,47 @@
             {% for block in visible_blocks %}
               <div class="swiper-slide">
                 <div class="sk-wavelength sk-wavelength--slide">
-                  {% if block.settings.sk_wavelength_image != blank %}
-                    {% assign wavelength_img = block.settings.sk_wavelength_image %}
-                    <figure class="sk-wavelength__image">
-                      <img
-                        src="{{ wavelength_img | image_url: width: 1000 }}"
-                        alt="{{ wavelength_img.alt | escape }}"
-                        loading="lazy"
-                        decoding="async"
-                        width="340"
-                        height="425"
-                      >
-                    </figure>
-                  {% endif %}
-                  <h3 class="sk-wavelength__title">{{ block.settings.sk_wavelength_heading | escape }}</h3>
-                  <ul class="sk-wavelength__benefits" role="list">
-                    {%- assign items = block.settings.sk_wavelength_benefits | split: '\n' -%}
-                    {%- for item in items -%}
-                      {%- assign trimmed = item | strip -%}
-                      {%- if trimmed != blank -%}
-                        <li>{{ trimmed }}</li>
-                      {%- endif -%}
-                    {%- endfor -%}
-                  </ul>
+                  <div class="sk-wavelength__visual">
+                    <div class="sk-wavelength__diagram">
+                      <div class="sk-wavelength__beams">
+                        <div class="sk-wavelength__beam sk-wavelength__beam--red">
+                          <span>630 nm Rødt Lys</span>
+                        </div>
+                        <div class="sk-wavelength__beam sk-wavelength__beam--near-infrared">
+                          <span>830 nm NIR-Lys</span>
+                        </div>
+                        <div class="sk-wavelength__beam sk-wavelength__beam--deep">
+                          <span>1072 nm Dypt NIR-Lys</span>
+                        </div>
+                      </div>
+                      <div class="sk-wavelength__layers">
+                        <span class="sk-wavelength__layer">Epidermis</span>
+                        <span class="sk-wavelength__layer">Dermis</span>
+                        <span class="sk-wavelength__layer">Subcutis</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sk-wavelength__body">
+                    <h3 class="sk-wavelength__title">{{ block.settings.sk_wavelength_heading | escape }}</h3>
+                    <ul class="sk-wavelength__benefits" role="list">
+                      {%- assign items = block.settings.sk_wavelength_benefits | split: '\n' -%}
+                      {%- for item in items -%}
+                        {%- assign trimmed = item | strip -%}
+                        {%- if trimmed != blank -%}
+                          <li>{{ trimmed }}</li>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </ul>
+                  </div>
                 </div>
               </div>
             {% endfor %}
           </div>
           <div class="swiper-pagination"></div>
+        </div>
+        <div class="sk-wavelengths__dot-row" aria-hidden="true">
+          <span class="sk-wavelengths__dot sk-wavelengths__dot--active"></span>
+          <span class="sk-wavelengths__dot"></span>
         </div>
       </div>
     {% endif %}
