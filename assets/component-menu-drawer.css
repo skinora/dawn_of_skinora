@@ -14,41 +14,6 @@
   position: initial;
 }
 
-.js menu-drawer > details > summary::before,
-.js menu-drawer > details[open]:not(.menu-opening) > summary::before {
-  content: '';
-  position: fixed;
-  cursor: default;
-  inset: 0;
-  top: 0;
-  bottom: 0;
-  height: 100vh;
-  width: 100%;
-  background: rgba(var(--color-foreground), 0.5);
-  opacity: 0;
-  visibility: hidden;
-  z-index: 10000;
-  transition: opacity 0s, visibility 0s;
-}
-
-menu-drawer > details[open] > summary::before {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity var(--duration-default) ease, visibility var(--duration-default) ease;
-}
-
-.js menu-drawer > details.menu-opening > summary::before {
-  opacity: 1;
-  visibility: visible;
-}
-
-.js menu-drawer > details:not(.menu-opening) > summary::before,
-.js menu-drawer > details:not([open]) > summary::before {
-  display: none;
-  opacity: 0;
-  visibility: hidden;
-}
-
 .menu-drawer {
   position: fixed;
   transform: translateX(-100%);
