@@ -129,6 +129,39 @@
     .sk-wavelengths__slider {
       display: block;
     }
+
+    .sk-wavelengths__slider .swiper-slide {
+      padding: 0;
+    }
+
+    .sk-wavelengths__slider .sk-wavelength,
+    .sk-wavelengths__slider .sk-wavelength--slide {
+      background: transparent;
+      box-shadow: none;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .sk-wavelengths__slider .sk-wavelength__image {
+      border-radius: 0;
+      background: none;
+      width: 100%;
+      height: auto;
+      aspect-ratio: auto;
+      margin-bottom: 0;
+    }
+
+    .sk-wavelengths__slider .sk-wavelength__image img {
+      width: 100%;
+      height: auto;
+    }
+
+    .sk-wavelengths__slider .sk-wavelength__title,
+    .sk-wavelengths__slider .sk-wavelength__benefits {
+      background: transparent;
+      padding: 0 1rem 1.5rem;
+    }
   }
 
   @media (max-width: 500px) {
@@ -157,7 +190,7 @@
     {% capture arrow_svg %}
       {{ 'led-light-works-arrow.svg' | inline_asset_content }}
     {% endcapture %}
-    {% assign visible_blocks = section.blocks | where: 'settings.sk_wavelength_visible', true %}
+    {% assign visible_blocks = section.blocks | where_exp: 'block', 'block.settings.sk_wavelength_visible != false' %}
     {% assign visible_blocks_count = visible_blocks.size %}
     {% assign grid_block_count = visible_blocks_count %}
     {% if grid_block_count == 0 %}
