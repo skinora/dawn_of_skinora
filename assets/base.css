@@ -4328,15 +4328,16 @@ div.okeReviews .oke-w-review-main {
 }
 
 .menu-drawer__utility-links .svg-wrapper svg {
-  color: var(--color-white, #ffffff);
+  color: var(--color-brand);
+  fill: var(--color-brand);
 }
 
 .menu-drawer__close-button {
-  color: var(--color-white, #ffffff) !important;
+  color: var(--color-brand) !important;
 }
 
 .menu-drawer__close-button:focus {
-  color: var(--color-white, #ffffff) !important;
+  color: var(--color-brand) !important;
 }
 
 .icon-hamburger-variants .icon-close {

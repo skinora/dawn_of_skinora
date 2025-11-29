@@ -25,7 +25,7 @@
   width: min(66.666vw, 100%);
   height: 100vh;
   padding: 0;
-  background-color: var(--color-brand);
+  background-color: var(--color-white, #ffffff);
   overflow-x: hidden;
   filter: drop-shadow(
     var(--drawer-shadow-horizontal-offset) var(--drawer-shadow-vertical-offset) var(--drawer-shadow-blur-radius)
@@ -85,7 +85,7 @@ details[open].menu-opening > .menu-drawer__submenu {
   border: none;
   background: transparent;
   cursor: pointer;
-  color: rgb(var(--color-foreground));
+  color: var(--color-brand);
   font-size: 0;
   display: flex;
   justify-content: flex-end;
@@ -95,6 +95,8 @@ details[open].menu-opening > .menu-drawer__submenu {
   width: 1.6rem;
   height: 1.6rem;
   display: inline-flex;
+  color: var(--color-brand);
+  fill: var(--color-brand);
 }
 
 .menu-drawer__navigation {
@@ -108,7 +110,12 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 
 .js .menu-drawer__menu li {
-  margin-bottom: 0.2rem;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--color-brand);
+}
+
+.menu-drawer__menu li:last-child {
+  border-bottom: none;
 }
 
 .menu-drawer__menu-item {
@@ -212,6 +219,11 @@ details[open].menu-opening > .menu-drawer__submenu {
   font-size: 1.4rem;
   color: rgb(var(--color-foreground));
   margin-bottom: 0;
+}
+
+.menu-drawer__utility-links .svg-wrapper svg {
+  color: var(--color-brand);
+  fill: var(--color-brand);
 }
 
 .menu-drawer__utility-links:has(.menu-drawer__localization) .menu-drawer__account {
