@@ -1,24 +1,32 @@
 <style>
   .sk-features__container {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: start;
-    gap: 20px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: clamp(16px, 2vw, 32px);
+    justify-items: center;
+    align-content: center;
+    width: min(1200px, 100%);
+    margin: 0 auto;
   }
   .sk-features__item {
     display: flex;
     flex-flow: column;
     align-items: center;
-    flex: 0 0 270px;
+    width: 100%;
+    max-width: 280px;
   }
   .sk-features__title {
     text-align: center;
-    margin-top: 25px;
+    margin: 0;
+    padding-top: 1rem;
     color: #30273e;
-    font-size: var(--sk-font-size-large);
-    line-height: 25px;
+    font-size: clamp(1.2rem, 3.2vw, 1.6rem);
+    line-height: 28px;
     font-weight: 600;
+    max-width: 220px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: normal;
   }
   .sk-features {
     padding: 12px 0;
@@ -39,29 +47,52 @@
     height: auto;
   }
 
+  @media only screen and (max-width: 900px) {
+    .sk-features__container {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    .sk-features__container {
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: clamp(12px, 3vw, 20px);
+    }
+  }
+
   @media only screen and (max-width: 700px) {
     .sk-features {
       padding: 5rem 0;
     }
-    .sk-features__item {
-      flex: 0 0 220px;
-    }
-  }
-
-  @media only screen and (max-width: 435px) {
-    .sk-features__item {
-      flex: 0 0 100%;
-      margin-bottom: 50px;
-    }
-
     .sk-features__title {
       font-size: var(--sk-font-size-medium);
       line-height: 24px;
     }
+  }
 
+  @media only screen and (max-width: 600px) {
+    .sk-features__container {
+      grid-template-columns: 1fr;
+    }
+    .sk-features__item {
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 24px;
+    }
     .sk-features__icon {
-      width: 97px;
-      height: 97px;
+      width: 60px;
+      height: 60px;
+    }
+    .sk-features__title {
+      font-size: clamp(1.1rem, 4vw, 1.35rem);
+      line-height: 30px;
+      letter-spacing: 0.08em;
+      text-align: left;
+      flex: 1;
+      white-space: normal;
+      padding-top: 0;
     }
   }
 </style>
@@ -121,5 +152,3 @@
   ]
 }
 {% endschema %}
-
-
