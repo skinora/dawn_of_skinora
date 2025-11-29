@@ -2770,6 +2770,10 @@ input[type='checkbox'] {
   .sk-header__grid > .header__icons {
     width: 100%;
   }
+
+  .sk-header__grid > .sk-header__brand {
+    pointer-events: auto;
+  }
 }
 
 .header *[tabindex='-1']:focus {
@@ -4536,6 +4540,16 @@ div.okeReviews .oke-w-review-main {
     justify-content: center;
     pointer-events: none;
     min-width: 0 !important;
+  }
+  header.sk-header .sk-header__brand .header__heading-link {
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 1;
+  }
+  @media screen and (min-width: 990px) {
+    header.sk-header .sk-header__brand {
+      pointer-events: auto !important;
+    }
   }
 
   header.sk-header .header__search {
