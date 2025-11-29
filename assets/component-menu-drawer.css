@@ -204,6 +204,11 @@
 .menu-drawer__utility-links {
   padding: 0;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
 }
 
 .header--has-social .menu-drawer__utility-links {
@@ -237,6 +242,13 @@
   fill: var(--color-brand);
 }
 
+.menu-drawer__login-link {
+  display: inline-flex;
+  justify-content: center;
+  width: 100%;
+  padding: 1.1rem 3rem;
+}
+
 .menu-drawer__account account-icon > .svg-wrapper {
   height: 2rem;
   width: 2rem;
@@ -254,8 +266,11 @@
 }
 
 .menu-drawer .list-social {
-  justify-content: flex-start;
-  margin-left: -1.25rem;
+  justify-content: center;
+  margin-left: 0;
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
 }
 
 .menu-drawer .list-social:empty {
