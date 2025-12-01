@@ -3,6 +3,12 @@
   padding: 40px 0;
 }
 
+.sk-explore-blogs-button__heading {
+  text-align: center;
+  margin: 0 0 24px;
+  color: var(--color-brand, #30273e);
+}
+
 .sk-explore-blogs-button__wrapper {
   display: flex;
   justify-content: center;
@@ -33,5 +39,3 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(var(--color-brand-rgb), 0.3);
 }
-
-

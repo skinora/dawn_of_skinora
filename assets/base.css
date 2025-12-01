@@ -5032,7 +5032,7 @@ div.okeReviews .oke-w-review-main {
     font-size: var(--sk-font-size-medium) !important;
   }
 
-  .sk-radiance-product__title h1 {
+  .sk-radiance-product__title .sk-section-heading {
     margin: 6px 0 !important;
   }
 

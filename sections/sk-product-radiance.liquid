@@ -12,6 +12,11 @@
     flex-wrap: wrap;
   }
 
+  .sk-product-radiance__heading {
+    margin: 0 0 32px;
+    color: #30273E;
+  }
+
   .sk-product-radiance-{{ section.id }} .sk-radiance__image {
     flex: 0 0 600px;
   }
@@ -124,6 +129,11 @@
 {%- if product.metafields.custom.radiance_content != blank or product.metafields.custom.radiance_image != blank -%}
   <section class="sk-product-radiance-{{ section.id }}">
     <div class="page-width">
+      {% if section.settings.heading != blank %}
+        <h2 class="sk-section-heading sk-section-heading--h2 sk-product-radiance__heading">
+          {{ section.settings.heading | escape }}
+        </h2>
+      {% endif %}
       <div class="sk-image-content{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <div class="sk-radiance__container">
           <!-- Image Section -->
@@ -179,6 +189,11 @@
       "content": "Product-Specific Control"
     },
     {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading"
+    },
+    {
       "type": "paragraph",
       "content": "This section displays content from product metafields. Add these 2 metafields:"
     },
@@ -213,5 +228,3 @@
   ]
 }
 {% endschema %}
-
-

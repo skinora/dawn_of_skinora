@@ -64,8 +64,6 @@
 
   /* --- Title --- */
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__title {
-    font-size: 38px;
-    font-weight: 600;
     margin-bottom: 2.6rem;
     letter-spacing: -0.4px;
     color: #30273E;
@@ -216,14 +214,15 @@
   }
 </style>
 
-
 {%- if product.metafields.custom.faq_item.value != blank -%}
   <section class="sk-faq-accordion-{{ section.id }}">
     <div class="page-width">
       <div class="sk-faq-accordion__container">
         <div class="sk-faq-accordion__content">
           {% if section.settings.title != blank %}
-            <h2 class="sk-faq-accordion__title">{{ section.settings.title }}</h2>
+            <h2 class="sk-section-heading sk-section-heading--h1 sk-faq-accordion__title">
+              {{ section.settings.title | escape }}
+            </h2>
           {% endif %}
 
           <div class="sk-faq-accordion__questions">
@@ -349,9 +348,3 @@
   ]
 }
 {% endschema %}
-
-
-
-
-
-

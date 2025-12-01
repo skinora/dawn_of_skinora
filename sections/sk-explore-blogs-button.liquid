@@ -9,6 +9,11 @@
 
 <div class="sk-explore-blogs-button section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="sk-section-heading sk-section-heading--h2 sk-explore-blogs-button__heading">
+        {{ section.settings.heading | escape }}
+      </h2>
+    {%- endif -%}
     <div class="sk-explore-blogs-button__wrapper">
       {%- if section.settings.button_label != blank -%}
         <div>
@@ -27,6 +32,11 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading"
+    },
     {
       "type": "text",
       "id": "button_label",

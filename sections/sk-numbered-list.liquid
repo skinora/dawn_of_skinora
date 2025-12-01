@@ -9,6 +9,11 @@
 
 <div class="sk-numbered-list section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="sk-section-heading sk-section-heading--h2 sk-numbered-list__heading">
+        {{ section.settings.heading | escape }}
+      </h2>
+    {%- endif -%}
     <div class="sk-numbered-list__wrapper">
       <div class="sk-numbered-list__content-section">
         {%- for block in section.blocks -%}
@@ -59,6 +64,11 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading"
+    },
     {
       "type": "image_picker",
       "id": "featured_image",

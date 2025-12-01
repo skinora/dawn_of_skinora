@@ -1,11 +1,11 @@
 {{ 'section-sk-customer-service.css' | asset_url | stylesheet_tag }}
 
 <div class="sk-customer-service page-width py-10">
-  <h1 class="sk-customer-service__title">Kundeservice</h1>
+  <h2 class="sk-section-heading sk-section-heading--h1 sk-customer-service__heading">Kundeservice</h2>
 
   <div class="sk-customer-service__grid">
     <div class="sk-customer-service__info">
-      <h2>Kontakt oss</h2>
+      <h3 class="sk-section-heading sk-section-heading--h3 sk-customer-service__card-heading">Kontakt oss</h3>
       <p>Har du spørsmål om produkter, bestilling eller levering? Vi hjelper deg gjerne.</p>
 
       <ul class="sk-customer-service__details">
@@ -16,7 +16,7 @@
     </div>
 
     <div class="sk-customer-service__form">
-      <h2>Send oss en melding</h2>
+      <h3 class="sk-section-heading sk-section-heading--h3 sk-customer-service__card-heading">Send oss en melding</h3>
 
       {% form 'contact', id: 'contact_form', class: 'contact-form' %}
         {%- if form.posted_successfully? -%}
@@ -27,7 +27,7 @@
             Fjern kommentaren under og sett riktig URL (f.eks. /pages/takk)
           {%- endcomment -%}
           {%- comment -%}
-          <script>window.location='/pages/takk';</script>
+            <script>window.location='/pages/takk';</script>
           {%- endcomment -%}
 
         {%- elsif form.errors -%}
@@ -43,17 +43,30 @@
         {%- comment -%}
           Honeypot (anti-spam). Skjult for brukere, synlig for roboter.
         {%- endcomment -%}
-        <input type="text" name="contact[website]" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;padding:0;border:0;">
+        <input
+          type="text"
+          name="contact[website]"
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+          style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;padding:0;border:0;"
+        >
 
         <label for="ContactFormName">Navn</label>
         <input type="text" id="ContactFormName" name="contact[name]" autocomplete="name" required>
 
         <label for="ContactFormEmail">E-post</label>
-        <input type="email" id="ContactFormEmail" name="contact[email]"  autocomplete="email" required>
+        <input type="email" id="ContactFormEmail" name="contact[email]" autocomplete="email" required>
 
         <label for="ContactFormOrder">Ordrenummer (valgfritt)</label>
-        <input type="text" id="ContactFormOrder" name="contact[order_number]"  inputmode="numeric" pattern="[0-9#\- ]*">
-        <textarea id="ContactFormMessage" name="contact[body]" rows="6" placeholder="Hva kan vi hjelpe deg med?" required></textarea>
+        <input type="text" id="ContactFormOrder" name="contact[order_number]" inputmode="numeric" pattern="[0-9#\- ]*">
+        <textarea
+          id="ContactFormMessage"
+          name="contact[body]"
+          rows="6"
+          placeholder="Hva kan vi hjelpe deg med?"
+          required
+        ></textarea>
 
         <button type="submit" class="sk-customer-service__button">Send melding</button>
       {% endform %}

@@ -15,6 +15,11 @@
     width: 100%;
     max-width: 280px;
   }
+  .sk-features__heading {
+    text-align: center;
+    margin: 0 0 clamp(16px, 3vw, 28px);
+    color: #30273e;
+  }
   .sk-features__title {
     text-align: center;
     margin: 0;
@@ -99,6 +104,11 @@
 
 <section class="sk-features">
   <div class="page-width">
+    {% if section.settings.heading != blank %}
+      <h2 class="sk-section-heading sk-section-heading--h2 sk-features__heading">
+        {{ section.settings.heading | escape }}
+      </h2>
+    {% endif %}
     <div class="sk-features__container">
       {% for block in section.blocks %}
         <div class="sk-features__item">
@@ -118,6 +128,11 @@
 {
   "name": "SK Features",
   "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading"
+    },
     {
       "type": "color",
       "id": "sk_features_bgColor",

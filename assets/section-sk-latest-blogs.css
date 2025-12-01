@@ -9,12 +9,8 @@
 }
 
 .sk-latest-blogs__heading {
-  font-size: var(--section-heading-h1);
-  line-height: var(--section-heading-h1-line);
-  font-weight: 600;
-  color: var(--color-brand, #30273e);
-  margin-bottom: 20px;
-  margin-top: 0;
+  margin: 0 0 20px;
+  color: inherit;
 }
 
 .sk-latest-blogs__description {

@@ -26,13 +26,15 @@
   padding-block: clamp(28px, 5vw, 56px);
 }
 
-/* Title */
-.sk-customer-service__title {
-  font-size: clamp(28px, 4vw, 42px);
-  line-height: 1.1;
-  color: var(--sk-color-heading);
-  letter-spacing: 0.3px;
+/* Headings */
+.sk-customer-service__heading {
   margin: 0 0 clamp(12px, 1.6vw, 16px);
+  color: var(--sk-color-heading);
+}
+
+.sk-customer-service__card-heading {
+  margin: 0 0 10px;
+  color: var(--sk-color-heading);
 }
 
 /* Grid */
@@ -55,14 +57,6 @@
   border-radius: 0;
   padding: clamp(18px, 2.4vw, 28px);
   box-shadow: 0 8px 22px var(--sk-color-card-shadow);
-}
-
-/* Headings inside cards */
-.sk-customer-service__info h2,
-.sk-customer-service__form h2 {
-  font-size: clamp(18px, 2.2vw, 22px);
-  color: var(--sk-color-heading);
-  margin: 0 0 10px;
 }
 
 /* Info list */

@@ -5,12 +5,9 @@
   }
 
   .sk-wavelengths__heading {
-    font-size: clamp(32px, 3vw, 46px);
-    font-weight: 700;
     text-align: center;
     margin-bottom: 3rem;
-    color: #30273e;
-    line-height: 1.1;
+    color: inherit;
   }
 
   /* === DESKTOP GRID === */
@@ -120,7 +117,7 @@
 <section class="sk-wavelengths section--full-bleed">
   <div class="page-width">
     {% if section.settings.sk_led_light_work_heading != blank %}
-      <h2 class="sk-wavelengths__heading">
+      <h2 class="sk-wavelengths__heading sk-section-heading sk-section-heading--h1">
         {{ section.settings.sk_led_light_work_heading }}
       </h2>
     {% endif %}

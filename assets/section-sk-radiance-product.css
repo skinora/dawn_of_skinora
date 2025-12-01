@@ -314,7 +314,7 @@
   font-weight: 700;
   color: var(--color-brand);
 }
-.sk-radiance-product__title h1 {
+.sk-radiance-product__title .sk-section-heading {
   font-size: calc(var(--sk-font-size-2xl) * 1.0667);
   font-weight: 600;
   margin: 0 0 8px 0;

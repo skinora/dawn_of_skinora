@@ -10,6 +10,12 @@
   .sk-promotion-logos {
     margin: 0 1rem;
   }
+
+  .sk-promotion-logos__heading {
+    text-align: center;
+    margin: 0 0 24px;
+    color: #30273E;
+  }
 </style>
 
 <style>
@@ -101,6 +107,11 @@
 </style>
 
 <section class="sw-publication-{{ section.id }}">
+  {% if section.settings.heading != blank %}
+    <h2 class="sk-section-heading sk-section-heading--h2 sk-promotion-logos__heading">
+      {{ section.settings.heading | escape }}
+    </h2>
+  {% endif %}
   <div class="sw-publication__scroll-parent">
     <div class="sw-publication__scroll-element primary">
       {% for block in section.blocks %}
@@ -132,6 +143,11 @@
 {
   "name": "SK Promotion",
   "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading"
+    },
     {
       "type": "color",
       "id": "sk_promotion_bgColor",
