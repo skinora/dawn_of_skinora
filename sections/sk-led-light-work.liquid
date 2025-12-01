@@ -202,7 +202,8 @@
   document.addEventListener('DOMContentLoaded', function () {
     var mql = window.matchMedia('(max-width: 750px)');
     var swiperInstance = null;
-    var container = document.querySelector('.llw-swiper-{{ section.id }}');
+
+    var container = document.querySelector('.sk-wavelengths-swiper-{{ section.id }} .swiper');
 
     function setup() {
       if (mql.matches && !swiperInstance) {
