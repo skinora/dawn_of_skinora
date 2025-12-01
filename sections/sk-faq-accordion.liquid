@@ -90,30 +90,38 @@
   }
 
   .sk-faq-accordion__icon {
+    --sk-faq-icon-size: 34px;
     flex-shrink: 0;
-    width: 24px;
-    height: 24px;
-    border: 2px solid #ffffff;
-    border-radius: 50%;
-    display: flex;
+    width: var(--sk-faq-icon-size);
+    height: var(--sk-faq-icon-size);
+    min-width: var(--sk-faq-icon-size);
+    min-height: var(--sk-faq-icon-size);
+    display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
     position: relative;
-    font-size: var(--sk-font-size-medium);
-    font-weight: bold;
+    margin-top: 6px;
+    pointer-events: none;
+    font-size: calc(var(--sk-faq-icon-size) * 0.8);
+    font-weight: 400;
+    line-height: 1;
     color: #ffffff;
-    display: flex !important;
-    margin-top: 13px;
   }
 
   .sk-faq-accordion__icon::before {
     content: '+';
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
   }
 
   .sk-faq-accordion__button[aria-expanded='true'] .sk-faq-accordion__icon::before {
     content: '−';
+  }
+
+  .sk-faq-accordion__icon-placeholder {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    display: inline-block;
   }
 
   .sk-faq-accordion__collapse {
@@ -237,7 +245,9 @@
                         aria-controls="collapse-{{ block.id }}-{{ section.id }}"
                       >
                         <span class="sk-faq-accordion__question">{{ block.settings.question }}</span>
-                        <div class="sk-faq-accordion__icon"></div>
+                        <div class="sk-faq-accordion__icon" aria-hidden="true">
+                          <span class="sk-faq-accordion__icon-placeholder"></span>
+                        </div>
                       </button>
                     </h3>
                     <div
@@ -405,9 +415,3 @@
   ]
 }
 {% endschema %}
-
-
-
-
-
-
