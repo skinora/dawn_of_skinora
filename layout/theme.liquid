@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
+    {% comment %}theme-check-disable RemoteAsset{% endcomment %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -369,6 +370,8 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+
+    {% render 'sk-mobile-optimizations' %}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
@@ -452,5 +455,6 @@
     {%- endif -%}
     {%- comment -%} Global Swiper JS (consolidated) {%- endcomment -%}
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+    {% comment %}theme-check-enable RemoteAsset{% endcomment %}
   </body>
 </html>

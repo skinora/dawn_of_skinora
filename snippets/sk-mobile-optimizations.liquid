@@ -1,0 +1,94 @@
+{%- comment -%}
+  Lightweight helpers to trim animation cost and media payload on mobile/iOS.
+{%- endcomment -%}
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  html.is-ios .animate--fade-in,
+  html.is-ios .animate--slide-in,
+  html.is-ios .animate--zoom-in,
+  html.is-ios .sk-motion-heavy {
+    animation-duration: calc(var(--sk-motion-duration, 0.6s) * 0.65);
+    transition-duration: calc(var(--sk-motion-duration, 0.6s) * 0.65);
+  }
+</style>
+<script>
+  (function () {
+    var eagerContainers = ['header', '.section-header', '.banner', '.slideshow', '.hero'];
+
+    function isAboveFold(el) {
+      return eagerContainers.some(function (selector) {
+        return el.closest(selector);
+      });
+    }
+
+    function optimizeImages() {
+      var images = document.querySelectorAll('img');
+      images.forEach(function (img, index) {
+        if (!img.hasAttribute('decoding')) {
+          img.setAttribute('decoding', 'async');
+        }
+
+        var exempt = img.closest('[data-lazy-exempt]');
+        if (!img.hasAttribute('loading') && !exempt) {
+          if (!isAboveFold(img) && index > 1) {
+            img.setAttribute('loading', 'lazy');
+          } else if (!img.hasAttribute('fetchpriority')) {
+            img.setAttribute('fetchpriority', 'high');
+          }
+        }
+
+        if (!img.hasAttribute('sizes') && img.dataset && img.dataset.mobileWidth) {
+          img.setAttribute('sizes', '(max-width: 749px) ' + img.dataset.mobileWidth + 'px, 100vw');
+        }
+      });
+    }
+
+    function optimizeVideo() {
+      document.querySelectorAll('video').forEach(function (video) {
+        if (!video.hasAttribute('preload')) {
+          video.setAttribute('preload', 'metadata');
+        }
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+      });
+    }
+
+    function reduceIosMotion() {
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('is-ios');
+      }
+    }
+
+    function initOptimizations() {
+      reduceIosMotion();
+      optimizeImages();
+      optimizeVideo();
+    }
+
+    function scheduleInit() {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(initOptimizations, { timeout: 1500 });
+      } else {
+        setTimeout(initOptimizations, 600);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', scheduleInit);
+    } else {
+      scheduleInit();
+    }
+
+    document.addEventListener('shopify:section:load', scheduleInit);
+  })();
+</script>
