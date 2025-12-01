@@ -33,7 +33,7 @@
   <div class="sk-help-banner__content">
     <div class="sk-help-banner__text-wrapper">
       {%- if section.settings.heading != blank -%}
-        <h1 class="sk-help-banner__heading sk-section-heading sk-section-heading--hxl{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        <h1 class="sk-header__section sk-help-banner__heading sk-section-heading sk-section-heading--hxl{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
           {{ section.settings.heading | escape }}
         </h1>
       {%- endif -%}

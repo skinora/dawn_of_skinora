@@ -107,7 +107,7 @@
 {%- if product.metafields.custom.promotion_logos.value != blank -%}
   <section class="sw-publication-{{ section.id }}">
     {% if section.settings.heading != blank %}
-      <h2 class="sk-section-heading sk-section-heading--h2 sk-product-promotion-logos__heading">
+      <h2 class="sk-header__section sk-product-promotion-logos__heading sk-section-heading sk-section-heading--h2">
         {{ section.settings.heading | escape }}
       </h2>
     {% endif %}

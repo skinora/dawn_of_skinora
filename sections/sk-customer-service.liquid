@@ -1,11 +1,15 @@
 {{ 'section-sk-customer-service.css' | asset_url | stylesheet_tag }}
 
 <div class="sk-customer-service page-width py-10">
-  <h2 class="sk-section-heading sk-section-heading--h1 sk-customer-service__heading">Kundeservice</h2>
+  <h2 class="sk-header__section sk-section-heading sk-section-heading--h1 sk-customer-service__heading">
+    Kundeservice
+  </h2>
 
   <div class="sk-customer-service__grid">
     <div class="sk-customer-service__info">
-      <h3 class="sk-section-heading sk-section-heading--h3 sk-customer-service__card-heading">Kontakt oss</h3>
+      <h3 class="sk-header__section sk-section-heading sk-section-heading--h3 sk-customer-service__card-heading">
+        Kontakt oss
+      </h3>
       <p>Har du spørsmål om produkter, bestilling eller levering? Vi hjelper deg gjerne.</p>
 
       <ul class="sk-customer-service__details">
@@ -16,7 +20,9 @@
     </div>
 
     <div class="sk-customer-service__form">
-      <h3 class="sk-section-heading sk-section-heading--h3 sk-customer-service__card-heading">Send oss en melding</h3>
+      <h3 class="sk-header__section sk-section-heading sk-section-heading--h3 sk-customer-service__card-heading">
+        Send oss en melding
+      </h3>
 
       {% form 'contact', id: 'contact_form', class: 'contact-form' %}
         {%- if form.posted_successfully? -%}

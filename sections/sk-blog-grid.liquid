@@ -12,7 +12,7 @@
     <div class="sk-blog-grid__header">
       <div class="sk-blog-grid__heading-section">
         {%- if section.settings.heading != blank -%}
-          <h2 class="sk-blog-grid__heading sk-section-heading sk-section-heading--h1{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          <h2 class="sk-header__section sk-blog-grid__heading sk-section-heading sk-section-heading--h1{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
             {{ section.settings.heading | escape }}
           </h2>
         {%- endif -%}
