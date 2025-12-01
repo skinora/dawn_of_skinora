@@ -106,8 +106,10 @@
       {%- comment -%} First Column: Logo, Description, Newsletter, Social Icons {%- endcomment -%}
       <div class="footer__column footer__column--brand">
         <div class="footer__logo">
-          {{ 'custom-logo.svg' | inline_asset_content }}
-          <span class="visually-hidden">{{ shop.name }}</span>
+          <a href="{{ routes.root_url }}" class="footer__logo-link" aria-label="{{ shop.name | escape }}">
+            {{ 'custom-logo.svg' | inline_asset_content }}
+            <span class="visually-hidden">{{ shop.name }}</span>
+          </a>
         </div>
 
         {%- if section.settings.show_brand_description and section.settings.brand_description != blank -%}
