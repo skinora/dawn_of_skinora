@@ -9,15 +9,15 @@
 >
   <div class="page-width">
     <div class="grid image-with-text__grid{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <!-- Image column -->
+      <!-- IMAGE -->
       <div
         class="grid__item image-with-text__media-item"
         style="flex: 0 0 {{ image_width }}%; max-width: {{ image_width }}%;"
       >
         {% if section.settings.sk_radiance_image != blank %}
           <img
-            src="{{ section.settings.sk_radiance_image | image_url: width: 1200 }}"
-            alt="{{ section.settings.sk_radiance_image.alt }}"
+            src="{{ section.settings.sk_radiance_image | image_url: width: 1600 }}"
+            alt="{{ section.settings.sk_radiance_image.alt | escape }}"
             loading="lazy"
             width="{{ section.settings.sk_radiance_image.width }}"
             height="{{ section.settings.sk_radiance_image.height }}"
@@ -27,35 +27,35 @@
         {% endif %}
       </div>
 
-      <!-- Text column -->
+      <!-- TEXT -->
       <div
         class="grid__item image-with-text__text-item"
         style="flex: 0 0 {{ content_width }}%; max-width: {{ content_width }}%;"
       >
         <div class="image-with-text__content">
-          {%- for block in section.blocks -%}
+          {% for block in section.blocks %}
             {% case block.type %}
-              {%- when 'heading' -%}
-                {%- if block.settings.heading != blank -%}
+              {% when 'heading' %}
+                {% if block.settings.heading != blank %}
                   <h2
-                    class="image-with-text__heading {{ block.settings.heading_size }} sk-section-heading"
+                    class="image-with-text__heading {{ block.settings.heading_size }}"
                     {{ block.shopify_attributes }}
                   >
                     {{ block.settings.heading }}
                   </h2>
-                {%- endif -%}
+                {% endif %}
 
-              {%- when 'bullet_points' -%}
-                {%- if block.settings.bullet_items != blank -%}
+              {% when 'bullet_points' %}
+                {% if block.settings.bullet_items != blank %}
                   <ul class="image-with-text__list" {{ block.shopify_attributes }}>
-                    {%- assign bullet_items = block.settings.bullet_items | split: '|' -%}
-                    {%- for item in bullet_items -%}
-                      {%- if item != blank -%}
+                    {% assign bullet_items = block.settings.bullet_items | split: '|' %}
+                    {% for item in bullet_items %}
+                      {% if item != blank %}
                         <li class="image-with-text__list-item">
                           <div class="image-with-text__bullet-icon">
-                            {%- if block.settings.bullet_icon != blank -%}
+                            {% if block.settings.bullet_icon != blank %}
                               {{ block.settings.bullet_icon }}
-                            {%- else -%}
+                            {% else %}
                               <svg
                                 width="20"
                                 height="20"
@@ -64,35 +64,36 @@
                               >
                                 <circle cx="10" cy="10" r="3" />
                               </svg>
-                            {%- endif -%}
+                            {% endif %}
                           </div>
                           <span>{{ item | strip }}</span>
                         </li>
-                      {%- endif -%}
-                    {%- endfor -%}
+                      {% endif %}
+                    {% endfor %}
                   </ul>
-                {%- endif -%}
+                {% endif %}
 
-              {%- when 'description' -%}
-                {%- if block.settings.description != blank -%}
+              {% when 'description' %}
+                {% if block.settings.description != blank %}
                   <div
                     class="image-with-text__text rte {{ block.settings.text_style }}"
+                    style="font-size: 1.15rem; line-height: 1.6;"
                     {{ block.shopify_attributes }}
                   >
                     {{ block.settings.description }}
                   </div>
-                {%- endif -%}
+                {% endif %}
 
-              {%- when 'button' -%}
-                {%- if block.settings.button_text != blank -%}
+              {% when 'button' %}
+                {% if block.settings.button_text != blank %}
                   <div class="image-with-text__button">
                     <a href="{{ block.settings.button_url }}" class="sk_primary-button">
                       {{ block.settings.button_text }}
                     </a>
                   </div>
-                {%- endif -%}
-            {%- endcase -%}
-          {%- endfor -%}
+                {% endif %}
+            {% endcase %}
+          {% endfor %}
         </div>
       </div>
     </div>
@@ -104,9 +105,6 @@
   "name": "Image with Content",
   "tag": "section",
   "class": "section",
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  },
   "settings": [
     {
       "type": "header",
@@ -124,12 +122,12 @@
       "max": 60,
       "step": 5,
       "unit": "%",
-      "label": "Image width",
+      "label": "Image width (%)",
       "default": 50
     },
     {
       "type": "header",
-      "content": "Section Settings"
+      "content": "Section Appearance"
     },
     {
       "type": "color_scheme",
@@ -162,6 +160,7 @@
       "default": 36
     }
   ],
+
   "blocks": [
     {
       "type": "heading",
@@ -171,39 +170,25 @@
         {
           "type": "inline_richtext",
           "id": "heading",
-          "default": "Image with content",
-          "label": "Heading"
+          "label": "Heading text",
+          "default": "Sliter du med…"
         },
         {
           "type": "select",
           "id": "heading_size",
+          "label": "Heading size",
           "options": [
-            {
-              "value": "h2",
-              "label": "Small"
-            },
-            {
-              "value": "h1",
-              "label": "Medium"
-            },
-            {
-              "value": "h0",
-              "label": "Large"
-            },
-            {
-              "value": "hxl",
-              "label": "Extra large"
-            },
-            {
-              "value": "hxxl",
-              "label": "XX Large"
-            }
+            { "value": "h2", "label": "Small" },
+            { "value": "h1", "label": "Medium" },
+            { "value": "h0", "label": "Large" },
+            { "value": "hxl", "label": "Extra large" },
+            { "value": "hxxl", "label": "XX Large" }
           ],
-          "default": "h1",
-          "label": "Heading size"
+          "default": "h1"
         }
       ]
     },
+
     {
       "type": "bullet_points",
       "name": "Bullet Points",
@@ -212,18 +197,18 @@
         {
           "type": "textarea",
           "id": "bullet_items",
-          "label": "Bullet points",
-          "info": "Enter each bullet point on a new line or separate with | symbol",
-          "placeholder": "First bullet point\nSecond bullet point\nThird bullet point"
+          "label": "Bullet items",
+          "placeholder": "Fine linjer | Tap av spenst | Pigmentflekker"
         },
         {
           "type": "html",
           "id": "bullet_icon",
           "label": "Custom bullet icon (SVG)",
-          "info": "Leave empty to use default bullet. Paste SVG code for custom icon."
+          "info": "Paste SVG here"
         }
       ]
     },
+
     {
       "type": "description",
       "name": "Description",
@@ -232,27 +217,22 @@
         {
           "type": "richtext",
           "id": "description",
-          "default": "<p>Add your description text here. You can use rich text formatting.</p>",
-          "label": "Description"
+          "label": "Description text",
+          "default": "<p>Legg inn din beskrivende tekst her.</p>"
         },
         {
           "type": "select",
           "id": "text_style",
+          "label": "Text style",
           "options": [
-            {
-              "value": "body",
-              "label": "Body"
-            },
-            {
-              "value": "subtitle",
-              "label": "Subtitle"
-            }
+            { "value": "body", "label": "Body" },
+            { "value": "subtitle", "label": "Subtitle" }
           ],
-          "default": "body",
-          "label": "Text style"
+          "default": "body"
         }
       ]
     },
+
     {
       "type": "button",
       "name": "Button",
@@ -261,8 +241,8 @@
         {
           "type": "text",
           "id": "button_text",
-          "default": "Learn more",
-          "label": "Button text"
+          "label": "Button text",
+          "default": "KJØP SKINORA RADIANCE"
         },
         {
           "type": "url",
@@ -272,29 +252,17 @@
         {
           "type": "checkbox",
           "id": "button_style_secondary",
-          "default": false,
-          "label": "Use outline button style"
+          "label": "Use outline style",
+          "default": false
         }
       ]
     }
   ],
+
   "presets": [
     {
       "name": "Image with Content",
-      "blocks": [
-        {
-          "type": "heading"
-        },
-        {
-          "type": "bullet_points"
-        },
-        {
-          "type": "description"
-        },
-        {
-          "type": "button"
-        }
-      ]
+      "blocks": [{ "type": "heading" }, { "type": "bullet_points" }, { "type": "description" }, { "type": "button" }]
     }
   ]
 }
