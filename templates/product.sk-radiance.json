@@ -112,6 +112,7 @@
       "type": "sk-product-promotion-logos",
       "name": "SK Product Promotion Logos",
       "settings": {
+        "heading": "",
         "sk_promotion_bgColor": "#f1eff4"
       }
     },
@@ -197,6 +198,7 @@
       "type": "sk-product-radiance",
       "name": "SK Product Radiance",
       "settings": {
+        "heading": "",
         "button_text": "Kjøp Skinora Radiance",
         "button_url": "shopify://products/skinora-radiance-face"
       }
@@ -220,7 +222,7 @@
       "type": "sk-product-technology",
       "name": "SK Product Technology",
       "settings": {
-        "heading": "Teknologien bak Skinora",
+        "heading": "Teknologien bak Skinora Radiance",
         "left_image": "shopify://shop_images/630nm.jpg",
         "content_html": "<p>Klinisk LED-teknologi som aktiverer hudens egen fornyelse – for fastere, klarere og sterkere hud</p>",
         "right_image": "shopify://shop_images/1072nm.jpg",

@@ -116,6 +116,7 @@
       ],
       "name": "SK Promotion",
       "settings": {
+        "heading": "",
         "sk_promotion_bgColor": "#ffffff"
       }
     },
@@ -268,6 +269,7 @@
       ],
       "name": "SK Features",
       "settings": {
+        "heading": "",
         "sk_features_bgColor": "#ffffff"
       }
     },
@@ -313,7 +315,7 @@
       "name": "Image with Content",
       "settings": {
         "sk_radiance_image": "shopify://shop_images/Rectangle_1.png",
-        "image_width": 50,
+        "image_width": 60,
         "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 36
