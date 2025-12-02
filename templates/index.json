@@ -327,35 +327,25 @@
         "wavelength_NyVfVQ": {
           "type": "wavelength",
           "settings": {
-            "sk_wavelength_image": "shopify://shop_images/415nm.webp",
+            "sk_wavelength_image": "shopify://shop_images/415_630_830_nm.webp",
             "sk_wavelength_visible": true,
             "sk_wavelength_heading": "630 nm Rødt Lys",
             "sk_wavelength_benefits": "Stimulerer kollagen\nForbedrer glød\nFremmer redusert fine linjer"
           }
         },
-        "wavelength_rhrt43": {
+        "wavelength_LM4gYW": {
           "type": "wavelength",
           "settings": {
-            "sk_wavelength_image": "shopify://shop_images/630nm.webp",
+            "sk_wavelength_image": "shopify://shop_images/415_630_830_nm.webp",
             "sk_wavelength_visible": true,
-            "sk_wavelength_heading": "630 nm Rødt Lys",
-            "sk_wavelength_benefits": "Stimulerer kollagen\nForbedrer glød\nFremmer redusert fine linjer"
-          }
-        },
-        "wavelength_yV4gU7": {
-          "type": "wavelength",
-          "settings": {
-            "sk_wavelength_image": "shopify://shop_images/1072nm.webp",
-            "sk_wavelength_visible": true,
-            "sk_wavelength_heading": "1072 nm",
+            "sk_wavelength_heading": "Skinora Radiance",
             "sk_wavelength_benefits": "Stimulerer kollagen\nForbedrer glød\nFremmer redusert fine linjer"
           }
         }
       },
       "block_order": [
         "wavelength_NyVfVQ",
-        "wavelength_rhrt43",
-        "wavelength_yV4gU7"
+        "wavelength_LM4gYW"
       ],
       "name": "SK Led Light Work",
       "settings": {
