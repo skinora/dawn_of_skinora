@@ -1,128 +1,44 @@
 {{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
 
-<style>
-  .sk-radiance {
-    background: #f1eff4;
-    padding: 7rem 0;
-  }
-  .sk-radiance__container {
-    display: flex;
-    align-items: start;
-    gap: 7rem;
-    flex-wrap: wrap;
-  }
+{% assign image_width = section.settings.image_width | default: 50 %}
+{% assign content_width = 100 | minus: image_width %}
 
-  .sk-radiance__image {
-    flex: 0 0 600px;
-  }
-  .sk-image-content__content {
-    flex: 0 0 550px;
-  }
-
-  .sk-radiance .sk-image-content__bullet-list {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 20px;
-  }
-  .sk-radiance .sk-image-content__bullet-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    color: #30273e;
-    font-weight: 500;
-  }
-
-  .sk-radiance .sk-image-content__heading {
-    color: #30273e;
-    font-size: 65px;
-    line-height: 70px;
-    margin-bottom: 25px;
-    font-weight: 700;
-  }
-
-  .sk-image-content__description p {
-    font-size: var(--sk-font-size-medium);
-    line-height: 21px;
-  }
-
-  .sk-image-content__button {
-    margin-top: 3rem;
-  }
-
-  @media only screen and (max-width: 700px) {
-    .sk-image-content__button .sk_primary-button {
-      width: 30rem;
-    }
-
-    .sk-radiance__image {
-      flex: 0 0 100%;
-    }
-    .sk-radiance__image img {
-      width: 100%;
-      height: auto;
-    }
-
-    .sk-image-content__content {
-      flex: 0 0 100%;
-    }
-  }
-
-  @media only screen and (max-width: 435px) {
-    .sk-radiance .sk-image-content__heading {
-      font-size: calc(var(--sk-font-size-2xl) * 1.0667);
-      line-height: 37px;
-    }
-
-    .sk-radiance .sk-image-content__bullet-item {
-      font-size: var(--sk-font-size-xxs);
-      margin-bottom: 5px;
-    }
-
-    .sk-image-content__bullet-list svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    .sk-image-content__description p {
-      font-size: var(--sk-font-size-xxs);
-      line-height: 20px;
-    }
-
-    .sk-image-content__button .sk_primary-button {
-      width: 20rem;
-    }
-  }
-</style>
-
-<section class="sk-radiance">
+<section
+  class="image-with-text section {{ section.settings.color_scheme }}"
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
   <div class="page-width">
-    <div class="sk-image-content{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <div class="sk-radiance__container">
-        <!-- Image Section -->
+    <div class="grid image-with-text__grid{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <!-- Image column -->
+      <div
+        class="grid__item image-with-text__media-item"
+        style="flex: 0 0 {{ image_width }}%; max-width: {{ image_width }}%;"
+      >
+        {% if section.settings.sk_radiance_image != blank %}
+          <img
+            src="{{ section.settings.sk_radiance_image | image_url: width: 1200 }}"
+            alt="{{ section.settings.sk_radiance_image.alt }}"
+            loading="lazy"
+            width="{{ section.settings.sk_radiance_image.width }}"
+            height="{{ section.settings.sk_radiance_image.height }}"
+          >
+        {% else %}
+          {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
 
-        <div class="sk-radiance__image">
-          {%- if section.settings.sk_radiance_image != blank -%}
-            <img
-              src="{{ section.settings.sk_radiance_image | image_url: width: 577, height: 640 }}"
-              alt="{{ section.settings.sk_radiance_image.alt }}"
-              width="577"
-              height="640"
-              loading="lazy"
-            >
-          {%- else -%}
-            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          {%- endif -%}
-        </div>
-
-        <!-- Content Section -->
-        <div class="sk-image-content__content">
+      <!-- Text column -->
+      <div
+        class="grid__item image-with-text__text-item"
+        style="flex: 0 0 {{ content_width }}%; max-width: {{ content_width }}%;"
+      >
+        <div class="image-with-text__content">
           {%- for block in section.blocks -%}
             {% case block.type %}
               {%- when 'heading' -%}
                 {%- if block.settings.heading != blank -%}
                   <h2
-                    class="sk-image-content__heading {{ block.settings.heading_size }} sk-section-heading sk-section-heading--hxl"
+                    class="image-with-text__heading {{ block.settings.heading_size }} sk-section-heading"
                     {{ block.shopify_attributes }}
                   >
                     {{ block.settings.heading }}
@@ -131,12 +47,12 @@
 
               {%- when 'bullet_points' -%}
                 {%- if block.settings.bullet_items != blank -%}
-                  <ul class="sk-image-content__bullet-list" {{ block.shopify_attributes }}>
+                  <ul class="image-with-text__list" {{ block.shopify_attributes }}>
                     {%- assign bullet_items = block.settings.bullet_items | split: '|' -%}
                     {%- for item in bullet_items -%}
                       {%- if item != blank -%}
-                        <li class="sk-image-content__bullet-item">
-                          <div class="sk-image-content__bullet-icon">
+                        <li class="image-with-text__list-item">
+                          <div class="image-with-text__bullet-icon">
                             {%- if block.settings.bullet_icon != blank -%}
                               {{ block.settings.bullet_icon }}
                             {%- else -%}
@@ -146,10 +62,7 @@
                                 viewBox="0 0 20 20"
                                 fill="currentColor"
                               >
-                                <circle
-                                  cx="10"
-                                  cy="10"
-                                  r="3" />
+                                <circle cx="10" cy="10" r="3" />
                               </svg>
                             {%- endif -%}
                           </div>
@@ -163,7 +76,7 @@
               {%- when 'description' -%}
                 {%- if block.settings.description != blank -%}
                   <div
-                    class="sk-image-content__description rte {{ block.settings.text_style }}"
+                    class="image-with-text__text rte {{ block.settings.text_style }}"
                     {{ block.shopify_attributes }}
                   >
                     {{ block.settings.description }}
@@ -172,8 +85,8 @@
 
               {%- when 'button' -%}
                 {%- if block.settings.button_text != blank -%}
-                  <div class="sk-image-content__button">
-                    <a href="{{ block.settings.button_url }}" class=" sk_primary-button">
+                  <div class="image-with-text__button">
+                    <a href="{{ block.settings.button_url }}" class="sk_primary-button">
                       {{ block.settings.button_text }}
                     </a>
                   </div>
@@ -386,7 +299,3 @@
   ]
 }
 {% endschema %}
-
-
-
-
