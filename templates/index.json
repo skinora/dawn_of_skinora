@@ -352,6 +352,22 @@
         "sk_led_light_work_heading": "Hvordan Fungerer Skinora Led Lys"
       }
     },
+    "sk_product_technology_Vm78GM": {
+      "type": "sk-product-technology",
+      "name": "SK Technology (Generic)",
+      "settings": {
+        "heading": "Teknologien bak Skinora",
+        "left_image": "shopify://shop_images/415_630_830_nm.webp",
+        "content_html": "<p>Klinisk LED-teknologi som aktiverer hudens egen fornyelse – for fastere, klarere og sterkere hud.</p>",
+        "right_image": "shopify://shop_images/630_830_1072_nm.webp",
+        "show_arrow": true,
+        "bg_color": "#FFF9F5",
+        "content_max_width": 520,
+        "mobile_stack_order": "image-first",
+        "pad_y_desktop": 112,
+        "pad_y_mobile": 60
+      }
+    },
     "sk_product_why_choose_8a4LNx": {
       "type": "sk-product-why-choose",
       "name": "SK Product Why Choose",
@@ -439,6 +455,7 @@
     "sk_features_pHkfMf",
     "sk_radiance_meq7Gb",
     "sk_led_light_work_QHXAbE",
+    "sk_product_technology_Vm78GM",
     "sk_product_why_choose_8a4LNx",
     "sk_faq_accordion_GcMDDq"
   ]
