@@ -1,6 +1,5 @@
 <style>
   .sk-tech-{{ section.id }} {
-    background: {{ section.settings.bg_color }};
     padding: {{ section.settings.pad_y_mobile }}px 0;
   }
   @media (min-width: 701px) {
@@ -30,30 +29,26 @@
   /* Layout */
   .sk-tech-{{ section.id }} .sk-tech__row {
     display: flex;
-    gap: 48px;
-    align-items: center;
+    gap: 32px;
+    align-items: stretch;
     justify-content: center;
-    flex-wrap: wrap;
   }
 
-  /* Bigger image blocks */
   .sk-tech-{{ section.id }} .sk-tech__img {
-    flex: 1 1 560px;
-    max-width: 640px;
+    flex: 0 1 40%;
+    max-width: 40%;
   }
 
   .sk-tech-{{ section.id }} .sk-tech__img img {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 12px;
   }
 
-  /* Center content */
   .sk-tech-{{ section.id }} .sk-tech__content {
-    flex: 0 1 {{ section.settings.content_max_width }}px;
-    min-width: 320px;
+    flex: 0 1 20%;
     max-width: {{ section.settings.content_max_width }}px;
+    min-width: 220px;
   }
 
   .sk-tech-{{ section.id }} .sk-tech__content :where(p) {
@@ -77,35 +72,32 @@
     margin-top: 12px;
   }
 
+  .sk-tech-{{ section.id }} .sk-tech__slider {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .sk-tech-{{ section.id }} .sk-tech__row {
+      gap: 20px;
+    }
+
+    .sk-tech-{{ section.id }} .sk-tech__img,
+    .sk-tech-{{ section.id }} .sk-tech__content {
+      max-width: 100%;
+      flex-basis: 100%;
+    }
+  }
+
   @media (max-width: 700px) {
     .sk-tech-{{ section.id }} .sk-tech__arrow { display: none; }
-
-    .sk-tech-{{ section.id }} .sk-tech__row { gap: 20px; }
-
-    .sk-tech-{{ section.id }} .sk-tech__img {
-      max-width: 95vw;
-      flex: 1 1 95vw;
-    }
+    .sk-tech-{{ section.id }} .sk-tech__row { display: none; }
+    .sk-tech-{{ section.id }} .sk-tech__slider { display: block; }
 
     .sk-tech-{{ section.id }} .sk-tech__content :where(p) {
       font-size: var(--sk-font-size-medium);
       line-height: 22px;
       margin-bottom: 12px;
     }
-
-    {% if section.settings.mobile_stack_order == 'image-first' %}
-      .sk-tech-{{ section.id }} .sk-tech__left { order: 1; }
-      .sk-tech-{{ section.id }} .sk-tech__center { order: 2; }
-      .sk-tech-{{ section.id }} .sk-tech__right { order: 3; }
-    {% elsif section.settings.mobile_stack_order == 'content-first' %}
-      .sk-tech-{{ section.id }} .sk-tech__center { order: 1; }
-      .sk-tech-{{ section.id }} .sk-tech__left { order: 2; }
-      .sk-tech-{{ section.id }} .sk-tech__right { order: 3; }
-    {% else %}
-      .sk-tech-{{ section.id }} .sk-tech__right { order: 1; }
-      .sk-tech-{{ section.id }} .sk-tech__center { order: 2; }
-      .sk-tech-{{ section.id }} .sk-tech__left { order: 3; }
-    {% endif %}
   }
 </style>
 
@@ -128,7 +120,7 @@
               {{ li | image_url: width: 900 }} 900w,
               {{ li | image_url: width: 1200 }} 1200w
             "
-            sizes="(min-width: 1200px) 600px, (min-width: 701px) 45vw, 95vw"
+            sizes="(min-width: 1200px) 40vw, (min-width: 701px) 42vw, 95vw"
             src="{{ li | image_url: width: 900 }}"
             alt="{{ li.alt | default: section.settings.heading | escape }}"
             loading="lazy"
@@ -158,7 +150,7 @@
               {{ ri | image_url: width: 900 }} 900w,
               {{ ri | image_url: width: 1200 }} 1200w
             "
-            sizes="(min-width: 1200px) 600px, (min-width: 701px) 45vw, 95vw"
+            sizes="(min-width: 1200px) 40vw, (min-width: 701px) 42vw, 95vw"
             src="{{ ri | image_url: width: 900 }}"
             alt="{{ ri.alt | default: section.settings.heading | escape }}"
             loading="lazy"
@@ -168,8 +160,98 @@
         </div>
       {% endif %}
     </div>
+
+    <div class="sk-tech__slider sk-tech-slider-{{ section.id }}">
+      <div class="swiper sk-tech-swiper-{{ section.id }}">
+        <div class="swiper-wrapper">
+          {% if section.settings.left_image != blank %}
+            {%- assign li = section.settings.left_image -%}
+            <div class="swiper-slide">
+              <div class="sk-tech__img">
+                <img
+                  src="{{ li | image_url: width: 900 }}"
+                  srcset="
+                    {{ li | image_url: width: 600 }} 600w,
+                    {{ li | image_url: width: 900 }} 900w
+                  "
+                  sizes="90vw"
+                  alt="{{ li.alt | default: section.settings.heading | escape }}"
+                  loading="lazy"
+                  width="{{ li.width }}"
+                  height="{{ li.height }}"
+                >
+              </div>
+            </div>
+          {% endif %}
+
+          {% if section.settings.content_html != blank %}
+            <div class="swiper-slide">
+              <div class="sk-tech__content">
+                {{ section.settings.content_html }}
+                {% if section.settings.show_arrow %}
+                  <div class="sk-tech__arrow">
+                    {{ 'technology-arrow.svg' | inline_asset_content }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if section.settings.right_image != blank %}
+            {%- assign ri = section.settings.right_image -%}
+            <div class="swiper-slide">
+              <div class="sk-tech__img">
+                <img
+                  src="{{ ri | image_url: width: 900 }}"
+                  srcset="
+                    {{ ri | image_url: width: 600 }} 600w,
+                    {{ ri | image_url: width: 900 }} 900w
+                  "
+                  sizes="90vw"
+                  alt="{{ ri.alt | default: section.settings.heading | escape }}"
+                  loading="lazy"
+                  width="{{ ri.width }}"
+                  height="{{ ri.height }}"
+                >
+              </div>
+            </div>
+          {% endif %}
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var mql = window.matchMedia('(max-width: 700px)');
+    var swiperInstance = null;
+    var container = document.querySelector('.sk-tech-slider-{{ section.id }} .swiper');
+
+    function setupTechSwiper() {
+      if (!container) {
+        return;
+      }
+      if (mql.matches && !swiperInstance) {
+        swiperInstance = new Swiper(container, {
+          slidesPerView: 1,
+          spaceBetween: 18,
+          pagination: {
+            el: container.querySelector('.swiper-pagination'),
+            clickable: true,
+          },
+        });
+      } else if (!mql.matches && swiperInstance) {
+        swiperInstance.destroy(true, true);
+        swiperInstance = null;
+      }
+    }
+
+    setupTechSwiper();
+    mql.addEventListener('change', setupTechSwiper);
+  });
+</script>
 
 {% schema %}
 {
@@ -189,7 +271,6 @@
     { "type": "checkbox", "id": "show_arrow", "label": "Show center arrow (hidden on mobile)", "default": true },
 
     { "type": "header", "content": "Layout & Style" },
-    { "type": "color", "id": "bg_color", "label": "Background", "default": "#FFF9F5" },
     {
       "type": "range",
       "id": "content_max_width",
@@ -198,17 +279,6 @@
       "max": 720,
       "step": 20,
       "default": 520
-    },
-    {
-      "type": "select",
-      "id": "mobile_stack_order",
-      "label": "Mobile stack order",
-      "default": "image-first",
-      "options": [
-        { "value": "image-first", "label": "Left image → Content → Right image" },
-        { "value": "content-first", "label": "Content → Left image → Right image" },
-        { "value": "right-first", "label": "Right image → Content → Left image" }
-      ]
     },
     {
       "type": "range",
