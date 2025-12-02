@@ -132,6 +132,8 @@
             src="{{ li | image_url: width: 900 }}"
             alt="{{ li.alt | default: section.settings.heading | escape }}"
             loading="lazy"
+            width="{{ li.width }}"
+            height="{{ li.height }}"
           >
         </div>
       {% endif %}
@@ -160,6 +162,8 @@
             src="{{ ri | image_url: width: 900 }}"
             alt="{{ ri.alt | default: section.settings.heading | escape }}"
             loading="lazy"
+            width="{{ ri.width }}"
+            height="{{ ri.height }}"
           >
         </div>
       {% endif %}
