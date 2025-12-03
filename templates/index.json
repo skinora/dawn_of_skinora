@@ -283,13 +283,6 @@
             "heading_size": "h0"
           }
         },
-        "bullet_points_jMhnrh": {
-          "type": "bullet_points",
-          "settings": {
-            "bullet_items": "Fine Linjer Og Rynker|Tap Av Spenst Og Elastitet|Pigmentflekker Eller Solskadet Hud|Hud Uten Glød|Rosacea Eller Rødhet",
-            "bullet_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\">\n<path d=\"M17 3.33782C15.5291 2.48697 13.8214 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 11.3151 21.9311 10.6462 21.8 10\" stroke=\"#30273E\" stroke-width=\"1.5\" stroke-linecap=\"round\"></path>\n<path d=\"M8 12.5C8 12.5 9.5 12.5 11.5 16C11.5 16 17.0588 6.83333 22 5\" stroke=\"#30273E\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n</svg>"
-          }
-        },
         "description_NNfKke": {
           "type": "description",
           "settings": {
@@ -300,22 +293,18 @@
         "button_4eVJnT": {
           "type": "button",
           "settings": {
-            "button_text": "Kjøp Skinora Radiance",
-            "button_url": "shopify://products/skinora-radiance-face",
-            "button_style_secondary": false
+            "text": "Kjøp Skinora Radiance",
+            "url": ""
           }
         }
       },
       "block_order": [
         "heading_XQwdbz",
-        "bullet_points_jMhnrh",
         "description_NNfKke",
         "button_4eVJnT"
       ],
       "name": "Image with Content",
       "settings": {
-        "sk_radiance_image": "shopify://shop_images/ChatGPT_Image_Sep_29_2025_10_14_47_AM.png",
-        "image_width": 60,
         "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 36
@@ -356,14 +345,12 @@
       "type": "sk-product-technology",
       "name": "SK Technology (Generic)",
       "settings": {
-        "heading": "Teknologien bak Skinora",
+        "heading": "TEKNOLOGIEN BAK SKINORA",
         "left_image": "shopify://shop_images/415_630_830_nm.webp",
         "content_html": "<p>Klinisk LED-teknologi som aktiverer hudens egen fornyelse – for fastere, klarere og sterkere hud.</p>",
         "right_image": "shopify://shop_images/630_830_1072_nm.webp",
         "show_arrow": true,
-        "bg_color": "#FFF9F5",
         "content_max_width": 520,
-        "mobile_stack_order": "image-first",
         "pad_y_desktop": 112,
         "pad_y_mobile": 60
       }
