@@ -8,6 +8,7 @@
     }
   }
 
+  /* Section heading */
   .sk-tech-{{ section.id }} .sk-tech__heading {
     font-size: var(--section-heading-h2);
     line-height: var(--section-heading-h2-line);
@@ -17,7 +18,6 @@
     max-width: 800px;
     margin: 0 auto 40px;
   }
-
   @media (max-width: 435px) {
     .sk-tech-{{ section.id }} .sk-tech__heading {
       font-size: calc(var(--section-heading-h2) * 0.9);
@@ -26,78 +26,72 @@
     }
   }
 
-  /* Layout */
+  /* Layout for desktop & tablet */
   .sk-tech-{{ section.id }} .sk-tech__row {
     display: flex;
-    gap: 32px;
     align-items: stretch;
-    justify-content: center;
+    justify-content: space-between;
+    gap: 32px;
   }
-
-  .sk-tech-{{ section.id }} .sk-tech__img {
-    flex: 0 1 48%;
-    max-width: 48%;
+  .sk-tech-{{ section.id }} .sk-tech__col {
+    flex: 1 1 0;
+    max-width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
   }
-
-  .sk-tech-{{ section.id }} .sk-tech__img img {
+  .sk-tech-{{ section.id }} .sk-tech__col .sk-tech__img {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  .sk-tech-{{ section.id }} .sk-tech__col .sk-tech__img img {
     width: 100%;
     height: auto;
     display: block;
   }
-
-  .sk-tech-{{ section.id }} .sk-tech__content {
-    flex: 0 1 12%;
-    max-width: clamp(180px, 12%, {{ section.settings.content_max_width }}px);
-    min-width: 180px;
+  .sk-tech-{{ section.id }} .sk-tech__details {
+    max-width: {{ section.settings.content_max_width }}px;
   }
-
-  .sk-tech-{{ section.id }} .sk-tech__content :where(p) {
+  .sk-tech-{{ section.id }} .sk-tech__details :where(p) {
     font-size: var(--sk-font-size-medium);
     line-height: 1.6;
     color: #30273E;
     margin: 0 0 16px 0;
   }
-
-  .sk-tech-{{ section.id }} .sk-tech__content :where(h3, h4) {
+  .sk-tech-{{ section.id }} .sk-tech__details :where(h3, h4) {
     font-size: var(--sk-font-size-medium);
     font-weight: 600;
     color: #30273E;
     margin: 0 0 12px 0;
   }
-
-  /* Arrow (hidden on mobile) */
   .sk-tech-{{ section.id }} .sk-tech__arrow {
     display: flex;
     justify-content: center;
     margin-top: 12px;
   }
 
+  /* Hide slider on larger screens */
   .sk-tech-{{ section.id }} .sk-tech__slider {
     display: none;
   }
-
-  .sk-tech-{{ section.id }} .sk-tech__slider .sk-tech__img {
-    max-width: 100%;
-  }
-
   @media (max-width: 900px) {
     .sk-tech-{{ section.id }} .sk-tech__row {
       gap: 20px;
     }
-
-    .sk-tech-{{ section.id }} .sk-tech__img,
-    .sk-tech-{{ section.id }} .sk-tech__content {
+    .sk-tech-{{ section.id }} .sk-tech__col {
       max-width: 100%;
-      flex-basis: 100%;
     }
   }
-
   @media (max-width: 700px) {
-    .sk-tech-{{ section.id }} .sk-tech__arrow { display: none; }
-    .sk-tech-{{ section.id }} .sk-tech__row { display: none; }
-    .sk-tech-{{ section.id }} .sk-tech__slider { display: block; }
-
-    .sk-tech-{{ section.id }} .sk-tech__content :where(p) {
+    /* For mobile: hide desktop row and show slider */
+    .sk-tech-{{ section.id }} .sk-tech__row {
+      display: none;
+    }
+    .sk-tech-{{ section.id }} .sk-tech__slider {
+      display: block;
+    }
+    .sk-tech-{{ section.id }} .sk-tech__details :where(p) {
       font-size: var(--sk-font-size-medium);
       line-height: 22px;
       margin-bottom: 12px;
@@ -107,92 +101,91 @@
 
 <section class="sk-tech-{{ section.id }}">
   <div class="page-width">
-    <!-- 🔥 Wider parent container -->
     {% if section.settings.heading != blank %}
       <h2 class="sk-tech__heading sk-section-heading sk-section-heading--h2">
         {{ section.settings.heading | escape }}
       </h2>
     {% endif %}
 
+    <!-- Desktop / Tablet three-column layout -->
     <div class="sk-tech__row">
-      {% if section.settings.left_image != blank %}
-        <div class="sk-tech__img sk-tech__left">
-          {%- assign li = section.settings.left_image -%}
-          <img
-            srcset="
-              {{ li | image_url: width: 700 }} 700w,
-              {{ li | image_url: width: 900 }} 900w,
-              {{ li | image_url: width: 1200 }} 1200w
-            "
-            sizes="(min-width: 1400px) 48vw, (min-width: 901px) 49vw, 95vw"
-            src="{{ li | image_url: width: 900 }}"
-            alt="{{ li.alt | default: section.settings.heading | escape }}"
-            loading="lazy"
-            width="{{ li.width }}"
-            height="{{ li.height }}"
-          >
-        </div>
-      {% endif %}
-
-      <div class="sk-tech__content sk-tech__center">
-        {% if section.settings.content_html != blank %}
-          {{ section.settings.content_html }}
+      <!-- Left column: Skinora Clear -->
+      <div class="sk-tech__col sk-tech__left-col">
+        {% if section.settings.left_image != blank %}
+          <div class="sk-tech__img">
+            {%- assign li = section.settings.left_image -%}
+            <img
+              srcset="
+                {{ li | image_url: width: 700 }} 700w,
+                {{ li | image_url: width: 900 }} 900w,
+                {{ li | image_url: width: 1200 }} 1200w
+              "
+              sizes="(min-width: 1400px) 33vw, (min-width: 901px) 33vw, 95vw"
+              src="{{ li | image_url: width: 900 }}"
+              alt="{{ li.alt | default: section.settings.heading | escape }}"
+              loading="lazy"
+              width="{{ li.width }}"
+              height="{{ li.height }}"
+            >
+          </div>
         {% endif %}
-        {% if section.settings.show_arrow %}
-          <div class="sk-tech__arrow">
-            {{ 'technology-arrow.svg' | inline_asset_content }}
+        {% if section.settings.left_html != blank %}
+          <div class="sk-tech__details">
+            {{ section.settings.left_html }}
           </div>
         {% endif %}
       </div>
 
-      {% if section.settings.right_image != blank %}
-        <div class="sk-tech__img sk-tech__right">
-          {%- assign ri = section.settings.right_image -%}
-          <img
-            srcset="
-              {{ ri | image_url: width: 700 }} 700w,
-              {{ ri | image_url: width: 900 }} 900w,
-              {{ ri | image_url: width: 1200 }} 1200w
-            "
-            sizes="(min-width: 1400px) 48vw, (min-width: 901px) 49vw, 95vw"
-            src="{{ ri | image_url: width: 900 }}"
-            alt="{{ ri.alt | default: section.settings.heading | escape }}"
-            loading="lazy"
-            width="{{ ri.width }}"
-            height="{{ ri.height }}"
-          >
-        </div>
-      {% endif %}
+      <!-- Center column: Intro text and arrow -->
+      <div class="sk-tech__col sk-tech__center-col">
+        {% if section.settings.content_html != blank %}
+          <div class="sk-tech__details">
+            {{ section.settings.content_html }}
+            {% if section.settings.show_arrow %}
+              <div class="sk-tech__arrow">
+                {{ 'technology-arrow.svg' | inline_asset_content }}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Right column: Skinora Radiance -->
+      <div class="sk-tech__col sk-tech__right-col">
+        {% if section.settings.right_image != blank %}
+          <div class="sk-tech__img">
+            {%- assign ri = section.settings.right_image -%}
+            <img
+              srcset="
+                {{ ri | image_url: width: 700 }} 700w,
+                {{ ri | image_url: width: 900 }} 900w,
+                {{ ri | image_url: width: 1200 }} 1200w
+              "
+              sizes="(min-width: 1400px) 33vw, (min-width: 901px) 33vw, 95vw"
+              src="{{ ri | image_url: width: 900 }}"
+              alt="{{ ri.alt | default: section.settings.heading | escape }}"
+              loading="lazy"
+              width="{{ ri.width }}"
+              height="{{ ri.height }}"
+            >
+          </div>
+        {% endif %}
+        {% if section.settings.right_html != blank %}
+          <div class="sk-tech__details">
+            {{ section.settings.right_html }}
+          </div>
+        {% endif %}
+      </div>
     </div>
 
+    <!-- Mobile slider for small screens -->
     <div class="sk-tech__slider sk-tech-slider-{{ section.id }}">
       <div class="swiper sk-tech-swiper-{{ section.id }}">
         <div class="swiper-wrapper">
-          {% if section.settings.left_image != blank %}
-            {%- assign li = section.settings.left_image -%}
-            <div class="swiper-slide">
-              <div class="sk-tech__img">
-                <img
-                  src="{{ li | image_url: width: 1200 }}"
-                  srcset="
-                    {{ li | image_url: width: 600 }} 600w,
-                    {{ li | image_url: width: 900 }} 900w,
-                    {{ li | image_url: width: 1200 }} 1200w,
-                    {{ li | image_url: width: 1400 }} 1400w
-                  "
-                  sizes="min(100vw, 720px)"
-                  alt="{{ li.alt | default: section.settings.heading | escape }}"
-                  loading="lazy"
-                  width="{{ li.width }}"
-                  height="{{ li.height }}"
-                >
-              </div>
-            </div>
-          {% endif %}
-
+          <!-- Slide 1: Intro text -->
           {% if section.settings.content_html != blank %}
             <div class="swiper-slide">
-              <div class="sk-tech__content">
+              <div class="sk-tech__details">
                 {{ section.settings.content_html }}
                 {% if section.settings.show_arrow %}
                   <div class="sk-tech__arrow">
@@ -202,26 +195,62 @@
               </div>
             </div>
           {% endif %}
-
-          {% if section.settings.right_image != blank %}
-            {%- assign ri = section.settings.right_image -%}
+          <!-- Slide 2: Skinora Clear -->
+          {% if section.settings.left_image != blank or section.settings.left_html != blank %}
             <div class="swiper-slide">
               <div class="sk-tech__img">
-                <img
-                  src="{{ ri | image_url: width: 1200 }}"
-                  srcset="
-                    {{ ri | image_url: width: 600 }} 600w,
-                    {{ ri | image_url: width: 900 }} 900w,
-                    {{ ri | image_url: width: 1200 }} 1200w,
-                    {{ ri | image_url: width: 1400 }} 1400w
-                  "
-                  sizes="min(100vw, 720px)"
-                  alt="{{ ri.alt | default: section.settings.heading | escape }}"
-                  loading="lazy"
-                  width="{{ ri.width }}"
-                  height="{{ ri.height }}"
-                >
+                {% if section.settings.left_image != blank %}
+                  {%- assign li = section.settings.left_image -%}
+                  <img
+                    src="{{ li | image_url: width: 1200 }}"
+                    srcset="
+                      {{ li | image_url: width: 600 }} 600w,
+                      {{ li | image_url: width: 900 }} 900w,
+                      {{ li | image_url: width: 1200 }} 1200w,
+                      {{ li | image_url: width: 1400 }} 1400w
+                    "
+                    sizes="min(100vw, 720px)"
+                    alt="{{ li.alt | default: section.settings.heading | escape }}"
+                    loading="lazy"
+                    width="{{ li.width }}"
+                    height="{{ li.height }}"
+                  >
+                {% endif %}
               </div>
+              {% if section.settings.left_html != blank %}
+                <div class="sk-tech__details">
+                  {{ section.settings.left_html }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+          <!-- Slide 3: Skinora Radiance -->
+          {% if section.settings.right_image != blank or section.settings.right_html != blank %}
+            <div class="swiper-slide">
+              <div class="sk-tech__img">
+                {% if section.settings.right_image != blank %}
+                  {%- assign ri = section.settings.right_image -%}
+                  <img
+                    src="{{ ri | image_url: width: 1200 }}"
+                    srcset="
+                      {{ ri | image_url: width: 600 }} 600w,
+                      {{ ri | image_url: width: 900 }} 900w,
+                      {{ ri | image_url: width: 1200 }} 1200w,
+                      {{ ri | image_url: width: 1400 }} 1400w
+                    "
+                    sizes="min(100vw, 720px)"
+                    alt="{{ ri.alt | default: section.settings.heading | escape }}"
+                    loading="lazy"
+                    width="{{ ri.width }}"
+                    height="{{ ri.height }}"
+                  >
+                {% endif %}
+              </div>
+              {% if section.settings.right_html != blank %}
+                <div class="sk-tech__details">
+                  {{ section.settings.right_html }}
+                </div>
+              {% endif %}
             </div>
           {% endif %}
         </div>
@@ -255,7 +284,6 @@
         swiperInstance = null;
       }
     }
-
     setupTechSwiper();
     mql.addEventListener('change', setupTechSwiper);
   });
@@ -263,7 +291,7 @@
 
 {% schema %}
 {
-  "name": "SK Technology (Generic)",
+  "name": "SK Technology (Enhanced)",
   "tag": "section",
   "class": "section",
   "settings": [
@@ -271,18 +299,29 @@
     { "type": "image_picker", "id": "left_image", "label": "Left image" },
     {
       "type": "html",
+      "id": "left_html",
+      "label": "Left column content",
+      "default": "<h3>Skinora Clear – Lysdybder</h3><ul><li>415 nm blått lys – antibakteriell effekt</li><li>630 nm rødt lys – roer ned huden og støtter reparasjon</li></ul>"
+    },
+    {
+      "type": "html",
       "id": "content_html",
       "label": "Center content",
       "default": "<p>Klinisk LED-teknologi som aktiverer hudens egen fornyelse – for fastere, klarere og sterkere hud.</p>"
     },
     { "type": "image_picker", "id": "right_image", "label": "Right image" },
+    {
+      "type": "html",
+      "id": "right_html",
+      "label": "Right column content",
+      "default": "<h3>Skinora Radiance – Lysdybder</h3><ul><li>630 nm rødt lys – kollagen og glød</li><li>830 nm NIR-lys – reduserer inflammasjon</li><li>1072 nm dyp NIR-lys – styrker struktur og fasthet</li></ul>"
+    },
     { "type": "checkbox", "id": "show_arrow", "label": "Show center arrow (hidden on mobile)", "default": true },
-
     { "type": "header", "content": "Layout & Style" },
     {
       "type": "range",
       "id": "content_max_width",
-      "label": "Center content max width",
+      "label": "Content max width",
       "min": 360,
       "max": 720,
       "step": 20,
@@ -307,6 +346,6 @@
       "default": 60
     }
   ],
-  "presets": [{ "name": "SK Technology (Generic)" }]
+  "presets": [{ "name": "SK Technology (Enhanced)" }]
 }
 {% endschema %}
