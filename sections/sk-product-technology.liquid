@@ -35,8 +35,8 @@
   }
 
   .sk-tech-{{ section.id }} .sk-tech__img {
-    flex: 0 1 40%;
-    max-width: 40%;
+    flex: 0 1 48%;
+    max-width: 48%;
   }
 
   .sk-tech-{{ section.id }} .sk-tech__img img {
@@ -46,9 +46,9 @@
   }
 
   .sk-tech-{{ section.id }} .sk-tech__content {
-    flex: 0 1 20%;
-    max-width: {{ section.settings.content_max_width }}px;
-    min-width: 220px;
+    flex: 0 1 12%;
+    max-width: clamp(180px, 12%, {{ section.settings.content_max_width }}px);
+    min-width: 180px;
   }
 
   .sk-tech-{{ section.id }} .sk-tech__content :where(p) {
@@ -74,6 +74,10 @@
 
   .sk-tech-{{ section.id }} .sk-tech__slider {
     display: none;
+  }
+
+  .sk-tech-{{ section.id }} .sk-tech__slider .sk-tech__img {
+    max-width: 100%;
   }
 
   @media (max-width: 900px) {
@@ -120,7 +124,7 @@
               {{ li | image_url: width: 900 }} 900w,
               {{ li | image_url: width: 1200 }} 1200w
             "
-            sizes="(min-width: 1200px) 40vw, (min-width: 701px) 42vw, 95vw"
+            sizes="(min-width: 1400px) 48vw, (min-width: 901px) 49vw, 95vw"
             src="{{ li | image_url: width: 900 }}"
             alt="{{ li.alt | default: section.settings.heading | escape }}"
             loading="lazy"
@@ -150,7 +154,7 @@
               {{ ri | image_url: width: 900 }} 900w,
               {{ ri | image_url: width: 1200 }} 1200w
             "
-            sizes="(min-width: 1200px) 40vw, (min-width: 701px) 42vw, 95vw"
+            sizes="(min-width: 1400px) 48vw, (min-width: 901px) 49vw, 95vw"
             src="{{ ri | image_url: width: 900 }}"
             alt="{{ ri.alt | default: section.settings.heading | escape }}"
             loading="lazy"
@@ -169,12 +173,14 @@
             <div class="swiper-slide">
               <div class="sk-tech__img">
                 <img
-                  src="{{ li | image_url: width: 900 }}"
+                  src="{{ li | image_url: width: 1200 }}"
                   srcset="
                     {{ li | image_url: width: 600 }} 600w,
-                    {{ li | image_url: width: 900 }} 900w
+                    {{ li | image_url: width: 900 }} 900w,
+                    {{ li | image_url: width: 1200 }} 1200w,
+                    {{ li | image_url: width: 1400 }} 1400w
                   "
-                  sizes="90vw"
+                  sizes="min(100vw, 720px)"
                   alt="{{ li.alt | default: section.settings.heading | escape }}"
                   loading="lazy"
                   width="{{ li.width }}"
@@ -202,12 +208,14 @@
             <div class="swiper-slide">
               <div class="sk-tech__img">
                 <img
-                  src="{{ ri | image_url: width: 900 }}"
+                  src="{{ ri | image_url: width: 1200 }}"
                   srcset="
                     {{ ri | image_url: width: 600 }} 600w,
-                    {{ ri | image_url: width: 900 }} 900w
+                    {{ ri | image_url: width: 900 }} 900w,
+                    {{ ri | image_url: width: 1200 }} 1200w,
+                    {{ ri | image_url: width: 1400 }} 1400w
                   "
-                  sizes="90vw"
+                  sizes="min(100vw, 720px)"
                   alt="{{ ri.alt | default: section.settings.heading | escape }}"
                   loading="lazy"
                   width="{{ ri.width }}"
