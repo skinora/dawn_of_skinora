@@ -8,48 +8,50 @@
     }
   }
 
+  .sk-tech-{{ section.id }} .sk-tech__header {
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto 48px;
+  }
+
   /* Heading */
   .sk-tech-{{ section.id }} .sk-tech__heading {
     font-size: var(--section-heading-h2);
     font-weight: 700;
     line-height: var(--section-heading-h2-line);
     color: #30273E;
-    text-align: center;
-    max-width: 820px;
-    margin: 0 auto 48px;
+    margin: 0 0 12px 0;
+  }
+
+  .sk-tech-{{ section.id }} .sk-tech__subheader {
+    font-size: calc(var(--sk-font-size-large) * 1.05);
+    line-height: 1.35;
+    color: #30273E;
+    font-weight: 600;
+    margin: 0;
   }
 
   /* Desktop 3-column */
   .sk-tech-{{ section.id }} .sk-tech__row {
     display: flex;
-    gap: 40px;
+    gap: 48px;
     justify-content: center;
     align-items: flex-start;
   }
 
+  .sk-tech-{{ section.id }} .sk-tech__block {
+    flex: 1 1 45%;
+    max-width: 520px;
+  }
+
   .sk-tech-{{ section.id }} .sk-tech__img {
-    flex: 1 1 33%;
-    max-width: 33%;
+    margin-bottom: 24px;
   }
 
   .sk-tech-{{ section.id }} .sk-tech__img img {
     width: 100%;
     height: auto;
     display: block;
-  }
-
-  .sk-tech-{{ section.id }} .sk-tech__content {
-    flex: 1 1 33%;
-    max-width: 33%;
-  }
-
-  /* Subheader */
-  .sk-tech__subheader {
-    font-size: calc(var(--sk-font-size-large) * 1.0);
-    font-weight: 600;
-    color: #30273E;
-    line-height: 1.35;
-    margin: 0 0 20px 0;
   }
 
   /* Bullets */
@@ -66,19 +68,21 @@
     display: flex;
     align-items: flex-start;
     gap: 12px;
-  }
-
-  .sk-tech__icon {
-    width: 18px;
-    height: 18px;
-    display: block;
-    flex-shrink: 0;
-  }
-
-  .sk-tech__text {
     color: #30273E;
     font-size: var(--sk-font-size-medium);
     line-height: 1.55;
+  }
+
+  .sk-tech__bullets li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+    margin-top: 6px;
+    border-right: 2px solid #30273E;
+    border-bottom: 2px solid #30273E;
+    transform: rotate(-45deg);
+    display: inline-block;
   }
 
   /* Mobile mode */
@@ -114,68 +118,80 @@
 
     .sk-tech-{{ section.id }} .swiper-slide {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-    }
-
-    .sk-tech__subheader {
-      margin-bottom: 16px;
     }
   }
 </style>
 
 <section class="sk-tech-{{ section.id }}">
   <div class="page-width">
-    {% if section.settings.heading %}
-      <h2 class="sk-tech__heading">{{ section.settings.heading }}</h2>
+    {% if section.settings.heading or section.settings.subheader %}
+      <div class="sk-tech__header">
+        {% if section.settings.heading %}
+          <h2 class="sk-tech__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.subheader %}
+          <h3 class="sk-tech__subheader">{{ section.settings.subheader }}</h3>
+        {% endif %}
+      </div>
     {% endif %}
 
     <!-- DESKTOP LAYOUT -->
     <div class="sk-tech__row">
-      {% if section.settings.left_image %}
-        <div class="sk-tech__img">
-          <img
-            src="{{ section.settings.left_image | image_url: width: 1200 }}"
-            loading="lazy"
-            alt="Skinora Left"
-            width="{{ section.settings.left_image.width }}"
-            height="{{ section.settings.left_image.height }}"
-          >
+      {% if section.settings.left_image or section.settings.left_bullets %}
+        <div class="sk-tech__block">
+          {% if section.settings.left_image %}
+            <div class="sk-tech__img">
+              <img
+                src="{{ section.settings.left_image | image_url: width: 1200 }}"
+                loading="lazy"
+                alt="Skinora Left"
+                width="{{ section.settings.left_image.width }}"
+                height="{{ section.settings.left_image.height }}"
+              >
+            </div>
+          {% endif %}
+
+          {% if section.settings.left_bullets %}
+            <ul class="sk-tech__bullets">
+              {% assign left_items = section.settings.left_bullets | split: '||' %}
+              {% for item in left_items %}
+                {% assign text = item | strip %}
+                {% if text != '' %}
+                  <li>{{ text }}</li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          {% endif %}
         </div>
       {% endif %}
 
-      <div class="sk-tech__content">
-        {% if section.settings.subheader %}
-          <h3 class="sk-tech__subheader">{{ section.settings.subheader }}</h3>
-        {% endif %}
+      {% if section.settings.right_image or section.settings.right_bullets %}
+        <div class="sk-tech__block">
+          {% if section.settings.right_image %}
+            <div class="sk-tech__img">
+              <img
+                src="{{ section.settings.right_image | image_url: width: 1200 }}"
+                loading="lazy"
+                alt="Skinora Right"
+                width="{{ section.settings.right_image.width }}"
+                height="{{ section.settings.right_image.height }}"
+              >
+            </div>
+          {% endif %}
 
-        {% if section.settings.bullet_points %}
-          <ul class="sk-tech__bullets">
-            {% assign items = section.settings.bullet_points | split: '||' %}
-            {% for i in items %}
-              {% assign t = i | strip %}
-              {% if t != '' %}
-                <li>
-                  <span class="sk-tech__icon">
-                    {{ 'icon-arrow-right.svg' | inline_asset_content }}
-                  </span>
-                  <span class="sk-tech__text">{{ t }}</span>
-                </li>
-              {% endif %}
-            {% endfor %}
-          </ul>
-        {% endif %}
-      </div>
-
-      {% if section.settings.right_image %}
-        <div class="sk-tech__img">
-          <img
-            src="{{ section.settings.right_image | image_url: width: 1200 }}"
-            loading="lazy"
-            alt="Skinora Right"
-            width="{{ section.settings.right_image.width }}"
-            height="{{ section.settings.right_image.height }}"
-          >
+          {% if section.settings.right_bullets %}
+            <ul class="sk-tech__bullets">
+              {% assign right_items = section.settings.right_bullets | split: '||' %}
+              {% for item in right_items %}
+                {% assign text = item | strip %}
+                {% if text != '' %}
+                  <li>{{ text }}</li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          {% endif %}
         </div>
       {% endif %}
     </div>
@@ -184,56 +200,59 @@
     <div class="sk-tech__slider sk-tech-slider-{{ section.id }}">
       <div class="swiper sk-tech-swiper-{{ section.id }}">
         <div class="swiper-wrapper">
-          {% if section.settings.left_image %}
+          {% if section.settings.left_image or section.settings.left_bullets %}
             <div class="swiper-slide">
-              <div class="sk-tech__img">
-                <img
-                  src="{{ section.settings.left_image | image_url: width: 1200 }}"
-                  loading="lazy"
-                  alt="Skinora Left"
-                  width="{{ section.settings.left_image.width }}"
-                  height="{{ section.settings.left_image.height }}"
-                >
-              </div>
-            </div>
-          {% endif %}
-
-          <div class="swiper-slide">
-            <div class="sk-tech__content">
-              {% if section.settings.subheader %}
-                <h3 class="sk-tech__subheader">{{ section.settings.subheader }}</h3>
+              {% if section.settings.left_image %}
+                <div class="sk-tech__img">
+                  <img
+                    src="{{ section.settings.left_image | image_url: width: 1200 }}"
+                    loading="lazy"
+                    alt="Skinora Left"
+                    width="{{ section.settings.left_image.width }}"
+                    height="{{ section.settings.left_image.height }}"
+                  >
+                </div>
               {% endif %}
 
-              {% if section.settings.bullet_points %}
+              {% if section.settings.left_bullets %}
                 <ul class="sk-tech__bullets">
-                  {% assign items = section.settings.bullet_points | split: '||' %}
-                  {% for i in items %}
-                    {% assign t = i | strip %}
-                    {% if t != '' %}
-                      <li>
-                        <span class="sk-tech__icon">
-                          {{ 'icon-arrow-right.svg' | inline_asset_content }}
-                        </span>
-                        <span class="sk-tech__text">{{ t }}</span>
-                      </li>
+                  {% assign left_items = section.settings.left_bullets | split: '||' %}
+                  {% for item in left_items %}
+                    {% assign text = item | strip %}
+                    {% if text != '' %}
+                      <li>{{ text }}</li>
                     {% endif %}
                   {% endfor %}
                 </ul>
               {% endif %}
             </div>
-          </div>
+          {% endif %}
 
-          {% if section.settings.right_image %}
+          {% if section.settings.right_image or section.settings.right_bullets %}
             <div class="swiper-slide">
-              <div class="sk-tech__img">
-                <img
-                  src="{{ section.settings.right_image | image_url: width: 1200 }}"
-                  loading="lazy"
-                  alt="Skinora Right"
-                  width="{{ section.settings.right_image.width }}"
-                  height="{{ section.settings.right_image.height }}"
-                >
-              </div>
+              {% if section.settings.right_image %}
+                <div class="sk-tech__img">
+                  <img
+                    src="{{ section.settings.right_image | image_url: width: 1200 }}"
+                    loading="lazy"
+                    alt="Skinora Right"
+                    width="{{ section.settings.right_image.width }}"
+                    height="{{ section.settings.right_image.height }}"
+                  >
+                </div>
+              {% endif %}
+
+              {% if section.settings.right_bullets %}
+                <ul class="sk-tech__bullets">
+                  {% assign right_items = section.settings.right_bullets | split: '||' %}
+                  {% for item in right_items %}
+                    {% assign text = item | strip %}
+                    {% if text != '' %}
+                      <li>{{ text }}</li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
           {% endif %}
         </div>
@@ -291,21 +310,19 @@
       "label": "Subheader",
       "default": "Hva gjør Skinora-teknologien?"
     },
+    { "type": "image_picker", "id": "left_image", "label": "Left image" },
     {
       "type": "textarea",
-      "id": "bullet_points",
-      "label": "Bullet points (use || as delimiter)",
-      "default": "Øker kollagen || Reduserer inflammasjon || Forbedrer hudens klarhet"
+      "id": "left_bullets",
+      "label": "Left bullets (use || as delimiter)",
+      "default": "Øker kollagen || Reduserer inflammasjon"
     },
+    { "type": "image_picker", "id": "right_image", "label": "Right image" },
     {
-      "type": "image_picker",
-      "id": "left_image",
-      "label": "Left image"
-    },
-    {
-      "type": "image_picker",
-      "id": "right_image",
-      "label": "Right image"
+      "type": "textarea",
+      "id": "right_bullets",
+      "label": "Right bullets (use || as delimiter)",
+      "default": "Forbedrer hudens klarhet"
     },
     {
       "type": "range",
