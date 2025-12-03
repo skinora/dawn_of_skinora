@@ -346,11 +346,10 @@
       "name": "SK Technology (Generic)",
       "settings": {
         "heading": "TEKNOLOGIEN BAK SKINORA®",
+        "subheader": "Hva gjør Skinora-teknologien?",
+        "bullet_points": "Øker kollagen || Reduserer inflammasjon || Forbedrer hudens klarhet",
         "left_image": "shopify://shop_images/415_630_830_nm.webp",
-        "content_html": "<p>Klinisk LED-teknologi som aktiverer hudens egen fornyelse – for fastere, klarere og sterkere hud.</p>",
         "right_image": "shopify://shop_images/630_830_1072_nm.webp",
-        "show_arrow": true,
-        "content_max_width": 520,
         "pad_y_desktop": 112,
         "pad_y_mobile": 60
       }
