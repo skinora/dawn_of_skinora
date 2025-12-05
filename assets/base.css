@@ -378,7 +378,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 :root {
   --section-heading-hxl: var(--sk-font-size-hero);
   --section-heading-hxl-line: 1.05;
-  --section-heading-h1: var(--sk-font-size-3xl);
+  --section-heading-h1: calc(var(--sk-font-size-3xl) * 0.65);
   --section-heading-h1-line: 1.08;
   --section-heading-h2: var(--sk-font-size-2xl);
   --section-heading-h2-line: 1.1;
@@ -4845,7 +4845,7 @@ div.okeReviews .oke-w-review-main {
   }
 
   .sk-content-section__heading {
-    font-size: calc(var(--section-heading-h2) * 0.85) !important;
+    font-size: calc(var(--section-heading-h2) * 0.75) !important;
     margin-bottom: 16px;
   }
 

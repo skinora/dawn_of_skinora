@@ -16,9 +16,9 @@
 
   /* Heading */
   .sk-tech-{{ section.id }} .sk-tech__heading {
-    font-size: var(--section-heading-h2);
+    font-size: var(--section-heading-h1);
     font-weight: 700;
-    line-height: var(--section-heading-h2-line);
+    line-height: var(--section-heading-h1-line);
     color: rgb(var(--sk-color-heading-text));
     margin: 0 0 12px 0;
     text-transform: uppercase;
@@ -131,7 +131,9 @@
     {% if section.settings.heading or section.settings.subheader %}
       <div class="sk-tech__header">
         {% if section.settings.heading %}
-          <h2 class="sk-tech__heading">{{ section.settings.heading }}</h2>
+          <h1 class="sk-header__section sk-tech__heading sk-section-heading sk-section-heading--h1">
+            {{ section.settings.heading }}
+          </h1>
         {% endif %}
         {% if section.settings.subheader %}
           <h3 class="sk-tech__subheader">{{ section.settings.subheader }}</h3>

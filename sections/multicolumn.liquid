@@ -32,9 +32,9 @@
   >
     {%- unless section.settings.title == blank -%}
       <div class="title-wrapper-with-link title-wrapper--self-padded-mobile title-wrapper--no-top-margin multicolumn__title">
-        <h2 class="title inline-richtext {{ section.settings.heading_size }} sk-section-heading sk-section-heading--h1">
+        <h1 class="title inline-richtext {{ section.settings.heading_size }} sk-section-heading sk-section-heading--h1">
           {{ section.settings.title }}
-        </h2>
+        </h1>
         {%- if section.settings.button_label != blank and show_mobile_slider -%}
           <a href="{{ section.settings.button_link }}" class="link underlined-link large-up-hide">
             {{- section.settings.button_label | escape -}}

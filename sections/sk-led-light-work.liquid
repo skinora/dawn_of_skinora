@@ -121,9 +121,9 @@
 <section class="sk-wavelengths section--full-bleed">
   <div class="page-width">
     {% if section.settings.sk_led_light_work_heading != blank %}
-      <h2 class="sk-header__section sk-section-heading sk-section-heading--h1">
+      <h1 class="sk-header__section sk-section-heading sk-section-heading--h1">
         {{ section.settings.sk_led_light_work_heading }}
-      </h2>
+      </h1>
     {% endif %}
 
     {% assign visible_blocks = section.blocks | where_exp: 'block', 'block.settings.sk_wavelength_visible != false' %}

@@ -4,9 +4,9 @@
   <div class="page-width">
     <div class="sk-latest-blogs__header">
       {%- if section.settings.heading != blank -%}
-        <h2 class="sk-header__section sk-latest-blogs__heading sk-section-heading sk-section-heading--h1{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        <h1 class="sk-header__section sk-latest-blogs__heading sk-section-heading sk-section-heading--h1{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
           {{ section.settings.heading | escape }}
-        </h2>
+        </h1>
       {%- endif -%}
 
       {%- if section.settings.description != blank -%}
