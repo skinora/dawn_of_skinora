@@ -76,7 +76,7 @@
     margin-top: 3rem;
   }
 
-  /* Brukes sammen med theme-knappen .sk_primary-button */
+  /* Brukes sammen med theme-knappen .sk-btn */
   .about-sec-2-btn {
     display: inline-flex;
     align-items: center;
@@ -292,9 +292,9 @@
 
         {% if section.settings.button_label != blank %}
           <div class="sk-about-section-2__button-wrapper">
-            <a href="{{ section.settings.button_link }}" class="sk_primary-button about-sec-2-btn">
+            <a href="{{ section.settings.button_link }}" class="sk-btn sk-btn--primary about-sec-2-btn">
               {{ section.settings.button_label }}
-              <span class="svg-wrapper">
+              <span class="svg-wrapper sk-btn__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="29" viewBox="0 0 23 29" fill="none">
                   <path d="M22.1904 13.8521L21.5352 14.5132L22.1904 15.1763L9.02734 28.4858L6.39453 25.8247L15.6016 16.5142H0.499023V12.5142H15.6016L6.39453 3.20361L9.02734 0.541504L22.1904 13.8521Z" fill="white"/>
                 </svg>

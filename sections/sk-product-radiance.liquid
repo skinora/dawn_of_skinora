@@ -84,7 +84,7 @@
       flex: 0 0 100%;
     }
 
-    .sk_primary-button{
+    .sk-product-radiance-{{ section.id }} .sk-btn {
       width: 30rem;
     }
 
@@ -120,7 +120,7 @@
       line-height: 20px;
     }
 
-    .sk-product-radiance-{{ section.id }} .sk-image-content__button .sk_primary-button {
+    .sk-product-radiance-{{ section.id }} .sk-image-content__button .sk-btn {
       width: 20rem;
     }
   }
@@ -177,7 +177,7 @@
               <div class="sk-image-content__button">
                 <a
                   href="{% if section.settings.button_url != blank %}{{ section.settings.button_url }}{% else %}#{% endif %}"
-                  class="sk_primary-button"
+                  class="sk-btn sk-btn--primary"
                 >
                   {{ section.settings.button_text }}
                 </a>

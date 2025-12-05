@@ -162,7 +162,7 @@
     border: none !important;
   }
 
-  .sk-faq-read-more-btn .sk_primary-button {
+  .sk-faq-read-more-btn .sk-btn {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -196,7 +196,7 @@
       line-height: 20px;
     }
 
-    .sk-faq-read-more-btn .sk_primary-button {
+    .sk-faq-read-more-btn .sk-btn {
       width: 12rem;
     }
   }
@@ -273,9 +273,9 @@
           </div>
         </div>
         <div class="sk-faq-read-more-btn">
-          <a href="{{ section.settings.faq_link }}" class=" sk_primary-button">
+          <a href="{{ section.settings.faq_link }}" class="sk-btn sk-btn--secondary">
             Les mer
-            <span class="svg-wrapper">
+            <span class="svg-wrapper sk-btn__icon">
               {{- 'arrow-right.svg' | inline_asset_content -}}
             </span>
           </a>

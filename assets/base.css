@@ -4176,26 +4176,83 @@ small,
   height: unset;
 }
 
+.sk-btn,
+.sk_primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  font-size: clamp(1.6rem, 1.8vw, 1.8rem);
+  line-height: 1.25;
+  border-radius: 2px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sk-btn--primary,
 .sk_primary-button {
   background: var(--color-brand);
   color: var(--color-white);
-  text-decoration: none;
-  padding: 15px 10px;
-  display: flex;
-  justify-content: center;
-  text-transform: uppercase;
-  width: 30rem;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  padding: 16px 32px;
+  box-shadow: 0 2px 2px rgba(var(--color-brand-rgb), 0.28);
 }
 
+.sk-btn--primary:hover,
 .sk_primary-button:hover {
-  background: rgba(var(--color-brand-rgb), 0.59); /* approx alpha from 0x96 */
+  background: #3a3150;
   color: var(--color-white);
+  box-shadow: 0 2px 3px rgba(var(--color-brand-rgb), 0.35);
 }
 
+.sk-btn--secondary {
+  background: transparent;
+  color: var(--color-brand);
+  font-weight: 500;
+  border: 2px solid var(--color-brand);
+  padding: 16px 32px;
+  box-shadow: none;
+  letter-spacing: 0.3px;
+}
+
+.sk-btn--secondary:hover {
+  background: #f2f2f2;
+}
+
+.sk-btn--tertiary {
+  background: transparent;
+  border: none;
+  color: rgba(var(--color-brand-rgb), 0.7);
+  font-weight: 500;
+  padding: 0;
+  gap: 0.4rem;
+  box-shadow: none;
+  letter-spacing: 0.25px;
+}
+
+.sk-btn--tertiary:hover {
+  text-decoration: underline;
+}
+
+.sk-btn__icon {
+  display: inline-flex;
+  transition: transform 0.25s ease;
+}
+
+.sk-btn--primary:hover .sk-btn__icon,
+.sk_primary-button:hover .sk-btn__icon,
+.sk-btn--secondary:hover .sk-btn__icon,
+.sk-btn--tertiary:hover .sk-btn__icon {
+  transform: translateX(2px);
+}
+
+.sk-btn.cart-items-pg-btn,
 .sk_primary-button.cart-items-pg-btn {
   display: inline-flex !important;
-  width: 23rem;
+  min-width: 23rem;
 }
 
 .shopify-pc__banner__dialog {
@@ -4626,7 +4683,7 @@ div.okeReviews .oke-w-review-main {
     margin: 13px 0;
   }
 
-  .sk_primary-button {
+  .sk-btn {
     width: 22rem;
     gap: 15px;
     align-items: center;
@@ -4867,13 +4924,13 @@ div.okeReviews .oke-w-review-main {
     line-height: 20px;
   }
 
-  .sk_primary-button {
+  .sk-btn {
     font-size: var(--sk-font-size-xxs);
     padding: 12px;
     width: 20rem;
   }
 
-  .sk_primary-button svg {
+  .sk-btn svg {
     width: 12px;
   }
 

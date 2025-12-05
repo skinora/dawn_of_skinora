@@ -17,7 +17,10 @@
     <div class="sk-explore-blogs-button__wrapper">
       {%- if section.settings.button_label != blank -%}
         <div>
-          <a href="{{ section.settings.button_link | default: '/blogs' }}" class="sk_primary-button">
+          <a
+            href="{{ section.settings.button_link | default: '/blogs' }}"
+            class="sk-btn sk-btn--secondary sk-explore-blogs-button__btn"
+          >
             {{ section.settings.button_label | escape }}
           </a>
         </div>

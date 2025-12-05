@@ -309,7 +309,7 @@
                         <button
                           type="submit"
                           name="add"
-                          class="sk_primary-button buy_prod_btn"
+                          class="sk-btn sk-btn--primary buy_prod_btn"
                         >
                           <span>
                             {% if current_variant.available == false %}
@@ -318,15 +318,17 @@
                               {{ block.settings.button_text }}
                             {% endif %}
                           </span>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 23 24"
-                            fill="none"
-                          >
-                            <path d="M11.5001 1.79175V22.2084M1.29175 12.0001H21.7084" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
+                          <span class="sk-btn__icon">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 23 24"
+                              fill="none"
+                            >
+                              <path d="M11.5001 1.79175V22.2084M1.29175 12.0001H21.7084" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                          </span>
                           {%- render 'loading-spinner' -%}
                         </button>
                       {%- endform -%}

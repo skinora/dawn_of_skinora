@@ -170,7 +170,7 @@
 /*                                BUTTON                                      */
 /* -------------------------------------------------------------------------- */
 
-.image-with-text__button .sk_primary-button {
+.image-with-text__button .sk-btn {
   margin-top: 2rem;
   padding: 1.1rem 2.4rem;
   font-size: 1rem !important;

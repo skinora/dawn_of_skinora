@@ -68,9 +68,12 @@
           {{ section.settings.sk_banner_description }}
         </p>
         <div>
-          <a href="{{ section.settings.sk_banner_button_link }}" class="sk-dynamic-banner__button sk_primary-button">
+          <a
+            href="{{ section.settings.sk_banner_button_link }}"
+            class="sk-dynamic-banner__button sk-btn sk-btn--primary"
+          >
             {{ section.settings.sk_banner_button_text }}
-            <span class="svg-wrapper">
+            <span class="svg-wrapper sk-btn__icon">
               {{- 'arrow-right.svg' | inline_asset_content -}}
             </span>
           </a>

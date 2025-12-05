@@ -163,25 +163,9 @@
   }
 
   /* --- Read more button --- */
-  .sk-faq-accordion-{{ section.id }} .sk-faq-read-more-btn .sk_primary-button {
-    background: #4B0082;
-    color: #fff;
+  .sk-faq-accordion-{{ section.id }} .sk-faq-read-more-btn .sk-btn {
     margin-top: 2.3rem;
-    padding: 14px 24px;
-    border-radius: 999px;
-    font-size: var(--sk-font-size-medium);
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
     gap: 10px;
-    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
-    box-shadow: 0 8px 18px rgba(75, 0, 130, 0.22);
-  }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-read-more-btn .sk_primary-button:hover {
-    background: #6A0DAD;
-    box-shadow: 0 10px 22px rgba(75, 0, 130, 0.3);
-    transform: translateY(-1px);
   }
 
   /* --- Mobile --- */
@@ -206,7 +190,7 @@
       padding: 18px 0;
     }
 
-    .sk-faq-accordion-{{ section.id }} .sk-faq-read-more-btn .sk_primary-button {
+    .sk-faq-accordion-{{ section.id }} .sk-faq-read-more-btn .sk-btn {
       width: 100%;
       justify-content: center;
       text-align: center;
@@ -277,9 +261,9 @@
           </div>
 
           <div class="sk-faq-read-more-btn">
-            <a href="{{ section.settings.faq_link }}" class="sk_primary-button">
+            <a href="{{ section.settings.faq_link }}" class="sk-btn sk-btn--secondary">
               Les mer
-              <span class="svg-wrapper">
+              <span class="svg-wrapper sk-btn__icon">
                 {{- 'arrow-right.svg' | inline_asset_content -}}
               </span>
             </a>
