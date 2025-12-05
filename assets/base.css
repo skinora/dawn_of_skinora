@@ -4209,17 +4209,20 @@ small,
 }
 
 .sk-btn--secondary {
-  background: transparent;
-  color: var(--color-brand);
+  background: transparent !important;
+  color: var(--color-brand) !important;
   font-weight: 500;
-  border: 2px solid var(--color-brand);
+  border: 2px solid var(--color-brand) !important;
   padding: 16px 32px;
   box-shadow: none;
   letter-spacing: 0.3px;
+  text-transform: uppercase;
 }
 
-.sk-btn--secondary:hover {
-  background: #f2f2f2;
+.sk-btn--secondary:hover,
+.sk-btn--secondary:focus-visible {
+  background: rgba(var(--color-brand-rgb), 0.08);
+  color: var(--color-brand);
 }
 
 .sk-btn--tertiary {
