@@ -1,11 +1,14 @@
 <style>
   .sk-dynamic-banner {
-    background: url('{{ 'banner-bg.png' | asset_url }}') no-repeat center center/cover;
-    height: 65vh;
+    background-image: url('{{ section.settings.sk_banner_img_desktop | image_url: width: 2200 }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     width: 100%;
-    position: relative;
+    height: 100vh; /* full viewport height */
     display: flex;
     align-items: center;
+    position: relative;
   }
 
   .sk-dynamic-banner__container {
@@ -13,49 +16,73 @@
     align-items: center;
     justify-content: space-between;
   }
-  .sk-dynamic-banner__title {
-    font-size: clamp(2.6rem, 4vw, 4rem);
-    color: #2c2c2c;
-    font-weight: 500;
-    margin-bottom: clamp(1.1rem, 2.25vw, 1.25rem);
-    line-height: clamp(1.05, 1.08 + 0.1vw, 1.12);
-    letter-spacing: clamp(-0.08rem, -0.35vw, -0.125rem);
-    max-width: min(90vw, 45rem);
-  }
 
   .sk-dynamic-banner__content {
-    padding-right: clamp(2rem, 6vw + 1rem, 15rem);
-    max-width: min(90vw, 45rem);
+    padding-right: 15rem;
   }
+
+  .sk-dynamic-banner__title {
+    font-size: 64px;
+    color: #2c2c2c;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    max-width: 720px;
+  }
+
   .sk-dynamic-banner__description {
     font-size: calc(var(--sk-font-size-large) * 1.1);
     font-weight: 600;
     color: #6c6c6c;
     line-height: 32px;
     margin-bottom: 30px;
+    max-width: 520px;
   }
 
   .sk-dynamic-banner__button {
-    display: flex;
-    justify-content: center;
+    display: inline-flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
   }
 
-  @media only screen and (max-width: 700px) {
+  /* Tablet override */
+  @media (max-width: 1000px) {
     .sk-dynamic-banner {
-      background: url('{{ 'banner-bg-mobile.png' | asset_url }}') no-repeat center center/cover;
-      height: 75vh;
+      background-image: url('{{ section.settings.sk_banner_img_tablet | image_url: width: 1500 }}');
+      height: 100vh;
+    }
+
+    .sk-dynamic-banner__content {
+      padding-right: 5rem;
     }
   }
-  @media screen and (max-width: 749px) {
-    .sk-section-heading {
-      font-size: var(--sk-mobile-heading-size);
-      line-height: var(--sk-mobile-heading-line);
+
+  /* Mobile override */
+  @media (max-width: 700px) {
+    .sk-dynamic-banner {
+      background-image: url('{{ section.settings.sk_banner_img_mobile | image_url: width: 900 }}');
+      height: 100vh;
     }
-    .sk-section-body {
-      font-size: var(--sk-mobile-body-size);
-      line-height: var(--sk-mobile-body-line);
+
+    .sk-dynamic-banner__container {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .sk-dynamic-banner__content {
+      padding-right: 0;
+    }
+
+    .sk-dynamic-banner__title {
+      font-size: 36px;
+      line-height: 1.2;
+      max-width: 100%;
+    }
+
+    .sk-dynamic-banner__description {
+      font-size: 16px;
+      line-height: 1.4;
+      max-width: 100%;
     }
   }
 </style>
@@ -67,9 +94,11 @@
         <h2 class="sk-header__section sk-dynamic-banner__title sk-section-heading sk-section-heading--hxl">
           {{ section.settings.sk_banner_title }}
         </h2>
+
         <p class="sk-dynamic-banner__description sk-section-body">
           {{ section.settings.sk_banner_description }}
         </p>
+
         <div>
           <a
             href="{{ section.settings.sk_banner_button_link }}"
@@ -82,14 +111,20 @@
           </a>
         </div>
       </div>
-      <div class="sk-dynamic-banner__img">
-        <img
-          src="{{ section.settings.sk_banner_img | image_url: width: 555, height: 370 }}"
-          alt="{{ section.settings.sk_banner_title }}"
-          width="555"
-          height="370"
-        >
-      </div>
+
+      {% comment %}
+        Optional image block on the side — remove if you don’t want it:
+      {% endcomment %}
+      {% if section.settings.sk_banner_img_desktop %}
+        <div class="sk-dynamic-banner__img">
+          <img
+            src="{{ section.settings.sk_banner_img_desktop | image_url: width: 555, height: 370 }}"
+            alt="{{ section.settings.sk_banner_title }}"
+            width="555"
+            height="370"
+          >
+        </div>
+      {% endif %}
     </div>
   </div>
 </section>
@@ -100,8 +135,18 @@
   "settings": [
     {
       "type": "image_picker",
-      "id": "sk_banner_img",
-      "label": "Banner Img"
+      "id": "sk_banner_img_desktop",
+      "label": "Banner Image – Desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "sk_banner_img_tablet",
+      "label": "Banner Image – Tablet"
+    },
+    {
+      "type": "image_picker",
+      "id": "sk_banner_img_mobile",
+      "label": "Banner Image – Mobile"
     },
     {
       "type": "text",
