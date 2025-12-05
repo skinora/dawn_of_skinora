@@ -52,10 +52,17 @@
     height: auto;
     fill: none;
     stroke: currentColor;
+    stroke-width: 1.75;
   }
 
   .sk-features__icon svg * {
     fill: none !important;
+    stroke-width: 1.75;
+  }
+
+  .sk-features__icon svg .star,
+  .sk-features__icon svg [data-icon='star'] {
+    fill: currentColor !important;
   }
 
   @media only screen and (max-width: 900px) {
