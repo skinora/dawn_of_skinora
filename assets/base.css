@@ -391,6 +391,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   font-weight: 600;
   margin: 0 0 0.6rem;
   color: inherit; /* do not override section-specific colors */
+  text-transform: uppercase;
 }
 
 .sk-section-heading--hxl {

@@ -21,9 +21,9 @@
 }
 
 .sk-about-section-2__subheading {
-  font-size: 1.125rem; /* 18px */
-  font-weight: 700;
-  color: var(--color-neutral-1, #6c6c6c);
+  font-size: var(--sk-font-size-small);
+  font-weight: 400;
+  color: rgb(var(--sk-color-subheader-text));
 }
 
 .sk-about-section-2__heading {
@@ -31,9 +31,10 @@
   font-size: clamp(2.5rem, 5vw + 1rem, 5.625rem);
   font-weight: 600;
   line-height: 1.1;
-  color: var(--color-brand, #30273e);
+  color: rgb(var(--sk-color-heading-text));
   margin-bottom: 2.5rem;
   margin-top: 0;
+  text-transform: uppercase;
 }
 
 .sk-about-section-2__button-wrapper {
@@ -185,7 +186,7 @@
     font-size: 1rem;
     line-height: 1.375rem;
     margin-top: 1rem;
-    color: var(--color-neutral-4, #4f4f4f);
+    color: rgb(var(--sk-color-body-text));
     margin-bottom: 3rem;
   }
 
