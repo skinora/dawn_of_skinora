@@ -44,28 +44,6 @@
     gap: 2.4rem;
   }
 
-  /* Remove bullets from menu lists and prevent default styling */
-  .header__menu ul,
-  .header__menu li,
-  .sk-header__inline-menu,
-  .sk-header__inline-menu li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  /* Change font style: remove italic, use condensed typeface with letter-spacing adjustments */
-  .header__menu .list-menu__item,
-  .header__menu .list-menu__item--link,
-  .sk-header__inline-menu .list-menu__item,
-  .sk-header__inline-menu .list-menu__item--link {
-    font-style: normal;
-    font-stretch: condensed;
-    letter-spacing: -0.3px;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-
   /* Right: ICONS */
   .header__icons {
     justify-self: end;
@@ -74,27 +52,13 @@
     gap: 1.6rem;
   }
 
-  /* Apply brand color to icons */
-  .header__icons .svg-wrapper svg,
-  .header__icons .svg-wrapper svg * {
-    fill: var(--sk-brand-color, #30273e) !important;
-    stroke: var(--sk-brand-color, #30273e) !important;
-  }
-
-  /* Also apply brand color to menu-item dropdown icons (e.g. error/dropdown arrow) */
-  .header__menu .list-menu__item .icon,
-  .sk-header__inline-menu .list-menu__item .icon {
-    fill: var(--sk-brand-color, #30273e) !important;
-    stroke: var(--sk-brand-color, #30273e) !important;
-  }
-
   /* Inline menu spacing */
   .sk-header__inline-menu,
   .list-menu--inline {
     gap: 2.4rem !important;
   }
 
-  /* Show nav always on tablet/desktop */
+  /* SHOW NAV ALWAYS ≥ tablet */
   @media (min-width: 750px) {
     .header__menu,
     .sk-header__nav,
@@ -102,6 +66,10 @@
     .list-menu--inline {
       display: flex !important;
     }
+  }
+
+  /* FORCE OVERRIDE Dawn auto-added medium-hide */
+  @media (min-width: 750px) {
     .header__menu.medium-hide,
     .header__menu .medium-hide,
     nav.medium-hide {
@@ -109,7 +77,7 @@
     }
   }
 
-  /* Logo block styling */
+  /* Logo block styling fix */
   .sk-header__brand {
     justify-self: center;
     display: flex;
@@ -121,15 +89,18 @@
   .header {
     padding: 10px 5px;
   }
+
   .section-header {
     position: sticky;
     margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
   }
+
   @media screen and (min-width: 750px) {
     .section-header {
       margin-bottom: {{ section.settings.margin_bottom }}px;
     }
   }
+
   @media screen and (min-width: 990px) {
     .header {
       padding-top: {{ section.settings.padding_top }}px;
