@@ -2,25 +2,27 @@
 
 <style>
   .sk-radiance {
-    padding-top: {{ section.settings.padding_top }}px;
-    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-top: {{ section.settings.padding_top | times: 4 | divided_by: 3 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 4 | divided_by: 3 }}px;
   }
 
   .sk-radiance__inner {
     display: grid;
-    gap: clamp(2rem, 4vw, 4.8rem);
+    gap: clamp(3rem, 5vw, 6.4rem);
     align-items: center;
+    max-width: min(1280px, 100%);
+    margin: 0 auto;
   }
 
   @media (min-width: 750px) {
     .sk-radiance__inner {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
     }
   }
 
   .sk-radiance__media-frame {
     aspect-ratio: 1 / 1;
-    width: min(520px, 100%);
+    width: min(680px, 100%);
     margin: 0 auto;
     border-radius: 32px;
     overflow: hidden;
@@ -41,7 +43,7 @@
   }
 
   .sk-radiance__content {
-    max-width: 520px;
+    max-width: 640px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
