@@ -387,6 +387,8 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   /* Shared mobile typography tokens */
   --sk-mobile-heading-size: clamp(2.4rem, 6.5vw, 3.2rem);
   --sk-mobile-heading-line: 1.2;
+  --sk-mobile-body-size: clamp(1.6rem, 4.2vw, 2rem);
+  --sk-mobile-body-line: 1.55;
 }
 
 /* Reusable section heading utility */

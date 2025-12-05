@@ -162,6 +162,10 @@
       font-size: var(--sk-mobile-heading-size);
       line-height: var(--sk-mobile-heading-line);
     }
+    .sk-section-body {
+      font-size: var(--sk-mobile-body-size);
+      line-height: var(--sk-mobile-body-line);
+    }
   }
 </style>
 
@@ -317,7 +321,7 @@
                           </svg>
                       {%- endcase -%}
                     </div>
-                    <div class="sk-specifications__text">
+                    <div class="sk-specifications__text sk-section-body">
                       {{ spec_content }}
 
                       {%- comment -%} Check for sub-items marked with ++ {%- endcomment -%}

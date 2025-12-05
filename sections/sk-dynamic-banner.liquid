@@ -50,6 +50,10 @@
       font-size: var(--sk-mobile-heading-size);
       line-height: var(--sk-mobile-heading-line);
     }
+    .sk-section-body {
+      font-size: var(--sk-mobile-body-size);
+      line-height: var(--sk-mobile-body-line);
+    }
   }
 </style>
 
@@ -60,7 +64,7 @@
         <h2 class="sk-header__section sk-dynamic-banner__title sk-section-heading sk-section-heading--hxl">
           {{ section.settings.sk_banner_title }}
         </h2>
-        <p class="sk-dynamic-banner__description">
+        <p class="sk-dynamic-banner__description sk-section-body">
           {{ section.settings.sk_banner_description }}
         </p>
         <div>

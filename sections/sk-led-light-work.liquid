@@ -121,6 +121,10 @@
       font-size: var(--sk-mobile-heading-size);
       line-height: var(--sk-mobile-heading-line);
     }
+    .sk-section-body {
+      font-size: var(--sk-mobile-body-size);
+      line-height: var(--sk-mobile-body-line);
+    }
   }
 </style>
 
@@ -152,7 +156,7 @@
             {{ block.settings.sk_wavelength_heading }}
           </h3>
 
-          <ul class="sk-wavelength__benefits">
+          <ul class="sk-wavelength__benefits sk-section-body">
             {% assign items = block.settings.sk_wavelength_benefits | split: '\n' %}
             {% for item in items %}
               {% assign line = item | strip %}
@@ -186,7 +190,7 @@
                   {{ block.settings.sk_wavelength_heading }}
                 </h3>
 
-                <ul class="sk-wavelength__benefits">
+                <ul class="sk-wavelength__benefits sk-section-body">
                   {% assign items = block.settings.sk_wavelength_benefits | split: '\n' %}
                   {% for item in items %}
                     {% assign line = item | strip %}

@@ -129,6 +129,10 @@
       font-size: var(--sk-mobile-heading-size);
       line-height: var(--sk-mobile-heading-line);
     }
+    .sk-section-body {
+      font-size: var(--sk-mobile-body-size);
+      line-height: var(--sk-mobile-body-line);
+    }
   }
 </style>
 
@@ -164,7 +168,9 @@
               {%- capture radiance_content -%}
                 {{ product.metafields.custom.radiance_content | metafield_tag }}
               {%- endcapture -%}
-              {{ radiance_content | replace: '~', check_icon }}
+              <div class="sk-section-body">
+                {{ radiance_content | replace: '~', check_icon }}
+              </div>
             {%- endif -%}
 
             {%- if section.settings.button_text != blank -%}

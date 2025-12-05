@@ -217,6 +217,10 @@
       font-size: var(--sk-mobile-heading-size);
       line-height: var(--sk-mobile-heading-line);
     }
+    .sk-section-body {
+      font-size: var(--sk-mobile-body-size);
+      line-height: var(--sk-mobile-body-line);
+    }
   }
 </style>
 
@@ -258,7 +262,7 @@
                     data-bs-parent="#faqAccordion-{{ section.id }}"
                   >
                     <div class="accordion-body sk-faq-accordion__body">
-                      <div class="sk-faq-accordion__answer">
+                      <div class="sk-faq-accordion__answer sk-section-body">
                         {%- if faq_item.answer.type == 'rich_text_field' -%}
                           {{ faq_item.answer | metafield_tag }}
                         {%- else -%}

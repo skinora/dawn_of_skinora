@@ -113,6 +113,10 @@
       font-size: var(--sk-mobile-heading-size);
       line-height: var(--sk-mobile-heading-line);
     }
+    .sk-section-body {
+      font-size: var(--sk-mobile-body-size);
+      line-height: var(--sk-mobile-body-line);
+    }
   }
 </style>
 
@@ -154,7 +158,9 @@
                 {% when 'wavelength' %}
                   <div class="sk-led-mask__wavelength" {{ block.shopify_attributes }}>
                     {% comment %} <span class="sk-led-mask__wavelength-value">{{ block.settings.wavelength_value }}</span> {% endcomment %}
-                    <p class="sk-led-mask__wavelength-description">{{ block.settings.wavelength_description }}</p>
+                    <p class="sk-led-mask__wavelength-description sk-section-body">
+                      {{ block.settings.wavelength_description }}
+                    </p>
                   </div>
               {% endcase %}
             {% endfor %}
@@ -162,14 +168,14 @@
         </div>
 
         {% if section.settings.study_info != blank %}
-          <div class="sk-led-mask__study-info">
+          <div class="sk-led-mask__study-info sk-section-body">
             {{ section.settings.study_info }}
           </div>
         {% endif %}
 
         {% if section.settings.result_text != blank %}
           <div class="sk-led-mask__result">
-            <p>
+            <p class="sk-section-body">
               <strong>{{ section.settings.result_label }}</strong>
               {{ section.settings.result_text }}
             </p>
