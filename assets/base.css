@@ -55,22 +55,22 @@
   --sk-info-min: 420px;
   --sk-info-max: clamp(420px, 48vw, 860px);
   --sk-layout-expanded-width: clamp(118rem, 95vw, 190rem);
-  --sk-font-size-base: 1.9rem; /* ~30px */
-  --sk-font-size-small: 1.5833rem; /* ~25px */
-  --sk-font-size-medium: 1.7813rem; /* ~28px */
-  --sk-font-size-caption: 1.4844rem; /* ~24px */
-  --sk-font-size-button: 1.7733rem; /* ~28px */
-  --sk-font-size-large: 1.9792rem; /* ~32px */
-  --sk-font-size-xl: 2.5333rem; /* ~41px */
-  --sk-font-size-2xl: 2.9688rem; /* ~48px */
-  --sk-font-size-3xl: 3.9583rem; /* ~63px */
-  --sk-font-size-display: 3.5625rem; /* ~57px */
-  --sk-font-size-hero: 4.75rem; /* ~76px */
-  --sk-font-size-mega: 6.3333rem; /* ~101px */
-  --sk-font-size-giga: 7.9167rem; /* ~127px */
-  --sk-font-size-count: 11.875rem; /* ~190px */
-  --sk-font-size-xs: 1.3854rem; /* ~22px */
-  --sk-font-size-xxs: 1.1875rem; /* ~19px */
+  --sk-font-size-base: 2.185rem; /* ~35px */
+  --sk-font-size-small: 1.8208rem; /* ~29px */
+  --sk-font-size-medium: 2.0485rem; /* ~32px */
+  --sk-font-size-caption: 1.7071rem; /* ~28px */
+  --sk-font-size-button: 2.0393rem; /* ~32px */
+  --sk-font-size-large: 2.2761rem; /* ~37px */
+  --sk-font-size-xl: 2.9133rem; /* ~47px */
+  --sk-font-size-2xl: 3.4141rem; /* ~55px */
+  --sk-font-size-3xl: 4.551rem; /* ~72px */
+  --sk-font-size-display: 4.0969rem; /* ~66px */
+  --sk-font-size-hero: 5.4625rem; /* ~87px */
+  --sk-font-size-mega: 7.2833rem; /* ~116px */
+  --sk-font-size-giga: 9.1042rem; /* ~146px */
+  --sk-font-size-count: 13.6563rem; /* ~219px */
+  --sk-font-size-xs: 1.5932rem; /* ~25px */
+  --sk-font-size-xxs: 1.3656rem; /* ~22px */
   --sk-line-height-base: 1.75;
   --sk-line-height-tight: 1.45;
   --sk-letter-spacing-button: 0.08em;
