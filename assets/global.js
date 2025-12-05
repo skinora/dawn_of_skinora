@@ -423,6 +423,8 @@ class MenuDrawer extends HTMLElement {
     super();
 
     this.mainDetailsToggle = this.querySelector('details');
+    this.handleOutsidePointer = this.onOutsidePointer.bind(this);
+    this.outsideEventOptions = { capture: true };
 
     this.addEventListener('keyup', this.onKeyUp.bind(this));
     this.addEventListener('focusout', this.onFocusOut.bind(this));
@@ -472,7 +474,8 @@ class MenuDrawer extends HTMLElement {
       if (isOpen) event.preventDefault();
       isOpen ? this.closeMenuDrawer(event, summaryElement) : this.openMenuDrawer(summaryElement);
 
-      if (window.matchMedia('(max-width: 990px)')) {
+      const mobileViewport = window.matchMedia('(max-width: 990px)');
+      if (mobileViewport.matches) {
         document.documentElement.style.setProperty('--viewport-height', `${window.innerHeight}px`);
       }
     } else {
@@ -494,9 +497,15 @@ class MenuDrawer extends HTMLElement {
     summaryElement.setAttribute('aria-expanded', true);
     trapFocus(this.mainDetailsToggle, summaryElement);
     document.body.classList.add(`overflow-hidden-${this.dataset.breakpoint}`);
+    document.addEventListener('pointerdown', this.handleOutsidePointer, this.outsideEventOptions);
+    document.addEventListener('click', this.handleOutsidePointer, this.outsideEventOptions);
+    document.addEventListener('touchstart', this.handleOutsidePointer, this.outsideEventOptions);
   }
 
   closeMenuDrawer(event, elementToFocus = false) {
+    document.removeEventListener('pointerdown', this.handleOutsidePointer, this.outsideEventOptions);
+    document.removeEventListener('click', this.handleOutsidePointer, this.outsideEventOptions);
+    document.removeEventListener('touchstart', this.handleOutsidePointer, this.outsideEventOptions);
     if (event === undefined) return;
 
     this.mainDetailsToggle.classList.remove('menu-opening');
@@ -512,6 +521,19 @@ class MenuDrawer extends HTMLElement {
     this.closeAnimation(this.mainDetailsToggle);
 
     if (event instanceof KeyboardEvent) elementToFocus?.setAttribute('aria-expanded', false);
+  }
+
+  onOutsidePointer(event) {
+    if (!this.mainDetailsToggle.hasAttribute('open')) return;
+    const drawerPanel = this.querySelector('.menu-drawer');
+    const toggleSummary = this.mainDetailsToggle.querySelector('summary');
+
+    if (drawerPanel?.contains(event.target) || toggleSummary?.contains(event.target)) {
+      return;
+    }
+
+    toggleSummary?.setAttribute('aria-expanded', false);
+    this.closeMenuDrawer(event, toggleSummary);
   }
 
   onFocusOut() {
@@ -604,6 +626,26 @@ class HeaderDrawer extends MenuDrawer {
 }
 
 customElements.define('header-drawer', HeaderDrawer);
+
+const updateViewportHeightVar = () => {
+  document.documentElement.style.setProperty('--viewport-height', `${window.innerHeight}px`);
+};
+
+window.addEventListener('resize', () => {
+  if (window.matchMedia('(max-width: 990px)').matches) {
+    updateViewportHeightVar();
+  }
+});
+
+window.addEventListener('orientationchange', () => {
+  if (window.matchMedia('(max-width: 990px)').matches) {
+    updateViewportHeightVar();
+  }
+});
+
+if (window.matchMedia('(max-width: 990px)').matches) {
+  updateViewportHeightVar();
+}
 
 class ModalDialog extends HTMLElement {
   constructor() {

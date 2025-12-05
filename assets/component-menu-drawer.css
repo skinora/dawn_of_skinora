@@ -23,8 +23,9 @@
   top: 0;
   bottom: 0;
   width: min(75vw, 100%);
-  height: 100vh;
-  padding: 0;
+  height: var(--viewport-height, 100dvh);
+  min-height: var(--viewport-height, 100dvh);
+  padding: 0 0 max(env(safe-area-inset-bottom, 0), constant(safe-area-inset-bottom, 0));
   background-color: var(--color-white, #ffffff);
   overflow-x: hidden;
   filter: drop-shadow(
@@ -34,7 +35,7 @@
 }
 
 .js .menu-drawer {
-  height: 100vh;
+  height: var(--viewport-height, 100dvh);
 }
 
 .js details[open] > .menu-drawer {
@@ -61,10 +62,11 @@
 
 .menu-drawer__inner-container {
   position: relative;
-  height: 100%;
+  min-height: var(--viewport-height, 100dvh);
   display: flex;
   flex-direction: column;
-  padding: 2rem 2rem 2.5rem;
+  padding: calc(2rem + max(env(safe-area-inset-top, 0), constant(safe-area-inset-top, 0))) 2rem
+    calc(2.5rem + max(env(safe-area-inset-bottom, 0), constant(safe-area-inset-bottom, 0)));
 }
 
 .menu-drawer__navigation-container {
@@ -72,29 +74,45 @@
   grid-template-rows: 1fr auto;
   align-content: space-between;
   overflow-y: auto;
-  height: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
   padding-top: 1rem;
 }
 
 .menu-drawer__close-main {
   align-self: flex-end;
-  margin: 0;
-  padding: 0.25rem 0 0.75rem;
+  margin: calc(0.9rem + max(env(safe-area-inset-top, 0), constant(safe-area-inset-top, 0)))
+    calc(2.4rem + max(env(safe-area-inset-right, 0), constant(safe-area-inset-right, 0))) 0
+    calc(2.4rem + max(env(safe-area-inset-left, 0), constant(safe-area-inset-left, 0)));
+  padding: 0.7rem 1rem;
   border: none;
   background: transparent;
   cursor: pointer;
-  color: var(--color-brand);
+  color: rgba(var(--color-foreground), 0.85);
   font-size: 0;
   display: flex;
   justify-content: flex-end;
+  position: sticky;
+  top: max(env(safe-area-inset-top, 0), constant(safe-area-inset-top, 0));
+  min-width: 3.2rem;
+  min-height: 3.2rem;
+  z-index: 2;
 }
 
 .menu-drawer__close-main .svg-wrapper {
   width: 1.6rem;
   height: 1.6rem;
   display: inline-flex;
-  color: var(--color-brand);
-  fill: var(--color-brand);
+  color: inherit;
+  fill: currentColor;
+}
+
+.menu-drawer__close-main .svg-wrapper svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  fill: currentColor !important;
+  stroke: currentColor !important;
 }
 
 .menu-drawer__navigation {
