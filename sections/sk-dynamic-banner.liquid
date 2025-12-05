@@ -14,15 +14,18 @@
     justify-content: space-between;
   }
   .sk-dynamic-banner__title {
-    font-size: 64px;
+    font-size: clamp(2.6rem, 4vw, 4rem);
     color: #2c2c2c;
-    font-weight: 600;
-    margin-bottom: 20px;
-    line-height: 65px;
+    font-weight: 500;
+    margin-bottom: clamp(1.1rem, 2.25vw, 1.25rem);
+    line-height: clamp(1.05, 1.08 + 0.1vw, 1.12);
+    letter-spacing: clamp(-0.08rem, -0.35vw, -0.125rem);
+    max-width: min(90vw, 45rem);
   }
 
   .sk-dynamic-banner__content {
-    padding-right: 15rem;
+    padding-right: clamp(2rem, 6vw + 1rem, 15rem);
+    max-width: min(90vw, 45rem);
   }
   .sk-dynamic-banner__description {
     font-size: calc(var(--sk-font-size-large) * 1.1);
