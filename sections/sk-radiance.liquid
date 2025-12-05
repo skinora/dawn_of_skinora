@@ -99,28 +99,14 @@
     align-self: flex-start;
   }
 
-  .sk-radiance__button .sk-btn--secondary {
+  .sk-radiance__button .sk-btn--primary {
     min-width: 200px;
     text-align: center;
-    background: transparent;
-    color: rgb(var(--color-brand-rgb));
-    border-color: rgb(var(--color-brand-rgb));
-    text-transform: uppercase;
-    letter-spacing: var(--sk-letter-spacing-button);
-    border-width: 2px;
-    opacity: 1;
   }
 
-  .sk-radiance__button .sk-btn--secondary.is-disabled {
+  .sk-radiance__button .sk-btn--primary.is-disabled {
     pointer-events: none;
-    opacity: 1;
-    border-color: rgb(var(--color-brand-rgb));
-    color: rgb(var(--color-brand-rgb));
-  }
-
-  .sk-radiance__button .sk-btn--secondary:not(.is-disabled):hover,
-  .sk-radiance__button .sk-btn--secondary:not(.is-disabled):focus-visible {
-    background: rgba(var(--color-brand-rgb), 0.08);
+    opacity: 0.6;
   }
 
   @media (max-width: 749px) {
@@ -176,7 +162,7 @@
                 aria-disabled="true"
                 tabindex="-1"
               {% endif %}
-              class="sk-btn sk-btn--secondary{% if section.settings.button_link == blank %} is-disabled{% endif %}"
+              class="sk-btn sk-btn--primary{% if section.settings.button_link == blank %} is-disabled{% endif %}"
             >
               {{ section.settings.button_label }}
             </a>
