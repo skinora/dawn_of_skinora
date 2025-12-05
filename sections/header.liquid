@@ -50,12 +50,35 @@
     display: flex;
     align-items: center;
     gap: 1.6rem;
+    color: var(--color-brand);
+  }
+
+  .header__icons .header__icon .svg-wrapper svg {
+    width: 26px;
+    height: 26px;
   }
 
   /* Inline menu spacing */
   .sk-header__inline-menu,
   .list-menu--inline {
     gap: 2.4rem !important;
+  }
+
+  .sk-header__inline-menu .list-menu,
+  .sk-header__inline-menu .list-menu li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sk-header__inline-menu .header__menu-item {
+    font-style: normal;
+    letter-spacing: clamp(-0.06em, -0.2vw, -0.02em);
+    text-transform: uppercase;
+  }
+
+  .sk-header__inline-menu .header__menu-item span {
+    letter-spacing: inherit;
   }
 
   /* SHOW NAV ALWAYS ≥ tablet */
