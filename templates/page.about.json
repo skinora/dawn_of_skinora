@@ -29,7 +29,7 @@
         "description": "<p>Vi startet Skinora som en familiebedrift med et klart mål: å gjøre profesjonell hudpleie og well‑aging tilgjengelig for alle som bryr seg om kvalitet. Vi så et marked fylt av overprisede vidundermaskiner og mirakelkurer uten dokumentasjon. Det gjorde oss ikke bare frustrerte – det ga oss et brennende ønske om å skape noe som virkelig virker.</p>",
         "button_label": "Oppdag skinora",
         "button_link": "/collections/all",
-        "main_image": "shopify://shop_images/about-sec-2-img-1.png",
+        "main_image": "shopify://shop_images/ChatGPT_Image_Sep_29_2025_10_14_47_AM.webp",
         "show_glow_effect": true,
         "color_scheme": "background-1",
         "padding_top": 60,
@@ -94,6 +94,7 @@
         "numbered_item_nMHP4b"
       ],
       "settings": {
+        "heading": "",
         "featured_image": "shopify://shop_images/about-sec-2-img-1.png",
         "color_scheme": "background-1",
         "padding_top": 80,
@@ -117,6 +118,7 @@
     "features": {
       "type": "sk-features",
       "settings": {
+        "heading": "",
         "sk_features_bgColor": "#ffffff"
       }
     }
