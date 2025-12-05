@@ -77,8 +77,15 @@
 
   .sk-header .sk-header__inline-menu .header__menu-item {
     font-style: normal;
-    letter-spacing: clamp(0.02em, 0.12vw, 0.08em) !important;
+    letter-spacing: clamp(-0.01em, 0.08vw, 0.05em) !important;
     text-transform: uppercase;
+  }
+  /* Mobile drawer typography */
+  .menu-drawer__menu-item,
+  .menu-drawer__submenu-list .menu-drawer__menu-item {
+    text-transform: uppercase;
+    letter-spacing: clamp(-0.01em, 0.08vw, 0.05em);
+    font-style: normal !important;
   }
 
   .sk-header__inline-menu .header__menu-item span {
