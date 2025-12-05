@@ -61,24 +61,25 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 18px;
   }
 
   .sk-tech__bullets li {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
+    gap: 14px;
     color: #30273E;
-    font-size: var(--sk-font-size-medium);
-    line-height: 1.55;
+    font-size: 18px;
+    line-height: 1.7;
+    font-weight: 400;
   }
 
   .sk-tech__bullets li::before {
     content: '';
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     flex-shrink: 0;
-    margin-top: 6px;
+    margin-top: 9px;
     border-right: 2px solid #30273E;
     border-bottom: 2px solid #30273E;
     transform: rotate(-45deg);
@@ -153,16 +154,22 @@
             </div>
           {% endif %}
 
-          {% if section.settings.left_bullets %}
-            <ul class="sk-tech__bullets">
-              {% assign left_items = section.settings.left_bullets | split: '||' %}
+          {% if section.settings.left_bullets != blank %}
+            {% assign left_items = section.settings.left_bullets | split: '</p>' %}
+            {% capture left_list %}
               {% for item in left_items %}
-                {% assign text = item | strip %}
+                {% assign text = item | strip | remove: '<p>' | strip %}
                 {% if text != '' %}
                   <li>{{ text }}</li>
                 {% endif %}
               {% endfor %}
-            </ul>
+            {% endcapture %}
+            {% assign left_list_trimmed = left_list | strip %}
+            {% if left_list_trimmed != '' %}
+              <ul class="sk-tech__bullets">
+                {{ left_list }}
+              </ul>
+            {% endif %}
           {% endif %}
         </div>
       {% endif %}
@@ -181,16 +188,22 @@
             </div>
           {% endif %}
 
-          {% if section.settings.right_bullets %}
-            <ul class="sk-tech__bullets">
-              {% assign right_items = section.settings.right_bullets | split: '||' %}
+          {% if section.settings.right_bullets != blank %}
+            {% assign right_items = section.settings.right_bullets | split: '</p>' %}
+            {% capture right_list %}
               {% for item in right_items %}
-                {% assign text = item | strip %}
+                {% assign text = item | strip | remove: '<p>' | strip %}
                 {% if text != '' %}
                   <li>{{ text }}</li>
                 {% endif %}
               {% endfor %}
-            </ul>
+            {% endcapture %}
+            {% assign right_list_trimmed = right_list | strip %}
+            {% if right_list_trimmed != '' %}
+              <ul class="sk-tech__bullets">
+                {{ right_list }}
+              </ul>
+            {% endif %}
           {% endif %}
         </div>
       {% endif %}
@@ -214,16 +227,22 @@
                 </div>
               {% endif %}
 
-              {% if section.settings.left_bullets %}
-                <ul class="sk-tech__bullets">
-                  {% assign left_items = section.settings.left_bullets | split: '||' %}
+              {% if section.settings.left_bullets != blank %}
+                {% assign left_items = section.settings.left_bullets | split: '</p>' %}
+                {% capture left_list %}
                   {% for item in left_items %}
-                    {% assign text = item | strip %}
+                    {% assign text = item | strip | remove: '<p>' | strip %}
                     {% if text != '' %}
                       <li>{{ text }}</li>
                     {% endif %}
                   {% endfor %}
-                </ul>
+                {% endcapture %}
+                {% assign left_list_mobile_trimmed = left_list | strip %}
+                {% if left_list_mobile_trimmed != '' %}
+                  <ul class="sk-tech__bullets">
+                    {{ left_list }}
+                  </ul>
+                {% endif %}
               {% endif %}
             </div>
           {% endif %}
@@ -242,16 +261,22 @@
                 </div>
               {% endif %}
 
-              {% if section.settings.right_bullets %}
-                <ul class="sk-tech__bullets">
-                  {% assign right_items = section.settings.right_bullets | split: '||' %}
+              {% if section.settings.right_bullets != blank %}
+                {% assign right_items = section.settings.right_bullets | split: '</p>' %}
+                {% capture right_list %}
                   {% for item in right_items %}
-                    {% assign text = item | strip %}
+                    {% assign text = item | strip | remove: '<p>' | strip %}
                     {% if text != '' %}
                       <li>{{ text }}</li>
                     {% endif %}
                   {% endfor %}
-                </ul>
+                {% endcapture %}
+                {% assign right_list_mobile_trimmed = right_list | strip %}
+                {% if right_list_mobile_trimmed != '' %}
+                  <ul class="sk-tech__bullets">
+                    {{ right_list }}
+                  </ul>
+                {% endif %}
               {% endif %}
             </div>
           {% endif %}
@@ -312,17 +337,17 @@
     },
     { "type": "image_picker", "id": "left_image", "label": "Left image" },
     {
-      "type": "textarea",
+      "type": "richtext",
       "id": "left_bullets",
-      "label": "Left bullets (use || as delimiter)",
-      "default": "Øker kollagen || Reduserer inflammasjon"
+      "label": "Left bullet content",
+      "default": "<p>Øker kollagen</p><p>Reduserer inflammasjon</p>"
     },
     { "type": "image_picker", "id": "right_image", "label": "Right image" },
     {
-      "type": "textarea",
+      "type": "richtext",
       "id": "right_bullets",
-      "label": "Right bullets (use || as delimiter)",
-      "default": "Forbedrer hudens klarhet"
+      "label": "Right bullet content",
+      "default": "<p>Forbedrer hudens klarhet</p>"
     },
     {
       "type": "range",
