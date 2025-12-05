@@ -20,12 +20,13 @@
 
   .sk-dynamic-banner__content {
     padding-right: clamp(2rem, calc(6vw + 1rem), 15rem);
-    max-width: min(90vw, 45rem);
+    width: min(100%, 55rem);
+    max-width: clamp(36rem, 70vw, 55rem);
     justify-self: start;
   }
 
   .sk-dynamic-banner__title {
-    font-size: clamp(3.1rem, 4.8vw, 4.8rem);
+    font-size: clamp(3.8rem, 5.6vw, 5.6rem);
     color: rgb(var(--sk-color-heading-text));
     font-weight: 500;
     line-height: clamp(1.05, calc(1 + 0.12vw), 1.12);
@@ -80,7 +81,7 @@
     }
 
     .sk-dynamic-banner__title {
-      font-size: 43px;
+      font-size: 52px;
       line-height: 1.2;
       max-width: 100%;
     }
@@ -121,16 +122,9 @@
       {% comment %}
         Optional image block on the side — remove if you don’t want it:
       {% endcomment %}
-      {% if section.settings.sk_banner_img_desktop %}
-        <div class="sk-dynamic-banner__img">
-          <img
-            src="{{ section.settings.sk_banner_img_desktop | image_url: width: 555, height: 370 }}"
-            alt="{{ section.settings.sk_banner_title }}"
-            width="555"
-            height="370"
-          >
-        </div>
-      {% endif %}
+      {% comment %}
+        Inline image removed; hero now relies solely on background artwork.
+      {% endcomment %}
     </div>
   </div>
 </section>
