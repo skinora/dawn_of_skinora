@@ -124,6 +124,12 @@
       width: 20rem;
     }
   }
+  @media screen and (max-width: 749px) {
+    .sk-section-heading {
+      font-size: var(--sk-mobile-heading-size);
+      line-height: var(--sk-mobile-heading-line);
+    }
+  }
 </style>
 
 {%- if product.metafields.custom.radiance_content != blank or product.metafields.custom.radiance_image != blank -%}

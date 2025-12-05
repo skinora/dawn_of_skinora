@@ -384,6 +384,9 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   --section-heading-h2-line: 1.1;
   --section-heading-h3: var(--sk-font-size-large);
   --section-heading-h3-line: 1.16;
+  /* Shared mobile typography tokens */
+  --sk-mobile-heading-size: clamp(2.4rem, 6.5vw, 3.2rem);
+  --sk-mobile-heading-line: 1.2;
 }
 
 /* Reusable section heading utility */
