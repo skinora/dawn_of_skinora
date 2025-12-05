@@ -275,39 +275,17 @@
     },
     "sk_radiance_meq7Gb": {
       "type": "sk-radiance",
-      "blocks": {
-        "heading_XQwdbz": {
-          "type": "heading",
-          "settings": {
-            "heading": "Sliter Du Med...",
-            "heading_size": "h0"
-          }
-        },
-        "description_NNfKke": {
-          "type": "description",
-          "settings": {
-            "description": "<p>Skinora Radiance Er Utviklet For Å Møte Nettopp Disse Utfordringene – Med Klinisk Dokumentert LED-Lysteknologi, For Både Menn Og Kvinner</p>",
-            "text_style": "body"
-          }
-        },
-        "button_4eVJnT": {
-          "type": "button",
-          "settings": {
-            "text": "Kjøp Skinora Radiance",
-            "url": ""
-          }
-        }
-      },
-      "block_order": [
-        "heading_XQwdbz",
-        "description_NNfKke",
-        "button_4eVJnT"
-      ],
       "name": "Image with Content",
       "settings": {
+        "image": "shopify://shop_images/enecta-cannabis-extracts-80wCkpt-IKE-unsplash.webp",
         "color_scheme": "",
         "padding_top": 36,
-        "padding_bottom": 36
+        "padding_bottom": 36,
+        "header_text": "Skinora Radiance",
+        "subheader_text": "Clinically inspired glow ritual",
+        "body_richtext": "<p>Describe the routine, highlight ingredients, or insert any promotional copy here.</p>",
+        "button_label": "Learn more",
+        "button_link": ""
       }
     },
     "sk_led_light_work_QHXAbE": {
