@@ -336,6 +336,7 @@
         "wavelength_NyVfVQ",
         "wavelength_LM4gYW"
       ],
+      "disabled": true,
       "name": "SK Led Light Work",
       "settings": {
         "sk_led_light_work_heading": "Hvordan Fungerer Skinora Led Lys"
