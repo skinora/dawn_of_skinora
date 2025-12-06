@@ -83,7 +83,7 @@
 .sk-radiance-product__media {
   position: relative;
   background: transparent;
-  border-radius: 12px;
+  border-radius: 0;
   overflow: hidden;
   flex: 1;
   display: flex;
@@ -94,9 +94,9 @@
 .sk-radiance-product__media-main {
   position: relative;
   width: 100%;
-  background: var(--color-brand, #30273e);
+  background: transparent;
   flex: 1;
-  border-radius: 12px;
+  border-radius: 0;
   overflow: hidden;
 }
 
@@ -104,7 +104,7 @@
   color: var(--color-white, #fff);
   aspect-ratio: 1;
   width: 100%;
-  border-radius: 12px;
+  border-radius: 0;
   overflow: hidden;
 }
 
@@ -124,31 +124,39 @@
 .sk-radiance-product__media-item {
   position: absolute;
   color: var(--color-neutral-3, #333);
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   opacity: 0;
   transition: opacity 0.3s ease;
+  background: transparent;
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .sk-radiance-product__media-item--active {
   opacity: 1;
-  background: linear-gradient(to left, var(--color-brand, #30273e), var(--color-almost-black, #070707)) !important;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-brand, #30273e);
-  border-radius: 12px;
-  overflow: hidden;
+  background: transparent;
+  pointer-events: auto;
+  visibility: visible;
 }
 
 .sk-radiance-product__media-image-element {
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
   color: var(--color-white, #fff);
-  border-radius: 12px;
+  border-radius: 0;
+}
+
+.sk-radiance-product__media-image,
+.sk-radiance-product__media-video,
+.sk-radiance-product__media-external-video,
+.sk-radiance-product__media-model {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 /* Navigation Arrows */
@@ -213,20 +221,18 @@
   flex: 0 0 var(--sk-thumb-size-value);
   width: var(--sk-thumb-size-value);
   height: calc(var(--sk-thumb-size-value) * 1.05);
-  border: 2px solid transparent;
-  border-radius: 12px;
+  border: none;
+  border-radius: 0;
   overflow: hidden;
   cursor: pointer;
   transition: border-color 0.18s ease;
-  background: var(--color-black);
+  background: transparent;
   position: relative;
 }
 .sk-radiance-product__media-thumbnail:hover {
-  border-color: var(--color-black);
   transform: translateY(-2px);
 }
 .sk-radiance-product__media-thumbnail--active {
-  border-color: var(--color-black);
   transform: none;
 }
 .sk-radiance-product__media-thumbnail-image {
