@@ -29,7 +29,7 @@
 .about-page__image {
   width: 100%;
   height: auto;
-  border-radius: var(--border-radius);
+  border-radius: 0;
   box-shadow: var(--shadow-horizontal-offset) var(--shadow-vertical-offset) var(--shadow-blur-radius)
     rgba(var(--color-shadow), var(--shadow-opacity));
 }
@@ -86,7 +86,7 @@
   width: 100%;
   height: auto;
   max-width: 55rem;
-  border-radius: var(--border-radius);
+  border-radius: 0;
   box-shadow: var(--shadow-horizontal-offset) var(--shadow-vertical-offset) var(--shadow-blur-radius)
     rgba(var(--color-shadow), var(--shadow-opacity));
 }

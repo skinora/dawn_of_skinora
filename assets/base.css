@@ -1,3 +1,8 @@
+.sk-section img,
+[class^='sk-'] img,
+[class*=' sk-'] img {
+  border-radius: 0 !important;
+}
 :root {
   --alpha-button-background: 1;
   --alpha-button-border: 1;
