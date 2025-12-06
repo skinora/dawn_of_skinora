@@ -5284,6 +5284,7 @@ div.okeReviews .oke-w-review-main {
   } */
 }
 
+/* Allow sticky bar JS to control visibility */
 .sk-radiance-sticky-bottom-bar {
-  display: none !important;
+  display: block;
 }

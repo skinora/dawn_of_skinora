@@ -13,18 +13,10 @@
       <div class="sk-radiance-sticky-bottom-bar__content">
         <div class="sk-radiance-sticky-bottom-bar__info">
           <h3 class="sk-radiance-sticky-bottom-bar__product-name">{{ product.title }}</h3>
-          <div class="sk-radiance-sticky-bottom-bar__price">
-            {%- render 'sk-radiance-price',
-              product: product,
-              use_variant: true,
-              show_badges: false,
-              price_class: 'price--small'
-            -%}
-          </div>
         </div>
         <button
           type="button"
-          class="sk-radiance-sticky-bottom-bar__button"
+          class="sk-radiance-sticky-bottom-bar__button sk-btn sk-btn--primary"
           data-product-form="{{ product_form_id }}"
           data-section-id="{{ section.id }}"
         >
@@ -43,6 +35,8 @@
     const productFormSelector = '#{{ product_form_id }}';
     const productId = '{{ product.id }}';
     const debug = {{ request.design_mode | json }} || false;
+    const heroSelector = '#MainProduct-' + sectionId + ' .sk-radiance-product__media-wrapper';
+    const heroThreshold = 72; // pixels from top before showing sticky CTA
 
     function createOrUpdatePortal() {
       const template = document.getElementById(templateId);
@@ -72,34 +66,36 @@
       return portal;
     }
 
-    function getVisibilityTarget() {
-      let el = document.querySelector(productFormSelector);
-      if (el) return el;
-      el = document.getElementById('MainProduct-' + sectionId);
-      if (el) return el;
-      el = document.querySelector('[data-product-id="' + productId + '"]');
-      if (el) return el;
-      return document.body;
+    let portal = null;
+    let heroHeight = null;
+    let heroIntersectionObserver = null;
+
+    function getHeroTarget() {
+      return document.querySelector(heroSelector);
     }
 
-    let portal = null;
-    let intersectionObserver = null;
+    function isHeroPastViewport() {
+      const hero = getHeroTarget();
+      if (hero) {
+        const rect = hero.getBoundingClientRect();
+        heroHeight = rect.height;
+        return rect.bottom <= heroThreshold;
+      }
 
-    function togglePortal() {
+      const productSection = document.getElementById('MainProduct-' + sectionId);
+      if (productSection) {
+        const rect = productSection.getBoundingClientRect();
+        return rect.top <= heroThreshold * -1;
+      }
+
+      return window.scrollY > 320;
+    }
+
+    function updatePortalVisibility() {
       if (!portal) portal = createOrUpdatePortal();
       if (!portal) return;
 
-      const target = getVisibilityTarget();
-      if (!target) return;
-
-      const rect = target.getBoundingClientRect();
-      const portalElem = portal || document.getElementById(portalId);
-      const portalHeight = portalElem && portalElem.offsetHeight ? portalElem.offsetHeight : 72;
-      const margin = 28;
-
-      const isAbove = rect.bottom <= margin;
-      const isBelow = rect.top >= window.innerHeight - portalHeight - margin;
-      const shouldShow = isAbove || isBelow;
+      const shouldShow = isHeroPastViewport();
 
       if (shouldShow) {
         portal.classList.add('visible');
@@ -109,7 +105,11 @@
         portal.style.transform = 'translateY(100%)';
       }
 
-      if (debug) console.debug('[SK Sticky] togglePortal', { sectionId, rect, portalHeight, shouldShow });
+      if (debug) console.debug('[SK Sticky] updatePortalVisibility', {
+        sectionId,
+        shouldShow,
+        heroHeight,
+      });
     }
 
     function findProductForm(btn) {
@@ -184,53 +184,44 @@
       portal.addEventListener('click', onPortalClick);
     }
 
-    function setupObservers() {
-      const target = getVisibilityTarget();
-      if ('IntersectionObserver' in window && target) {
-        if (intersectionObserver)
-          try { intersectionObserver.disconnect(); } catch (err) {}
-        intersectionObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.intersectionRatio >= 0.99) {
-                portal && portal.classList.remove('visible');
-                portal && (portal.style.transform = 'translateY(100%)');
-              } else {
-                portal && portal.classList.add('visible');
-                portal && (portal.style.transform = 'translateY(0)');
-              }
-            });
-          },
-          { threshold: [0, 0.5, 0.99] }
-        );
-        try { intersectionObserver.observe(target); } catch (er) {}
-      }
+    function bindScrollListeners() {
+      window.removeEventListener('scroll', updatePortalVisibility);
+      window.removeEventListener('resize', updatePortalVisibility);
+      window.addEventListener('scroll', updatePortalVisibility, { passive: true });
+      window.addEventListener('resize', updatePortalVisibility);
 
-      window.removeEventListener('scroll', togglePortal);
-      window.removeEventListener('resize', togglePortal);
-      window.addEventListener('scroll', togglePortal, { passive: true });
-      window.addEventListener('resize', togglePortal);
+      if (heroIntersectionObserver)
+        try { heroIntersectionObserver.disconnect(); } catch (err) {}
+
+      const hero = getHeroTarget();
+      if (hero && 'IntersectionObserver' in window) {
+        heroIntersectionObserver = new IntersectionObserver(
+          () => updatePortalVisibility(),
+          { threshold: [0, 0.1, 1] }
+        );
+        try { heroIntersectionObserver.observe(hero); } catch (err) {}
+      }
     }
 
     document.addEventListener('product-info:loaded', function (e) {
       const mainId = 'MainProduct-' + sectionId;
       if (!e || !e.target || e.target.id === mainId || (e.target.closest && e.target.closest('#' + mainId))) {
         bindPortalEvents();
-        setupObservers();
-        togglePortal();
+        bindScrollListeners();
+        updatePortalVisibility();
       }
     });
 
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function () {
         bindPortalEvents();
-        setupObservers();
-        togglePortal();
+        bindScrollListeners();
+        updatePortalVisibility();
       });
     } else {
       bindPortalEvents();
-      setupObservers();
-      togglePortal();
+      bindScrollListeners();
+      updatePortalVisibility();
     }
 
     const templateObserver = new MutationObserver((mutations) => {
@@ -239,7 +230,7 @@
           if (n && n.nodeType === 1) {
             if (n.id === templateId || (n.querySelector && n.querySelector('#' + templateId))) {
               bindPortalEvents();
-              togglePortal();
+              updatePortalVisibility();
               return;
             }
           }

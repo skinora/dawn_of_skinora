@@ -616,31 +616,10 @@
   white-space: nowrap;
   padding-top: 1rem;
 }
-.sk-radiance-sticky-bottom-bar__price {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.sk-radiance-sticky-bottom-bar__price .sk-radiance-price-item {
-  font-size: var(--sk-font-size-medium);
-}
 .sk-radiance-sticky-bottom-bar__button {
-  background: var(--color-brand, #30273e);
-  color: var(--color-white, #ffffff);
-  border: none;
-  padding: 13px 45px;
-  font-size: var(--sk-font-size-medium);
-  font-weight: 600;
-  border-radius: 33px;
-  transition: all 0.2s ease;
+  min-width: clamp(10rem, 24vw, 15rem);
   white-space: nowrap;
-}
-.sk-radiance-sticky-bottom-bar__button:hover {
-  background: rgba(var(--color-brand-rgb), 0.8);
-  box-shadow: 0 4px 12px rgba(var(--color-brand-rgb), 0.35);
-}
-.sk-radiance-sticky-bottom-bar__button:active {
-  transform: translateY(0);
+  justify-content: center;
 }
 
 /* Mobile sticky bar tweaks */
