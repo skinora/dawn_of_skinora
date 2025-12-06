@@ -236,7 +236,7 @@
         "wavelength_8KtWUh": {
           "type": "wavelength",
           "settings": {
-            "sk_wavelength_image": "shopify://shop_images/630nm.webp",
+            "sk_wavelength_image": "shopify://shop_images/415nm.webp",
             "sk_wavelength_eyebrow": "LED-TEKNOLOGI",
             "show_highlight_tag": false,
             "highlight_tag_text": "NY DYPTVIRKENDE BØLGELENGDE",
