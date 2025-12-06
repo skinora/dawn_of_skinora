@@ -19,7 +19,6 @@
     font-size: var(--section-heading-h1);
     font-weight: 700;
     line-height: var(--section-heading-h1-line);
-    color: rgb(var(--sk-color-heading-text));
     margin: 0 0 12px 0;
     text-transform: uppercase;
   }
@@ -27,7 +26,6 @@
   .sk-tech-{{ section.id }} .sk-tech__subheader {
     font-size: var(--sk-font-size-medium);
     line-height: 1.35;
-    color: rgb(var(--sk-color-subheader-text));
     font-weight: 400;
     margin: 0;
   }
@@ -69,7 +67,6 @@
     display: flex;
     align-items: flex-start;
     gap: 14px;
-    color: rgb(var(--sk-color-body-text));
     font-size: 19px;
     line-height: 1.7;
     font-weight: 400;
@@ -81,8 +78,8 @@
     height: 12px;
     flex-shrink: 0;
     margin-top: 9px;
-    border-right: 2px solid rgb(var(--sk-color-heading-text));
-    border-bottom: 2px solid rgb(var(--sk-color-heading-text));
+    border-right: 2px solid var(--sk-heading-text-strong);
+    border-bottom: 2px solid var(--sk-heading-text-strong);
     transform: rotate(-45deg);
     display: inline-block;
   }
@@ -132,17 +129,19 @@
   }
 </style>
 
-<section class="sk-tech-{{ section.id }}">
+<section class="sk-tech-{{ section.id }} sk-body-text--strong">
   <div class="page-width">
     {% if section.settings.heading or section.settings.subheader %}
       <div class="sk-tech__header">
         {% if section.settings.heading %}
-          <h1 class="sk-header__section sk-tech__heading sk-section-heading sk-section-heading--h1">
+          <h1 class="sk-header__section sk-tech__heading sk-section-heading sk-section-heading--h1 sk-heading-text--strong sk-heading-size--large">
             {{ section.settings.heading }}
           </h1>
         {% endif %}
         {% if section.settings.subheader %}
-          <h3 class="sk-tech__subheader">{{ section.settings.subheader }}</h3>
+          <h3 class="sk-tech__subheader sk-heading-text--soft sk-heading-size--compact">
+            {{ section.settings.subheader }}
+          </h3>
         {% endif %}
       </div>
     {% endif %}
@@ -175,7 +174,7 @@
             {% endcapture %}
             {% assign left_list_trimmed = left_list | strip %}
             {% if left_list_trimmed != '' %}
-              <ul class="sk-tech__bullets">
+              <ul class="sk-tech__bullets sk-body-text--soft">
                 {{ left_list }}
               </ul>
             {% endif %}
@@ -209,7 +208,7 @@
             {% endcapture %}
             {% assign right_list_trimmed = right_list | strip %}
             {% if right_list_trimmed != '' %}
-              <ul class="sk-tech__bullets">
+              <ul class="sk-tech__bullets sk-body-text--soft">
                 {{ right_list }}
               </ul>
             {% endif %}
@@ -248,7 +247,7 @@
                 {% endcapture %}
                 {% assign left_list_mobile_trimmed = left_list | strip %}
                 {% if left_list_mobile_trimmed != '' %}
-                  <ul class="sk-tech__bullets">
+                  <ul class="sk-tech__bullets sk-body-text--soft">
                     {{ left_list }}
                   </ul>
                 {% endif %}
@@ -282,7 +281,7 @@
                 {% endcapture %}
                 {% assign right_list_mobile_trimmed = right_list | strip %}
                 {% if right_list_mobile_trimmed != '' %}
-                  <ul class="sk-tech__bullets">
+                  <ul class="sk-tech__bullets sk-body-text--soft">
                     {{ right_list }}
                   </ul>
                 {% endif %}

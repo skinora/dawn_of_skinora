@@ -434,6 +434,45 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   font-weight: var(--font-body-weight);
 }
 
+.sk-body-text--strong {
+  color: var(--sk-body-text-strong);
+}
+
+.sk-body-text--soft {
+  color: var(--sk-body-text-soft);
+}
+
+.sk-body-text--muted {
+  color: var(--sk-body-text-muted);
+}
+
+.sk-heading-text--strong {
+  color: var(--sk-heading-text-strong);
+}
+
+.sk-heading-text--soft {
+  color: var(--sk-heading-text-soft);
+}
+
+.sk-heading-text--muted {
+  color: var(--sk-heading-text-muted);
+}
+
+.sk-heading-size--large {
+  font-size: var(--sk-heading-size-large);
+  line-height: var(--section-heading-h1-line);
+}
+
+.sk-heading-size--medium {
+  font-size: var(--sk-heading-size-medium);
+  line-height: var(--section-heading-h2-line);
+}
+
+.sk-heading-size--compact {
+  font-size: var(--sk-heading-size-compact);
+  line-height: var(--section-heading-h3-line);
+}
+
 h1,
 .h1,
 h2,

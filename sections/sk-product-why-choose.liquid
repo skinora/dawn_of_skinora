@@ -29,7 +29,6 @@
                                     font-size: var(--section-heading-h2);
                                     line-height: var(--section-heading-h2-line);
                                     font-weight: 700;
-                                    color: rgb(var(--sk-color-heading-text));
                                     margin-bottom: 48px;
                                     text-align: center;
                                   }
@@ -40,7 +39,6 @@
                                                   font-size: var(--sk-font-size-medium);
                                                   line-height: 1.4;
                                                   font-weight: 700;
-                                                  color: rgb(var(--sk-color-heading-text));
                                                   margin: 0 0 12px 0;
                                                   text-transform: uppercase;
                                                   text-align: center;
@@ -49,7 +47,6 @@
                                                                   .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
                                                                     font-size: var(--sk-font-size-medium);
                                                                     line-height: 1.6;
-                                                                    color: rgb(var(--sk-color-body-text));
                                                                     margin: 0;
                                                                     text-align: center;
                                                                   }
@@ -101,7 +98,7 @@
 </style>
 
 {%- if product.metafields.custom.why_choose_content != blank or product.metafields.custom.why_choose_image != blank -%}
-  <section class="sk-product-why-choose sk-product-why-choose-{{ section.id }}">
+  <section class="sk-product-why-choose sk-product-why-choose-{{ section.id }} sk-body-text--strong">
     <div class="page-width">
       <div class="sk-why-choose__container">
         <!-- Image Section -->
@@ -150,17 +147,24 @@
             {%- endif -%}
 
             {%- if heading_full != blank -%}
-              <h1 class="sk-why-choose__main-heading sk-section-heading sk-section-heading--h1">{{ heading_full }}</h1>
+              <h1 class="sk-why-choose__main-heading sk-section-heading sk-section-heading--h1 sk-heading-text--strong sk-heading-size--large">
+                {{ heading_full }}
+              </h1>
             {%- endif -%}
 
             {%- comment -%} Parse columns separated by || {%- endcomment -%}
             {%- assign columns_content = why_choose_html | split: '||' -%}
 
-            <div class="sk-why-choose__columns">
+            <div class="sk-why-choose__columns sk-body-text--soft">
               {%- for column in columns_content -%}
                 {%- if column contains '<h3>' or column contains '<h4>' or column contains '<p>' -%}
+                  {% assign column_styled = column
+                    | replace: '<h3>', '<h3 class="sk-heading-text--strong sk-heading-size--medium">'
+                    | replace: '<h4>', '<h4 class="sk-heading-text--soft sk-heading-size--compact">'
+                    | replace: '<p>', '<p class="sk-body-text--soft">'
+                  %}
                   <div class="sk-why-choose__column">
-                    {{ column }}
+                    {{ column_styled }}
                   </div>
                 {%- endif -%}
               {%- endfor -%}

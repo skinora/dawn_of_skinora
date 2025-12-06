@@ -42,7 +42,6 @@
   .sk-about-section-2__subheading {
     font-size: var(--sk-font-size-small);
     font-weight: 400;
-    color: rgb(var(--sk-color-subheader-text));
     display: inline-block;
     margin-bottom: 1rem;
   }
@@ -52,7 +51,6 @@
     font-size: 72px;
     font-weight: 600;
     line-height: 1.05;
-    color: rgb(var(--sk-color-heading-text));
     margin-bottom: 2.5rem;
     margin-top: 0;
     text-transform: uppercase;
@@ -68,7 +66,6 @@
     line-height: 1.7;
     margin-top: 20px;
     margin-bottom: 3.5rem;
-    color: rgb(var(--sk-color-body-text));
   }
 
   /* Button-wrapper */
@@ -273,19 +270,19 @@
       <!-- TEXT SECTION -->
       <div class="sk-about-section-2__text-section">
         {% if section.settings.heading != blank %}
-          <h2 class="sk-header__section sk-about-section-2__heading sk-section-heading sk-section-heading--hxl{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          <h2 class="sk-header__section sk-about-section-2__heading sk-section-heading sk-section-heading--hxl sk-heading-text--strong sk-heading-size--large{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
             {{ section.settings.heading | escape }}
           </h2>
         {% endif %}
 
         {% if section.settings.subheading != blank %}
-          <span class="sk-about-section-2__subheading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          <span class="sk-about-section-2__subheading sk-heading-text--soft sk-heading-size--compact{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
             {{ section.settings.subheading | escape }}
           </span>
         {% endif %}
 
         {% if section.settings.description != blank %}
-          <div class="sk-about-section-2__description{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          <div class="sk-about-section-2__description sk-body-text--soft{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
             {{ section.settings.description }}
           </div>
         {% endif %}
