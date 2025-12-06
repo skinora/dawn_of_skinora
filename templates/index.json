@@ -14,8 +14,8 @@
       "name": "SK Dynamic Banner",
       "settings": {
         "sk_banner_img_desktop": "shopify://shop_images/ChatGPT_Image_Sep_29_2025_10_14_47_AM.webp",
-        "sk_banner_title": "PROFESJONELLE RESULTATER, HJEMME",
-        "sk_banner_description": "Utviklet med dokumentert lys­teknologi – designet for å gi deg klinikkresultater, hjemme.",
+        "sk_banner_title": "Profesjonelle resultater uten klinikken",
+        "sk_banner_description": "Dokumentert LED-teknologi som støtter hudens naturlige prosesser – for synlig glød, jevnhet og ro",
         "sk_banner_button_link": "shopify://collections/all-products",
         "sk_banner_button_text": "få huden til å stråle"
       }
