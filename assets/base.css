@@ -5,6 +5,7 @@
   --alpha-badge-border: 0.1;
   /* Brand color */
   --color-brand: #30273e;
+  --color-brand-hover: #4b0082;
   /* Common color tokens */
   --color-white: #ffffff;
   --sk-color-body-text: 42, 38, 52; /* muted charcoal for paragraphs */
@@ -4242,56 +4243,74 @@ small,
 
 .sk-btn--primary,
 .sk_primary-button {
-  background-color: #30273e;
-  color: #ffffff;
-  border: none;
-  padding: 14px 32px;
-  font-size: 15px;
-  letter-spacing: 0.5px;
-  border-radius: 6px;
-  transition: all 0.25s ease;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-weight: 500;
+  justify-content: center;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  border-radius: 0;
+  border: none;
+  background-color: var(--color-brand);
+  color: var(--color-white);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 0.25s ease, transform 0.2s ease;
 }
 
 .sk-btn--primary:hover,
 .sk_primary-button:hover {
-  background-color: #4b0082;
+  background-color: var(--color-brand-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(48, 39, 62, 0.18);
+}
+
+.sk-btn--primary:active,
+.sk_primary-button:active {
+  transform: translateY(0);
 }
 
 .sk-btn--secondary {
-  background: transparent !important;
-  color: var(--color-brand) !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  font-size: 15px;
   font-weight: 500;
-  border: 2px solid var(--color-brand) !important;
-  padding: 16px 32px;
-  box-shadow: none;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  border-radius: 0;
+  border: 2px solid var(--color-brand);
+  background-color: transparent;
+  color: var(--color-brand);
+  text-decoration: none;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .sk-btn--secondary:hover,
 .sk-btn--secondary:focus-visible {
-  background: rgba(var(--color-brand-rgb), 0.08);
-  color: var(--color-brand);
+  background-color: var(--color-brand);
+  color: var(--color-white);
 }
 
 .sk-btn--tertiary {
-  background: transparent;
-  border: none;
-  color: rgba(var(--color-brand-rgb), 0.7);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 4px;
+  font-size: 15px;
   font-weight: 500;
-  padding: 0;
-  gap: 0.4rem;
-  box-shadow: none;
-  letter-spacing: 0.25px;
+  letter-spacing: 0.01em;
+  color: var(--color-brand);
+  text-decoration: none;
+  border-radius: 0;
+  border: none;
+  background: none;
+  transition: color 0.25s ease;
 }
 
-.sk-btn--tertiary:hover {
+.sk-btn--tertiary:hover,
+.sk-btn--tertiary:focus-visible {
+  color: var(--color-brand-hover);
   text-decoration: underline;
 }
 
