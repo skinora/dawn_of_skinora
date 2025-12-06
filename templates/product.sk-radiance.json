@@ -223,15 +223,49 @@
       "name": "SK Product Technology",
       "settings": {
         "heading": "Teknologien bak Skinora Radiance",
-        "left_image": "shopify://shop_images/630nm.jpg",
-        "content_html": "<p>Klinisk LED-teknologi som aktiverer hudens egen fornyelse – for fastere, klarere og sterkere hud</p>",
-        "right_image": "shopify://shop_images/1072nm.jpg",
-        "show_arrow": true,
-        "bg_color": "#ffffff",
-        "content_max_width": 500,
-        "mobile_stack_order": "image-first",
+        "subheader": "Hva gjør Skinora-teknologien?",
+        "left_bullets": "<p>Øker kollagen</p><p>Reduserer inflammasjon</p>",
+        "right_bullets": "<p>Forbedrer hudens klarhet</p>",
         "pad_y_desktop": 112,
         "pad_y_mobile": 60
+      }
+    },
+    "sk_led_light_work_7LKqcD": {
+      "type": "sk-led-light-work",
+      "blocks": {
+        "wavelength_8KtWUh": {
+          "type": "wavelength",
+          "settings": {
+            "sk_wavelength_visible": true,
+            "sk_wavelength_heading": "630 nm Rødt Lys",
+            "sk_wavelength_benefits": "Stimulerer kollagen\nForbedrer glød\nFremmer redusert fine linjer"
+          }
+        },
+        "wavelength_F7AzRL": {
+          "type": "wavelength",
+          "settings": {
+            "sk_wavelength_visible": true,
+            "sk_wavelength_heading": "630 nm Rødt Lys",
+            "sk_wavelength_benefits": "Stimulerer kollagen\nForbedrer glød\nFremmer redusert fine linjer"
+          }
+        },
+        "wavelength_hm7bez": {
+          "type": "wavelength",
+          "settings": {
+            "sk_wavelength_visible": true,
+            "sk_wavelength_heading": "630 nm Rødt Lys",
+            "sk_wavelength_benefits": "Stimulerer kollagen\nForbedrer glød\nFremmer redusert fine linjer"
+          }
+        }
+      },
+      "block_order": [
+        "wavelength_8KtWUh",
+        "wavelength_F7AzRL",
+        "wavelength_hm7bez"
+      ],
+      "name": "SK Led Light Work",
+      "settings": {
+        "sk_led_light_work_heading": "Hvordan Fungerer Skinora LED Lys"
       }
     },
     "sk_product_specifications_cJY9VW": {
@@ -277,6 +311,7 @@
     "sk_product_why_choose_pwJz83",
     "sk_product_how_to_use_zaEacQ",
     "sk_product_technology_iXTDFn",
+    "sk_led_light_work_7LKqcD",
     "sk_product_specifications_cJY9VW",
     "sk_product_faq_accordion_EPRXLb",
     "1759515838eeeda580"
