@@ -133,12 +133,108 @@
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
+    width: 100%;
+    max-width: 100%;
+    gap: clamp(0.4rem, 2vw, 1rem);
+    margin: 0;
+    padding-inline: clamp(0.75rem, 4vw, 1rem);
+    box-sizing: border-box;
+    overflow-x: hidden;
   }
 
   .sk-header__grid > header-drawer {
     grid-area: nav;
     justify-self: start;
     width: 100%;
+  }
+
+  header.sk-header header-drawer {
+    order: 0 !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  header.sk-header,
+  header.sk-header .header__heading-link,
+  header.sk-header .header__icon,
+  header.sk-header .header__icon .svg-wrapper,
+  header.sk-header header-drawer,
+  header.sk-header header-drawer summary {
+    color: var(--color-brand) !important;
+  }
+
+  .sk-header__grid {
+    align-items: center;
+    gap: clamp(0.5rem, 2vw, 1rem);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  header.sk-header header-drawer,
+  header.sk-header .sk-header__nav,
+  header.sk-header .header__icons {
+    flex: 0 0 auto;
+    min-width: 0 !important;
+  }
+
+  header.sk-header .header__icons {
+    display: flex;
+    gap: 0.6rem;
+    justify-self: end;
+    padding-right: 0;
+  }
+
+  header.sk-header .sk-header__icons-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: nowrap;
+  }
+
+  header.sk-header .sk-header__brand {
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    min-width: 0 !important;
+  }
+
+  header.sk-header .sk-header__brand .header__heading-link {
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 1;
+  }
+
+  header.sk-header .header__search {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-width: 0 !important;
+    order: 0;
+  }
+
+  header.sk-header .header__icon--search {
+    visibility: visible;
+    opacity: 1;
+    position: relative;
+  }
+
+  header.sk-header .header__icon--search .svg-wrapper svg,
+  header.sk-header .header__icon--search .svg-wrapper svg path,
+  header.sk-header .header__icons .svg-wrapper svg {
+    display: block;
+    width: 1.6rem;
+    max-width: 1.6rem;
+    height: auto;
+    max-height: 1.6rem;
+  }
+
+  header.sk-header .header__icon--cart .svg-wrapper svg {
+    width: 1.75rem;
+    max-width: 1.75rem;
+    height: auto;
+    max-height: 1.75rem;
   }
 }
 
