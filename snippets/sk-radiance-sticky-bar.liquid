@@ -96,13 +96,16 @@
       if (!portal) return;
 
       const shouldShow = isHeroPastViewport();
+      const body = document.body;
 
       if (shouldShow) {
         portal.classList.add('visible');
         portal.style.transform = 'translateY(0)';
+        body && body.classList.add('sk-sticky-bar-visible');
       } else {
         portal.classList.remove('visible');
         portal.style.transform = 'translateY(100%)';
+        body && body.classList.remove('sk-sticky-bar-visible');
       }
 
       if (debug) console.debug('[SK Sticky] updatePortalVisibility', {
