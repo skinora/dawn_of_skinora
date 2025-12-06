@@ -40,6 +40,13 @@
     display: none;
   }
 
+  .sk-wavelengths__empty {
+    text-align: center;
+    color: var(--sk-color-neutral);
+    font-size: 14px;
+    margin-top: 1rem;
+  }
+
   /* === CARD WRAPPER === */
   .sk-wavelength {
     background: #ffffff;
@@ -58,9 +65,9 @@
   /* === IMAGE WRAPPER === */
   .sk-wavelength__visual {
     width: 100%;
-    max-width: 550px; /* Sweet spot for large images */
+    max-width: 550px;
     margin: 0 auto 16px;
-    aspect-ratio: 1 / 0.75; /* Keeps layout stable */
+    aspect-ratio: 1 / 0.75;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -140,7 +147,7 @@
     margin-top: 6px;
   }
 
-  /* === MOBILE SLIDER — same as before === */
+  /* === MOBILE SLIDER === */
   @media (max-width: 750px) {
     .sk-wavelengths__grid {
       display: none;
@@ -161,16 +168,6 @@
       font-size: 15px;
     }
   }
-  @media screen and (max-width: 749px) {
-    .sk-section-heading {
-      font-size: var(--sk-mobile-heading-size);
-      line-height: var(--sk-mobile-heading-line);
-    }
-    .sk-section-body {
-      font-size: var(--sk-mobile-body-size);
-      line-height: var(--sk-mobile-body-line);
-    }
-  }
 </style>
 
 <section class="sk-wavelengths section--full-bleed sk-body-text--strong">
@@ -187,96 +184,124 @@
       </h1>
     {% endif %}
 
-    {% assign visible_blocks = section.blocks | where_exp: 'block', 'block.settings.sk_wavelength_visible != false' %}
+    {% assign sk_cards_metafield = product.metafields['custom.sk-led-light-work-card-product'] %}
+    {% if sk_cards_metafield == blank %}
+      {% assign sk_cards_metafield = product.metafields.custom['sk-led-light-work-card-product'] %}
+    {% endif %}
+    {% if sk_cards_metafield == blank %}
+      {% assign sk_cards_metafield = product.metafields.custom.sk_led_light_work_card_product %}
+    {% endif %}
+    {% assign sk_cards = blank %}
+    {% if sk_cards_metafield and sk_cards_metafield.value != blank %}
+      {% assign sk_cards = sk_cards_metafield.value %}
+    {% endif %}
+    {% assign sk_cards_count = sk_cards | size %}
 
-    <!-- DESKTOP GRID -->
-    <div class="sk-wavelengths__grid">
-      {% for block in visible_blocks %}
-        <div class="sk-wavelength">
-          <div class="sk-wavelength__visual">
-            <img
-              src="{{ block.settings.sk_wavelength_image | image_url: width: 1000 }}"
-              alt="{{ block.settings.sk_wavelength_heading | escape }}"
-              loading="lazy"
-              width="{{ block.settings.sk_wavelength_image.width }}"
-              height="{{ block.settings.sk_wavelength_image.height }}"
-            >
-          </div>
+    {% if sk_cards_count == 0 %}
+      {% if request.design_mode %}
+        <p class="sk-wavelengths__empty">
+          Connect the metafield <code>custom.sk-led-light-work-card-product</code> or
+          <code>custom.sk_led_light_work_card_product</code> (list of metaobjects) to display wavelength cards.
+        </p>
+      {% endif %}
+    {% else %}
+      <!-- DESKTOP GRID -->
+      <div class="sk-wavelengths__grid">
+        {% for card in sk_cards %}
+          <div class="sk-wavelength">
+            {% if card.show_highlight_tag %}
+              <span class="sk-tag">
+                {{ card.highlight_tag_text | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
+              </span>
+            {% endif %}
 
-          {% if block.settings.show_highlight_tag %}
-            <span class="sk-tag">
-              {{- block.settings.highlight_tag_text | default: 'NY DYPTVIRKENDE BØLGELENGDE' | escape -}}
-            </span>
-          {% endif %}
-
-          <p class="sk-wavelength__eyebrow">
-            {{ block.settings.sk_wavelength_eyebrow | default: 'LED-TEKNOLOGI' }}
-          </p>
-
-          <h3 class="sk-wavelength__title sk-heading-text--strong sk-heading-size--medium">
-            {{ block.settings.sk_wavelength_heading }}
-          </h3>
-
-          <ul class="sk-wavelength__benefits sk-section-body sk-body-text--soft">
-            {% assign items = block.settings.sk_wavelength_benefits | split: '\n' %}
-            {% for item in items %}
-              {% assign line = item | strip %}
-              {% if line != blank %}
-                <li>{{ line }}</li>
-              {% endif %}
-            {% endfor %}
-          </ul>
-        </div>
-      {% endfor %}
-    </div>
-
-    <!-- MOBILE SWIPER -->
-    <div class="sk-wavelengths__slider sk-wavelengths-swiper-{{ section.id }}">
-      <div class="swiper llw-swiper-{{ section.id }}">
-        <div class="swiper-wrapper">
-          {% for block in visible_blocks %}
-            <div class="swiper-slide">
-              <div class="sk-wavelength">
-                <div class="sk-wavelength__visual">
-                  <img
-                    src="{{ block.settings.sk_wavelength_image | image_url: width: 800 }}"
-                    alt="{{ block.settings.sk_wavelength_heading | escape }}"
-                    loading="lazy"
-                    width="{{ block.settings.sk_wavelength_image.width }}"
-                    height="{{ block.settings.sk_wavelength_image.height }}"
-                  >
-                </div>
-
-                {% if block.settings.show_highlight_tag %}
-                  <span class="sk-tag">
-                    {{- block.settings.highlight_tag_text | default: 'NY DYPTVIRKENDE BØLGELENGDE' | escape -}}
-                  </span>
-                {% endif %}
-
-                <p class="sk-wavelength__eyebrow">
-                  {{ block.settings.sk_wavelength_eyebrow | default: 'LED-TEKNOLOGI' }}
-                </p>
-
-                <h3 class="sk-wavelength__title sk-heading-text--strong sk-heading-size--medium">
-                  {{ block.settings.sk_wavelength_heading }}
-                </h3>
-
-                <ul class="sk-wavelength__benefits sk-section-body sk-body-text--soft">
-                  {% assign items = block.settings.sk_wavelength_benefits | split: '\n' %}
-                  {% for item in items %}
-                    {% assign line = item | strip %}
-                    {% if line != blank %}
-                      <li>{{ line }}</li>
-                    {% endif %}
-                  {% endfor %}
-                </ul>
+            {% if card.image != blank %}
+              <div class="sk-wavelength__visual">
+                <img
+                  src="{{ card.image | image_url: width: 1000 }}"
+                  alt="{{ card.title | escape }}"
+                  loading="lazy"
+                  width="{{ card.image.width }}"
+                  height="{{ card.image.height }}"
+                >
               </div>
-            </div>
-          {% endfor %}
-        </div>
-        <div class="swiper-pagination"></div>
+            {% endif %}
+
+            {% if card.eyebrow != blank %}
+              <p class="sk-wavelength__eyebrow">{{ card.eyebrow }}</p>
+            {% endif %}
+
+            {% if card.title != blank %}
+              <h3 class="sk-wavelength__title">{{ card.title }}</h3>
+            {% endif %}
+
+            {% if card.benefits != blank %}
+              <ul class="sk-wavelength__benefits">
+                {% assign items = card.benefits | newline_to_br | split: '<br />' %}
+                {% for item in items %}
+                  {% assign line = item | strip %}
+                  {% if line != blank %}
+                    <li>{{ line }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% endfor %}
       </div>
-    </div>
+
+      <!-- MOBILE SWIPER -->
+      <div class="sk-wavelengths__slider sk-wavelengths-swiper-{{ section.id }}">
+        <div class="swiper llw-swiper-{{ section.id }}">
+          <div class="swiper-wrapper">
+            {% for card in sk_cards %}
+              <div class="swiper-slide">
+                <div class="sk-wavelength">
+                  {% if card.show_highlight_tag %}
+                    <span class="sk-tag">
+                      {{ card.highlight_tag_text | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
+                    </span>
+                  {% endif %}
+
+                  {% if card.image != blank %}
+                    <div class="sk-wavelength__visual">
+                      <img
+                        src="{{ card.image | image_url: width: 800 }}"
+                        alt="{{ card.title | escape }}"
+                        loading="lazy"
+                        width="{{ card.image.width }}"
+                        height="{{ card.image.height }}"
+                      >
+                    </div>
+                  {% endif %}
+
+                  {% if card.eyebrow != blank %}
+                    <p class="sk-wavelength__eyebrow">{{ card.eyebrow }}</p>
+                  {% endif %}
+
+                  {% if card.title != blank %}
+                    <h3 class="sk-wavelength__title">{{ card.title }}</h3>
+                  {% endif %}
+
+                  {% if card.benefits != blank %}
+                    <ul class="sk-wavelength__benefits">
+                      {% assign items = card.benefits | newline_to_br | split: '<br />' %}
+                      {% for item in items %}
+                        {% assign line = item | strip %}
+                        {% if line != blank %}
+                          <li>{{ line }}</li>
+                        {% endif %}
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    {% endif %}
   </div>
 </section>
 
@@ -284,7 +309,6 @@
   document.addEventListener('DOMContentLoaded', function () {
     var mql = window.matchMedia('(max-width: 750px)');
     var swiperInstance = null;
-
     var container = document.querySelector('.sk-wavelengths-swiper-{{ section.id }} .swiper');
 
     function setup() {
@@ -316,7 +340,7 @@
       "type": "text",
       "id": "sk_led_light_work_eyebrow",
       "label": "Eyebrow label",
-      "default": "LED-TEKNOLOGI"
+      "default": "VITENSKAPEN BAK SKINORA LED"
     },
     {
       "type": "text",
@@ -325,60 +349,9 @@
       "default": "Hvordan Fungerer Skinora LED Lys"
     }
   ],
-  "blocks": [
-    {
-      "type": "wavelength",
-      "name": "Wavelength",
-      "limit": 4,
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "sk_wavelength_image",
-          "label": "Image"
-        },
-        {
-          "type": "text",
-          "id": "sk_wavelength_eyebrow",
-          "label": "Eyebrow label",
-          "default": "LED-TEKNOLOGI"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_highlight_tag",
-          "label": "Show highlight tag",
-          "default": false
-        },
-        {
-          "type": "text",
-          "id": "highlight_tag_text",
-          "label": "Highlight tag text",
-          "default": "NY DYPTVIRKENDE BØLGELENGDE"
-        },
-        {
-          "type": "checkbox",
-          "id": "sk_wavelength_visible",
-          "label": "Display block",
-          "default": true
-        },
-        {
-          "type": "text",
-          "id": "sk_wavelength_heading",
-          "label": "Heading",
-          "default": "630 nm Rødt Lys"
-        },
-        {
-          "type": "textarea",
-          "id": "sk_wavelength_benefits",
-          "label": "Benefits",
-          "default": "Stimulerer kollagen\nForbedrer glød\nFremmer redusert fine linjer"
-        }
-      ]
-    }
-  ],
   "presets": [
     {
-      "name": "SK Led Light Work",
-      "blocks": [{ "type": "wavelength" }, { "type": "wavelength" }, { "type": "wavelength" }]
+      "name": "SK Led Light Work"
     }
   ]
 }
