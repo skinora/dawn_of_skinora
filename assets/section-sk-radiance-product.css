@@ -583,12 +583,12 @@
   left: 0;
   right: 0;
   width: 100%;
-  background: linear-gradient(to left, var(--color-brand, #30273e), var(--color-almost-black, #070707)) !important;
+  background: linear-gradient(to left, var(--color-brand, #30273e), var(--color-white, #ffffff)) !important;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
   z-index: 999;
   transform: translateY(100%);
   transition: transform 0.3s ease-in-out;
-  padding: 1rem 0;
+  padding: 1.35rem 0;
 }
 .sk-radiance-sticky-bottom-bar.visible {
   transform: translateY(0);
@@ -604,11 +604,12 @@
   flex-direction: column;
   gap: 0.25rem;
   flex: 1;
+  justify-content: center;
 }
 .sk-radiance-sticky-bottom-bar__product-name {
   font-size: 28px;
   font-weight: 600;
-  color: var(--color-white, #fff);
+  color: var(--color-brand, #30273e);
   margin: 0;
   line-height: 1.3;
   overflow: hidden;
@@ -625,7 +626,7 @@
 /* Mobile sticky bar tweaks */
 @media screen and (max-width: 749px) {
   .sk-radiance-sticky-bottom-bar {
-    padding: 0.75rem 0;
+    padding: 1rem 0;
   }
   .sk-radiance-sticky-bottom-bar__content {
     flex-direction: column;

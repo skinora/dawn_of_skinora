@@ -95,41 +95,30 @@
 
       return window.scrollY > 320;
     }
-
-    function logDebug(payload) {
-      if (!(debug || window.SK_STICKY_DEBUG)) return;
-      try {
-        console.debug('[SK Sticky]', payload);
-      } catch (err) {}
+    function getPortalInnerBar() {
+      if (!portal) return null;
+      return portal.querySelector('.sk-radiance-sticky-bottom-bar');
     }
 
-    function updatePortalVisibility(source) {
+    function updatePortalVisibility() {
       if (!portal) portal = createOrUpdatePortal();
       if (!portal) return;
 
       const shouldShow = isHeroPastViewport();
       const body = document.body;
+      const innerBar = getPortalInnerBar();
 
       if (shouldShow) {
         portal.classList.add('visible');
         portal.style.transform = 'translateY(0)';
+        innerBar && innerBar.classList.add('visible');
         body && body.classList.add('sk-sticky-bar-visible');
       } else {
         portal.classList.remove('visible');
         portal.style.transform = 'translateY(100%)';
+        innerBar && innerBar.classList.remove('visible');
         body && body.classList.remove('sk-sticky-bar-visible');
       }
-
-      logDebug({
-        type: 'updatePortalVisibility',
-        source: source || 'manual',
-        sectionId,
-        shouldShow,
-        heroRect: (getHeroTarget() && getHeroTarget().getBoundingClientRect()) || null,
-        heroHeight,
-        scrollY: window.scrollY,
-        bodyHasClass: body && body.classList.contains('sk-sticky-bar-visible'),
-      });
     }
 
     function findProductForm(btn) {
@@ -207,8 +196,8 @@
     function bindScrollListeners() {
       window.removeEventListener('scroll', updatePortalVisibility);
       window.removeEventListener('resize', updatePortalVisibility);
-      window.addEventListener('scroll', () => updatePortalVisibility('scroll'), { passive: true });
-      window.addEventListener('resize', () => updatePortalVisibility('resize'));
+      window.addEventListener('scroll', updatePortalVisibility, { passive: true });
+      window.addEventListener('resize', updatePortalVisibility);
 
       if (heroIntersectionObserver)
         try { heroIntersectionObserver.disconnect(); } catch (err) {}
@@ -216,7 +205,7 @@
       const hero = getHeroTarget();
       if (hero && 'IntersectionObserver' in window) {
         heroIntersectionObserver = new IntersectionObserver(
-          () => updatePortalVisibility('hero-intersection'),
+          () => updatePortalVisibility(),
           { threshold: [0, 0.1, 1] }
         );
         try { heroIntersectionObserver.observe(hero); } catch (err) {}
@@ -228,7 +217,7 @@
       if (!e || !e.target || e.target.id === mainId || (e.target.closest && e.target.closest('#' + mainId))) {
         bindPortalEvents();
         bindScrollListeners();
-        updatePortalVisibility('product-info:loaded');
+        updatePortalVisibility();
       }
     });
 
@@ -236,12 +225,12 @@
       document.addEventListener('DOMContentLoaded', function () {
         bindPortalEvents();
         bindScrollListeners();
-        updatePortalVisibility('domcontentloaded');
+        updatePortalVisibility();
       });
     } else {
       bindPortalEvents();
       bindScrollListeners();
-      updatePortalVisibility('immediate');
+      updatePortalVisibility();
     }
 
     const templateObserver = new MutationObserver((mutations) => {
@@ -250,7 +239,7 @@
           if (n && n.nodeType === 1) {
             if (n.id === templateId || (n.querySelector && n.querySelector('#' + templateId))) {
               bindPortalEvents();
-              updatePortalVisibility('mutation');
+              updatePortalVisibility();
               return;
             }
           }
