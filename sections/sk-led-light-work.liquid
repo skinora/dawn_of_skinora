@@ -184,28 +184,41 @@
       </h1>
     {% endif %}
 
-    {% assign sk_cards_metafield = product.metafields['custom.sk-led-light-work-card-product'] %}
-    {% if sk_cards_metafield == blank %}
-      {% assign sk_cards_metafield = product.metafields.custom['sk-led-light-work-card-product'] %}
-    {% endif %}
-    {% if sk_cards_metafield == blank %}
-      {% assign sk_cards_metafield = product.metafields.custom.sk_led_light_work_card_product %}
+    {%- comment -%}
+      Hent metaobjekt-lista fra produktet
+      Metafield-id: custom.sk_led_light_work_card_product (list of SK-LED-LIGHT-WORK-CARD)
+    {%- endcomment -%}
+    <p style="font-size:14px; color:red;">
+      DEBUG: Raw metafield object → {{ product.metafields.custom.sk_led_light_work_card_product | json }}
+    </p>
+
+    {% assign sk_cards = empty %}
+
+    {% if product %}
+      {% assign mf = product.metafields.custom.sk_led_light_work_card_product %}
+
+      {% if mf %}
+        {%- comment -%}
+          Ny struktur: mf.value er en array av metaobjects
+        {%- endcomment -%}
+        {% if mf.value != blank and mf.value.size > 0 %}
+          {% assign sk_cards = mf.value %}
+        {% elsif mf.size > 0 %}
+          {%- comment -%}
+            Fallback: noen temaer gir array direkte på mf
+          {%- endcomment -%}
+          {% assign sk_cards = mf %}
+        {% endif %}
+      {% endif %}
     {% endif %}
 
-    {% assign sk_cards = blank %}
-    {% if sk_cards_metafield != blank %}
-      {% assign sk_cards = sk_cards_metafield.references
-        | default: sk_cards_metafield.value
-        | default: sk_cards_metafield
-      %}
-    {% endif %}
     {% assign sk_cards_count = sk_cards | size %}
 
     {% if sk_cards_count == 0 %}
       {% if request.design_mode %}
         <p class="sk-wavelengths__empty">
-          Connect the metafield <code>custom.sk-led-light-work-card-product</code> or
-          <code>custom.sk_led_light_work_card_product</code> (list of metaobjects) to display wavelength cards.
+          Metafeltet <code>custom.sk_led_light_work_card_product</code> er tomt. Legg til metaobjekter (type
+          <strong>SK-LED-LIGHT-WORK-CARD</strong>) på produktet.
         </p>
       {% endif %}
     {% else %}
@@ -219,14 +232,15 @@
               </span>
             {% endif %}
 
-            {% if card.image != blank %}
+            {% if card.image %}
+              {% assign img = card.image %}
               <div class="sk-wavelength__visual">
                 <img
-                  src="{{ card.image | image_url: width: 1000 }}"
+                  src="{{ img | image_url: width: 1000 }}"
                   alt="{{ card.title | escape }}"
                   loading="lazy"
-                  width="{{ card.image.width }}"
-                  height="{{ card.image.height }}"
+                  width="{{ img.width | default: 1000 }}"
+                  height="{{ img.height | default: 750 }}"
                 >
               </div>
             {% endif %}
@@ -267,14 +281,15 @@
                     </span>
                   {% endif %}
 
-                  {% if card.image != blank %}
+                  {% if card.image %}
+                    {% assign img = card.image %}
                     <div class="sk-wavelength__visual">
                       <img
-                        src="{{ card.image | image_url: width: 800 }}"
+                        src="{{ img | image_url: width: 800 }}"
                         alt="{{ card.title | escape }}"
                         loading="lazy"
-                        width="{{ card.image.width }}"
-                        height="{{ card.image.height }}"
+                        width="{{ img.width | default: 800 }}"
+                        height="{{ img.height | default: 600 }}"
                       >
                     </div>
                   {% endif %}
@@ -316,6 +331,8 @@
     var container = document.querySelector('.sk-wavelengths-swiper-{{ section.id }} .swiper');
 
     function setup() {
+      if (!container) return;
+
       if (mql.matches && !swiperInstance) {
         swiperInstance = new Swiper(container, {
           slidesPerView: 1,
@@ -332,7 +349,7 @@
     }
 
     setup();
-    mql.addEventListenebenefitsr('change', setup);
+    mql.addEventListener('change', setup);
   });
 </script>
 
