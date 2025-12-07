@@ -184,19 +184,65 @@
       </h1>
     {% endif %}
 
-    {%- comment -%}
-      Get list metafield: custom.led_light_work_cards
-      Type: List of metaobjects (SK_LED_LIGHT_WORK_CARD)
-    {%- endcomment -%}
+    {% liquid
+      assign sk_metafield_handle = 'product.metafields.custom.led_light_work_cards'
+      assign sk_cards = ''
 
-    {% assign mf_raw = product.metafields.custom.led_light_work_cards %}
-    {% assign sk_cards = mf_raw.value | default: mf_raw %}
-    {% assign sk_cards_count = sk_cards | size %}
+      if product != blank and product.metafields != blank
+        assign product_metafields = product.metafields
+        if product_metafields.custom != blank and product_metafields.custom.led_light_work_cards != blank
+          assign sk_metafield = product_metafields.custom.led_light_work_cards
+          if sk_metafield.references != blank
+            assign sk_cards = sk_metafield.references
+          else
+            assign sk_cards = sk_metafield.value | default: sk_metafield
+          endif
+        endif
+      endif
+
+      assign sk_cards_count = sk_cards | size
+    %}
+
+    {% if request.design_mode and product != blank and product.metafields != blank %}
+      {% assign namespace_count = 0 %}
+      {% for namespace in product.metafields %}
+        {% assign namespace_count = namespace_count | plus: 1 %}
+      {% endfor %}
+      <div
+        class="sk-wavelengths__debug"
+        style="margin: 1rem auto 2rem; padding: 1rem; border: 1px dashed #ccc; max-width: 960px; font-size: 0.85rem;"
+      >
+        <p style="margin: 0 0 0.5rem;">
+          <strong>Debug</strong>: product metafields namespaces listed below ({{ namespace_count }} total)
+        </p>
+        <details open>
+          <summary style="cursor: pointer;">Show namespaces and keys</summary>
+          <ul style="margin: 0.5rem 0 0; padding-left: 1.25rem;">
+            {% for namespace in product.metafields %}
+              {% assign namespace_name = namespace | first %}
+              {% assign namespace_object = namespace | last %}
+              <li>
+                <code>{{ namespace_name }}</code>
+                {% if namespace_object != blank %}
+                  <ul style="margin: 0.25rem 0 0.5rem; padding-left: 1.25rem;">
+                    {% for mf in namespace_object %}
+                      <li>
+                        <code>{{ namespace_name }}.{{ mf.key }}</code>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </details>
+      </div>
+    {% endif %}
 
     {% if sk_cards_count == 0 %}
       {% if request.design_mode %}
         <p class="sk-wavelengths__empty">
-          Metafeltet <code>custom.led_light_work_cards</code> er tomt. Legg til metaobjekter (type
+          Metafeltet <code>{{ sk_metafield_handle }}</code> er tomt. Legg til metaobjekter (type
           <strong>SK_LED_LIGHT_WORK_CARD</strong>) på produktet.
         </p>
       {% endif %}
@@ -204,37 +250,56 @@
       <!-- DESKTOP GRID -->
       <div class="sk-wavelengths__grid">
         {% for card in sk_cards %}
+          {% liquid
+            assign card_image = ''
+            if card.image
+              assign card_image_value = card.image.value
+              assign card_image = card_image_value | default: card.image
+            endif
+            assign card_eyebrow = card.eyebrow.value | default: card.eyebrow
+            assign card_title = card.title.value | default: card.title
+            assign card_benefits = card.benefits.value | default: card.benefits
+            assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
+            assign card_show_highlight = false
+            if card.show_highlight_text != null
+              assign show_highlight_value = card.show_highlight_text.value
+              if show_highlight_value == null
+                assign card_show_highlight = card.show_highlight_text
+              else
+                assign card_show_highlight = show_highlight_value
+              endif
+            endif
+          %}
           <div class="sk-wavelength">
-            {% if card.show_highlight_text %}
+            {% if card_show_highlight %}
               <span class="sk-tag">
-                {{ card.highlight_tag_text | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
+                {{ card_highlight_tag | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
               </span>
             {% endif %}
 
-            {% if card.image %}
-              {% assign img = card.image %}
+            {% if card_image %}
               <div class="sk-wavelength__visual">
                 <img
-                  src="{{ img | image_url: width: 1000 }}"
-                  alt="{{ card.title | escape }}"
+                  src="{{ card_image | image_url: width: 1000 }}"
+                  alt="{{ card_title | default: 'Skinora LED lys' | escape }}"
                   loading="lazy"
-                  width="{{ img.width | default: 1000 }}"
-                  height="{{ img.height | default: 750 }}"
+                  width="{{ card_image.width | default: 1000 }}"
+                  height="{{ card_image.height | default: 750 }}"
                 >
               </div>
             {% endif %}
 
-            {% if card.eyebrow != blank %}
-              <p class="sk-wavelength__eyebrow">{{ card.eyebrow }}</p>
+            {% if card_eyebrow != blank %}
+              <p class="sk-wavelength__eyebrow">{{ card_eyebrow }}</p>
             {% endif %}
 
-            {% if card.title != blank %}
-              <h3 class="sk-wavelength__title">{{ card.title }}</h3>
+            {% if card_title != blank %}
+              <h3 class="sk-wavelength__title">{{ card_title }}</h3>
             {% endif %}
 
-            {% if card.benefits != blank %}
+            {% if card_benefits != blank %}
               <ul class="sk-wavelength__benefits">
-                {% assign items = card.benefits | newline_to_br | split: '<br />' %}
+                {% assign items = card_benefits | newline_to_br | split: '<br />' %}
                 {% for item in items %}
                   {% assign line = item | strip %}
                   {% if line != blank %}
@@ -252,38 +317,57 @@
         <div class="swiper llw-swiper-{{ section.id }}">
           <div class="swiper-wrapper">
             {% for card in sk_cards %}
+              {% liquid
+                assign card_image = ''
+                if card.image
+                  assign card_image_value = card.image.value
+                  assign card_image = card_image_value | default: card.image
+                endif
+                assign card_eyebrow = card.eyebrow.value | default: card.eyebrow
+                assign card_title = card.title.value | default: card.title
+                assign card_benefits = card.benefits.value | default: card.benefits
+                assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
+                assign card_show_highlight = false
+                if card.show_highlight_text != null
+                  assign show_highlight_value = card.show_highlight_text.value
+                  if show_highlight_value == null
+                    assign card_show_highlight = card.show_highlight_text
+                  else
+                    assign card_show_highlight = show_highlight_value
+                  endif
+                endif
+              %}
               <div class="swiper-slide">
                 <div class="sk-wavelength">
-                  {% if card.show_highlight_text %}
+                  {% if card_show_highlight %}
                     <span class="sk-tag">
-                      {{ card.highlight_tag_text | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
+                      {{ card_highlight_tag | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
                     </span>
                   {% endif %}
 
-                  {% if card.image %}
-                    {% assign img = card.image %}
+                  {% if card_image %}
                     <div class="sk-wavelength__visual">
                       <img
-                        src="{{ img | image_url: width: 800 }}"
-                        alt="{{ card.title | escape }}"
+                        src="{{ card_image | image_url: width: 800 }}"
+                        alt="{{ card_title | default: 'Skinora LED lys' | escape }}"
                         loading="lazy"
-                        width="{{ img.width | default: 800 }}"
-                        height="{{ img.height | default: 600 }}"
+                        width="{{ card_image.width | default: 800 }}"
+                        height="{{ card_image.height | default: 600 }}"
                       >
                     </div>
                   {% endif %}
 
-                  {% if card.eyebrow != blank %}
-                    <p class="sk-wavelength__eyebrow">{{ card.eyebrow }}</p>
+                  {% if card_eyebrow != blank %}
+                    <p class="sk-wavelength__eyebrow">{{ card_eyebrow }}</p>
                   {% endif %}
 
-                  {% if card.title != blank %}
-                    <h3 class="sk-wavelength__title">{{ card.title }}</h3>
+                  {% if card_title != blank %}
+                    <h3 class="sk-wavelength__title">{{ card_title }}</h3>
                   {% endif %}
 
-                  {% if card.benefits != blank %}
+                  {% if card_benefits != blank %}
                     <ul class="sk-wavelength__benefits">
-                      {% assign items = card.benefits | newline_to_br | split: '<br />' %}
+                      {% assign items = card_benefits | newline_to_br | split: '<br />' %}
                       {% for item in items %}
                         {% assign line = item | strip %}
                         {% if line != blank %}
