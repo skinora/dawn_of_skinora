@@ -184,91 +184,28 @@
       </h1>
     {% endif %}
 
-    {% liquid
-      assign sk_metafield_handle = 'product.metafields.custom.led_light_work_cards'
-      assign sk_cards = ''
-
-      if product != blank and product.metafields != blank
-        assign product_metafields = product.metafields
-        if product_metafields.custom != blank and product_metafields.custom.led_light_work_cards != blank
-          assign sk_metafield = product_metafields.custom.led_light_work_cards
-          if sk_metafield.references != blank
-            assign sk_cards = sk_metafield.references
-          else
-            assign sk_cards = sk_metafield.value | default: sk_metafield
-          endif
-        endif
-      endif
-
-      assign sk_cards_count = sk_cards | size
-    %}
-
-    {% if request.design_mode and product != blank and product.metafields != blank %}
-      {% assign namespace_count = 0 %}
-      {% for namespace in product.metafields %}
-        {% assign namespace_count = namespace_count | plus: 1 %}
-      {% endfor %}
-      <div
-        class="sk-wavelengths__debug"
-        style="margin: 1rem auto 2rem; padding: 1rem; border: 1px dashed #ccc; max-width: 960px; font-size: 0.85rem;"
-      >
-        <p style="margin: 0 0 0.5rem;">
-          <strong>Debug</strong>: product metafields namespaces listed below ({{ namespace_count }} total)
-        </p>
-        <details open>
-          <summary style="cursor: pointer;">Show namespaces and keys</summary>
-          <ul style="margin: 0.5rem 0 0; padding-left: 1.25rem;">
-            {% for namespace in product.metafields %}
-              {% assign namespace_name = namespace | first %}
-              {% assign namespace_object = namespace | last %}
-              <li>
-                <code>{{ namespace_name }}</code>
-                {% if namespace_object != blank %}
-                  <ul style="margin: 0.25rem 0 0.5rem; padding-left: 1.25rem;">
-                    {% for mf in namespace_object %}
-                      <li>
-                        <code>{{ namespace_name }}.{{ mf.key }}</code>
-                      </li>
-                    {% endfor %}
-                  </ul>
-                {% endif %}
-              </li>
-            {% endfor %}
-          </ul>
-        </details>
-      </div>
+    {% if request.design_mode %}
+      <pre style="margin: 1rem 0; padding: 1rem; border: 1px dashed #ccc; overflow: auto;">
+        {{ product.metafields.custom | json }}
+      </pre>
     {% endif %}
 
-    {% if sk_cards_count == 0 %}
-      {% if request.design_mode %}
-        <p class="sk-wavelengths__empty">
-          Metafeltet <code>{{ sk_metafield_handle }}</code> er tomt. Legg til metaobjekter (type
-          <strong>SK_LED_LIGHT_WORK_CARD</strong>) på produktet.
-        </p>
-      {% endif %}
-    {% else %}
+    {% liquid
+      assign sk_metafield_handle = 'product.metafields.custom["led_light_work_cards"]'
+    %}
+
+    {% if product.metafields.custom.led_light_work_cards.value != blank %}
+      {% assign sk_cards = product.metafields.custom.led_light_work_cards.value %}
       <!-- DESKTOP GRID -->
       <div class="sk-wavelengths__grid">
-        {% for card in sk_cards %}
+        {% for card in product.metafields.custom.led_light_work_cards.value %}
           {% liquid
-            assign card_image = ''
-            if card.image
-              assign card_image_value = card.image.value
-              assign card_image = card_image_value | default: card.image
-            endif
+            assign card_image = card.image.value | default: card.image
             assign card_eyebrow = card.eyebrow.value | default: card.eyebrow
             assign card_title = card.title.value | default: card.title
             assign card_benefits = card.benefits.value | default: card.benefits
             assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
-            assign card_show_highlight = false
-            if card.show_highlight_text != null
-              assign show_highlight_value = card.show_highlight_text.value
-              if show_highlight_value == null
-                assign card_show_highlight = card.show_highlight_text
-              else
-                assign card_show_highlight = show_highlight_value
-              endif
-            endif
+            assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
           %}
           <div class="sk-wavelength">
             {% if card_show_highlight %}
@@ -316,26 +253,14 @@
       <div class="sk-wavelengths__slider sk-wavelengths-swiper-{{ section.id }}">
         <div class="swiper llw-swiper-{{ section.id }}">
           <div class="swiper-wrapper">
-            {% for card in sk_cards %}
+            {% for card in product.metafields.custom.led_light_work_cards.value %}
               {% liquid
-                assign card_image = ''
-                if card.image
-                  assign card_image_value = card.image.value
-                  assign card_image = card_image_value | default: card.image
-                endif
+                assign card_image = card.image.value | default: card.image
                 assign card_eyebrow = card.eyebrow.value | default: card.eyebrow
                 assign card_title = card.title.value | default: card.title
                 assign card_benefits = card.benefits.value | default: card.benefits
                 assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
-                assign card_show_highlight = false
-                if card.show_highlight_text != null
-                  assign show_highlight_value = card.show_highlight_text.value
-                  if show_highlight_value == null
-                    assign card_show_highlight = card.show_highlight_text
-                  else
-                    assign card_show_highlight = show_highlight_value
-                  endif
-                endif
+                assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
               %}
               <div class="swiper-slide">
                 <div class="sk-wavelength">
@@ -382,7 +307,12 @@
           </div>
           <div class="swiper-pagination"></div>
         </div>
-      </div>
+    {% else %}
+      {% if request.design_mode %}
+        <p class="sk-wavelengths__empty">
+          Ingen data funnet. Legg til metaobjekter på <code>{{ sk_metafield_handle }}</code> for å fylle ut kortene.
+        </p>
+      {% endif %}
     {% endif %}
   </div>
 </section>
