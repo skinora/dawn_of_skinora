@@ -213,7 +213,7 @@
       <div class="sk-wavelengths__grid">
         {% for card in sk_cards %}
           <div class="sk-wavelength">
-            {% if card.show_highlight_tag %}
+            {% if card.show_highlight_text %}
               <span class="sk-tag">
                 {{ card.highlight_tag_text | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
               </span>
@@ -261,7 +261,7 @@
             {% for card in sk_cards %}
               <div class="swiper-slide">
                 <div class="sk-wavelength">
-                  {% if card.show_highlight_tag %}
+                  {% if card.show_highlight_text %}
                     <span class="sk-tag">
                       {{ card.highlight_tag_text | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
                     </span>
@@ -332,7 +332,7 @@
     }
 
     setup();
-    mql.addEventListener('change', setup);
+    mql.addEventListenebenefitsr('change', setup);
   });
 </script>
 
