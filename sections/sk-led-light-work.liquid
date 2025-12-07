@@ -191,9 +191,13 @@
     {% if sk_cards_metafield == blank %}
       {% assign sk_cards_metafield = product.metafields.custom.sk_led_light_work_card_product %}
     {% endif %}
+
     {% assign sk_cards = blank %}
-    {% if sk_cards_metafield and sk_cards_metafield.value != blank %}
-      {% assign sk_cards = sk_cards_metafield.value %}
+    {% if sk_cards_metafield != blank %}
+      {% assign sk_cards = sk_cards_metafield.references
+        | default: sk_cards_metafield.value
+        | default: sk_cards_metafield
+      %}
     {% endif %}
     {% assign sk_cards_count = sk_cards | size %}
 
