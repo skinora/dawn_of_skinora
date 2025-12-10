@@ -184,12 +184,6 @@
       </h1>
     {% endif %}
 
-    {% if request.design_mode %}
-      <pre style="margin: 1rem 0; padding: 1rem; border: 1px dashed #ccc; overflow: auto;">
-        {{ product.metafields.custom | json }}
-      </pre>
-    {% endif %}
-
     {% liquid
       assign sk_metafield_handle = 'product.metafields.custom["led_light_work_cards"]'
     %}
@@ -198,7 +192,7 @@
       {% assign sk_cards = product.metafields.custom.led_light_work_cards.value %}
       <!-- DESKTOP GRID -->
       <div class="sk-wavelengths__grid">
-        {% for card in product.metafields.custom.led_light_work_cards.value %}
+        {% for card in sk_cards %}
           {% liquid
             assign card_image = card.image.value | default: card.image
             assign card_eyebrow = card.eyebrow.value | default: card.eyebrow
