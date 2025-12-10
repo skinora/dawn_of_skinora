@@ -203,6 +203,14 @@
         "button_url": "shopify://products/skinora-radiance-face"
       }
     },
+    "sk_led_light_work_mDz86m": {
+      "type": "sk-led-light-work",
+      "name": "SK Led Light Work",
+      "settings": {
+        "sk_led_light_work_eyebrow": "VITENSKAPEN BAK SKINORA LED",
+        "sk_led_light_work_heading": "Hvordan Fungerer Skinora LED Lys"
+      }
+    },
     "sk_product_how_to_use_dbAJA9": {
       "type": "sk-product-how-to-use",
       "name": "SK Product How to Use",
@@ -277,6 +285,7 @@
     "sk_product_promotion_logos_r9MTbH",
     "sk_before_after_mBrdqd",
     "sk_product_radiance_TCYaUL",
+    "sk_led_light_work_mDz86m",
     "sk_product_how_to_use_dbAJA9",
     "sk_product_why_choose_pwJz83",
     "sk_product_how_to_use_zaEacQ",
