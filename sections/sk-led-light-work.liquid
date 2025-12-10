@@ -197,6 +197,15 @@
             assign card_image = card.image.value | default: card.image
             assign card_eyebrow = card.eyebrow.value | default: card.eyebrow
             assign card_title = card.title.value | default: card.title
+            assign title_parts = card_title | split: '|'
+            assign card_primary_title = ''
+            assign card_secondary_title = ''
+            if title_parts.size > 1
+              assign card_primary_title = title_parts[0] | strip
+              assign card_secondary_title = title_parts[1] | strip
+            else
+              assign card_secondary_title = card_title | strip
+            endif
             assign card_benefits = card.benefits.value | default: card.benefits
             assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
             assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
@@ -224,8 +233,18 @@
               <p class="sk-wavelength__eyebrow">{{ card_eyebrow }}</p>
             {% endif %}
 
-            {% if card_title != blank %}
-              <h3 class="sk-wavelength__title">{{ card_title }}</h3>
+            {% if card_primary_title != blank or card_secondary_title != blank %}
+              <h3 class="sk-wavelength__title">
+                {% if card_primary_title != blank %}
+                  {{ card_primary_title }}
+                {% endif %}
+                {% if card_primary_title != blank and card_secondary_title != blank %}
+                  |
+                {% endif %}
+                {% if card_secondary_title != blank %}
+                  <em>{{ card_secondary_title }}</em>
+                {% endif %}
+              </h3>
             {% endif %}
 
             {% if card_benefits != blank %}
@@ -252,6 +271,15 @@
                 assign card_image = card.image.value | default: card.image
                 assign card_eyebrow = card.eyebrow.value | default: card.eyebrow
                 assign card_title = card.title.value | default: card.title
+                assign title_parts = card_title | split: '|'
+                assign card_primary_title = ''
+                assign card_secondary_title = ''
+                if title_parts.size > 1
+                  assign card_primary_title = title_parts[0] | strip
+                  assign card_secondary_title = title_parts[1] | strip
+                else
+                  assign card_secondary_title = card_title | strip
+                endif
                 assign card_benefits = card.benefits.value | default: card.benefits
                 assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
                 assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
@@ -280,8 +308,18 @@
                     <p class="sk-wavelength__eyebrow">{{ card_eyebrow }}</p>
                   {% endif %}
 
-                  {% if card_title != blank %}
-                    <h3 class="sk-wavelength__title">{{ card_title }}</h3>
+                  {% if card_primary_title != blank or card_secondary_title != blank %}
+                    <h3 class="sk-wavelength__title">
+                      {% if card_primary_title != blank %}
+                        {{ card_primary_title }}
+                      {% endif %}
+                      {% if card_primary_title != blank and card_secondary_title != blank %}
+                        |
+                      {% endif %}
+                      {% if card_secondary_title != blank %}
+                        <em>{{ card_secondary_title }}</em>
+                      {% endif %}
+                    </h3>
                   {% endif %}
 
                   {% if card_benefits != blank %}
