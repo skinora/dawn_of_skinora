@@ -7,7 +7,7 @@
     --sk-color-body: #333333;
     --sk-color-tag-text: #ffffff;
     padding: 4rem 0 6rem;
-    background: #f2f2f2;
+    background: #ffffff;
   }
 
   .sk-header__section {
@@ -50,7 +50,7 @@
 
   /* === CARD WRAPPER === */
   .sk-wavelength {
-    background: #f2f2f2;
+    background: #ffffff;
     border-radius: 8px;
     padding: 32px;
     border: none;
@@ -60,7 +60,7 @@
     align-items: center;
     box-shadow: none;
     position: relative;
-    overflow: visible;
+    overflow: hidden;
   }
 
   /* === IMAGE WRAPPER === */
@@ -117,12 +117,6 @@
     color: var(--sk-color-brand);
   }
 
-  .sk-wavelength__svg-preview {
-    width: 100%;
-    max-width: 420px;
-    margin: 0 auto 24px;
-  }
-
   /* === BENEFITS LIST === */
   .sk-wavelength__benefits {
     list-style: none;
@@ -141,7 +135,7 @@
     gap: 4px;
     align-items: flex-start;
     line-height: 1.3;
-    color: var(--sk-color-body);
+    color: var(--sk-color-brand);
     font-weight: 400;
   }
 
@@ -152,6 +146,24 @@
     border-radius: 50%;
     background: var(--sk-color-brand);
     margin-top: 6px;
+  }
+
+  .sk-wavelengths__slider .swiper {
+    padding-bottom: 20px;
+  }
+
+  .sk-wavelengths__slider .swiper-pagination {
+    position: static;
+    margin: 8px auto 0;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sk-wavelengths__slider .swiper-pagination-bullet {
+    margin: 0;
   }
 
   /* === MOBILE SLIDER === */
@@ -216,21 +228,6 @@
             assign card_benefits = card.benefits.value | default: card.benefits
             assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
             assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
-            assign card_svg_file = card.svg.value | default: card.svg
-            assign card_svg_inline = ''
-            assign card_svg_image_url = ''
-            if card_svg_file != blank
-              if card_svg_file.media_type != blank
-                assign card_svg_image_url = card_svg_file | image_url: width: 320
-              else
-                assign card_svg_text = card_svg_file | strip
-                if card_svg_text contains '<svg'
-                  assign card_svg_inline = card_svg_text
-                else
-                  assign card_svg_image_url = card_svg_text
-                endif
-              endif
-            endif
           %}
           <div class="sk-wavelength">
             {% if card_show_highlight %}
@@ -269,22 +266,6 @@
               </h3>
             {% endif %}
 
-            {% if card_svg_inline != blank %}
-              <div class="sk-wavelength__svg-preview">
-                {{ card_svg_inline | raw }}
-              </div>
-            {% elsif card_svg_image_url != blank %}
-              <div class="sk-wavelength__svg-preview">
-                <img
-                  src="{{ card_svg_image_url }}"
-                  alt="{{ card_secondary_title | default: card_primary_title | default: 'Skinora LED illustrasjon' }}"
-                  loading="lazy"
-                  width="420"
-                  height="420"
-                >
-              </div>
-            {% endif %}
-
             {% if card_benefits != blank %}
               <ul class="sk-wavelength__benefits">
                 {% assign items = card_benefits | newline_to_br | split: '<br />' %}
@@ -321,21 +302,6 @@
                 assign card_benefits = card.benefits.value | default: card.benefits
                 assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
                 assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
-                assign card_svg_file = card.svg.value | default: card.svg
-                assign card_svg_inline = ''
-                assign card_svg_image_url = ''
-                if card_svg_file != blank
-                  if card_svg_file.media_type != blank
-                    assign card_svg_image_url = card_svg_file | image_url: width: 320
-                  else
-                    assign card_svg_text = card_svg_file | strip
-                    if card_svg_text contains '<svg'
-                      assign card_svg_inline = card_svg_text
-                    else
-                      assign card_svg_image_url = card_svg_text
-                    endif
-                  endif
-                endif
               %}
               <div class="swiper-slide">
                 <div class="sk-wavelength">
@@ -373,22 +339,6 @@
                         <em>{{ card_secondary_title }}</em>
                       {% endif %}
                     </h3>
-                  {% endif %}
-
-                  {% if card_svg_inline != blank %}
-                    <div class="sk-wavelength__svg-preview">
-                      {{ card_svg_inline | raw }}
-                    </div>
-                  {% elsif card_svg_image_url != blank %}
-                    <div class="sk-wavelength__svg-preview">
-                      <img
-                        src="{{ card_svg_image_url }}"
-                        alt="{{ card_secondary_title | default: card_primary_title | default: 'Skinora LED illustrasjon' }}"
-                        loading="lazy"
-                        width="420"
-                        height="420"
-                      >
-                    </div>
                   {% endif %}
 
                   {% if card_benefits != blank %}
