@@ -117,6 +117,12 @@
     color: var(--sk-color-brand);
   }
 
+  .sk-wavelength__svg-preview {
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto 16px;
+  }
+
   /* === BENEFITS LIST === */
   .sk-wavelength__benefits {
     list-style: none;
@@ -210,6 +216,21 @@
             assign card_benefits = card.benefits.value | default: card.benefits
             assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
             assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
+            assign card_svg_file = card.svg.value | default: card.svg
+            assign card_svg_inline = ''
+            assign card_svg_image_url = ''
+            if card_svg_file != blank
+              if card_svg_file.media_type != blank
+                assign card_svg_image_url = card_svg_file | image_url: width: 320
+              else
+                assign card_svg_text = card_svg_file | strip
+                if card_svg_text contains '<svg'
+                  assign card_svg_inline = card_svg_text
+                else
+                  assign card_svg_image_url = card_svg_text
+                endif
+              endif
+            endif
           %}
           <div class="sk-wavelength">
             {% if card_show_highlight %}
@@ -248,6 +269,22 @@
               </h3>
             {% endif %}
 
+            {% if card_svg_inline != blank %}
+              <div class="sk-wavelength__svg-preview">
+                {{ card_svg_inline | raw }}
+              </div>
+            {% elsif card_svg_image_url != blank %}
+              <div class="sk-wavelength__svg-preview">
+                <img
+                  src="{{ card_svg_image_url }}"
+                  alt="{{ card_secondary_title | default: card_primary_title | default: 'Skinora LED illustrasjon' }}"
+                  loading="lazy"
+                  width="320"
+                  height="320"
+                >
+              </div>
+            {% endif %}
+
             {% if card_benefits != blank %}
               <ul class="sk-wavelength__benefits">
                 {% assign items = card_benefits | newline_to_br | split: '<br />' %}
@@ -284,6 +321,21 @@
                 assign card_benefits = card.benefits.value | default: card.benefits
                 assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
                 assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
+                assign card_svg_file = card.svg.value | default: card.svg
+                assign card_svg_inline = ''
+                assign card_svg_image_url = ''
+                if card_svg_file != blank
+                  if card_svg_file.media_type != blank
+                    assign card_svg_image_url = card_svg_file | image_url: width: 320
+                  else
+                    assign card_svg_text = card_svg_file | strip
+                    if card_svg_text contains '<svg'
+                      assign card_svg_inline = card_svg_text
+                    else
+                      assign card_svg_image_url = card_svg_text
+                    endif
+                  endif
+                endif
               %}
               <div class="swiper-slide">
                 <div class="sk-wavelength">
@@ -321,6 +373,22 @@
                         <em>{{ card_secondary_title }}</em>
                       {% endif %}
                     </h3>
+                  {% endif %}
+
+                  {% if card_svg_inline != blank %}
+                    <div class="sk-wavelength__svg-preview">
+                      {{ card_svg_inline | raw }}
+                    </div>
+                  {% elsif card_svg_image_url != blank %}
+                    <div class="sk-wavelength__svg-preview">
+                      <img
+                        src="{{ card_svg_image_url }}"
+                        alt="{{ card_secondary_title | default: card_primary_title | default: 'Skinora LED illustrasjon' }}"
+                        loading="lazy"
+                        width="320"
+                        height="320"
+                      >
+                    </div>
                   {% endif %}
 
                   {% if card_benefits != blank %}
