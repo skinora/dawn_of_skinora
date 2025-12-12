@@ -238,14 +238,6 @@
         "pad_y_mobile": 60
       }
     },
-    "sk_led_light_work_7LKqcD": {
-      "type": "sk-led-light-work",
-      "name": "SK Led Light Work",
-      "settings": {
-        "sk_led_light_work_eyebrow": "VITENSKAPEN BAK SKINORA LED",
-        "sk_led_light_work_heading": "Hvordan Fungerer Skinora LED Lys"
-      }
-    },
     "sk_product_specifications_cJY9VW": {
       "type": "sk-product-specifications",
       "name": "SK Product Specifications",
@@ -290,7 +282,6 @@
     "sk_product_why_choose_pwJz83",
     "sk_product_how_to_use_zaEacQ",
     "sk_product_technology_iXTDFn",
-    "sk_led_light_work_7LKqcD",
     "sk_product_specifications_cJY9VW",
     "sk_product_faq_accordion_EPRXLb",
     "1759515838eeeda580"
