@@ -6,13 +6,14 @@
     --sk-color-border: #e6e6e6;
     --sk-color-body: #333333;
     --sk-color-tag-text: #ffffff;
+    --sk-spacing-unit: 4px;
     padding: 4rem 0 6rem;
     background: #ffffff;
   }
 
   .sk-header__section {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: calc(var(--sk-spacing-unit) * 4);
     color: inherit;
   }
 
@@ -32,13 +33,15 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 48px;
     max-width: 1800px;
-    margin: 0 auto;
+    margin: calc(var(--sk-spacing-unit) * 6) auto 0;
     padding: 0 24px;
     align-items: start;
   }
 
   .sk-wavelengths__slider {
     display: none;
+    margin-top: calc(var(--sk-spacing-unit) * 3);
+    position: relative;
   }
 
   .sk-wavelengths__empty {
@@ -61,6 +64,11 @@
     box-shadow: none;
     position: relative;
     overflow: visible;
+    margin-top: calc(var(--sk-spacing-unit) * 2);
+  }
+
+  .sk-wavelength--has-tag {
+    margin-top: calc(var(--sk-spacing-unit) * 6);
   }
 
   /* === IMAGE WRAPPER === */
@@ -109,9 +117,14 @@
     inset: 0;
     background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.7) 45%, transparent 90%);
     transform: translateX(-150%);
-    animation: sk-tag-shimmer 1.4s ease-out 0.6s 1 forwards;
     pointer-events: none;
     z-index: -1;
+    opacity: 0;
+  }
+
+  .sk-tag.sk-tag--shimmer::after {
+    animation: sk-tag-shimmer 1.4s ease-out forwards;
+    opacity: 1;
   }
 
   @keyframes sk-tag-shimmer {
@@ -182,12 +195,13 @@
   }
 
   .sk-wavelengths__slider .swiper {
-    padding-bottom: 20px;
+    padding: 28px 0 32px;
+    overflow: visible;
   }
 
   .sk-wavelengths__slider .swiper-pagination {
     position: static;
-    margin: 8px auto 0;
+    margin: 4px auto 0;
     width: auto;
     display: flex;
     justify-content: center;
@@ -199,6 +213,68 @@
     margin: 0;
   }
 
+  .sk-wavelengths__arrow {
+    position: absolute;
+    top: 50%;
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    color: rgba(48, 39, 62, 0.35);
+    font-size: 26px;
+    line-height: 1;
+    transform: translateY(-50%);
+    transition: color 0.2s ease, opacity 0.2s ease;
+    pointer-events: auto;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+    padding: 8px;
+  }
+
+  .sk-wavelengths__arrow--prev {
+    left: -20px;
+  }
+
+  .sk-wavelengths__arrow--next {
+    right: -20px;
+  }
+
+  .sk-wavelengths__arrow:hover {
+    color: rgba(48, 39, 62, 0.6);
+  }
+
+  .sk-wavelengths__arrow.swiper-button-disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .sk-wavelengths__arrow-icon {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid currentColor;
+    border-bottom: none;
+    border-left: none;
+    display: inline-block;
+    filter: drop-shadow(0 1px 2px rgba(48, 39, 62, 0.15));
+  }
+
+  .sk-wavelengths__arrow--prev .sk-wavelengths__arrow-icon {
+    transform: rotate(225deg);
+  }
+
+  .sk-wavelengths__arrow--next .sk-wavelengths__arrow-icon {
+    transform: rotate(45deg);
+  }
+
+  .sk-wavelengths__slider .swiper-button-prev::after,
+  .sk-wavelengths__slider .swiper-button-next::after {
+    display: none;
+  }
+
   /* === MOBILE SLIDER === */
   @media (max-width: 750px) {
     .sk-wavelengths__grid {
@@ -206,9 +282,20 @@
     }
     .sk-wavelengths__slider {
       display: block;
+      margin-top: calc(var(--sk-spacing-unit) * -3);
     }
     .sk-wavelength {
-      padding: 24px 12px;
+      padding: 20px 12px;
+      margin-top: calc(var(--sk-spacing-unit) * -2);
+    }
+    .sk-wavelength--has-tag {
+      margin-top: calc(var(--sk-spacing-unit) * 1);
+    }
+    .sk-wavelengths__arrow {
+      width: auto;
+      height: auto;
+      padding: 14px;
+      box-shadow: none;
     }
     .sk-wavelength__visual {
       max-width: 420px;
@@ -222,7 +309,7 @@
   }
 </style>
 
-<section class="sk-wavelengths section--full-bleed sk-body-text--strong">
+<section id="sk-wavelengths-{{ section.id }}" class="sk-wavelengths section--full-bleed sk-body-text--strong">
   <div class="page-width">
     {% if section.settings.sk_led_light_work_eyebrow != blank %}
       <p class="sk-wavelengths__eyebrow">
@@ -262,7 +349,7 @@
             assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
             assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
           %}
-          <div class="sk-wavelength">
+          <div class="sk-wavelength{% if card_show_highlight %} sk-wavelength--has-tag{% endif %}">
             {% if card_show_highlight %}
               <span class="sk-tag">
                 {{ card_highlight_tag | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
@@ -337,7 +424,7 @@
                 assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
               %}
               <div class="swiper-slide">
-                <div class="sk-wavelength">
+                <div class="sk-wavelength{% if card_show_highlight %} sk-wavelength--has-tag{% endif %}">
                   {% if card_show_highlight %}
                     <span class="sk-tag">
                       {{ card_highlight_tag | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
@@ -391,6 +478,21 @@
           </div>
           <div class="swiper-pagination"></div>
         </div>
+        <button
+          type="button"
+          class="sk-wavelengths__arrow sk-wavelengths__arrow--prev swiper-button-prev"
+          aria-label="Forrige lysbilde"
+        >
+          <span class="sk-wavelengths__arrow-icon" aria-hidden="true"></span>
+        </button>
+        <button
+          type="button"
+          class="sk-wavelengths__arrow sk-wavelengths__arrow--next swiper-button-next"
+          aria-label="Neste lysbilde"
+        >
+          <span class="sk-wavelengths__arrow-icon" aria-hidden="true"></span>
+        </button>
+      </div>
     {% else %}
       {% if request.design_mode %}
         <p class="sk-wavelengths__empty">
@@ -402,23 +504,113 @@
 </section>
 
 <script>
+  var skShimmerObserver = null;
+
+  function skTriggerShimmer(tag) {
+    if (!tag) return;
+    tag.classList.remove('sk-tag--shimmer');
+    // Force reflow to restart animation
+    void tag.offsetWidth;
+    tag.classList.add('sk-tag--shimmer');
+    window.setTimeout(function () {
+      tag.classList.remove('sk-tag--shimmer');
+    }, 1600);
+  }
+
+  function skTriggerAllShimmers(scope) {
+    var root = scope || document;
+    var selector = root === document ? '.sk-wavelengths .sk-tag' : '.sk-tag';
+    root.querySelectorAll(selector).forEach(skTriggerShimmer);
+  }
+
+  function skInitShimmerObserver(scopeEl) {
+    var root = scopeEl || document;
+
+    if (!('IntersectionObserver' in window)) {
+      skTriggerAllShimmers(root);
+      return null;
+    }
+
+    if (skShimmerObserver) {
+      skShimmerObserver.disconnect();
+      skShimmerObserver = null;
+    }
+
+    skShimmerObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.sk-tag').forEach(skTriggerShimmer);
+          }
+        });
+      },
+      {
+        threshold: [0, 0.45],
+        rootMargin: '0px 0px -10% 0px',
+      }
+    );
+
+    root.querySelectorAll('.sk-wavelength').forEach(function (card) {
+      skShimmerObserver.observe(card);
+    });
+
+    return skShimmerObserver;
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
+    var sectionEl = document.getElementById('sk-wavelengths-{{ section.id }}');
+    if (!sectionEl) {
+      skTriggerAllShimmers();
+      return;
+    }
+
+    skInitShimmerObserver(sectionEl);
     var mql = window.matchMedia('(max-width: 750px)');
     var swiperInstance = null;
-    var container = document.querySelector('.sk-wavelengths-swiper-{{ section.id }} .swiper');
+    var sliderRoot = sectionEl.querySelector('.sk-wavelengths-swiper-{{ section.id }}');
+    var container = sliderRoot ? sliderRoot.querySelector('.swiper') : null;
 
     function setup() {
       if (!container) return;
 
       if (mql.matches && !swiperInstance) {
-        swiperInstance = new Swiper(container, {
+        var options = {
           slidesPerView: 1,
           spaceBetween: 20,
-          pagination: {
-            el: container.querySelector('.swiper-pagination'),
+        };
+
+        var paginationEl = container.querySelector('.swiper-pagination');
+        if (paginationEl) {
+          options.pagination = {
+            el: paginationEl,
             clickable: true,
+          };
+        }
+
+        var prevArrow = sliderRoot ? sliderRoot.querySelector('.sk-wavelengths__arrow--prev') : null;
+        var nextArrow = sliderRoot ? sliderRoot.querySelector('.sk-wavelengths__arrow--next') : null;
+        if (prevArrow && nextArrow) {
+          options.navigation = {
+            prevEl: prevArrow,
+            nextEl: nextArrow,
+          };
+        }
+
+        options.on = {
+          slideChangeTransitionStart: function (swiper) {
+            var activeSlide = swiper.slides ? swiper.slides[swiper.activeIndex] : null;
+            if (activeSlide) {
+              activeSlide.querySelectorAll('.sk-tag').forEach(skTriggerShimmer);
+            }
           },
-        });
+        };
+
+        swiperInstance = new Swiper(container, options);
+        // Initial shimmer on the first slide
+        var initialSlide = swiperInstance.slides ? swiperInstance.slides[swiperInstance.activeIndex] : null;
+        if (initialSlide) {
+          initialSlide.querySelectorAll('.sk-tag').forEach(skTriggerShimmer);
+        }
       } else if (!mql.matches && swiperInstance) {
         swiperInstance.destroy(true, true);
         swiperInstance = null;
@@ -427,6 +619,7 @@
 
     setup();
     mql.addEventListener('change', setup);
+    skTriggerAllShimmers(sectionEl);
   });
 </script>
 
