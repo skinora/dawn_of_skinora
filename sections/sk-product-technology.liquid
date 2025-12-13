@@ -136,58 +136,156 @@
 </style>
 
 {% liquid
-  assign ref = product.metafields.custom.result_section_reference.value
+  assign sk_result_entry = null
+  if product and product.metafields.custom.result_section_reference != blank
+    assign sk_result_entry = product.metafields.custom.result_section_reference.value
+  endif
 
-  assign eyebrow = ref.eyebrow | default: section.settings.eyebrow
-  assign heading = ref.heading | default: section.settings.heading
-  assign subheading = ref.subheading | default: section.settings.subheading
-  assign intro = ref.bullet_intro
-  assign bullets = ref.bullet_points
-  assign note = ref.note | default: section.settings.note_text
+  assign result_eyebrow = section.settings.eyebrow
+  if sk_result_entry and sk_result_entry.eyebrow != blank
+    assign result_eyebrow = sk_result_entry.eyebrow
+  endif
 
-  assign image = ref.hero_image | default: section.settings.result_image
-  assign image_alt = ref.hero_image_alt | default: section.settings.result_image_alt
+  assign result_heading = section.settings.heading
+  if sk_result_entry and sk_result_entry.heading != blank
+    assign result_heading = sk_result_entry.heading
+  endif
 
-  assign before = ref.before_image
-  assign after = ref.after_image
+  assign result_subheading = section.settings.subheading
+  if sk_result_entry and sk_result_entry.subheading != blank
+    assign result_subheading = sk_result_entry.subheading
+  endif
+
+  assign result_intro = section.settings.bullet_intro_text
+  if sk_result_entry and sk_result_entry.bullet_intro != blank
+    assign result_intro = sk_result_entry.bullet_intro
+  endif
+
+  assign result_intro_markup = ''
+  if result_intro != blank
+    if result_intro.value != blank
+      assign result_intro_markup = result_intro | metafield_tag
+    else
+      assign result_intro_markup = result_intro
+    endif
+  endif
+
+  assign result_bullets = section.settings.rich_bullet_content
+  if sk_result_entry and sk_result_entry.bullet_points != blank
+    assign result_bullets = sk_result_entry.bullet_points
+  endif
+
+  assign result_bullets_markup = ''
+  if result_bullets != blank
+    if result_bullets.value != blank
+      assign result_bullets_markup = result_bullets | metafield_tag
+    else
+      assign result_bullets_markup = result_bullets
+    endif
+  endif
+
+  assign result_note = section.settings.note_text
+  if sk_result_entry and sk_result_entry.note != blank
+    assign result_note = sk_result_entry.note
+  endif
+
+  assign result_image = section.settings.result_image
+  if sk_result_entry and sk_result_entry.hero_image != blank
+    assign result_image = sk_result_entry.hero_image
+  endif
+
+  assign result_image_alt = section.settings.result_image_alt
+  if result_image and result_image.alt != blank
+    assign result_image_alt = result_image.alt
+  endif
+  if sk_result_entry and sk_result_entry.hero_image_alt != blank
+    assign result_image_alt = sk_result_entry.hero_image_alt
+  endif
+
+  assign result_before_image = null
+  if sk_result_entry and sk_result_entry.before_image != blank
+    assign result_before_image = sk_result_entry.before_image
+  endif
+
+  assign result_after_image = null
+  if sk_result_entry and sk_result_entry.after_image != blank
+    assign result_after_image = sk_result_entry.after_image
+  endif
 %}
 
-<section class="sk-results section">
+<section id="sk-results-{{ section.id }}" class="sk-results section">
   <div class="page-width">
-    <div class="sk-section-header sk-section-header--center">
-      <p class="sk-section-header__eyebrow">{{ eyebrow }}</p>
-      <h2 class="sk-section-header__title">{{ heading }}</h2>
-      <p class="sk-section-header__subtitle">{{ subheading }}</p>
-    </div>
+    {% assign sk_results_has_header = false %}
+    {% if result_eyebrow != blank %}
+      {% assign sk_results_has_header = true %}
+    {% endif %}
+    {% if result_heading != blank %}
+      {% assign sk_results_has_header = true %}
+    {% endif %}
+    {% if result_subheading != blank %}
+      {% assign sk_results_has_header = true %}
+    {% endif %}
+
+    {% if sk_results_has_header %}
+      <div class="sk-section-header sk-section-header--center">
+        {% if result_eyebrow != blank %}
+          <p class="sk-section-header__eyebrow">{{ result_eyebrow }}</p>
+        {% endif %}
+        {% if result_heading != blank %}
+          <h2 class="sk-section-header__title">{{ result_heading }}</h2>
+        {% endif %}
+        {% if result_subheading != blank %}
+          <p class="sk-section-header__subtitle">{{ result_subheading }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
 
     <div class="sk-results__inner">
       <div class="sk-results__copy">
-        {% if intro != blank %}
-          <div class="sk-results__intro">{{ intro | metafield_tag }}</div>
+        {% if result_intro_markup != blank %}
+          <div class="sk-results__intro">{{ result_intro_markup }}</div>
         {% endif %}
 
-        {% if bullets != blank %}
+        {% if result_bullets_markup != blank %}
           <div class="sk-results__list sk-results__list--rich">
-            {{ bullets | metafield_tag }}
+            {{ result_bullets_markup }}
           </div>
         {% endif %}
 
-        {% if note != blank %}
-          <p class="sk-results__note">{{ note }}</p>
+        {% if result_note != blank %}
+          <p class="sk-results__note">{{ result_note }}</p>
         {% endif %}
       </div>
 
       <div class="sk-results__media">
         <div class="sk-results__visual">
-          {% if before != blank and after != blank %}
-            <img src="{{ before | image_url: width: 1200 }}" alt="Før">
+          {% if result_before_image != blank and result_after_image != blank %}
+            <img
+              src="{{ result_before_image | image_url: width: 1200 }}"
+              alt="{{ result_before_image.alt | escape | default: 'Før' }}"
+              loading="lazy"
+              width="{{ result_before_image.width | default: 1200 }}"
+              height="{{ result_before_image.height | default: 1600 }}"
+            >
             <div class="sk-ba__after" data-after>
-              <img src="{{ after | image_url: width: 1200 }}" alt="Etter">
+              <img
+                src="{{ result_after_image | image_url: width: 1200 }}"
+                alt="{{ result_after_image.alt | escape | default: 'Etter' }}"
+                loading="lazy"
+                width="{{ result_after_image.width | default: 1200 }}"
+                height="{{ result_after_image.height | default: 1600 }}"
+              >
             </div>
             <div class="sk-ba__handle" data-handle></div>
             <input type="range" min="0" max="100" value="50" class="sk-ba__range" data-range>
-          {% elsif image != blank %}
-            <img src="{{ image | image_url: width: 1200 }}" alt="{{ image_alt }}">
+          {% elsif result_image != blank %}
+            <img
+              src="{{ result_image | image_url: width: 1200 }}"
+              alt="{{ result_image_alt | escape }}"
+              loading="lazy"
+              width="{{ result_image.width | default: 1200 }}"
+              height="{{ result_image.height | default: 1600 }}"
+            >
           {% endif %}
         </div>
       </div>
@@ -197,30 +295,78 @@
 
 <script>
   (function () {
-    const range = document.querySelector('[data-range]');
-    if (!range) return;
-    const after = document.querySelector('[data-after]');
-    const handle = document.querySelector('[data-handle]');
-    const set = (v) => {
-      after.style.width = v + '%';
-      handle.style.left = v + '%';
+    const section = document.getElementById('sk-results-{{ section.id }}');
+    if (!section) return;
+    const range = section.querySelector('[data-range]');
+    const after = section.querySelector('[data-after]');
+    const handle = section.querySelector('[data-handle]');
+    if (!range || !after || !handle) return;
+    const set = (value) => {
+      after.style.width = value + '%';
+      handle.style.left = value + '%';
     };
     set(range.value);
-    range.addEventListener('input', (e) => set(e.target.value));
+    range.addEventListener('input', (event) => set(event.target.value));
   })();
 </script>
 
 {% schema %}
 {
-  "name": "SK Resultater",
+  "name": "SK Result Section",
   "settings": [
-    { "type": "text", "id": "eyebrow", "default": "RESULTATER" },
-    { "type": "text", "id": "heading", "default": "Hva kan jeg forvente?" },
-    { "type": "textarea", "id": "subheading" },
-    { "type": "textarea", "id": "note_text" },
-    { "type": "image_picker", "id": "result_image" },
-    { "type": "text", "id": "result_image_alt" }
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "RESULTATER"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Hva kan jeg forvente?"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Fire klare forbedringer du merker gradvis."
+    },
+    {
+      "type": "richtext",
+      "id": "bullet_intro_text",
+      "label": "Intro text before list",
+      "default": "<p>Del en kort introduksjon her.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "rich_bullet_content",
+      "label": "Tilpasset punktliste",
+      "default": "<ul><li>Jevnere hudtone</li><li>Fastere hud</li><li>Mer glød</li><li>Mindre sliten hud</li></ul>"
+    },
+    {
+      "type": "textarea",
+      "id": "note_text",
+      "label": "Diskret note",
+      "default": "Resultater bygges gradvis og påvirkes av hudtype og kontinuitet."
+    },
+    {
+      "type": "image_picker",
+      "id": "result_image",
+      "label": "Støttebilde"
+    },
+    {
+      "type": "text",
+      "id": "result_image_alt",
+      "label": "Alternativ tekst",
+      "default": "Rolig portrett"
+    }
   ],
-  "presets": [{ "name": "SK Resultater" }]
+  "presets": [
+    {
+      "name": "SK Resultater",
+      "category": "Custom"
+    }
+  ]
 }
 {% endschema %}
