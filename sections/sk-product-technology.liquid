@@ -34,7 +34,8 @@
     color: var(--sk-results-muted);
   }
 
-  .sk-results__list {
+  .sk-results__list,
+  .sk-results__list--rich ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -43,7 +44,8 @@
     gap: var(--sk-results-list-gap);
   }
 
-  .sk-results__list li {
+  .sk-results__list li,
+  .sk-results__list--rich li {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -52,12 +54,18 @@
     color: var(--sk-results-brand);
   }
 
-  .sk-results__bullet {
+  .sk-results__bullet,
+  .sk-results__list--rich li::before {
     width: 10px;
     height: 10px;
     border-radius: 999px;
     background: linear-gradient(145deg, var(--sk-results-brand), var(--sk-results-accent));
     flex-shrink: 0;
+  }
+
+  .sk-results__list--rich li::before {
+    content: '';
+    display: inline-flex;
   }
 
   .sk-results__note {
@@ -163,7 +171,11 @@
 
     <div class="sk-results__inner">
       <div class="sk-results__copy">
-        {% if section.blocks.size > 0 %}
+        {% if section.settings.rich_bullet_content != blank %}
+          <div class="sk-results__list sk-results__list--rich" role="list">
+            {{ section.settings.rich_bullet_content }}
+          </div>
+        {% elsif section.blocks.size > 0 %}
           <ul class="sk-results__list" role="list">
             {% for block in section.blocks %}
               {% if block.settings.result_text != blank %}
@@ -219,6 +231,12 @@
       "id": "subheading",
       "label": "Subheading",
       "default": "Fire klare forbedringer du merker gradvis."
+    },
+    {
+      "type": "richtext",
+      "id": "rich_bullet_content",
+      "label": "Tilpasset punktliste",
+      "default": "<ul><li>Jevnere hudtone</li><li>Fastere hud</li><li>Mer glød</li><li>Mindre sliten hud</li></ul>"
     },
     {
       "type": "textarea",
