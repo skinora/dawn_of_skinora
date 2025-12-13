@@ -404,6 +404,12 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   --sk-mobile-heading-line: 1.2;
   --sk-mobile-body-size: clamp(1.6rem, 4.2vw, 2rem);
   --sk-mobile-body-line: 1.55;
+  --sk-section-eyebrow-size: clamp(0.9rem, 2vw, 1.2rem);
+  --sk-section-eyebrow-spacing: 0.22em;
+  --sk-section-subtitle-size: clamp(1.4rem, 2.6vw, 1.8rem);
+  --sk-section-subtitle-line: 1.55;
+  --sk-section-header-gap: clamp(0.65rem, 2vw, 1.2rem);
+  --sk-section-title-spacing: 0.08em;
 }
 
 /* Reusable section heading utility */
@@ -477,6 +483,59 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 .sk-heading-size--compact {
   font-size: var(--sk-heading-size-compact);
   line-height: var(--section-heading-h3-line);
+}
+
+/* Shared section header wrapper */
+.sk-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sk-section-header-gap);
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  color: rgb(var(--sk-color-heading-text));
+}
+
+.sk-section-header--center {
+  text-align: center;
+  align-items: center;
+}
+
+.sk-section-header--left {
+  text-align: left;
+  align-items: flex-start;
+}
+
+.sk-section-header--right {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.sk-section-header__eyebrow {
+  font-size: var(--sk-section-eyebrow-size);
+  letter-spacing: var(--sk-section-eyebrow-spacing);
+  text-transform: uppercase;
+  color: rgba(var(--sk-color-subheader-text), 0.95);
+  margin: 0;
+}
+
+.sk-section-header__title {
+  font-weight: 600;
+  margin: 0;
+  color: inherit;
+  line-height: var(--section-heading-h1-line);
+  text-transform: uppercase;
+  letter-spacing: var(--sk-section-title-spacing);
+}
+
+.sk-section-header--center .sk-section-header__title,
+.sk-section-header--right .sk-section-header__title {
+  text-align: inherit;
+}
+
+.sk-section-header__subtitle {
+  margin: 0;
+  font-size: var(--sk-section-subtitle-size);
+  line-height: var(--sk-section-subtitle-line);
+  color: rgba(var(--sk-color-subheader-text), 0.85);
 }
 
 h1,

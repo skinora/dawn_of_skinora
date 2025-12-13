@@ -13,22 +13,6 @@
     background: #ffffff;
   }
 
-  .sk-header__section {
-    text-align: center;
-    margin-bottom: calc(var(--sk-spacing-unit) * 4);
-    color: inherit;
-  }
-
-  .sk-wavelengths__eyebrow {
-    margin: 0 0 0.5rem;
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--sk-color-neutral);
-    font-weight: 500;
-    text-align: center;
-  }
-
   /* === DESKTOP GRID === */
   .sk-wavelengths__grid {
     display: grid;
@@ -339,16 +323,35 @@
 
 <section id="sk-wavelengths-{{ section.id }}" class="sk-wavelengths section--full-bleed sk-body-text--strong">
   <div class="page-width">
+    {% assign sk_header_has_content = false %}
     {% if section.settings.sk_led_light_work_eyebrow != blank %}
-      <p class="sk-wavelengths__eyebrow">
-        {{ section.settings.sk_led_light_work_eyebrow }}
-      </p>
+      {% assign sk_header_has_content = true %}
+    {% endif %}
+    {% if section.settings.sk_led_light_work_heading != blank %}
+      {% assign sk_header_has_content = true %}
+    {% endif %}
+    {% if section.settings.sk_led_light_work_subheading != blank %}
+      {% assign sk_header_has_content = true %}
     {% endif %}
 
-    {% if section.settings.sk_led_light_work_heading != blank %}
-      <h1 class="sk-header__section sk-section-heading sk-section-heading--h1 sk-heading-text--strong sk-heading-size--large">
-        {{ section.settings.sk_led_light_work_heading }}
-      </h1>
+    {% if sk_header_has_content %}
+      <div class="sk-section-header sk-section-header--center">
+        {% if section.settings.sk_led_light_work_eyebrow != blank %}
+          <p class="sk-section-header__eyebrow">{{ section.settings.sk_led_light_work_eyebrow }}</p>
+        {% endif %}
+
+        {% if section.settings.sk_led_light_work_heading != blank %}
+          <h1 class="sk-section-header__title sk-heading-size--large sk-heading-text--strong">
+            {{ section.settings.sk_led_light_work_heading }}
+          </h1>
+        {% endif %}
+
+        {% if section.settings.sk_led_light_work_subheading != blank %}
+          <p class="sk-section-header__subtitle sk-heading-text--soft">
+            {{ section.settings.sk_led_light_work_subheading }}
+          </p>
+        {% endif %}
+      </div>
     {% endif %}
 
     {% liquid
@@ -674,6 +677,12 @@
       "id": "sk_led_light_work_heading",
       "label": "Title",
       "default": "Hvordan Fungerer Skinora LED Lys"
+    },
+    {
+      "type": "textarea",
+      "id": "sk_led_light_work_subheading",
+      "label": "Subheading",
+      "default": "Oppdag hver bølgelengdes rolige effekt, steg for steg."
     }
   ],
   "presets": [
