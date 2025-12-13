@@ -208,7 +208,8 @@
       "name": "SK Led Light Work",
       "settings": {
         "sk_led_light_work_eyebrow": "VITENSKAPEN BAK SKINORA LED",
-        "sk_led_light_work_heading": "Hvordan Fungerer Skinora LED Lys"
+        "sk_led_light_work_heading": "Hvordan Fungerer Skinora LED Lys",
+        "sk_led_light_work_subheading": "Oppdag hver bølgelengdes rolige effekt, steg for steg"
       }
     },
     "sk_product_how_to_use_dbAJA9": {
@@ -230,12 +231,11 @@
       "type": "sk-product-technology",
       "name": "SK Product Technology",
       "settings": {
+        "eyebrow": "RESULTATER",
         "heading": "Teknologien bak Skinora Radiance",
-        "subheader": "Hva gjør Skinora-teknologien?",
-        "left_bullets": "<p>Øker kollagen</p><p>Reduserer inflammasjon</p>",
-        "right_bullets": "<p>Forbedrer hudens klarhet</p>",
-        "pad_y_desktop": 112,
-        "pad_y_mobile": 60
+        "subheading": "Fire klare forbedringer du merker gradvis",
+        "note_text": "Resultater bygges gradvis og påvirkes av hudtype og kontinuitet.",
+        "result_image_alt": "Rolig portrett"
       }
     },
     "sk_product_specifications_cJY9VW": {
