@@ -138,70 +138,104 @@
   }
 </style>
 
+{% liquid
+  assign sk_result_entry = null
+  if product and product.metafields.custom.result_section_reference != blank
+    assign sk_result_entry = product.metafields.custom.result_section_reference.value
+  endif
+
+  assign result_eyebrow = section.settings.eyebrow
+  if sk_result_entry and sk_result_entry.eyebrow != blank
+    assign result_eyebrow = sk_result_entry.eyebrow
+  endif
+
+  assign result_heading = section.settings.heading
+  if sk_result_entry and sk_result_entry.heading != blank
+    assign result_heading = sk_result_entry.heading
+  endif
+
+  assign result_subheading = section.settings.subheading
+  if sk_result_entry and sk_result_entry.subheading != blank
+    assign result_subheading = sk_result_entry.subheading
+  endif
+
+  assign result_bullets = section.settings.rich_bullet_content
+  if sk_result_entry and sk_result_entry.bullet_points != blank
+    assign result_bullets = sk_result_entry.bullet_points
+  endif
+
+  assign result_note = section.settings.note_text
+  if sk_result_entry and sk_result_entry.note != blank
+    assign result_note = sk_result_entry.note
+  endif
+
+  assign result_image = section.settings.result_image
+  if sk_result_entry and sk_result_entry.hero_image != blank
+    assign result_image = sk_result_entry.hero_image
+  endif
+
+  assign result_image_alt = section.settings.result_image_alt
+  if result_image and result_image.alt != blank
+    assign result_image_alt = result_image.alt
+  endif
+  if sk_result_entry and sk_result_entry.hero_image_alt != blank
+    assign result_image_alt = sk_result_entry.hero_image_alt
+  endif
+%}
+
 <section id="sk-results-{{ section.id }}" class="sk-results section">
   <div class="page-width">
     {% assign sk_results_has_header = false %}
-    {% if section.settings.eyebrow != blank %}
+    {% if result_eyebrow != blank %}
       {% assign sk_results_has_header = true %}
     {% endif %}
-    {% if section.settings.heading != blank %}
+    {% if result_heading != blank %}
       {% assign sk_results_has_header = true %}
     {% endif %}
-    {% if section.settings.subheading != blank %}
+    {% if result_subheading != blank %}
       {% assign sk_results_has_header = true %}
     {% endif %}
 
     {% if sk_results_has_header %}
       <div class="sk-section-header sk-section-header--center">
-        {% if section.settings.eyebrow != blank %}
-          <p class="sk-section-header__eyebrow">{{ section.settings.eyebrow }}</p>
+        {% if result_eyebrow != blank %}
+          <p class="sk-section-header__eyebrow">{{ result_eyebrow }}</p>
         {% endif %}
 
-        {% if section.settings.heading != blank %}
+        {% if result_heading != blank %}
           <h1 class="sk-section-header__title sk-heading-size--large sk-heading-text--strong">
-            {{ section.settings.heading }}
+            {{ result_heading }}
           </h1>
         {% endif %}
 
-        {% if section.settings.subheading != blank %}
-          <p class="sk-section-header__subtitle sk-heading-text--soft">{{ section.settings.subheading }}</p>
+        {% if result_subheading != blank %}
+          <p class="sk-section-header__subtitle sk-heading-text--soft">{{ result_subheading }}</p>
         {% endif %}
       </div>
     {% endif %}
 
     <div class="sk-results__inner">
       <div class="sk-results__copy">
-        {% if section.settings.rich_bullet_content != blank %}
+        {% if result_bullets != blank %}
           <div class="sk-results__list sk-results__list--rich" role="list">
-            {{ section.settings.rich_bullet_content }}
+            {{ result_bullets }}
           </div>
-        {% elsif section.blocks.size > 0 %}
-          <ul class="sk-results__list" role="list">
-            {% for block in section.blocks %}
-              {% if block.settings.result_text != blank %}
-                <li {{ block.shopify_attributes }}>
-                  <span class="sk-results__bullet" aria-hidden="true"></span>
-                  <span>{{ block.settings.result_text }}</span>
-                </li>
-              {% endif %}
-            {% endfor %}
-          </ul>
         {% endif %}
 
-        {% if section.settings.note_text != blank %}
-          <p class="sk-results__note">{{ section.settings.note_text }}</p>
+        {% if result_note != blank %}
+          <p class="sk-results__note">{{ result_note }}</p>
         {% endif %}
       </div>
 
-      {% if section.settings.result_image != blank %}
+      {% if result_image != blank %}
         <div class="sk-results__media">
           <div class="sk-results__visual">
             <img
-              src="{{ section.settings.result_image | image_url: width: 1200 }}"
-              alt="{{ section.settings.result_image_alt | escape }}"
+              src="{{ result_image | image_url: width: 1200 }}"
+              alt="{{ result_image_alt | escape }}"
               loading="lazy"
-              width="{{ section.settings.result_image.width | default: 1200 }}"
-              height="{{ section.settings.result_image.height | default: 1600 }}"
+              width="{{ result_image.width | default: 1200 }}"
+              height="{{ result_image.height | default: 1600 }}"
             >
           </div>
         </div>
@@ -254,21 +288,6 @@
       "id": "result_image_alt",
       "label": "Alternativ tekst",
       "default": "Rolig portrett"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "result",
-      "name": "Resultat",
-      "limit": 4,
-      "settings": [
-        {
-          "type": "text",
-          "id": "result_text",
-          "label": "Punkt",
-          "default": "Jevnere hudtone"
-        }
-      ]
     }
   ],
   "presets": [
