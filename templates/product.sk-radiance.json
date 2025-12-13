@@ -206,18 +206,6 @@
         "result_image_alt": "Rolig portrett"
       }
     },
-    "sk_product_technology_VKgrgV": {
-      "type": "sk-product-technology",
-      "name": "SK Resultater",
-      "settings": {
-        "eyebrow": "RESULTATER",
-        "heading": "Hva kan jeg forvente?",
-        "subheading": "Fire klare forbedringer du merker gradvis.",
-        "rich_bullet_content": "<ul><li>Jevnere hudtone</li><li>Fastere hud</li><li>Mer glød</li><li>Mindre sliten hud</li></ul>",
-        "note_text": "Resultater bygges gradvis og påvirkes av hudtype og kontinuitet.",
-        "result_image_alt": "Rolig portrett"
-      }
-    },
     "sk_product_radiance_TCYaUL": {
       "type": "sk-product-radiance",
       "name": "SK Product Radiance",
@@ -302,7 +290,6 @@
     "sk_product_promotion_logos_r9MTbH",
     "sk_before_after_mBrdqd",
     "sk_product_technology_RP8yDt",
-    "sk_product_technology_VKgrgV",
     "sk_product_radiance_TCYaUL",
     "sk_led_light_work_mDz86m",
     "sk_product_how_to_use_dbAJA9",
