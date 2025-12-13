@@ -164,6 +164,15 @@
     assign result_bullets = sk_result_entry.bullet_points
   endif
 
+  assign result_bullets_markup = ''
+  if result_bullets != blank
+    if result_bullets.value != blank
+      assign result_bullets_markup = result_bullets | metafield_tag
+    else
+      assign result_bullets_markup = result_bullets
+    endif
+  endif
+
   assign result_note = section.settings.note_text
   if sk_result_entry and sk_result_entry.note != blank
     assign result_note = sk_result_entry.note
@@ -216,9 +225,9 @@
 
     <div class="sk-results__inner">
       <div class="sk-results__copy">
-        {% if result_bullets != blank %}
+        {% if result_bullets_markup != blank %}
           <div class="sk-results__list sk-results__list--rich" role="list">
-            {{ result_bullets }}
+            {{ result_bullets_markup }}
           </div>
         {% endif %}
 
