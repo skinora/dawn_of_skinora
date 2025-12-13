@@ -77,87 +77,11 @@
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(48, 39, 62, 0.12);
   }
-
   .sk-results__visual img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-  }
-
-  .sk-ba__after {
-    position: absolute;
-    inset: 0;
-    width: 50%;
-    overflow: hidden;
-    z-index: 2;
-    pointer-events: none;
-    transition: width 0.25s ease;
-  }
-
-  .sk-ba__handle {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 72px;
-    transform: translateX(-50%);
-    z-index: 6;
-    cursor: grab;
-    touch-action: none;
-    background: transparent;
-    transition: left 0.25s ease;
-  }
-
-  .sk-results--sliding .sk-ba__after,
-  .sk-results--sliding .sk-ba__handle,
-  .sk-results--sliding .sk-ba__handle::before,
-  .sk-results--sliding .sk-ba__handle::after {
-    transition: none;
-  }
-
-  .sk-results--sliding .sk-ba__handle {
-    cursor: grabbing;
-  }
-
-  .sk-ba__handle::before {
-    content: '';
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 8px;
-    transform: translateX(-50%);
-    background: var(--slider-line);
-    border-left: 2px solid var(--slider-line-outline);
-    border-right: 2px solid var(--slider-line-outline);
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.75), 0 0 30px rgba(0, 0, 0, 0.65);
-    mix-blend-mode: screen;
-    transition: inherit;
-  }
-
-  .sk-ba__handle::after {
-    content: '\2194';
-    pointer-events: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.95);
-    border: 3px solid var(--brand);
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35), inset 0 0 0 2px rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(6px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    color: var(--brand);
-    font-weight: 700;
-    transition: inherit;
   }
 
   @media (max-width: 820px) {
@@ -166,6 +90,9 @@
     }
   }
 </style>
+
+{{ 'component-before-after.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'component-before-after.js' | asset_url }}" defer="defer"></script>
 
 {% liquid
   assign sk_result_entry = null
@@ -290,32 +217,48 @@
       <div class="sk-results__media">
         <div class="sk-results__visual">
           {% if result_before_image != blank and result_after_image != blank %}
-            <img
-              src="{{ result_before_image | image_url: width: 1200 }}"
-              alt="{{ result_before_image.alt | escape | default: 'Før' }}"
-              loading="lazy"
-              width="{{ result_before_image.width | default: 1200 }}"
-              height="{{ result_before_image.height | default: 1600 }}"
-            >
-            <div class="sk-ba__after" data-after>
-              <img
-                src="{{ result_after_image | image_url: width: 1200 }}"
-                alt="{{ result_after_image.alt | escape | default: 'Etter' }}"
-                loading="lazy"
-                width="{{ result_after_image.width | default: 1200 }}"
-                height="{{ result_after_image.height | default: 1600 }}"
-              >
-            </div>
             <div
-              class="sk-ba__handle"
-              data-handle
-              role="slider"
+              class="before-after"
+              data-before-after
+              data-initial="50"
               aria-label="Dra for å se før og etter"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow="50"
-              tabindex="0"
-            ></div>
+            >
+              <div class="before-after__image before-after__image--before">
+                <img
+                  src="{{ result_before_image | image_url: width: 1200 }}"
+                  alt="{{ result_before_image.alt | escape | default: 'Før' }}"
+                  loading="lazy"
+                  width="{{ result_before_image.width | default: 1200 }}"
+                  height="{{ result_before_image.height | default: 1600 }}"
+                >
+                <span class="visually-hidden">Før-bilde</span>
+              </div>
+              <div class="before-after__image before-after__image--after">
+                <img
+                  src="{{ result_after_image | image_url: width: 1200 }}"
+                  alt="{{ result_after_image.alt | escape | default: 'Etter' }}"
+                  loading="lazy"
+                  width="{{ result_after_image.width | default: 1200 }}"
+                  height="{{ result_after_image.height | default: 1600 }}"
+                >
+                <span class="visually-hidden">Etter-bilde</span>
+              </div>
+              <div
+                class="before-after__slider"
+                role="slider"
+                aria-label="Dra for å se før og etter"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="50"
+                tabindex="0"
+                data-ba-slider
+              >
+                <span class="before-after__line" aria-hidden="true"></span>
+                <span class="before-after__handle" aria-hidden="true">
+                  <span class="before-after__chevron">↔</span>
+                </span>
+              </div>
+            </div>
           {% elsif result_image != blank %}
             <img
               src="{{ result_image | image_url: width: 1200 }}"
@@ -330,97 +273,6 @@
     </div>
   </div>
 </section>
-
-<script>
-  (function () {
-    const section = document.getElementById('sk-results-{{ section.id }}');
-    if (!section) return;
-
-    const visual = section.querySelector('.sk-results__visual');
-    const after = section.querySelector('[data-after]');
-    const handle = section.querySelector('[data-handle]');
-    if (!visual || !after || !handle) return;
-
-    let isDragging = false;
-    let startX = 0;
-    let startPercent = 50;
-    let current = 50;
-
-    const clamp = (v) => Math.min(100, Math.max(0, v));
-
-    const set = (v) => {
-      current = clamp(v);
-      after.style.width = current + '%';
-      handle.style.left = current + '%';
-      handle.setAttribute('aria-valuenow', Math.round(current));
-    };
-
-    /* 🔒 HARD LOCK DEFAULT POSITION */
-    set(50);
-
-    const getClientX = (e) => {
-      if (e.touches && e.touches.length) return e.touches[0].clientX;
-      return e.clientX;
-    };
-
-    const onMove = (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-
-      const rect = visual.getBoundingClientRect();
-      const deltaPx = getClientX(e) - startX;
-      const deltaPercent = (deltaPx / rect.width) * 100;
-
-      set(startPercent + deltaPercent);
-    };
-
-    const stopDrag = (e) => {
-      if (!isDragging) return;
-      isDragging = false;
-      section.classList.remove('sk-results--sliding');
-      window.removeEventListener('pointermove', onMove);
-      window.removeEventListener('pointerup', stopDrag);
-      window.removeEventListener('pointercancel', stopDrag);
-      if (handle.releasePointerCapture && e && e.pointerId !== undefined) {
-        try {
-          handle.releasePointerCapture(e.pointerId);
-        } catch (error) {}
-      }
-    };
-
-    const startDrag = (e) => {
-      e.preventDefault();
-      isDragging = true;
-      section.classList.add('sk-results--sliding');
-
-      startX = getClientX(e);
-      startPercent = current;
-
-      if (handle.setPointerCapture && e.pointerId !== undefined) {
-        try {
-          handle.setPointerCapture(e.pointerId);
-        } catch (error) {}
-      }
-
-      window.addEventListener('pointermove', onMove);
-      window.addEventListener('pointerup', stopDrag);
-      window.addEventListener('pointercancel', stopDrag);
-    };
-
-    handle.addEventListener('pointerdown', startDrag);
-
-    handle.addEventListener('keydown', (event) => {
-      const step = event.shiftKey ? 10 : 5;
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        set(current - step);
-      } else if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        set(current + step);
-      }
-    });
-  })();
-</script>
 
 {% schema %}
 {

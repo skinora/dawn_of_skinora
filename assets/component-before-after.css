@@ -1,0 +1,86 @@
+.before-after {
+  --before-after-percent: 50%;
+  --before-after-line-color: rgba(255, 255, 255, 0.95);
+  --before-after-line-outline: rgba(0, 0, 0, 0.35);
+  --before-after-handle-bg: rgba(255, 255, 255, 0.95);
+  --before-after-handle-color: #111;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.before-after__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.before-after__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.before-after__image--after {
+  clip-path: inset(0 calc(100% - var(--before-after-percent)) 0 0);
+  transition: clip-path 0.12s ease-out;
+}
+
+.before-after[data-dragging] .before-after__image--after {
+  transition: none;
+}
+
+.before-after__slider {
+  position: absolute;
+  inset: 0;
+  cursor: ew-resize;
+  touch-action: none;
+  outline: none;
+}
+
+.before-after__line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--before-after-percent);
+  transform: translateX(-50%);
+  width: 2px;
+  background: var(--before-after-line-color);
+  box-shadow: 0 0 0 1px var(--before-after-line-outline);
+  pointer-events: none;
+}
+
+.before-after__handle {
+  position: absolute;
+  left: var(--before-after-percent);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  background: var(--before-after-handle-bg);
+  color: var(--before-after-handle-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+}
+
+.before-after__chevron {
+  font-size: 20px;
+  line-height: 1;
+}
+
+@media (max-width: 600px) {
+  .before-after__handle {
+    width: 42px;
+    height: 42px;
+    font-size: 14px;
+  }
+}
