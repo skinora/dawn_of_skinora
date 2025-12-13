@@ -29,6 +29,13 @@
     gap: 20px;
   }
 
+  .sk-results__intro {
+    font-size: var(--sk-results-list-size);
+    line-height: 1.6;
+    color: var(--sk-results-brand);
+    margin: 0;
+  }
+
   .sk-results__copy .sk-section-header__subtitle,
   .sk-results__copy .sk-section-header__eyebrow {
     color: var(--sk-results-muted);
@@ -159,6 +166,20 @@
     assign result_subheading = sk_result_entry.subheading
   endif
 
+  assign result_bullet_intro = section.settings.bullet_intro_text
+  if sk_result_entry and sk_result_entry.bullet_intro != blank
+    assign result_bullet_intro = sk_result_entry.bullet_intro
+  endif
+
+  assign result_bullet_intro_markup = ''
+  if result_bullet_intro != blank
+    if result_bullet_intro.value != blank
+      assign result_bullet_intro_markup = result_bullet_intro | metafield_tag
+    else
+      assign result_bullet_intro_markup = result_bullet_intro
+    endif
+  endif
+
   assign result_bullets = section.settings.rich_bullet_content
   if sk_result_entry and sk_result_entry.bullet_points != blank
     assign result_bullets = sk_result_entry.bullet_points
@@ -225,6 +246,12 @@
 
     <div class="sk-results__inner">
       <div class="sk-results__copy">
+        {% if result_bullet_intro_markup != blank %}
+          <div class="sk-results__intro">
+            {{ result_bullet_intro_markup }}
+          </div>
+        {% endif %}
+
         {% if result_bullets_markup != blank %}
           <div class="sk-results__list sk-results__list--rich" role="list">
             {{ result_bullets_markup }}
@@ -274,6 +301,12 @@
       "id": "subheading",
       "label": "Subheading",
       "default": "Fire klare forbedringer du merker gradvis."
+    },
+    {
+      "type": "richtext",
+      "id": "bullet_intro_text",
+      "label": "Intro text before list",
+      "default": ""
     },
     {
       "type": "richtext",
