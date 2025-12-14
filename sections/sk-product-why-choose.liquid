@@ -57,86 +57,108 @@
   }
 </style>
 
+{%- assign has_content = false -%}
+{%- assign why_choose_image = blank -%}
+{%- assign points_list = '' -%}
+{%- assign why_choose_heading = '' -%}
+{%- assign why_choose_subheading = '' -%}
+{%- assign why_choose_content = blank -%}
+{%- assign why_choose_reference = blank -%}
+{%- assign why_choose_entry = blank -%}
 {%- if product != blank -%}
-  {%- assign has_content = false -%}
-  {%- assign why_choose_content = product.metafields.custom.why_choose_content -%}
+  {%- assign why_choose_reference = product.metafields.custom.why_choose_reference -%}
+{%- endif -%}
+{%- if why_choose_reference != blank and why_choose_reference.value != blank -%}
+  {%- assign why_choose_entry = why_choose_reference.value -%}
+{%- endif -%}
+{%- if why_choose_entry != blank -%}
+  {%- assign why_choose_image = why_choose_entry.image -%}
+  {%- if why_choose_image != blank -%}
+    {%- assign why_choose_image_alt = why_choose_image.alt | default: product.title -%}
+  {%- else -%}
+    {%- assign why_choose_image_alt = product.title -%}
+  {%- endif -%}
+  {%- if why_choose_entry.heading != blank -%}
+    {%- assign why_choose_heading = why_choose_entry.heading -%}
+  {%- endif -%}
+  {%- if why_choose_entry.subheading != blank -%}
+    {%- assign why_choose_subheading = why_choose_entry.subheading -%}
+  {%- endif -%}
+  {%- assign why_choose_content = why_choose_entry.content -%}
   {%- if why_choose_content != blank -%}
     {%- assign has_content = true -%}
   {%- endif -%}
-  {%- assign why_choose_entry = product.metafields.custom.why_choose -%}
-  {%- assign why_choose_image = blank -%}
-  {%- assign points_list = '' -%}
-  {%- if why_choose_entry != blank -%}
-    {%- assign why_choose_image = why_choose_entry.image -%}
-    {%- if why_choose_image != blank -%}
-      {%- assign why_choose_image_alt = why_choose_image.alt | default: product.title -%}
-    {%- else -%}
-      {%- assign why_choose_image_alt = product.title -%}
-    {%- endif -%}
-    {%- if why_choose_entry.points != blank -%}
-      {%- assign points_list = why_choose_entry.points.value -%}
-    {%- endif -%}
+  {%- if why_choose_entry.points != blank -%}
+    {%- assign points_list = why_choose_entry.points -%}
   {%- endif -%}
-  {%- assign has_image = false -%}
-  {%- if why_choose_image != blank -%}
-    {%- assign has_image = true -%}
-  {%- endif -%}
-  {%- if has_image or has_content or points_list != blank -%}
-    <section
-      class="sk-product-why-choose sk-product-why-choose-{{ section.id }}"
-      style="--pwc-image-width: {{ section.settings.layout_image_width | default: 45 }}%; --pwc-text-width: {{ section.settings.layout_text_width | default: 45 }}%; --pwc-gap: {{ section.settings.layout_gap | default: 10 }}%;"
-    >
-      <div class="page-width">
-        <div class="sk-section-header sk-section-header--left">
-          {% if section.settings.heading != blank %}
-            <h2 class="sk-section-heading sk-section-heading--h2 sk-heading-text--strong">
-              {{ section.settings.heading | escape }}
-            </h2>
-          {% endif %}
-          {% if section.settings.subheading != blank %}
-            <p class="sk-section-header__subtitle sk-heading-text--soft">
-              {{ section.settings.subheading | escape }}
-            </p>
-          {% endif %}
-        </div>
-
-        {% if points_list != blank %}
-          <div class="sk-product-why-choose__points">
-            {%- for point in points_list limit: 3 -%}
-              <article class="sk-why-choose__point">
-                <span class="sk-why-choose__point-number sk-section-heading sk-section-heading--h2" aria-hidden="true">
-                  {{ forloop.index }}
-                </span>
-                <div class="sk-why-choose__point-copy sk-heading-size--medium sk-heading-text--strong">
-                  {{ point | metafield_tag }}
-                </div>
-              </article>
-            {%- endfor -%}
-          </div>
+{%- endif -%}
+{%- assign has_image = false -%}
+{%- if why_choose_image != blank -%}
+  {%- assign has_image = true -%}
+{%- endif -%}
+{%- if has_image or has_content or points_list != blank -%}
+  <section
+    class="sk-product-why-choose sk-product-why-choose-{{ section.id }}"
+    style="--pwc-image-width: {{ section.settings.layout_image_width | default: 45 }}%; --pwc-text-width: {{ section.settings.layout_text_width | default: 45 }}%; --pwc-gap: {{ section.settings.layout_gap | default: 10 }}%;"
+  >
+    <div class="page-width">
+      <div class="sk-section-header sk-section-header--left">
+        {% if why_choose_heading != blank %}
+          <h2 class="sk-section-heading sk-section-heading--h2 sk-heading-text--strong">
+            {{ why_choose_heading | escape }}
+          </h2>
         {% endif %}
+        {% if why_choose_subheading != blank %}
+          <p class="sk-section-header__subtitle sk-heading-text--soft">
+            {{ why_choose_subheading | escape }}
+          </p>
+        {% endif %}
+      </div>
 
-        <div class="sk-why-choose__layout">
-          {%- if has_image -%}
-            <div class="sk-why-choose__image">
-              <img
-                src="{{ why_choose_image | image_url: width: 900, height: 900 }}"
-                width="900"
-                height="900"
-                loading="lazy"
-                alt="{{ why_choose_image_alt }}"
-              >
-            </div>
-          {%- endif %}
+      {% if points_list != blank %}
+        <div class="sk-product-why-choose__points">
+          {%- for point in points_list limit: 3 -%}
+            {%- assign point_question = point.question | default: '' -%}
+            {%- assign point_detail = point.point | default: '' -%}
+            <article class="sk-why-choose__point">
+              <span class="sk-why-choose__point-number sk-section-heading sk-section-heading--h2" aria-hidden="true">
+                {{ forloop.index }}
+              </span>
+              {% if point_question != blank %}
+                <p class="sk-why-choose__point-question sk-heading-size--small sk-heading-text--soft">
+                  {{ point_question | escape }}
+                </p>
+              {% endif %}
+              {% if point_detail != blank %}
+                <p class="sk-why-choose__point-copy sk-heading-size--medium sk-heading-text--strong">
+                  {{ point_detail | escape }}
+                </p>
+              {% endif %}
+            </article>
+          {%- endfor -%}
+        </div>
+      {% endif %}
 
-          <div class="sk-why-choose__content sk-section-body">
-            {%- if has_content -%}
-              {{ product.metafields.custom.why_choose_content | metafield_tag }}
-            {%- endif -%}
+      <div class="sk-why-choose__layout">
+        {%- if has_image -%}
+          <div class="sk-why-choose__image">
+            {%- comment -%}Using image_tag for product metafield image (not a theme asset){%- endcomment -%}
+            {%- liquid
+              assign image_url = why_choose_image | image_url: width: 900, height: 900
+            -%}
+            {%- comment -%}theme-check-disable AssetUrlFilters{%- endcomment -%}
+            <img src="{{ image_url }}" loading="lazy" alt="{{ why_choose_image_alt }}" width="900" height="900">
           </div>
+        {%- endif %}
+
+        <div class="sk-why-choose__content sk-section-body">
+          {%- if has_content -%}
+            {{ why_choose_content | metafield_tag }}
+          {%- endif -%}
         </div>
       </div>
-    </section>
-  {%- endif -%}
+    </div>
+  </section>
 {%- endif -%}
 
 {% schema %}
@@ -150,23 +172,20 @@
       "content": "Product-Specific Control"
     },
     {
-      "type": "text",
-      "id": "heading",
-      "label": "Section heading"
-    },
-    {
-      "type": "text",
-      "id": "subheading",
-      "label": "Section subheading",
-      "info": "Optional copy that appears below the heading"
+      "type": "paragraph",
+      "content": "All display data should live on 'custom.why_choose_reference': this reference holds heading, subheading, image, content, and the list of Why Choose Point metaobjects so each product can manage the entire section from a single metaobject entry."
     },
     {
       "type": "paragraph",
-      "content": "Point data is read from the metafield list 'custom.why_choose_points' (List of type rich text) and is rendered with numbers 1-3."
+      "content": "Heading and subheading are read solely from the reference’s 'heading' and 'subheading' fields."
     },
     {
       "type": "paragraph",
-      "content": "Content copy is pulled from 'custom.why_choose_content' (Rich text), and the image from 'custom.why_choose_image' (File)."
+      "content": "Point data is read from 'custom.why_choose_reference.points', a List of Why Choose Point metaobjects that each expose a 'question' and 'point' field; the section renders 1-3 numbered entries."
+    },
+    {
+      "type": "paragraph",
+      "content": "The reference’s 'content' field is rendered as rich text and the 'image' field supplies the media."
     },
     {
       "type": "header",
