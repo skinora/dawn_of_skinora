@@ -15,7 +15,7 @@
         "category_tag": {
           "type": "text",
           "settings": {
-            "text": "Synlig forbedret hudtekstur på 8 uker",
+            "text": "Synlig forbedret hudtekstur på 6 uker",
             "text_style": "subtitle"
           }
         },
@@ -212,6 +212,7 @@
       "name": "SK Product Radiance",
       "settings": {
         "heading": "",
+        "subheading": "",
         "button_text": "Kjøp Skinora Radiance",
         "button_url": "shopify://products/skinora-radiance-face"
       }
