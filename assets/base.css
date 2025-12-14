@@ -518,6 +518,82 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   color: rgba(var(--sk-color-body-text), 0.85);
 }
 
+/* Default body copy treatment for custom sections (non-heading text) */
+section[class^='sk-'] :where(p, ul, ol, li, blockquote, figcaption, dl, dt, dd, .rte, .sk-richtext),
+section[class*=' sk-'] :where(p, ul, ol, li, blockquote, figcaption, dl, dt, dd, .rte, .sk-richtext) {
+  font-size: calc(var(--sk-font-size-base) * 1.05);
+  line-height: var(--sk-line-height-base);
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: var(--font-body-weight);
+  letter-spacing: 0.02rem;
+  color: rgba(var(--sk-color-body-text), 0.95);
+}
+
+section[class^='sk-']
+  :is(
+    .sk-about-section-2__content,
+    .sk-about-section-2__description,
+    .sk-about-section-2__text-section,
+    .sk-blog-article__block-content,
+    .sk-blog-article__body,
+    .sk-blog-article__content,
+    .sk-blog-article__custom-content,
+    .sk-blog-article__right-content,
+    .sk-blog-article__text-block,
+    .sk-content-section,
+    .sk-content-section__content,
+    .sk-dynamic-banner__content,
+    .sk-faq-accordion,
+    .sk-faq-accordion__accordion,
+    .sk-faq-accordion__answer,
+    .sk-faq-accordion__body,
+    .sk-faq-accordion__collapse,
+    .sk-faq-accordion__content,
+    .sk-faq-accordion__item,
+    .sk-faq-accordion__question,
+    .sk-faq-accordion__questions,
+    .sk-guarantee__copy,
+    .sk-guarantee__item-text,
+    .sk-guarantee__list,
+    .sk-help-banner__content,
+    .sk-help-banner__description,
+    .sk-help-categories__content,
+    .sk-help-categories__description,
+    .sk-led-mask__content,
+    .sk-latest-blogs__featured-content,
+    .sk-latest-blogs__post-content,
+    .sk-numbered-list,
+    .sk-numbered-list__content-section,
+    .sk-numbered-list__item,
+    .sk-numbered-list__number,
+    .sk-numbered-list__text,
+    .sk-product-card__content,
+    .sk-product-card__description,
+    .sk-product-listing,
+    .sk-product-listing__header,
+    .sk-radiance-guarantee-banner__content,
+    .sk-results__copy,
+    .sk-results__intro,
+    .sk-results__list,
+    .sk-section-body,
+    .sk-section-content,
+    .sk-specifications__content,
+    .sk-specifications__text,
+    .sk-testimonial-card__content,
+    .sk-why-choose__content,
+    .sk-radiance__content,
+    .sk-radiance__richtext
+  ) {
+  font-size: calc(var(--sk-font-size-base) * 1.05);
+  line-height: var(--sk-line-height-base);
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: var(--font-body-weight);
+  letter-spacing: 0.02rem;
+  color: rgba(var(--sk-color-body-text), 0.95);
+}
+
 .sk-copy-mono {
   font-family: 'DM Mono', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     monospace;
