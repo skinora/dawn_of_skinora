@@ -1,179 +1,142 @@
+{{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
+
 <style>
   .sk-product-why-choose-{{ section.id }} {
-    /* Standardize to full page-width container background using token fallback */
-    background: var(--color-neutral-1, #F8F8F8);
-    padding: 7rem 0;
+    background: transparent;
+    padding: clamp(3rem, 4vw, 5rem) 0;
   }
 
-                .sk-product-why-choose-{{ section.id }} .sk-why-choose__container {
-                    display: flex;
-                        align-items: center;
-                            flex-wrap: wrap;
-                                justify-content: space-around;
-                                  }
+  .sk-product-why-choose-{{ section.id }} .sk-product-why-choose__points {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: clamp(1.5rem, 3vw, 3rem);
+  }
 
-                                    .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
-                                        flex: 0 0 280px;
-                                          }
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__point {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 
-                                            .sk-product-why-choose-{{ section.id }} .sk-why-choose__image img {
-                                                width: 100%;
-                                                    height: auto;
-                                                      }
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__point-number {
+    font-size: clamp(2.2rem, 3vw, 3rem);
+    line-height: 1;
+    font-weight: 700;
+  }
 
-                            .sk-product-why-choose-{{ section.id }} .sk-why-choose__content {
-                              flex: 1;
-                            }
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__layout {
+    display: grid;
+    grid-template-columns: minmax(0, var(--pwc-image-width, 45%)) minmax(0, var(--pwc-text-width, 45%));
+    column-gap: var(--pwc-gap, 10%);
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2rem);
+  }
 
-                                  .sk-product-why-choose-{{ section.id }} .sk-why-choose__main-heading {
-                                    font-size: var(--section-heading-h2);
-                                    line-height: var(--section-heading-h2-line);
-                                    font-weight: 700;
-                                    margin-bottom: 48px;
-                                    text-align: center;
-                                  }
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
 
+  @media only screen and (max-width: 900px) {
+    .sk-product-why-choose-{{ section.id }} .sk-why-choose__layout {
+      grid-template-columns: 1fr;
+    }
+  }
 
-                                                .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h3,
-                                                .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h4 {
-                                                  font-size: var(--sk-font-size-medium);
-                                                  line-height: 1.4;
-                                                  font-weight: 700;
-                                                  margin: 0 0 12px 0;
-                                                  text-transform: uppercase;
-                                                  text-align: center;
-                                                }
-
-                                                                  .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
-                                                                    font-size: var(--sk-font-size-medium);
-                                                                    line-height: 1.6;
-                                                                    margin: 0;
-                                                                    text-align: center;
-                                                                  }
-
-                                                                                                                                                          .sk-product-why-choose .metafield-rich_text_field{
-                                                                                                                                                              display: none;
-                                                                                                                                                                }
-                                                                                                                                                                  .sk-product-why-choose .sk-why-choose__columns > .sk-why-choose__column{
-                                                                                                                                                                      display: flex;
-                                                                                                                                                                          gap: 50px;
-                                                                                                                                                                              flex-wrap: wrap;
-                                                                                                                                                                                }
-
-
-                                                                                                                                                                                  @media only screen and (max-width: 700px) {
-                                                                                                                                                                                      .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
-                                                                                                                                                                                             display: none;
-                                                                                                                                                                                                 }
-                                                                                                                                                                                                   }
-
-                                                                                                                                                                                                     @media only screen and (max-width: 435px) {
-                                                                     .sk-product-why-choose-{{ section.id }} .sk-why-choose__main-heading {
-                                                                       font-size: calc(var(--section-heading-h2) * 0.9);
-                                                                         line-height: var(--section-heading-h2-line);
-                                                                         }
-
-                                                                                                                                                                                                                             .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h3,
-                                                                                                                                                                                                                               .sk-product-why-choose-{{ section.id }} .sk-why-choose__column h4 {
-                                                                                                                                                                                                                                   font-size: var(--sk-font-size-medium);
-                                                                                                                                                                                                                                       line-height: 20px;
-
-                                                                                                                                                                                                                                         }
-                                                                                                                                                                                                                                           .sk-product-why-choose-{{ section.id }} .sk-why-choose__column p {
-                                                                                                                                                                                                                                               font-size: var(--sk-font-size-xxs);
-                                                                                                                                                                                                                                                   line-height: 20px;
-                                                                                                                                                                                                                                                     }
-                                                                                                                                                                                                                                                       .sk-product-why-choose .sk-why-choose__columns > .sk-why-choose__column{
-                                                                                                                                                                                                                                                           gap: 18px;
-                                                                                                                                                                                                                                                             }
-
-
-                                                                                                                                                                                                                                                               }
   @media screen and (max-width: 749px) {
     .sk-section-heading {
       font-size: var(--sk-mobile-heading-size);
       line-height: var(--sk-mobile-heading-line);
     }
+
+    .sk-product-why-choose-{{ section.id }} {
+      padding: clamp(2rem, 4vw, 3rem) 0;
+    }
   }
 </style>
 
-{%- if product.metafields.custom.why_choose_content != blank or product.metafields.custom.why_choose_image != blank -%}
-  <section class="sk-product-why-choose sk-product-why-choose-{{ section.id }} sk-body-text--strong">
-    <div class="page-width">
-      <div class="sk-why-choose__container">
-        <!-- Image Section -->
-        <div class="sk-why-choose__image">
-          {%- if product.metafields.custom.why_choose_image != blank -%}
-            <img
-              src="{{ product.metafields.custom.why_choose_image | image_url: width: 280, height: 380 }}"
-              alt="{{ product.metafields.custom.why_choose_image.alt | default: product.title }}"
-              width="280"
-              height="380"
-              loading="lazy"
-            >
-          {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          {%- endif -%}
+{%- if product != blank -%}
+  {%- assign has_content = false -%}
+  {%- assign why_choose_content = product.metafields.custom.why_choose_content -%}
+  {%- if why_choose_content != blank -%}
+    {%- assign has_content = true -%}
+  {%- endif -%}
+  {%- assign why_choose_entry = product.metafields.custom.why_choose -%}
+  {%- assign why_choose_image = blank -%}
+  {%- assign points_list = '' -%}
+  {%- if why_choose_entry != blank -%}
+    {%- assign why_choose_image = why_choose_entry.image -%}
+    {%- if why_choose_image != blank -%}
+      {%- assign why_choose_image_alt = why_choose_image.alt | default: product.title -%}
+    {%- else -%}
+      {%- assign why_choose_image_alt = product.title -%}
+    {%- endif -%}
+    {%- if why_choose_entry.points != blank -%}
+      {%- assign points_list = why_choose_entry.points.value -%}
+    {%- endif -%}
+  {%- endif -%}
+  {%- assign has_image = false -%}
+  {%- if why_choose_image != blank -%}
+    {%- assign has_image = true -%}
+  {%- endif -%}
+  {%- if has_image or has_content or points_list != blank -%}
+    <section
+      class="sk-product-why-choose sk-product-why-choose-{{ section.id }}"
+      style="--pwc-image-width: {{ section.settings.layout_image_width | default: 45 }}%; --pwc-text-width: {{ section.settings.layout_text_width | default: 45 }}%; --pwc-gap: {{ section.settings.layout_gap | default: 10 }}%;"
+    >
+      <div class="page-width">
+        <div class="sk-section-header sk-section-header--left">
+          {% if section.settings.heading != blank %}
+            <h2 class="sk-section-heading sk-section-heading--h2 sk-heading-text--strong">
+              {{ section.settings.heading | escape }}
+            </h2>
+          {% endif %}
+          {% if section.settings.subheading != blank %}
+            <p class="sk-section-header__subtitle sk-heading-text--soft">
+              {{ section.settings.subheading | escape }}
+            </p>
+          {% endif %}
         </div>
 
-        <!-- Content Section (apply readable default width instead of wide) -->
-        <div class="sk-why-choose__content sk-section-content">
-          {%- if product.metafields.custom.why_choose_content != blank -%}
-            {%- capture why_choose_html -%}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               {{ product.metafields.custom.why_choose_content | metafield_tag }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           {%- endcapture -%}
+        {% if points_list != blank %}
+          <div class="sk-product-why-choose__points">
+            {%- for point in points_list limit: 3 -%}
+              <article class="sk-why-choose__point">
+                <span class="sk-why-choose__point-number sk-section-heading sk-section-heading--h2" aria-hidden="true">
+                  {{ forloop.index }}
+                </span>
+                <div class="sk-why-choose__point-copy sk-heading-size--medium sk-heading-text--strong">
+                  {{ point | metafield_tag }}
+                </div>
+              </article>
+            {%- endfor -%}
+          </div>
+        {% endif %}
 
-            {%- comment -%} Extract main heading (first h2 or h3) {%- endcomment -%}
-            {%- assign heading_start = why_choose_html | split: '<h2>' | first -%}
-            {%- if heading_start == why_choose_html -%}
-              {%- assign heading_start = why_choose_html | split: '<h3>' | first -%}
-              {%- assign heading_end = why_choose_html | split: '</h3>' | last -%}
-              {%- assign heading_full = why_choose_html
-                | replace: heading_start, ''
-                | replace: heading_end, ''
-                | replace: '<h3>', ''
-                | replace: '</h3>', ''
-                | strip
-              -%}
-            {%- else -%}
-              {%- assign heading_end = why_choose_html | split: '</h2>' | last -%}
-              {%- assign heading_full = why_choose_html
-                | replace: heading_start, ''
-                | replace: heading_end, ''
-                | replace: '<h2>', ''
-                | replace: '</h2>', ''
-                | strip
-              -%}
-            {%- endif -%}
-
-            {%- if heading_full != blank -%}
-              <h1 class="sk-why-choose__main-heading sk-section-heading sk-section-heading--h1 sk-heading-text--strong sk-heading-size--large">
-                {{ heading_full }}
-              </h1>
-            {%- endif -%}
-
-            {%- comment -%} Parse columns separated by || {%- endcomment -%}
-            {%- assign columns_content = why_choose_html | split: '||' -%}
-
-            <div class="sk-why-choose__columns sk-body-text--soft">
-              {%- for column in columns_content -%}
-                {%- if column contains '<h3>' or column contains '<h4>' or column contains '<p>' -%}
-                  {% assign column_styled = column
-                    | replace: '<h3>', '<h3 class="sk-heading-text--strong sk-heading-size--medium">'
-                    | replace: '<h4>', '<h4 class="sk-heading-text--soft sk-heading-size--compact">'
-                    | replace: '<p>', '<p class="sk-body-text--soft">'
-                  %}
-                  <div class="sk-why-choose__column">
-                    {{ column_styled }}
-                  </div>
-                {%- endif -%}
-              {%- endfor -%}
+        <div class="sk-why-choose__layout">
+          {%- if has_image -%}
+            <div class="sk-why-choose__image">
+              <img
+                src="{{ why_choose_image | image_url: width: 900, height: 900 }}"
+                width="900"
+                height="900"
+                loading="lazy"
+                alt="{{ why_choose_image_alt }}"
+              >
             </div>
-          {%- endif -%}
+          {%- endif %}
+
+          <div class="sk-why-choose__content sk-section-body">
+            {%- if has_content -%}
+              {{ product.metafields.custom.why_choose_content | metafield_tag }}
+            {%- endif -%}
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  {%- endif -%}
 {%- endif -%}
 
 {% schema %}
@@ -187,20 +150,57 @@
       "content": "Product-Specific Control"
     },
     {
-      "type": "paragraph",
-      "content": "This section displays why-choose content from product metafields. Add these 2 metafields:"
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Section subheading",
+      "info": "Optional copy that appears below the heading"
     },
     {
       "type": "paragraph",
-      "content": "1. 'custom.why_choose_image' (File) - Upload the product image"
+      "content": "Point data is read from the metafield list 'custom.why_choose_points' (List of type rich text) and is rendered with numbers 1-3."
     },
     {
       "type": "paragraph",
-      "content": "2. 'custom.why_choose_content' (Rich text) - Format: Main heading, then columns separated by ||"
+      "content": "Content copy is pulled from 'custom.why_choose_content' (Rich text), and the image from 'custom.why_choose_image' (File)."
     },
     {
-      "type": "paragraph",
-      "content": "Example: <h2>Main Heading</h2> ||<h3>Column 1 Title</h3><p>Description...</p> ||<h3>Column 2 Title</h3><p>Description...</p> ||<h3>Column 3 Title</h3><p>Description...</p>"
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "layout_image_width",
+      "label": "Image width (%)",
+      "min": 30,
+      "max": 60,
+      "step": 1,
+      "unit": "%",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "layout_text_width",
+      "label": "Text width (%)",
+      "min": 30,
+      "max": 60,
+      "step": 1,
+      "unit": "%",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "layout_gap",
+      "label": "Gap between image and text (%)",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "unit": "%",
+      "default": 10
     }
   ],
   "presets": [
