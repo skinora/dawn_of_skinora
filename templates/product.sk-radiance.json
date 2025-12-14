@@ -201,6 +201,7 @@
         "eyebrow": "RESULTATER",
         "heading": "Hva kan jeg forvente?",
         "subheading": "Fire klare forbedringer du merker gradvis.",
+        "bullet_intro_text": "<p>Del en kort introduksjon her.</p>",
         "rich_bullet_content": "<ul><li>Jevnere hudtone</li><li>Fastere hud</li><li>Mer glød</li><li>Mindre sliten hud</li></ul>",
         "note_text": "Resultater bygges gradvis og påvirkes av hudtype og kontinuitet.",
         "result_image_alt": "Rolig portrett"
@@ -238,18 +239,6 @@
       "type": "sk-product-how-to-use",
       "name": "SK Product How to Use",
       "settings": {}
-    },
-    "sk_product_technology_iXTDFn": {
-      "type": "sk-product-technology",
-      "name": "SK Product Technology",
-      "settings": {
-        "eyebrow": "RESULTATER",
-        "heading": "Hva kan du forvente?",
-        "subheading": "Fire klare forbedringer du merker gradvis",
-        "rich_bullet_content": "<ul><li>Jevnere hudtone</li><li>Fastere hud</li><li>Mer glød</li><li>Mindre sliten hud</li></ul>",
-        "note_text": "Resultater bygges gradvis og påvirkes av hudtype og kontinuitet.",
-        "result_image_alt": "Rolig portrett"
-      }
     },
     "sk_product_specifications_cJY9VW": {
       "type": "sk-product-specifications",
@@ -295,7 +284,6 @@
     "sk_product_how_to_use_dbAJA9",
     "sk_product_why_choose_pwJz83",
     "sk_product_how_to_use_zaEacQ",
-    "sk_product_technology_iXTDFn",
     "sk_product_specifications_cJY9VW",
     "sk_product_faq_accordion_EPRXLb",
     "1759515838eeeda580"
