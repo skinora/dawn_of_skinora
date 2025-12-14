@@ -13,7 +13,30 @@
   --color-brand-hover: #4b0082;
   /* Common color tokens */
   --color-white: #ffffff;
-  --sk-color-body-text: 42, 38, 52; /* muted charcoal for paragraphs */
+  /* Neutral palette: Mine Shaft */
+  --mine-shaft-50: #f6f6f6;
+  --mine-shaft-100: #e7e7e7;
+  --mine-shaft-200: #d1d1d1;
+  --mine-shaft-300: #b0b0b0;
+  --mine-shaft-400: #888888;
+  --mine-shaft-500: #6d6d6d;
+  --mine-shaft-600: #5d5d5d;
+  --mine-shaft-700: #4f4f4f;
+  --mine-shaft-800: #454545;
+  --mine-shaft-900: #333333;
+  --mine-shaft-950: #262626;
+  --mine-shaft-50-rgb: 246, 246, 246;
+  --mine-shaft-100-rgb: 231, 231, 231;
+  --mine-shaft-200-rgb: 209, 209, 209;
+  --mine-shaft-300-rgb: 176, 176, 176;
+  --mine-shaft-400-rgb: 136, 136, 136;
+  --mine-shaft-500-rgb: 109, 109, 109;
+  --mine-shaft-600-rgb: 93, 93, 93;
+  --mine-shaft-700-rgb: 79, 79, 79;
+  --mine-shaft-800-rgb: 69, 69, 69;
+  --mine-shaft-900-rgb: 51, 51, 51;
+  --mine-shaft-950-rgb: 38, 38, 38;
+  --sk-color-body-text: var(--mine-shaft-900-rgb);
   --sk-color-heading-text: 58, 52, 72; /* softened eggplant for headings */
   --sk-color-subheader-text: 120, 114, 134; /* lavender gray for subheads */
   --sk-body-text-strong: rgba(var(--sk-color-body-text), 1);
@@ -437,6 +460,73 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   line-height: var(--section-heading-h3-line);
 }
 
+/*
+  Semantic typography helpers
+  Usage:
+    - Apply .sk-copy-lead for intro paragraphs under headings.
+    - Use .sk-copy-base for default body copy in sections/snippets.
+    - Use .sk-copy-muted for supporting text, disclaimers, footnotes.
+    - .sk-copy-small/.sk-copy-caption cover captions, meta labels.
+    - .sk-copy-eyebrow/.sk-copy-label wire eyebrows and UI labels.
+    - .sk-copy-mono is reserved for technical specs / SKUs.
+*/
+.sk-copy-lead {
+  font-size: clamp(2rem, 2vw, 2.6rem);
+  line-height: var(--sk-line-height-base);
+  color: rgba(var(--sk-color-body-text), 1);
+  font-weight: var(--font-body-weight);
+}
+
+.sk-copy-base {
+  font-size: calc(var(--sk-font-size-base) * 1.05);
+  line-height: var(--sk-line-height-base);
+  color: rgba(var(--sk-color-body-text), 0.95);
+}
+
+.sk-copy-muted {
+  font-size: calc(var(--sk-font-size-base) * 0.95);
+  line-height: var(--sk-line-height-base);
+  color: rgba(var(--sk-color-body-text), 0.7);
+}
+
+.sk-copy-small {
+  font-size: clamp(1.4rem, 1.5vw, 1.8rem);
+  line-height: var(--sk-line-height-tight);
+  color: rgba(var(--sk-color-body-text), 0.9);
+}
+
+.sk-copy-caption {
+  font-size: clamp(1.2rem, 1.3vw, 1.4rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: rgba(var(--sk-color-body-text), 0.8);
+}
+
+.sk-copy-eyebrow {
+  font-size: var(--sk-section-eyebrow-size);
+  letter-spacing: var(--sk-section-eyebrow-spacing);
+  text-transform: uppercase;
+  color: rgba(var(--sk-color-body-text), 0.65);
+}
+
+.sk-copy-label {
+  font-size: clamp(1.3rem, 1.2vw, 1.6rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: var(--font-body-weight-bold);
+  color: rgba(var(--sk-color-body-text), 0.85);
+}
+
+.sk-copy-mono {
+  font-family: 'DM Mono', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    monospace;
+  font-size: clamp(1.3rem, 1.4vw, 1.6rem);
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+  color: rgba(var(--sk-color-body-text), 0.8);
+}
+
 .text-body {
   font-size: calc(var(--sk-font-size-base) * 1.28);
   letter-spacing: 0.02rem;
@@ -510,14 +600,15 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 }
 
 .sk-section-header__eyebrow {
-  font-size: var(--sk-section-eyebrow-size);
+  font-size: 1.9rem;
   letter-spacing: var(--sk-section-eyebrow-spacing);
   text-transform: uppercase;
-  color: rgba(var(--sk-color-subheader-text), 0.95);
+  color: rgba(var(--sk-color-body-text), 0.85);
   margin: 0;
 }
 
 .sk-section-header__title {
+  font-size: 2.9rem;
   font-weight: 600;
   margin: 0;
   color: inherit;

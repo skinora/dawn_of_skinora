@@ -52,12 +52,8 @@
   }
 
   .sk-radiance__eyebrow {
-    font-size: var(--sk-font-size-caption);
-    line-height: var(--sk-line-height-tight);
-    letter-spacing: var(--sk-letter-spacing-button);
-    text-transform: uppercase;
-    color: rgba(var(--color-foreground), 0.7);
     margin: 0;
+    color: rgba(var(--sk-color-body-text), 0.65);
   }
 
   .sk-radiance__title {
@@ -141,7 +137,7 @@
 
       <div class="sk-radiance__content">
         {% if section.settings.header_text != blank %}
-          <p class="sk-radiance__eyebrow">{{ section.settings.header_text }}</p>
+          <p class="sk-radiance__eyebrow sk-copy-eyebrow">{{ section.settings.header_text }}</p>
         {% endif %}
 
         {% if section.settings.subheader_text != blank %}

@@ -134,11 +134,8 @@
 
   .sk-wavelength__eyebrow {
     margin: 0;
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--sk-color-neutral);
-    font-weight: 500;
+    color: rgba(var(--sk-color-body-text), 0.65);
+    font-weight: var(--font-body-weight-medium);
   }
 
   .sk-wavelength__header {
@@ -337,7 +334,7 @@
     {% if sk_header_has_content %}
       <div class="sk-section-header sk-section-header--center">
         {% if section.settings.sk_led_light_work_eyebrow != blank %}
-          <p class="sk-section-header__eyebrow">{{ section.settings.sk_led_light_work_eyebrow }}</p>
+          <p class="sk-section-header__eyebrow sk-copy-eyebrow">{{ section.settings.sk_led_light_work_eyebrow }}</p>
         {% endif %}
 
         {% if section.settings.sk_led_light_work_heading != blank %}
@@ -402,7 +399,7 @@
             {% if card_eyebrow != blank or card_primary_title != blank or card_secondary_title != blank %}
               <div class="sk-wavelength__header">
                 {% if card_eyebrow != blank %}
-                  <p class="sk-wavelength__eyebrow">{{ card_eyebrow }}</p>
+                  <p class="sk-wavelength__eyebrow sk-copy-eyebrow">{{ card_eyebrow }}</p>
                 {% endif %}
 
                 {% if card_primary_title != blank or card_secondary_title != blank %}
@@ -481,7 +478,7 @@
                   {% if card_eyebrow != blank or card_primary_title != blank or card_secondary_title != blank %}
                     <div class="sk-wavelength__header">
                       {% if card_eyebrow != blank %}
-                        <p class="sk-wavelength__eyebrow">{{ card_eyebrow }}</p>
+                        <p class="sk-wavelength__eyebrow sk-copy-eyebrow">{{ card_eyebrow }}</p>
                       {% endif %}
 
                       {% if card_primary_title != blank or card_secondary_title != blank %}
