@@ -234,7 +234,13 @@
     "sk_product_why_choose_pwJz83": {
       "type": "sk-product-why-choose",
       "name": "SK Product Why Choose",
-      "settings": {}
+      "settings": {
+        "heading": "Tror du Skinora® Clear bare handler om kviser?",
+        "subheading": "",
+        "layout_image_width": 45,
+        "layout_text_width": 45,
+        "layout_gap": 10
+      }
     },
     "sk_product_how_to_use_zaEacQ": {
       "type": "sk-product-how-to-use",
