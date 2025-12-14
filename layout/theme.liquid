@@ -74,6 +74,11 @@
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
+    <link rel="preconnect" href="https://use.typekit.net">
+    <link rel="stylesheet" href="https://use.typekit.net/jxm0xpk.css">
+    <link rel="stylesheet" href="https://use.typekit.net/pbt1clx.css">
+    {{ 'typekit-fonts.css' | asset_url | stylesheet_tag }}
+
     {{ content_for_header }}
 
     {%- liquid
@@ -139,10 +144,10 @@
             :root {
               --font-body-family: 'sofia-pro', {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
               --font-body-style: {{ settings.type_body_font.style }};
-              --font-body-weight: {{ settings.type_body_font.weight }};
-              --font-body-weight-bold: {{ settings.type_body_font.weight | plus: 300 | at_most: 1000 }};
+              --font-body-weight: 300;
+              --font-body-weight-bold: 600;
 
-              --font-heading-family: 'sofia-pro', {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+              --font-heading-family: 'freight-text-pro', 'freighttextcmp-pro', serif, {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
               --font-heading-style: {{ settings.type_header_font.style }};
               --font-heading-weight: {{ settings.type_header_font.weight }};
 

@@ -4246,6 +4246,15 @@ body {
   color: rgb(var(--sk-color-body-text));
 }
 
+button,
+input,
+textarea,
+select {
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: var(--font-body-weight);
+}
+
 p,
 li,
 label,
