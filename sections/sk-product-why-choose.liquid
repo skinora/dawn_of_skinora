@@ -92,74 +92,27 @@
     {%- assign points_list = why_choose_entry.points -%}
   {%- endif -%}
 {%- endif -%}
-{%- assign has_image = false -%}
-{%- if why_choose_image != blank -%}
-  {%- assign has_image = true -%}
-{%- endif -%}
-{%- if has_image or has_content or points_list != blank -%}
-  <section
-    class="sk-product-why-choose sk-product-why-choose-{{ section.id }}"
-    style="--pwc-image-width: {{ section.settings.layout_image_width | default: 45 }}%; --pwc-text-width: {{ section.settings.layout_text_width | default: 45 }}%; --pwc-gap: {{ section.settings.layout_gap | default: 10 }}%;"
-  >
-    <div class="page-width">
-      <div class="sk-section-header sk-section-header--left">
-        {% if why_choose_heading != blank %}
-          <h2 class="sk-section-heading sk-section-heading--h2 sk-heading-text--strong">
-            {{ why_choose_heading | escape }}
-          </h2>
-        {% endif %}
-        {% if why_choose_subheading != blank %}
-          <p class="sk-section-header__subtitle sk-heading-text--soft">
-            {{ why_choose_subheading | escape }}
-          </p>
-        {% endif %}
-      </div>
-
+<section class="sk-product-why-choose sk-product-why-choose-{{ section.id }}">
+  <div class="page-width">
+    {% if why_choose_reference == blank %}
+      <p>No `why_choose_reference` metafield present on product.</p>
+    {% else %}
+      <p>Reference ID: {{ why_choose_reference.id | default: 'n/a' }}</p>
+      <p>Heading: {{ why_choose_heading }}</p>
+      <p>Subheading: {{ why_choose_subheading }}</p>
+      <p>Image URL: {{ why_choose_image | image_url: width: 900 | default: 'none' }}</p>
+      <p>Content present? {{ has_content }}</p>
+      <p>Points count: {{ points_list | size }}</p>
       {% if points_list != blank %}
-        <div class="sk-product-why-choose__points">
-          {%- for point in points_list limit: 3 -%}
-            {%- assign point_question = point.question | default: '' -%}
-            {%- assign point_detail = point.point | default: '' -%}
-            <article class="sk-why-choose__point">
-              <span class="sk-why-choose__point-number sk-section-heading sk-section-heading--h2" aria-hidden="true">
-                {{ forloop.index }}
-              </span>
-              {% if point_question != blank %}
-                <p class="sk-why-choose__point-question sk-heading-size--small sk-heading-text--soft">
-                  {{ point_question | escape }}
-                </p>
-              {% endif %}
-              {% if point_detail != blank %}
-                <p class="sk-why-choose__point-copy sk-heading-size--medium sk-heading-text--strong">
-                  {{ point_detail | escape }}
-                </p>
-              {% endif %}
-            </article>
+        <ul>
+          {%- for point in points_list -%}
+            <li>Question: {{ point.question | escape }} – Point: {{ point.point | escape }}</li>
           {%- endfor -%}
-        </div>
+        </ul>
       {% endif %}
-
-      <div class="sk-why-choose__layout">
-        {%- if has_image -%}
-          <div class="sk-why-choose__image">
-            {%- comment -%}Using image_tag for product metafield image (not a theme asset){%- endcomment -%}
-            {%- liquid
-              assign image_url = why_choose_image | image_url: width: 900, height: 900
-            -%}
-            {%- comment -%}theme-check-disable AssetUrlFilters{%- endcomment -%}
-            <img src="{{ image_url }}" loading="lazy" alt="{{ why_choose_image_alt }}" width="900" height="900">
-          </div>
-        {%- endif %}
-
-        <div class="sk-why-choose__content sk-section-body">
-          {%- if has_content -%}
-            {{ why_choose_content | metafield_tag }}
-          {%- endif -%}
-        </div>
-      </div>
-    </div>
-  </section>
-{%- endif -%}
+    {% endif %}
+  </div>
+</section>
 
 {% schema %}
 {
