@@ -235,17 +235,10 @@
       "type": "sk-product-why-choose",
       "name": "SK Product Why Choose",
       "settings": {
-        "heading": "Tror du Skinora® Clear bare handler om kviser?",
-        "subheading": "Målrettet LED-teknologi utviklet for å redusere urenheter og berolige huden",
         "layout_image_width": 45,
         "layout_text_width": 45,
         "layout_gap": 10
       }
-    },
-    "sk_product_how_to_use_zaEacQ": {
-      "type": "sk-product-how-to-use",
-      "name": "SK Product How to Use",
-      "settings": {}
     },
     "sk_product_specifications_cJY9VW": {
       "type": "sk-product-specifications",
@@ -290,7 +283,6 @@
     "sk_led_light_work_mDz86m",
     "sk_product_how_to_use_dbAJA9",
     "sk_product_why_choose_pwJz83",
-    "sk_product_how_to_use_zaEacQ",
     "sk_product_specifications_cJY9VW",
     "sk_product_faq_accordion_EPRXLb",
     "1759515838eeeda580"
