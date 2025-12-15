@@ -91,10 +91,34 @@
     .sk-product-why-choose-{{ section.id }} .sk-why-choose__layout {
       grid-template-columns: 1fr;
       column-gap: 0;
+      gap: 2rem;
+    }
+    .sk-product-why-choose-{{ section.id }} {
+      --pwc-point-number-size: 3.2rem;
+      --pwc-point-question-size: 2.6rem;
+      --pwc-point-detail-size: 1.6rem;
     }
     .sk-product-why-choose-{{ section.id }} .sk-why-choose__point {
       grid-template-columns: 1fr;
       column-gap: 1rem;
+      grid-template-rows: auto auto;
+      align-items: center;
+    }
+    section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      font-size: var(--pwc-point-number-size);
+      color: var(--color-brand);
+    }
+    section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-number::before,
+    section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-number::after {
+      content: '';
+      flex: none;
+      width: min(34%, 70px);
+      height: 1px;
+      background: var(--color-brand);
     }
   }
 
