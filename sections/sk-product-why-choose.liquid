@@ -58,6 +58,13 @@
     align-self: stretch;
   }
 
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__point-text {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 0.35rem;
+    min-height: 100%;
+  }
+
   @media (max-width: 900px) {
     .sk-product-why-choose-{{ section.id }} .sk-why-choose__layout {
       grid-template-columns: 1fr;
@@ -149,18 +156,19 @@
                     <span class="sk-why-choose__point-number" aria-hidden="true">
                       {{ forloop.index }}
                     </span>
+                    <div class="sk-why-choose__point-text">
+                      {% if point_question != blank %}
+                        <p class="sk-why-choose__point-question sk-heading-text--soft">
+                          {{ point_question | escape }}
+                        </p>
+                      {% endif %}
 
-                    {% if point_question != blank %}
-                      <p class="sk-why-choose__point-question sk-heading-text--soft">
-                        {{ point_question | escape }}
-                      </p>
-                    {% endif %}
-
-                    {% if point_detail != blank %}
-                      <p class="sk-why-choose__point-copy sk-heading-text--strong">
-                        {{ point_detail | escape }}
-                      </p>
-                    {% endif %}
+                      {% if point_detail != blank %}
+                        <p class="sk-why-choose__point-copy sk-heading-text--strong">
+                          {{ point_detail | escape }}
+                        </p>
+                      {% endif %}
+                    </div>
                   </article>
                 {% endif %}
               {% endfor %}
