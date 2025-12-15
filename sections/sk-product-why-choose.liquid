@@ -47,13 +47,15 @@
     display: grid;
     grid-template-columns: minmax(0, 10%) minmax(0, 1fr);
     column-gap: 10%;
-    align-items: start;
+    align-items: stretch;
+    grid-auto-rows: minmax(0, 1fr);
   }
 
   .sk-product-why-choose-{{ section.id }} .sk-why-choose__point-number {
     font-size: clamp(3rem, 5vw, 5rem);
     line-height: 1;
     font-weight: 900;
+    align-self: stretch;
   }
 
   @media (max-width: 900px) {
