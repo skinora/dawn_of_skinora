@@ -8,6 +8,7 @@
   --alpha-button-border: 1;
   --alpha-link: 0.85;
   --alpha-badge-border: 0.1;
+  --root-font-size: 10px;
   /* Brand color */
   --color-brand: #30273e;
   --color-brand-hover: #4b0082;
@@ -112,6 +113,11 @@
   --sk-line-height-base: 1.75;
   --sk-line-height-tight: 1.45;
   --sk-letter-spacing-button: 0.08em;
+}
+
+html {
+  font-size: var(--root-font-size);
+  font-family: var(--font-body-family, 'Inter', 'system-ui', sans-serif);
 }
 
 .product-card-wrapper .card,
