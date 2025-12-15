@@ -292,20 +292,14 @@
       "type": "sk-product-technology",
       "name": "SK Technology (Generic)",
       "settings": {
+        "eyebrow": "RESULTATER",
         "heading": "TEKNOLOGIEN BAK SKINORA®",
-        "subheader": "Målrettet lys som gir målbare resultater",
-        "left_image": "shopify://shop_images/630_830_1072_nm.webp",
-        "left_bullets": "<p><em><strong>1–2 uker:</strong></em> Mer glød og jevnere hudtone</p><p><em><strong>3–4 uker:</strong></em> Fastere hud og mykere linjer</p><p><em><strong>6–8 uker:</strong></em> Synlig tettere og mer elastisk hud</p><p><em><strong>Over tid:</strong></em> Huden eldes saktere og holder seg klarere</p>",
-        "right_image": "shopify://shop_images/415_630_830_nm.webp",
-        "right_bullets": "<p><em><strong>3–5 dager:</strong></em> Mindre rødhet og roligere hud</p><p><em><strong>1–2 uker:</strong></em> Renere porer og mer kontrollert olje</p><p><em><strong>3–4 uker:</strong></em> Færre utbrudd og jevnere hudflate</p><p><em><strong>Over tid: </strong></em>Stabil, balansert hud med langt færre reaksjoner</p>",
-        "pad_y_desktop": 112,
-        "pad_y_mobile": 60
+        "subheading": "Fire klare forbedringer du merker gradvis.",
+        "bullet_intro_text": "<p>Del en kort introduksjon her.</p>",
+        "rich_bullet_content": "<ul><li>Jevnere hudtone</li><li>Fastere hud</li><li>Mer glød</li><li>Mindre sliten hud</li></ul>",
+        "note_text": "Resultater bygges gradvis og påvirkes av hudtype og kontinuitet.",
+        "result_image_alt": "Rolig portrett"
       }
-    },
-    "sk_product_why_choose_8a4LNx": {
-      "type": "sk-product-why-choose",
-      "name": "SK Product Why Choose",
-      "settings": {}
     },
     "sk_faq_accordion_GcMDDq": {
       "type": "sk-faq-accordion",
@@ -389,7 +383,6 @@
     "sk_features_pHkfMf",
     "sk_radiance_meq7Gb",
     "sk_product_technology_Vm78GM",
-    "sk_product_why_choose_8a4LNx",
     "sk_faq_accordion_GcMDDq"
   ]
 }
