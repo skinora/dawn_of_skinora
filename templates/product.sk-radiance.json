@@ -234,15 +234,16 @@
     "sk_product_why_choose_pwJz83": {
       "type": "sk-product-why-choose",
       "name": "SK Product Why Choose",
-      "settings": {
-        "layout_image_width": 45,
-        "layout_text_width": 45,
-        "layout_gap": 10
-      }
+      "settings": {}
     },
     "sk_product_specifications_cJY9VW": {
       "type": "sk-product-specifications",
       "name": "SK Product Specifications",
+      "settings": {}
+    },
+    "sk_product_why_choose_GhwVnC": {
+      "type": "sk-product-why-choose",
+      "name": "DEBUG – Why Choose",
       "settings": {}
     },
     "sk_product_faq_accordion_EPRXLb": {
@@ -284,6 +285,7 @@
     "sk_product_how_to_use_dbAJA9",
     "sk_product_why_choose_pwJz83",
     "sk_product_specifications_cJY9VW",
+    "sk_product_why_choose_GhwVnC",
     "sk_product_faq_accordion_EPRXLb",
     "1759515838eeeda580"
   ]

@@ -52,26 +52,15 @@
   }
 </style>
 
-{%- assign why_choose_reference = product.metafields.custom.why_choose_reference -%}
-{%- assign why_choose_entry = blank -%}
+{%- assign ref = product.metafields.custom.why_choose_reference -%}
+{%- assign entry = ref.value -%}
 
-{%- if why_choose_reference != blank and why_choose_reference.value != blank -%}
-  {%- assign why_choose_entry = why_choose_reference.value -%}
-{%- endif -%}
+{%- if entry != blank -%}
+  {%- assign heading = entry.heading.value | default: '' -%}
+  {%- assign subheading = entry.subheading.value | default: '' -%}
+  {%- assign image_obj = entry.image.value -%}
+  {%- assign points = entry.points.value -%}
 
-{%- if why_choose_entry != blank -%}
-  {%- assign heading = why_choose_entry.heading.value -%}
-  {%- assign subheading = why_choose_entry.subheading.value -%}
-  {%- assign image_obj = why_choose_entry.image.value -%}
-  {%- assign points = why_choose_entry.points.value -%}
-
-  {%- assign show_section = false -%}
-  {%- if image_obj != blank or points != blank -%}
-    {%- assign show_section = true -%}
-  {%- endif -%}
-{%- endif -%}
-
-{%- if show_section -%}
   <section
     class="sk-product-why-choose sk-product-why-choose-{{ section.id }}"
     style="
@@ -96,39 +85,39 @@
         </div>
       {% endif %}
 
-      {% if points != blank %}
+      {% if points != blank and points.size > 0 %}
         <div class="sk-product-why-choose__points">
           {% for point in points limit: 3 %}
-            {% assign point_question = point.question.value %}
-            {% assign point_detail = point.point.value %}
-            <article class="sk-why-choose__point">
-              <span class="sk-why-choose__point-number sk-section-heading sk-section-heading--h2">
-                {{ forloop.index }}
-              </span>
+            {% assign q = point.question.value %}
+            {% assign d = point.point.value %}
+            {% if q != blank or d != blank %}
+              <article class="sk-why-choose__point">
+                <span class="sk-why-choose__point-number sk-section-heading sk-section-heading--h2">
+                  {{ forloop.index }}
+                </span>
 
-              {% if point_question != blank %}
-                <p class="sk-why-choose__point-question sk-heading-size--small sk-heading-text--soft">
-                  {{ point_question | escape }}
-                </p>
-              {% endif %}
+                {% if q != blank %}
+                  <p class="sk-why-choose__point-question sk-heading-size--small sk-heading-text--soft">
+                    {{ q | escape }}
+                  </p>
+                {% endif %}
 
-              {% if point_detail != blank %}
-                <p class="sk-why-choose__point-copy sk-heading-size--medium sk-heading-text--strong">
-                  {{ point_detail | escape }}
-                </p>
-              {% endif %}
-            </article>
+                {% if d != blank %}
+                  <p class="sk-why-choose__point-copy sk-heading-size--medium sk-heading-text--strong">
+                    {{ d | escape }}
+                  </p>
+                {% endif %}
+              </article>
+            {% endif %}
           {% endfor %}
         </div>
       {% endif %}
 
       {% if image_obj != blank %}
         <div class="sk-why-choose__layout">
-          {% comment %}
-            <div class="sk-why-choose__image">
-              {{ image_obj | image_tag: width: 900, loading: 'lazy', alt: image_obj.alt | default: product.title }}
-            </div>
-          {% endcomment %}
+          <div class="sk-why-choose__image">
+            {{ image_obj | image_tag: width: 900, loading: 'lazy', alt: image_obj.alt | default: product.title }}
+          </div>
         </div>
       {% endif %}
     </div>
