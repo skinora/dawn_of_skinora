@@ -6,11 +6,41 @@
     padding: clamp(3rem, 4vw, 5rem) 0;
   }
 
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__layout {
+    display: grid;
+    grid-template-columns: minmax(0, var(--pwc-image-width, 45%)) minmax(0, var(--pwc-text-width, 45%));
+    column-gap: var(--pwc-gap, 10%);
+    align-items: center;
+  }
+
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__layout--no-image {
+    grid-template-columns: 1fr;
+  }
+
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .sk-product-why-choose-{{ section.id }} .sk-why-choose__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
   .sk-product-why-choose-{{ section.id }} .sk-product-why-choose__points {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.5rem;
-    margin-bottom: clamp(1.5rem, 3vw, 3rem);
+    margin-top: 1.5rem;
   }
 
   .sk-product-why-choose-{{ section.id }} .sk-why-choose__point {
@@ -25,23 +55,10 @@
     font-weight: 700;
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__layout {
-    display: grid;
-    grid-template-columns: minmax(0, var(--pwc-image-width, 45%)) minmax(0, var(--pwc-text-width, 45%));
-    column-gap: var(--pwc-gap, 10%);
-    align-items: center;
-    gap: clamp(1rem, 3vw, 2rem);
-  }
-
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__image img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
   @media (max-width: 900px) {
     .sk-product-why-choose-{{ section.id }} .sk-why-choose__layout {
       grid-template-columns: 1fr;
+      column-gap: 0;
     }
   }
 
@@ -52,80 +69,139 @@
   }
 </style>
 
-{% liquid
-  assign entry = product.metafields.custom.why_choose_reference.value
-%}
+{%- assign why_choose_reference = product.metafields.custom.why_choose_reference -%}
+{%- assign why_choose_entry = blank -%}
+{%- assign heading = '' -%}
+{%- assign subheading = '' -%}
+{%- assign image_obj = blank -%}
+{%- assign points = blank -%}
+{%- assign show_section = false -%}
 
-{% if entry != blank %}
-  <section class="sk-product-why-choose sk-product-why-choose-{{ section.id }}">
+{%- if why_choose_reference != blank and why_choose_reference.value != blank -%}
+  {%- assign why_choose_entry = why_choose_reference.value -%}
+  {%- assign heading = why_choose_entry.heading.value | default: '' -%}
+  {%- assign subheading = why_choose_entry.subheading.value | default: '' -%}
+  {%- assign image_obj = why_choose_entry.image.value -%}
+
+  {%- if why_choose_entry.points != blank and why_choose_entry.points.value != blank -%}
+    {%- assign points = why_choose_entry.points.value -%}
+  {%- endif -%}
+
+  {%- if heading != blank or subheading != blank or points != blank or image_obj != blank -%}
+    {%- assign show_section = true -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if show_section -%}
+  <section
+    class="sk-product-why-choose sk-product-why-choose-{{ section.id }}"
+    style="
+      --pwc-image-width: {{ section.settings.layout_image_width | default: 45 }}%;
+      --pwc-text-width: {{ section.settings.layout_text_width | default: 45 }}%;
+      --pwc-gap: {{ section.settings.layout_gap | default: 10 }}%;
+    "
+  >
     <div class="page-width">
-      {% if entry.heading.value != blank or entry.subheading.value != blank %}
-        <div class="sk-section-header sk-section-header--left">
-          {% if entry.heading.value != blank %}
-            <h2 class="sk-section-heading sk-section-heading--h2 sk-heading-text--strong">
-              {{ entry.heading.value | escape }}
-            </h2>
-          {% endif %}
-          {% if entry.subheading.value != blank %}
-            <p class="sk-section-header__subtitle sk-heading-text--soft">
-              {{ entry.subheading.value | escape }}
-            </p>
-          {% endif %}
-        </div>
-      {% endif %}
-
-      {% if entry.points != blank %}
-        {% assign points = entry.points.value | default: blank %}
-      {% else %}
-        {% assign points = blank %}
-      {% endif %}
-      {% if points != blank %}
-        <div class="sk-product-why-choose__points">
-          {% for p in points limit: 3 %}
-            {% if p.question.value != blank or p.point.value != blank %}
-              <article class="sk-why-choose__point">
-                <span class="sk-why-choose__point-number">
-                  {{ forloop.index }}
-                </span>
-
-                {% if p.question.value != blank %}
-                  <p class="sk-why-choose__point-question sk-heading-text--soft">
-                    {{ p.question.value | escape }}
-                  </p>
-                {% endif %}
-
-                {% if p.point.value != blank %}
-                  <p class="sk-why-choose__point-copy sk-heading-text--strong">
-                    {{ p.point.value | escape }}
-                  </p>
-                {% endif %}
-              </article>
-            {% endif %}
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      {% assign image_obj = entry.image.value %}
-      {% if image_obj != blank %}
-        <div class="sk-why-choose__layout">
+      <div class="sk-why-choose__layout{% if image_obj == blank %} sk-why-choose__layout--no-image{% endif %}">
+        {% if image_obj != blank %}
           <div class="sk-why-choose__image">
             <img
               src="{{ image_obj | image_url: width: 900 }}"
               loading="lazy"
-              alt="{{ entry.heading.value | default: product.title | escape }}"
+              alt="{{ heading | default: product.title | escape }}"
               width="900"
               height="900"
             >
           </div>
+        {% endif %}
+
+        <div class="sk-why-choose__content">
+          {% if heading != blank or subheading != blank %}
+            <div class="sk-section-header sk-section-header--left">
+              {% if heading != blank %}
+                <h2 class="sk-section-heading sk-section-heading--h2 sk-heading-text--strong">
+                  {{ heading | escape }}
+                </h2>
+              {% endif %}
+              {% if subheading != blank %}
+                <p class="sk-section-header__subtitle sk-heading-text--soft">
+                  {{ subheading | escape }}
+                </p>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if points != blank %}
+            <div class="sk-product-why-choose__points">
+              {% for point in points limit: 3 %}
+                {% assign point_question = point.question.value | default: '' %}
+                {% assign point_detail = point.point.value | default: '' %}
+
+                {% if point_question != blank or point_detail != blank %}
+                  <article class="sk-why-choose__point">
+                    <span class="sk-why-choose__point-number" aria-hidden="true">
+                      {{ forloop.index }}
+                    </span>
+
+                    {% if point_question != blank %}
+                      <p class="sk-why-choose__point-question sk-heading-text--soft">
+                        {{ point_question | escape }}
+                      </p>
+                    {% endif %}
+
+                    {% if point_detail != blank %}
+                      <p class="sk-why-choose__point-copy sk-heading-text--strong">
+                        {{ point_detail | escape }}
+                      </p>
+                    {% endif %}
+                  </article>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
+      </div>
     </div>
   </section>
-{% endif %}
+{%- endif -%}
 
 {% schema %}
 {
   "name": "SK Product – Why Choose",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "layout_image_width",
+      "label": "Image width (%)",
+      "min": 30,
+      "max": 60,
+      "step": 1,
+      "unit": "%",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "layout_text_width",
+      "label": "Text width (%)",
+      "min": 30,
+      "max": 60,
+      "step": 1,
+      "unit": "%",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "layout_gap",
+      "label": "Gap between image and text (%)",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "unit": "%",
+      "default": 10
+    }
+  ],
   "presets": [
     {
       "name": "SK Product – Why Choose"
