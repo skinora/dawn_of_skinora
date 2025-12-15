@@ -707,9 +707,9 @@ section[class^='sk-']
 
 .sk-section-header__subtitle {
   margin: 0;
-  font-size: var(--sk-section-subtitle-size);
+  font-size: calc(var(--sk-section-subtitle-size) * 0.95);
   line-height: var(--sk-section-subtitle-line);
-  color: rgba(var(--sk-color-subheader-text), 0.85);
+  color: var(--sk-body-text-soft);
 }
 
 h1,
