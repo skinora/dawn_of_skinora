@@ -664,7 +664,7 @@ section[class^='sk-']
   flex-direction: column;
   gap: var(--sk-section-header-gap);
   margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  color: rgb(var(--sk-color-heading-text));
+  color: var(--color-brand);
 }
 
 .sk-section-header--center {

@@ -6,6 +6,12 @@
     padding: clamp(3rem, 4vw, 5rem) 0;
   }
 
+  .sk-product-why-choose-{{ section.id }} {
+    --pwc-point-number-size: 4.7rem;
+    --pwc-point-question-size: 2.2rem;
+    --pwc-point-detail-size: 1.8rem;
+  }
+
   .sk-product-why-choose-{{ section.id }} .sk-why-choose__layout {
     display: grid;
     grid-template-columns: minmax(0, var(--pwc-image-width, 45%)) minmax(0, var(--pwc-text-width, 45%));
@@ -39,7 +45,7 @@
   .sk-product-why-choose-{{ section.id }} .sk-product-why-choose__points {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
     margin-top: 1.5rem;
   }
 
@@ -51,8 +57,8 @@
     grid-auto-rows: minmax(0, 1fr);
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__point-number {
-    font-size: 3.125rem;
+  section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-number {
+    font-size: var(--pwc-point-number-size);
     line-height: 1;
     font-weight: 900;
     align-self: stretch;
@@ -60,7 +66,7 @@
     color: var(--color-brand);
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__point-text {
+  section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-text {
     display: grid;
     grid-template-rows: auto auto;
     gap: 0.35rem;
@@ -68,13 +74,17 @@
   }
 
   .sk-product-why-choose-{{ section.id }} .sk-why-choose__point-text p {
-    font-size: 1.3125rem;
-    line-height: 1.2;
+    line-height: 1.25;
     margin: 0;
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__point-question {
+  section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-question {
     font-style: italic;
+    font-size: var(--pwc-point-question-size);
+  }
+
+  section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-copy {
+    font-size: var(--pwc-point-detail-size);
   }
 
   @media (max-width: 900px) {
