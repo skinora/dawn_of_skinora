@@ -49,19 +49,23 @@
   }
 
   /* --- Right decorative image, nå mer subtil --- */
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__image {
-    opacity: 0.6;
-    position: sticky;
-    top: 120px;
+  section.sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--sk-font-size-xl);
+    font-weight: bold;
+    margin-top: 4px;
+    transition: all 0.3s ease;
+    color: var(--color-brand) !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
   }
-
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__image img {
-    width: auto;
-    height: 70vh;
-    object-fit: contain;
-    filter: drop-shadow(0px 0px 18px rgba(72, 122, 183, 0.18));
-  }
-
   /* --- Title --- */
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__title {
     margin-bottom: 2.6rem;
@@ -110,6 +114,10 @@
     flex: 1;
     padding-right: 24px;
     margin: 0;
+    font-size: var(--sk-font-size-small);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
 
   /* --- Icon (brand-lilla) --- */
@@ -127,9 +135,12 @@
     box-shadow: none;
   }
 
-  .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon::before {
+  section.sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon::before {
     content: "+";
     line-height: 1;
+    font-size: var(--sk-font-size-xl) !important;
+    color: var(--color-brand) !important;
+    padding: 0 0.35rem;
   }
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button[aria-expanded="true"] .sk-faq-accordion__icon {
@@ -144,7 +155,7 @@
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__body {
     padding: 0 0 18px;
     color: #333333;
-    font-size: var(--sk-font-size-medium);
+    font-size: 1.8rem;
     line-height: 1.7;
   }
 

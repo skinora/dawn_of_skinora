@@ -43,10 +43,12 @@
   }
 
   .sk-product-why-choose-{{ section.id }} .sk-product-why-choose__points {
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    margin-top: 1.5rem;
   }
 
   .sk-product-why-choose-{{ section.id }} .sk-why-choose__point {
@@ -192,13 +194,13 @@
           {% endif %}
 
           {% if points != blank %}
-            <div class="sk-product-why-choose__points">
+            <ol class="sk-product-why-choose__points" aria-label="Why choose">
               {% for point in points limit: 3 %}
                 {% assign point_question = point.question.value | default: '' %}
                 {% assign point_detail = point.point.value | default: '' %}
 
                 {% if point_question != blank or point_detail != blank %}
-                  <article class="sk-why-choose__point">
+                  <li class="sk-why-choose__point">
                     <span class="sk-why-choose__point-number" aria-hidden="true">
                       {{ forloop.index }}
                     </span>
@@ -215,10 +217,10 @@
                         </p>
                       {% endif %}
                     </div>
-                  </article>
+                  </li>
                 {% endif %}
               {% endfor %}
-            </div>
+            </ol>
           {% endif %}
         </div>
       </div>
