@@ -207,16 +207,6 @@
         "result_image_alt": "Rolig portrett"
       }
     },
-    "sk_product_radiance_TCYaUL": {
-      "type": "sk-product-radiance",
-      "name": "SK Product Radiance",
-      "settings": {
-        "heading": "",
-        "subheading": "",
-        "button_text": "Kjøp Skinora Radiance",
-        "button_url": "shopify://products/skinora-radiance-face"
-      }
-    },
     "sk_led_light_work_mDz86m": {
       "type": "sk-led-light-work",
       "name": "SK Led Light Work",
@@ -279,7 +269,6 @@
     "sk_product_promotion_logos_r9MTbH",
     "sk_before_after_mBrdqd",
     "sk_product_technology_RP8yDt",
-    "sk_product_radiance_TCYaUL",
     "sk_led_light_work_mDz86m",
     "sk_product_how_to_use_dbAJA9",
     "sk_product_why_choose_pwJz83",
