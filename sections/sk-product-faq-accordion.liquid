@@ -102,8 +102,8 @@
   }
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button:hover {
-    color: #4B0082;
-    background: rgba(72, 122, 183, 0.04);
+    color: var(--color-brand);
+    background: rgba(var(--color-brand-rgb), 0.08);
   }
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__question {
@@ -114,21 +114,19 @@
 
   /* --- Icon (brand-lilla) --- */
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 2px solid #4B0082; /* CTA lilla */
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center;
     justify-content: center;
     font-size: var(--sk-font-size-medium);
     font-weight: bold;
     margin-top: 4px;
     transition: all 0.3s ease;
-    color: #4B0082;
-    background: #ffffff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    color: var(--color-brand);
+    border: none;
+    background: transparent;
+    box-shadow: none;
   }
+
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon::before {
     content: "+";
@@ -136,10 +134,7 @@
   }
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button[aria-expanded="true"] .sk-faq-accordion__icon {
-    border-color: #A8A5C3;
-    color: #A8A5C3;
-    background: #F7F7FA;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    color: rgba(var(--color-brand-rgb), 0.8);
   }
 
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__button[aria-expanded="true"] .sk-faq-accordion__icon::before {
@@ -232,7 +227,7 @@
                       type="button"
                       data-bs-toggle="collapse"
                       data-bs-target="#collapse-{{ forloop.index }}-{{ section.id }}"
-                      aria-expanded="{% if section.settings.open_first_item and forloop.first %}true{% else %}false{% endif %}"
+                      aria-expanded="false"
                       aria-controls="collapse-{{ forloop.index }}-{{ section.id }}"
                     >
                       <span class="sk-faq-accordion__question">{{ faq_item.question }}</span>
@@ -241,7 +236,7 @@
                   </h3>
                   <div
                     id="collapse-{{ forloop.index }}-{{ section.id }}"
-                    class="accordion-collapse collapse sk-faq-accordion__collapse {% if section.settings.open_first_item and forloop.first %}show{% endif %}"
+                    class="accordion-collapse collapse sk-faq-accordion__collapse"
                     aria-labelledby="heading-{{ forloop.index }}-{{ section.id }}"
                     data-bs-parent="#faqAccordion-{{ section.id }}"
                   >
