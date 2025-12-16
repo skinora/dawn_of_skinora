@@ -35,12 +35,12 @@
 
   /* --- Main container --- */
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__container {
-    max-width: 1200px;
+    max-width: 880px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 80px;
-    align-items: flex-start;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    justify-items: center;
     position: relative;
   }
 
@@ -49,23 +49,6 @@
   }
 
   /* --- Right decorative image, nå mer subtil --- */
-  section.sk-faq-accordion-{{ section.id }} .sk-faq-accordion__icon {
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--sk-font-size-xl);
-    font-weight: bold;
-    margin-top: 4px;
-    transition: all 0.3s ease;
-    color: var(--color-brand) !important;
-    border: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    width: auto !important;
-    height: auto !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-  }
   /* --- Title --- */
   .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__title {
     margin-bottom: 2.6rem;
@@ -171,6 +154,14 @@
   .sk-faq-accordion-{{ section.id }} .sk-faq-read-more-btn .sk-btn {
     margin-top: 2.3rem;
     gap: 10px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .sk-faq-accordion-{{ section.id }} .sk-faq-read-more-btn {
+    display: flex;
+    justify-content: center;
   }
 
   /* --- Mobile --- */
@@ -178,10 +169,6 @@
     .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__container {
       grid-template-columns: 1fr;
       gap: 40px;
-    }
-
-    .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__image {
-      display: none;
     }
 
     .sk-faq-accordion-{{ section.id }} .sk-faq-accordion__title {
@@ -274,18 +261,6 @@
             </a>
           </div>
         </div>
-
-        {% if section.settings.faq_image != blank %}
-          <div class="sk-faq-accordion__image">
-            <img
-              src="{{ section.settings.faq_image | image_url: width: 210, height: 808 }}"
-              alt="{{ section.settings.faq_image.alt | default: section.settings.title }}"
-              width="210"
-              height="808"
-              loading="lazy"
-            >
-          </div>
-        {% endif %}
       </div>
     </div>
   </section>
