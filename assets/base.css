@@ -4417,9 +4417,11 @@ small,
   align-items: center;
   justify-content: center;
   padding: 16px 32px;
-  font-size: 16px;
-  font-weight: 300;
+  font-family: var(--font-heading-family, 'Inter', 'system-ui', sans-serif);
+  font-style: var(--font-heading-style, normal);
+  font-weight: var(--font-heading-weight, 400);
   letter-spacing: 0.08em;
+  gap: 1rem;
   border-radius: 0;
   border: 1px solid var(--color-brand);
   background-color: var(--color-brand);
@@ -4444,8 +4446,8 @@ small,
 
 .sk-btn--secondary {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  font-size: clamp(1.6rem, 1.8vw, 1.8rem);
+  font-weight: var(--font-heading-weight, 400);
   padding: 14px 28px;
   font-size: 15px;
   font-weight: 500;
