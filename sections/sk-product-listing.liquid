@@ -2,7 +2,6 @@
   SK Product Listing Section
   Displays a grid of products with product cards matching the Skinora design
 {% endcomment %}
-
 <style>
   .sk-product-listing {
     padding: 7rem 0;
@@ -52,7 +51,7 @@
     margin: auto;
     margin-bottom: 25px;
     border-radius: 0;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .sk-product-card__image-primary,
@@ -87,6 +86,39 @@
     height: 100%;
     color: var(--color-neutral-5);
     font-size: var(--sk-font-size-xxs);
+  }
+
+  .sk-product-card__badge {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    top: -30px;
+    right: -20px;
+    padding: 0.75rem;
+    text-align: center;
+    background: var(--color-brand);
+    color: var(--color-white);
+    box-shadow: 0 15px 25px rgba(15, 10, 30, 0.3);
+    z-index: 2;
+    opacity: 0.95;
+    pointer-events: none;
+    font-family: var(--font-secondary-family, 'Inter', sans-serif);
+  }
+
+  .sk-product-card__badge[data-badge-target='secondary'] {
+    opacity: 0;
+  }
+
+  .sk-product-card:hover .sk-product-card__badge[data-badge-target='secondary'] {
+    opacity: 0.95;
   }
 
   .sk-product-card__content {
@@ -179,6 +211,7 @@
       overflow: hidden;
       margin-bottom: 38px;
     }
+
     .sk-product-card__content {
       padding: 0;
     }
@@ -294,6 +327,14 @@
                       {% endif %}
                     {% else %}
                       <div class="sk-product-card__image-placeholder">No Image</div>
+                    {% endif %}
+                    {% if block.settings.show_badge %}
+                      <span
+                        class="sk-product-card__badge"
+                        data-badge-target="{{ block.settings.badge_image | default: 'primary' }}"
+                      >
+                        {{ block.settings.badge_text | default: 'LIMITED EDITION' | escape }}
+                      </span>
                     {% endif %}
                   </div>
                 </a>
@@ -440,6 +481,34 @@
           "id": "button_text",
           "label": "Button Text",
           "default": "KJØP"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_badge",
+          "label": "Show badge",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge Text",
+          "default": "LIMITED EDITION"
+        },
+        {
+          "type": "select",
+          "id": "badge_image",
+          "label": "Badge Image",
+          "default": "primary",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Primary (featured image)"
+            },
+            {
+              "value": "secondary",
+              "label": "Secondary (hover image)"
+            }
+          ]
         }
       ]
     }
