@@ -51,10 +51,10 @@
   @supports ((-webkit-background-clip: text) or (background-clip: text)) {
     .sk-dynamic-banner__title {
       background-image: linear-gradient(
-        120deg,
-        rgba(var(--sk-color-heading-text), 1),
-        rgba(var(--sk-color-heading-text), 0.5) 60%,
-        rgba(var(--sk-color-heading-text), 0.25)
+        135deg,
+        rgba(var(--sk-color-heading-text), 1) 0%,
+        rgba(var(--sk-color-heading-text), 0.9) 45%,
+        rgba(var(--sk-color-heading-text), 0.4)
       );
       color: transparent;
       -webkit-background-clip: text;
@@ -64,8 +64,8 @@
 
   .sk-dynamic-banner__description {
     font-size: calc(var(--sk-font-size-large) * 1.1);
-    font-weight: 400;
-    color: var(--color-neutral-1);
+    font-weight: 300;
+    color: rgba(var(--sk-color-body-text), 0.95);
     line-height: 32px;
     margin-bottom: 30px;
     max-width: clamp(32rem, 60vw, 60rem);
@@ -137,7 +137,7 @@
           {{ section.settings.sk_banner_title }}
         </h2>
 
-        <p class="sk-dynamic-banner__description sk-section-body">
+        <p class="sk-section-body sk-dynamic-banner__description">
           {{ section.settings.sk_banner_description }}
         </p>
 
