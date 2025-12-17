@@ -11,7 +11,7 @@
   --root-font-size: 10px;
   /* Brand color */
   --color-brand: #30273e;
-  --color-brand-hover: #4b0082;
+
   /* Common color tokens */
   --color-white: #ffffff;
   /* Neutral palette: Mine Shaft */
@@ -4421,17 +4421,19 @@ small,
   font-weight: 300;
   letter-spacing: 0.08em;
   border-radius: 0;
-  border: none;
+  border: 1px solid var(--color-brand);
   background-color: var(--color-brand);
   color: var(--color-white);
   text-decoration: none;
   text-transform: uppercase;
-  transition: background-color 0.25s ease, transform 0.2s ease;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
 }
 
 .sk-btn--primary:hover,
 .sk_primary-button:hover {
-  background-color: var(--color-brand-hover);
+  background-color: var(--color-white);
+  color: var(--color-brand);
+  border-color: var(--color-brand);
   transform: translateY(-2px);
 }
 
