@@ -39,7 +39,7 @@
   --mine-shaft-950-rgb: 38, 38, 38;
   --sk-color-body-text: var(--mine-shaft-900-rgb);
   --sk-color-heading-text: 58, 52, 72; /* softened eggplant for headings */
-  --sk-color-subheader-text: 120, 114, 134; /* lavender gray for subheads */
+  --sk-color-subheader-text: rgba(var(--mine-shaft-500), 1);
   --sk-body-text-strong: rgba(var(--sk-color-body-text), 1);
   --sk-body-text-soft: rgba(var(--sk-color-body-text), 0.8);
   --sk-body-text-muted: rgba(var(--sk-color-body-text), 0.6);
@@ -411,7 +411,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 .sk-before-after__subtitle {
   color: rgb(var(--sk-color-subheader-text));
   margin: 0 0 1rem;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 /* Heading size variables (used by .sk-section-heading modifiers)
