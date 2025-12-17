@@ -128,7 +128,10 @@
           "settings": {
             "product": "skinora-radiance-face",
             "show_description": true,
-            "button_text": "KJØP"
+            "button_text": "KJØP",
+            "show_badge": true,
+            "badge_text": "pakkerabatt",
+            "badge_image": "primary"
           }
         },
         "product_Km3at8": {
@@ -136,7 +139,10 @@
           "settings": {
             "product": "skinora-radiance-neck",
             "show_description": true,
-            "button_text": "KJØP"
+            "button_text": "KJØP",
+            "show_badge": false,
+            "badge_text": "LIMITED EDITION",
+            "badge_image": "primary"
           }
         },
         "product_fRgkE9": {
@@ -144,7 +150,10 @@
           "settings": {
             "product": "skinora-clear",
             "show_description": true,
-            "button_text": "KJØP"
+            "button_text": "KJØP",
+            "show_badge": false,
+            "badge_text": "LIMITED EDITION",
+            "badge_image": "primary"
           }
         }
       },
