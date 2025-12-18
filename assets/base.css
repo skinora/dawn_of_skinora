@@ -2347,6 +2347,19 @@ input[type='checkbox'] {
   color: var(--color-white);
 }
 
+@media only screen and (max-width: 749px) {
+  .quantity__button:last-child {
+    color: rgb(var(--color-foreground));
+  }
+  .quantity__button:last-child .svg-wrapper,
+  .quantity__button:last-child .svg-wrapper svg {
+    color: currentColor;
+  }
+  .quantity__button:last-child .svg-wrapper svg path {
+    fill: currentColor;
+  }
+}
+
 .quantity__button .svg-wrapper {
   width: 1rem;
   pointer-events: none;
@@ -4411,6 +4424,15 @@ small,
   transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
 }
 
+@media only screen and (max-width: 600px) {
+  .sk-btn,
+  .sk-btn--primary,
+  .sk_primary-button {
+    font-size: 2rem;
+    padding-inline: clamp(18px, 6vw, 26px);
+  }
+}
+
 .sk-btn--primary,
 .sk_primary-button {
   display: inline-flex;
@@ -4430,6 +4452,14 @@ small,
   text-decoration: none;
   text-transform: uppercase;
   transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+}
+
+@media only screen and (max-width: 749px) {
+  .sk-btn--primary,
+  .sk_primary-button {
+    font-size: clamp(2rem, 4vw, 2.4rem);
+    padding-inline: clamp(22px, 6vw, 32px);
+  }
 }
 
 .sk-btn--primary:hover,

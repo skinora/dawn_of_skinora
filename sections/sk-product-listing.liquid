@@ -17,6 +17,7 @@
 
   .sk-product-listing__title {
     margin-bottom: 15px;
+    font-size: clamp(var(--sk-font-size-xl), 3vw, var(--sk-font-size-3xl));
   }
 
   .sk-product-listing__subtitle {
@@ -211,10 +212,12 @@
       width: min(90%, 360px);
       overflow: visible;
       margin: 0 auto 32px;
+      min-height: unset;
     }
 
     .sk-product-card__content {
       padding: 0;
+      justify-content: flex-start;
     }
 
     .sk-product-card__content {
