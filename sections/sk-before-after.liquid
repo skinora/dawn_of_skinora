@@ -66,10 +66,9 @@
   .sk-before-after-next.swiper-button-disabled { opacity:0; pointer-events:none; }
   .sk-before-after-prev:not(.swiper-button-disabled):hover,
   .sk-before-after-next:not(.swiper-button-disabled):hover { background:rgba(255,255,255,.75); transform:translateY(-50%) scale(1.08); }
-  /* Removed generic hover; using conditional hover above */
-  /* Position arrows just inside the centered .page-width content edge so they never get clipped
-    (page-width uses max-width: var(--page-width) in base.css). */
-  /* Flush arrows to content edge (remove extra 8px inset). Fallback JS will adjust if var(--page-width) undefined */
+  /* Position arrows just inside the centered .page-width content edges so they never get clipped
+     (page-width uses max-width: var(--page-width) in base.css).
+     Flush them to the edge; fallback JS nudges inward if var(--page-width) is undefined. */
   .sk-before-after-prev { left: calc((100% - var(--page-width)) / 2); }
   .sk-before-after-next { right: calc((100% - var(--page-width)) / 2); }
   .sk-before-after-prev svg, .sk-before-after-next svg { width:24px; height:24px; stroke: var(--color-neutral-3, #6C6C6C); }
