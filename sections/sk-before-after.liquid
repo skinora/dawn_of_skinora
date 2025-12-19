@@ -1,21 +1,21 @@
 {% comment %}
   SK Before/After Section
-  Displays a slider of before/after testimonial cards using SwiperJS
+  Single-image before/after look (visual split only)
 {% endcomment %}
-
-<!-- Swiper CSS -->
 
 <style>
   .sk-before-after {
     padding: 5rem 0;
-    background-color: {{ section.settings.background_color | default: '#f1eff4' }};
+    background-color: var(--color-white);
     position: relative;
-    /* Prevent horizontal scrollbar while keeping arrows visible via absolute positioning */
     overflow: hidden;
-    --slide-gap: 16px;
-    --slides-desktop: {{ section.settings.slides_per_view | default: 3 }};
   }
-  .sk-before-after__header { text-align: center; margin-bottom: 48px; }
+
+  .sk-before-after__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
   .sk-before-after__title {
     font-size: {{ section.settings.title_size }}px;
     font-weight: {{ section.settings.title_weight }};
@@ -23,514 +23,245 @@
     margin-bottom: 15px;
     line-height: 1.15;
   }
+
   .sk-before-after__subtitle {
     font-size: {{ section.settings.subtitle_size }}px;
     color: {{ section.settings.subtitle_color }};
     font-weight: {{ section.settings.subtitle_weight }};
-    margin: 0 auto;
     line-height: 1.4;
   }
-  /* Deterministic layout: 1 slide mobile, 2 tablet, 3 desktop via Swiper breakpoints */
-  .sk-before-after .swiper { padding:0; margin:0 auto; width:100%; }
-  /* Let Swiper manage widths; keep slides simple */
-  .swiper-slide { display:flex; justify-content:center; }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+  }
+
   .sk-testimonial-card {
-    box-sizing: border-box;
-    width:100%;
-    transition: box-shadow 0.3s ease;
+    width: 100%;
+    background: #fff;
+    border-radius: 0;
+    overflow: hidden;
   }
-  /* Single image layout (before/after combined request) */
-  .sk-testimonial-card__images { position: relative; border-radius: 0; overflow: hidden; }
-  /* Constrain image aspect & prevent overflow */
-  .sk-testimonial-card__image { width:100%; display:block; aspect-ratio: 334 / 360; height: auto; object-fit: cover; }
-  .sk-before-after .sk-testimonial-card__images { height: clamp(260px, 30vw, 360px); }
-  .sk-before-after .sk-testimonial-card__images img { height:100%; width:100%; object-fit:cover; }
-  .sk-testimonial-card__image--before, .sk-testimonial-card__image--after { border-radius:0; }
-  .sk-testimonial-card__divider { display:none; }
+
+  /* === SINGLE IMAGE WITH FAKE BEFORE / AFTER SPLIT === */
+
+  .sk-testimonial-card__images {
+    position: relative;
+    height: clamp(260px, 30vw, 360px);
+    overflow: hidden;
+  }
+
+  .sk-testimonial-card__images img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* vertical divider */
+  .sk-testimonial-card__images::after {
+    content: "";
+    position: absolute;
+    top: 6%;
+    bottom: 6%;
+    left: 50%;
+    width: 1px;
+    background: rgba(255,255,255,0.65);
+    transform: translateX(-50%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* pills */
+  .sk-ba-pill {
+    position: absolute;
+    top: 12px;
+    padding: 6px 14px;
+    font-size: 13px;
+    background: rgba(245,245,245,0.95);
+    border-radius: 0;
+    font-weight: 500;
+    color: #333;
+    z-index: 3;
+  }
+
+  .sk-ba-pill--before { left: 12px; }
+  .sk-ba-pill--after { right: 12px; }
+
+  /* === CONTENT === */
+
   .sk-testimonial-card__content {
-    text-align:center; background: {{ section.settings.card_bg_color | default: '#fff' }}; color: var(--color-text, #000); padding:16px 24px 20px; margin-top:0; border-radius:0 0 20px 20px;
+    padding: 18px 20px 22px;
+    text-align: left;
   }
-  .sk-testimonial-card__author {
-    display:flex; align-items:center; justify-content:center; gap:8px; font-size: var(--sk-font-size-xxs); font-weight:600; background: var(--color-brand-700, #30273E); color:#fff; font-style:italic; position:absolute; bottom:0; left:0; right:0; border-bottom-left-radius:20px; border-bottom-right-radius:20px; padding:9px 11px;
+
+  .sk-testimonial-card__title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #000;
   }
-  .sk-testimonial-card__verified { width:16px; height:16px; fill:currentColor; }
-  .sk-testimonial-card__title { font-size: var(--sk-font-size-medium); font-weight:700; margin-bottom:8px; color: var(--color-text-strong, #000); }
-  .sk-testimonial-card__text { font-size: var(--sk-font-size-medium); line-height:1.5; color: var(--color-text, #000); font-weight:500; }
-  .sk-before-after-prev, .sk-before-after-next {
-    position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:5; transition:background .25s ease, transform .25s ease, opacity .25s ease;
-    background:rgba(255,255,255,.55);
-    backdrop-filter:blur(4px);
+
+  .sk-testimonial-card__meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
-  /* Hide disabled arrows (no slide in that direction) */
-  .sk-before-after-prev.swiper-button-disabled,
-  .sk-before-after-next.swiper-button-disabled { opacity:0; pointer-events:none; }
-  .sk-before-after-prev:not(.swiper-button-disabled):hover,
-  .sk-before-after-next:not(.swiper-button-disabled):hover { background:rgba(255,255,255,.75); transform:translateY(-50%) scale(1.08); }
-  /* Position arrows just inside the centered .page-width content edges so they never get clipped
-     (page-width uses max-width: var(--page-width) in base.css).
-     Flush them to the edge; fallback JS nudges inward if var(--page-width) is undefined. */
-  .sk-before-after-prev { left: calc((100% - var(--page-width)) / 2); }
-  .sk-before-after-next { right: calc((100% - var(--page-width)) / 2); }
-  .sk-before-after-prev svg, .sk-before-after-next svg { width:24px; height:24px; stroke: var(--color-neutral-3, #6C6C6C); }
-  .sk-before-after-prev:not(.swiper-button-disabled) svg,
-  .sk-before-after-next:not(.swiper-button-disabled) svg { stroke: #555; }
-  /* Remove any unexpected UA focus fill */
-  .sk-before-after-prev svg path,
-  .sk-before-after-next svg path { fill: none; }
-  .sk-before-after-prev:hover svg path,
-  .sk-before-after-next:hover svg path { stroke: #444; }
-  /* Keyboard accessibility focus styles */
-  .sk-before-after-prev:focus-visible, .sk-before-after-next:focus-visible {
-    outline:2px solid var(--color-brand, #4a4458);
-    outline-offset:4px;
+
+  .sk-testimonial-card__text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #333;
   }
-  /* Prevent vertical overflow but let arrows render horizontally */
-  /* Tighten horizontal overflow: hide any stray slide width spill while arrows remain positioned by absolute calc */
-  .sk-before-after .swiper { overflow: hidden; }
-  .sk-before-after .swiper-wrapper { box-sizing: border-box; }
-  /* Ensure slides cannot exceed container width due to flex shrink behavior */
-  .sk-before-after .swiper-slide { flex: 0 0 auto; max-width: 100%; }
-  @media (min-width:1024px){
-    /* When 3-up, guard against rounding overflow: subtract aggregated gap (2 * 28px) */
-    .sk-before-after .swiper-slide { width: calc((100% - 56px) / 3); }
-  }
-  @media (min-width:700px) and (max-width:1023.98px){
-    /* When 2-up, subtract one gap (24px) */
-    .sk-before-after .swiper-slide { width: calc((100% - 24px) / 2); }
-  }
-  @media (max-width:699.98px){
-    .sk-before-after .swiper-slide { width: 100%; }
-  }
-  .swiper-pagination { position:relative !important; margin-top:34px; }
-  .swiper-pagination-bullet { width:12px; height:12px; background:#ddd; opacity:1; transition:all .3s ease; }
-  .swiper-pagination-bullet-active { background:#4a4458; transform:scale(1.2); }
-  .sk_before_img { width:100%; height:auto; display:block; }
-  .sk-before-after .swiper, .sk-before-after .swiper-wrapper { position:relative; }
-  @media (max-width:1024px){ .sk-testimonial-card{ width:100%; } }
-  @media (max-width:700px){
-    .sk-testimonial-card{ width:100%; }
-    .sk-testimonial-card__content{ margin-top:0; }
-    .sk-before-after-prev, .sk-before-after-next{ top:auto; bottom:10px; transform:none; }
-    .sk-before-after-prev{ left:1rem; }
-    .sk-before-after-next{ right:1rem; }
-    .sk-testimonial-card__title{ font-size: calc(var(--sk-font-size-large) * 1.1); }
-    .sk-testimonial-card__text{ font-size: var(--sk-font-size-medium); }
-  }
-  @media (max-width:435px){
-    .sk-testimonial-card__title{ font-size: var(--sk-font-size-large); }
-    .sk-testimonial-card__text{ font-size: var(--sk-font-size-medium); line-height:1.45; }
-    .sk-before-after-prev svg, .sk-before-after-next svg{ width:18px; height:18px; }
-  }
-  @media screen and (max-width: 749px) {
-    .sk-section-heading {
-      font-size: var(--sk-mobile-heading-size);
-      line-height: var(--sk-mobile-heading-line);
-    }
-    .sk-section-body {
-      font-size: var(--sk-mobile-body-size);
-      line-height: var(--sk-mobile-body-line);
-    }
-  }
+
+  /* Swiper arrows & pagination untouched */
 </style>
 
 <section class="sk-before-after">
   <div class="page-width">
-    {% if section.settings.section_title != blank or section.settings.section_subtitle != blank %}
-      <div class="sk-before-after__header sk-section-content">
-        {% if section.settings.section_title != blank %}
-          <h1 class="sk-header__section sk-before-after__title sk-section-heading sk-section-heading--h1">
-            {{ section.settings.section_title }}
-          </h1>
-        {% endif %}
+    {% if section.settings.section_title != blank %}
+      <div class="sk-before-after__header">
+        <h2 class="sk-before-after__title">
+          {{ section.settings.section_title }}
+        </h2>
         {% if section.settings.section_subtitle != blank %}
-          <p class="sk-before-after__subtitle sk-section-body">{{ section.settings.section_subtitle }}</p>
+          <p class="sk-before-after__subtitle">
+            {{ section.settings.section_subtitle }}
+          </p>
         {% endif %}
       </div>
     {% endif %}
 
-    {% if section.blocks.size > 0 %}
-      <div class="swiper sk-before-after-swiper">
-        <div class="swiper-wrapper">
-          {% for block in section.blocks %}
-            <div class="swiper-slide" {{ block.shopify_attributes }}>
-              <div class="sk-testimonial-card">
-                <div class="sk-testimonial-card__images">
-                  <img
-                    src="{{ block.settings.before_image | image_url: width: 334, height: 360 }}"
-                    alt="{{ block.settings.before_image.alt | escape }}"
-                    class="sk_before_img"
-                    loading="lazy"
-                    width="334"
-                    height="360"
-                  >
+    <div class="swiper sk-before-after-swiper">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide" {{ block.shopify_attributes }}>
+            <div class="sk-testimonial-card">
+              <div class="sk-testimonial-card__images">
+                <img
+                  src="{{ block.settings.before_image | image_url: width: 800 }}"
+                  alt="{{ block.settings.before_image.alt | escape }}"
+                  width="{{ block.settings.before_image.width | default: 800 }}"
+                  height="{{ block.settings.before_image.height | default: 360 }}"
+                  loading="lazy"
+                >
 
-                  {% if block.settings.author_name != blank %}
-                    <div class="sk-testimonial-card__author">
-                      {{ block.settings.author_name }}
-                      {% if block.settings.show_verified %}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="17"
-                          height="17"
-                          viewBox="0 0 17 17"
-                          fill="none"
-                        >
-                          <path d="M15.5124 6.76909C15.2287 6.47309 14.9356 6.16764 14.8178 5.88327C14.7087 5.61927 14.7029 5.22873 14.6964 4.81564C14.6862 4.13345 14.6745 3.36109 14.1567 2.84327C13.6389 2.32545 12.8636 2.31382 12.1844 2.30364C11.7713 2.29709 11.3844 2.29127 11.1167 2.18218C10.8324 2.06436 10.5269 1.77127 10.2309 1.48764C9.748 1.02509 9.20109 0.5 8.5 0.5C7.79891 0.5 7.252 1.02509 6.76909 1.48764C6.47309 1.77127 6.16764 2.06436 5.88327 2.18218C5.61927 2.29127 5.22873 2.29709 4.81564 2.30364C4.13345 2.31382 3.36109 2.32545 2.84327 2.84327C2.32545 3.36109 2.31382 4.13636 2.30364 4.81564C2.29709 5.22873 2.29127 5.61564 2.18218 5.88327C2.06436 6.16764 1.77127 6.47309 1.48764 6.76909C1.02509 7.252 0.5 7.79891 0.5 8.5C0.5 9.20109 1.02509 9.748 1.48764 10.2309C1.77127 10.5269 2.06436 10.8324 2.18218 11.1167C2.29127 11.3807 2.29709 11.7713 2.30364 12.1844C2.31382 12.8665 2.32545 13.6389 2.84327 14.1567C3.36109 14.6745 4.13636 14.6862 4.81564 14.6964C5.22873 14.7029 5.61564 14.7087 5.88327 14.8178C6.16764 14.9356 6.47309 15.2287 6.76909 15.5124C7.252 15.9749 7.79891 16.5 8.5 16.5C9.20109 16.5 9.748 15.9749 10.2309 15.5124C10.5269 15.2287 10.8324 14.9356 11.1167 14.8178C11.3807 14.7087 11.7713 14.7029 12.1844 14.6964C12.8665 14.6862 13.6389 14.6745 14.1567 14.1567C14.6745 13.6389 14.6862 12.8665 14.6964 12.1844C14.7029 11.7713 14.7087 11.3844 14.8178 11.1167C14.9356 10.8324 15.2287 10.5269 15.5124 10.2309C15.9749 9.748 16.5 9.20109 16.5 8.5C16.5 7.79891 15.9749 7.252 15.5124 6.76909ZM14.8825 9.62727C14.5429 9.98073 14.1916 10.3473 14.0098 10.7836C13.8367 11.2011 13.8295 11.6942 13.8222 12.1713C13.8142 12.7124 13.8055 13.2724 13.5385 13.54C13.2716 13.8076 12.7109 13.8156 12.1698 13.8236C11.6927 13.8309 11.1996 13.8382 10.7822 14.0113C10.3458 14.1916 9.98218 14.5429 9.62509 14.884C9.24327 15.2476 8.84836 15.6287 8.49855 15.6287C8.14873 15.6287 7.75382 15.2498 7.37127 14.884C7.01782 14.5444 6.65127 14.1931 6.21491 14.0113C5.79746 13.8382 5.30436 13.8309 4.82727 13.8236C4.28618 13.8156 3.72618 13.8069 3.45855 13.54C3.19091 13.2731 3.18291 12.7124 3.17491 12.1713C3.16764 11.6942 3.16036 11.2011 2.98727 10.7836C2.80691 10.3473 2.45564 9.98364 2.11455 9.62655C1.75164 9.24473 1.37273 8.84982 1.37273 8.5C1.37273 8.15018 1.75164 7.75527 2.11745 7.37273C2.45709 7.01927 2.80836 6.65273 2.99018 6.21636C3.16327 5.79891 3.17055 5.30582 3.17782 4.82873C3.18582 4.28764 3.19455 3.72764 3.46145 3.46C3.72836 3.19236 4.28909 3.18436 4.83018 3.17636C5.30727 3.16909 5.80036 3.16182 6.21782 2.98873C6.65418 2.80836 7.01782 2.45709 7.37491 2.116C7.75527 1.75164 8.15018 1.37273 8.5 1.37273C8.84982 1.37273 9.24473 1.75164 9.62727 2.11745C9.98073 2.45709 10.3473 2.80836 10.7836 2.99018C11.2011 3.16327 11.6942 3.17055 12.1713 3.17782C12.7124 3.18582 13.2724 3.19455 13.54 3.46145C13.8076 3.72836 13.8156 4.28909 13.8236 4.83018C13.8309 5.30727 13.8382 5.80036 14.0113 6.21782C14.1916 6.65418 14.5429 7.01782 14.884 7.37491C15.2476 7.75673 15.6287 8.15164 15.6287 8.50146C15.6287 8.85127 15.2484 9.24473 14.8825 9.62727ZM11.7175 6.44618C11.7992 6.528 11.8451 6.63891 11.8451 6.75455C11.8451 6.87018 11.7992 6.98109 11.7175 7.06291L7.64473 11.1356C7.56291 11.2174 7.452 11.2633 7.33636 11.2633C7.22073 11.2633 7.10982 11.2174 7.028 11.1356L5.28255 9.39018C5.20547 9.30746 5.1635 9.19805 5.1655 9.08501C5.16749 8.97196 5.21329 8.8641 5.29324 8.78415C5.37319 8.7042 5.48105 8.6584 5.5941 8.65641C5.70714 8.65441 5.81655 8.69638 5.89927 8.77345L7.33636 10.2098L11.1007 6.44618C11.1825 6.36447 11.2935 6.31857 11.4091 6.31857C11.5247 6.31857 11.6356 6.36447 11.7175 6.44618Z" fill="white"/>
-                        </svg>
-                      {% endif %}
-                    </div>
-                  {% endif %}
-                </div>
+                <span class="sk-ba-pill sk-ba-pill--before">FØR</span>
+                <span class="sk-ba-pill sk-ba-pill--after">...OG ETTER</span>
+              </div>
 
-                <div class="sk-testimonial-card__content">
-                  {% if block.settings.testimonial_title != blank %}
-                    <h3 class="sk-testimonial-card__title">{{ block.settings.testimonial_title }}</h3>
-                  {% endif %}
+              <div class="sk-testimonial-card__content">
+                {% if block.settings.testimonial_title != blank %}
+                  <h3 class="sk-testimonial-card__title">
+                    {{ block.settings.testimonial_title }}
+                  </h3>
+                {% endif %}
 
-                  {% if block.settings.testimonial_text != blank %}
-                    <p class="sk-testimonial-card__text sk-section-body">{{ block.settings.testimonial_text }}</p>
-                  {% endif %}
-                </div>
+                {% if block.settings.author_name != blank %}
+                  <div class="sk-testimonial-card__meta">
+                    {{ block.settings.author_name }}
+                    {% if block.settings.show_verified %}
+                      <span>✔</span>
+                    {% endif %}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.testimonial_text != blank %}
+                  <p class="sk-testimonial-card__text">“{{ block.settings.testimonial_text }}”</p>
+                {% endif %}
               </div>
             </div>
-          {% endfor %}
-        </div>
-
-        <!-- Navigation arrows (restored & accessible) -->
-        <div
-          class="sk-before-after-prev swiper-button-prev"
-          role="button"
-          aria-label="Previous testimonials"
-          tabindex="0"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="33"
-            viewBox="0 0 32 33"
-            fill="none"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path d="M30 16.2756L2 16.2756M2 16.2756L16 30.2756M2 16.2756L16 2.27563" stroke="var(--color-neutral-2,#666666)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="sk-before-after-next swiper-button-next" role="button" aria-label="Next testimonials" tabindex="0">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="33"
-            viewBox="0 0 32 33"
-            fill="none"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path d="M2 16.2756H30M30 16.2756L16 2.27563M30 16.2756L16 30.2756" stroke="var(--color-neutral-2,#666666)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-
-        <!-- Pagination -->
-        <div class="swiper-pagination"></div>
+          </div>
+        {% endfor %}
       </div>
-    {% else %}
-      <div style="text-align: center; padding: 60px 0; color: #999;">
-        <p>Add testimonial blocks to display before/after cards here.</p>
-      </div>
-    {% endif %}
+
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
   </div>
 </section>
 
-<!-- Swiper JS -->
-
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Swiper safely (only if Swiper lib present)
-    if (typeof Swiper === 'undefined') {
-      console.warn('Swiper not found; sk-before-after slider not initialized');
-      return;
-    }
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof Swiper === 'undefined') return;
 
-    const swiper = new Swiper('.sk-before-after-swiper', {
+    new Swiper('.sk-before-after-swiper', {
       slidesPerView: 1,
       spaceBetween: 20,
-      loop: {{ section.settings.enable_loop }},
-      autoplay: {{ section.settings.enable_autoplay }} ? {
-        delay: 600,
-        disableOnInteraction: false,
-      } : false,
       pagination: { el: '.swiper-pagination', clickable: true },
-      navigation: { nextEl: '.sk-before-after-next', prevEl: '.sk-before-after-prev' },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
       breakpoints: {
-        700: { slidesPerView: 2, spaceBetween: 24 },
-        1024: { slidesPerView: 3, spaceBetween: 28 }
-      }
+        700: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      },
     });
-
-    // Robust arrow positioning: centers arrows to the image midpoint, updates on resize,
-    // after images load, and when Swiper changes slides. Uses defensive DOM queries.
-    function positionArrows() {
-      const section = document.getElementsByClassName('sk-before-after')[0];
-      if (!section) return;
-      const imgContainer = section.getElementsByClassName('sk-testimonial-card__images')[0];
-      if (!imgContainer) return;
-      const rect = imgContainer.getBoundingClientRect();
-      const sectionRect = section.getBoundingClientRect();
-      const localTop = rect.top - sectionRect.top + rect.height / 2;
-      const prevBtns = document.getElementsByClassName('sk-before-after-prev');
-      const nextBtns = document.getElementsByClassName('sk-before-after-next');
-      const allBtns = [];
-      for (let i=0;i<prevBtns.length;i++) allBtns.push(prevBtns[i]);
-      for (let i=0;i<nextBtns.length;i++) allBtns.push(nextBtns[i]);
-      if (allBtns.length === 0) return;
-      allBtns.forEach(btn => {
-        try {
-          btn.style.top = localTop + 'px';
-          btn.style.transform = 'translateY(-50%)';
-          btn.style.willChange = 'top';
-          btn.style.zIndex = '6';
-        } catch (e) {}
-      });
-    }
-
-    // initial positioning
-    positionArrows();
-    // Horizontal fallback: if CSS calc returns unrealistic value (e.g., var(--page-width) missing), nudge arrows inward by 16px.
-    function horizontalFallback() {
-      const prev = document.querySelector('.sk-before-after-prev');
-      const next = document.querySelector('.sk-before-after-next');
-      if (!prev || !next) return;
-      const prevRect = prev.getBoundingClientRect();
-      const nextRect = next.getBoundingClientRect();
-      // If arrow sits at or beyond viewport edge (<=2px) apply inset.
-      if (prevRect.left <= 2) prev.style.left = '16px';
-      if (window.innerWidth - nextRect.right <= 2) next.style.right = '16px';
-    }
-    horizontalFallback();
-    window.addEventListener('resize', horizontalFallback);
-    // reposition on resize and when swiper updates
-    window.addEventListener('resize', positionArrows);
-    swiper.on('slideChangeTransitionEnd', positionArrows);
-
-    // Reposition when images finish loading
-    const imgs = Array.from(document.querySelectorAll('.sk-before-after .sk_before_img'));
-    imgs.forEach(img => {
-      if (img.complete) return;
-      img.addEventListener('load', () => setTimeout(positionArrows, 50));
-    });
-
-    // Fallback: observe structural changes inside the first image container
-    const firstImgContainer = document.querySelector('.sk-before-after .sk-testimonial-card__images');
-    if (firstImgContainer) {
-      const mo = new MutationObserver(() => setTimeout(positionArrows, 30));
-      mo.observe(firstImgContainer, { childList: true, subtree: true, attributes: true });
-    }
   });
 </script>
 
 {% schema %}
 {
-  "name": "SK Before/After Section",
-  "tag": "section",
-  "class": "section",
+  "name": "SK Before / After",
   "settings": [
-    {
-      "type": "header",
-      "content": "Section Settings"
-    },
     {
       "type": "text",
       "id": "section_title",
-      "label": "Section Title",
-      "default": "Real Results from Real Customers"
+      "label": "Title",
+      "default": "Real results"
     },
     {
       "type": "textarea",
       "id": "section_subtitle",
-      "label": "Section Subtitle",
+      "label": "Subtitle",
       "default": "See the amazing transformations our customers have achieved"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#f1eff4"
-    },
-    {
-      "type": "color",
-      "id": "card_bg_color",
-      "label": "Card Content Background",
-      "default": "#fff"
-    },
-    {
-      "type": "header",
-      "content": "Typography"
-    },
-    {
-      "type": "range",
-      "id": "title_size",
-      "min": 24,
-      "max": 60,
-      "step": 2,
-      "unit": "px",
-      "label": "Title Font Size",
-      "default": 36
-    },
-    {
-      "type": "select",
-      "id": "title_weight",
-      "label": "Title Font Weight",
-      "options": [
-        {
-          "value": "400",
-          "label": "Normal"
-        },
-        {
-          "value": "500",
-          "label": "Medium"
-        },
-        {
-          "value": "600",
-          "label": "Semi Bold"
-        },
-        {
-          "value": "700",
-          "label": "Bold"
-        }
-      ],
-      "default": "600"
-    },
-    {
-      "type": "color",
-      "id": "title_color",
-      "label": "Title Color",
-      "default": "#333333"
-    },
-    {
-      "type": "range",
-      "id": "subtitle_size",
-      "min": 12,
-      "max": 24,
-      "step": 1,
-      "unit": "px",
-      "label": "Subtitle Font Size",
-      "default": 16
-    },
-    {
-      "type": "select",
-      "id": "subtitle_weight",
-      "label": "Subtitle Font Weight",
-      "options": [
-        {
-          "value": "400",
-          "label": "Normal"
-        },
-        {
-          "value": "500",
-          "label": "Medium"
-        }
-      ],
-      "default": "400"
-    },
-    {
-      "type": "color",
-      "id": "subtitle_color",
-      "label": "Subtitle Color",
-      "default": "#666666"
-    },
-    {
-      "type": "header",
-      "content": "Card Settings"
-    },
-    {
-      "type": "header",
-      "content": "Slider Settings"
-    },
-    {
-      "type": "range",
-      "id": "slides_per_view",
-      "min": 1,
-      "max": 4,
-      "step": 1,
-      "label": "Slides Per View (Desktop)",
-      "default": 3
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_loop",
-      "label": "Enable Loop",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_autoplay",
-      "label": "Enable Autoplay",
-      "default": false
-    },
-    {
-      "type": "header",
-      "content": "Spacing"
     }
   ],
   "blocks": [
     {
       "type": "testimonial",
-      "name": "Before/After Testimonial",
+      "name": "Before / After Card",
       "settings": [
-        {
-          "type": "header",
-          "content": "Images"
-        },
         {
           "type": "image_picker",
           "id": "before_image",
-          "label": "Image"
-        },
-        {
-          "type": "header",
-          "content": "Content"
-        },
-        {
-          "type": "text",
-          "id": "author_name",
-          "label": "Author Name",
-          "default": "Kari M. Nøtteden | Skinora Verified Buyer"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_verified",
-          "label": "Show Verified Badge",
-          "default": true
+          "label": "Image (single)"
         },
         {
           "type": "text",
           "id": "testimonial_title",
-          "label": "Testimonial Title",
-          "default": "Reduced Lines & Wrinkles"
+          "label": "Title",
+          "default": "Even out skin tone"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Meta line",
+          "default": "Kate, 5× a week for 8 weeks | Verified Buyer"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_verified",
+          "label": "Show verified",
+          "default": true
         },
         {
           "type": "textarea",
           "id": "testimonial_text",
-          "label": "Testimonial Text",
-          "default": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+          "label": "Quote",
+          "default": "I’ve seen a real improvement in my sun spots and pigmentation."
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "SK Before/After Section",
-      "category": "Custom",
-      "blocks": [
-        {
-          "type": "testimonial"
-        },
-        {
-          "type": "testimonial"
-        },
-        {
-          "type": "testimonial"
-        }
-      ]
+      "name": "SK Before / After"
     }
   ]
 }
