@@ -117,10 +117,62 @@
     color: #333;
   }
 
+  .sk-before-after .sk-radiance-product__media-progress {
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 899px) {
+    .sk-before-after .sk-before-after-prev,
+    .sk-before-after .sk-before-after-next {
+      display: none;
+    }
+    .sk-before-after .swiper-button-prev,
+    .sk-before-after .swiper-button-next {
+      display: none;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .sk-before-after .sk-radiance-product__media-progress {
+      display: none !important;
+    }
+    .sk-before-after .sk-before-after-prev,
+    .sk-before-after .sk-before-after-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(48, 39, 62, 0.16);
+      background: var(--color-white);
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+      color: var(--color-dark);
+      z-index: 4;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .sk-before-after .sk-before-after-prev.sk-arrow-visible,
+    .sk-before-after .sk-before-after-next.sk-arrow-visible {
+      opacity: 1;
+      pointer-events: auto;
+      display: flex;
+    }
+    .sk-before-after .sk-before-after-prev {
+      left: -40px;
+    }
+    .sk-before-after .sk-before-after-next {
+      right: -20px;
+    }
+  }
+
   /* Swiper arrows & pagination untouched */
 </style>
 
-<section class="sk-before-after">
+<section class="sk-before-after" data-section-id="{{ section.id }}">
   <div class="page-width">
     {% if section.settings.section_title != blank %}
       <div class="sk-before-after__header">
@@ -177,11 +229,26 @@
           </div>
         {% endfor %}
       </div>
-
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev sk-before-after-prev"></div>
+      <div class="swiper-button-next sk-before-after-next"></div>
     </div>
+    {% if section.blocks.size > 0 %}
+      <div class="sk-radiance-product__media-progress" role="status" aria-live="polite">
+        <div class="sk-radiance-product__media-progress-squares" role="tablist" aria-label="Testimonials progress">
+          {% for block in section.blocks %}
+            <button
+              type="button"
+              class="sk-radiance-product__media-progress-square{% if forloop.first %} sk-radiance-product__media-progress-square--active{% endif %}"
+              data-progress-index="{{ forloop.index0 }}"
+              aria-label="Vis eksempel {{ forloop.index }}"
+              {% if forloop.first %}
+                aria-current="true"
+              {% endif %}
+            ></button>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
   </div>
 </section>
 
@@ -189,19 +256,69 @@
   document.addEventListener('DOMContentLoaded', function () {
     if (typeof Swiper === 'undefined') return;
 
-    new Swiper('.sk-before-after-swiper', {
+    const wrapper = document.querySelector('.sk-before-after[data-section-id="{{ section.id }}"]');
+    if (!wrapper) return;
+
+    const swiperElement = wrapper.querySelector('.sk-before-after-swiper');
+    if (!swiperElement) return;
+
+    const swiperInstance = new Swiper(swiperElement, {
       slidesPerView: 1,
       spaceBetween: 20,
-      pagination: { el: '.swiper-pagination', clickable: true },
       navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
+        nextEl: wrapper.querySelector('.sk-before-after-next'),
+        prevEl: wrapper.querySelector('.sk-before-after-prev'),
       },
       breakpoints: {
         700: { slidesPerView: 2 },
         1024: { slidesPerView: 3 },
       },
     });
+
+    const progressBar = wrapper.querySelector('.sk-radiance-product__media-progress');
+    const progressSquares = progressBar
+      ? Array.from(progressBar.querySelectorAll('.sk-radiance-product__media-progress-square'))
+      : [];
+    const prevArrow = wrapper.querySelector('.sk-before-after-prev');
+    const nextArrow = wrapper.querySelector('.sk-before-after-next');
+    const isDesktop = () => window.matchMedia('(min-width: 900px)').matches;
+
+    const updateProgress = (index) => {
+      if (!progressBar) return;
+      const hideProgress = progressSquares.length <= 1;
+      progressBar.classList.toggle('sk-radiance-product__media-progress--hidden', hideProgress);
+      progressBar.setAttribute('aria-hidden', hideProgress ? 'true' : 'false');
+      progressSquares.forEach((square, idx) => {
+        const isActive = idx === index;
+        square.classList.toggle('sk-radiance-product__media-progress-square--active', isActive);
+        if (isActive) {
+          square.setAttribute('aria-current', 'true');
+        } else {
+          square.removeAttribute('aria-current');
+        }
+      });
+    };
+
+    progressSquares.forEach((square, idx) => {
+      square.addEventListener('click', () => swiperInstance.slideTo(idx));
+    });
+
+    const updateDesktopArrows = () => {
+      if (!prevArrow || !nextArrow) return;
+      const showPrev = isDesktop() && !swiperInstance.isBeginning;
+      const showNext = isDesktop() && !swiperInstance.isEnd;
+      prevArrow.classList.toggle('sk-arrow-visible', showPrev);
+      nextArrow.classList.toggle('sk-arrow-visible', showNext);
+    };
+
+    swiperInstance.on('slideChange', () => {
+      updateProgress(swiperInstance.activeIndex);
+      updateDesktopArrows();
+    });
+
+    updateProgress(swiperInstance.activeIndex);
+    updateDesktopArrows();
+    window.addEventListener('resize', updateDesktopArrows);
   });
 </script>
 
