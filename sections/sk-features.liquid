@@ -2,7 +2,7 @@
   .sk-features__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: clamp(16px, 2vw, 32px);
+    gap: clamp(12px, 2vw, 24px);
     justify-items: center;
     align-content: center;
     width: min(1200px, 100%);
@@ -11,9 +11,13 @@
   .sk-features__item {
     display: flex;
     flex-flow: column;
+    justify-content: center;
     align-items: center;
+    text-align: center;
     width: 100%;
-    max-width: 280px;
+    max-width: 300px;
+    padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(0.75rem, 1.8vw, 1.25rem);
+    gap: 0.35rem;
   }
   .sk-features__heading {
     text-align: center;
@@ -21,51 +25,19 @@
     color: #30273e;
   }
   .sk-features__title {
-    text-align: center;
     margin: 0;
-    padding-top: 1rem;
     color: #30273e;
     font-size: clamp(1.2rem, 3.2vw, 1.6rem);
     line-height: 28px;
     font-weight: 600;
-    max-width: 220px;
+    max-width: 240px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     white-space: normal;
   }
   .sk-features {
-    padding: 12px 0;
-  }
-  .sk-features__icon {
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .sk-features__icon svg {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 3.2;
-  }
-
-  .sk-features__icon svg * {
-    fill: none !important;
-    stroke-width: 3.2;
-  }
-
-  .sk-features__icon svg .star,
-  .sk-features__icon svg [data-icon='star'],
-  .sk-features__icon svg polygon,
-  .sk-features__icon svg [data-fill='solid'] {
-    fill: currentColor !important;
-    stroke: none !important;
+    background-color: var(--color-ghost-3);
+    padding-block: clamp(2.5rem, 5vw, 4.5rem);
   }
 
   @media only screen and (max-width: 900px) {
@@ -83,7 +55,7 @@
 
   @media only screen and (max-width: 700px) {
     .sk-features {
-      padding: 5rem 0;
+      padding: 3.25rem 0;
     }
     .sk-features__title {
       font-size: var(--sk-font-size-medium);
@@ -109,11 +81,14 @@
     .sk-features__title {
       font-size: clamp(1.1rem, 4vw, 1.35rem);
       line-height: 30px;
-      letter-spacing: 0.08em;
-      text-align: left;
+      letter-spacing: 0.04em;
+      text-align: center;
       flex: 1;
       white-space: normal;
       padding-top: 0;
+      text-transform: none;
+      font-weight: 400;
+      font-variant: small-caps;
     }
   }
   @media screen and (max-width: 749px) {
@@ -138,11 +113,6 @@
     <div class="sk-features__container">
       {% for block in section.blocks %}
         <div class="sk-features__item">
-          {% if block.settings.sk_features_svg != blank %}
-            <div class="sk-features__icon">
-              {{ block.settings.sk_features_svg }}
-            </div>
-          {% endif %}
           <span class="sk-features__title sk-section-body">{{ block.settings.sk_features_title }}</span>
         </div>
       {% endfor %}
@@ -158,12 +128,6 @@
       "type": "text",
       "id": "heading",
       "label": "Section heading"
-    },
-    {
-      "type": "color",
-      "id": "sk_features_bgColor",
-      "label": "Background Color",
-      "default": "#fff"
     }
   ],
   "blocks": [
@@ -171,12 +135,6 @@
       "name": "Logo",
       "type": "Card",
       "settings": [
-        {
-          "type": "html",
-          "id": "sk_features_svg",
-          "label": "SVG Code",
-          "info": "Paste your SVG code here. The SVG will be automatically sized to 98x98px."
-        },
         {
           "type": "text",
           "id": "sk_features_title",
