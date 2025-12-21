@@ -43,6 +43,8 @@
     overflow: hidden;
   }
 
+  /* === SINGLE IMAGE WITH FAKE BEFORE / AFTER SPLIT === */
+
   .sk-testimonial-card__images {
     position: relative;
     height: clamp(260px, 30vw, 360px);
@@ -56,6 +58,7 @@
     display: block;
   }
 
+  /* vertical divider */
   .sk-testimonial-card__images::after {
     content: "";
     position: absolute;
@@ -69,6 +72,7 @@
     pointer-events: none;
   }
 
+  /* pills */
   .sk-ba-pill {
     position: absolute;
     top: 12px;
@@ -83,6 +87,8 @@
 
   .sk-ba-pill--before { left: 12px; }
   .sk-ba-pill--after { right: 12px; }
+
+  /* === CONTENT === */
 
   .sk-testimonial-card__content {
     padding: 18px 20px 22px;
@@ -111,14 +117,33 @@
     color: #333;
   }
 
+  .sk-before-after .sk-radiance-product__media-progress {
+    margin-top: 1rem;
+  }
+
   @media (max-width: 899px) {
     .sk-before-after .sk-before-after-prev,
     .sk-before-after .sk-before-after-next {
       display: none;
     }
+    .sk-before-after .swiper-button-prev,
+    .sk-before-after .swiper-button-next {
+      display: none;
+    }
+    .sk-before-after .sk-before-after-prev.sk-arrow-visible,
+    .sk-before-after .sk-before-after-next.sk-arrow-visible,
+    .sk-before-after .swiper-button-prev.sk-arrow-visible,
+    .sk-before-after .swiper-button-next.sk-arrow-visible {
+      display: flex !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
   }
 
   @media (min-width: 900px) {
+    .sk-before-after .sk-radiance-product__media-progress {
+      display: none !important;
+    }
     .sk-before-after .sk-before-after-prev,
     .sk-before-after .sk-before-after-next {
       position: absolute;
@@ -128,34 +153,62 @@
       height: 44px;
       border-radius: 999px;
       border: 1px solid rgba(48, 39, 62, 0.16);
-      background: #fff;
+      background: var(--color-white);
       justify-content: center;
       align-items: center;
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+      color: var(--color-dark);
       z-index: 4;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease;
     }
-
     .sk-before-after .sk-before-after-prev.sk-arrow-visible,
     .sk-before-after .sk-before-after-next.sk-arrow-visible {
       opacity: 1;
       pointer-events: auto;
-      display: flex;
+      display: flex !important;
     }
-
-    .sk-before-after-prev { left: -40px; }
-    .sk-before-after-next { right: -20px; }
+    .sk-before-after .sk-before-after-prev {
+      left: -40px;
+    }
+    .sk-before-after .sk-before-after-next {
+      right: -20px;
+    }
   }
+
+  .sk-before-after .swiper-button-disabled {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .sk-before-after .sk-arrow-visible.swiper-button-disabled {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Swiper arrows & pagination untouched */
 </style>
 
 <section class="sk-before-after" data-section-id="{{ section.id }}">
   <div class="page-width">
+    {% if section.settings.section_title != blank %}
+      <div class="sk-before-after__header">
+        <h2 class="sk-before-after__title">
+          {{ section.settings.section_title }}
+        </h2>
+        {% if section.settings.section_subtitle != blank %}
+          <p class="sk-before-after__subtitle">
+            {{ section.settings.section_subtitle }}
+          </p>
+        {% endif %}
+      </div>
+    {% endif %}
+
     <div class="swiper sk-before-after-swiper">
       <div class="swiper-wrapper">
         {% for block in section.blocks %}
-          <div class="swiper-slide">
+          <div class="swiper-slide" {{ block.shopify_attributes }}>
             <div class="sk-testimonial-card">
               <div class="sk-testimonial-card__images">
                 <img
@@ -165,17 +218,55 @@
                   height="{{ block.settings.before_image.height | default: 360 }}"
                   loading="lazy"
                 >
+
                 <span class="sk-ba-pill sk-ba-pill--before">FØR</span>
-                <span class="sk-ba-pill sk-ba-pill--after">…OG ETTER</span>
+                <span class="sk-ba-pill sk-ba-pill--after">...OG ETTER</span>
+              </div>
+
+              <div class="sk-testimonial-card__content">
+                {% if block.settings.testimonial_title != blank %}
+                  <h3 class="sk-testimonial-card__title">
+                    {{ block.settings.testimonial_title }}
+                  </h3>
+                {% endif %}
+
+                {% if block.settings.author_name != blank %}
+                  <div class="sk-testimonial-card__meta">
+                    {{ block.settings.author_name }}
+                    {% if block.settings.show_verified %}
+                      <span>✔</span>
+                    {% endif %}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.testimonial_text != blank %}
+                  <p class="sk-testimonial-card__text">“{{ block.settings.testimonial_text }}”</p>
+                {% endif %}
               </div>
             </div>
           </div>
         {% endfor %}
       </div>
-
       <div class="swiper-button-prev sk-before-after-prev"></div>
       <div class="swiper-button-next sk-before-after-next"></div>
     </div>
+    {% if section.blocks.size > 0 %}
+      <div class="sk-radiance-product__media-progress" role="status" aria-live="polite">
+        <div class="sk-radiance-product__media-progress-squares" role="tablist" aria-label="Testimonials progress">
+          {% for block in section.blocks %}
+            <button
+              type="button"
+              class="sk-radiance-product__media-progress-square{% if forloop.first %} sk-radiance-product__media-progress-square--active{% endif %}"
+              data-progress-index="{{ forloop.index0 }}"
+              aria-label="Vis eksempel {{ forloop.index }}"
+              {% if forloop.first %}
+                aria-current="true"
+              {% endif %}
+            ></button>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
   </div>
 </section>
 
@@ -186,51 +277,134 @@
     const wrapper = document.querySelector('.sk-before-after[data-section-id="{{ section.id }}"]');
     if (!wrapper) return;
 
-    const swiper = new Swiper(wrapper.querySelector('.sk-before-after-swiper'), {
+    const swiperElement = wrapper.querySelector('.sk-before-after-swiper');
+    if (!swiperElement) return;
+
+    const swiperInstance = new Swiper(swiperElement, {
       slidesPerView: 1,
       spaceBetween: 20,
       navigation: {
         nextEl: wrapper.querySelector('.sk-before-after-next'),
         prevEl: wrapper.querySelector('.sk-before-after-prev'),
       },
-      watchOverflow: true,
       breakpoints: {
         700: { slidesPerView: 2 },
         1024: { slidesPerView: 3 },
       },
     });
 
+    const progressBar = wrapper.querySelector('.sk-radiance-product__media-progress');
+    const progressSquares = progressBar
+      ? Array.from(progressBar.querySelectorAll('.sk-radiance-product__media-progress-square'))
+      : [];
     const prevArrow = wrapper.querySelector('.sk-before-after-prev');
     const nextArrow = wrapper.querySelector('.sk-before-after-next');
 
-    const updateArrows = () => {
-      const isDesktop = window.matchMedia('(min-width: 900px)').matches;
-      if (!isDesktop) return;
-
-      prevArrow.classList.toggle('sk-arrow-visible', !swiper.isBeginning);
-      nextArrow.classList.toggle('sk-arrow-visible', !swiper.isEnd);
+    const updateProgress = (index) => {
+      if (!progressBar) return;
+      const hideProgress = progressSquares.length <= 1;
+      progressBar.classList.toggle('sk-radiance-product__media-progress--hidden', hideProgress);
+      progressBar.setAttribute('aria-hidden', hideProgress ? 'true' : 'false');
+      progressSquares.forEach((square, idx) => {
+        const isActive = idx === index;
+        square.classList.toggle('sk-radiance-product__media-progress-square--active', isActive);
+        if (isActive) {
+          square.setAttribute('aria-current', 'true');
+        } else {
+          square.removeAttribute('aria-current');
+        }
+      });
     };
 
-    swiper.on('init', updateArrows);
-    swiper.on('slideChangeTransitionEnd', updateArrows);
-    swiper.on('breakpoint', updateArrows);
+    progressSquares.forEach((square, idx) => {
+      square.addEventListener('click', () => swiperInstance.slideTo(idx));
+    });
 
-    updateArrows();
-    window.addEventListener('resize', updateArrows);
+    const updateDesktopArrows = () => {
+      if (!prevArrow || !nextArrow) return;
+
+      const showPrev = !swiperInstance.isBeginning;
+      const showNext = !swiperInstance.isEnd;
+
+      prevArrow.classList.toggle('sk-arrow-visible', showPrev);
+      nextArrow.classList.toggle('sk-arrow-visible', showNext);
+      prevArrow.classList.toggle('swiper-button-disabled', !showPrev);
+      nextArrow.classList.toggle('swiper-button-disabled', !showNext);
+    };
+
+    swiperInstance.on('init', updateDesktopArrows);
+    swiperInstance.on('slideChangeTransitionEnd', updateDesktopArrows);
+    swiperInstance.on('breakpoint', updateDesktopArrows);
+
+    swiperInstance.on('slideChange', () => {
+      updateProgress(swiperInstance.activeIndex);
+      updateDesktopArrows();
+    });
+
+    updateProgress(swiperInstance.activeIndex);
+    updateDesktopArrows();
+    window.addEventListener('resize', updateDesktopArrows);
   });
 </script>
 
 {% schema %}
 {
   "name": "SK Before / After",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Title",
+      "default": "Real results"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subtitle",
+      "label": "Subtitle",
+      "default": "See the amazing transformations our customers have achieved"
+    }
+  ],
   "blocks": [
     {
       "type": "testimonial",
       "name": "Before / After Card",
-      "settings": [{ "type": "image_picker", "id": "before_image", "label": "Image" }]
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "before_image",
+          "label": "Image (single)"
+        },
+        {
+          "type": "text",
+          "id": "testimonial_title",
+          "label": "Title",
+          "default": "Even out skin tone"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Meta line",
+          "default": "Kate, 5× a week for 8 weeks | Verified Buyer"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_verified",
+          "label": "Show verified",
+          "default": true
+        },
+        {
+          "type": "textarea",
+          "id": "testimonial_text",
+          "label": "Quote",
+          "default": "I’ve seen a real improvement in my sun spots and pigmentation."
+        }
+      ]
     }
   ],
-  "presets": [{ "name": "SK Before / After" }]
+  "presets": [
+    {
+      "name": "SK Before / After"
+    }
+  ]
 }
 {% endschema %}
