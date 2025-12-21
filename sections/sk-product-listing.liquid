@@ -25,23 +25,22 @@
   }
 
   .sk-product-listing__grid {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: clamp(1.5rem, 2vw, 3rem);
     align-items: stretch;
   }
 
   .sk-product-card {
     text-align: center;
-    flex: 0 0 min(92%, 460px);
-    width: min(92%, 460px);
-    max-width: 460px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
     align-items: stretch;
-    min-height: 740px;
+    max-width: 460px;
+    margin: 0 auto;
+    min-height: 0;
   }
 
   .sk-product-card__image {
