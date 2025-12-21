@@ -127,6 +127,25 @@
 
   @media (min-width: 900px) {
     .sk-before-after .sk-radiance-product__media-progress {
+      .sk-before-after .sk-before-after-prev::after,
+      .sk-before-after .sk-before-after-next::after {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-top: 2px solid var(--color-dark);
+        border-right: 2px solid var(--color-dark);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: border-color 0.25s ease;
+      }
+      .sk-before-after .sk-before-after-prev::after {
+        transform: translate(-50%, -50%) rotate(-135deg);
+      }
+      .sk-before-after .sk-before-after-next::after {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
       display: none !important;
     }
     .sk-before-after .sk-before-after-prev,
