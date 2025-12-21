@@ -174,21 +174,18 @@
         "card_kHQtcn": {
           "type": "Card",
           "settings": {
-            "sk_features_svg": "",
             "sk_features_title": "30 dagers fornøydhetsgaranti"
           }
         },
         "card_UCy7PJ": {
           "type": "Card",
           "settings": {
-            "sk_features_svg": "",
             "sk_features_title": "Sendes fra vårt lager i Norge"
           }
         },
         "card_XrpM6T": {
           "type": "Card",
           "settings": {
-            "sk_features_svg": "",
             "sk_features_title": "Gratis frakt på alle bestillinger"
           }
         }
@@ -200,8 +197,7 @@
       ],
       "name": "SK Features",
       "settings": {
-        "heading": "",
-        "sk_features_bgColor": "#ffffff"
+        "heading": ""
       }
     },
     "sk_before_after_HqFkek": {
@@ -211,8 +207,8 @@
           "type": "testimonial",
           "settings": {
             "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
-            "testimonial_title": "Reduced Lines & Wrinkles 1",
-            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "testimonial_title": "Even out skin tone",
+            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
             "show_verified": true,
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
@@ -221,8 +217,8 @@
           "type": "testimonial",
           "settings": {
             "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
-            "testimonial_title": "Reduced Lines & Wrinkles 2",
-            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "testimonial_title": "Even out skin tone",
+            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
             "show_verified": true,
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
@@ -231,8 +227,8 @@
           "type": "testimonial",
           "settings": {
             "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
-            "testimonial_title": "Reduced Lines & Wrinkles 3",
-            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "testimonial_title": "Even out skin tone",
+            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
             "show_verified": true,
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
@@ -241,8 +237,8 @@
           "type": "testimonial",
           "settings": {
             "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
-            "testimonial_title": "Reduced Lines & Wrinkles 4",
-            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "testimonial_title": "Even out skin tone",
+            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
             "show_verified": true,
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
@@ -251,8 +247,8 @@
           "type": "testimonial",
           "settings": {
             "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
-            "testimonial_title": "Reduced Lines & Wrinkles 5",
-            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "testimonial_title": "Even out skin tone",
+            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
             "show_verified": true,
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
@@ -267,8 +263,8 @@
       ],
       "name": "SK Before/After Section",
       "settings": {
-        "section_title": "",
-        "section_subtitle": ""
+        "section_title": "Synlige resultater – dokumentert av ekte brukere",
+        "section_subtitle": "Resultater etter jevn bruk"
       }
     },
     "sk_radiance_meq7Gb": {
