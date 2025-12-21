@@ -132,11 +132,13 @@
     .sk-before-after .sk-before-after-prev,
     .sk-before-after .sk-before-after-next {
       position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
       width: 44px;
       height: 44px;
-      border-radius: 8px;
-      border: 1px solid rgba(48, 39, 62, 0.08);
-      background: rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      border: 1px solid rgba(48, 39, 62, 0.16);
+      background: var(--color-white);
       justify-content: center;
       align-items: center;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
@@ -153,14 +155,10 @@
       display: flex !important;
     }
     .sk-before-after .sk-before-after-prev {
-      top: 50%;
-      left: clamp(12px, 3vw, 32px);
-      transform: translate(-60%, -50%);
+      left: -40px;
     }
     .sk-before-after .sk-before-after-next {
-      top: 50%;
-      right: clamp(12px, 3vw, 32px);
-      transform: translate(60%, -50%);
+      right: -20px;
     }
   }
 

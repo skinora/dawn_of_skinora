@@ -121,11 +121,12 @@
       "blocks": {
         "testimonial_W4kX3A": {
           "type": "testimonial",
+          "disabled": true,
           "settings": {
             "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e_1_3c63e0fb-0357-4b41-bfd6-450216bd2d58.png",
-            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "testimonial_title": "Even out skin tone",
+            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
             "show_verified": true,
-            "testimonial_title": "Reduced Lines & Wrinkles",
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
         },
@@ -133,9 +134,9 @@
           "type": "testimonial",
           "settings": {
             "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e_1_3c63e0fb-0357-4b41-bfd6-450216bd2d58.png",
-            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "testimonial_title": "Even out skin tone",
+            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
             "show_verified": true,
-            "testimonial_title": "Reduced Lines & Wrinkles",
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
         },
@@ -143,9 +144,9 @@
           "type": "testimonial",
           "settings": {
             "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e_1_3c63e0fb-0357-4b41-bfd6-450216bd2d58.png",
-            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "testimonial_title": "Even out skin tone",
+            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
             "show_verified": true,
-            "testimonial_title": "Reduced Lines & Wrinkles",
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
         },
@@ -153,9 +154,9 @@
           "type": "testimonial",
           "settings": {
             "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e_1_3c63e0fb-0357-4b41-bfd6-450216bd2d58.png",
-            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "testimonial_title": "Even out skin tone",
+            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
             "show_verified": true,
-            "testimonial_title": "Reduced Lines & Wrinkles",
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
         },
@@ -163,9 +164,9 @@
           "type": "testimonial",
           "settings": {
             "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e_1_3c63e0fb-0357-4b41-bfd6-450216bd2d58.png",
-            "author_name": "Kari M. Nøtteden | Skinora Verified Buyer",
+            "testimonial_title": "Even out skin tone",
+            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
             "show_verified": true,
-            "testimonial_title": "Reduced Lines & Wrinkles",
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
         }
@@ -179,19 +180,8 @@
       ],
       "name": "SK Before/After Section",
       "settings": {
-        "section_title": "",
-        "section_subtitle": "",
-        "background_color": "#f1eff4",
-        "card_bg_color": "#ffffff",
-        "title_size": 36,
-        "title_weight": "600",
-        "title_color": "#333333",
-        "subtitle_size": 16,
-        "subtitle_weight": "400",
-        "subtitle_color": "#666666",
-        "slides_per_view": 3,
-        "enable_loop": true,
-        "enable_autoplay": false
+        "section_title": "Real results",
+        "section_subtitle": "See the amazing transformations our customers have achieved"
       }
     },
     "sk_product_technology_RP8yDt": {
