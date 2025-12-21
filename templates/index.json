@@ -205,6 +205,7 @@
       "blocks": {
         "testimonial_4YHa8c": {
           "type": "testimonial",
+          "disabled": true,
           "settings": {
             "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
             "testimonial_title": "Even out skin tone",
@@ -215,6 +216,7 @@
         },
         "testimonial_XiMBAy": {
           "type": "testimonial",
+          "disabled": true,
           "settings": {
             "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
             "testimonial_title": "Even out skin tone",
@@ -225,6 +227,7 @@
         },
         "testimonial_wanmk4": {
           "type": "testimonial",
+          "disabled": true,
           "settings": {
             "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
             "testimonial_title": "Even out skin tone",
