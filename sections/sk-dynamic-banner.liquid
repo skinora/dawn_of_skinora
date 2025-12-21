@@ -39,12 +39,12 @@
   }
 
   .sk-dynamic-banner__title {
-    font-size: clamp(4.2rem, 6vw, 6.2rem);
+    font-size: clamp(2.4rem, 6.5vw, 5.2rem);
     color: rgb(var(--sk-color-heading-text));
     font-weight: 500;
-    line-height: clamp(1.05, calc(1 + 0.12vw), 1.12);
-    margin-bottom: clamp(1.1rem, 2.25vw, 1.25rem);
-    letter-spacing: clamp(-0.08rem, -0.35vw, -0.125rem);
+    line-height: clamp(1.05, 1.15, 1.2);
+    margin-bottom: clamp(1.2rem, 2.5vw, 1.4rem);
+    letter-spacing: clamp(-0.05rem, -0.35vw, -0.12rem);
     max-width: min(90vw, 60rem);
   }
 
@@ -63,12 +63,17 @@
   }
 
   .sk-dynamic-banner__description {
-    font-size: calc(var(--sk-font-size-large) * 1.1);
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
     font-weight: 300;
     color: rgba(var(--sk-color-body-text), 0.95);
-    line-height: 32px;
-    margin-bottom: 30px;
+    line-height: clamp(1.2, 1.4, 1.5);
+    margin-bottom: clamp(1.5rem, 3vw, 2rem);
     max-width: clamp(32rem, 60vw, 60rem);
+  }
+
+  .sk-dynamic-banner__button .sk-btn {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    padding: clamp(0.65rem, 1.8vw, 0.95rem) clamp(1.6rem, 3vw, 2.6rem);
   }
 
   /* TABLET */
@@ -86,6 +91,11 @@
       max-width: 40rem;
       transform: translateX(clamp(1rem, 60px, 5vw));
       padding-right: 3rem;
+    }
+
+    .sk-dynamic-banner__title {
+      font-size: clamp(2.2rem, 9vw, 4rem);
+      letter-spacing: clamp(-0.04rem, -0.4vw, -0.08rem);
     }
   }
 
@@ -110,7 +120,7 @@
     }
 
     .sk-dynamic-banner__title {
-      font-size: 52px;
+      font-size: clamp(2rem, 14vw, 3rem);
       line-height: 1.2;
       max-width: 100%;
     }
@@ -119,6 +129,43 @@
       font-size: 16px;
       line-height: 1.4;
       max-width: 100%;
+    }
+    .sk-dynamic-banner__button .sk-btn {
+      width: min(280px, 90vw);
+      justify-content: center;
+    }
+    .sk-dynamic-banner__content {
+      padding-bottom: 2rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .sk-dynamic-banner {
+      min-height: 80vh;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .sk-dynamic-banner__content {
+      margin-inline: auto;
+      transform: none;
+    }
+
+    .sk-dynamic-banner__title {
+      font-size: clamp(1.6rem, 12vw, 2.6rem);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .sk-dynamic-banner__description {
+      font-size: clamp(1.1rem, 5vw, 1.5rem);
+      max-width: 100%;
+    }
+
+    .sk-dynamic-banner__button .sk-btn {
+      width: 100%;
+      padding: clamp(0.6rem, 2vw, 0.9rem) clamp(1.4rem, 4vw, 2rem);
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
     }
   }
 </style>
