@@ -8,27 +8,7 @@
     padding: 5rem 0;
     background-color: var(--color-white);
     position: relative;
-    overflow: hidden;
-  }
-
-  .sk-before-after__header {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-
-  .sk-before-after__title {
-    font-size: {{ section.settings.title_size }}px;
-    font-weight: {{ section.settings.title_weight }};
-    color: {{ section.settings.title_color }};
-    margin-bottom: 15px;
-    line-height: 1.15;
-  }
-
-  .sk-before-after__subtitle {
-    font-size: {{ section.settings.subtitle_size }}px;
-    color: {{ section.settings.subtitle_color }};
-    font-weight: {{ section.settings.subtitle_weight }};
-    line-height: 1.4;
+    overflow: visible;
   }
 
   .swiper-slide {
@@ -41,13 +21,14 @@
     background: #fff;
     border-radius: 0;
     overflow: hidden;
+    --sk-ba-image-base-height: clamp(260px, 30vw, 360px);
   }
 
   /* === SINGLE IMAGE WITH FAKE BEFORE / AFTER SPLIT === */
 
   .sk-testimonial-card__images {
     position: relative;
-    height: clamp(260px, 30vw, 360px);
+    height: calc(var(--sk-ba-image-base-height) * 1.15);
     overflow: hidden;
   }
 
@@ -60,13 +41,13 @@
 
   /* vertical divider */
   .sk-testimonial-card__images::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 6%;
     bottom: 6%;
     left: 50%;
     width: 1px;
-    background: rgba(255,255,255,0.65);
+    background: rgba(255, 255, 255, 0.65);
     transform: translateX(-50%);
     z-index: 2;
     pointer-events: none;
@@ -78,15 +59,19 @@
     top: 12px;
     padding: 6px 14px;
     font-size: 13px;
-    background: rgba(245,245,245,0.95);
+    background: rgba(245, 245, 245, 0.95);
     border-radius: 0;
     font-weight: 500;
     color: #333;
     z-index: 3;
   }
 
-  .sk-ba-pill--before { left: 12px; }
-  .sk-ba-pill--after { right: 12px; }
+  .sk-ba-pill--before {
+    left: 12px;
+  }
+  .sk-ba-pill--after {
+    right: 12px;
+  }
 
   /* === CONTENT === */
 
@@ -147,16 +132,14 @@
     .sk-before-after .sk-before-after-prev,
     .sk-before-after .sk-before-after-next {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
       width: 44px;
       height: 44px;
-      border-radius: 999px;
-      border: 1px solid rgba(48, 39, 62, 0.16);
-      background: var(--color-white);
+      border-radius: 8px;
+      border: 1px solid rgba(48, 39, 62, 0.08);
+      background: rgba(255, 255, 255, 0.35);
       justify-content: center;
       align-items: center;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
       color: var(--color-dark);
       z-index: 4;
       opacity: 0;
@@ -170,10 +153,14 @@
       display: flex !important;
     }
     .sk-before-after .sk-before-after-prev {
-      left: -40px;
+      top: 50%;
+      left: clamp(12px, 3vw, 32px);
+      transform: translate(-60%, -50%);
     }
     .sk-before-after .sk-before-after-next {
-      right: -20px;
+      top: 50%;
+      right: clamp(12px, 3vw, 32px);
+      transform: translate(60%, -50%);
     }
   }
 
@@ -193,12 +180,12 @@
 <section class="sk-before-after" data-section-id="{{ section.id }}">
   <div class="page-width">
     {% if section.settings.section_title != blank %}
-      <div class="sk-before-after__header">
-        <h2 class="sk-before-after__title">
+      <div class="sk-section-header sk-section-header--center">
+        <h1 class="sk-section-header__title">
           {{ section.settings.section_title }}
-        </h2>
+        </h1>
         {% if section.settings.section_subtitle != blank %}
-          <p class="sk-before-after__subtitle">
+          <p class="sk-section-header__subtitle">
             {{ section.settings.section_subtitle }}
           </p>
         {% endif %}
@@ -403,7 +390,7 @@
   ],
   "presets": [
     {
-      "name": "SK Before / After"
+      "name": "SK Before/After"
     }
   ]
 }
