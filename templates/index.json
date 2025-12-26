@@ -213,6 +213,17 @@
             "testimonial_text": "Etter noen ukers bruk føles huden jevnere, og pigmentflekkene er blitt merkbart mindre synnlige"
           }
         },
+        "testimonial_wanmk4": {
+          "type": "testimonial",
+          "disabled": true,
+          "settings": {
+            "before_image": "shopify://shop_images/New_Project.webp",
+            "testimonial_title": "Even out skin tone",
+            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
+            "show_verified": true,
+            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+          }
+        },
         "testimonial_4YHa8c": {
           "type": "testimonial",
           "disabled": true,
@@ -226,24 +237,12 @@
         },
         "testimonial_XiMBAy": {
           "type": "testimonial",
-          "disabled": true,
           "settings": {
             "before_image": "shopify://shop_images/kunde_panne.webp",
             "testimonial_title": "Fine linjer ble mindre synlig",
             "author_name": "Anne Grete H. | Verified Buyer",
             "show_verified": true,
             "testimonial_text": "Huden føles friskere, og fine linjer fremstår mindre synlige"
-          }
-        },
-        "testimonial_wanmk4": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "before_image": "shopify://shop_images/New_Project.webp",
-            "testimonial_title": "Even out skin tone",
-            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
-            "show_verified": true,
-            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
         },
         "testimonial_EbbgMm": {
@@ -269,9 +268,9 @@
       },
       "block_order": [
         "testimonial_M9yDjh",
+        "testimonial_wanmk4",
         "testimonial_4YHa8c",
         "testimonial_XiMBAy",
-        "testimonial_wanmk4",
         "testimonial_EbbgMm",
         "testimonial_rWEGVc"
       ],
