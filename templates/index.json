@@ -206,7 +206,7 @@
         "testimonial_M9yDjh": {
           "type": "testimonial",
           "settings": {
-            "before_image": "shopify://shop_images/pigment_flekker_kunde.webp",
+            "before_image": "shopify://shop_images/New_Project.webp",
             "testimonial_title": "Huden min ble jevnere og freshere",
             "author_name": "Wenche S., etter 8 uker av regelmessig bruk | Verified Buyer",
             "show_verified": true,
@@ -239,7 +239,7 @@
           "type": "testimonial",
           "disabled": true,
           "settings": {
-            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
+            "before_image": "shopify://shop_images/New_Project.webp",
             "testimonial_title": "Even out skin tone",
             "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
             "show_verified": true,
