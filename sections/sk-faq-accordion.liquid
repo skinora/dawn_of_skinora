@@ -1,35 +1,18 @@
 <style>
   .sk-faq-accordion {
-    background: linear-gradient(to bottom, #695686, #070707);
-    color: #ffffff;
+    background: var(--color-white);
+    color: var(--color-neutral-3);
     padding: 7rem 0;
   }
 
   .sk-faq-accordion__container {
-    display: flex;
-    align-items: center;
-    gap: 80px;
-    flex-wrap: wrap;
-  }
-
-  .sk-faq-accordion__image {
-    flex: 0 0 550px;
-  }
-
-  .sk-faq-accordion__image img {
-    width: 100%;
-    height: auto;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1rem;
   }
 
   .sk-faq-accordion__content {
-    flex: 0 0 590px;
-  }
-
-  .sk-faq-accordion__title {
-    color: inherit;
-    border-bottom: 1px solid currentColor;
-    padding-bottom: 14px;
-    margin-bottom: 16px;
+    width: 100%;
   }
 
   .sk-faq-accordion__accordion {
@@ -37,7 +20,7 @@
   }
 
   .sk-faq-accordion__item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid var(--color-border);
     margin-bottom: 0;
     background: transparent;
     border: none;
@@ -65,19 +48,19 @@
     border: none;
     font-size: var(--sk-font-size-medium);
     font-weight: 400;
-    color: #ffffff;
+    color: var(--color-neutral-3);
     line-height: 1.4;
     text-align: left;
     cursor: pointer;
     outline: none;
     box-shadow: none;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.2);
   }
 
   .sk-faq-accordion__button:hover,
   .sk-faq-accordion__button:focus {
     background: transparent;
-    color: #ffffff;
+    color: var(--color-neutral-3);
     box-shadow: none;
     /* border: none; */
   }
@@ -104,7 +87,7 @@
     font-size: calc(var(--sk-faq-icon-size) * 0.8);
     font-weight: 400;
     line-height: 1;
-    color: #ffffff;
+    color: var(--color-neutral-4);
   }
 
   .sk-faq-accordion__icon::before {
@@ -137,16 +120,8 @@
   .sk-faq-accordion__answer {
     font-size: var(--sk-font-size-medium);
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--color-neutral-3);
     margin: 0;
-  }
-
-  .sk-faq-accordion__answer p {
-    margin: 0 0 15px;
-  }
-
-  .sk-faq-accordion__answer p:last-child {
-    margin-bottom: 0;
   }
 
   /* Mobile Responsive */
@@ -156,7 +131,7 @@
   }
 
   .accordion-button:not(.collapsed) {
-    color: #fff !important;
+    color: var(--color-neutral-3) !important;
     background-color: transparent !important;
     box-shadow: none !important;
     border: none !important;
@@ -289,17 +264,6 @@
 {
   "name": "SK FAQ Accordion",
   "settings": [
-    {
-      "type": "image_picker",
-      "id": "faq_image",
-      "label": "FAQ Image"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Section Title",
-      "default": "Alt Du Lurte På Om Skinora Radiance"
-    },
     {
       "type": "checkbox",
       "id": "open_first_item",
