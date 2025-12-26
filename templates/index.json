@@ -228,11 +228,11 @@
           "type": "testimonial",
           "disabled": true,
           "settings": {
-            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
-            "testimonial_title": "Even out skin tone",
-            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
+            "before_image": "shopify://shop_images/kunde_panne.webp",
+            "testimonial_title": "Fine linjer ble mindre synlig",
+            "author_name": "Anne Grete H. | Verified Buyer",
             "show_verified": true,
-            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+            "testimonial_text": "Huden føles friskere, og fine linjer fremstår mindre synlige"
           }
         },
         "testimonial_wanmk4": {
