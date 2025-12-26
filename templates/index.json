@@ -249,11 +249,11 @@
         "testimonial_EbbgMm": {
           "type": "testimonial",
           "settings": {
-            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e.png",
-            "testimonial_title": "Even out skin tone",
-            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
+            "before_image": "shopify://shop_images/kundebildet.webp",
+            "testimonial_title": "Synlig roligere hud",
+            "author_name": "Jannike H. | Verified Buyer",
             "show_verified": true,
-            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
+            "testimonial_text": "Huden føles mer  jevn, og de mørke ringene under øynene er mindre"
           }
         },
         "testimonial_rWEGVc": {
@@ -279,6 +279,15 @@
       "settings": {
         "section_title": "Synlige resultater – dokumentert av ekte brukere",
         "section_subtitle": "Resultater etter jevn bruk"
+      }
+    },
+    "sk_product_why_choose_z3eKLG": {
+      "type": "sk-product-why-choose",
+      "name": "SK Product – Why Choose",
+      "settings": {
+        "layout_image_width": 45,
+        "layout_text_width": 45,
+        "layout_gap": 10
       }
     },
     "sk_radiance_meq7Gb": {
@@ -389,6 +398,7 @@
     "sk_product_listing_dYMpyE",
     "sk_features_pHkfMf",
     "sk_before_after_HqFkek",
+    "sk_product_why_choose_z3eKLG",
     "sk_radiance_meq7Gb",
     "sk_product_technology_Vm78GM",
     "sk_faq_accordion_GcMDDq"
