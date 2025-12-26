@@ -245,16 +245,6 @@
             "testimonial_text": "Huden føles friskere, og fine linjer fremstår mindre synlige"
           }
         },
-        "testimonial_EbbgMm": {
-          "type": "testimonial",
-          "settings": {
-            "before_image": "shopify://shop_images/kundebildet.webp",
-            "testimonial_title": "Mørke ringer ble mindre",
-            "author_name": "Jannike H. | Verified Buyer",
-            "show_verified": true,
-            "testimonial_text": "Huden føles mer  jevn, og de mørke ringene under øynene er mindre"
-          }
-        },
         "testimonial_rWEGVc": {
           "type": "testimonial",
           "settings": {
@@ -264,6 +254,16 @@
             "show_verified": true,
             "testimonial_text": "Huden føles mindre irritert, og utbruddene har roet seg"
           }
+        },
+        "testimonial_EbbgMm": {
+          "type": "testimonial",
+          "settings": {
+            "before_image": "shopify://shop_images/kundebildet.webp",
+            "testimonial_title": "Mørke ringer ble mindre",
+            "author_name": "Jannike H. | Verified Buyer",
+            "show_verified": true,
+            "testimonial_text": "Huden føles mer  jevn, og de mørke ringene under øynene er mindre"
+          }
         }
       },
       "block_order": [
@@ -271,8 +271,8 @@
         "testimonial_wanmk4",
         "testimonial_4YHa8c",
         "testimonial_XiMBAy",
-        "testimonial_EbbgMm",
-        "testimonial_rWEGVc"
+        "testimonial_rWEGVc",
+        "testimonial_EbbgMm"
       ],
       "name": "SK Before/After Section",
       "settings": {
