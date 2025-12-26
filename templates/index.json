@@ -206,7 +206,7 @@
         "testimonial_M9yDjh": {
           "type": "testimonial",
           "settings": {
-            "before_image": "shopify://shop_images/pigment_flekker_kunde.png",
+            "before_image": "shopify://shop_images/pigment_flekker_kunde.webp",
             "testimonial_title": "Even out skin tone",
             "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
             "show_verified": true,
