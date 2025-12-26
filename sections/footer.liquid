@@ -203,7 +203,7 @@
         {%- assign footer_menu = linklists[section.settings.footer_menu] -%}
         {%- for parent_link in footer_menu.links limit: 3 -%}
           <div class="footer__column footer__column--menu">
-            <a href="{{ parent_link.url }}" class="footer__menu-heading">{{ parent_link.title | escape }}</a>
+            <h3 class="footer__menu-heading">{{ parent_link.title | escape }}</h3>
             {%- if parent_link.links != blank -%}
               <ul class="footer__menu-list list-unstyled">
                 {%- for child_link in parent_link.links -%}

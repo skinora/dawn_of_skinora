@@ -19,6 +19,10 @@
   margin-bottom: 3rem;
 }
 
+.footer__main-columns.scroll-trigger.animate--slide-in {
+  gap: 4rem;
+}
+
 .footer__column {
   flex: 1;
   min-width: 250px;
@@ -120,9 +124,10 @@
   padding-bottom: 5px;
 }
 
-.footer__menu-link:hover {
-  color: var(--color-footer-accent, #cdb7ed);
-  border-bottom: 1px solid var(--color-footer-accent, #cdb7ed);
+.footer__menu-link:hover,
+.footer__menu-link:focus-visible {
+  color: var(--color-brand, #30273e);
+  border-bottom: 1px solid var(--color-brand, #30273e);
 }
 
 @media screen and (max-width: 749px) {
@@ -826,9 +831,9 @@ p.newsletter-subtext {
   margin-bottom: 25px;
 }
 
-footer .footer-top_section-content h2,
-footer .newsletter-subtext {
-  color: #30273e !important; /* Brand-lilla */
+footer .footer-top_section-content h1,
+footer .footer-top_section-content h2 {
+  color: var(--color-neutral-3) !important;
 }
 
 footer .newsletter-subtext {
