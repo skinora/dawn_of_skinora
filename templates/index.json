@@ -203,6 +203,16 @@
     "sk_before_after_HqFkek": {
       "type": "sk-before-after",
       "blocks": {
+        "testimonial_M9yDjh": {
+          "type": "testimonial",
+          "settings": {
+            "before_image": "shopify://shop_images/pigment_flekker_kunde.png",
+            "testimonial_title": "Even out skin tone",
+            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
+            "show_verified": true,
+            "testimonial_text": "I’ve seen a real improvement in my sun spots and pigmentation."
+          }
+        },
         "testimonial_4YHa8c": {
           "type": "testimonial",
           "disabled": true,
@@ -258,6 +268,7 @@
         }
       },
       "block_order": [
+        "testimonial_M9yDjh",
         "testimonial_4YHa8c",
         "testimonial_XiMBAy",
         "testimonial_wanmk4",
