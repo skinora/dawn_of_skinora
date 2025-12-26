@@ -235,16 +235,6 @@
             "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
           }
         },
-        "testimonial_XiMBAy": {
-          "type": "testimonial",
-          "settings": {
-            "before_image": "shopify://shop_images/kunde_panne.webp",
-            "testimonial_title": "Fine linjer ble mindre synlig",
-            "author_name": "Anne Grete H. | Verified Buyer",
-            "show_verified": true,
-            "testimonial_text": "Huden føles friskere, og fine linjer fremstår mindre synlige"
-          }
-        },
         "testimonial_rWEGVc": {
           "type": "testimonial",
           "settings": {
@@ -253,6 +243,16 @@
             "author_name": "Maria A. | Verified Buyer",
             "show_verified": true,
             "testimonial_text": "Huden føles mindre irritert, og utbruddene har roet seg"
+          }
+        },
+        "testimonial_XiMBAy": {
+          "type": "testimonial",
+          "settings": {
+            "before_image": "shopify://shop_images/kunde_panne.webp",
+            "testimonial_title": "Fine linjer ble mindre synlig",
+            "author_name": "Anne Grete H. | Verified Buyer",
+            "show_verified": true,
+            "testimonial_text": "Huden føles friskere, og fine linjer fremstår mindre synlige"
           }
         },
         "testimonial_EbbgMm": {
@@ -270,8 +270,8 @@
         "testimonial_M9yDjh",
         "testimonial_wanmk4",
         "testimonial_4YHa8c",
-        "testimonial_XiMBAy",
         "testimonial_rWEGVc",
+        "testimonial_XiMBAy",
         "testimonial_EbbgMm"
       ],
       "name": "SK Before/After Section",
