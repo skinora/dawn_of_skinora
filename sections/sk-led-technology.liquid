@@ -1,0 +1,240 @@
+<style>
+  .sk-led-technology {
+    background-color: #f8f7f5;
+    color: var(--color-neutral-4);
+    padding: clamp(4rem, 6vw, 6rem) 0;
+  }
+
+  .sk-led-technology__content {
+    max-width: 920px;
+    margin: 0 auto 3rem;
+    text-align: center;
+    padding: 0 1.25rem;
+  }
+
+  .sk-led-technology__title {
+    font-size: clamp(2.6rem, 3.3vw, 3.6rem);
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+    color: var(--color-neutral-4);
+  }
+
+  .sk-led-technology__intro {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: rgba(var(--color-foreground), 0.85);
+    max-width: 64rem;
+    margin: 0 auto;
+  }
+
+  .sk-led-technology__icons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    margin: 3rem auto 4rem;
+    max-width: 900px;
+  }
+
+  .sk-led-technology__icon-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+    padding: 1rem 1.25rem;
+  }
+
+  .sk-led-technology__icon {
+    width: 54px;
+    height: 54px;
+    border: 1px solid rgba(var(--color-foreground), 0.35);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-neutral-3);
+  }
+
+  .sk-led-technology__icon svg {
+    width: 28px;
+    height: 28px;
+    stroke-width: 1.5;
+    stroke: currentColor;
+    fill: none;
+  }
+
+  .sk-led-technology__icon-label {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .sk-led-technology__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.75rem;
+    max-width: 1100px;
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+  }
+
+  .sk-led-technology__card {
+    background-color: var(--color-white);
+    border: 1px solid rgba(var(--color-foreground), 0.15);
+    border-radius: var(--popup-corner-radius);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    min-height: 220px;
+    box-shadow: 0 15px 30px rgba(var(--color-shadow), 0.05);
+  }
+
+  .sk-led-technology__card-title {
+    font-size: 1.55rem;
+    color: var(--color-neutral-4);
+    margin: 0;
+  }
+
+  .sk-led-technology__card-body {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(var(--color-foreground), 0.75);
+    flex: 1;
+  }
+
+  .sk-led-technology__card-link {
+    font-size: 0.95rem;
+    color: var(--color-brand);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-transform: none;
+  }
+
+  .sk-led-technology__callout {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 1.5rem 1.75rem;
+    border: 1px solid rgba(var(--color-foreground), 0.18);
+    border-radius: var(--popup-corner-radius);
+    background: #fcfbf9;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  .sk-led-technology__callout-label {
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: var(--color-neutral-5);
+  }
+
+  .sk-led-technology__callout-subtext {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgba(var(--color-foreground), 0.78);
+  }
+
+  @media (max-width: 640px) {
+    .sk-led-technology__card {
+      padding: 1.25rem;
+    }
+
+    .sk-led-technology__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .sk-led-technology__icons {
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+  }
+</style>
+
+<section class="sk-led-technology">
+  <div class="page-width">
+    <div class="sk-led-technology__content">
+      <h2 class="sk-led-technology__title">LED-teknologi tilpasset hudens egne prosesser</h2>
+      <p class="sk-led-technology__intro">
+        Skinora benytter presise LED-bølgelengder som samhandler med hudens celler. Lyset stimulerer mitokondriene –
+        cellenes energisentre – og støtter hudens evne til å fornye, styrke og balansere seg selv over tid.
+      </p>
+    </div>
+
+    <div class="sk-led-technology__icons" aria-label="LED technology benefits">
+      <div class="sk-led-technology__icon-card">
+        <span class="sk-led-technology__icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48">
+            <path d="M12 28c0-8 8-16 16-16s16 8 16 16c0 8-16 16-16 16S12 36 12 28z" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M24 12v32M12 24h24" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="sk-led-technology__icon-label">Stimulerer kollagen og elastin</span>
+      </div>
+      <div class="sk-led-technology__icon-card">
+        <span class="sk-led-technology__icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="10" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M24 4v8M24 36v8M4 24h8M36 24h8" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="sk-led-technology__icon-label">Styrker hudbarrieren</span>
+      </div>
+      <div class="sk-led-technology__icon-card">
+        <span class="sk-led-technology__icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48">
+            <path d="M12 28c3-6 9-10 12-10s9 4 12 10" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M24 20v20" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="sk-led-technology__icon-label">Bidrar til roligere, mer balansert hud</span>
+      </div>
+    </div>
+
+    <div class="sk-led-technology__grid">
+      <article class="sk-led-technology__card">
+        <h3 class="sk-led-technology__card-title">Skinora Radiance Face</h3>
+        <p class="sk-led-technology__card-body">
+          Rødt + nær-infrarødt LED-lys for dypere stimulering av hudens struktur og celleaktivitet.
+        </p>
+        <a class="sk-led-technology__card-link" href="#">Les mer</a>
+      </article>
+      <article class="sk-led-technology__card">
+        <h3 class="sk-led-technology__card-title">Skinora Radiance Neck</h3>
+        <p class="sk-led-technology__card-body">
+          Tilpassede LED-bølgelengder utviklet for elastisitet, barriere og struktur i halsområdet.
+        </p>
+      </article>
+      <article class="sk-led-technology__card">
+        <h3 class="sk-led-technology__card-title">Skinora Clear</h3>
+        <p class="sk-led-technology__card-body">
+          Blått LED-lys som reduserer aknebakterier og støtter hudens naturlige balanse.
+        </p>
+      </article>
+    </div>
+
+    <div class="sk-led-technology__callout">
+      <span class="sk-led-technology__callout-label">1072 nm nær-infrarødt lys</span>
+      <span class="sk-led-technology__callout-subtext">
+        Eksklusiv teknologi i Skinora Radiance Face – utviklet for dypere hudstimulering enn tradisjonelt rødt LED-lys.
+      </span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SK LED Technology",
+  "settings": [],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "LED Technology",
+      "category": "SK Sections"
+    }
+  ]
+}
+{% endschema %}
