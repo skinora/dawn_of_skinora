@@ -3,6 +3,7 @@
     background-color: var(--color-white);
     color: var(--color-neutral-4);
     --sk-led-area-gap: clamp(2.5rem, 4vw, 3.8rem);
+    --sk-led-card-icon-radius: clamp(0.35rem, 1vw, 0.75rem);
     padding: clamp(4rem, 6vw, 6rem) 0;
   }
 
@@ -73,8 +74,9 @@
     --sk-led-card-available: max(0px, calc(100% - (2 * var(--sk-led-card-padding-inline)) - var(--sk-led-card-gap)));
     display: flex;
     overflow-x: auto;
+    overflow-y: visible;
     gap: var(--sk-led-card-gap);
-    padding: 0 var(--sk-led-card-padding-inline) var(--sk-led-card-bottom-padding);
+    padding: clamp(0.75rem, 1.5vw, 1rem) var(--sk-led-card-padding-inline) var(--sk-led-card-bottom-padding);
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x;
@@ -151,7 +153,7 @@
     align-self: flex-start;
     display: block;
     overflow: hidden;
-    border-radius: var(--popup-corner-radius);
+    border-radius: var(--sk-led-card-icon-radius);
   }
 
   .sk-led-technology__card-icon img {
@@ -159,6 +161,7 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    border-radius: var(--sk-led-card-icon-radius);
   }
 
   .sk-led-technology__card-badge {
@@ -350,8 +353,10 @@
 
     .sk-led-technology__card-track {
       overflow-x: auto;
+      overflow-y: visible;
       --sk-led-card-padding-inline: clamp(0.75rem, 2vw, 1.25rem);
       --sk-led-card-gap: clamp(0.6rem, 1.5vw, 0.9rem);
+      padding-top: clamp(0.75rem, 1.6vw, 1.1rem);
       padding-inline: var(--sk-led-card-padding-inline);
       gap: var(--sk-led-card-gap);
     }
@@ -495,21 +500,7 @@
       </div>
     </div>
 
-    <div class="sk-led-technology__callout">
-      <span class="sk-led-technology__callout-title">{{ section.settings.callout_title }}</span>
-      <p>
-        {{ section.settings.callout_body }}
-      </p>
-      <a class="sk-led-technology__callout-link" href="{{ section.settings.callout_link_url }}">
-        {{- section.settings.callout_link_text -}}
-      </a>
-    </div>
-
-    <div class="sk-led-technology__cta">
-      <p class="sk-led-technology__cta-text">{{ section.settings.cta_text }}</p>
-      <button class="sk-led-technology__cta-button" type="button">{{ section.settings.cta_button_text }}</button>
-    </div>
-  </div>
+   
 </section>
 
 <script>
@@ -758,21 +749,10 @@
       "default": "1072 nm nær-infrarødt lys"
     },
     {
-      "type": "textarea",
-      "id": "callout_body",
-      "label": "Callout body",
-      "default": "Eksklusiv teknologi i Skinora Radiance Face – utviklet for dypere hudstimulering enn tradisjonelt rødt LED-lys."
-    },
-    {
       "type": "text",
       "id": "callout_link_text",
       "label": "Callout link text",
       "default": "Les om teknologien"
-    },
-    {
-      "type": "url",
-      "id": "callout_link_url",
-      "label": "Callout link URL"
     },
     {
       "type": "text",
