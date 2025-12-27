@@ -14,7 +14,7 @@
       "name": "SK Dynamic Banner",
       "settings": {
         "sk_banner_img_desktop": "shopify://shop_images/ChatGPT_Image_Sep_29_2025_10_14_47_AM.webp",
-        "sk_banner_title": "Profesjonelle resultater uten klinikken",
+        "sk_banner_title": "Profesjonell LED-terapi hjemme – dokumentert effekt på rynker, akne og rødhet",
         "sk_banner_description": "Dokumentert LED-teknologi som støtter hudens naturlige prosesser – for synlig glød, jevnhet og ro",
         "sk_banner_button_link": "shopify://collections/all-products",
         "sk_banner_button_text": "få huden til å stråle"
@@ -373,8 +373,6 @@
       ],
       "name": "SK FAQ Accordion",
       "settings": {
-        "faq_image": "shopify://shop_images/Image_3.png",
-        "title": "Alt Du Lurte På Om Skinora LED-masker",
         "open_first_item": false,
         "faq_link": "",
         "background_color": "#3a3052",
