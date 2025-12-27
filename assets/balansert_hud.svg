@@ -1,0 +1,26 @@
+<svg width="48" height="36" viewBox="0 0 48 36" fill="none"
+    xmlns="http://www.w3.org/2000/svg" aria-label="Calm balanced skin icon">
+
+    <!-- Top stabilizing line -->
+    <path d="M6 10 L42 10"
+        stroke="#30273E"
+        stroke-width="0.75"
+        stroke-linecap="round"
+        opacity="0.7" />
+
+    <!-- Central symmetric sinusoidal wave -->
+    <path d="M6 18
+           C14 12, 18 12, 24 18
+           C30 24, 34 24, 42 18"
+        stroke="#52436C"
+        stroke-width="0.75"
+        fill="none"
+        stroke-linecap="round" />
+
+    <!-- Bottom stabilizing line -->
+    <path d="M6 26 L42 26"
+        stroke="#634E85"
+        stroke-width="0.75"
+        stroke-linecap="round"
+        opacity="0.7" />
+</svg>

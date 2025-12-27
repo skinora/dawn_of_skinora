@@ -230,11 +230,10 @@
     <div class="sk-led-technology__content">
       <div class="sk-section-header sk-section-header--center">
         <h2 class="sk-section-heading sk-section-heading--h1 sk-section-header__title">
-          LED-teknologi tilpasset hudens egne prosesser
+          {{ section.settings.heading_text }}
         </h2>
         <p class="sk-section-header__subtitle sk-copy-lead">
-          Skinora benytter presise LED-bølgelengder som samhandler med hudens celler. Lyset stimulerer mitokondriene –
-          cellenes energisentre – og støtter hudens evne til å fornye, styrke og balansere seg selv over tid.
+          {{ section.settings.subtitle_text }}
         </p>
       </div>
     </div>
@@ -242,45 +241,60 @@
     <div class="sk-led-technology__benefits">
       <div class="sk-led-technology__benefit">
         <span class="sk-led-technology__benefit-icon" aria-hidden="true">
-          <img src="{{ 'collagen_elastin.svg' | asset_url }}" alt="Collagen and elastin icon" width="20" height="20">
+          <img
+            src="{{ 'collagen_elastin.svg' | asset_url }}"
+            alt="{{ section.settings.benefit_one_alt }}"
+            width="52"
+            height="52"
+          >
         </span>
-        <p class="sk-led-technology__benefit-text">Stimulerer kollagen og elastin</p>
+        <p class="sk-led-technology__benefit-text">{{ section.settings.benefit_one_text }}</p>
       </div>
       <div class="sk-led-technology__benefit">
         <span class="sk-led-technology__benefit-icon" aria-hidden="true">
-          <img src="{{ 'skin_barrier.svg' | asset_url }}" alt="Skin barrier icon">
+          <img
+            src="{{ 'skin_barrier.svg' | asset_url }}"
+            alt="{{ section.settings.benefit_two_alt }}"
+            width="52"
+            height="52"
+          >
         </span>
-        <p class="sk-led-technology__benefit-text">Styrker hudbarrieren</p>
+        <p class="sk-led-technology__benefit-text">{{ section.settings.benefit_two_text }}</p>
       </div>
       <div class="sk-led-technology__benefit">
         <span class="sk-led-technology__benefit-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M6 18l6-12 6 12" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
+          <img
+            src="{{ 'balansert_hud.svg' | asset_url }}"
+            alt="{{ section.settings.benefit_three_alt }}"
+            width="52"
+            height="52"
+          >
         </span>
-        <p class="sk-led-technology__benefit-text">Bidrar til roligere, mer balansert hud</p>
+        <p class="sk-led-technology__benefit-text">{{ section.settings.benefit_three_text }}</p>
       </div>
     </div>
 
-    <div class="sk-led-technology__cards" aria-label="Skinora technology cards">
+    <div class="sk-led-technology__cards" aria-label="{{ section.settings.cards_aria_label }}">
       <div class="sk-led-technology__card-track">
         <article class="sk-led-technology__card">
-          <h3 class="sk-led-technology__card-title">Skinora Radiance Face</h3>
+          <h3 class="sk-led-technology__card-title">{{ section.settings.card_one_title }}</h3>
           <p class="sk-led-technology__card-body">
-            Rødt + nær-infrarødt LED-lys for dypere stimulering av hudens struktur og celleaktivitet.
+            {{ section.settings.card_one_body }}
           </p>
-          <a class="sk-led-technology__card-link" href="#">Les mer</a>
+          <a class="sk-led-technology__card-link" href="{{ section.settings.card_one_link_url }}">
+            {{ section.settings.card_one_link_text }}
+          </a>
         </article>
         <article class="sk-led-technology__card">
-          <h3 class="sk-led-technology__card-title">Skinora Radiance Neck</h3>
+          <h3 class="sk-led-technology__card-title">{{ section.settings.card_two_title }}</h3>
           <p class="sk-led-technology__card-body">
-            Tilpassede LED-bølgelengder utviklet for elastisitet, barriere og struktur i halsområdet.
+            {{ section.settings.card_two_body }}
           </p>
         </article>
         <article class="sk-led-technology__card">
-          <h3 class="sk-led-technology__card-title">Skinora Clear</h3>
+          <h3 class="sk-led-technology__card-title">{{ section.settings.card_three_title }}</h3>
           <p class="sk-led-technology__card-body">
-            Blått LED-lys som reduserer aknebakterier og støtter hudens naturlige balanse.
+            {{ section.settings.card_three_body }}
           </p>
         </article>
       </div>
@@ -292,16 +306,18 @@
     </div>
 
     <div class="sk-led-technology__callout">
-      <span class="sk-led-technology__callout-title">1072 nm nær-infrarødt lys</span>
+      <span class="sk-led-technology__callout-title">{{ section.settings.callout_title }}</span>
       <p>
-        Eksklusiv teknologi i Skinora Radiance Face – utviklet for dypere hudstimulering enn tradisjonelt rødt LED-lys.
+        {{ section.settings.callout_body }}
       </p>
-      <a class="sk-led-technology__callout-link" href="#">Les om teknologien</a>
+      <a class="sk-led-technology__callout-link" href="{{ section.settings.callout_link_url }}">
+        {{- section.settings.callout_link_text -}}
+      </a>
     </div>
 
     <div class="sk-led-technology__cta">
-      <p class="sk-led-technology__cta-text">Usikker på hvilken maske som passer deg?</p>
-      <button class="sk-led-technology__cta-button" type="button">Ta maskeguiden</button>
+      <p class="sk-led-technology__cta-text">{{ section.settings.cta_text }}</p>
+      <button class="sk-led-technology__cta-button" type="button">{{ section.settings.cta_button_text }}</button>
     </div>
   </div>
 </section>
@@ -309,7 +325,146 @@
 {% schema %}
 {
   "name": "SK LED Technology",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Section heading",
+      "default": "LED-teknologi tilpasset hudens egne prosesser"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle_text",
+      "label": "Section subtitle",
+      "default": "Skinora benytter presise LED-bølgelengder som samhandler med hudens celler. Lyset stimulerer mitokondriene – cellenes energisentre – og støtter hudens evne til å fornye, styrke og balansere seg selv over tid."
+    },
+    {
+      "type": "text",
+      "id": "benefit_one_text",
+      "label": "Benefit 1 copy",
+      "default": "Stimulerer kollagen og elastin"
+    },
+    {
+      "type": "text",
+      "id": "benefit_one_alt",
+      "label": "Benefit 1 icon alt",
+      "default": "Collagen and elastin icon"
+    },
+    {
+      "type": "text",
+      "id": "benefit_two_text",
+      "label": "Benefit 2 copy",
+      "default": "Styrker hudbarrieren"
+    },
+    {
+      "type": "text",
+      "id": "benefit_two_alt",
+      "label": "Benefit 2 icon alt",
+      "default": "Skin barrier icon"
+    },
+    {
+      "type": "text",
+      "id": "benefit_three_alt",
+      "label": "Benefit 3 icon alt",
+      "default": "Balansert hud icon"
+    },
+    {
+      "type": "text",
+      "id": "benefit_three_text",
+      "label": "Benefit 3 copy",
+      "default": "Bidrar til roligere, mer balansert hud"
+    },
+    {
+      "type": "text",
+      "id": "cards_aria_label",
+      "label": "Cards aria label",
+      "default": "Skinora technology cards"
+    },
+    {
+      "type": "text",
+      "id": "card_one_title",
+      "label": "Card 1 title",
+      "default": "Skinora Radiance Face"
+    },
+    {
+      "type": "textarea",
+      "id": "card_one_body",
+      "label": "Card 1 body",
+      "default": "Rødt + nær-infrarødt LED-lys for dypere stimulering av hudens struktur og celleaktivitet."
+    },
+    {
+      "type": "text",
+      "id": "card_one_link_text",
+      "label": "Card 1 link text",
+      "default": "Les mer"
+    },
+    {
+      "type": "url",
+      "id": "card_one_link_url",
+      "label": "Card 1 link URL",
+      "default": "#"
+    },
+    {
+      "type": "text",
+      "id": "card_two_title",
+      "label": "Card 2 title",
+      "default": "Skinora Radiance Neck"
+    },
+    {
+      "type": "textarea",
+      "id": "card_two_body",
+      "label": "Card 2 body",
+      "default": "Tilpassede LED-bølgelengder utviklet for elastisitet, barriere og struktur i halsområdet."
+    },
+    {
+      "type": "text",
+      "id": "card_three_title",
+      "label": "Card 3 title",
+      "default": "Skinora Clear"
+    },
+    {
+      "type": "textarea",
+      "id": "card_three_body",
+      "label": "Card 3 body",
+      "default": "Blått LED-lys som reduserer aknebakterier og støtter hudens naturlige balanse."
+    },
+    {
+      "type": "text",
+      "id": "callout_title",
+      "label": "Callout title",
+      "default": "1072 nm nær-infrarødt lys"
+    },
+    {
+      "type": "textarea",
+      "id": "callout_body",
+      "label": "Callout body",
+      "default": "Eksklusiv teknologi i Skinora Radiance Face – utviklet for dypere hudstimulering enn tradisjonelt rødt LED-lys."
+    },
+    {
+      "type": "text",
+      "id": "callout_link_text",
+      "label": "Callout link text",
+      "default": "Les om teknologien"
+    },
+    {
+      "type": "url",
+      "id": "callout_link_url",
+      "label": "Callout link URL",
+      "default": "#"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Usikker på hvilken maske som passer deg?"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_text",
+      "label": "CTA button text",
+      "default": "Ta maskeguiden"
+    }
+  ],
   "blocks": [],
   "presets": [
     {
