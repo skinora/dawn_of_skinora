@@ -165,9 +165,7 @@
       "name": "SK Product Listing",
       "settings": {
         "section_title": "Finn Skinora® LED-maske tilpasset dine hudbehov",
-        "section_subtitle": "Tre modeller. Ulike lysbølgelengder. Samme dokumenterte hudforbedring",
-        "show_card_badge": false,
-        "card_badge_text": "LIMITED EDITION"
+        "section_subtitle": "Tre modeller. Ulike lysbølgelengder. Samme dokumenterte hudforbedring"
       }
     },
     "sk_before_after_HqFkek": {
@@ -269,16 +267,24 @@
         "card_one_icon_alt": "Skinora® Radiance Face icon",
         "card_one_link_text": "Les mer",
         "card_one_link_url": "",
+        "card_one_show_badge": true,
         "card_two_title": "Skinora® Radiance Neck",
         "card_two_body": "Tilpassede LED-bølgelengder utviklet for elastisitet, barriere og struktur i halsområdet.",
         "card_two_icon_alt": "Skinora Radiance Neck icon",
         "card_two_link_text": "Les mer",
         "card_two_link_url": "",
+        "card_two_show_badge": true,
         "card_three_title": "Skinora Clear",
         "card_three_body": "Blått LED-lys som reduserer aknebakterier og støtter hudens naturlige balanse.",
         "card_three_icon_alt": "Skinora Clear icon",
         "card_three_link_text": "Les mer",
         "card_three_link_url": "",
+        "card_three_show_badge": false,
+        "show_card_badge": false,
+        "card_badge_text": "LIMITED EDITION",
+        "card_one_badge_text": "1072 NM",
+        "card_two_badge_text": "1072 NM",
+        "card_three_badge_text": "1072 NM",
         "callout_title": "1072 nm nær-infrarødt lys",
         "callout_body": "Eksklusiv teknologi i Skinora Radiance Face – utviklet for dypere hudstimulering enn tradisjonelt rødt LED-lys.",
         "callout_link_text": "Les om teknologien",
