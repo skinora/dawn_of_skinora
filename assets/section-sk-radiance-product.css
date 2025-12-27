@@ -662,6 +662,14 @@
     min-width: auto;
   }
 }
+  body.cart-drawer-open .sk-radiance-sticky-bottom-bar,
+  body.cart-drawer-open .sk-radiance-sticky-bottom-bar--portal {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(100%) !important;
+  }
+
 @media screen and (min-width: 750px) and (max-width: 989px) {
   .sk-radiance-sticky-bottom-bar__product-name {
     font-size: var(--sk-font-size-medium);

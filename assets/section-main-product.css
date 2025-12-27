@@ -27,6 +27,12 @@ product-info {
     z-index: 2;
   }
 
+  body.cart-drawer-open .product__column-sticky {
+    position: static;
+    top: auto;
+    z-index: auto;
+  }
+
   .product--thumbnail .thumbnail-list {
     padding-right: var(--media-shadow-horizontal-offset);
   }
