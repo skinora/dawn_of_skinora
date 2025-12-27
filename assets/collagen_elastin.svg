@@ -6,7 +6,7 @@
            C8 4, 16 4, 24 12
            C32 20, 40 20, 48 12"
         stroke="#30273E"
-        stroke-width="3"
+        stroke-width="0.75"
         fill="none"
         stroke-linecap="round" />
 
@@ -15,7 +15,7 @@
            C8 20, 16 20, 24 12
            C32 4, 40 4, 48 12"
         stroke="#52436C"
-        stroke-width="3"
+        stroke-width="0.75"
         fill="none"
         stroke-linecap="round" />
 
@@ -24,7 +24,7 @@
            C12 8, 12 16, 24 12
            C36 8, 36 16, 48 12"
         stroke="#634E85"
-        stroke-width="3"
+        stroke-width="0.75"
         fill="none"
         stroke-linecap="round" />
 </svg>
