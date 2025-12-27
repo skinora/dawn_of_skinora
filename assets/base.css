@@ -3416,8 +3416,9 @@ details[open] > .header__submenu {
   animation-fill-mode: forwards;
   z-index: 1;
   background: var(--color-brand);
-  padding: 5px;
-  width: 220px;
+  padding: 0;
+  min-width: 260px;
+  width: auto;
 }
 
 @media (prefers-reduced-motion) {
@@ -3595,6 +3596,7 @@ details[open] > .header__menu-item .icon-caret {
 .header__submenu .header__menu-item {
   justify-content: space-between;
   padding: 0.8rem 2rem;
+  font-size: 1.35rem;
 }
 
 .header__submenu .header__menu-item:hover {
