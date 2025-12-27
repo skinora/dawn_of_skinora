@@ -91,6 +91,7 @@
   }
 
   .sk-led-technology__card {
+    position: relative;
     min-width: clamp(320px, var(--sk-led-card-available), 380px);
     width: min(var(--sk-led-card-available), 380px);
     flex: 0 0 auto;
@@ -157,6 +158,26 @@
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  .sk-led-technology__card-badge {
+    position: absolute;
+    top: clamp(0.6rem, 1vw, 0.95rem);
+    right: clamp(0.6rem, 1vw, 0.95rem);
+    padding: 0.35rem 1rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: clamp(1.8rem, 2vw, 2.2rem);
+    font-weight: 600;
+    background: var(--color-ink-dark);
+    color: var(--color-white);
+    box-shadow: 0 12px 20px rgba(15, 10, 30, 0.25);
+    z-index: 2;
+    opacity: 0.95;
+    pointer-events: none;
+    font-family: var(--font-secondary-family, 'Inter', sans-serif);
+    white-space: nowrap;
   }
 
   .sk-led-technology__pagination {
@@ -388,6 +409,18 @@
     <div class="sk-led-technology__cards" aria-label="{{ section.settings.cards_aria_label }}">
       <div class="sk-led-technology__card-track">
         <article class="sk-led-technology__card">
+          {% assign show_card_one_badge = section.settings.card_one_show_badge %}
+          {% if show_card_one_badge == false %}
+            {% assign show_card_one_badge = section.settings.show_card_badge %}
+          {% endif %}
+          {% if show_card_one_badge %}
+            {% assign card_one_badge_text = section.settings.card_one_badge_text
+              | default: section.settings.card_badge_text
+            %}
+            <span class="sk-led-technology__card-badge" aria-hidden="true">
+              {{ card_one_badge_text | escape }}
+            </span>
+          {% endif %}
           <h3 class="sk-led-technology__card-title">{{ section.settings.card_one_title }}</h3>
           <p class="sk-led-technology__card-body">
             {{ section.settings.card_one_body }}
@@ -409,6 +442,18 @@
           </a>
         </article>
         <article class="sk-led-technology__card">
+          {% assign show_card_two_badge = section.settings.card_two_show_badge %}
+          {% if show_card_two_badge == false %}
+            {% assign show_card_two_badge = section.settings.show_card_badge %}
+          {% endif %}
+          {% if show_card_two_badge %}
+            {% assign card_two_badge_text = section.settings.card_two_badge_text
+              | default: section.settings.card_badge_text
+            %}
+            <span class="sk-led-technology__card-badge" aria-hidden="true">
+              {{ card_two_badge_text | escape }}
+            </span>
+          {% endif %}
           <h3 class="sk-led-technology__card-title">{{ section.settings.card_two_title }}</h3>
           <p class="sk-led-technology__card-body">
             {{ section.settings.card_two_body }}
@@ -430,6 +475,18 @@
           </a>
         </article>
         <article class="sk-led-technology__card">
+          {% assign show_card_three_badge = section.settings.card_three_show_badge %}
+          {% if show_card_three_badge == false %}
+            {% assign show_card_three_badge = section.settings.show_card_badge %}
+          {% endif %}
+          {% if show_card_three_badge %}
+            {% assign card_three_badge_text = section.settings.card_three_badge_text
+              | default: section.settings.card_badge_text
+            %}
+            <span class="sk-led-technology__card-badge" aria-hidden="true">
+              {{ card_three_badge_text | escape }}
+            </span>
+          {% endif %}
           <h3 class="sk-led-technology__card-title">{{ section.settings.card_three_title }}</h3>
           <p class="sk-led-technology__card-body">
             {{ section.settings.card_three_body }}
@@ -611,6 +668,12 @@
       "label": "Card 1 link URL"
     },
     {
+      "type": "checkbox",
+      "id": "card_one_show_badge",
+      "label": "Show badge on card 1",
+      "default": false
+    },
+    {
       "type": "text",
       "id": "card_two_title",
       "label": "Card 2 title",
@@ -645,6 +708,12 @@
       "label": "Card 2 link URL"
     },
     {
+      "type": "checkbox",
+      "id": "card_two_show_badge",
+      "label": "Show badge on card 2",
+      "default": false
+    },
+    {
       "type": "text",
       "id": "card_three_title",
       "label": "Card 3 title",
@@ -677,6 +746,42 @@
       "type": "url",
       "id": "card_three_link_url",
       "label": "Card 3 link URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_three_show_badge",
+      "label": "Show badge on card 3",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_badge",
+      "label": "Show badge on cards",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "card_badge_text",
+      "label": "Badge text",
+      "default": "LIMITED EDITION"
+    },
+    {
+      "type": "text",
+      "id": "card_one_badge_text",
+      "label": "Card 1 badge text",
+      "default": "1072 NM"
+    },
+    {
+      "type": "text",
+      "id": "card_two_badge_text",
+      "label": "Card 2 badge text",
+      "default": "1072 NM"
+    },
+    {
+      "type": "text",
+      "id": "card_three_badge_text",
+      "label": "Card 3 badge text",
+      "default": "1072 NM"
     },
     {
       "type": "text",

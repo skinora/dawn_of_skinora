@@ -32,8 +32,7 @@
   }
 
   .sk-product-card {
-    position: relative;
-    text-align: left;
+    text-align: center;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -42,8 +41,6 @@
     max-width: 460px;
     margin: 0 auto;
     min-height: 0;
-    overflow: visible;
-    padding-top: 1rem;
   }
 
   .sk-product-card__image {
@@ -93,22 +90,27 @@
 
   .sk-product-card__badge {
     position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    padding: 0.35rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
     border-radius: 999px;
     text-transform: uppercase;
-    letter-spacing: 0.3em;
-    font-size: 0.7rem;
-    font-weight: 600;
-    background: var(--color-ink-dark);
+    letter-spacing: 0.35em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    top: -30px;
+    right: -20px;
+    padding: 0.75rem;
+    text-align: center;
+    background: var(--color-brand);
     color: var(--color-white);
-    box-shadow: 0 12px 20px rgba(15, 10, 30, 0.25);
+    box-shadow: 0 15px 25px rgba(15, 10, 30, 0.3);
     z-index: 2;
     opacity: 0.95;
     pointer-events: none;
     font-family: var(--font-secondary-family, 'Inter', sans-serif);
-    white-space: nowrap;
   }
 
   .sk-product-card__badge[data-badge-target='secondary'] {
@@ -305,18 +307,6 @@
             {% if product != blank %}
               {% assign hover_image = product.images[1] %}
               <div class="sk-product-card" {{ block.shopify_attributes }}>
-                {% assign badge_available = section.settings.show_card_badge %}
-                {% if block.settings.show_badge %}
-                  {% assign badge_available = true %}
-                {% endif %}
-                {% if badge_available %}
-                  <span
-                    class="sk-product-card__badge"
-                    data-badge-target="{{ block.settings.badge_image | default: 'primary' }}"
-                  >
-                    {{ block.settings.badge_text | default: section.settings.card_badge_text | escape }}
-                  </span>
-                {% endif %}
                 <a href="{{ product.url }}">
                   <div class="sk-product-card__image">
                     {% if product.featured_media %}
@@ -341,6 +331,14 @@
                       {% endif %}
                     {% else %}
                       <div class="sk-product-card__image-placeholder">No Image</div>
+                    {% endif %}
+                    {% if block.settings.show_badge %}
+                      <span
+                        class="sk-product-card__badge"
+                        data-badge-target="{{ block.settings.badge_image | default: 'primary' }}"
+                      >
+                        {{ block.settings.badge_text | default: 'LIMITED EDITION' | escape }}
+                      </span>
                     {% endif %}
                   </div>
                 </a>
@@ -464,18 +462,6 @@
       "id": "section_subtitle",
       "label": "Section Subtitle",
       "default": "OD3 komfortbriller inkludert – ekstra komfort, samme effekt."
-    },
-    {
-      "type": "checkbox",
-      "id": "show_card_badge",
-      "label": "Show badge on cards",
-      "default": false
-    },
-    {
-      "type": "text",
-      "id": "card_badge_text",
-      "label": "Badge text",
-      "default": "LIMITED EDITION"
     }
   ],
   "blocks": [
