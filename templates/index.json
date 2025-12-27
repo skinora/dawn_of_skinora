@@ -275,7 +275,7 @@
         "card_two_link_text": "Les mer",
         "card_two_link_url": "",
         "card_two_show_badge": true,
-        "card_three_title": "Skinora Clear",
+        "card_three_title": "Skinora® Clear",
         "card_three_body": "Blått LED-lys som reduserer aknebakterier og støtter hudens naturlige balanse.",
         "card_three_icon": "shopify://shop_images/Image_8.png",
         "card_three_icon_alt": "Skinora Clear icon",
@@ -286,9 +286,7 @@
         "card_two_badge_text": "1072 NM",
         "card_three_badge_text": "1072 NM",
         "callout_title": "1072 nm nær-infrarødt lys",
-        "callout_body": "Eksklusiv teknologi i Skinora Radiance Face – utviklet for dypere hudstimulering enn tradisjonelt rødt LED-lys.",
         "callout_link_text": "Les om teknologien",
-        "callout_link_url": "#",
         "cta_text": "Usikker på hvilken maske som passer deg?",
         "cta_button_text": "Ta maskeguiden"
       }
