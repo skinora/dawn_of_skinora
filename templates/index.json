@@ -120,86 +120,6 @@
         "sk_promotion_bgColor": "#ffffff"
       }
     },
-    "sk_product_listing_dYMpyE": {
-      "type": "sk-product-listing",
-      "blocks": {
-        "product_azBm9j": {
-          "type": "product",
-          "settings": {
-            "product": "skinora-radiance-face",
-            "show_description": true,
-            "button_text": "KJØP",
-            "show_badge": true,
-            "badge_text": "pakkerabatt",
-            "badge_image": "primary"
-          }
-        },
-        "product_Km3at8": {
-          "type": "product",
-          "settings": {
-            "product": "skinora-radiance-neck",
-            "show_description": true,
-            "button_text": "KJØP",
-            "show_badge": false,
-            "badge_text": "LIMITED EDITION",
-            "badge_image": "primary"
-          }
-        },
-        "product_fRgkE9": {
-          "type": "product",
-          "settings": {
-            "product": "skinora-clear",
-            "show_description": true,
-            "button_text": "KJØP",
-            "show_badge": false,
-            "badge_text": "LIMITED EDITION",
-            "badge_image": "primary"
-          }
-        }
-      },
-      "block_order": [
-        "product_azBm9j",
-        "product_Km3at8",
-        "product_fRgkE9"
-      ],
-      "name": "SK Product Listing",
-      "settings": {
-        "section_title": "Finn Skinora® LED-maske tilpasset dine hudbehov",
-        "section_subtitle": "Tre modeller. Ulike lysbølgelengder. Samme dokumenterte hudforbedring"
-      }
-    },
-    "sk_features_pHkfMf": {
-      "type": "sk-features",
-      "blocks": {
-        "card_kHQtcn": {
-          "type": "Card",
-          "settings": {
-            "sk_features_title": "30 dagers fornøydhetsgaranti"
-          }
-        },
-        "card_UCy7PJ": {
-          "type": "Card",
-          "settings": {
-            "sk_features_title": "Sendes fra vårt lager i Norge"
-          }
-        },
-        "card_XrpM6T": {
-          "type": "Card",
-          "settings": {
-            "sk_features_title": "Gratis frakt på alle bestillinger"
-          }
-        }
-      },
-      "block_order": [
-        "card_kHQtcn",
-        "card_UCy7PJ",
-        "card_XrpM6T"
-      ],
-      "name": "SK Features",
-      "settings": {
-        "heading": ""
-      }
-    },
     "sk_before_after_HqFkek": {
       "type": "sk-before-after",
       "blocks": {
@@ -278,6 +198,86 @@
       "settings": {
         "section_title": "Synlige resultater – dokumentert av ekte brukere",
         "section_subtitle": "Resultater etter jevn bruk"
+      }
+    },
+    "sk_product_listing_dYMpyE": {
+      "type": "sk-product-listing",
+      "blocks": {
+        "product_azBm9j": {
+          "type": "product",
+          "settings": {
+            "product": "skinora-radiance-face",
+            "show_description": true,
+            "button_text": "KJØP",
+            "show_badge": true,
+            "badge_text": "pakkerabatt",
+            "badge_image": "primary"
+          }
+        },
+        "product_Km3at8": {
+          "type": "product",
+          "settings": {
+            "product": "skinora-radiance-neck",
+            "show_description": true,
+            "button_text": "KJØP",
+            "show_badge": false,
+            "badge_text": "LIMITED EDITION",
+            "badge_image": "primary"
+          }
+        },
+        "product_fRgkE9": {
+          "type": "product",
+          "settings": {
+            "product": "skinora-clear",
+            "show_description": true,
+            "button_text": "KJØP",
+            "show_badge": false,
+            "badge_text": "LIMITED EDITION",
+            "badge_image": "primary"
+          }
+        }
+      },
+      "block_order": [
+        "product_azBm9j",
+        "product_Km3at8",
+        "product_fRgkE9"
+      ],
+      "name": "SK Product Listing",
+      "settings": {
+        "section_title": "Finn Skinora® LED-maske tilpasset dine hudbehov",
+        "section_subtitle": "Tre modeller. Ulike lysbølgelengder. Samme dokumenterte hudforbedring"
+      }
+    },
+    "sk_features_pHkfMf": {
+      "type": "sk-features",
+      "blocks": {
+        "card_kHQtcn": {
+          "type": "Card",
+          "settings": {
+            "sk_features_title": "30 dagers fornøydhetsgaranti"
+          }
+        },
+        "card_UCy7PJ": {
+          "type": "Card",
+          "settings": {
+            "sk_features_title": "Sendes fra vårt lager i Norge"
+          }
+        },
+        "card_XrpM6T": {
+          "type": "Card",
+          "settings": {
+            "sk_features_title": "Gratis frakt på alle bestillinger"
+          }
+        }
+      },
+      "block_order": [
+        "card_kHQtcn",
+        "card_UCy7PJ",
+        "card_XrpM6T"
+      ],
+      "name": "SK Features",
+      "settings": {
+        "heading": ""
       }
     },
     "sk_radiance_meq7Gb": {
@@ -384,9 +384,9 @@
   "order": [
     "sk_dynamic_banner_AEb7NJ",
     "sk_promotion_logos_giWdMT",
+    "sk_before_after_HqFkek",
     "sk_product_listing_dYMpyE",
     "sk_features_pHkfMf",
-    "sk_before_after_HqFkek",
     "sk_radiance_meq7Gb",
     "sk_product_technology_Vm78GM",
     "sk_faq_accordion_GcMDDq"
