@@ -1,0 +1,30 @@
+<svg width="48" height="24" viewBox="0 0 48 24" fill="none"
+    xmlns="http://www.w3.org/2000/svg" aria-label="Collagen triple helix icon">
+
+    <!-- Strand 1 -->
+    <path d="M0 12
+           C8 4, 16 4, 24 12
+           C32 20, 40 20, 48 12"
+        stroke="#30273E"
+        stroke-width="3"
+        fill="none"
+        stroke-linecap="round" />
+
+    <!-- Strand 2 -->
+    <path d="M0 12
+           C8 20, 16 20, 24 12
+           C32 4, 40 4, 48 12"
+        stroke="#52436C"
+        stroke-width="3"
+        fill="none"
+        stroke-linecap="round" />
+
+    <!-- Strand 3 -->
+    <path d="M0 12
+           C12 8, 12 16, 24 12
+           C36 8, 36 16, 48 12"
+        stroke="#634E85"
+        stroke-width="3"
+        fill="none"
+        stroke-linecap="round" />
+</svg>

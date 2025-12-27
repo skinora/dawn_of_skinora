@@ -29,20 +29,19 @@
   }
 
   .sk-led-technology__benefit-icon {
-    width: 40px;
-    height: 40px;
+    width: 52px;
+    height: 52px;
     flex-shrink: 0;
-    border: 1px solid rgba(var(--color-foreground), 0.2);
-    border-radius: 50%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     color: var(--color-neutral-4);
   }
 
+  .sk-led-technology__benefit-icon img,
   .sk-led-technology__benefit-icon svg {
-    width: 18px;
-    height: 18px;
+    width: 28px;
+    height: 28px;
     stroke: currentColor;
     stroke-width: 1.5;
     fill: none;
@@ -240,10 +239,7 @@
     <div class="sk-led-technology__benefits">
       <div class="sk-led-technology__benefit">
         <span class="sk-led-technology__benefit-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="6" />
-            <path d="M12 6v12M6 12h12" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
+          <img src="{{ 'collagen_elastin.svg' | asset_url }}" alt="Collagen and elastin icon" width="20" height="20">
         </span>
         <p class="sk-led-technology__benefit-text">Stimulerer kollagen og elastin</p>
       </div>
