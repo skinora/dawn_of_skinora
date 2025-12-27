@@ -108,6 +108,21 @@
     text-decoration: none;
   }
 
+  .sk-led-technology__card-icon {
+    width: clamp(40px, 6vw, 64px);
+    height: clamp(40px, 6vw, 64px);
+    margin-bottom: 0.4rem;
+    align-self: center;
+    display: block;
+  }
+
+  .sk-led-technology__card-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
   .sk-led-technology__pagination {
     display: flex;
     justify-content: center;
@@ -288,6 +303,17 @@
           <p class="sk-led-technology__card-body">
             {{ section.settings.card_one_body }}
           </p>
+          {% if section.settings.card_one_icon %}
+            <span class="sk-led-technology__card-icon">
+              <img
+                src="{{ section.settings.card_one_icon | image_url }}"
+                alt="{{ section.settings.card_one_icon_alt }}"
+                width="64"
+                height="64"
+                loading="lazy"
+              >
+            </span>
+          {% endif %}
           <a class="sk-led-technology__card-link" href="{{ section.settings.card_one_link_url }}">
             {{ section.settings.card_one_link_text }}
           </a>
@@ -297,12 +323,34 @@
           <p class="sk-led-technology__card-body">
             {{ section.settings.card_two_body }}
           </p>
+          {% if section.settings.card_two_icon %}
+            <span class="sk-led-technology__card-icon">
+              <img
+                src="{{ section.settings.card_two_icon | image_url }}"
+                alt="{{ section.settings.card_two_icon_alt }}"
+                width="64"
+                height="64"
+                loading="lazy"
+              >
+            </span>
+          {% endif %}
         </article>
         <article class="sk-led-technology__card">
           <h3 class="sk-led-technology__card-title">{{ section.settings.card_three_title }}</h3>
           <p class="sk-led-technology__card-body">
             {{ section.settings.card_three_body }}
           </p>
+          {% if section.settings.card_three_icon %}
+            <span class="sk-led-technology__card-icon">
+              <img
+                src="{{ section.settings.card_three_icon | image_url }}"
+                alt="{{ section.settings.card_three_icon_alt }}"
+                width="64"
+                height="64"
+                loading="lazy"
+              >
+            </span>
+          {% endif %}
         </article>
       </div>
       <div class="sk-led-technology__pagination">
@@ -371,15 +419,15 @@
     },
     {
       "type": "text",
-      "id": "benefit_three_alt",
-      "label": "Benefit 3 icon alt",
-      "default": "Balansert hud icon"
-    },
-    {
-      "type": "text",
       "id": "benefit_three_text",
       "label": "Benefit 3 copy",
       "default": "Bidrar til roligere, mer balansert hud"
+    },
+    {
+      "type": "text",
+      "id": "benefit_three_alt",
+      "label": "Benefit 3 icon alt",
+      "default": "Balansert hud icon"
     },
     {
       "type": "text",
@@ -400,6 +448,17 @@
       "default": "Rødt + nær-infrarødt LED-lys for dypere stimulering av hudens struktur og celleaktivitet."
     },
     {
+      "type": "image_picker",
+      "id": "card_one_icon",
+      "label": "Card 1 icon"
+    },
+    {
+      "type": "text",
+      "id": "card_one_icon_alt",
+      "label": "Card 1 icon alt",
+      "default": "Skinora Radiance Face icon"
+    },
+    {
       "type": "text",
       "id": "card_one_link_text",
       "label": "Card 1 link text",
@@ -407,8 +466,8 @@
     },
     {
       "type": "url",
-      "id": "callout_link_url",
-      "label": "Callout link URL"
+      "id": "card_one_link_url",
+      "label": "Card 1 link URL"
     },
     {
       "type": "text",
@@ -423,6 +482,17 @@
       "default": "Tilpassede LED-bølgelengder utviklet for elastisitet, barriere og struktur i halsområdet."
     },
     {
+      "type": "image_picker",
+      "id": "card_two_icon",
+      "label": "Card 2 icon"
+    },
+    {
+      "type": "text",
+      "id": "card_two_icon_alt",
+      "label": "Card 2 icon alt",
+      "default": "Skinora Radiance Neck icon"
+    },
+    {
       "type": "text",
       "id": "card_three_title",
       "label": "Card 3 title",
@@ -433,6 +503,17 @@
       "id": "card_three_body",
       "label": "Card 3 body",
       "default": "Blått LED-lys som reduserer aknebakterier og støtter hudens naturlige balanse."
+    },
+    {
+      "type": "image_picker",
+      "id": "card_three_icon",
+      "label": "Card 3 icon"
+    },
+    {
+      "type": "text",
+      "id": "card_three_icon_alt",
+      "label": "Card 3 icon alt",
+      "default": "Skinora Clear icon"
     },
     {
       "type": "text",
@@ -451,6 +532,11 @@
       "id": "callout_link_text",
       "label": "Callout link text",
       "default": "Les om teknologien"
+    },
+    {
+      "type": "url",
+      "id": "callout_link_url",
+      "label": "Callout link URL"
     },
     {
       "type": "text",
