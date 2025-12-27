@@ -126,8 +126,8 @@
 
 .footer__menu-link:hover,
 .footer__menu-link:focus-visible {
-  color: var(--color-brand, #30273e);
-  border-bottom: 1px solid var(--color-brand, #30273e);
+  color: var(--color-brand) !important;
+  border-bottom: 1px solid var(--color-brand) !important;
 }
 
 @media screen and (max-width: 749px) {
