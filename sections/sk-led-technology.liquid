@@ -22,27 +22,27 @@
 
   .sk-led-technology__benefit {
     display: flex;
-    gap: 1.25rem;
+    gap: 1.75rem;
     align-items: center;
     border-bottom: 1px solid rgba(var(--color-foreground), 0.12);
     padding: 1rem 0;
   }
 
   .sk-led-technology__benefit-icon {
-    width: 54px;
-    height: 54px;
+    width: 56px;
+    height: 56px;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     color: var(--color-neutral-4);
-    padding: 0.4rem;
+    padding: 0.5rem;
   }
 
   .sk-led-technology__benefit-icon img,
   .sk-led-technology__benefit-icon svg {
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
     stroke: currentColor;
     stroke-width: 1.5;
     fill: none;
@@ -248,9 +248,7 @@
       </div>
       <div class="sk-led-technology__benefit">
         <span class="sk-led-technology__benefit-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 3v18M3 12h18" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
+          <img src="{{ 'skin_barrier.svg' | asset_url }}" alt="Skin barrier icon">
         </span>
         <p class="sk-led-technology__benefit-text">Styrker hudbarrieren</p>
       </div>

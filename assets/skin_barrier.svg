@@ -1,0 +1,34 @@
+<svg width="48" height="32" viewBox="0 0 48 32" fill="none"
+    xmlns="http://www.w3.org/2000/svg" aria-label="Skin barrier icon">
+
+    <!-- Arrows (stimulation/support) -->
+    <path d="M14 4 L14 12" stroke="#30273E" stroke-width="0.75" stroke-linecap="round" />
+    <path d="M14 12 L12 10" stroke="#30273E" stroke-width="0.75" stroke-linecap="round" />
+    <path d="M14 12 L16 10" stroke="#30273E" stroke-width="0.75" stroke-linecap="round" />
+
+    <path d="M24 4 L24 12" stroke="#52436C" stroke-width="0.75" stroke-linecap="round" />
+    <path d="M24 12 L22 10" stroke="#52436C" stroke-width="0.75" stroke-linecap="round" />
+    <path d="M24 12 L26 10" stroke="#52436C" stroke-width="0.75" stroke-linecap="round" />
+
+    <path d="M34 4 L34 12" stroke="#634E85" stroke-width="0.75" stroke-linecap="round" />
+    <path d="M34 12 L32 10" stroke="#634E85" stroke-width="0.75" stroke-linecap="round" />
+    <path d="M34 12 L36 10" stroke="#634E85" stroke-width="0.75" stroke-linecap="round" />
+
+    <!-- Skin barrier wave -->
+    <path d="M6 20
+           C12 16, 18 16, 24 20
+           C30 24, 36 24, 42 20"
+        stroke="#30273E"
+        stroke-width="0.75"
+        fill="none"
+        stroke-linecap="round" />
+
+    <path d="M6 24
+           C12 20, 18 20, 24 24
+           C30 28, 36 28, 42 24"
+        stroke="#52436C"
+        stroke-width="0.75"
+        fill="none"
+        stroke-linecap="round"
+        opacity="0.9" />
+</svg>
