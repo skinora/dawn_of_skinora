@@ -12,116 +12,200 @@
     padding: 0 1.25rem;
   }
 
-  .sk-led-technology__icons {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1.5rem;
-    margin: 3rem auto 4rem;
-    max-width: 900px;
-  }
-
-  .sk-led-technology__icon-card {
+  .sk-led-technology__benefits {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    text-align: center;
-    padding: 1rem 1.25rem;
+    gap: 1.25rem;
+    margin: 3rem auto;
+    max-width: 520px;
   }
 
-  .sk-led-technology__icon {
-    width: 54px;
-    height: 54px;
-    border: 1px solid rgba(var(--color-foreground), 0.35);
+  .sk-led-technology__benefit {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.12);
+    padding-bottom: 1rem;
+  }
+
+  .sk-led-technology__benefit-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border: 1px solid rgba(var(--color-foreground), 0.2);
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-neutral-3);
+    color: var(--color-neutral-4);
   }
 
-  .sk-led-technology__icon svg {
-    width: 28px;
-    height: 28px;
-    stroke-width: 1.5;
+  .sk-led-technology__benefit-icon svg {
+    width: 18px;
+    height: 18px;
     stroke: currentColor;
+    stroke-width: 1.5;
     fill: none;
   }
 
-  .sk-led-technology__icon-label {
+  .sk-led-technology__benefit-text {
     font-size: 1rem;
-    line-height: 1.5;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--color-neutral-4);
   }
 
-  .sk-led-technology__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.75rem;
-    max-width: 1100px;
-    margin: 0 auto 3rem;
-    padding: 0 1rem;
+  .sk-led-technology__cards {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .sk-led-technology__card-track {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
   }
 
   .sk-led-technology__card {
+    min-width: min(calc(100vw - 2rem), 360px);
+    width: min(calc(100vw - 2rem), 360px);
+    scroll-snap-align: start;
+    border-radius: var(--popup-corner-radius);
     background-color: var(--color-white);
     border: 1px solid rgba(var(--color-foreground), 0.15);
-    border-radius: var(--popup-corner-radius);
-    padding: 1.75rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
-    min-height: 220px;
-    box-shadow: 0 15px 30px rgba(var(--color-shadow), 0.05);
+    gap: 0.6rem;
+    box-shadow: 0 12px 30px rgba(var(--color-shadow), 0.08);
   }
 
   .sk-led-technology__card-title {
-    font-size: 1.55rem;
+    font-size: 1.35rem;
     color: var(--color-neutral-4);
     margin: 0;
   }
 
   .sk-led-technology__card-body {
-    font-size: 1rem;
+    font-size: 0.95rem;
     line-height: 1.6;
     color: rgba(var(--color-foreground), 0.75);
-    flex: 1;
   }
 
   .sk-led-technology__card-link {
-    font-size: 0.95rem;
-    color: var(--color-brand);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    text-transform: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-neutral-5);
+    text-decoration: none;
+  }
+
+  .sk-led-technology__pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .sk-led-technology__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(var(--color-foreground), 0.35);
   }
 
   .sk-led-technology__callout {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 1.5rem 1.75rem;
-    border: 1px solid rgba(var(--color-foreground), 0.18);
+    margin: 1.5rem auto 0;
+    padding: 1.25rem;
     border-radius: var(--popup-corner-radius);
-    background: #fcfbf9;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    text-align: center;
+    border: 1px solid rgba(var(--color-foreground), 0.18);
+    background: #fdfbf9;
+    text-align: left;
     font-size: 0.95rem;
+    color: rgba(var(--color-foreground), 0.85);
   }
 
-  .sk-led-technology__callout-label {
+  .sk-led-technology__callout-title {
     font-weight: 600;
-    letter-spacing: 0.1em;
-    font-size: 0.85rem;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--color-neutral-5);
+    margin-bottom: 0.35rem;
   }
 
-  .sk-led-technology__callout-subtext {
+  .sk-led-technology__callout-link {
+    font-size: 0.85rem;
+    color: var(--color-brand);
+    text-transform: none;
+    text-decoration: none;
+  }
+
+  .sk-led-technology__cta {
+    margin: 2.5rem auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .sk-led-technology__cta-text {
     font-size: 1rem;
-    line-height: 1.5;
-    color: rgba(var(--color-foreground), 0.78);
+    color: var(--color-neutral-4);
+  }
+
+  .sk-led-technology__cta-button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    background: var(--color-neutral-4);
+    color: var(--color-white);
+    border: none;
+    cursor: pointer;
+  }
+
+  @media (min-width: 900px) {
+    .sk-led-technology__benefits {
+      flex-direction: row;
+      align-items: stretch;
+      gap: 1.75rem;
+    }
+
+    .sk-led-technology__benefit {
+      flex-direction: column;
+      border: none;
+      align-items: flex-start;
+      padding-bottom: 0;
+    }
+
+    .sk-led-technology__card-track {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+
+    .sk-led-technology__pagination {
+      display: none;
+    }
+
+    .sk-led-technology__card {
+      min-width: auto;
+      width: auto;
+    }
+
+    .sk-led-technology__callout {
+      max-width: 640px;
+    }
+
+    .sk-led-technology__cta-button {
+      width: auto;
+    }
   }
 
   @media (max-width: 640px) {
@@ -153,63 +237,74 @@
       </div>
     </div>
 
-    <div class="sk-led-technology__icons" aria-label="LED technology benefits">
-      <div class="sk-led-technology__icon-card">
-        <span class="sk-led-technology__icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48">
-            <path d="M12 28c0-8 8-16 16-16s16 8 16 16c0 8-16 16-16 16S12 36 12 28z" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M24 12v32M12 24h24" stroke-linecap="round" stroke-linejoin="round"/>
+    <div class="sk-led-technology__benefits">
+      <div class="sk-led-technology__benefit">
+        <span class="sk-led-technology__benefit-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="6" />
+            <path d="M12 6v12M6 12h12" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </span>
-        <span class="sk-led-technology__icon-label">Stimulerer kollagen og elastin</span>
+        <p class="sk-led-technology__benefit-text">Stimulerer kollagen og elastin</p>
       </div>
-      <div class="sk-led-technology__icon-card">
-        <span class="sk-led-technology__icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48">
-            <circle cx="24" cy="24" r="10" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M24 4v8M24 36v8M4 24h8M36 24h8" stroke-linecap="round"/>
+      <div class="sk-led-technology__benefit">
+        <span class="sk-led-technology__benefit-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3v18M3 12h18" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </span>
-        <span class="sk-led-technology__icon-label">Styrker hudbarrieren</span>
+        <p class="sk-led-technology__benefit-text">Styrker hudbarrieren</p>
       </div>
-      <div class="sk-led-technology__icon-card">
-        <span class="sk-led-technology__icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48">
-            <path d="M12 28c3-6 9-10 12-10s9 4 12 10" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M24 20v20" stroke-linecap="round" stroke-linejoin="round"/>
+      <div class="sk-led-technology__benefit">
+        <span class="sk-led-technology__benefit-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M6 18l6-12 6 12" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </span>
-        <span class="sk-led-technology__icon-label">Bidrar til roligere, mer balansert hud</span>
+        <p class="sk-led-technology__benefit-text">Bidrar til roligere, mer balansert hud</p>
       </div>
     </div>
 
-    <div class="sk-led-technology__grid">
-      <article class="sk-led-technology__card">
-        <h3 class="sk-led-technology__card-title">Skinora Radiance Face</h3>
-        <p class="sk-led-technology__card-body">
-          Rødt + nær-infrarødt LED-lys for dypere stimulering av hudens struktur og celleaktivitet.
-        </p>
-        <a class="sk-led-technology__card-link" href="#">Les mer</a>
-      </article>
-      <article class="sk-led-technology__card">
-        <h3 class="sk-led-technology__card-title">Skinora Radiance Neck</h3>
-        <p class="sk-led-technology__card-body">
-          Tilpassede LED-bølgelengder utviklet for elastisitet, barriere og struktur i halsområdet.
-        </p>
-      </article>
-      <article class="sk-led-technology__card">
-        <h3 class="sk-led-technology__card-title">Skinora Clear</h3>
-        <p class="sk-led-technology__card-body">
-          Blått LED-lys som reduserer aknebakterier og støtter hudens naturlige balanse.
-        </p>
-      </article>
+    <div class="sk-led-technology__cards" aria-label="Skinora technology cards">
+      <div class="sk-led-technology__card-track">
+        <article class="sk-led-technology__card">
+          <h3 class="sk-led-technology__card-title">Skinora Radiance Face</h3>
+          <p class="sk-led-technology__card-body">
+            Rødt + nær-infrarødt LED-lys for dypere stimulering av hudens struktur og celleaktivitet.
+          </p>
+          <a class="sk-led-technology__card-link" href="#">Les mer</a>
+        </article>
+        <article class="sk-led-technology__card">
+          <h3 class="sk-led-technology__card-title">Skinora Radiance Neck</h3>
+          <p class="sk-led-technology__card-body">
+            Tilpassede LED-bølgelengder utviklet for elastisitet, barriere og struktur i halsområdet.
+          </p>
+        </article>
+        <article class="sk-led-technology__card">
+          <h3 class="sk-led-technology__card-title">Skinora Clear</h3>
+          <p class="sk-led-technology__card-body">
+            Blått LED-lys som reduserer aknebakterier og støtter hudens naturlige balanse.
+          </p>
+        </article>
+      </div>
+      <div class="sk-led-technology__pagination">
+        <span class="sk-led-technology__dot"></span>
+        <span class="sk-led-technology__dot"></span>
+        <span class="sk-led-technology__dot"></span>
+      </div>
     </div>
 
     <div class="sk-led-technology__callout">
-      <span class="sk-led-technology__callout-label">1072 nm nær-infrarødt lys</span>
-      <span class="sk-led-technology__callout-subtext">
+      <span class="sk-led-technology__callout-title">1072 nm nær-infrarødt lys</span>
+      <p>
         Eksklusiv teknologi i Skinora Radiance Face – utviklet for dypere hudstimulering enn tradisjonelt rødt LED-lys.
-      </span>
+      </p>
+      <a class="sk-led-technology__callout-link" href="#">Les om teknologien</a>
+    </div>
+
+    <div class="sk-led-technology__cta">
+      <p class="sk-led-technology__cta-text">Usikker på hvilken maske som passer deg?</p>
+      <button class="sk-led-technology__cta-button" type="button">Ta maskeguiden</button>
     </div>
   </div>
 </section>
