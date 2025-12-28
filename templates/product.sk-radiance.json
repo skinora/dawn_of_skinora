@@ -14,6 +14,7 @@
       "blocks": {
         "category_tag": {
           "type": "text",
+          "name": "product_hero_eyebrow",
           "settings": {
             "text": "Synlig forbedret hudtekstur på 6 uker",
             "text_style": "subtitle"
