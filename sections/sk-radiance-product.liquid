@@ -1,5 +1,6 @@
 {{ 'section-sk-radiance-product.css' | asset_url | stylesheet_tag }}
 {{ 'section-sk-guarantee-banner.css' | asset_url | stylesheet_tag }}
+{{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%}
   Bigger “pill” badges (desktop before price, mobile under hero).
@@ -34,6 +35,15 @@
       display: flex;
     }
   }
+  .sk-product-radiance-hero {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .sk-radiance-hero-reviews {
+    margin-top: clamp(0.35rem, 1vw, 0.65rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.35rem, 0.8vw, 0.5rem);
+  }
   @media screen and (max-width: 749px) {
     .sk-section-heading {
       font-size: var(--sk-mobile-heading-size);
@@ -56,15 +66,10 @@
   {% render 'sk-radiance-product-assets', section: section, product: product %}
 
   {%- assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' -%}
-  {%- assign product_pills_meta = product.metafields.custom.product_pills -%}
+  {%- assign product_info = product.metafields.product_info -%}
   {%- assign product_pills = blank -%}
-
-  {%- if product_pills_meta and product_pills_meta.value != blank -%}
-    {%- if product_pills_meta.type contains 'list.' -%}
-      {%- assign product_pills = product_pills_meta.value -%}
-    {%- else -%}
-      {%- assign product_pills = product_pills_meta.value | split: '\n' -%}
-    {%- endif -%}
+  {%- if product_info.radiance_pills != blank -%}
+    {%- assign product_pills = product_info.radiance_pills | split: '\n' -%}
   {%- endif -%}
 
   {%- assign has_pills = false -%}
@@ -78,6 +83,76 @@
   {%- endif -%}
 
   <div class="page-width">
+    {%- assign hero_heading = product_info.radiance_heading -%}
+    {%- assign hero_subheading = product_info.radiance_subheading -%}
+    {%- assign hero_eyebrow = product_info.radiance_eyebrow -%}
+    {%- assign hero_image = product_info.radiance_image -%}
+    {%- assign hero_content = product_info.radiance_content -%}
+    {%- assign hero_app_blocks = section.blocks | where: 'type', '@app' -%}
+    {%- assign hero_app_block_ids = hero_app_blocks | map: 'id' -%}
+    {%- assign show_hero = false -%}
+    {%- if hero_heading != blank
+      or hero_subheading != blank
+      or hero_eyebrow != blank
+      or hero_content != blank
+      or hero_image != blank
+    -%}
+      {%- assign show_hero = true -%}
+    {%- endif -%}
+    {% if show_hero %}
+      <div class="sk-product-radiance-hero">
+        <div class="sk-image-content{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          <div class="sk-radiance__container">
+            <div class="sk-radiance__image">
+              {% if hero_image != blank %}
+                <img
+                  src="{{ hero_image | image_url: width: 577, height: 640 }}"
+                  alt="{{ hero_image.alt | default: product.title }}"
+                  width="577"
+                  height="640"
+                  loading="lazy"
+                >
+              {% else %}
+                {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+            </div>
+            <div class="sk-image-content__content">
+              <div class="sk-section-header sk-section-header--left">
+                {% if hero_eyebrow != blank %}
+                  <p class="sk-section-header__eyebrow sk-copy-eyebrow">{{ hero_eyebrow }}</p>
+                {% endif %}
+                {% if hero_heading != blank %}
+                  <h1 class="sk-header__section sk-product-radiance__heading sk-section-heading sk-section-heading--h1">
+                    {{ hero_heading | escape }}
+                  </h1>
+                {% endif %}
+                {% if hero_subheading != blank %}
+                  <p class="sk-section-header__subtitle sk-heading-text--soft">
+                    {{ hero_subheading | escape }}
+                  </p>
+                {% endif %}
+                {% if hero_app_blocks.size > 0 %}
+                  <div class="sk-radiance-hero-reviews">
+                    {% for hero_block in hero_app_blocks %}
+                      {% render hero_block %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              {%- if hero_content != blank -%}
+                {%- assign check_icon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none"><path d="M17 3.61321C15.5291 2.76236 13.8214 2.27539 12 2.27539C6.47715 2.27539 2 6.75254 2 12.2754C2 17.7982 6.47715 22.2754 12 22.2754C17.5228 22.2754 22 17.7982 22 12.2754C22 11.5905 21.9311 10.9216 21.8 10.2754" stroke="#30273E" stroke-width="1.5" stroke-linecap="round"/><path d="M8 12.7754C8 12.7754 9.5 12.7754 11.5 16.2754C11.5 16.2754 17.0588 7.10872 22 5.27539" stroke="#30273E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' -%}
+                {%- capture hero_copy -%}
+                  {{ hero_content | metafield_tag }}
+                {%- endcapture -%}
+                <div class="sk-section-body">
+                  {{ hero_copy | replace: '~', check_icon }}
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
     <div
       class="
         sk-radiance-product
@@ -133,123 +208,125 @@
           {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
           {% for block in section.blocks %}
-            {% case block.type %}
-              {% when '@app' %}
-                {% render block %}
+            {% unless hero_app_block_ids contains block.id %}
+              {% case block.type %}
+                {% when '@app' %}
+                  {% render block %}
 
-              {% when 'text' %}
-                <p
-                  class="sk-radiance-product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
-                  {{ block.shopify_attributes }}
-                >
-                  {{ block.settings.text }}
-                </p>
+                {% when 'text' %}
+                  <p
+                    class="sk-radiance-product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {{ block.settings.text }}
+                  </p>
 
-              {% when 'title' %}
-                <div class="sk-radiance-product__title" {{ block.shopify_attributes }}>
-                  <h1 class="sk-section-heading sk-section-heading--h1">{{ product.title | escape }}</h1>
-                </div>
-
-              {% when 'rating' %}
-                {% render 'sk-radiance-rating', product: product, block: block %}
-
-              {% when 'price' %}
-                {% if has_pills %}
-                  <div class="sk-radiance-pills sk-radiance-pills--desktop" role="list">
-                    {% for pill in product_pills %}
-                      {% assign pill_text = pill | strip %}
-                      {% if pill_text != blank %}
-                        <span class="sk-pill">{{ pill_text }}</span>
-                      {% endif %}
-                    {% endfor %}
+                {% when 'title' %}
+                  <div class="sk-radiance-product__title" {{ block.shopify_attributes }}>
+                    <h1 class="sk-section-heading sk-section-heading--h1">{{ product.title | escape }}</h1>
                   </div>
-                {% endif %}
 
-                <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
-                  {% render 'sk-radiance-price',
-                    product: product,
-                    use_variant: true,
-                    show_badges: false,
-                    price_class: 'price--large'
-                  %}
-                </div>
+                {% when 'rating' %}
+                  {% render 'sk-radiance-rating', product: product, block: block %}
 
-              {% when 'quantity_selector' %}
-                {% render 'sk-radiance-quantity',
-                  product: product,
-                  block: block,
-                  product_form_id: product_form_id,
-                  section: section
-                %}
-
-              {% when 'variant_picker' %}
-                {% render 'sk-radiance-product-variant-picker',
-                  product: product,
-                  block: block,
-                  product_form_id: product_form_id
-                %}
-
-              {% when 'product_features' %}
-                {% assign feature_namespace = block.settings.metafield_namespace | default: 'custom' %}
-                {% assign feature_key = block.settings.metafield_key | default: 'feature_svg' %}
-                {% assign feature_group = product.metafields[feature_namespace] %}
-                {% assign feature_meta = feature_group[feature_key] %}
-
-                <div class="sk-product-features" {{ block.shopify_attributes }} role="list">
-                  {% if feature_meta and feature_meta.value != blank %}
-                    {% assign feature_type = feature_meta.type %}
-
-                    {% if feature_type contains 'list.file_reference' %}
-                      {% for file_ref in feature_meta.value %}
-                        {% if file_ref != blank %}
-                          {% assign img = file_ref.preview_image %}
-                          <div class="sk-product-features__item" role="listitem">
-                            <img
-                              src="{{ img | image_url: width: 160 }}"
-                              width="160"
-                              height="{{ 160 | divided_by: img.aspect_ratio | round }}"
-                            >
-                          </div>
+                {% when 'price' %}
+                  {% if has_pills %}
+                    <div class="sk-radiance-pills sk-radiance-pills--desktop" role="list">
+                      {% for pill in product_pills %}
+                        {% assign pill_text = pill | strip %}
+                        {% if pill_text != blank %}
+                          <span class="sk-pill">{{ pill_text }}</span>
                         {% endif %}
                       {% endfor %}
-
-                    {% elsif feature_type contains 'list.' %}
-                      {% for svg_markup in feature_meta.value %}
-                        {% if svg_markup != blank %}
-                          <div class="sk-product-features__item" role="listitem">{{ svg_markup }}</div>
-                        {% endif %}
-                      {% endfor %}
-
-                    {% elsif feature_type == 'rich_text' %}
-                      <div class="sk-product-features__item">{{ feature_meta.value }}</div>
-
-                    {% else %}
-                      <div class="sk-product-features__item">{{ feature_meta.value }}</div>
-                    {% endif %}
-
-                  {% else %}
-                    {% if block.settings.empty_state != blank %}
-                      <div class="sk-product-features__empty">{{ block.settings.empty_state }}</div>
-                    {% else %}
-                      <div class="sk-product-features__empty">
-                        Add SVGs to metafield {{ feature_namespace }}.{{ feature_key }}.
-                      </div>
-                    {% endif %}
+                    </div>
                   {% endif %}
-                </div>
 
-              {% when 'product_description' %}
-                {% render 'sk-radiance-product-description', product: product, block: block, section: section %}
+                  <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+                    {% render 'sk-radiance-price',
+                      product: product,
+                      use_variant: true,
+                      show_badges: false,
+                      price_class: 'price--large'
+                    %}
+                  </div>
 
-              {% when 'guarantee_banner' %}
-                {% if product.metafields.custom.guarantee_banner_content != blank %}
-                  {% render 'sk-radiance-guarantee', section: section, product: product, block: block %}
-                {% endif %}
+                {% when 'quantity_selector' %}
+                  {% render 'sk-radiance-quantity',
+                    product: product,
+                    block: block,
+                    product_form_id: product_form_id,
+                    section: section
+                  %}
 
-              {% when 'promotion_logos' %}
-                {% assign logos = product.metafields.custom.promotion_logos.value %}
-                {% render 'sk-radiance-promotion-logos', logos: logos, section: section %}
-            {% endcase %}
+                {% when 'variant_picker' %}
+                  {% render 'sk-radiance-product-variant-picker',
+                    product: product,
+                    block: block,
+                    product_form_id: product_form_id
+                  %}
+
+                {% when 'product_features' %}
+                  {% assign feature_namespace = block.settings.metafield_namespace | default: 'custom' %}
+                  {% assign feature_key = block.settings.metafield_key | default: 'feature_svg' %}
+                  {% assign feature_group = product.metafields[feature_namespace] %}
+                  {% assign feature_meta = feature_group[feature_key] %}
+
+                  <div class="sk-product-features" {{ block.shopify_attributes }} role="list">
+                    {% if feature_meta and feature_meta.value != blank %}
+                      {% assign feature_type = feature_meta.type %}
+
+                      {% if feature_type contains 'list.file_reference' %}
+                        {% for file_ref in feature_meta.value %}
+                          {% if file_ref != blank %}
+                            {% assign img = file_ref.preview_image %}
+                            <div class="sk-product-features__item" role="listitem">
+                              <img
+                                src="{{ img | image_url: width: 160 }}"
+                                width="160"
+                                height="{{ 160 | divided_by: img.aspect_ratio | round }}"
+                              >
+                            </div>
+                          {% endif %}
+                        {% endfor %}
+
+                      {% elsif feature_type contains 'list.' %}
+                        {% for svg_markup in feature_meta.value %}
+                          {% if svg_markup != blank %}
+                            <div class="sk-product-features__item" role="listitem">{{ svg_markup }}</div>
+                          {% endif %}
+                        {% endfor %}
+
+                      {% elsif feature_type == 'rich_text' %}
+                        <div class="sk-product-features__item">{{ feature_meta.value }}</div>
+
+                      {% else %}
+                        <div class="sk-product-features__item">{{ feature_meta.value }}</div>
+                      {% endif %}
+
+                    {% else %}
+                      {% if block.settings.empty_state != blank %}
+                        <div class="sk-product-features__empty">{{ block.settings.empty_state }}</div>
+                      {% else %}
+                        <div class="sk-product-features__empty">
+                          Add SVGs to metafield {{ feature_namespace }}.{{ feature_key }}.
+                        </div>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+
+                {% when 'product_description' %}
+                  {% render 'sk-radiance-product-description', product: product, block: block, section: section %}
+
+                {% when 'guarantee_banner' %}
+                  {% if product.metafields.custom.guarantee_banner_content != blank %}
+                    {% render 'sk-radiance-guarantee', section: section, product: product, block: block %}
+                  {% endif %}
+
+                {% when 'promotion_logos' %}
+                  {% assign logos = product.metafields.custom.promotion_logos.value %}
+                  {% render 'sk-radiance-promotion-logos', logos: logos, section: section %}
+              {% endcase %}
+            {% endunless %}
           {% endfor %}
         </section>
       </div>
@@ -372,6 +449,9 @@
       "name": "Promotion Logos",
       "limit": 1,
       "settings": []
+    },
+    {
+      "type": "@app"
     }
   ],
 
