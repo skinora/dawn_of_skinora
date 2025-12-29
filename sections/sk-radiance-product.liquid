@@ -17,9 +17,9 @@
 
   @media (min-width: 990px) {
     .sk-hero-grid {
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: minmax(0, 45%) minmax(0, 55%);
       align-items: start;
-      gap: 3rem;
+      gap: 6rem;
     }
   }
 
@@ -27,23 +27,45 @@
    MEDIA
 ============================= */
 
-  .sk-hero-media-main img {
-    width: 100%;
-    height: auto;
+  .sk-hero-media {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sk-hero-media-main {
+    width: min(750px, 100%);
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
     border-radius: 16px;
+  }
+
+  .sk-hero-media-main img,
+  .sk-hero-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
   }
 
-  .sk-hero-gallery {
-    display: flex;
-    gap: 0.75rem;
+  .sk-hero-gallery-wrapper {
+    width: min(750px, 100%);
     margin-top: 0.75rem;
+    overflow: hidden;
+  }
+
+  .sk-hero-gallery {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .sk-hero-thumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
   }
 
   .sk-hero-thumb img {
-    width: 64px;
-    height: 64px;
-    object-fit: cover;
     border-radius: 10px;
     cursor: pointer;
     opacity: 0.85;
@@ -150,6 +172,28 @@
     padding-top: 2rem;
     border-top: 1px solid #ececf2;
   }
+
+  @media (max-width: 768px) {
+    .sk-hero-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .sk-hero-media-main,
+    .sk-hero-gallery-wrapper {
+      width: min(750px, calc(100vw - 2rem));
+    }
+
+    .sk-hero-thumb {
+      width: min(750px, calc(100vw - 2rem));
+      height: min(750px, calc(100vw - 2rem));
+    }
+
+    .sk-hero-gallery {
+      gap: 0.65rem;
+      padding-bottom: 0.65rem;
+    }
+  }
 </style>
 
 {%- assign product_info_reference = product.metafields.custom.product_info
@@ -185,19 +229,21 @@
             </div>
 
             {% if media_images.size > 1 %}
-              <div class="sk-hero-gallery">
-                {% for image in media_images offset: 1 %}
-                  <div class="sk-hero-thumb">
-                    <img
-                      src="{{ image | image_url: width: 150 }}"
-                      data-full="{{ image | image_url: width: 900 }}"
-                      alt="{{ image.alt | default: product.title }}"
-                      width="64"
-                      height="64"
-                      loading="lazy"
-                    >
-                  </div>
-                {% endfor %}
+              <div class="sk-hero-gallery-wrapper">
+                <div class="sk-hero-gallery">
+                  {% for image in media_images offset: 1 %}
+                    <div class="sk-hero-thumb">
+                      <img
+                        src="{{ image | image_url: width: 120 }}"
+                        data-full="{{ image | image_url: width: 900 }}"
+                        alt="{{ image.alt | default: product.title }}"
+                        width="150"
+                        height="150"
+                        loading="lazy"
+                      >
+                    </div>
+                  {% endfor %}
+                </div>
               </div>
             {% endif %}
           {% endif %}
