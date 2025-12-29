@@ -1,11 +1,6 @@
 {%- liquid
   assign product_form_id = 'product-form-' | append: section_id
   assign current_variant = product.selected_or_first_available_variant
-
-  assign show_dynamic_checkout = false
-  if block.settings.show_dynamic_checkout
-    assign show_dynamic_checkout = true
-  endif
 -%}
 
 <div
@@ -41,7 +36,7 @@
               id="ProductSubmitButton-{{ section_id }}"
               type="submit"
               name="add"
-              class="sk-btn sk-btn--primary sk-radiance-buy-buttons__button sk-radiance-buy-buttons__button--primary{% unless show_dynamic_checkout %} sk-radiance-buy-buttons__button--single{% endunless %}"
+              class="sk-btn sk-btn--primary sk-radiance-buy-buttons__button sk-radiance-buy-buttons__button--primary sk-radiance-buy-buttons__button--single"
             >
               <span class="sk-radiance-buy-buttons__button-text">
                 {{ 'products.product.add_to_cart' | t }}
@@ -49,9 +44,6 @@
               {%- render 'loading-spinner' -%}
             </button>
 
-            {%- if show_dynamic_checkout -%}
-              {{ form | payment_button }}
-            {%- endif -%}
           </div>
         </div>
 

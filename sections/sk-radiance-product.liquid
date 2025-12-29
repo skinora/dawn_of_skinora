@@ -37,7 +37,7 @@
     width: min(clamp(280px, 60vw, 750px), 100%);
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    border-radius: 16px;
+    border-radius: 0;
   }
 
   .sk-hero-media-swiper {
@@ -69,7 +69,7 @@
   .sk-hero-gallery {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: clamp(0.45rem, 1vw, 0.75rem);
+    gap: clamp(0.5rem, 1vw, 0.75rem);
   }
 
   .sk-hero-thumb {
@@ -84,7 +84,6 @@
   }
 
   .sk-hero-thumb img.is-active {
-    outline: 2px solid #487ab7;
     opacity: 1;
   }
 
@@ -138,12 +137,12 @@
 
   @media (min-width: 990px) {
     .sk-product-title {
-      font-size: 2.4rem;
+      font-size: 2.5rem;
     }
   }
 
   .sk-product-subtitle {
-    font-size: 1.05rem;
+    font-size: 1.25rem;
     color: #3a3a42;
     margin-bottom: 1.25rem;
     max-width: 42ch;
@@ -155,7 +154,7 @@
 
   .sk-radiance-pills {
     display: flex;
-    gap: 0.6rem;
+    gap: 0.75rem;
     flex-wrap: wrap;
     margin-bottom: 1.75rem;
   }
@@ -163,8 +162,8 @@
   .sk-pill {
     border: 1.5px solid #d4d4dc;
     border-radius: 999px;
-    padding: 0.5rem 1.1rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 1.25rem;
+    font-size: 1rem;
     font-weight: 500;
     background: #fff;
   }
@@ -183,7 +182,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: #5b5b66;
   }
 
@@ -222,15 +221,22 @@
       width: min(750px, calc(100vw - 2rem));
     }
 
+    .sk-hero-media-main {
+      margin: 0 auto;
+    }
+
     .sk-hero-thumb {
       width: min(750px, calc(100vw - 2rem));
       height: min(750px, calc(100vw - 2rem));
     }
 
     .sk-hero-gallery {
-      gap: 0.65rem;
-      padding-bottom: 0.65rem;
+      gap: 0.75rem;
+      padding-bottom: 0.75rem;
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .sk-hero-gallery-wrapper {
+      display: none;
     }
   }
 
@@ -350,8 +356,6 @@
 
             {% render 'sk-radiance-quantity', product: product, product_form_id: product_form_id, section: section %}
 
-            {% render 'sk-radiance-buy-buttons', product: product, product_form_id: product_form_id %}
-
             <div class="sk-trust-inline">
               <span>Free shipping</span>
               <span>30-day returns</span>
@@ -405,12 +409,13 @@
       const swiperRoot = sectionEl.querySelector('.sk-hero-media-swiper');
       if (!swiperRoot) return;
 
-      const swiperElement = swiperRoot.querySelector('.swiper');
+      const swiperElement = swiperRoot.querySelector('.swiper') || swiperRoot;
       if (!swiperElement) return;
 
       const prevButton = swiperRoot.querySelector('.sk-hero-arrow--prev');
       const nextButton = swiperRoot.querySelector('.sk-hero-arrow--next');
       const thumbnails = sectionEl.querySelectorAll('.sk-hero-thumb img');
+      const heroMediaMain = sectionEl.querySelector('.sk-hero-media-main');
 
       const swiperOptions = {
         slidesPerView: 1,
@@ -434,15 +439,22 @@
         });
       }
 
+      function scrollHeroIntoView() {
+        if (!heroMediaMain) return;
+        heroMediaMain.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
       updateActiveThumb(heroSwiper.activeIndex || 0);
 
       heroSwiper.on('slideChange', function () {
         updateActiveThumb(heroSwiper.activeIndex);
+        scrollHeroIntoView();
       });
 
       thumbnails.forEach((thumb, index) => {
         thumb.addEventListener('click', function () {
           heroSwiper.slideTo(index);
+          scrollHeroIntoView();
         });
       });
     });

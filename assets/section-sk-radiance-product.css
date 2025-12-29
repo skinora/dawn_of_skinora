@@ -382,8 +382,8 @@
 }
 .sk-radiance-price-item--sale {
   color: var(--color-black);
-  font-weight: 700;
-  font-size: calc(var(--sk-font-size-xl) * 0.95);
+  font-weight: 800;
+  font-size: clamp(1.75rem, 2vw, 2.2rem);
 }
 .sk-radiance-sticky-bottom-bar .sk-radiance-price-item--sale {
   color: var(--color-white);
