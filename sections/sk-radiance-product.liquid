@@ -32,60 +32,62 @@
            HERO SECTION
       ==========================
     -->
-    {% if product_info.radiance_heading
-      or product_info.radiance_subheading
-      or product_info.radiance_content
-      or product_info.radiance_image
-    %}
-      <section class="sk-product-radiance-hero">
-        <div class="sk-hero-grid">
-          {% if product_info.radiance_image %}
-            <div class="sk-hero-image">
-              <img
-                src="{{ product_info.radiance_image | image_url: width: 720 }}"
-                alt="{{ product_info.radiance_heading | escape }}"
-                width="720"
-                height="720"
-                loading="lazy"
-              >
-            </div>
+    {% comment %}
+      {% if product_info.radiance_heading
+        or product_info.radiance_subheading
+        or product_info.radiance_content
+        or product_info.radiance_image
+      %}
+    {% endcomment %}
+    <section class="sk-product-radiance-hero">
+      <div class="sk-hero-grid">
+        {% if product_info.radiance_image %}
+          <div class="sk-hero-image">
+            <img
+              src="{{ product_info.radiance_image | image_url: width: 720 }}"
+              alt="{{ product_info.radiance_heading | escape }}"
+              width="720"
+              height="720"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+
+        <div class="sk-hero-content">
+          {% if product_info.radiance_eyebrow %}
+            <p class="sk-eyebrow">
+              {{ product_info.radiance_eyebrow }}
+            </p>
           {% endif %}
 
-          <div class="sk-hero-content">
-            {% if product_info.radiance_eyebrow %}
-              <p class="sk-eyebrow">
-                {{ product_info.radiance_eyebrow }}
-              </p>
-            {% endif %}
+          <h1 class="sk-product-title">
+            {{ product_info.radiance_heading | default: product.title }}
+          </h1>
 
-            <h1 class="sk-product-title">
-              {{ product_info.radiance_heading | default: product.title }}
-            </h1>
+          {% if product_info.radiance_subheading %}
+            <p class="sk-product-subtitle">
+              {{ product_info.radiance_subheading }}
+            </p>
+          {% endif %}
 
-            {% if product_info.radiance_subheading %}
-              <p class="sk-product-subtitle">
-                {{ product_info.radiance_subheading }}
-              </p>
-            {% endif %}
-
-            <!-- Reviews (Okendo) -->
-            <div class="sk-product-reviews">
-              {% for block in section.blocks %}
-                {% if block.type == '@app' %}
-                  {% render block %}
-                {% endif %}
-              {% endfor %}
-            </div>
-
-            {% if product_info.radiance_content %}
-              <div class="sk-hero-copy">
-                {{ product_info.radiance_content | metafield_tag }}
-              </div>
-            {% endif %}
+          <!-- Reviews (Okendo) -->
+          <div class="sk-product-reviews">
+            {% for block in section.blocks %}
+              {% if block.type == '@app' %}
+                {% render block %}
+              {% endif %}
+            {% endfor %}
           </div>
+
+          {% if product_info.radiance_content %}
+            <div class="sk-hero-copy">
+              {{ product_info.radiance_content | metafield_tag }}
+            </div>
+          {% endif %}
         </div>
-      </section>
-    {% endif %}
+      </div>
+    </section>
+    {% comment %} {% endif %} {% endcomment %}
 
     <!--
       =========================
