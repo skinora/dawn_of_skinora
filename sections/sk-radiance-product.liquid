@@ -296,25 +296,27 @@
               <span>2-year warranty</span>
             </div>
 
-            {% comment %} {% if product_info.trust_badges != blank and product_info.trust_badges.value != blank %} {% endcomment %}
-            <div class="sk-payment sk-trust-icons">
-              {% for badge in product_info.trust_badges.value %}
-                {% assign badge_src = badge.url | default: badge.image | default: badge.src | default: badge %}
-                {% assign badge_alt = badge.alt | default: badge.alt_text | default: 'Trust badge' %}
-                {% if badge_src != blank %}
-                  <span class="sk-trust-icon">
-                    <img
-                      src="{{ badge_src | image_url }}"
-                      alt="{{ badge_alt }}"
-                      width="auto"
-                      height="22"
-                      loading="lazy"
-                    >
-                  </span>
-                {% endif %}
-              {% endfor %}
-            </div>
-            {% comment %} {% endif %} {% endcomment %}
+            {% assign trust_badges_source = product_info.trust_badges | default: blank %}
+            {% assign trust_badges_value = trust_badges_source.value | default: trust_badges_source %}
+            {% if trust_badges_value != blank %}
+              <div class="sk-payment sk-trust-icons">
+                {% for badge in trust_badges_value %}
+                  {% assign badge_src = badge.url | default: badge.image | default: badge.src | default: badge %}
+                  {% assign badge_alt = badge.alt | default: badge.alt_text | default: 'Trust badge' %}
+                  {% if badge_src != blank %}
+                    <span class="sk-trust-icon">
+                      <img
+                        src="{{ badge_src | image_url }}"
+                        alt="{{ badge_alt }}"
+                        width="auto"
+                        height="22"
+                        loading="lazy"
+                      >
+                    </span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
 
             <!-- WHAT YOU SHOULD KNOW -->
             {% if product_info.radiance_content.value != blank %}
