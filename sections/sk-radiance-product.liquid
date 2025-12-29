@@ -15,7 +15,6 @@
     gap: 2rem;
   }
 
-  /* Desktop */
   @media (min-width: 990px) {
     .sk-hero-grid {
       grid-template-columns: 1.1fr 0.9fr;
@@ -28,15 +27,34 @@
    MEDIA
 ============================= */
 
-  .sk-hero-media img {
+  .sk-hero-media-main img {
     width: 100%;
     height: auto;
     border-radius: 16px;
     display: block;
   }
 
+  .sk-hero-gallery {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .sk-hero-thumb img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    opacity: 0.85;
+  }
+
+  .sk-hero-thumb img:hover {
+    opacity: 1;
+  }
+
   /* =============================
-   CONTENT
+   CONTENT (unchanged)
 ============================= */
 
   .sk-eyebrow {
@@ -87,7 +105,7 @@
   }
 
   /* =============================
-   PURCHASE
+   PURCHASE / TRUST
 ============================= */
 
   .sk-purchase {
@@ -95,60 +113,6 @@
     flex-direction: column;
     gap: 1.25rem;
   }
-
-  .sk-option-group {
-    border: 1px solid #e2e2ea;
-    border-radius: 14px;
-    padding: 1rem;
-  }
-
-  .sk-option-group--highlight {
-    border-color: #487ab7;
-    background: #f4f7fb;
-  }
-
-  .sk-option {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .sk-option label {
-    font-weight: 500;
-  }
-
-  .sk-price {
-    font-size: 1.4rem;
-    font-weight: 600;
-  }
-
-  /* =============================
-   WHAT YOU SHOULD KNOW
-============================= */
-
-  .sk-hero-info {
-    margin-top: 2.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid #ececf2;
-  }
-
-  .sk-hero-info h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .sk-hero-info ul {
-    padding-left: 1.2rem;
-    color: #3f3f46;
-  }
-
-  .sk-hero-info li {
-    margin-bottom: 0.5rem;
-  }
-
-  /* =============================
-   TRUST
-============================= */
 
   .sk-trust-inline {
     display: flex;
@@ -158,38 +122,28 @@
     color: #5b5b66;
   }
 
-  .sk-payment {
-    margin-top: 0.75rem;
-    opacity: 0.7;
-  }
-
   .sk-trust-icons {
     display: flex;
     gap: 0.75rem;
     align-items: center;
     flex-wrap: wrap;
+    opacity: 0.7;
   }
 
   .sk-trust-icon img {
     height: 22px;
     width: auto;
     display: block;
-    opacity: 0.7;
   }
 
   /* =============================
-   MOBILE STICKY CTA (OPTIONAL)
+   INFO
 ============================= */
 
-  @media (max-width: 989px) {
-    .sk-sticky-cta {
-      position: sticky;
-      bottom: 0;
-      background: #fff;
-      padding: 1rem;
-      border-top: 1px solid #e5e5ef;
-      z-index: 10;
-    }
+  .sk-hero-info {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid #ececf2;
   }
 </style>
 
@@ -198,6 +152,7 @@
 -%}
 {%- assign product_info = product_info_reference.value -%}
 {%- assign product_form_id = 'product-form-' | append: section.id -%}
+{%- assign media_images = product.media | where: 'media_type', 'image' -%}
 
 <product-info
   id="MainProduct-{{ section.id }}"
@@ -205,23 +160,40 @@
   data-url="{{ product.url }}"
 >
   <div class="page-width">
-    <!-- ================= HERO ================= -->
     <section class="sk-product-hero">
       <div class="sk-hero-grid">
-        <!-- MEDIA -->
+        <!-- ================= LEFT: CANONICAL MEDIA ================= -->
+
         <div class="sk-hero-media">
-          {% if product_info.radiance_image.value != blank %}
-            <img
-              src="{{ product_info.radiance_image.value | image_url: width: 900 }}"
-              alt="{{ product.title | escape }}"
-              width="900"
-              height="900"
-              loading="lazy"
-            >
+          {% if media_images.size > 0 %}
+            {% assign hero_image = media_images.first %}
+
+            <div class="sk-hero-media-main">
+              <img
+                src="{{ hero_image | image_url: width: 900 }}"
+                alt="{{ hero_image.alt | default: product.title | append: ' LED light therapy device' }}"
+                loading="lazy"
+              >
+            </div>
+
+            {% if media_images.size > 1 %}
+              <div class="sk-hero-gallery">
+                {% for image in media_images offset: 1 %}
+                  <div class="sk-hero-thumb">
+                    <img
+                      src="{{ image | image_url: width: 150 }}"
+                      alt="{{ image.alt | default: product.title }}"
+                      loading="lazy"
+                    >
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
           {% endif %}
         </div>
 
-        <!-- CONTENT -->
+        <!-- ================= RIGHT: METAOBJECT CONTENT ================= -->
+
         <div class="sk-hero-content">
           {% if product_info.radiance_eyebrow.value != blank %}
             <p class="sk-eyebrow">{{ product_info.radiance_eyebrow.value }}</p>
@@ -247,36 +219,10 @@
           </div>
 
           <!-- PILLS -->
-          {% assign radiance_pills_raw = product_info.radiance_pills.value | strip %}
-
-          {% if radiance_pills_raw != blank %}
-            {% comment %}
-              Handle JSON-style array:
-              ["pill one", "pill two", "pill three"]
-            {% endcomment %}
-
-            {% assign pills_clean = radiance_pills_raw %}
-
-            {% if pills_clean contains '[' and pills_clean contains ']' %}
-              {% assign pills_clean = pills_clean | remove: '[' | remove: ']' %}
-              {% assign pills_clean = pills_clean
-                | replace: '","', '|||'
-                | replace: '", "', '|||'
-                | replace: '",', '|||'
-                | replace: ',"', '|||'
-              %}
-              {% assign pills_clean = pills_clean | replace: '"', '' %}
-              {% assign pills = pills_clean | split: '|||' %}
-            {% else %}
-              {% assign pills = pills_clean | split: '\n' %}
-            {% endif %}
-
+          {% if product_info.radiance_pills.value != blank %}
             <div class="sk-radiance-pills">
-              {% for pill in pills %}
-                {% assign pill_text = pill | strip %}
-                {% if pill_text != blank %}
-                  <span class="sk-pill">{{ pill_text }}</span>
-                {% endif %}
+              {% for pill in product_info.radiance_pills.value %}
+                <span class="sk-pill">{{ pill }}</span>
               {% endfor %}
             </div>
           {% endif %}
@@ -301,14 +247,14 @@
             {% if trust_badges_value != blank %}
               <div class="sk-payment sk-trust-icons">
                 {% for badge in trust_badges_value %}
-                  {% assign badge_src = badge.url | default: badge.image | default: badge.src | default: badge %}
+                  {% assign badge_img = badge.url | default: badge.image | default: badge.src | default: badge %}
                   {% assign badge_alt = badge.alt | default: badge.alt_text | default: 'Trust badge' %}
-                  {% if badge_src != blank %}
+                  {% if badge_img != blank %}
                     <span class="sk-trust-icon">
                       <img
-                        src="{{ badge_src | image_url }}"
+                        src="{{ badge_img | image_url: width: 60 }}"
                         alt="{{ badge_alt }}"
-                        width="auto"
+                        width="60"
                         height="22"
                         loading="lazy"
                       >
@@ -318,7 +264,6 @@
               </div>
             {% endif %}
 
-            <!-- WHAT YOU SHOULD KNOW -->
             {% if product_info.radiance_content.value != blank %}
               <div class="sk-hero-info">
                 {{ product_info.radiance_content | metafield_tag }}
@@ -330,7 +275,6 @@
     </section>
   </div>
 
-  <!-- JSON-LD -->
   <script type="application/ld+json">
     {{ product | structured_data }}
   </script>
