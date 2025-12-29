@@ -163,6 +163,20 @@
     opacity: 0.7;
   }
 
+  .sk-trust-icons {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .sk-trust-icon img {
+    height: 22px;
+    width: auto;
+    display: block;
+    opacity: 0.7;
+  }
+
   /* =============================
    MOBILE STICKY CTA (OPTIONAL)
 ============================= */
@@ -183,6 +197,7 @@
   | default: product.metafields.product_info
 -%}
 {%- assign product_info = product_info_reference.value -%}
+{%- assign product_form_id = 'product-form-' | append: section.id -%}
 
 <product-info
   id="MainProduct-{{ section.id }}"
@@ -281,17 +296,33 @@
               <span>2-year warranty</span>
             </div>
 
-            <div class="sk-payment">
-              {{ product_info.trust_badges | metafield_tag }}
+            {% comment %} {% if product_info.trust_badges != blank and product_info.trust_badges.value != blank %} {% endcomment %}
+            <div class="sk-payment sk-trust-icons">
+              {% for badge in product_info.trust_badges.value %}
+                {% assign badge_src = badge.url | default: badge.image | default: badge.src | default: badge %}
+                {% assign badge_alt = badge.alt | default: badge.alt_text | default: 'Trust badge' %}
+                {% if badge_src != blank %}
+                  <span class="sk-trust-icon">
+                    <img
+                      src="{{ badge_src | image_url }}"
+                      alt="{{ badge_alt }}"
+                      width="auto"
+                      height="22"
+                      loading="lazy"
+                    >
+                  </span>
+                {% endif %}
+              {% endfor %}
             </div>
-          </div>
+            {% comment %} {% endif %} {% endcomment %}
 
-          <!-- WHAT YOU SHOULD KNOW -->
-          {% if product_info.radiance_content.value != blank %}
-            <div class="sk-hero-info">
-              {{ product_info.radiance_content | metafield_tag }}
-            </div>
-          {% endif %}
+            <!-- WHAT YOU SHOULD KNOW -->
+            {% if product_info.radiance_content.value != blank %}
+              <div class="sk-hero-info">
+                {{ product_info.radiance_content | metafield_tag }}
+              </div>
+            {% endif %}
+          </div>
         </div>
       </div>
     </section>
