@@ -40,6 +40,18 @@
     border-radius: 16px;
   }
 
+  .sk-hero-media-swiper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .sk-hero-media-swiper .swiper,
+  .sk-hero-media-swiper .swiper-slide {
+    width: 100%;
+    height: 100%;
+  }
+
   .sk-hero-media-main img,
   .sk-hero-thumb img {
     width: 100%;
@@ -78,6 +90,32 @@
 
   .sk-hero-thumb img:hover {
     opacity: 1;
+  }
+
+  .sk-hero-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .sk-hero-arrow--prev {
+    left: 1rem;
+  }
+
+  .sk-hero-arrow--next {
+    right: 1rem;
   }
 
   /* =============================
@@ -222,44 +260,52 @@
   data-url="{{ product.url }}"
 >
   <div class="page-width">
-    <section class="sk-product-hero">
+    <section class="sk-product-hero" id="sk-radiance-product-hero-{{ section.id }}">
       <div class="sk-hero-grid">
         <!-- ================= LEFT: CANONICAL MEDIA ================= -->
-
         <div class="sk-hero-media">
           {% if media_images.size > 0 %}
-            {% assign hero_image = media_images.first %}
-
             <div class="sk-hero-media-main">
-              <img
-                id="sk-main-product-image"
-                src="{{ hero_image | image_url: width: 900 }}"
-                alt="{{ hero_image.alt | default: product.title | append: ' LED light therapy device' }}"
-                width="{{ hero_image.width }}"
-                height="{{ hero_image.height }}"
-                loading="lazy"
-              >
-            </div>
-
-            {% if media_images.size > 0 %}
-              <div class="sk-hero-gallery-wrapper">
-                <div class="sk-hero-gallery">
+              <div class="sk-hero-media-swiper swiper">
+                <div class="swiper-wrapper">
                   {% for image in media_images %}
-                    <div class="sk-hero-thumb">
+                    <div class="swiper-slide">
                       <img
-                        class="{% if forloop.first %}is-active{% endif %}"
-                        src="{{ image | image_url: width: 120 }}"
-                        data-full="{{ image | image_url: width: 900 }}"
-                        alt="{{ image.alt | default: product.title }}"
-                        width="120"
-                        height="120"
+                        src="{{ image | image_url: width: 900 }}"
+                        alt="{{ image.alt | default: product.title | append: ' LED light therapy device' }}"
+                        width="900"
+                        height="900"
                         loading="lazy"
                       >
                     </div>
                   {% endfor %}
                 </div>
+                {% if media_images.size > 1 %}
+                  <button class="sk-hero-arrow sk-hero-arrow--prev" type="button" aria-label="Previous hero image">
+                    ‹
+                  </button>
+                  <button class="sk-hero-arrow sk-hero-arrow--next" type="button" aria-label="Next hero image">
+                    ›
+                  </button>
+                {% endif %}
               </div>
-            {% endif %}
+            </div>
+
+            <div class="sk-hero-gallery-wrapper">
+              <div class="sk-hero-gallery">
+                {% for image in media_images %}
+                  <div class="sk-hero-thumb">
+                    <img
+                      src="{{ image | image_url: width: 120 }}"
+                      alt="{{ image.alt | default: product.title }}"
+                      width="120"
+                      height="120"
+                      loading="lazy"
+                    >
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
           {% endif %}
         </div>
 
@@ -351,21 +397,52 @@
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const mainImage = document.getElementById('sk-main-product-image');
-      if (!mainImage) return;
+      if (typeof Swiper === 'undefined') return;
 
-      const thumbs = document.querySelectorAll('.sk-hero-thumb img');
+      const sectionEl = document.getElementById('sk-radiance-product-hero-{{ section.id }}');
+      if (!sectionEl) return;
 
-      thumbs.forEach((thumb) => {
+      const swiperRoot = sectionEl.querySelector('.sk-hero-media-swiper');
+      if (!swiperRoot) return;
+
+      const swiperElement = swiperRoot.querySelector('.swiper');
+      if (!swiperElement) return;
+
+      const prevButton = swiperRoot.querySelector('.sk-hero-arrow--prev');
+      const nextButton = swiperRoot.querySelector('.sk-hero-arrow--next');
+      const thumbnails = sectionEl.querySelectorAll('.sk-hero-thumb img');
+
+      const swiperOptions = {
+        slidesPerView: 1,
+        loop: false,
+        allowTouchMove: true,
+        speed: 400,
+      };
+
+      if (prevButton && nextButton) {
+        swiperOptions.navigation = {
+          prevEl: prevButton,
+          nextEl: nextButton,
+        };
+      }
+
+      const heroSwiper = new Swiper(swiperElement, swiperOptions);
+
+      function updateActiveThumb(index) {
+        thumbnails.forEach((thumb, thumbIndex) => {
+          thumb.classList.toggle('is-active', thumbIndex === index);
+        });
+      }
+
+      updateActiveThumb(heroSwiper.activeIndex || 0);
+
+      heroSwiper.on('slideChange', function () {
+        updateActiveThumb(heroSwiper.activeIndex);
+      });
+
+      thumbnails.forEach((thumb, index) => {
         thumb.addEventListener('click', function () {
-          const fullSrc = this.getAttribute('data-full');
-          if (!fullSrc) return;
-
-          mainImage.src = fullSrc;
-          mainImage.removeAttribute('srcset');
-
-          thumbs.forEach((t) => t.classList.remove('is-active'));
-          this.classList.add('is-active');
+          heroSwiper.slideTo(index);
         });
       });
     });
