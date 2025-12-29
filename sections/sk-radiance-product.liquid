@@ -1,173 +1,291 @@
 {{ 'section-sk-radiance-product.css' | asset_url | stylesheet_tag }}
 
 <style>
-  .sk-radiance-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin: 1rem 0;
+/* =============================
+   BASE LAYOUT
+============================= */
+
+.sk-product-hero {
+  padding: 2rem 0 3rem;
+}
+
+.sk-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+/* Desktop */
+@media (min-width: 990px) {
+  .sk-hero-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: start;
+    gap: 3rem;
   }
-  .sk-pill {
-    border: 2px solid #d4d4dc;
-    border-radius: 999px;
-    padding: 0.6rem 1.2rem;
-    font-weight: 600;
-    font-size: 0.95rem;
+}
+
+/* =============================
+   MEDIA
+============================= */
+
+.sk-hero-media img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  display: block;
+}
+
+/* =============================
+   CONTENT
+============================= */
+
+.sk-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b6b76;
+  margin-bottom: 0.5rem;
+}
+
+.sk-product-title {
+  font-size: 2rem;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 990px) {
+  .sk-product-title {
+    font-size: 2.4rem;
+  }
+}
+
+.sk-product-subtitle {
+  font-size: 1.05rem;
+  color: #3a3a42;
+  margin-bottom: 1.25rem;
+  max-width: 42ch;
+}
+
+/* =============================
+   PILLS
+============================= */
+
+.sk-radiance-pills {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+}
+
+.sk-pill {
+  border: 1.5px solid #d4d4dc;
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: #fff;
+}
+
+/* =============================
+   PURCHASE
+============================= */
+
+.sk-purchase {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sk-option-group {
+  border: 1px solid #e2e2ea;
+  border-radius: 14px;
+  padding: 1rem;
+}
+
+.sk-option-group--highlight {
+  border-color: #487ab7;
+  background: #f4f7fb;
+}
+
+.sk-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sk-option label {
+  font-weight: 500;
+}
+
+.sk-price {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+/* =============================
+   WHAT YOU SHOULD KNOW
+============================= */
+
+.sk-hero-info {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #ececf2;
+}
+
+.sk-hero-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.sk-hero-info ul {
+  padding-left: 1.2rem;
+  color: #3f3f46;
+}
+
+.sk-hero-info li {
+  margin-bottom: 0.5rem;
+}
+
+/* =============================
+   TRUST
+============================= */
+
+.sk-trust-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: #5b5b66;
+}
+
+.sk-payment {
+  margin-top: 0.75rem;
+  opacity: 0.7;
+}
+
+/* =============================
+   MOBILE STICKY CTA (OPTIONAL)
+============================= */
+
+@media (max-width: 989px) {
+  .sk-sticky-cta {
+    position: sticky;
+    bottom: 0;
     background: #fff;
+    padding: 1rem;
+    border-top: 1px solid #e5e5ef;
+    z-index: 10;
   }
+}
 </style>
 
-{%- assign product_info_reference = product.metafields.custom.product_info -%}
-{%- if product_info_reference == blank -%}
-  {%- assign product_info_reference = product.metafields.product_info -%}
-{%- endif -%}
-{%- assign product_info_entry = blank -%}
-{%- assign hero_heading = '' -%}
-{%- assign hero_subheading = '' -%}
-{%- assign hero_eyebrow = '' -%}
-{%- assign hero_image = blank -%}
-{%- assign hero_content_meta = blank -%}
-{%- assign hero_pills_source = blank -%}
-{%- assign hero_trust_badges = blank -%}
-{%- assign has_hero_content = false -%}
-{%- assign show_hero = false -%}
-{%- assign show_trust_badges = false -%}
-{%- assign product_form_id = 'product-form-' | append: section.id -%}
-
-{%- if product_info_reference != blank and product_info_reference.value != blank -%}
-  {%- assign product_info_entry = product_info_reference.value -%}
-  {%- assign hero_heading = product_info_entry.radiance_heading.value | default: '' -%}
-  {%- assign hero_subheading = product_info_entry.radiance_subheading.value | default: '' -%}
-  {%- assign hero_eyebrow = product_info_entry.radiance_eyebrow.value | default: '' -%}
-  {%- assign hero_image = product_info_entry.radiance_image.value -%}
-  {%- assign hero_content_meta = product_info_entry.radiance_content -%}
-  {%- assign hero_pills_source = product_info_entry.radiance_pills.value -%}
-  {%- assign hero_trust_badges = product_info_entry.trust_badges -%}
-  {%- if hero_content_meta != blank and hero_content_meta.value != blank -%}
-    {%- assign has_hero_content = true -%}
-  {%- endif -%}
-  {%- if hero_heading != blank
-    or hero_subheading != blank
-    or hero_eyebrow != blank
-    or hero_image != blank
-    or has_hero_content
-  -%}
-    {%- assign show_hero = true -%}
-  {%- endif -%}
-  {%- if hero_trust_badges != blank and hero_trust_badges.value != blank -%}
-    {%- assign show_trust_badges = true -%}
-  {%- endif -%}
-{%- endif -%}
+{%- assign product_info_reference = product.metafields.custom.product_info | default: product.metafields.product_info -%}
+{%- assign product_info = product_info_reference.value -%}
 
 <product-info
   id="MainProduct-{{ section.id }}"
-  class="section-{{ section.id }}-padding"
   data-product-id="{{ product.id }}"
   data-url="{{ product.url }}"
 >
   <div class="page-width">
-    <!--
-      =========================
-           HERO SECTION
-      ==========================
-    -->
-    {% if show_hero %}
-      <section class="sk-product-radiance-hero">
-        <div class="sk-hero-grid">
-          {% if hero_image != blank %}
-            <div class="sk-hero-image">
-              <img
-                src="{{ hero_image | image_url: width: 720 }}"
-                alt="{{ hero_heading | default: product.title | escape }}"
-                width="720"
-                height="720"
-                loading="lazy"
-              >
-            </div>
+
+    <!-- ================= HERO ================= -->
+    <section class="sk-product-hero">
+      <div class="sk-hero-grid">
+
+        <!-- MEDIA -->
+        <div class="sk-hero-media">
+          {% if product_info.radiance_image.value != blank %}
+            <img
+              src="{{ product_info.radiance_image.value | image_url: width: 900 }}"
+              alt="{{ product.title | escape }}"
+              width="900"
+              height="900"
+              loading="lazy"
+            >
+          {% endif %}
+        </div>
+
+        <!-- CONTENT -->
+        <div class="sk-hero-content">
+
+          {% if product_info.radiance_eyebrow.value != blank %}
+            <p class="sk-eyebrow">{{ product_info.radiance_eyebrow.value }}</p>
           {% endif %}
 
-          <div class="sk-hero-content">
-            {% if hero_eyebrow != blank %}
-              <p class="sk-eyebrow">
-                {{ hero_eyebrow }}
-              </p>
-            {% endif %}
+          <h1 class="sk-product-title">
+            {{ product_info.radiance_heading.value | default: product.title }}
+          </h1>
 
-            <h1 class="sk-product-title">
-              {{ hero_heading | default: product.title }}
-            </h1>
+          {% if product_info.radiance_subheading.value != blank %}
+            <p class="sk-product-subtitle">
+              {{ product_info.radiance_subheading.value }}
+            </p>
+          {% endif %}
 
-            {% if hero_subheading != blank %}
-              <p class="sk-product-subtitle">
-                {{ hero_subheading }}
-              </p>
-            {% endif %}
+          <!-- REVIEWS -->
+          <div class="sk-product-reviews">
+            {% for block in section.blocks %}
+              {% if block.type == '@app' %}
+                {% render block %}
+              {% endif %}
+            {% endfor %}
+          </div>
 
-            <!-- Reviews (Okendo) -->
-            <div class="sk-product-reviews">
-              {% for block in section.blocks %}
-                {% if block.type == '@app' %}
-                  {% render block %}
+          <!-- PILLS -->
+          {% if product_info.radiance_pills.value != blank %}
+            <div class="sk-radiance-pills">
+              {% assign pills = product_info.radiance_pills.value | split: '\n' %}
+              {% for pill in pills %}
+                {% if pill != blank %}
+                  <span class="sk-pill">{{ pill | strip }}</span>
                 {% endif %}
               {% endfor %}
             </div>
+          {% endif %}
 
-            {% if has_hero_content %}
-              <div class="sk-hero-copy">
-                {{ hero_content_meta | metafield_tag }}
-              </div>
-            {% endif %}
+          <!-- PURCHASE -->
+          <div class="sk-purchase">
+
+            {% render 'sk-radiance-product-variant-picker',
+              product: product,
+              product_form_id: product_form_id
+            %}
+
+            {% render 'sk-radiance-quantity',
+              product: product,
+              product_form_id: product_form_id,
+              section: section
+            %}
+
+            {% render 'sk-radiance-buy-buttons',
+              product: product,
+              product_form_id: product_form_id
+            %}
+
+            <div class="sk-trust-inline">
+              <span>Free shipping</span>
+              <span>30-day returns</span>
+              <span>Secure checkout</span>
+              <span>2-year warranty</span>
+            </div>
+
+            <div class="sk-payment">
+              {{ product_info.trust_badges | metafield_tag }}
+            </div>
           </div>
-        </div>
-      </section>
-    {% endif %}
 
-    <!--
-      =========================
-           PRODUCT CORE
-      ==========================
-    -->
-    <section class="sk-product-core">
-      <!-- PRICE -->
-      <div class="sk-product-price">
-        {% render 'sk-radiance-price',
-          product: product,
-          use_variant: true,
-          show_badges: true,
-          price_class: 'price--large'
-        %}
+          <!-- WHAT YOU SHOULD KNOW -->
+          {% if product_info.radiance_content.value != blank %}
+            <div class="sk-hero-info">
+              {{ product_info.radiance_content | metafield_tag }}
+            </div>
+          {% endif %}
+
+        </div>
       </div>
-
-      <!-- PILLS -->
-      {% if hero_pills_source != blank %}
-        <div class="sk-radiance-pills" role="list">
-          {% assign pills = hero_pills_source | split: '\n' %}
-          {% for pill in pills %}
-            {% if pill != blank %}
-              <span class="sk-pill">{{ pill | strip }}</span>
-            {% endif %}
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      <!-- VARIANTS -->
-      {% if product.variants.size > 1 %}
-        {% render 'sk-radiance-product-variant-picker', product: product, product_form_id: product_form_id %}
-      {% endif %}
-
-      <!-- QUANTITY -->
-      {% render 'sk-radiance-quantity', product: product, product_form_id: product_form_id, section: section %}
-
-      <!-- BUY BUTTON -->
-      {% render 'sk-radiance-buy-buttons', product: product, product_form_id: product_form_id %}
-
-      <!-- TRUST BADGES -->
-      {% if show_trust_badges %}
-        <div class="sk-trust-badges">
-          {{ hero_trust_badges | metafield_tag }}
-        </div>
-      {% endif %}
     </section>
+
   </div>
 
   <!-- JSON-LD -->
@@ -178,14 +296,10 @@
 
 {% schema %}
 {
-  "name": "SK Radiance Product",
+  "name": "SK Radiance Product Hero",
   "tag": "section",
   "class": "section",
-  "blocks": [
-    {
-      "type": "@app"
-    }
-  ],
+  "blocks": [{ "type": "@app" }],
   "settings": []
 }
 {% endschema %}
