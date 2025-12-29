@@ -18,6 +18,9 @@
 </style>
 
 {%- assign product_info_reference = product.metafields.custom.product_info -%}
+{%- if product_info_reference == blank -%}
+  {%- assign product_info_reference = product.metafields.product_info -%}
+{%- endif -%}
 {%- assign product_info_entry = blank -%}
 {%- assign hero_heading = '' -%}
 {%- assign hero_subheading = '' -%}
