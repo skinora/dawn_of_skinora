@@ -232,12 +232,35 @@
           </div>
 
           <!-- PILLS -->
-          {% if product_info.radiance_pills.value != blank %}
+          {% assign radiance_pills_raw = product_info.radiance_pills.value | strip %}
+
+          {% if radiance_pills_raw != blank %}
+            {% comment %}
+              Handle JSON-style array:
+              ["pill one", "pill two", "pill three"]
+            {% endcomment %}
+
+            {% assign pills_clean = radiance_pills_raw %}
+
+            {% if pills_clean contains '[' and pills_clean contains ']' %}
+              {% assign pills_clean = pills_clean | remove: '[' | remove: ']' %}
+              {% assign pills_clean = pills_clean
+                | replace: '","', '|||'
+                | replace: '", "', '|||'
+                | replace: '",', '|||'
+                | replace: ',"', '|||'
+              %}
+              {% assign pills_clean = pills_clean | replace: '"', '' %}
+              {% assign pills = pills_clean | split: '|||' %}
+            {% else %}
+              {% assign pills = pills_clean | split: '\n' %}
+            {% endif %}
+
             <div class="sk-radiance-pills">
-              {% assign pills = product_info.radiance_pills.value | split: '\n' %}
               {% for pill in pills %}
-                {% if pill != blank %}
-                  <span class="sk-pill">{{ pill | strip }}</span>
+                {% assign pill_text = pill | strip %}
+                {% if pill_text != blank %}
+                  <span class="sk-pill">{{ pill_text }}</span>
                 {% endif %}
               {% endfor %}
             </div>
@@ -245,22 +268,11 @@
 
           <!-- PURCHASE -->
           <div class="sk-purchase">
+            {% render 'sk-radiance-product-variant-picker', product: product, product_form_id: product_form_id %}
 
-            {% render 'sk-radiance-product-variant-picker',
-              product: product,
-              product_form_id: product_form_id
-            %}
+            {% render 'sk-radiance-quantity', product: product, product_form_id: product_form_id, section: section %}
 
-            {% render 'sk-radiance-quantity',
-              product: product,
-              product_form_id: product_form_id,
-              section: section
-            %}
-
-            {% render 'sk-radiance-buy-buttons',
-              product: product,
-              product_form_id: product_form_id
-            %}
+            {% render 'sk-radiance-buy-buttons', product: product, product_form_id: product_form_id %}
 
             <div class="sk-trust-inline">
               <span>Free shipping</span>
@@ -280,11 +292,9 @@
               {{ product_info.radiance_content | metafield_tag }}
             </div>
           {% endif %}
-
         </div>
       </div>
     </section>
-
   </div>
 
   <!-- JSON-LD -->
