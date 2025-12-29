@@ -17,8 +17,44 @@
   }
 </style>
 
-{%- assign product_info = product.metafields.custom.product_info -%}
+{%- assign product_info_reference = product.metafields.custom.product_info -%}
+{%- assign product_info_entry = blank -%}
+{%- assign hero_heading = '' -%}
+{%- assign hero_subheading = '' -%}
+{%- assign hero_eyebrow = '' -%}
+{%- assign hero_image = blank -%}
+{%- assign hero_content_meta = blank -%}
+{%- assign hero_pills_source = blank -%}
+{%- assign hero_trust_badges = blank -%}
+{%- assign has_hero_content = false -%}
+{%- assign show_hero = false -%}
+{%- assign show_trust_badges = false -%}
 {%- assign product_form_id = 'product-form-' | append: section.id -%}
+
+{%- if product_info_reference != blank and product_info_reference.value != blank -%}
+  {%- assign product_info_entry = product_info_reference.value -%}
+  {%- assign hero_heading = product_info_entry.radiance_heading.value | default: '' -%}
+  {%- assign hero_subheading = product_info_entry.radiance_subheading.value | default: '' -%}
+  {%- assign hero_eyebrow = product_info_entry.radiance_eyebrow.value | default: '' -%}
+  {%- assign hero_image = product_info_entry.radiance_image.value -%}
+  {%- assign hero_content_meta = product_info_entry.radiance_content -%}
+  {%- assign hero_pills_source = product_info_entry.radiance_pills.value -%}
+  {%- assign hero_trust_badges = product_info_entry.trust_badges -%}
+  {%- if hero_content_meta != blank and hero_content_meta.value != blank -%}
+    {%- assign has_hero_content = true -%}
+  {%- endif -%}
+  {%- if hero_heading != blank
+    or hero_subheading != blank
+    or hero_eyebrow != blank
+    or hero_image != blank
+    or has_hero_content
+  -%}
+    {%- assign show_hero = true -%}
+  {%- endif -%}
+  {%- if hero_trust_badges != blank and hero_trust_badges.value != blank -%}
+    {%- assign show_trust_badges = true -%}
+  {%- endif -%}
+{%- endif -%}
 
 <product-info
   id="MainProduct-{{ section.id }}"
@@ -32,18 +68,14 @@
            HERO SECTION
       ==========================
     -->
-    {% if product_info.radiance_heading
-      or product_info.radiance_subheading
-      or product_info.radiance_content
-      or product_info.radiance_image
-    %}
+    {% if show_hero %}
       <section class="sk-product-radiance-hero">
         <div class="sk-hero-grid">
-          {% if product_info.radiance_image %}
+          {% if hero_image != blank %}
             <div class="sk-hero-image">
               <img
-                src="{{ product_info.radiance_image | image_url: width: 720 }}"
-                alt="{{ product_info.radiance_heading | escape }}"
+                src="{{ hero_image | image_url: width: 720 }}"
+                alt="{{ hero_heading | default: product.title | escape }}"
                 width="720"
                 height="720"
                 loading="lazy"
@@ -52,19 +84,19 @@
           {% endif %}
 
           <div class="sk-hero-content">
-            {% if product_info.radiance_eyebrow %}
+            {% if hero_eyebrow != blank %}
               <p class="sk-eyebrow">
-                {{ product_info.radiance_eyebrow }}
+                {{ hero_eyebrow }}
               </p>
             {% endif %}
 
             <h1 class="sk-product-title">
-              {{ product_info.radiance_heading | default: product.title }}
+              {{ hero_heading | default: product.title }}
             </h1>
 
-            {% if product_info.radiance_subheading %}
+            {% if hero_subheading != blank %}
               <p class="sk-product-subtitle">
-                {{ product_info.radiance_subheading }}
+                {{ hero_subheading }}
               </p>
             {% endif %}
 
@@ -77,9 +109,9 @@
               {% endfor %}
             </div>
 
-            {% if product_info.radiance_content %}
+            {% if has_hero_content %}
               <div class="sk-hero-copy">
-                {{ product_info.radiance_content | metafield_tag }}
+                {{ hero_content_meta | metafield_tag }}
               </div>
             {% endif %}
           </div>
@@ -104,9 +136,9 @@
       </div>
 
       <!-- PILLS -->
-      {% if product_info.radiance_pills %}
+      {% if hero_pills_source != blank %}
         <div class="sk-radiance-pills" role="list">
-          {% assign pills = product_info.radiance_pills | split: '\n' %}
+          {% assign pills = hero_pills_source | split: '\n' %}
           {% for pill in pills %}
             {% if pill != blank %}
               <span class="sk-pill">{{ pill | strip }}</span>
@@ -127,9 +159,9 @@
       {% render 'sk-radiance-buy-buttons', product: product, product_form_id: product_form_id %}
 
       <!-- TRUST BADGES -->
-      {% if product_info.trust_badges %}
+      {% if show_trust_badges %}
         <div class="sk-trust-badges">
-          {{ product_info.trust_badges | metafield_tag }}
+          {{ hero_trust_badges | metafield_tag }}
         </div>
       {% endif %}
     </section>
