@@ -70,6 +70,30 @@
     gap: clamp(0.5rem, 1vw, 0.75rem);
   }
 
+  .sk-hero-progress {
+    display: none;
+    gap: 0.65rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .sk-hero-progress-dot {
+    width: clamp(12px, 2vw, 16px);
+    height: clamp(12px, 2vw, 16px);
+    border: 1px solid var(--color-neutral-4, #49494a);
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .sk-hero-progress-dot.is-active,
+  .sk-hero-progress-dot:focus-visible {
+    background: var(--color-brand, #30273e);
+    border-color: var(--color-brand, #30273e);
+  }
+
   .sk-hero-thumb {
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -214,6 +238,10 @@
       gap: 1.5rem;
     }
 
+    .sk-hero-progress {
+      display: flex;
+    }
+
     .sk-hero-media-main,
     .sk-hero-gallery-wrapper {
       width: min(750px, calc(100vw - 2rem));
@@ -249,11 +277,11 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
-  
+
   /* =============================
      STICKY BOTTOM BAR
   ============================= */
-  
+
   .sk-radiance-sticky-bottom-bar {
     position: fixed;
     bottom: 0;
@@ -267,18 +295,18 @@
     transition: transform 0.3s ease-in-out;
     padding: 1.35rem 0;
   }
-  
+
   .sk-radiance-sticky-bottom-bar.visible {
     transform: translateY(0);
   }
-  
+
   .sk-radiance-sticky-bottom-bar__content {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
   }
-  
+
   .sk-radiance-sticky-bottom-bar__info {
     display: flex;
     flex-direction: column;
@@ -286,7 +314,7 @@
     flex: 1;
     justify-content: center;
   }
-  
+
   .sk-radiance-sticky-bottom-bar__product-name {
     font-size: 28px;
     font-weight: 600;
@@ -298,28 +326,28 @@
     white-space: nowrap;
     padding-top: 1rem;
   }
-  
+
   .sk-radiance-sticky-bottom-bar__button {
     min-width: clamp(10rem, 24vw, 15rem);
     white-space: nowrap;
     justify-content: center;
   }
-  
+
   @media screen and (max-width: 749px) {
     .sk-radiance-sticky-bottom-bar {
       padding: 1rem 0;
     }
-  
+
     .sk-radiance-sticky-bottom-bar__content {
       flex-direction: column;
       gap: 0.75rem;
     }
-  
+
     .sk-radiance-sticky-bottom-bar__info {
       width: 100%;
       text-align: center;
     }
-  
+
     .sk-radiance-sticky-bottom-bar__product-name {
       font-size: var(--sk-font-size-medium);
       white-space: normal;
@@ -331,17 +359,17 @@
       -webkit-box-orient: vertical;
       line-clamp: 2;
     }
-  
+
     .sk-radiance-sticky-bottom-bar__price {
       justify-content: center;
     }
-  
+
     .sk-radiance-sticky-bottom-bar__button {
       width: 100%;
       min-width: auto;
     }
   }
-  
+
   body.cart-drawer-open .sk-radiance-sticky-bottom-bar,
   body.cart-drawer-open .sk-radiance-sticky-bottom-bar--portal {
     opacity: 0 !important;
@@ -349,18 +377,18 @@
     pointer-events: none !important;
     transform: translateY(100%) !important;
   }
-  
+
   @media screen and (min-width: 750px) and (max-width: 989px) {
     .sk-radiance-sticky-bottom-bar__product-name {
       font-size: var(--sk-font-size-medium);
     }
-  
+
     .sk-radiance-sticky-bottom-bar__button {
       min-width: 180px;
       padding: 0.875rem 1.5rem;
     }
   }
-  
+
   .sk-radiance-sticky-bottom-bar--portal {
     position: fixed !important;
     bottom: 0 !important;
@@ -371,15 +399,15 @@
     transform: translateY(100%);
     transition: transform 0.3s ease-in-out;
   }
-  
+
   .sk-radiance-sticky-bottom-bar--portal.visible {
     transform: translateY(0) !important;
   }
-  
+
   body.sk-sticky-bar-visible {
     padding-bottom: 72px;
   }
-  
+
   @media (max-width: 989px) {
     body.sk-sticky-bar-visible {
       padding-bottom: 100px;
@@ -446,6 +474,19 @@
                 {% endfor %}
               </div>
             </div>
+            {% if media_images.size > 1 %}
+              <div class="sk-hero-progress" role="tablist" aria-label="Hero swipe progress">
+                {% for image in media_images %}
+                  <button
+                    type="button"
+                    class="sk-hero-progress-dot{% if forloop.first %} is-active{% endif %}"
+                    data-media-index="{{ forloop.index0 }}"
+                    aria-label="View media {{ forloop.index }}"
+                    aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+                  ></button>
+                {% endfor %}
+              </div>
+            {% endif %}
           {% endif %}
         </div>
 
@@ -551,6 +592,7 @@
       const prevButton = swiperRoot.querySelector('.sk-hero-arrow--prev');
       const nextButton = swiperRoot.querySelector('.sk-hero-arrow--next');
       const thumbnails = sectionEl.querySelectorAll('.sk-hero-thumb img');
+      const progressDots = sectionEl.querySelectorAll('.sk-hero-progress-dot');
       const heroMediaMain = sectionEl.querySelector('.sk-hero-media-main');
 
       const swiperOptions = {
@@ -573,6 +615,17 @@
         thumbnails.forEach((thumb, thumbIndex) => {
           thumb.classList.toggle('is-active', thumbIndex === index);
         });
+
+        updateProgressDots(index);
+      }
+
+      function updateProgressDots(index) {
+        if (!progressDots.length) return;
+        progressDots.forEach((dot, dotIndex) => {
+          const isActive = dotIndex === index;
+          dot.classList.toggle('is-active', isActive);
+          dot.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
       }
 
       function scrollHeroIntoView() {
@@ -589,6 +642,13 @@
 
       thumbnails.forEach((thumb, index) => {
         thumb.addEventListener('click', function () {
+          heroSwiper.slideTo(index);
+          scrollHeroIntoView();
+        });
+      });
+
+      progressDots.forEach((dot, index) => {
+        dot.addEventListener('click', function () {
           heroSwiper.slideTo(index);
           scrollHeroIntoView();
         });
