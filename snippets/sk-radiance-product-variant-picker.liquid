@@ -9,44 +9,76 @@
     <fieldset class="sk-radiance-variant-selects__fieldset js product-form__input">
       <div class="sk-radiance-variant-cards">
         {%- for variant in product.variants -%}
-          <div class="sk-radiance-variant-card {% if variant.id == product.selected_or_first_available_variant.id %} sk-radiance-variant-card--active {% endif %}">
-            <a
-              href="{{ product.url }}?variant={{ variant.id }}"
-              class="sk-radiance-variant-card__link"
-            >
+          {%- assign is_active = false -%}
+          {%- if variant.id == product.selected_or_first_available_variant.id -%}
+            {%- assign is_active = true -%}
+          {%- endif -%}
+          {%- assign bundle_title_field = variant.metafields.custom.bundle_title -%}
+          {%- assign bundle_title = variant.title -%}
+          {%- if bundle_title_field -%}
+            {%- assign bundle_title = bundle_title_field.value | default: bundle_title_field | default: bundle_title -%}
+          {%- endif -%}
+          {%- assign variant_subtitle_field = variant.metafields.custom.variant_subtitle -%}
+          {%- assign variant_subtitle = '' -%}
+          {%- if variant_subtitle_field -%}
+            {%- assign variant_subtitle = variant_subtitle_field.value
+              | default: variant_subtitle_field
+              | default: variant_subtitle
+            -%}
+          {%- endif -%}
+          {%- assign popularity_flag = variant.metafields.custom.is_popular -%}
+          {%- assign popularity_value = popularity_flag.value | default: popularity_flag -%}
+          {%- assign is_popular = false -%}
+          {%- if popularity_value == true or popularity_value == 'true' -%}
+            {%- assign is_popular = true -%}
+          {%- endif -%}
+          <div class="sk-radiance-variant-card{% if is_active %} sk-radiance-variant-card--active{% endif %}">
+            <label class="sk-radiance-variant-card__label" for="VariantCard-{{ variant.id }}">
+              <input
+                id="VariantCard-{{ variant.id }}"
+                class="sk-radiance-variant-card__input"
+                type="radio"
+                name="id"
+                value="{{ variant.id }}"
+                form="{{ product_form_id }}"
+                {% if is_active %}
+                  checked
+                {% endif %}
+                {% unless variant.available %}
+                  disabled
+                {% endunless %}
+              >
               <div class="sk-radiance-variant-card__image">
                 {%- if variant.featured_image -%}
                   <img
-                    src="{{ variant.featured_image | image_url: width: 200 }}"
+                    src="{{ variant.featured_image | image_url: width: 320 }}"
                     alt="{{ variant.featured_image.alt | escape }}"
-                    width="200"
-                    height="200"
+                    width="320"
+                    height="320"
                     loading="lazy"
                   >
                 {%- else -%}
                   <img
-                    src="{{ product.featured_image | image_url: width: 200 }}"
+                    src="{{ product.featured_image | image_url: width: 320 }}"
                     alt="{{ product.featured_image.alt | escape }}"
-                    width="200"
-                    height="200"
+                    width="320"
+                    height="320"
                     loading="lazy"
                   >
                 {%- endif -%}
               </div>
               <div class="sk-radiance-variant-card__content">
-                <h3 class="sk-radiance-variant-card__title">{{ variant.title }}</h3>
+                <div class="sk-radiance-variant-card__heading">
+                  <h3 class="sk-radiance-variant-card__title">{{ bundle_title }}</h3>
+                  {%- if is_popular %}
+                    <span class="sk-radiance-variant-card__badge">Most popular</span>
+                  {%- endif -%}
+                </div>
+                {% if variant_subtitle != blank %}
+                  <p class="sk-radiance-variant-card__subtitle">{{ variant_subtitle }}</p>
+                {% endif %}
               </div>
-              <div class="sk-radiance-variant-card__price">
-                <span class="sk-radiance-variant-card__price-wrapper">
-                  <s class="sk-radiance-variant-card__compare-price">
-                    {{ variant.compare_at_price | money | strip_html }}
-                  </s>
-                  <span class="sk-radiance-variant-card__current-price">
-                    {{ variant.price | money | strip_html }}
-                  </span>
-                </span>
-              </div>
-            </a>
+            </label>
           </div>
         {%- endfor -%}
       </div>
@@ -83,7 +115,6 @@
             {%- if variant.available == false -%}
               - {{ 'products.product.sold_out' | t }}
             {%- endif -%}
-            - {{ variant.price | money | strip_html }}
           </option>
         {%- endfor -%}
       </select>
