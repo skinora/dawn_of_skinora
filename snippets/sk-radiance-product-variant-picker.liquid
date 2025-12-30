@@ -9,8 +9,14 @@
     <fieldset class="sk-radiance-variant-selects__fieldset js product-form__input">
       <div class="sk-radiance-variant-cards">
         {%- for variant in product.variants -%}
+          {%- assign inventory_management = variant.inventory_management -%}
+          {%- assign inventory_quantity = variant.inventory_quantity | default: 0 -%}
+          {%- assign is_out_of_stock = false -%}
+          {%- if variant.available == false or (inventory_management != blank and inventory_quantity <= 0) -%}
+            {%- assign is_out_of_stock = true -%}
+          {%- endif -%}
           {%- assign is_active = false -%}
-          {%- if variant.id == product.selected_or_first_available_variant.id -%}
+          {%- if variant.id == product.selected_or_first_available_variant.id and is_out_of_stock == false -%}
             {%- assign is_active = true -%}
           {%- endif -%}
           {%- assign bundle_title_field = variant.metafields.custom.bundle_title -%}
@@ -32,7 +38,7 @@
           {%- if popularity_value == true or popularity_value == 'true' -%}
             {%- assign is_popular = true -%}
           {%- endif -%}
-          <div class="sk-radiance-variant-card{% if is_active %} sk-radiance-variant-card--active{% endif %}">
+          <div class="sk-radiance-variant-card{% if is_active %} sk-radiance-variant-card--active{% endif %}{% if is_out_of_stock %} sk-radiance-variant-card--disabled{% endif %}">
             <label class="sk-radiance-variant-card__label" for="VariantCard-{{ variant.id }}">
               <input
                 id="VariantCard-{{ variant.id }}"
@@ -44,9 +50,9 @@
                 {% if is_active %}
                   checked
                 {% endif %}
-                {% unless variant.available %}
+                {% if is_out_of_stock %}
                   disabled
-                {% endunless %}
+                {% endif %}
               >
               <div class="sk-radiance-variant-card__image">
                 {%- if variant.featured_image -%}

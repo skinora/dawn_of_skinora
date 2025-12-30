@@ -165,6 +165,19 @@ variant-selects {
   width: 280px;
 }
 
+.sk-radiance-variant-card--disabled {
+  opacity: 0.45;
+}
+
+.sk-radiance-variant-card--disabled .sk-radiance-variant-card__image {
+  filter: grayscale(90%);
+}
+
+.sk-radiance-variant-card--disabled .sk-radiance-variant-card__content {
+  background: var(--color-border-2);
+  color: var(--color-neutral-6);
+}
+
 .sk-radiance-variant-card__link {
   display: block;
   border: 2px solid var(--color-border-2);
@@ -261,5 +274,3 @@ variant-selects {
     max-width: 250px;
   }
 }
-
-
