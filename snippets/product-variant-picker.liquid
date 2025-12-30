@@ -3,11 +3,10 @@
 
   Accepts:
   - product: {Object} product object.
-  - block: {Object} passing the block information.
+  - block: {Object} passing the block information. (optional in this custom version)
   - product_form_id: {String} Id of the product form to which the variant picker is associated.
-  Usage:
-  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
 {% endcomment %}
+
 <style>
   .sk-variant-cards {
     display: flex;
@@ -18,6 +17,7 @@
 
   .sk-variant-card {
     cursor: pointer;
+    display: block;
   }
 
   .sk-variant-card input {
@@ -25,6 +25,7 @@
   }
 
   .sk-variant-card-inner {
+    position: relative; /* needed for badge positioning */
     display: grid;
     grid-template-columns: auto 1fr auto;
     gap: 0.75rem;
@@ -54,8 +55,11 @@
   .sk-variant-subtitle {
     font-size: 0.85rem;
     color: #6b6b76;
+    margin-top: 0.15rem;
   }
 
+  /* Keep hint pricing in card (optional).
+     The authoritative price should be in the shared price slot (outside this snippet). */
   .sk-variant-price {
     font-weight: 500;
     white-space: nowrap;
@@ -75,7 +79,11 @@
     font-size: 0.7rem;
     padding: 0.2rem 0.5rem;
     border-radius: 999px;
+    line-height: 1;
+    white-space: nowrap;
   }
+
+  /* Mobile */
   @media (max-width: 989px) {
     .sk-variant-card-inner {
       grid-template-columns: auto 1fr;
@@ -84,6 +92,8 @@
         'thumb price';
       gap: 0.6rem 0.75rem;
       padding: 0.85rem;
+      min-height: 72px;
+      transition: border-color 0.15s ease, background 0.15s ease;
     }
 
     .sk-variant-thumb {
@@ -126,23 +136,46 @@
       padding: 0.15rem 0.45rem;
     }
 
-    .sk-variant-card-inner {
-      min-height: 72px;
-    }
-    .sk-variant-card-inner {
-      transition: border-color 0.15s ease, background 0.15s ease;
-    }
-
     .sk-variant-card:active .sk-variant-card-inner {
       transform: scale(0.985);
     }
   }
 </style>
+
 {%- unless product.has_only_default_variant -%}
   <variant-selects
     id="variant-selects-{{ section.id }}"
     data-section="{{ section.id }}"
+    {{ block.shopify_attributes | default: '' }}
   >
+    {%- assign current_variant = product.selected_or_first_available_variant -%}
+
+    {%- comment -%}
+      IMPORTANT:
+      Shopify/Dawn listens to a select[name="id"] (the "source of truth") to update:
+      - shared price
+      - availability
+      - buy button
+      - sticky bar / other components
+      Your card radios are just a UI. We sync them into this hidden select.
+    {%- endcomment -%}
+
+    <select name="id" form="{{ product_form_id }}" class="visually-hidden" aria-hidden="true">
+      {% for variant in product.variants %}
+        <option
+          value="{{ variant.id }}"
+          {% if variant.id == current_variant.id %}
+            selected
+          {% endif %}
+          {% if variant.available == false %}
+            disabled
+          {% endif %}
+        >
+          {{ variant.title }}
+        </option>
+      {% endfor %}
+    </select>
+
     <fieldset class="sk-variant-cards" form="{{ product_form_id }}">
       <legend class="visually-hidden">Choose configuration</legend>
 
@@ -150,11 +183,14 @@
         <label class="sk-variant-card">
           <input
             type="radio"
-            name="id"
+            name="id_radio"
             value="{{ variant.id }}"
-            form="{{ product_form_id }}"
-            {% if variant.id == product.selected_or_first_available_variant.id %}
+            data-variant-radio
+            {% if variant.id == current_variant.id %}
               checked
+            {% endif %}
+            {% if variant.available == false %}
+              disabled
             {% endif %}
           >
 
@@ -162,7 +198,7 @@
             {% if variant.image %}
               <img
                 src="{{ variant.image | image_url: width: 120 }}"
-                alt="{{ variant.title }}"
+                alt="{{ variant.title | escape }}"
                 class="sk-variant-thumb"
                 width="120"
                 height="120"
@@ -192,7 +228,7 @@
             </div>
 
             {% if variant.metafields.custom.is_popular == true %}
-              <span class="sk-variant-badge"> Most popular </span>
+              <span class="sk-variant-badge">Most popular</span>
             {% endif %}
           </div>
         </label>
@@ -200,7 +236,47 @@
     </fieldset>
 
     <script type="application/json" data-selected-variant>
-      {{ product.selected_or_first_available_variant | json }}
+      {{ current_variant | json }}
+    </script>
+
+    <script>
+      (function () {
+        const root = document.getElementById('variant-selects-{{ section.id }}');
+        if (!root) return;
+
+        const hiddenSelect = root.querySelector('select[name="id"]');
+        if (!hiddenSelect) return;
+
+        const radios = root.querySelectorAll('[data-variant-radio]');
+
+        function setVariant(variantId) {
+          // Update the hidden select (Shopify/Dawn listens to this)
+          hiddenSelect.value = variantId;
+          hiddenSelect.dispatchEvent(new Event('change', { bubbles: true }));
+
+          // Also update the JSON payload for any listeners
+          const payloadEl = root.querySelector('[data-selected-variant]');
+          if (payloadEl) {
+            try {
+              const variants = {{ product.variants | json }};
+              const match = variants.find(v => String(v.id) === String(variantId));
+              if (match) payloadEl.textContent = JSON.stringify(match);
+            } catch (e) {}
+          }
+
+          // Some themes listen for this custom event
+          document.dispatchEvent(
+            new CustomEvent('variant:change', { detail: { variantId: variantId } })
+          );
+        }
+
+        radios.forEach((radio) => {
+          radio.addEventListener('change', (e) => {
+            if (!e.target.checked) return;
+            setVariant(e.target.value);
+          });
+        });
+      })();
     </script>
   </variant-selects>
 {%- endunless -%}
