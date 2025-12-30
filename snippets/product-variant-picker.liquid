@@ -8,84 +8,196 @@
   Usage:
   {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
 {% endcomment %}
+<style>
+  .sk-variant-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+  }
+
+  .sk-variant-card {
+    cursor: pointer;
+  }
+
+  .sk-variant-card input {
+    display: none;
+  }
+
+  .sk-variant-card-inner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #e2e2ea;
+    border-radius: 14px;
+    background: #fff;
+  }
+
+  .sk-variant-card input:checked + .sk-variant-card-inner {
+    border-color: #487ab7;
+    background: #f4f7fb;
+  }
+
+  .sk-variant-thumb {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .sk-variant-title {
+    font-weight: 600;
+  }
+
+  .sk-variant-subtitle {
+    font-size: 0.85rem;
+    color: #6b6b76;
+  }
+
+  .sk-variant-price {
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .sk-variant-save {
+    font-size: 0.85rem;
+    color: #487ab7;
+  }
+
+  .sk-variant-badge {
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    background: #487ab7;
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+  }
+  @media (max-width: 989px) {
+    .sk-variant-card-inner {
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        'thumb meta'
+        'thumb price';
+      gap: 0.6rem 0.75rem;
+      padding: 0.85rem;
+    }
+
+    .sk-variant-thumb {
+      width: 48px;
+      height: 48px;
+      grid-area: thumb;
+    }
+
+    .sk-variant-meta {
+      grid-area: meta;
+    }
+
+    .sk-variant-title {
+      font-size: 0.95rem;
+      line-height: 1.2;
+    }
+
+    .sk-variant-subtitle {
+      font-size: 0.8rem;
+      line-height: 1.2;
+      margin-top: 0.1rem;
+    }
+
+    .sk-variant-price {
+      grid-area: price;
+      font-size: 0.9rem;
+      margin-top: 0.2rem;
+    }
+
+    .sk-variant-save {
+      display: block;
+      font-size: 0.75rem;
+      margin-top: 0.15rem;
+    }
+
+    .sk-variant-badge {
+      top: -6px;
+      right: 10px;
+      font-size: 0.65rem;
+      padding: 0.15rem 0.45rem;
+    }
+
+    .sk-variant-card-inner {
+      min-height: 72px;
+    }
+    .sk-variant-card-inner {
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .sk-variant-card:active .sk-variant-card-inner {
+      transform: scale(0.985);
+    }
+  }
+</style>
 {%- unless product.has_only_default_variant -%}
   <variant-selects
     id="variant-selects-{{ section.id }}"
     data-section="{{ section.id }}"
-    {{ block.shopify_attributes }}
   >
-    {%- for option in product.options_with_values -%}
-      {%- liquid
-        assign swatch_count = option.values | map: 'swatch' | compact | size
-        assign picker_type = block.settings.picker_type
+    <fieldset class="sk-variant-cards" form="{{ product_form_id }}">
+      <legend class="visually-hidden">Choose configuration</legend>
 
-        if swatch_count > 0 and block.settings.swatch_shape != 'none'
-          if block.settings.picker_type == 'dropdown'
-            assign picker_type = 'swatch_dropdown'
-          else
-            assign picker_type = 'swatch'
-          endif
-        endif
-      -%}
-      {%- if picker_type == 'swatch' -%}
-        <fieldset class="js product-form__input product-form__input--swatch">
-          <legend class="form__label">
-            {{ option.name }}:
-            <span data-selected-value>
-              {{- option.selected_value -}}
-            </span>
-          </legend>
-          {% render 'product-variant-options',
-            product: product,
-            option: option,
-            block: block,
-            picker_type: picker_type
-          %}
-        </fieldset>
-      {%- elsif picker_type == 'button' -%}
-        <fieldset class="js product-form__input product-form__input--pill">
-          <legend class="form__label">{{ option.name }}</legend>
-          {% render 'product-variant-options',
-            product: product,
-            option: option,
-            block: block,
-            picker_type: picker_type
-          %}
-        </fieldset>
-      {%- else -%}
-        <div class="product-form__input product-form__input--dropdown">
-          <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
-            {{ option.name }}
-          </label>
-          <div class="select">
-            {%- if picker_type == 'swatch_dropdown' -%}
-              <span
-                data-selected-value
-                class="dropdown-swatch"
+      {% for variant in product.variants %}
+        <label class="sk-variant-card">
+          <input
+            type="radio"
+            name="id"
+            value="{{ variant.id }}"
+            form="{{ product_form_id }}"
+            {% if variant.id == product.selected_or_first_available_variant.id %}
+              checked
+            {% endif %}
+          >
+
+          <div class="sk-variant-card-inner">
+            {% if variant.image %}
+              <img
+                src="{{ variant.image | image_url: width: 120 }}"
+                alt="{{ variant.title }}"
+                class="sk-variant-thumb"
+                width="120"
+                height="120"
+                loading="lazy"
               >
-                {% render 'swatch', swatch: option.selected_value.swatch, shape: block.settings.swatch_shape %}
-              </span>
-            {%- endif -%}
-            <select
-              id="Option-{{ section.id }}-{{ forloop.index0 }}"
-              class="select__select"
-              name="options[{{ option.name | escape }}]"
-              form="{{ product_form_id }}"
-            >
-              {% render 'product-variant-options',
-                product: product,
-                option: option,
-                block: block,
-                picker_type: picker_type
-              %}
-            </select>
-            <span class="svg-wrapper">
-              {{- 'icon-caret.svg' | inline_asset_content -}}
-            </span>
+            {% endif %}
+
+            <div class="sk-variant-meta">
+              <div class="sk-variant-title">
+                {{ variant.title }}
+              </div>
+
+              {% if variant.metafields.custom.variant_subtitle %}
+                <div class="sk-variant-subtitle">
+                  {{ variant.metafields.custom.variant_subtitle }}
+                </div>
+              {% endif %}
+
+              <div class="sk-variant-price">
+                {{ variant.price | money }}
+                {% if variant.compare_at_price > variant.price %}
+                  <span class="sk-variant-save">
+                    · Save {{ variant.compare_at_price | minus: variant.price | money }}
+                  </span>
+                {% endif %}
+              </div>
+            </div>
+
+            {% if variant.metafields.custom.is_popular == true %}
+              <span class="sk-variant-badge"> Most popular </span>
+            {% endif %}
           </div>
-        </div>
-      {%- endif -%}
-    {%- endfor -%}
+        </label>
+      {% endfor %}
+    </fieldset>
 
     <script type="application/json" data-selected-variant>
       {{ product.selected_or_first_available_variant | json }}
