@@ -158,7 +158,7 @@
   }
 
   /* =============================
-   CONTENT (unchanged)
+   CONTENT
 ============================= */
 
   .sk-eyebrow {
@@ -196,7 +196,7 @@
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.25rem;
   }
 
   .sk-pill {
@@ -206,6 +206,110 @@
     font-size: 1rem;
     font-weight: 500;
     background: #fff;
+  }
+
+  /* =============================
+   OFFER CARDS (Single vs Bundle)
+   - CurrentBody-style: two cards + shared price + shared CTA
+============================= */
+
+  .sk-offer-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1rem 0 0.75rem;
+  }
+
+  .sk-offer-card {
+    cursor: pointer;
+    display: block;
+  }
+
+  .sk-offer-card input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .sk-offer-card__inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem 1rem;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #e2e2ea;
+    border-radius: 14px;
+    background: #fff;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.08s ease;
+  }
+
+  .sk-offer-card input:checked + .sk-offer-card__inner {
+    border-color: #487ab7;
+    background: #f4f7fb;
+  }
+
+  .sk-offer-card:active .sk-offer-card__inner {
+    transform: scale(0.992);
+  }
+
+  .sk-offer-card__title {
+    font-weight: 650;
+    line-height: 1.2;
+    margin-bottom: 0.15rem;
+  }
+
+  .sk-offer-card__subtitle {
+    font-size: 0.9rem;
+    color: #6b6b76;
+    line-height: 1.2;
+  }
+
+  .sk-offer-card__price {
+    text-align: right;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  .sk-offer-card__compare {
+    display: block;
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: #6b6b76;
+    text-decoration: line-through;
+    margin-bottom: 0.1rem;
+  }
+
+  .sk-offer-card__badge {
+    position: absolute;
+    top: -10px;
+    right: 14px;
+    background: #487ab7;
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 0.22rem 0.55rem;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 989px) {
+    .sk-offer-card__inner {
+      grid-template-columns: 1fr;
+      align-items: start;
+      gap: 0.5rem;
+      padding: 0.9rem;
+    }
+    .sk-offer-card__price {
+      text-align: left;
+    }
+  }
+
+  /* =============================
+   SHARED PRICE SLOT WRAPPER
+============================= */
+
+  .sk-shared-price {
+    margin: 0.5rem 0 0.75rem;
   }
 
   /* =============================
@@ -279,6 +383,7 @@
       padding-bottom: 0.75rem;
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
     .sk-hero-gallery-wrapper {
       display: none;
     }
@@ -295,142 +400,6 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
-
-  /* =============================
-     STICKY BOTTOM BAR
-  ============================= */
-
-  .sk-radiance-sticky-bottom-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    background: linear-gradient(to left, var(--color-brand, #30273e), var(--color-white, #ffffff)) !important;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-    z-index: 999;
-    transform: translateY(100%);
-    transition: transform 0.3s ease-in-out;
-    padding: 1.35rem 0;
-  }
-
-  .sk-radiance-sticky-bottom-bar.visible {
-    transform: translateY(0);
-  }
-
-  .sk-radiance-sticky-bottom-bar__content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-  }
-
-  .sk-radiance-sticky-bottom-bar__info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    flex: 1;
-    justify-content: center;
-  }
-
-  .sk-radiance-sticky-bottom-bar__product-name {
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--color-brand, #30273e);
-    margin: 0;
-    line-height: 1.3;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding-top: 1rem;
-  }
-
-  .sk-radiance-sticky-bottom-bar__button {
-    min-width: clamp(10rem, 24vw, 15rem);
-    white-space: nowrap;
-    justify-content: center;
-  }
-
-  @media screen and (max-width: 749px) {
-    .sk-radiance-sticky-bottom-bar {
-      padding: 1rem 0;
-    }
-
-    .sk-radiance-sticky-bottom-bar__content {
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .sk-radiance-sticky-bottom-bar__info {
-      width: 100%;
-      text-align: center;
-    }
-
-    .sk-radiance-sticky-bottom-bar__product-name {
-      font-size: var(--sk-font-size-medium);
-      white-space: normal;
-      line-height: 1.4;
-      max-height: 2.8em;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      line-clamp: 2;
-    }
-
-    .sk-radiance-sticky-bottom-bar__price {
-      justify-content: center;
-    }
-
-    .sk-radiance-sticky-bottom-bar__button {
-      width: 100%;
-      min-width: auto;
-    }
-  }
-
-  body.cart-drawer-open .sk-radiance-sticky-bottom-bar,
-  body.cart-drawer-open .sk-radiance-sticky-bottom-bar--portal {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    transform: translateY(100%) !important;
-  }
-
-  @media screen and (min-width: 750px) and (max-width: 989px) {
-    .sk-radiance-sticky-bottom-bar__product-name {
-      font-size: var(--sk-font-size-medium);
-    }
-
-    .sk-radiance-sticky-bottom-bar__button {
-      min-width: 180px;
-      padding: 0.875rem 1.5rem;
-    }
-  }
-
-  .sk-radiance-sticky-bottom-bar--portal {
-    position: fixed !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    z-index: 2147483000 !important;
-    pointer-events: auto !important;
-    transform: translateY(100%);
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .sk-radiance-sticky-bottom-bar--portal.visible {
-    transform: translateY(0) !important;
-  }
-
-  body.sk-sticky-bar-visible {
-    padding-bottom: 72px;
-  }
-
-  @media (max-width: 989px) {
-    body.sk-sticky-bar-visible {
-      padding-bottom: 100px;
-    }
-  }
 </style>
 
 {%- assign product_info_reference = product.metafields.custom.product_info
@@ -440,13 +409,70 @@
 {%- assign product_form_id = 'product-form-' | append: section.id -%}
 {%- assign media_images = product.media | where: 'media_type', 'image' -%}
 
+{%- comment -%}
+  Bundle wiring (IMPORTANT):
+
+  Best option: create a Product reference metafield on the BASE product:
+  - namespace/key suggestion: custom.bundle_product
+  - type: Product (reference)
+  Then you can select the Bundler "standalone bundle product" in admin.
+
+  Fallback option: hardcode the handle below via JS data attribute.
+{%- endcomment -%}
+
+{%- assign bundle_product_ref = product.metafields.custom.bundle_product.value -%}
+{%- assign bundle_handle = '' -%}
+{%- assign bundle_title = '' -%}
+{%- if bundle_product_ref != blank -%}
+  {%- assign bundle_handle = bundle_product_ref.handle -%}
+  {%- assign bundle_title = bundle_product_ref.title -%}
+{%- endif -%}
+
+{%- comment -%}
+  Pills can be:
+  - a list/array
+  - OR a JSON-like string '["a","b","c"]'
+  - OR newline-separated string
+{%- endcomment -%}
+{%- assign pills_raw = product_info.radiance_pills.value | default: blank -%}
+{%- assign pills_list = blank -%}
+{%- if pills_raw != blank -%}
+  {%- if pills_raw.size and pills_raw.first -%}
+    {%- assign pills_list = pills_raw -%}
+  {%- else -%}
+    {%- assign pills_clean = pills_raw | strip -%}
+    {%- if pills_clean contains '[' and pills_clean contains ']' -%}
+      {%- assign pills_clean = pills_clean | remove: '[' | remove: ']' -%}
+      {%- assign pills_clean = pills_clean
+        | replace: '","', '|||'
+        | replace: '", "', '|||'
+        | replace: '",', '|||'
+        | replace: ',"', '|||'
+      -%}
+      {%- assign pills_clean = pills_clean | replace: '"', '' -%}
+      {%- assign pills_list = pills_clean | split: '|||' -%}
+    {%- else -%}
+      {%- assign pills_list = pills_clean | split: '\n' -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+
 <product-info
   id="MainProduct-{{ section.id }}"
   data-product-id="{{ product.id }}"
   data-url="{{ product.url }}"
 >
   <div class="page-width">
-    <section class="sk-product-hero" id="sk-radiance-product-hero-{{ section.id }}">
+    <section
+      class="sk-product-hero"
+      id="sk-radiance-product-hero-{{ section.id }}"
+      data-base-handle="{{ product.handle }}"
+      data-base-product-id="{{ product.id }}"
+      data-base-variant-id="{{ product.selected_or_first_available_variant.id }}"
+      data-bundle-handle="{{ bundle_handle }}"
+      data-bundle-title="{{ bundle_title | escape }}"
+      data-money-format="{{ shop.money_format | escape }}"
+    >
       <div class="sk-hero-grid">
         <!-- ================= LEFT: CANONICAL MEDIA ================= -->
         <div class="sk-hero-media">
@@ -502,6 +528,7 @@
                 </div>
               {% endif %}
             </div>
+
             {% if media_images.size > 1 %}
               <div class="sk-hero-progress" role="tablist" aria-label="Hero swipe progress">
                 {% for image in media_images %}
@@ -519,7 +546,6 @@
         </div>
 
         <!-- ================= RIGHT: METAOBJECT CONTENT ================= -->
-
         <div class="sk-hero-content">
           {% if product_info.radiance_eyebrow.value != blank %}
             <p class="sk-eyebrow">{{ product_info.radiance_eyebrow.value }}</p>
@@ -530,9 +556,7 @@
           </h1>
 
           {% if product_info.radiance_subheading.value != blank %}
-            <p class="sk-product-subtitle">
-              {{ product_info.radiance_subheading.value }}
-            </p>
+            <p class="sk-product-subtitle">{{ product_info.radiance_subheading.value }}</p>
           {% endif %}
 
           <!-- REVIEWS -->
@@ -545,21 +569,102 @@
           </div>
 
           <!-- PILLS -->
-          {% if product_info.radiance_pills.value != blank %}
+          {% if pills_list != blank %}
             <div class="sk-radiance-pills">
-              {% for pill in product_info.radiance_pills.value %}
-                <span class="sk-pill">{{ pill }}</span>
+              {% for pill in pills_list %}
+                {% assign pill_text = pill | strip %}
+                {% if pill_text != blank %}
+                  <span class="sk-pill">{{ pill_text }}</span>
+                {% endif %}
               {% endfor %}
             </div>
           {% endif %}
 
-          {% render 'sk-radiance-price', product: product, section: section, show_badges: false %}
+          {%- comment -%}
+            OFFER SELECTOR (Single vs Bundle)
+            - This replaces "variant picker" for your CurrentBody-style layout.
+            - Shared price + shared CTA below.
+            - The bundle product must be a separate product (Bundler standalone product).
+          {%- endcomment -%}
+
+          <div class="sk-offer-cards" data-sk-offer-cards>
+            <!-- SINGLE -->
+            <label class="sk-offer-card">
+              <input
+                type="radio"
+                name="sk-offer"
+                value="single"
+                checked
+              >
+              <div class="sk-offer-card__inner">
+                <div>
+                  <div class="sk-offer-card__title">{{ product.title }}</div>
+                  <div class="sk-offer-card__subtitle">Single device</div>
+                </div>
+
+                <div class="sk-offer-card__price" data-sk-card-price="single">
+                  <span class="sk-offer-card__value">
+                    {{ product.selected_or_first_available_variant.price | money }}
+                  </span>
+                </div>
+              </div>
+            </label>
+
+            <!-- BUNDLE (optional if bundle handle exists) -->
+            <label
+              class="sk-offer-card"
+              data-sk-bundle-card
+              {% if bundle_handle == blank %}
+                style="display:none"
+              {% endif %}
+            >
+              <input
+                type="radio"
+                name="sk-offer"
+                value="bundle"
+              >
+              <div class="sk-offer-card__inner">
+                <span class="sk-offer-card__badge">Most popular</span>
+
+                <div>
+                  <div class="sk-offer-card__title">
+                    {{ bundle_title | default: 'Face + Neck Kit' }}
+                  </div>
+                  <div class="sk-offer-card__subtitle">Includes Face + Neck</div>
+                </div>
+
+                <div class="sk-offer-card__price" data-sk-card-price="bundle">
+                  <!-- Filled by JS via /products/{handle}.js -->
+                  <span class="sk-offer-card__value">—</span>
+                </div>
+              </div>
+            </label>
+          </div>
+
+          <!-- SHARED PRICE SLOT (changes with offer) -->
+          <div class="sk-shared-price" data-sk-shared-price>
+            {% render 'sk-radiance-price', product: product, section: section, show_badges: false %}
+          </div>
+
+          <!-- Hidden variant id (the shared CTA must always submit THIS) -->
+          <input
+            type="hidden"
+            name="id"
+            value="{{ product.selected_or_first_available_variant.id }}"
+            form="{{ product_form_id }}"
+            data-sk-selected-variant-id
+          >
 
           <!-- PURCHASE -->
           <div class="sk-purchase">
-            {% render 'sk-radiance-product-variant-picker', product: product, product_form_id: product_form_id %}
-
             {% render 'sk-radiance-quantity', product: product, product_form_id: product_form_id, section: section %}
+
+            {%- comment -%}
+              IMPORTANT:
+              If your add-to-cart button is currently only in the sticky bar,
+              you can also render your buy buttons here for desktop parity.
+            {%- endcomment -%}
+            {% render 'sk-radiance-buy-buttons', product: product, product_form_id: product_form_id %}
 
             <div class="sk-trust-inline">
               <span>Free shipping</span>
@@ -568,20 +673,27 @@
               <span>2-year warranty</span>
             </div>
 
+            {%- comment -%}
+              TRUST BADGES (SVG files)
+              Your trust_badges are SVGs uploaded in Shopify Files. These often render best via file_url.
+              We try url → file_url fallback.
+            {%- endcomment -%}
             {% assign trust_badges_source = product_info.trust_badges | default: blank %}
             {% assign trust_badges_value = trust_badges_source.value | default: trust_badges_source %}
             {% if trust_badges_value != blank %}
-              <div class="sk-payment sk-trust-icons">
+              <div class="sk-trust-icons" aria-label="Trust badges">
                 {% for badge in trust_badges_value %}
-                  {% assign badge_img = badge.url | default: badge.image | default: badge.src | default: badge %}
-                  {% assign badge_alt = badge.alt | default: badge.alt_text | default: 'Trust badge' %}
-                  {% if badge_img != blank %}
+                  {% assign badge_url = '' %}
+                  {% if badge.url != blank %}
+                    {% assign badge_url = badge.url %}
+                  {% else %}
+                    {% assign badge_url = badge | file_url %}
+                  {% endif %}
+                  {% if badge_url != blank %}
                     <span class="sk-trust-icon">
                       <img
-                        src="{{ badge_img | image_url: width: 60 }}"
-                        alt="{{ badge_alt }}"
-                        width="60"
-                        height="22"
+                        src="{{ badge_url }}"
+                        alt="{{ product.title | escape }} trust badge"
                         loading="lazy"
                       >
                     </span>
@@ -606,107 +718,269 @@
   <script type="application/ld+json">
     {{ product | structured_data }}
   </script>
+
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      if (typeof Swiper === 'undefined') return;
+    document.addEventListener('DOMContentLoaded', async function () {
+      // =========================
+      // HERO SWIPER (your existing logic)
+      // =========================
+      (function initHeroSwiper() {
+        if (typeof Swiper === 'undefined') return;
 
-      const sectionEl = document.getElementById('sk-radiance-product-hero-{{ section.id }}');
-      if (!sectionEl) return;
+        const sectionEl = document.getElementById('sk-radiance-product-hero-{{ section.id }}');
+        if (!sectionEl) return;
 
-      const swiperRoot = sectionEl.querySelector('.sk-hero-media-swiper');
-      if (!swiperRoot) return;
+        const swiperRoot = sectionEl.querySelector('.sk-hero-media-swiper');
+        if (!swiperRoot) return;
 
-      const swiperElement = swiperRoot.querySelector('.swiper') || swiperRoot;
-      if (!swiperElement) return;
+        const swiperElement = swiperRoot.querySelector('.swiper') || swiperRoot;
+        if (!swiperElement) return;
 
-      const prevButton = swiperRoot.querySelector('.sk-hero-arrow--prev');
-      const nextButton = swiperRoot.querySelector('.sk-hero-arrow--next');
-      const thumbnails = sectionEl.querySelectorAll('.sk-hero-thumb img');
-      const progressDots = sectionEl.querySelectorAll('.sk-hero-progress-dot');
-      const galleryPrevButton = sectionEl.querySelector('.sk-hero-gallery-controls .sk-hero-arrow--prev');
-      const galleryNextButton = sectionEl.querySelector('.sk-hero-gallery-controls .sk-hero-arrow--next');
-      const galleryRow = sectionEl.querySelector('.sk-hero-gallery');
-      const heroMediaMain = sectionEl.querySelector('.sk-hero-media-main');
+        const prevButton = swiperRoot.querySelector('.sk-hero-arrow--prev');
+        const nextButton = swiperRoot.querySelector('.sk-hero-arrow--next');
+        const thumbnails = sectionEl.querySelectorAll('.sk-hero-thumb img');
+        const progressDots = sectionEl.querySelectorAll('.sk-hero-progress-dot');
+        const galleryPrevButton = sectionEl.querySelector('.sk-hero-gallery-controls .sk-hero-arrow--prev');
+        const galleryNextButton = sectionEl.querySelector('.sk-hero-gallery-controls .sk-hero-arrow--next');
+        const galleryRow = sectionEl.querySelector('.sk-hero-gallery');
+        const heroMediaMain = sectionEl.querySelector('.sk-hero-media-main');
 
-      const swiperOptions = {
-        slidesPerView: 1,
-        loop: false,
-        allowTouchMove: true,
-        speed: 400,
+        const swiperOptions = { slidesPerView: 1, loop: false, allowTouchMove: true, speed: 400 };
+
+        if (prevButton && nextButton) {
+          swiperOptions.navigation = { prevEl: prevButton, nextEl: nextButton };
+        }
+
+        const heroSwiper = new Swiper(swiperElement, swiperOptions);
+
+        function updateProgressDots(index) {
+          if (!progressDots.length) return;
+          progressDots.forEach((dot, dotIndex) => {
+            const isActive = dotIndex === index;
+            dot.classList.toggle('is-active', isActive);
+            dot.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+          });
+        }
+
+        function updateActiveThumb(index) {
+          thumbnails.forEach((thumb, thumbIndex) => {
+            thumb.classList.toggle('is-active', thumbIndex === index);
+          });
+          updateProgressDots(index);
+        }
+
+        function scrollHeroIntoView() {
+          if (!heroMediaMain) return;
+          heroMediaMain.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        updateActiveThumb(heroSwiper.activeIndex || 0);
+
+        heroSwiper.on('slideChange', function () {
+          updateActiveThumb(heroSwiper.activeIndex);
+          scrollHeroIntoView();
+        });
+
+        thumbnails.forEach((thumb, index) => {
+          thumb.addEventListener('click', function () {
+            heroSwiper.slideTo(index);
+            scrollHeroIntoView();
+          });
+        });
+
+        progressDots.forEach((dot, index) => {
+          dot.addEventListener('click', function () {
+            heroSwiper.slideTo(index);
+            scrollHeroIntoView();
+          });
+        });
+
+        function scrollGallery(direction) {
+          if (!galleryRow) return;
+          const step = galleryRow.clientWidth / 2 || 150;
+          galleryRow.scrollBy({ left: direction === 'next' ? step : -step, behavior: 'smooth' });
+        }
+
+        if (galleryPrevButton) galleryPrevButton.addEventListener('click', () => scrollGallery('prev'));
+        if (galleryNextButton) galleryNextButton.addEventListener('click', () => scrollGallery('next'));
+      })();
+
+      // =========================
+      // OFFER SWITCHING (Single vs Bundle)
+      // - Shared price slot
+      // - Shared hidden variant id for add-to-cart
+      // =========================
+      const root = document.getElementById('sk-radiance-product-hero-{{ section.id }}');
+      if (!root) return;
+
+      const baseHandle = root.dataset.baseHandle;
+      const bundleHandleFromMeta = root.dataset.bundleHandle;
+      const moneyFormat = root.dataset.moneyFormat || '{{ shop.money_format | escape }}';
+
+      // TODO (only if you DON'T use the metafield custom.bundle_product):
+      // Put your Bundler standalone bundle handle here. Example: "skinora-radiance-face-neck-bundle"
+      const fallbackBundleHandle = '';
+      const bundleHandle = bundleHandleFromMeta || fallbackBundleHandle;
+
+      const offerRadios = root.querySelectorAll('input[name="sk-offer"]');
+      const bundleCard = root.querySelector('[data-sk-bundle-card]');
+      const hiddenVariantInput = root.querySelector('[data-sk-selected-variant-id]');
+      const sharedPriceEl = root.querySelector('[data-sk-shared-price]');
+      const cardPriceSingle = root.querySelector('[data-sk-card-price="single"] .sk-offer-card__value');
+      const cardPriceBundle = root.querySelector('[data-sk-card-price="bundle"] .sk-offer-card__value');
+
+      // Helpers
+      const formatMoney = (cents) => {
+        try {
+          if (window.Shopify && typeof window.Shopify.formatMoney === 'function') {
+            return window.Shopify.formatMoney(cents, moneyFormat);
+          }
+        } catch (e) {}
+        // worst-case fallback
+        return (cents / 100).toFixed(2);
       };
 
-      if (prevButton && nextButton) {
-        swiperOptions.navigation = {
-          prevEl: prevButton,
-          nextEl: nextButton,
-        };
-      }
+      const fetchProductJson = async (handle) => {
+        const res = await fetch(`/products/${handle}.js`, { credentials: 'same-origin' });
+        if (!res.ok) throw new Error(`Failed to load product JSON: ${handle}`);
+        return await res.json();
+      };
 
-      const heroSwiper = new Swiper(swiperElement, swiperOptions);
+      const pickFirstAvailableVariant = (productJson) => {
+        if (!productJson || !productJson.variants) return null;
+        return productJson.variants.find((v) => v.available) || productJson.variants[0] || null;
+      };
 
-      function updateActiveThumb(index) {
-        thumbnails.forEach((thumb, thumbIndex) => {
-          thumb.classList.toggle('is-active', thumbIndex === index);
+      const replaceSharedPrice = (variant) => {
+        if (!sharedPriceEl || !variant) return;
+
+        // We patch the visible numbers without relying on snippet internals:
+        // - Find "regular" and "sale" nodes if present; else just inject a simple price.
+        const saleEl = sharedPriceEl.querySelector('.sk-radiance-price-item--sale');
+        const regEl = sharedPriceEl.querySelector('.sk-radiance-price-item--regular');
+
+        const compareAt = variant.compare_at_price;
+        const price = variant.price;
+
+        if (saleEl) saleEl.textContent = formatMoney(price);
+
+        if (regEl) {
+          if (compareAt && compareAt > price) {
+            regEl.textContent = formatMoney(compareAt);
+            regEl.closest('s')?.classList.remove('d-none');
+          } else {
+            // hide regular if not on sale
+            const s = regEl.closest('s');
+            if (s) s.style.display = 'none';
+          }
+        }
+
+        // Also try update sticky bar if present
+        const stickyPrice = document.querySelector(
+          '.sk-radiance-sticky-bottom-bar__price .sk-radiance-price-item--sale'
+        );
+        if (stickyPrice) stickyPrice.textContent = formatMoney(price);
+      };
+
+      const setActiveOffer = async (offerType) => {
+        // SINGLE
+        if (offerType === 'single') {
+          hiddenVariantInput.value = root.dataset.baseVariantId;
+          // shared price -> already correct from initial render
+          // emit event for anything else that listens
+          document.dispatchEvent(
+            new CustomEvent('sk:offerchange', {
+              detail: { offer: 'single', handle: baseHandle, variantId: hiddenVariantInput.value },
+            })
+          );
+          return;
+        }
+
+        // BUNDLE
+        if (offerType === 'bundle') {
+          if (!bundleHandle) {
+            // No bundle configured; revert to single silently
+            offerRadios.forEach((r) => {
+              if (r.value === 'single') r.checked = true;
+            });
+            if (bundleCard) bundleCard.style.display = 'none';
+            return;
+          }
+
+          const bundleJson = await fetchProductJson(bundleHandle);
+          const bundleVariant = pickFirstAvailableVariant(bundleJson);
+          if (!bundleVariant) return;
+
+          // Update hidden variant id for shared add-to-cart
+          hiddenVariantInput.value = bundleVariant.id;
+
+          // Update bundle card price
+          if (cardPriceBundle) {
+            if (bundleVariant.compare_at_price && bundleVariant.compare_at_price > bundleVariant.price) {
+              cardPriceBundle.innerHTML = `<span class="sk-offer-card__compare">${formatMoney(
+                bundleVariant.compare_at_price
+              )}</span>${formatMoney(bundleVariant.price)}`;
+            } else {
+              cardPriceBundle.textContent = formatMoney(bundleVariant.price);
+            }
+          }
+
+          // Update shared price slot numbers
+          replaceSharedPrice(bundleVariant);
+
+          // Emit event so you can patch sticky bar / other components later
+          document.dispatchEvent(
+            new CustomEvent('sk:offerchange', {
+              detail: { offer: 'bundle', handle: bundleHandle, variantId: bundleVariant.id, product: bundleJson },
+            })
+          );
+        }
+      };
+
+      // On load: hydrate bundle card (price) if bundle exists
+      (async function hydrateBundleCard() {
+        if (!bundleHandle) {
+          if (bundleCard) bundleCard.style.display = 'none';
+          return;
+        }
+
+        try {
+          const bundleJson = await fetchProductJson(bundleHandle);
+          const bundleVariant = pickFirstAvailableVariant(bundleJson);
+          if (!bundleVariant) return;
+
+          if (cardPriceBundle) {
+            if (bundleVariant.compare_at_price && bundleVariant.compare_at_price > bundleVariant.price) {
+              cardPriceBundle.innerHTML = `<span class="sk-offer-card__compare">${formatMoney(
+                bundleVariant.compare_at_price
+              )}</span>${formatMoney(bundleVariant.price)}`;
+            } else {
+              cardPriceBundle.textContent = formatMoney(bundleVariant.price);
+            }
+          }
+        } catch (e) {
+          if (bundleCard) bundleCard.style.display = 'none';
+        }
+      })();
+
+      // Listen to offer changes
+      offerRadios.forEach((radio) => {
+        radio.addEventListener('change', async function () {
+          if (!this.checked) return;
+          try {
+            await setActiveOffer(this.value);
+          } catch (e) {
+            // fail safe: revert to single
+            offerRadios.forEach((r) => {
+              if (r.value === 'single') r.checked = true;
+            });
+            await setActiveOffer('single');
+          }
         });
-
-        updateProgressDots(index);
-      }
-
-      function updateProgressDots(index) {
-        if (!progressDots.length) return;
-        progressDots.forEach((dot, dotIndex) => {
-          const isActive = dotIndex === index;
-          dot.classList.toggle('is-active', isActive);
-          dot.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-        });
-      }
-
-      function scrollHeroIntoView() {
-        if (!heroMediaMain) return;
-        heroMediaMain.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-
-      updateActiveThumb(heroSwiper.activeIndex || 0);
-
-      heroSwiper.on('slideChange', function () {
-        updateActiveThumb(heroSwiper.activeIndex);
-        scrollHeroIntoView();
       });
 
-      thumbnails.forEach((thumb, index) => {
-        thumb.addEventListener('click', function () {
-          heroSwiper.slideTo(index);
-          scrollHeroIntoView();
-        });
-      });
-
-      progressDots.forEach((dot, index) => {
-        dot.addEventListener('click', function () {
-          heroSwiper.slideTo(index);
-          scrollHeroIntoView();
-        });
-      });
-
-      function scrollGallery(direction) {
-        if (!galleryRow) return;
-        const step = galleryRow.clientWidth / 2 || 150;
-        galleryRow.scrollBy({
-          left: direction === 'next' ? step : -step,
-          behavior: 'smooth',
-        });
-      }
-
-      if (galleryPrevButton) {
-        galleryPrevButton.addEventListener('click', function () {
-          scrollGallery('prev');
-        });
-      }
-
-      if (galleryNextButton) {
-        galleryNextButton.addEventListener('click', function () {
-          scrollGallery('next');
-        });
-      }
+      // Start in "single"
+      await setActiveOffer('single');
     });
   </script>
 </product-info>
