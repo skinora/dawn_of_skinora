@@ -62,12 +62,30 @@
     width: min(clamp(240px, 65vw, 750px), 100%);
     margin-top: 0.75rem;
     overflow: hidden;
+    position: relative;
   }
 
   .sk-hero-gallery {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(120px, 1fr));
     gap: clamp(0.5rem, 1vw, 0.75rem);
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(120px, 1fr);
+    overflow-x: hidden;
+  }
+
+  .sk-hero-gallery-controls {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+    padding: 0 0.5rem;
+  }
+
+  .sk-hero-gallery-controls .sk-hero-arrow {
+    pointer-events: auto;
   }
 
   .sk-hero-progress {
@@ -473,6 +491,16 @@
                   </div>
                 {% endfor %}
               </div>
+              {% if media_images.size > 1 %}
+                <div class="sk-hero-gallery-controls">
+                  <button class="sk-hero-arrow sk-hero-arrow--prev" type="button" aria-label="Scroll gallery left">
+                    ‹
+                  </button>
+                  <button class="sk-hero-arrow sk-hero-arrow--next" type="button" aria-label="Scroll gallery right">
+                    ›
+                  </button>
+                </div>
+              {% endif %}
             </div>
             {% if media_images.size > 1 %}
               <div class="sk-hero-progress" role="tablist" aria-label="Hero swipe progress">
@@ -593,6 +621,9 @@
       const nextButton = swiperRoot.querySelector('.sk-hero-arrow--next');
       const thumbnails = sectionEl.querySelectorAll('.sk-hero-thumb img');
       const progressDots = sectionEl.querySelectorAll('.sk-hero-progress-dot');
+      const galleryPrevButton = sectionEl.querySelector('.sk-hero-gallery-controls .sk-hero-arrow--prev');
+      const galleryNextButton = sectionEl.querySelector('.sk-hero-gallery-controls .sk-hero-arrow--next');
+      const galleryRow = sectionEl.querySelector('.sk-hero-gallery');
       const heroMediaMain = sectionEl.querySelector('.sk-hero-media-main');
 
       const swiperOptions = {
@@ -653,6 +684,27 @@
           scrollHeroIntoView();
         });
       });
+
+      function scrollGallery(direction) {
+        if (!galleryRow) return;
+        const step = galleryRow.clientWidth / 2 || 150;
+        galleryRow.scrollBy({
+          left: direction === 'next' ? step : -step,
+          behavior: 'smooth',
+        });
+      }
+
+      if (galleryPrevButton) {
+        galleryPrevButton.addEventListener('click', function () {
+          scrollGallery('prev');
+        });
+      }
+
+      if (galleryNextButton) {
+        galleryNextButton.addEventListener('click', function () {
+          scrollGallery('next');
+        });
+      }
     });
   </script>
 </product-info>
