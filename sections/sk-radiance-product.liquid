@@ -553,26 +553,10 @@
             </div>
           {% endif %}
 
+          {% render 'sk-radiance-price', product: product, section: section, show_badges: false %}
+
           <!-- PURCHASE -->
           <div class="sk-purchase">
-            <div
-              class="sk-product-price"
-              data-product-price
-              data-product-id="{{ product.id }}"
-            >
-              <span class="sk-price-current">
-                {{ product.selected_or_first_available_variant.price | money }}
-              </span>
-
-              {% if product.selected_or_first_available_variant.compare_at_price
-                  > product.selected_or_first_available_variant.price
-              %}
-                <span class="sk-price-compare">
-                  {{ product.selected_or_first_available_variant.compare_at_price | money }}
-                </span>
-              {% endif %}
-            </div>
-
             {% render 'sk-radiance-product-variant-picker', product: product, product_form_id: product_form_id %}
 
             {% render 'sk-radiance-quantity', product: product, product_form_id: product_form_id, section: section %}
@@ -724,40 +708,6 @@
         });
       }
     });
-  </script>
-  <script>
-    (function () {
-      const priceRoot = document.querySelector('[data-product-price]');
-      if (!priceRoot) return;
-
-      const variants = {{ product.variants | json }};
-
-      function updatePrice(variantId) {
-        const variant = variants.find(v => String(v.id) === String(variantId));
-        if (!variant) return;
-
-        const current = priceRoot.querySelector('.sk-price-current');
-        const compare = priceRoot.querySelector('.sk-price-compare');
-
-        if (current) current.textContent = Shopify.formatMoney(variant.price);
-        if (compare) {
-          if (variant.compare_at_price && variant.compare_at_price > variant.price) {
-            compare.textContent = Shopify.formatMoney(variant.compare_at_price);
-            compare.style.display = '';
-          } else {
-            compare.style.display = 'none';
-          }
-        }
-      }
-
-      document.addEventListener('variant:change', function (e) {
-        updatePrice(e.detail.variantId);
-      });
-
-      // Initial sync (important)
-      const initialSelect = document.querySelector('select[name="id"]');
-      if (initialSelect) updatePrice(initialSelect.value);
-    })();
   </script>
 </product-info>
 
