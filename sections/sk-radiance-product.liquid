@@ -700,21 +700,18 @@
 
             {% assign trust_badges_source = product_info.trust_badges | default: blank %}
             {% assign trust_badges_value = trust_badges_source.value | default: trust_badges_source %}
-            {% if trust_badges_value != blank %}
-              <div class="sk-trust-icons" aria-label="Trust badges">
+            {% assign trust_badges_size = trust_badges_value | size %}
+            {% if trust_badges_value != blank and trust_badges_size > 0 %}
+              <div class="sk-payment sk-trust-icons">
                 {% for badge in trust_badges_value %}
-                  {% assign badge_url = '' %}
-                  {% if badge.url != blank %}
-                    {% assign badge_url = badge.url %}
-                  {% else %}
-                    {% assign badge_url = badge | image_url %}
-                  {% endif %}
-                  {% if badge_url != blank %}
+                  {% assign badge_img = badge.url | default: badge.image | default: badge.src | default: badge %}
+                  {% assign badge_alt = badge.alt | default: badge.alt_text | default: 'Trust badge' %}
+                  {% if badge_img != blank %}
                     <span class="sk-trust-icon">
                       <img
-                        src="{{ badge_url | asset_url }}"
-                        alt="{{ product.title | escape }} trust badge"
-                        width="120"
+                        src="{{ badge_img | image_url: width: 60 }}"
+                        alt="{{ badge_alt }}"
+                        width="60"
                         height="22"
                         loading="lazy"
                       >
