@@ -227,15 +227,27 @@
 ============================= */
 
   .sk-offer-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin: 1rem 0 0.75rem;
+    display: inline-grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    --sk-offer-card-gap: 1rem;
+    column-gap: var(--sk-offer-card-gap);
+    row-gap: var(--sk-offer-card-gap);
+    margin: 1rem auto 0.75rem;
+    grid-auto-rows: 1fr;
+    align-items: stretch;
+    justify-content: center;
+    justify-items: center;
+    width: fit-content;
+    max-width: 100%;
   }
 
   .sk-offer-card {
     cursor: pointer;
-    display: block;
+    display: flex;
+    align-items: stretch;
+    position: relative;
+    width: 100%;
+    height: 100%;
   }
 
   .sk-offer-card input {
@@ -246,88 +258,148 @@
 
   .sk-offer-card__inner {
     position: relative;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 0.75rem 1rem;
-    align-items: center;
-    padding: 1rem;
-    border: 1px solid #e2e2ea;
-    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.3rem 0.85rem 0.85rem;
+    border-radius: 0;
+    border: 1px solid #e7e7ed;
     background: #fff;
-    transition: border-color 0.15s ease, background 0.15s ease, transform 0.08s ease;
+    transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.08s ease;
+    min-height: 330px;
+    flex: 1;
   }
 
   .sk-offer-card input:checked + .sk-offer-card__inner {
-    border-color: #487ab7;
-    background: #f4f7fb;
+    border: 2px solid #30273e;
+    box-shadow: 0 10px 35px rgba(48, 39, 62, 0.15);
   }
 
   .sk-offer-card:active .sk-offer-card__inner {
     transform: scale(0.992);
   }
 
+  .sk-offer-card__badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: #30273e;
+    color: #fff;
+    font-size: 0.65rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .sk-offer-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
   .sk-offer-card__title {
-    font-weight: 650;
-    line-height: 1.2;
-    margin-bottom: 0.15rem;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 0;
   }
 
   .sk-offer-card__subtitle {
-    font-size: 0.9rem;
-    color: #6b6b76;
-    line-height: 1.2;
+    font-size: 0.85rem;
+    color: #7a7a85;
+    margin: 0;
   }
 
   .sk-offer-card__price {
-    text-align: right;
-    white-space: nowrap;
-    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1b1b21;
   }
 
   .sk-offer-card__compare {
-    display: block;
-    font-weight: 500;
     font-size: 0.85rem;
-    color: #6b6b76;
+    color: #8c8c95;
     text-decoration: line-through;
-    margin-bottom: 0.1rem;
+    display: block;
   }
 
-  .sk-offer-card__badge {
+  .sk-offer-card__compare:empty {
+    display: none;
+  }
+
+  .sk-offer-card__check {
     position: absolute;
-    top: -10px;
+    bottom: 14px;
     right: 14px;
-    background: #487ab7;
-    color: #fff;
-    font-size: 0.7rem;
-    padding: 0.22rem 0.55rem;
-    border-radius: 999px;
-    letter-spacing: 0.02em;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 1px solid #cfcfd6;
+    background: #fff;
+    transition: border 0.2s ease, background 0.2s ease;
   }
 
-  /* unavailable state (still visible) */
+  .sk-offer-card input:checked + .sk-offer-card__inner .sk-offer-card__check {
+    background: #30273e;
+    border-color: #30273e;
+  }
+
+  .sk-offer-card__footer {
+    height: 1px;
+  }
+
   .sk-offer-card.is-unavailable {
-    cursor: default;
+    opacity: 0.45;
   }
-  .sk-offer-card.is-unavailable .sk-offer-card__inner {
-    opacity: 0.6;
-    border-style: dashed;
+
+  .sk-offer-card.is-unavailable::after {
+    content: 'Sold out';
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    font-size: 0.8rem;
+    color: #8c8c95;
   }
-  .sk-offer-card.is-unavailable .sk-offer-card__price::after {
-    content: ' • Sold out';
-    font-weight: 500;
-    color: #6b6b76;
+
+  .sk-offer-card__image-wrapper {
+    width: 100%;
+    height: 140px;
+    border-radius: 0;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .sk-offer-card__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.4rem;
+  }
+
+  .sk-offer-card {
+    max-width: 260px;
+  }
+
+  @media (max-width: 1024px) {
+    .sk-offer-card {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .sk-offer-card__body {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (max-width: 989px) {
     .sk-offer-card__inner {
-      grid-template-columns: 1fr;
-      align-items: start;
-      gap: 0.5rem;
-      padding: 0.9rem;
-    }
-    .sk-offer-card__price {
-      text-align: left;
+      padding: 1rem;
     }
   }
 
@@ -451,6 +523,19 @@
 {%- if bundle_product_ref != blank -%}
   {%- assign bundle_handle = bundle_product_ref.handle -%}
   {%- assign bundle_title = bundle_product_ref.title -%}
+{%- endif -%}
+{%- assign base_variant = product.selected_or_first_available_variant -%}
+{%- assign single_image_url = product.featured_image | image_url: width: 640 -%}
+{%- assign single_image_alt = product.featured_image.alt | default: product.title -%}
+{%- assign bundle_image_obj = bundle_product_ref.featured_image -%}
+{%- if bundle_image_obj == blank -%}
+  {%- assign bundle_image_obj = product.featured_image -%}
+{%- endif -%}
+{%- assign bundle_image_url = bundle_image_obj | image_url: width: 640 -%}
+{%- if bundle_image_obj != blank -%}
+  {%- assign bundle_image_alt = bundle_image_obj.alt | default: bundle_title | default: product.title -%}
+{%- else -%}
+  {%- assign bundle_image_alt = bundle_title | default: product.title -%}
 {%- endif -%}
 
 {%- comment -%}
@@ -616,16 +701,34 @@
             <label class="sk-offer-card" data-sk-offer-card="single">
               <input type="radio" name="sk-offer" value="single" checked>
               <div class="sk-offer-card__inner">
-                <div>
-                  <div class="sk-offer-card__title">{{ product.title }}</div>
-                  <div class="sk-offer-card__subtitle">Single device</div>
+                <div class="sk-offer-card__image-wrapper">
+                  <img
+                    src="{{ single_image_url }}"
+                    alt="{{ single_image_alt | escape }}"
+                    class="sk-offer-card__image"
+                    width="640"
+                    height="640"
+                    loading="lazy"
+                  >
                 </div>
-
-                <div class="sk-offer-card__price" data-sk-card-price="single">
-                  <span class="sk-offer-card__value">
-                    {{ product.selected_or_first_available_variant.price | money }}
-                  </span>
+                <div class="sk-offer-card__content">
+                  <div>
+                    <div class="sk-offer-card__title">{{ product.title }}</div>
+                    <div class="sk-offer-card__subtitle">Single device</div>
+                  </div>
+                  <div class="sk-offer-card__price" data-sk-card-price="single">
+                    {% if base_variant.compare_at_price and base_variant.compare_at_price > base_variant.price %}
+                      <span class="sk-offer-card__compare">
+                        {{ base_variant.compare_at_price | money }}
+                      </span>
+                    {% endif %}
+                    <span class="sk-offer-card__value">
+                      {{ base_variant.price | money }}
+                    </span>
+                  </div>
                 </div>
+                <div class="sk-offer-card__footer" aria-hidden="true"></div>
+                <span class="sk-offer-card__check" aria-hidden="true"></span>
               </div>
             </label>
 
@@ -641,15 +744,28 @@
               <input type="radio" name="sk-offer" value="bundle">
               <div class="sk-offer-card__inner">
                 <span class="sk-offer-card__badge">Most popular</span>
-
-                <div>
-                  <div class="sk-offer-card__title">{{ bundle_title | default: 'Face + Neck Kit' }}</div>
-                  <div class="sk-offer-card__subtitle">Includes Face + Neck</div>
+                <div class="sk-offer-card__image-wrapper">
+                  <img
+                    src="{{ bundle_image_url }}"
+                    alt="{{ bundle_image_alt | escape }}"
+                    class="sk-offer-card__image"
+                    width="640"
+                    height="640"
+                    loading="lazy"
+                  >
                 </div>
-
-                <div class="sk-offer-card__price" data-sk-card-price="bundle">
-                  <span class="sk-offer-card__value">—</span>
+                <div class="sk-offer-card__content">
+                  <div>
+                    <div class="sk-offer-card__title">{{ bundle_title | default: 'Face + Neck Kit' }}</div>
+                    <div class="sk-offer-card__subtitle">Includes Face + Neck</div>
+                  </div>
+                  <div class="sk-offer-card__price" data-sk-card-price="bundle">
+                    <span class="sk-offer-card__compare"></span>
+                    <span class="sk-offer-card__value">—</span>
+                  </div>
                 </div>
+                <div class="sk-offer-card__footer" aria-hidden="true"></div>
+                <span class="sk-offer-card__check" aria-hidden="true"></span>
               </div>
             </label>
           </div>
@@ -839,8 +955,7 @@
       const notifyWrapper = root.querySelector('[data-sk-notify-wrapper]');
       const notifyBtn = root.querySelector('[data-sk-notify-button]');
 
-      const cardPriceSingle = root.querySelector('[data-sk-card-price="single"] .sk-offer-card__value');
-      const cardPriceBundle = root.querySelector('[data-sk-card-price="bundle"] .sk-offer-card__value');
+      const cardPriceBundle = root.querySelector('[data-sk-card-price="bundle"]');
 
       const setAllIdInputs = (variantId) => {
         // update our hidden
@@ -917,12 +1032,17 @@
 
       const setBundleCardPrice = (variant) => {
         if (!cardPriceBundle || !variant) return;
-        if (variant.compare_at_price && variant.compare_at_price > variant.price) {
-          cardPriceBundle.innerHTML =
-            `<span class="sk-offer-card__compare">${formatMoney(variant.compare_at_price)}</span>` +
-            `${formatMoney(variant.price)}`;
-        } else {
-          cardPriceBundle.textContent = formatMoney(variant.price);
+        const compareEl = cardPriceBundle.querySelector('.sk-offer-card__compare');
+        const valueEl = cardPriceBundle.querySelector('.sk-offer-card__value');
+        if (compareEl) {
+          if (variant.compare_at_price && variant.compare_at_price > variant.price) {
+            compareEl.textContent = formatMoney(variant.compare_at_price);
+          } else {
+            compareEl.textContent = '';
+          }
+        }
+        if (valueEl) {
+          valueEl.textContent = formatMoney(variant.price);
         }
       };
 
