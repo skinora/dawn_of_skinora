@@ -282,7 +282,7 @@
   .sk-offer-card__badge {
     position: absolute;
     top: 14px;
-    left: 14px;
+    right: 14px;
     background: #30273e;
     color: #fff;
     font-size: 0.65rem;
@@ -334,6 +334,7 @@
   .sk-offer-card__notify.is-visible:focus-visible {
     background: #f6f6f8;
     transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   }
 
   .sk-offer-card__title {
@@ -396,7 +397,7 @@
   .sk-offer-card.is-unavailable::after {
     content: 'Utsolgt';
     position: absolute;
-    bottom: 14px;
+    top: 14px;
     left: 14px;
     font-size: 0.8rem;
     color: #8c8c95;
@@ -1102,6 +1103,23 @@
         if (!notifyBtn) return;
         notifyBtn.setAttribute('data-variant-id', variantId);
       };
+
+      const openNotifyFlow = (variantId) => {
+        if (!notifyWrapper) return;
+        if (variantId) setNotifyVariant(variantId);
+        notifyWrapper.style.display = 'block';
+        notifyWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (notifyBtn) notifyBtn.click();
+      };
+
+      const cardNotifyButtons = root.querySelectorAll('[data-sk-card-notify-button]');
+      cardNotifyButtons.forEach((btn) => {
+        btn.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          openNotifyFlow(btn.dataset.variantId || root.dataset.baseVariantId);
+        });
+      });
 
       const setBundleCardPrice = (variant) => {
         if (!cardPriceBundle || !variant) return;
