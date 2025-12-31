@@ -308,6 +308,34 @@
     display: block;
   }
 
+  .sk-offer-card__notify {
+    display: none;
+  }
+
+  .sk-offer-card__notify.is-visible {
+    display: block;
+    margin-top: auto;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #30273e;
+    background: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #30273e;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .sk-offer-card__notify.is-visible:hover,
+  .sk-offer-card__notify.is-visible:focus-visible {
+    background: #f6f6f8;
+    transform: translateY(-1px);
+  }
+
   .sk-offer-card__title {
     font-size: 1rem;
     font-weight: 600;
@@ -363,7 +391,6 @@
   }
 
   .sk-offer-card.is-unavailable {
-    opacity: 0.45;
   }
 
   .sk-offer-card.is-unavailable::after {
@@ -373,6 +400,12 @@
     left: 14px;
     font-size: 0.8rem;
     color: #8c8c95;
+  }
+  .sk-offer-card.is-unavailable .sk-offer-card__badge,
+  .sk-offer-card.is-unavailable .sk-offer-card__image-wrapper,
+  .sk-offer-card.is-unavailable .sk-offer-card__content,
+  .sk-offer-card.is-unavailable .sk-offer-card__check {
+    opacity: 0.45;
   }
 
   .sk-offer-card__image-wrapper {
@@ -738,6 +771,16 @@
                 </div>
                 <div class="sk-offer-card__footer" aria-hidden="true"></div>
                 <span class="sk-offer-card__check" aria-hidden="true"></span>
+                <button
+                  type="button"
+                  class="sk-offer-card__notify"
+                  data-sk-card-notify-button
+                  data-klaviyo-backinstock
+                  data-variant-id="{{ base_variant.id }}"
+                  aria-label="Gi beskjed når tilgjengelig"
+                >
+                  Gi beskjed når tilgjengelig
+                </button>
               </div>
             </label>
 
@@ -775,6 +818,16 @@
                 </div>
                 <div class="sk-offer-card__footer" aria-hidden="true"></div>
                 <span class="sk-offer-card__check" aria-hidden="true"></span>
+                <button
+                  type="button"
+                  class="sk-offer-card__notify"
+                  data-sk-card-notify-button
+                  data-klaviyo-backinstock
+                  data-variant-id=""
+                  aria-label="Gi beskjed når tilgjengelig"
+                >
+                  Gi beskjed når tilgjengelig
+                </button>
               </div>
             </label>
           </div>
@@ -1028,10 +1081,21 @@
         if (notifyWrapper) notifyWrapper.style.display = available ? 'none' : 'block';
       };
 
-      const setCardUnavailable = (cardEl, isUnavailable) => {
+      const setCardUnavailable = (cardEl, isUnavailable, variantId) => {
         if (!cardEl) return;
         cardEl.classList.toggle('is-unavailable', !!isUnavailable);
         cardEl.setAttribute('aria-disabled', isUnavailable ? 'true' : 'false');
+        const cardNotifyBtn = cardEl.querySelector('[data-sk-card-notify-button]');
+        if (cardNotifyBtn) {
+          if (variantId) {
+            cardNotifyBtn.setAttribute('data-variant-id', variantId);
+          }
+          cardNotifyBtn.classList.toggle('is-visible', !!isUnavailable);
+        }
+        const radioInput = cardEl.querySelector('input[type="radio"]');
+        if (radioInput) {
+          radioInput.disabled = !!isUnavailable;
+        }
       };
 
       const setNotifyVariant = (variantId) => {
@@ -1067,7 +1131,7 @@
           if (!bundleVariant) return null;
 
           setBundleCardPrice(bundleVariant);
-          setCardUnavailable(bundleCardWrap, !bundleVariant.available);
+          setCardUnavailable(bundleCardWrap, !bundleVariant.available, bundleVariant.id);
 
           return { product: bundleJson, variant: bundleVariant };
         } catch (e) {
@@ -1086,7 +1150,7 @@
           replaceSharedPrice({ price: {{ product.selected_or_first_available_variant.price | json }}, compare_at_price: {{ product.selected_or_first_available_variant.compare_at_price | json }} });
           setAvailabilityUI(baseAvailable);
 
-          setCardUnavailable(singleCard, !baseAvailable);
+          setCardUnavailable(singleCard, !baseAvailable, baseVariantId);
 
           document.dispatchEvent(new CustomEvent('sk:offerchange', {
             detail: { offer: 'single', handle: baseHandle, variantId: baseVariantId, available: baseAvailable }
@@ -1103,13 +1167,15 @@
         replaceSharedPrice(v);
         setAvailabilityUI(!!v.available);
 
+        setCardUnavailable(bundleCardWrap, !v.available, v.id);
+
         document.dispatchEvent(new CustomEvent('sk:offerchange', {
           detail: { offer: 'bundle', handle: bundleHandle, variantId: v.id, available: !!v.available, product: bundleData.product }
         }));
       };
 
       // 1) Base availability state on load (single)
-      setCardUnavailable(singleCard, root.dataset.baseAvailable !== 'true');
+      setCardUnavailable(singleCard, root.dataset.baseAvailable !== 'true', root.dataset.baseVariantId);
       setAvailabilityUI(root.dataset.baseAvailable === 'true');
       setNotifyVariant(root.dataset.baseVariantId);
 
