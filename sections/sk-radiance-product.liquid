@@ -310,37 +310,37 @@
 
   .sk-offer-card__notify {
     display: none;
+    min-width: 0;
+    text-decoration: none;
   }
 
   .sk-offer-card__notify.is-visible {
-    display: block;
-    margin-top: auto;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    border: 1px solid #30273e;
-    background: #fff;
-    font-size: 0.75rem;
+    display: inline-flex;
+    align-self: flex-start;
+    margin-top: 0.45rem;
+    gap: 0.3rem;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--color-brand, #30273e);
+    font-size: 0.85rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #30273e;
+    text-decoration: underline;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
-    opacity: 1;
-    pointer-events: auto;
   }
 
   .sk-offer-card__notify.is-visible:hover,
   .sk-offer-card__notify.is-visible:focus-visible {
-    background: #f6f6f8;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    opacity: 0.85;
   }
 
   .sk-offer-card__title {
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: 600;
-    line-height: 1.25;
+    line-height: 2;
     margin: 0;
   }
 
@@ -354,15 +354,17 @@
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-    font-size: 1.15rem;
+    font-size: 2.3rem;
     font-weight: 700;
-    color: #1b1b21;
+    line-height: 1;
+    color: var(--color-neutral-3, #1b1b21);
   }
 
   .sk-offer-card__compare {
     font-size: 0.85rem;
-    color: #8c8c95;
-    text-decoration: line-through;
+    color: #7a7a85;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
     display: block;
   }
 
@@ -761,9 +763,7 @@
                   </div>
                   <div class="sk-offer-card__price" data-sk-card-price="single">
                     {% if base_variant.compare_at_price and base_variant.compare_at_price > base_variant.price %}
-                      <span class="sk-offer-card__compare">
-                        {{ base_variant.compare_at_price | money }}
-                      </span>
+                      <span class="sk-offer-card__compare"> Verdi {{ base_variant.compare_at_price | money }} </span>
                     {% endif %}
                     <span class="sk-offer-card__value">
                       {{ base_variant.price | money }}
@@ -772,8 +772,8 @@
                 </div>
                 <div class="sk-offer-card__footer" aria-hidden="true"></div>
                 <span class="sk-offer-card__check" aria-hidden="true"></span>
-                <button
-                  type="button"
+                <a
+                  href="#"
                   class="sk-offer-card__notify"
                   data-sk-card-notify-button
                   data-klaviyo-backinstock
@@ -781,7 +781,7 @@
                   aria-label="Gi beskjed når tilgjengelig"
                 >
                   Gi beskjed når tilgjengelig
-                </button>
+                </a>
               </div>
             </label>
 
@@ -819,8 +819,8 @@
                 </div>
                 <div class="sk-offer-card__footer" aria-hidden="true"></div>
                 <span class="sk-offer-card__check" aria-hidden="true"></span>
-                <button
-                  type="button"
+                <a
+                  href="#"
                   class="sk-offer-card__notify"
                   data-sk-card-notify-button
                   data-klaviyo-backinstock
@@ -828,7 +828,7 @@
                   aria-label="Gi beskjed når tilgjengelig"
                 >
                   Gi beskjed når tilgjengelig
-                </button>
+                </a>
               </div>
             </label>
           </div>
@@ -1127,7 +1127,7 @@
         const valueEl = cardPriceBundle.querySelector('.sk-offer-card__value');
         if (compareEl) {
           if (variant.compare_at_price && variant.compare_at_price > variant.price) {
-            compareEl.textContent = formatMoney(variant.compare_at_price);
+            compareEl.textContent = `Verdi ${formatMoney(variant.compare_at_price)}`;
           } else {
             compareEl.textContent = '';
           }
