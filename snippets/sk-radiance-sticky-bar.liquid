@@ -22,7 +22,7 @@
 
     background: linear-gradient(90deg, #c9c6cc, #30273e);
     color: #fff;
-    height: 64px;
+    padding: 0.5rem 0;
 
     display: flex;
     align-items: center;
@@ -49,12 +49,31 @@
     gap: 1.25rem;
   }
 
-  .sk-radiance-sticky-bottom-bar__title {
+  .sk-radiance-sticky-bottom-bar__content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  .sk-radiance-sticky-bottom-bar__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .sk-radiance-sticky-bottom-bar__product-name {
+    font-size: 1.5rem;
     font-weight: 600;
-    white-space: nowrap;
+    color: #fff;
+    margin: 0;
+    line-height: 1.2;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 38ch;
+    white-space: nowrap;
   }
 
   .sk-radiance-sticky-bottom-bar__price {
@@ -81,6 +100,49 @@
     font-weight: 600;
     cursor: pointer;
   }
+
+  .sk-radiance-sticky-bottom-bar__button {
+    min-width: clamp(10rem, 24vw, 15rem);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 749px) {
+    .sk-radiance-sticky-bottom-bar {
+      padding: 0 0.75rem;
+    }
+
+    .sk-radiance-sticky-bottom-bar__content {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+    }
+
+    .sk-radiance-sticky-bottom-bar__info {
+      width: 100%;
+      text-align: center;
+    }
+
+    .sk-radiance-sticky-bottom-bar__product-name {
+      font-size: 1.125rem;
+      white-space: normal;
+      line-height: 1.4;
+      max-height: 2.8em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .sk-radiance-sticky-bottom-bar__price {
+      justify-content: center;
+    }
+
+    .sk-radiance-sticky-bottom-bar__button {
+      width: 100%;
+      min-width: auto;
+    }
+  }
 </style>
 
 {%- liquid
@@ -92,26 +154,30 @@
 <!-- SOURCE TEMPLATE -->
 <div id="stickyBottomBar-{{ section_id }}" style="display:none">
   <div class="sk-radiance-sticky-bottom-bar" data-sk-sticky>
-    <div class="sk-radiance-sticky-bottom-bar__title" data-sk-sticky-title>
-      {{ product.title }}
-    </div>
+    <div class="sk-radiance-sticky-bottom-bar__content">
+      <div class="sk-radiance-sticky-bottom-bar__info">
+        <div class="sk-radiance-sticky-bottom-bar__product-name" data-sk-sticky-title>
+          {{ product.title }}
+        </div>
+      </div>
 
-    <div class="sk-radiance-sticky-bottom-bar__price">
-      <span class="sk-price__value"></span>
-      <span class="sk-price__current"></span>
+      <div class="sk-radiance-sticky-bottom-bar__price">
+        <span class="sk-price__value"></span>
+        <span class="sk-price__current"></span>
+      </div>
+
+      <button
+        type="button"
+        class="sk-radiance-sticky-bottom-bar__cta sk-radiance-sticky-bottom-bar__button"
+        data-sk-sticky-cta
+        data-product-form="{{ product_form_id }}"
+        disabled
+      >
+        {{ add_label }}
+      </button>
     </div>
 
     <input type="hidden" data-sk-sticky-variant>
-
-    <button
-      type="button"
-      class="sk-radiance-sticky-bottom-bar__cta"
-      data-sk-sticky-cta
-      data-product-form="{{ product_form_id }}"
-      disabled
-    >
-      {{ add_label }}
-    </button>
   </div>
 </div>
 
@@ -121,6 +187,8 @@
     const sourceId = 'stickyBottomBar-' + sectionId;
     const portalId = sourceId + '-portal';
     const hero = document.querySelector('#MainProduct-' + sectionId);
+
+    let latestOfferDetail = null;
 
     function formatMoney(cents) {
       return Shopify?.formatMoney ? Shopify.formatMoney(cents) : (cents / 100).toFixed(2);
@@ -147,9 +215,74 @@
       portal.classList.toggle('visible', rect.bottom < 80);
     }
 
+    function findProductForm(btn) {
+      if (btn && btn.dataset && btn.dataset.productForm) {
+        const form = document.getElementById(btn.dataset.productForm);
+        if (form && form.tagName === 'FORM') return form;
+      }
+
+      const mainSection = document.getElementById('MainProduct-' + sectionId);
+      if (mainSection) {
+        const sectionForm = mainSection.querySelector('form');
+        if (sectionForm) return sectionForm;
+      }
+
+      const fallback = document.querySelector('form[action*="/cart"], form[action*="/cart/add"]');
+      return fallback || null;
+    }
+
+    function safeSubmitForm(form) {
+      if (!form) return false;
+      const submitBtn = form.querySelector(
+        'button[type="submit"], input[type="submit"], [data-add-to-cart], .add-to-cart'
+      );
+      if (submitBtn) {
+        try {
+          submitBtn.click();
+          return true;
+        } catch (error) {}
+      }
+      if (typeof form.requestSubmit === 'function') {
+        try {
+          form.requestSubmit();
+          return true;
+        } catch (error) {}
+      }
+      if (typeof form.submit === 'function') {
+        try {
+          form.submit();
+          return true;
+        } catch (error) {}
+      }
+      return false;
+    }
+
+    function handlePortalClick(event) {
+      const btn = event.target.closest && event.target.closest('[data-sk-sticky-cta]');
+      if (!btn) return;
+      event.preventDefault();
+      const form = findProductForm(btn);
+      if (!form) return;
+
+      if (latestOfferDetail && latestOfferDetail.variantId) {
+        form.querySelectorAll('input[name="id"]').forEach((input) => {
+          input.value = latestOfferDetail.variantId;
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+      }
+
+      safeSubmitForm(form);
+    }
+
     function updateSticky(detail) {
+      latestOfferDetail = detail;
       const portal = document.getElementById(portalId);
       if (!portal || !detail) return;
+
+      const variantInput = portal.querySelector('[data-sk-sticky-variant]');
+      if (variantInput && detail.variantId) {
+        variantInput.value = detail.variantId;
+      }
 
       portal.querySelector('[data-sk-sticky-title]').textContent = detail.title;
       portal.querySelector('.sk-price__current').textContent = formatMoney(detail.price);
@@ -163,6 +296,8 @@
 
     const portal = mountPortal();
     if (!portal) return;
+
+    portal.addEventListener('click', handlePortalClick);
 
     window.addEventListener('scroll', () => updateVisibility(portal), { passive: true });
     window.addEventListener('resize', () => updateVisibility(portal));
