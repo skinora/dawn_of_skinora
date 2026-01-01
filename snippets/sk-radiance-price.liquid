@@ -8,17 +8,20 @@
     assign money_price = price | money_with_currency
   endif
   assign has_compare = false
-  assign money_value = ''
-  if compare_at_price > price
-    assign has_compare = true
-    if settings.currency_code_enabled
-      assign money_value = compare_at_price | money_with_currency
-    else
-      assign money_value = compare_at_price | money
-    endif
-  endif
-  assign on_sale = has_compare
 -%}
+{%- assign money_value = '' -%}
+
+{%- if compare_at_price and compare_at_price > price -%}
+  {%- assign has_compare = true -%}
+
+  {%- if settings.currency_code_enabled -%}
+    {%- assign money_value = compare_at_price | money_with_currency -%}
+  {%- else -%}
+    {%- assign money_value = compare_at_price | money -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- assign on_sale = has_compare -%}
 
 <div class="sk-radiance-price sk-radiance-price--{{ price_class }} sk-radiance-price--{{ section.settings.price_size }} sk-radiance-price--{{ section.settings.price_layout }} sk-radiance-price--{{ section.settings.price_alignment }} sk-radiance-price--unavailable-{{ available }}">
   <div class="sk-radiance-price__container">
