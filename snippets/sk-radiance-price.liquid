@@ -3,7 +3,7 @@
   assign compare_at_price = target.compare_at_price
   assign price = target.price | default: 0
   assign available = target.available | default: false
-  assign money_price = price | money_without_trailing_zeros
+  assign money_price = price | money
   if settings.currency_code_enabled
     assign money_price = price | money_with_currency
   endif
@@ -14,7 +14,7 @@
     if settings.currency_code_enabled
       assign money_value = compare_at_price | money_with_currency
     else
-      assign money_value = compare_at_price | money_without_trailing_zeros
+      assign money_value = compare_at_price | money
     endif
   endif
   assign on_sale = has_compare
