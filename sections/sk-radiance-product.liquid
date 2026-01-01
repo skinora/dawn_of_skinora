@@ -809,7 +809,7 @@
             >
               <input type="radio" name="sk-offer" value="bundle">
               <div class="sk-offer-card__inner">
-                <span class="sk-offer-card__badge">Populær</span>
+                <span class="sk-offer-card__badge">Best verdi</span>
                 <div class="sk-offer-card__image-wrapper">
                   <img
                     src="{{ bundle_image_url }}"
@@ -1103,12 +1103,10 @@
         const compareAt = variant.compare_at_price;
         const price = variant.price;
 
-        if (compareAt && compareAt > price) {
-          if (valueEl) {
-            valueEl.textContent = `Verdi ${formatMoney(compareAt)}`;
-          }
-        } else if (valueEl) {
-          valueEl.textContent = '';
+        const shouldShowCompare = compareAt && compareAt > price;
+        if (valueEl) {
+          valueEl.textContent = shouldShowCompare ? `Verdi ${formatMoney(compareAt)}` : '';
+          valueEl.hidden = !shouldShowCompare;
         }
 
         currentEl.textContent = formatMoney(price);
