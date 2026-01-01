@@ -1,6 +1,8 @@
 {%- liquid
-  assign product_form_id = 'product-form-' | append: section_id assign current_variant = product.selected_or_first_available_variant
+  assign product_form_id = 'product-form-' | append: section_id
+  assign current_variant = product.selected_or_first_available_variant
 -%}
+
 <div
   class="sk-radiance-buy-buttons sk-radiance-buy-buttons--{{ block.settings.button_layout }} sk-radiance-buy-buttons--{{ block.settings.button_style }}"
   {{ block.shopify_attributes }}
@@ -8,9 +10,12 @@
   <div class="sk-radiance-buy-buttons__container">
     <product-form class="sk-radiance-product-form" data-section-id="{{ section_id }}">
       <div class="product-form__error-message-wrapper" role="alert" hidden>
-        <span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>
+        <span class="svg-wrapper">
+          {{- 'icon-error.svg' | inline_asset_content -}}
+        </span>
         <span class="product-form__error-message"></span>
       </div>
+
       {%- form 'product',
         product,
         id: product_form_id,
@@ -25,6 +30,7 @@
           class="product-variant-id"
           form="{{ product_form_id }}"
         >
+
         <div class="sk-radiance-buy-buttons__wrapper">
           <div class="sk-radiance-buy-buttons__buttons">
             <button
@@ -33,14 +39,62 @@
               name="add"
               class="sk-btn sk-btn--primary sk-radiance-buy-buttons__button sk-radiance-buy-buttons__button--primary sk-radiance-buy-buttons__button--single"
             >
-              <span class="sk-radiance-buy-buttons__button-text"> {{ 'products.product.add_to_cart' | t }} </span>
+              <span class="sk-radiance-buy-buttons__button-text">
+                {{ 'products.product.add_to_cart' | t }}
+              </span>
               {%- render 'loading-spinner' -%}
             </button>
           </div>
         </div>
-        {% comment %} <div class="sk-radiance-buy-buttons__payment-methods"> <div class="sk-radiance-buy-buttons__payment-methods-title d-none"> {{ 'products.product.payment_methods' | t }} </div> <div class="sk-radiance-buy-buttons__payment-methods-logos"> <div class="sk-radiance-buy-buttons__payment-method"> <img src="{{ 'visa-logo.svg' | asset_url }}" alt="Visa" class="sk-radiance-buy-buttons__payment-logo" width="47" height="34" > </div> <div class="sk-radiance-buy-buttons__payment-method"> <img src="{{ 'mastercard-logo.svg' | asset_url }}" alt="Mastercard" class="sk-radiance-buy-buttons__payment-logo" width="47" height="34" > </div> <div class="sk-radiance-buy-buttons__payment-method"> <img src="{{ 'apple-pay-logo.svg' | asset_url }}" alt="Apple Pay" class="sk-radiance-buy-buttons__payment-logo" width="47" height="34" > </div> <div class="sk-radiance-buy-buttons__payment-method"> <img src="{{ 'klarna-logo.svg' | asset_url }}" alt="Klarna" class="sk-radiance-buy-buttons__payment-logo" width="47" height="34" > </div> </div> </div> {% endcomment %}
+
+        {% comment %}
+          <div class="sk-radiance-buy-buttons__payment-methods">
+            <div class="sk-radiance-buy-buttons__payment-methods-title d-none">
+              {{ 'products.product.payment_methods' | t }}
+            </div>
+            <div class="sk-radiance-buy-buttons__payment-methods-logos">
+              <div class="sk-radiance-buy-buttons__payment-method">
+                <img
+                  src="{{ 'visa-logo.svg' | asset_url }}"
+                  alt="Visa"
+                  class="sk-radiance-buy-buttons__payment-logo"
+                  width="47"
+                  height="34"
+                >
+              </div>
+              <div class="sk-radiance-buy-buttons__payment-method">
+                <img
+                  src="{{ 'mastercard-logo.svg' | asset_url }}"
+                  alt="Mastercard"
+                  class="sk-radiance-buy-buttons__payment-logo"
+                  width="47"
+                  height="34"
+                >
+              </div>
+              <div class="sk-radiance-buy-buttons__payment-method">
+                <img
+                  src="{{ 'apple-pay-logo.svg' | asset_url }}"
+                  alt="Apple Pay"
+                  class="sk-radiance-buy-buttons__payment-logo"
+                  width="47"
+                  height="34"
+                >
+              </div>
+              <div class="sk-radiance-buy-buttons__payment-method">
+                <img
+                  src="{{ 'klarna-logo.svg' | asset_url }}"
+                  alt="Klarna"
+                  class="sk-radiance-buy-buttons__payment-logo"
+                  width="47"
+                  height="34"
+                >
+              </div>
+            </div>
+          </div>
+        {% endcomment %}
       {%- endform -%}
     </product-form>
   </div>
+
   {%- comment -%} Pickup availability removed - snippet not available {%- endcomment -%}
 </div>
