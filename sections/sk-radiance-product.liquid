@@ -354,22 +354,31 @@
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-    font-size: 2.3rem;
-    font-weight: 700;
     line-height: 1;
-    color: var(--color-neutral-3, #1b1b21);
   }
 
-  .sk-offer-card__compare {
+  .sk-price {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .sk-price__value {
     font-size: 0.85rem;
-    color: #7a7a85;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    display: block;
+    font-weight: 400;
+    color: #6b6b76;
+    text-transform: none;
+    letter-spacing: 0;
   }
 
-  .sk-offer-card__compare:empty {
+  .sk-price__value:empty {
     display: none;
+  }
+
+  .sk-price__current {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #30273e;
   }
 
   .sk-offer-card__check {
@@ -762,12 +771,16 @@
                     <div class="sk-offer-card__subtitle">Single device</div>
                   </div>
                   <div class="sk-offer-card__price" data-sk-card-price="single">
-                    {% if base_variant.compare_at_price and base_variant.compare_at_price > base_variant.price %}
-                      <span class="sk-offer-card__compare"> Verdi {{ base_variant.compare_at_price | money }} </span>
-                    {% endif %}
-                    <span class="sk-offer-card__value">
-                      {{ base_variant.price | money }}
-                    </span>
+                    <div class="sk-price">
+                      {% if base_variant.compare_at_price and base_variant.compare_at_price > base_variant.price %}
+                        <span class="sk-price__value">
+                          Verdi {{ base_variant.compare_at_price | money_without_trailing_zeros }}
+                        </span>
+                      {% endif %}
+                      <span class="sk-price__current">
+                        {{ base_variant.price | money_without_trailing_zeros }}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div class="sk-offer-card__footer" aria-hidden="true"></div>
@@ -813,8 +826,10 @@
                     <div class="sk-offer-card__subtitle">Includes Face + Neck</div>
                   </div>
                   <div class="sk-offer-card__price" data-sk-card-price="bundle">
-                    <span class="sk-offer-card__compare"></span>
-                    <span class="sk-offer-card__value">—</span>
+                    <div class="sk-price">
+                      <span class="sk-price__value"></span>
+                      <span class="sk-price__current">—</span>
+                    </div>
                   </div>
                 </div>
                 <div class="sk-offer-card__footer" aria-hidden="true"></div>
@@ -1056,23 +1071,22 @@
       const replaceSharedPrice = (variant) => {
         if (!sharedPriceEl || !variant) return;
 
-        const saleEl = sharedPriceEl.querySelector('.sk-radiance-price-item--sale');
-        const regEl = sharedPriceEl.querySelector('.sk-radiance-price-item--regular');
+        const valueEl = sharedPriceEl.querySelector('.sk-price__value');
+        const currentEl = sharedPriceEl.querySelector('.sk-price__current');
 
         const compareAt = variant.compare_at_price;
         const price = variant.price;
 
-        if (saleEl) saleEl.textContent = formatMoney(price);
-
-        // show/hide compare price safely
-        if (regEl) {
-          const s = regEl.closest('s');
+        if (valueEl) {
           if (compareAt && compareAt > price) {
-            regEl.textContent = formatMoney(compareAt);
-            if (s) s.style.display = '';
+            valueEl.textContent = `Verdi ${formatMoney(compareAt)}`;
           } else {
-            if (s) s.style.display = 'none';
+            valueEl.textContent = '';
           }
+        }
+
+        if (currentEl) {
+          currentEl.textContent = formatMoney(price);
         }
       };
 
@@ -1123,17 +1137,17 @@
 
       const setBundleCardPrice = (variant) => {
         if (!cardPriceBundle || !variant) return;
-        const compareEl = cardPriceBundle.querySelector('.sk-offer-card__compare');
-        const valueEl = cardPriceBundle.querySelector('.sk-offer-card__value');
-        if (compareEl) {
+        const valueEl = cardPriceBundle.querySelector('.sk-price__value');
+        const currentEl = cardPriceBundle.querySelector('.sk-price__current');
+        if (valueEl) {
           if (variant.compare_at_price && variant.compare_at_price > variant.price) {
-            compareEl.textContent = `Verdi ${formatMoney(variant.compare_at_price)}`;
+            valueEl.textContent = `Verdi ${formatMoney(variant.compare_at_price)}`;
           } else {
-            compareEl.textContent = '';
+            valueEl.textContent = '';
           }
         }
-        if (valueEl) {
-          valueEl.textContent = formatMoney(variant.price);
+        if (currentEl) {
+          currentEl.textContent = formatMoney(variant.price);
         }
       };
 
