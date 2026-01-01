@@ -1022,6 +1022,13 @@
       const fallbackBundleHandle = '';
       const bundleHandle = bundleHandleFromMeta || fallbackBundleHandle;
 
+      const baseVariant = {
+        id: {{ product.selected_or_first_available_variant.id | json }},
+        price: {{ product.selected_or_first_available_variant.price | json }},
+        compare_at_price: {{ product.selected_or_first_available_variant.compare_at_price | json }},
+        available: {{ product.selected_or_first_available_variant.available | json }}
+      };
+
       const offerRadios = root.querySelectorAll('input[name="sk-offer"]');
       const bundleCard = root.querySelector('[data-sk-bundle-card]');
       const singleCard = root.querySelector('[data-sk-offer-card="single"]');
@@ -1073,21 +1080,20 @@
 
         const valueEl = sharedPriceEl.querySelector('.sk-price__value');
         const currentEl = sharedPriceEl.querySelector('.sk-price__current');
+        if (!currentEl) return;
 
         const compareAt = variant.compare_at_price;
         const price = variant.price;
 
-        if (valueEl) {
-          if (compareAt && compareAt > price) {
+        if (compareAt && compareAt > price) {
+          if (valueEl) {
             valueEl.textContent = `Verdi ${formatMoney(compareAt)}`;
-          } else {
-            valueEl.textContent = '';
           }
+        } else if (valueEl) {
+          valueEl.textContent = '';
         }
 
-        if (currentEl) {
-          currentEl.textContent = formatMoney(price);
-        }
+        currentEl.textContent = formatMoney(price);
       };
 
       const setAvailabilityUI = (available) => {
@@ -1173,69 +1179,80 @@
       };
 
       const applyOffer = async (offerType, bundleData) => {
+        let activeVariant = null;
+
         if (offerType === 'single') {
-          const baseVariantId = root.dataset.baseVariantId;
-          const baseAvailable = root.dataset.baseAvailable === 'true';
-
-          setAllIdInputs(baseVariantId);
-          setNotifyVariant(baseVariantId);
-          replaceSharedPrice({ price: {{ product.selected_or_first_available_variant.price | json }}, compare_at_price: {{ product.selected_or_first_available_variant.compare_at_price | json }} });
-          setAvailabilityUI(baseAvailable);
-
-          setCardUnavailable(singleCard, !baseAvailable, baseVariantId);
-
-          document.dispatchEvent(new CustomEvent('sk:offerchange', {
-            detail: { offer: 'single', handle: baseHandle, variantId: baseVariantId, available: baseAvailable }
-          }));
-          return;
+          activeVariant = baseVariant;
         }
 
-        // bundle
-        if (!bundleData || !bundleData.variant) return;
+        if (offerType === 'bundle') {
+          if (!bundleData || !bundleData.variant) return;
+          activeVariant = bundleData.variant;
+        }
 
-        const v = bundleData.variant;
-        setAllIdInputs(v.id);
-        setNotifyVariant(v.id);
-        replaceSharedPrice(v);
-        setAvailabilityUI(!!v.available);
+        if (!activeVariant) return;
 
-        setCardUnavailable(bundleCardWrap, !v.available, v.id);
+        setAllIdInputs(activeVariant.id);
+        setNotifyVariant(activeVariant.id);
+        replaceSharedPrice(activeVariant);
+        setAvailabilityUI(!!activeVariant.available);
+
+        setCardUnavailable(singleCard, offerType === 'single' && !activeVariant.available, activeVariant.id);
+        setCardUnavailable(bundleCardWrap, offerType === 'bundle' && !activeVariant.available, activeVariant.id);
 
         document.dispatchEvent(new CustomEvent('sk:offerchange', {
-          detail: { offer: 'bundle', handle: bundleHandle, variantId: v.id, available: !!v.available, product: bundleData.product }
+          detail: {
+            offer: offerType,
+            variantId: activeVariant.id,
+            price: activeVariant.price,
+            compare_at_price: activeVariant.compare_at_price,
+            available: activeVariant.available,
+            handle: offerType === 'single' ? baseHandle : bundleHandle
+          }
         }));
       };
 
-      // 1) Base availability state on load (single)
-      setCardUnavailable(singleCard, root.dataset.baseAvailable !== 'true', root.dataset.baseVariantId);
-      setAvailabilityUI(root.dataset.baseAvailable === 'true');
-      setNotifyVariant(root.dataset.baseVariantId);
-
-      // 2) Hydrate bundle card + store data
+      // 1) Hydrate bundle card + store data
       const bundleData = await hydrateBundleCard();
 
-      // 3) Listen to offer changes
-      offerRadios.forEach((radio) => {
-        radio.addEventListener('change', async function () {
-          if (!this.checked) return;
+// 2) Listen to offer changes
+offerRadios.forEach((radio) => {
+  radio.addEventListener('change', async function () {
+    if (!this.checked) return;
 
-          try {
-            if (this.value === 'bundle') {
-              await applyOffer('bundle', bundleData);
-            } else {
-              await applyOffer('single', null);
-            }
-          } catch (e) {
-            // fail safe: revert to single
-            offerRadios.forEach((r) => { if (r.value === 'single') r.checked = true; });
-            await applyOffer('single', null);
-          }
-        });
+    try {
+      if (this.value === 'bundle') {
+        await applyOffer('bundle', bundleData);
+      } else {
+        await applyOffer('single', bundleData);
+      }
+    } catch (e) {
+      // fail safe: revert to single
+      offerRadios.forEach((r) => {
+        if (r.value === 'single') r.checked = true;
       });
+      await applyOffer('single', bundleData);
+    }
+  });
+});
 
-      // Ensure initial offer is applied (single)
-      await applyOffer('single', null);
-    });
+// 3) Ensure initial offer is applied AND sticky bar is hydrated
+await applyOffer('single', bundleData);
+
+
+document.dispatchEvent(
+  new CustomEvent('sk:offerchange', {
+    detail: {
+      offer: 'single',
+      variantId: baseVariant.id,
+      price: baseVariant.price,
+      compare_at_price: baseVariant.compare_at_price,
+      available: baseVariant.available,
+      handle: baseHandle
+    }
+  })
+);
+
   </script>
 </product-info>
 

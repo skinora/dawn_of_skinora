@@ -1,121 +1,57 @@
-{%- liquid
-  assign target = product.selected_or_first_available_variant
-  assign price = target.price | default: 0
-  assign compare_at_price = target.compare_at_price
-  assign available = target.available | default: false
-
-  assign money_price = price | money_without_trailing_zeros
-
-  if settings.currency_code_enabled
-    assign money_price = price | money_with_currency
-  endif
-
-  assign has_compare = false
-  assign money_value = ''
-
-  if compare_at_price and compare_at_price > price
-    assign has_compare = true
-
-    if settings.currency_code_enabled
-      assign money_value = compare_at_price | money_with_currency
-    else
-      assign money_value = compare_at_price | money_without_trailing_zeros
-    endif
-  endif
--%}
+{%- comment -%}
+  ============================================================
+  sk-radiance-price.liquid — FULLY PATCHED
+  ------------------------------------------------------------
+  RULES:
+  - Liquid NEVER decides price or compare price
+  - JS is the single source of truth
+  - Markup is ALWAYS present
+  - Bundle-safe
+  - Debuggable
+  ============================================================
+{%- endcomment -%}
 
 <div
-  class="sk-radiance-price sk-radiance-price--unavailable-{{ available }}"
+  class="sk-radiance-price"
   data-sk-price
-  data-price="{{ price }}"
-  data-compare="{{ compare_at_price }}"
+  data-price=""
+  data-compare=""
 >
   <div class="sk-radiance-price__container">
     <div class="sk-radiance-price__wrapper">
-      <!-- PRICE BLOCK -->
       <div class="sk-price">
-        <!-- VALUE / VERDI -->
+        <!-- Compare / Verdi price -->
         <span
           class="sk-price__value"
-          data-sk-price-value
-          {% unless has_compare %}
-            hidden
-          {% endunless %}
-        >
-          Verdi {{ money_value }}
-        </span>
+          data-sk-price-compare
+          hidden
+        ></span>
 
-        <!-- CURRENT PRICE -->
+        <!-- Current price -->
         <span
           class="sk-price__current"
           data-sk-price-current
-        >
-          {{ money_price }}
-        </span>
-      </div>
-
-      <!-- AVAILABILITY TEXT (optional) -->
-      <small class="sk-radiance-price__availability sk-radiance-price__availability--{{ available }}">
-        {%- if show_badges -%}
-          {%- if available == false -%}
-            {{ 'products.product.sold_out' | t }}
-          {%- elsif has_compare -%}
-            {{ 'products.product.on_sale' | t }}
-          {%- endif -%}
-        {%- endif -%}
-      </small>
-    </div>
-
-    <!-- PAYMENT ICONS (unchanged, safe) -->
-    <div class="sk-radiance-buy-buttons__payment-methods">
-      <div class="sk-radiance-buy-buttons__payment-methods-logos">
-        <div class="sk-radiance-buy-buttons__payment-method">
-          <img src="{{ 'visa-logo.svg' | asset_url }}" alt="Visa" width="47" height="34">
-        </div>
-        <div class="sk-radiance-buy-buttons__payment-method">
-          <img src="{{ 'mastercard-logo.svg' | asset_url }}" alt="Mastercard" width="47" height="34">
-        </div>
-        <div class="sk-radiance-buy-buttons__payment-method">
-          <img src="{{ 'apple-pay-logo.svg' | asset_url }}" alt="Apple Pay" width="47" height="34">
-        </div>
-        <div class="sk-radiance-buy-buttons__payment-method">
-          <img src="{{ 'klarna-logo.svg' | asset_url }}" alt="Klarna" width="47" height="34">
-        </div>
+        ></span>
       </div>
     </div>
-
-    <!-- BADGES (optional) -->
-    {%- if show_badges -%}
-      <span class="sk-radiance-badges">
-        {%- if available == false -%}
-          <span class="sk-radiance-badge sk-radiance-badge--sold-out">
-            {{ 'products.product.sold_out' | t }}
-          </span>
-        {%- elsif has_compare -%}
-          <span class="sk-radiance-badge sk-radiance-badge--sale">
-            {{ 'products.product.on_sale' | t }}
-          </span>
-        {%- endif -%}
-      </span>
-    {%- endif -%}
   </div>
 </div>
 
-{%- if product.quantity_price_breaks_configured? -%}
-  <div class="sk-radiance-volume-pricing">
-    <ul class="sk-radiance-volume-pricing__list">
-      {%- for price_break in target.quantity_price_breaks -%}
-        <li>
-          <span>{{ price_break.minimum_quantity }}+</span>
-          <span>
-            {%- if settings.currency_code_enabled -%}
-              {{ price_break.price | money_with_currency }}
-            {%- else -%}
-              {{ price_break.price | money_without_trailing_zeros }}
-            {%- endif -%}
-          </span>
-        </li>
-      {%- endfor -%}
-    </ul>
-  </div>
+{%- if request.design_mode -%}
+  <script>
+    console.log('[sk-radiance-price] snippet loaded');
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const el = document.querySelector('[data-sk-price]');
+      if (!el) {
+        console.warn('[sk-radiance-price] price root NOT found');
+        return;
+      }
+
+      console.log('[sk-radiance-price] initial dataset', {
+        price: el.dataset.price,
+        compare: el.dataset.compare,
+      });
+    });
+  </script>
 {%- endif -%}
