@@ -864,25 +864,9 @@
 
           <!-- PURCHASE -->
           <div class="sk-purchase">
-            {% render 'sk-radiance-quantity', product: product, product_form_id: product_form_id, section: section %}
-
             <!-- Buy buttons wrapper (we toggle this) -->
             <div data-sk-buy-wrapper>
               {% render 'sk-radiance-buy-buttons', product: product, product_form_id: product_form_id %}
-            </div>
-
-            <!-- Notify wrapper (Klaviyo back-in-stock trigger) -->
-            <div class="sk-notify" data-sk-notify-wrapper>
-              <button
-                type="button"
-                class="sk-notify__button"
-                data-klaviyo-backinstock
-                data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-                data-sk-notify-button
-              >
-                Notify me when available
-              </button>
-              <div class="sk-notify__hint">We’ll email you as soon as it’s back in stock.</div>
             </div>
 
             <div class="sk-trust-inline">
@@ -1050,10 +1034,11 @@
 
         // update any other id inputs in the same form (snippets sometimes add their own)
         const selector = productFormId
-          ? `input[name="id"][form="${productFormId}"]`
-          : `input[name="id"]`;
+          ? `[name="id"][form="${productFormId}"]`
+          : `[name="id"]`;
         document.querySelectorAll(selector).forEach((el) => {
           el.value = variantId;
+          el.dispatchEvent(new Event('change', { bubbles: true }));
         });
       };
 
