@@ -1017,6 +1017,8 @@
       const bundleHandleFromMeta = root.dataset.bundleHandle;
       const moneyFormat = root.dataset.moneyFormat || '{{ shop.money_format | escape }}';
       const productFormId = root.dataset.productFormId;
+      const baseTitle = {{ product.title | json }};
+      const bundleTitleFallback = {{ bundle_title | default: product.title | json }};
 
       // If you do NOT use metafield custom.bundle_product, put your bundle handle here:
       const fallbackBundleHandle = '';
@@ -1200,6 +1202,9 @@
         setCardUnavailable(singleCard, offerType === 'single' && !activeVariant.available, activeVariant.id);
         setCardUnavailable(bundleCardWrap, offerType === 'bundle' && !activeVariant.available, activeVariant.id);
 
+        const offerTitle = offerType === 'bundle'
+          ? (bundleData && bundleData.product && bundleData.product.title) || bundleTitleFallback || baseTitle
+          : baseTitle;
         document.dispatchEvent(new CustomEvent('sk:offerchange', {
           detail: {
             offer: offerType,
@@ -1207,7 +1212,8 @@
             price: activeVariant.price,
             compare_at_price: activeVariant.compare_at_price,
             available: activeVariant.available,
-            handle: offerType === 'single' ? baseHandle : bundleHandle
+            handle: offerType === 'single' ? baseHandle : bundleHandle,
+            title: offerTitle
           }
         }));
       };
@@ -1215,44 +1221,30 @@
       // 1) Hydrate bundle card + store data
       const bundleData = await hydrateBundleCard();
 
-// 2) Listen to offer changes
-offerRadios.forEach((radio) => {
-  radio.addEventListener('change', async function () {
-    if (!this.checked) return;
+      // 2) Listen to offer changes
+      offerRadios.forEach((radio) => {
+        radio.addEventListener('change', async function () {
+          if (!this.checked) return;
 
-    try {
-      if (this.value === 'bundle') {
-        await applyOffer('bundle', bundleData);
-      } else {
-        await applyOffer('single', bundleData);
-      }
-    } catch (e) {
-      // fail safe: revert to single
-      offerRadios.forEach((r) => {
-        if (r.value === 'single') r.checked = true;
+          try {
+            if (this.value === 'bundle') {
+              await applyOffer('bundle', bundleData);
+            } else {
+              await applyOffer('single', bundleData);
+            }
+          } catch (e) {
+            // fail safe: revert to single
+            offerRadios.forEach((r) => {
+              if (r.value === 'single') r.checked = true;
+            });
+            await applyOffer('single', bundleData);
+          }
+        });
       });
+
+      // 3) Ensure initial offer is applied AND sticky bar is hydrated
       await applyOffer('single', bundleData);
-    }
-  });
-});
-
-// 3) Ensure initial offer is applied AND sticky bar is hydrated
-await applyOffer('single', bundleData);
-
-
-document.dispatchEvent(
-  new CustomEvent('sk:offerchange', {
-    detail: {
-      offer: 'single',
-      variantId: baseVariant.id,
-      price: baseVariant.price,
-      compare_at_price: baseVariant.compare_at_price,
-      available: baseVariant.available,
-      handle: baseHandle
-    }
-  })
-);
-
+    });
   </script>
 </product-info>
 
