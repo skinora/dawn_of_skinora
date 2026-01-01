@@ -1027,19 +1027,50 @@
       const notifyBtn = root.querySelector('[data-sk-notify-button]');
 
       const cardPriceBundle = root.querySelector('[data-sk-card-price="bundle"]');
+      const productForm = document.getElementById(productFormId);
+      const variantFieldSelector = [
+        productFormId ? `form#${productFormId} [name="id"]` : null,
+        productFormId ? `[name="id"][form="${productFormId}"]` : null,
+        `[name="id"][form^="product-form-"]`,
+        productFormId ? `form#${productFormId} .product-variant-id` : null,
+        `.product-variant-id`,
+      ]
+        .filter(Boolean)
+        .join(',');
+      const isDebugMode = new URLSearchParams(window.location.search).get('skdebug') === '1';
+      const debugLog = (message, payload) => {
+        if (!isDebugMode) return;
+        console.debug('[sk-radiance-product]', message, payload);
+      };
+      window.__SK_ACTIVE_VARIANT_ID = window.__SK_ACTIVE_VARIANT_ID || baseVariant.id;
+      window.__SK_ACTIVE_OFFER = window.__SK_ACTIVE_OFFER || 'single';
 
-      const setAllIdInputs = (variantId) => {
-        // update our hidden
-        if (hiddenVariantInput) hiddenVariantInput.value = variantId;
+      const setActiveVariantId = (variantId, offer = 'single') => {
+        if (!variantId) return [];
 
-        // update any other id inputs in the same form (snippets sometimes add their own)
-        const selector = productFormId
-          ? `[name="id"][form="${productFormId}"]`
-          : `[name="id"]`;
-        document.querySelectorAll(selector).forEach((el) => {
-          el.value = variantId;
-          el.dispatchEvent(new Event('change', { bubbles: true }));
+        window.__SK_ACTIVE_VARIANT_ID = variantId;
+        window.__SK_ACTIVE_OFFER = offer;
+
+        if (hiddenVariantInput) {
+          hiddenVariantInput.value = variantId;
+        }
+
+        const inputs = variantFieldSelector
+          ? Array.from(document.querySelectorAll(variantFieldSelector))
+          : [];
+
+        inputs.forEach((input) => {
+          input.value = variantId;
+          input.dispatchEvent(new Event('change', { bubbles: true }));
         });
+
+        debugLog('setActiveVariantId', {
+          variantId,
+          offer,
+          inputsUpdated: inputs.length,
+        });
+
+        return inputs;
       };
 
       const formatMoney = (cents) => {
@@ -1179,7 +1210,7 @@
 
         if (!activeVariant) return;
 
-        setAllIdInputs(activeVariant.id);
+        setActiveVariantId(activeVariant.id, offerType);
         setNotifyVariant(activeVariant.id);
         replaceSharedPrice(activeVariant);
         setAvailabilityUI(!!activeVariant.available);
@@ -1202,6 +1233,55 @@
           }
         }));
       };
+
+      const handleOfferChangeEvent = (event) => {
+        const detail = event && event.detail;
+        if (!detail || !detail.variantId) return;
+        setActiveVariantId(detail.variantId, detail.offer || 'single');
+      };
+
+      document.addEventListener('sk:offerchange', handleOfferChangeEvent);
+
+      if (productForm) {
+        productForm.addEventListener('submit', () => {
+          setActiveVariantId(
+            window.__SK_ACTIVE_VARIANT_ID || baseVariant.id,
+            window.__SK_ACTIVE_OFFER || 'single'
+          );
+        });
+      }
+
+      if (productForm && window.MutationObserver) {
+        const observer = new MutationObserver((mutations) => {
+          const shouldSync = mutations.some((mutation) =>
+            Array.from(mutation.addedNodes).some((node) => {
+              if (node.nodeType !== Node.ELEMENT_NODE) return false;
+              if (node.matches('[name="id"]')) return true;
+              if (typeof node.querySelector === 'function') {
+                return !!node.querySelector('[name="id"]');
+              }
+              return false;
+            })
+          );
+          if (shouldSync) {
+            setActiveVariantId(
+              window.__SK_ACTIVE_VARIANT_ID || baseVariant.id,
+              window.__SK_ACTIVE_OFFER || 'single'
+            );
+          }
+        });
+        observer.observe(productForm, { childList: true, subtree: true });
+      }
+
+      window.SKDebug = () => ({
+        activeVariantId: window.__SK_ACTIVE_VARIANT_ID,
+        activeOffer: window.__SK_ACTIVE_OFFER,
+        inputs: [...document.querySelectorAll('input[name="id"]')].map((input) => ({
+          value: input.value,
+          form: input.getAttribute('form'),
+          inForm: !!input.closest('form'),
+        })),
+      });
 
       // 1) Hydrate bundle card + store data
       const bundleData = await hydrateBundleCard();
