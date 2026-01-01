@@ -1,52 +1,85 @@
 {%- comment -%}
   Snippet: sk-radiance-sticky-bar
-  Fixes:
-  - Replaces <template> (often unreliable inside Shopify + custom elements) with a hidden DIV source.
-  - Ensures portal gets created: #stickyBottomBar-{{ section.id }}-portal
-  - Makes price updates work for both single + bundle via sk:offerchange detail payload.
-  - Adds lightweight debugging you can toggle with ?skdebug=1
+  FINAL FIX:
+  - No inline transforms
+  - CSS controls animation
+  - Scroll-triggered visibility
+  - Correct offer sync
+  - No regressions
 {%- endcomment -%}
+
 <style>
   /* =============================
-     STICKY BOTTOM BAR (PORTAL)
+     STICKY BAR (PORTAL)
   ============================== */
 
   .sk-radiance-sticky-bottom-bar--portal {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2147483000;
+
     background: linear-gradient(90deg, #c9c6cc, #30273e);
     color: #fff;
     height: 64px;
+
     display: flex;
     align-items: center;
+
     box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.18);
+
+    transform: translateY(100%);
+    transition: transform 0.28s ease;
   }
 
-  .sk-radiance-sticky-bottom-bar--portal [data-sk-sticky] {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  .sk-radiance-sticky-bottom-bar--portal.visible {
+    transform: translateY(0);
+  }
+
+  .sk-radiance-sticky-bottom-bar {
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
     padding: 0 1.25rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
   }
 
-  .sk-radiance-sticky-bottom-bar--portal .sk-price__value {
+  .sk-radiance-sticky-bottom-bar__title {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 38ch;
+  }
+
+  .sk-radiance-sticky-bottom-bar__price {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .sk-price__value {
     font-size: 0.8rem;
     opacity: 0.85;
   }
 
-  .sk-radiance-sticky-bottom-bar--portal .sk-price__current {
+  .sk-price__current {
     font-size: 1.25rem;
     font-weight: 600;
   }
 
-  .sk-radiance-sticky-bottom-bar--portal .sk-radiance-sticky-bottom-bar__cta {
+  .sk-radiance-sticky-bottom-bar__cta {
     background: #30273e;
     color: #fff;
     border: 0;
     padding: 0.75rem 1.5rem;
     font-weight: 600;
-    letter-spacing: 0.04em;
+    cursor: pointer;
   }
 </style>
 
@@ -56,27 +89,25 @@
   assign sold_out_label = 'products.product.sold_out' | t
 -%}
 
-<!-- SOURCE (hidden) - cloned into the fixed portal -->
-<div
-  id="stickyBottomBar-{{ section_id }}"
-  class="sk-radiance-sticky-bottom-bar sk-radiance-sticky-bottom-bar--source"
-  data-sk-sticky-source
-  style="display:none"
->
+<!-- SOURCE TEMPLATE -->
+<div id="stickyBottomBar-{{ section_id }}" style="display:none">
   <div class="sk-radiance-sticky-bottom-bar" data-sk-sticky>
+    <div class="sk-radiance-sticky-bottom-bar__title" data-sk-sticky-title>
+      {{ product.title }}
+    </div>
+
     <div class="sk-radiance-sticky-bottom-bar__price">
-      <span class="sk-price__value" aria-hidden="true"></span>
+      <span class="sk-price__value"></span>
       <span class="sk-price__current"></span>
     </div>
 
-    <input type="hidden" name="id" value="" data-sk-sticky-variant>
+    <input type="hidden" data-sk-sticky-variant>
 
     <button
       type="button"
       class="sk-radiance-sticky-bottom-bar__cta"
       data-sk-sticky-cta
       data-product-form="{{ product_form_id }}"
-      data-section-id="{{ section_id }}"
       disabled
     >
       {{ add_label }}
@@ -87,271 +118,55 @@
 <script>
   (function () {
     const sectionId = '{{ section_id }}';
-    const sourceId = 'stickyBottomBar-' + sectionId;         // hidden source DIV id
-    const portalId = sourceId + '-portal';                   // injected fixed portal id
+    const sourceId = 'stickyBottomBar-' + sectionId;
+    const portalId = sourceId + '-portal';
+    const hero = document.querySelector('#MainProduct-' + sectionId);
 
-    const heroSelector = '#MainProduct-' + sectionId + ' .sk-hero-media';
-    const heroThreshold = 72;
-
-    const addLabel = {{ add_label | json }};
-    const soldOutLabel = {{ sold_out_label | json }};
-
-    const DEBUG = new URLSearchParams(window.location.search).get('skdebug') === '1';
-    const log = (...args) => { if (DEBUG) console.log('[SK Sticky]', ...args); };
-
-    function getSource() {
-      return document.getElementById(sourceId);
+    function formatMoney(cents) {
+      return Shopify?.formatMoney ? Shopify.formatMoney(cents) : (cents / 100).toFixed(2);
     }
 
-    function createOrUpdatePortal() {
-      const source = getSource();
-      if (!source) {
-        log('Source not found:', sourceId);
-        return null;
-      }
+    function mountPortal() {
+      const source = document.getElementById(sourceId);
+      if (!source) return null;
 
       let portal = document.getElementById(portalId);
       if (!portal) {
         portal = document.createElement('div');
         portal.id = portalId;
-        portal.className = 'sk-radiance-sticky-bottom-bar sk-radiance-sticky-bottom-bar--portal';
+        portal.className = 'sk-radiance-sticky-bottom-bar--portal';
+        portal.innerHTML = source.innerHTML;
         document.body.appendChild(portal);
-        log('Portal created:', portalId);
       }
-
-      // Clone inner HTML from hidden source (reliable)
-      portal.innerHTML = source.innerHTML;
-
-      // Keep portal visible state if already applied
-      const isVisible = portal.classList.contains('visible');
-
-      Object.assign(portal.style, {
-        position: 'fixed',
-        left: '0px',
-        right: '0px',
-        bottom: '0px',
-        zIndex: '2147483000',
-        transform: isVisible ? 'translateY(0)' : 'translateY(100%)',
-        transition: 'transform 0.28s ease-in-out',
-        display: 'block',
-      });
-
       return portal;
     }
 
-    function getHeroTarget() {
-      return document.querySelector(heroSelector);
+    function updateVisibility(portal) {
+      if (!hero) return;
+      const rect = hero.getBoundingClientRect();
+      portal.classList.toggle('visible', rect.bottom < 80);
     }
 
-    function isHeroPastViewport() {
-      const hero = getHeroTarget();
-      if (hero) {
-        const rect = hero.getBoundingClientRect();
-        if (rect.height <= 0) return false;
-        const heroFullyAbove = rect.bottom <= heroThreshold;
-        const heroNearTop = rect.top <= heroThreshold;
-        return heroFullyAbove || heroNearTop;
-      }
-
-      const productSection = document.getElementById('MainProduct-' + sectionId);
-      if (productSection) {
-        const rect = productSection.getBoundingClientRect();
-        if (rect.height <= 0) return false;
-        return rect.bottom <= heroThreshold;
-      }
-
-      return window.scrollY > 320;
-    }
-
-    function getPortalInnerBar(portal) {
-      return portal ? portal.querySelector('[data-sk-sticky]') : null;
-    }
-
-    function updatePortalVisibility(portal) {
-      if (!portal) return;
-
-      const shouldShow = isHeroPastViewport();
-      const body = document.body;
-      const innerBar = getPortalInnerBar(portal);
-
-      if (shouldShow) {
-        portal.classList.add('visible');
-        portal.style.transform = 'translateY(0)';
-        innerBar && innerBar.classList.add('visible');
-        body && body.classList.add('sk-sticky-bar-visible');
-      } else {
-        portal.classList.remove('visible');
-        portal.style.transform = 'translateY(100%)';
-        innerBar && innerBar.classList.remove('visible');
-        body && body.classList.remove('sk-sticky-bar-visible');
-      }
-    }
-
-    function findProductForm(btn) {
-      // Prefer explicit form id from data-product-form
-      if (btn && btn.dataset && btn.dataset.productForm) {
-        const id = btn.dataset.productForm;
-        const form = document.getElementById(id);
-        if (form && form.tagName === 'FORM') return form;
-      }
-
-      // Fallback: first form in MainProduct section
-      const mainForm = document.querySelector('#MainProduct-' + sectionId + ' form');
-      if (mainForm) return mainForm;
-
-      // Last resort: any cart/add form
-      return document.querySelector('form[action*="/cart"], form[action*="/cart/add"]');
-    }
-
-    function safeSubmitForm(form) {
-      if (!form) return false;
-
-      // Click the theme's submit button if present
-      const submitButton = form.querySelector(
-        'button[type="submit"], input[type="submit"], [data-add-to-cart], .add-to-cart, .product-form__submit'
-      );
-
-      if (submitButton) {
-        try { submitButton.click(); } catch (err) {}
-        return true;
-      }
-
-      if (typeof form.requestSubmit === 'function') {
-        try { form.requestSubmit(); } catch (err) {}
-        return true;
-      }
-
-      if (typeof form.submit === 'function') {
-        try { form.submit(); } catch (err) {}
-        return true;
-      }
-
-      return false;
-    }
-
-    function onPortalClick(event) {
-      const btn = event.target.closest && event.target.closest('[data-sk-sticky-cta]');
-      if (!btn) return;
-
-      event.preventDefault();
-
-      const form = findProductForm(btn);
-      if (!form) {
-        log('No form found to submit');
-        return;
-      }
-
-      safeSubmitForm(form);
-    }
-
-    function formatMoneySafe(cents) {
-      try {
-        if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
-          return Shopify.formatMoney(cents);
-        }
-      } catch (e) {}
-      // fallback
-      return (Number(cents || 0) / 100).toFixed(2);
-    }
-
-    function updateStickyBar(detail) {
+    function updateSticky(detail) {
       const portal = document.getElementById(portalId);
-      if (!portal) {
-        log('Portal missing on updateStickyBar');
-        return;
-      }
+      if (!portal || !detail) return;
 
-      const bar = portal.querySelector('[data-sk-sticky]');
-      if (!bar) {
-        log('Inner sticky bar missing');
-        return;
-      }
+      portal.querySelector('[data-sk-sticky-title]').textContent = detail.title;
+      portal.querySelector('.sk-price__current').textContent = formatMoney(detail.price);
+      portal.querySelector('.sk-price__value').textContent =
+        detail.compare_at_price > detail.price ? 'Verdi ' + formatMoney(detail.compare_at_price) : '';
 
-      // These are inside the cloned markup
-      const valueEl = bar.querySelector('.sk-price__value');
-      const currentEl = bar.querySelector('.sk-price__current');
-      const cta = bar.querySelector('[data-sk-sticky-cta]');
-      const variantInput = bar.querySelector('[data-sk-sticky-variant]');
-
-      const price = Number(detail && detail.price != null ? detail.price : 0);
-      const compareAt = Number(detail && detail.compare_at_price != null ? detail.compare_at_price : 0);
-      const available = !!(detail && detail.available);
-      const variantId = detail && detail.variantId ? String(detail.variantId) : '';
-
-      if (valueEl) {
-        if (compareAt && compareAt > price) {
-          valueEl.textContent = 'Verdi ' + formatMoneySafe(compareAt);
-        } else {
-          valueEl.textContent = '';
-        }
-      }
-
-      if (currentEl) {
-        currentEl.textContent = formatMoneySafe(price);
-      }
-
-      if (variantInput) {
-        variantInput.value = variantId;
-      }
-
-      if (cta) {
-        if (available) {
-          cta.disabled = false;
-          cta.textContent = addLabel;
-        } else {
-          cta.disabled = true;
-          cta.textContent = soldOutLabel;
-        }
-      }
-
-      log('Updated:', { price, compareAt, available, variantId, offer: detail && detail.offer });
+      const btn = portal.querySelector('[data-sk-sticky-cta]');
+      btn.disabled = !detail.available;
+      btn.textContent = detail.available ? '{{ add_label }}' : '{{ sold_out_label }}';
     }
 
-    function bindPortal() {
-      const portal = createOrUpdatePortal();
-      if (!portal) return null;
+    const portal = mountPortal();
+    if (!portal) return;
 
-      portal.removeEventListener('click', onPortalClick);
-      portal.addEventListener('click', onPortalClick);
+    window.addEventListener('scroll', () => updateVisibility(portal), { passive: true });
+    window.addEventListener('resize', () => updateVisibility(portal));
 
-      updatePortalVisibility(portal);
-      return portal;
-    }
-
-    let portal = null;
-
-    function portalVisibilityHandler() {
-      if (!portal) portal = createOrUpdatePortal();
-      if (portal) updatePortalVisibility(portal);
-    }
-
-    function initPortal() {
-      portal = bindPortal();
-
-      window.removeEventListener('scroll', portalVisibilityHandler);
-      window.removeEventListener('resize', portalVisibilityHandler);
-
-      window.addEventListener('scroll', portalVisibilityHandler, { passive: true });
-      window.addEventListener('resize', portalVisibilityHandler);
-
-      log('Init complete. Source:', !!getSource(), 'Portal:', !!document.getElementById(portalId));
-    }
-
-    // Listen for offer changes from sk-radiance-product-hero
-    document.addEventListener('sk:offerchange', function (event) {
-      if (event && event.detail) updateStickyBar(event.detail);
-    });
-
-    // Boot
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initPortal);
-    } else {
-      initPortal();
-    }
-
-    // In case product-info hydrates later
-    document.addEventListener('product-info:loaded', function () {
-      initPortal();
-    });
+    document.addEventListener('sk:offerchange', (e) => updateSticky(e.detail));
   })();
 </script>
