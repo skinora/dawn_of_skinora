@@ -490,16 +490,37 @@
   }
 
   .sk-trust-icons {
+    --sk-trust-icons-gap: 0.35rem;
+    --sk-trust-badge-count: 1;
     display: flex;
-    gap: 0.75rem;
+    gap: var(--sk-trust-icons-gap);
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     opacity: 0.7;
+    overflow-x: hidden;
+  }
+
+  .sk-trust-icon {
+    flex: 0 0
+      calc(
+        (min(100vw, 100%) - var(--sk-trust-badge-count, 1) * var(--sk-trust-icons-gap, 0.75rem)) /
+          var(--sk-trust-badge-count, 1)
+      );
+    max-width: calc(
+      (min(100vw, 100%) - var(--sk-trust-badge-count, 1) * var(--sk-trust-icons-gap, 0.75rem)) /
+        var(--sk-trust-badge-count, 1)
+    );
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .sk-trust-icon img {
-    height: 22px;
     width: auto;
+    max-width: 100%;
+    max-height: clamp(64px, 9vw, 90px);
+    height: auto;
     display: block;
   }
 
@@ -984,7 +1005,10 @@
             {% assign trust_badges_value = trust_badges_source.value | default: trust_badges_source %}
             {% assign trust_badges_size = trust_badges_value | size %}
             {% if trust_badges_value != blank and trust_badges_size > 0 %}
-              <div class="sk-payment sk-trust-icons">
+              <div
+                class="sk-payment sk-trust-icons"
+                style="--sk-trust-badge-count: {{ trust_badges_size }};"
+              >
                 {% for badge in trust_badges_value %}
                   {% assign badge_img = badge.url | default: badge.image | default: badge.src | default: badge %}
                   {% assign badge_alt = badge.alt | default: badge.alt_text | default: 'Trust badge' %}
