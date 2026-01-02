@@ -259,32 +259,46 @@ variant-selects {
 
 @media (max-width: 768px) {
   .sk-radiance-variant-cards {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    padding-bottom: 0.75rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    gap: 1rem;
-    justify-content: flex-start;
-  }
-
-  .sk-radiance-variant-cards::-webkit-scrollbar {
-    height: 6px;
-  }
-  .sk-radiance-variant-cards::-webkit-scrollbar-thumb {
-    background: rgba(48, 39, 62, 0.4);
-    border-radius: 999px;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
   }
 
   .sk-radiance-variant-card {
-    width: clamp(220px, 70vw, 250px);
-    flex: 0 0 auto;
-    scroll-snap-align: start;
+    --variant-card-mobile-width: min(90vw, 340px);
+    width: var(--variant-card-mobile-width);
+    height: calc(var(--variant-card-mobile-width) * 0.618);
+  }
+
+  .sk-radiance-variant-card__link {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0.85rem;
+  }
+
+  .sk-radiance-variant-card__image {
+    flex: 0 0 45%;
+    width: 45%;
+    height: 100%;
+    margin-bottom: 0;
+    padding: 10px;
+  }
+
+  .sk-radiance-variant-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .sk-radiance-variant-card__content {
-    padding: 0.75rem 0;
+    flex: 1 1 auto;
+    padding: 0.5rem 0;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
   }
 
   .sk-radiance-variant-card__title {
