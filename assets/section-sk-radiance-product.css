@@ -499,10 +499,23 @@
 }
 @media only screen and (max-width: 435px) {
   .sk-radiance-buy-buttons__button {
+    font-size: var(--sk-font-size-xxs) !important;
+    height: 47px !important;
+    width: 172px !important;
+  }
+
+  .sk-radiance-buy-buttons__button {
     width: 100% !important;
     min-width: auto !important;
     max-width: none;
     font-size: var(--sk-font-size-small) !important;
+  }
+
+  .sk-radiance-buy-buttons .sk-radiance-buy-buttons__button {
+    height: auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    font-size: clamp(var(--sk-font-size-small), 3vw, var(--sk-font-size-small)) !important;
   }
 }
 .sk-radiance-buy-buttons__button:disabled {

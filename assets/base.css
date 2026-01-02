@@ -5423,12 +5423,6 @@ div.okeReviews .oke-w-review-main {
     height: 40px !important;
   }
 
-  .sk-radiance-buy-buttons__button {
-    font-size: var(--sk-font-size-xxs) !important;
-    height: 47px !important;
-    width: 172px !important;
-  }
-
   .sk-radiance-product-features__icon svg {
     width: 60px !important;
     height: 60px !important;
