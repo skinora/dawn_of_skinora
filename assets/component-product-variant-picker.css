@@ -257,6 +257,46 @@ variant-selects {
   font-weight: 600;
 }
 
+@media (max-width: 768px) {
+  .sk-radiance-variant-cards {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding-bottom: 0.75rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    gap: 1rem;
+    justify-content: flex-start;
+  }
+
+  .sk-radiance-variant-cards::-webkit-scrollbar {
+    height: 6px;
+  }
+  .sk-radiance-variant-cards::-webkit-scrollbar-thumb {
+    background: rgba(48, 39, 62, 0.4);
+    border-radius: 999px;
+  }
+
+  .sk-radiance-variant-card {
+    width: clamp(220px, 70vw, 250px);
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .sk-radiance-variant-card__content {
+    padding: 0.75rem 0;
+  }
+
+  .sk-radiance-variant-card__title {
+    font-size: var(--sk-font-size-small);
+  }
+
+  .sk-radiance-variant-card__price,
+  .sk-radiance-variant-card__current-price {
+    font-size: 1.25rem;
+  }
+}
+
 .sk-radiance-variant-card__current-price {
   font-size: 1.6rem;
   font-weight: 700;
