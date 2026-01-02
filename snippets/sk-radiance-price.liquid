@@ -11,6 +11,16 @@
   ============================================================
 {%- endcomment -%}
 
+<style>
+  .sk-radiance-price .sk-price {
+    display: flex;
+    align-items: baseline;
+    flex-direction: row;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+</style>
+
 <div
   class="sk-radiance-price"
   data-sk-price
@@ -20,17 +30,17 @@
   <div class="sk-radiance-price__container">
     <div class="sk-radiance-price__wrapper">
       <div class="sk-price">
+        <!-- Current price -->
+        <span
+          class="sk-price__current"
+          data-sk-price-current
+        ></span>
+
         <!-- Compare / Verdi price -->
         <span
           class="sk-price__value"
           data-sk-price-compare
           hidden
-        ></span>
-
-        <!-- Current price -->
-        <span
-          class="sk-price__current"
-          data-sk-price-current
         ></span>
       </div>
     </div>
