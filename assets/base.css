@@ -5404,14 +5404,6 @@ div.okeReviews .oke-w-review-main {
     margin: 6px 0 !important;
   }
 
-  .sk-radiance-variant-card {
-    width: 165px !important;
-  }
-
-  .sk-radiance-variant-cards {
-    gap: 10px !important;
-  }
-
   .sk-radiance-variant-card__title,
   .sk-radiance-variant-card__current-price,
   .sk-radiance-variant-card__compare-price,
@@ -5471,18 +5463,6 @@ div.okeReviews .oke-w-review-main {
   .sk-led-light-work-images-container {
     width: 355px !important;
   }
-}
-
-@media only screen and (max-width: 400px) {
-  .sk-radiance-variant-card {
-    width: 95% !important;
-  }
-
-  /* .sk-led-light-work-images-container {
-    flex-wrap: nowrap !important;
-    gap: 9px !important;
-    overflow-x: hidden !important;
-  } */
 }
 
 /* Allow sticky bar JS to control visibility */
