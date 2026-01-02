@@ -184,14 +184,14 @@
   }
 
   .sk-product-title {
-    font-size: 2rem;
+    font-size: 1.333rem;
     line-height: 1.15;
     margin-bottom: 0.75rem;
   }
 
   @media (min-width: 990px) {
     .sk-product-title {
-      font-size: 2.5rem;
+      font-size: 1.667rem;
     }
   }
 
@@ -553,6 +553,55 @@
 
     .sk-hero-gallery-wrapper {
       display: none;
+    }
+  }
+
+  /* =============================
+     RADIANCE CONTENT (Rich text)
+  ============================= */
+
+  .sk-hero-info h2,
+  .sk-hero-info h3,
+  .sk-hero-info h4 {
+    font-size: clamp(2.6rem, 3vw, 3.2rem);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #30273e;
+    letter-spacing: -0.01em;
+  }
+
+  .sk-hero-info ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  .sk-hero-info li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 0.9rem;
+    line-height: 1.55;
+    color: #3a3a42;
+    font-size: clamp(1.2rem, 1.6vw, 1.9rem);
+  }
+
+  .sk-hero-info li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(1.1rem, 1.05em, 1.5rem);
+    height: clamp(1.1rem, 1.05em, 1.5rem);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' stroke='%2330273E' stroke-width='1.5' fill='none'/%3E%3Cpath fill='%2330273E' d='M10.5 8l3.5 3.3-3.5 3.3z'/%3E%3C/svg%3E");
+  }
+
+  @media (max-width: 768px) {
+    .sk-hero-info li {
+      font-size: 0.9rem;
+      padding-left: 24px;
     }
   }
 </style>
