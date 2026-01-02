@@ -569,11 +569,19 @@
   .sk-hero-info h2,
   .sk-hero-info h3,
   .sk-hero-info h4 {
-    font-size: clamp(2.6rem, 3vw, 3.2rem);
     font-weight: 600;
     margin-bottom: 1rem;
     color: #30273e;
     letter-spacing: -0.01em;
+  }
+
+  .sk-hero-info h2,
+  .sk-hero-info h3 {
+    font-size: clamp(2.1rem, 2.6vw, 2.7rem);
+  }
+
+  .sk-hero-info h4 {
+    font-size: clamp(1.8rem, 2.2vw, 2.35rem);
   }
 
   .sk-hero-info ul {
@@ -637,6 +645,15 @@
   }
 
   @media (max-width: 768px) {
+    .sk-hero-info h2,
+    .sk-hero-info h3 {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+    }
+
+    .sk-hero-info h4 {
+      font-size: clamp(1.5rem, 3.2vw, 2rem);
+    }
+
     .sk-hero-info li {
       font-size: clamp(1.5rem, 3vw, 2.2rem);
       padding-left: 24px;
