@@ -490,10 +490,34 @@
 
   .sk-trust-inline {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    font-size: 0.75rem;
-    color: #5b5b66;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0;
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-neutral-3, #57575f);
+    letter-spacing: 0.02em;
+    text-transform: none;
+    margin: 0;
+    padding: 1rem 0;
+    border-top: 1px solid var(--color-neutral-5, #d5d5d9);
+    border-bottom: 1px solid var(--color-neutral-5, #d5d5d9);
+  }
+
+  .sk-trust-inline span {
+    white-space: nowrap;
+  }
+
+  .sk-trust-inline span + span::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    margin: 0 8px;
+    border-radius: 50%;
+    background: var(--color-neutral-4, #9a9aa0);
+    vertical-align: middle;
   }
 
   .sk-trust-icons {
@@ -1102,10 +1126,9 @@
             </div>
 
             <div class="sk-trust-inline">
-              <span>Free shipping</span>
-              <span>30-day returns</span>
-              <span>Secure checkout</span>
-              <span>2-year warranty</span>
+              <span>Gratis frakt i Norge</span>
+              <span>Prøv hjemme i 30 dager</span>
+              <span>Trygg betaling</span>
             </div>
 
             {% assign trust_badges_source = product_info.trust_badges | default: blank %}
