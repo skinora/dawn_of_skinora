@@ -427,13 +427,13 @@
     line-height: 1;
   }
 
-  .sk-price {
+  .sk-offer-card__price .sk-price {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
   }
 
-  .sk-price__value {
+  .sk-offer-card__price .sk-price__value {
     font-size: 0.85rem;
     font-weight: 400;
     color: var(--color-neutral-2, #6b6b76);
@@ -441,15 +441,14 @@
     letter-spacing: 0;
   }
 
-  .sk-price__value:empty {
+  .sk-offer-card__price .sk-price__value:empty {
     display: none;
   }
 
-  .sk-price__current {
+  .sk-offer-card__price .sk-price__current {
     font-size: 2.5rem;
     font-weight: 600;
     color: var(--color-neutral-4, #49494a);
-    font-family: var(--font-heading-family, var(--font-body-family, 'Inter', system-ui, sans-serif));
   }
 
   @media (min-width: 990px) {
@@ -491,22 +490,21 @@
       margin-top: 0.5rem;
     }
 
-    .sk-price__value {
+    .sk-offer-card__price .sk-price__value {
       font-size: 0.9rem;
       opacity: 0.8;
     }
 
-    .sk-price__value:empty {
+    .sk-offer-card__price .sk-price__value:empty {
       display: none;
     }
 
-    .sk-price__current {
+    .sk-offer-card__price .sk-price__current {
       font-size: 2.5rem;
       font-weight: 600;
       letter-spacing: -0.01em;
       color: var(--color-neutral-4, #49494a);
       margin: 0 0 1rem;
-      font-family: var(--font-heading-family, var(--font-body-family, 'Inter', system-ui, sans-serif));
     }
   }
 
@@ -603,6 +601,35 @@
 
   .sk-shared-price {
     margin: 0;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .sk-shared-price .sk-radiance-price .sk-price {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .sk-shared-price .sk-radiance-price .sk-price__current {
+    font-size: 3.2rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-brand, #30273e);
+    line-height: 1;
+  }
+
+  .sk-shared-price .sk-radiance-price .sk-price__value {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-neutral-3, #5b5b63);
+    text-transform: none;
+  }
+
+  .sk-shared-price .sk-radiance-price .sk-price__value:empty {
+    display: none;
   }
 
   /* =============================
@@ -868,11 +895,11 @@
       gap: 0.25rem;
     }
 
-    .sk-price__value {
+    .sk-offer-card__price .sk-price__value {
       font-size: 0.75rem;
     }
 
-    .sk-price__current {
+    .sk-offer-card__price .sk-price__current {
       font-size: 2.5rem;
       color: var(--color-neutral-4, #49494a);
       font-weight: 600;
