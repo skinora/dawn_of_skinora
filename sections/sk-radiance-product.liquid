@@ -1550,13 +1550,30 @@
         return inputs;
       };
 
+      const normalizeMoneyString = (value) => {
+        if (typeof value !== 'string') return value;
+        let normalized = value.trim();
+        normalized = normalized.replace(/[.,]00(?=\s|$)/g, '');
+        const tokens = normalized.split(/\s+/);
+        if (tokens.length > 1) {
+          const stripDigits = (token) => token.replace(/[\d.,\s]/g, '');
+          const first = stripDigits(tokens[0]);
+          const last = stripDigits(tokens[tokens.length - 1]);
+          if (first && last && first === last) {
+            tokens.pop();
+            normalized = tokens.join(' ');
+          }
+        }
+        return normalized;
+      };
+
       const formatMoney = (cents) => {
         try {
           if (window.Shopify && typeof window.Shopify.formatMoney === 'function') {
-            return window.Shopify.formatMoney(cents, moneyFormat);
+            return normalizeMoneyString(window.Shopify.formatMoney(cents, moneyFormat));
           }
         } catch (e) {}
-        return (cents / 100).toFixed(2);
+        return normalizeMoneyString((cents / 100).toFixed(2));
       };
 
       const fetchProductJson = async (handle) => {
