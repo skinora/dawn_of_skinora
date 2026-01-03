@@ -289,15 +289,15 @@
   ============================= */
 
   .sk-offer-cards {
-    display: inline-grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, max-content));
     column-gap: var(--sk-gap-sm, 1rem);
     row-gap: var(--sk-gap-sm, 1rem);
     margin: 0;
-    grid-auto-rows: 1fr;
+    grid-auto-rows: auto;
     align-items: stretch;
-    justify-content: center;
-    justify-items: center;
+    justify-content: flex-start;
+    justify-items: start;
     max-width: 100%;
   }
 
@@ -500,6 +500,7 @@
 
   .sk-offer-card {
     max-width: 260px;
+    width: 260px;
   }
 
   @media (max-width: 768px) {
