@@ -449,6 +449,7 @@
     font-size: 1.8rem;
     font-weight: 600;
     color: var(--color-neutral-4, #49494a);
+    font-family: var(--font-heading-family, var(--font-body-family, 'Inter', system-ui, sans-serif));
   }
 
   @media (min-width: 990px) {
@@ -468,11 +469,24 @@
       gap: 1rem;
     }
 
+    .sk-price__value {
+      font-size: 2.15rem;
+      font-weight: 400;
+      color: var(--color-neutral-1, #6b6b76);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .sk-price__value:empty {
+      display: none;
+    }
+
     .sk-price__current {
       font-size: clamp(2.1rem, 2.2vw, 2.4rem);
       font-weight: 500;
       color: var(--color-neutral-4, #49494a);
       margin: 0 0 1rem;
+      font-family: var(--font-heading-family, var(--font-body-family, 'Inter', system-ui, sans-serif));
     }
   }
 
@@ -528,7 +542,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 0.5rem;
+    gap: 3rem;
   }
 
   .sk-offer-card {
