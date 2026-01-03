@@ -439,10 +439,12 @@
     color: var(--color-neutral-2, #6b6b76);
     text-transform: none;
     letter-spacing: 0;
+    min-height: 1.15rem;
+    display: block;
   }
 
   .sk-offer-card__price .sk-price__value:empty {
-    display: none;
+    visibility: hidden;
   }
 
   .sk-offer-card__price .sk-price__current {
@@ -500,20 +502,10 @@
       margin-top: 0.5rem;
     }
 
-    .sk-offer-card__price .sk-price {
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      gap: 0.45rem;
-    }
-
     .sk-offer-card__price .sk-price__value {
       font-size: 0.9rem;
       opacity: 0.8;
-    }
-
-    .sk-offer-card__price .sk-price__value:empty {
-      display: none;
+      min-height: 1.15rem;
     }
 
     .sk-offer-card__price .sk-price__current {
@@ -1275,11 +1267,11 @@
                   </div>
                   <div class="sk-offer-card__price" data-sk-card-price="single">
                     <div class="sk-price">
-                      {% if base_variant.compare_at_price and base_variant.compare_at_price > base_variant.price %}
-                        <span class="sk-price__value">
+                      <span class="sk-price__value">
+                        {%- if base_variant.compare_at_price and base_variant.compare_at_price > base_variant.price -%}
                           Verdi {{ base_variant.compare_at_price | money_without_trailing_zeros }}
-                        </span>
-                      {% endif %}
+                        {%- endif -%}
+                      </span>
                       <span class="sk-price__current">
                         {{ base_variant.price | money_without_trailing_zeros }}
                       </span>
