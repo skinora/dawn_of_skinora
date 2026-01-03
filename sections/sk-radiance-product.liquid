@@ -468,18 +468,20 @@
     max-width: 260px;
   }
 
-  @media (max-width: 1024px) {
-    .sk-offer-card {
-      max-width: 100%;
+  @media (max-width: 768px) {
+    .sk-trust-icons {
+      gap: 0.25rem;
     }
 
-    .sk-product-hero {
-      padding: 1.5rem 1rem 1.75rem;
-      overflow-x: hidden;
+    .sk-trust-icon {
+      flex: 1 1 80px;
+      max-width: 120px;
     }
 
-    .sk-hero-content {
-      gap: 1rem;
+    .sk-trust-inline span + span::before {
+      display: inline-flex;
+      align-self: center;
+      margin: 0 0.35rem;
     }
   }
 
@@ -542,7 +544,16 @@
 
   @media (max-width: 768px) {
     .sk-trust-inline span + span::before {
-      display: none;
+      display: inline-block;
+    }
+
+    .sk-trust-icons {
+      gap: 0.15rem;
+    }
+
+    .sk-trust-icon {
+      flex: 1 1 0;
+      max-width: 120px;
     }
   }
   .sk-trust-icons {
