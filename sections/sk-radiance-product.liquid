@@ -449,6 +449,16 @@
     font-size: 2.5rem;
     font-weight: 600;
     color: var(--color-neutral-4, #49494a);
+    position: relative;
+  }
+
+  .sk-offer-card__price .sk-price__current::after {
+    content: '\00a0kr';
+    font-size: 0.45em;
+    color: rgba(var(--color-neutral-4-rgb, 73, 73, 74), 0.65);
+    letter-spacing: 0;
+    margin-left: 0.1rem;
+  }
   }
 
   @media (min-width: 990px) {
@@ -619,6 +629,7 @@
     letter-spacing: -0.02em;
     color: var(--color-brand, #30273e);
     line-height: 1;
+    position: relative;
   }
 
   .sk-shared-price .sk-radiance-price .sk-price__value {
@@ -630,6 +641,13 @@
 
   .sk-shared-price .sk-radiance-price .sk-price__value:empty {
     display: none;
+  }
+
+  .sk-shared-price .sk-radiance-price .sk-price__current::after {
+    content: '\00a0kr';
+    font-size: 0.4em;
+    color: rgba(48, 39, 62, 0.7);
+    letter-spacing: 0;
   }
 
   /* =============================
@@ -1554,14 +1572,28 @@
         if (typeof value !== 'string') return value;
         let normalized = value.trim();
         normalized = normalized.replace(/[.,]00(?=\s|$)/g, '');
-        const tokens = normalized.split(/\s+/);
+        const stripDigits = (token) => token.replace(/[\d.,\s]/g, '');
+        const removeTrailingCurrency = (segments) => {
+          if (!segments.length) return segments;
+          const last = segments[segments.length - 1];
+          if (/[\p{L}]/u.test(last)) {
+            segments.pop();
+          }
+          return segments;
+        };
+
+        let tokens = normalized.split(/\s+/);
         if (tokens.length > 1) {
-          const stripDigits = (token) => token.replace(/[\d.,\s]/g, '');
-          const first = stripDigits(tokens[0]);
-          const last = stripDigits(tokens[tokens.length - 1]);
-          if (first && last && first === last) {
-            tokens.pop();
-            normalized = tokens.join(' ');
+          tokens = removeTrailingCurrency(tokens);
+          normalized = tokens.join(' ');
+          tokens = normalized.split(/\s+/);
+          if (tokens.length > 1) {
+            const first = stripDigits(tokens[0]);
+            const last = stripDigits(tokens[tokens.length - 1]);
+            if (first && last && first === last) {
+              tokens.pop();
+              normalized = tokens.join(' ');
+            }
           }
         }
         return normalized;
