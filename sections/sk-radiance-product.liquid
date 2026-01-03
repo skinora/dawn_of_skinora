@@ -259,6 +259,13 @@
       margin-bottom: 1rem;
     }
 
+    .sk-offer-card__title {
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 1.2;
+      margin: 0;
+    }
+
     .sk-pill {
       font-size: 1.4rem;
     }
@@ -439,9 +446,34 @@
   }
 
   .sk-price__current {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     font-weight: 600;
-    color: var(--sk-brand);
+    color: var(--color-neutral-4, #49494a);
+  }
+
+  @media (min-width: 990px) {
+    .sk-offer-card__title {
+      font-size: 2rem;
+      line-height: 1.2;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .sk-offer-cards {
+      column-gap: 2rem;
+      row-gap: 1.5rem;
+    }
+
+    .sk-offer-card__inner {
+      gap: 1rem;
+    }
+
+    .sk-price__current {
+      font-size: clamp(2.1rem, 2.2vw, 2.4rem);
+      font-weight: 500;
+      color: var(--color-neutral-4, #49494a);
+      margin: 0 0 1rem;
+    }
   }
 
   .sk-offer-card__check {
@@ -485,7 +517,8 @@
 
   .sk-offer-card__image-wrapper {
     width: 100%;
-    height: 140px;
+    aspect-ratio: 1 / 1;
+    min-height: 0;
     border-radius: 0;
     background: transparent;
     overflow: hidden;
@@ -805,7 +838,9 @@
     }
 
     .sk-price__current {
-      font-size: 1.1rem;
+      font-size: 1.8rem;
+      color: var(--color-neutral-4, #49494a);
+      font-weight: 600;
     }
 
     .sk-offer-card__footer {
@@ -1151,7 +1186,6 @@
                 <div class="sk-offer-card__content">
                   <div>
                     <div class="sk-offer-card__title">{{ product.title }}</div>
-                    <div class="sk-offer-card__subtitle">Single device</div>
                   </div>
                   <div class="sk-offer-card__price" data-sk-card-price="single">
                     <div class="sk-price">
@@ -1206,7 +1240,6 @@
                 <div class="sk-offer-card__content">
                   <div>
                     <div class="sk-offer-card__title">{{ bundle_title | default: 'Face + Neck Kit' }}</div>
-                    <div class="sk-offer-card__subtitle">Includes Face + Neck</div>
                   </div>
                   <div class="sk-offer-card__price" data-sk-card-price="bundle">
                     <div class="sk-price">
