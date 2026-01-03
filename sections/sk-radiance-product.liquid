@@ -1119,7 +1119,7 @@
       data-base-available="{% if product.selected_or_first_available_variant.available %}true{% else %}false{% endif %}"
       data-bundle-handle="{{ bundle_handle }}"
       data-bundle-title="{{ bundle_title | escape }}"
-      data-money-format="{{ shop.money_format | escape }}"
+      data-money-format="{{ shop.money_without_trailing_zeros_format | escape }}"
       data-product-form-id="{{ product_form_id }}"
     >
       <div class="sk-hero-grid">
