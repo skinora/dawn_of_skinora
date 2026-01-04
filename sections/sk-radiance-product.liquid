@@ -609,10 +609,18 @@
   ============================= */
 
   .sk-shared-price {
-    margin: 0;
+    margin: 2rem 0;
+    padding: 1.5rem 0;
     display: flex;
     justify-content: center;
     text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .sk-shared-price {
+      margin: calc(2rem * 2 / 3) 0;
+      padding: calc(1.5rem * 2 / 3) 0;
+    }
   }
 
   .sk-shared-price .sk-radiance-price .sk-price {
