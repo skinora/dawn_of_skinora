@@ -5479,3 +5479,21 @@ div.okeReviews .oke-w-review-main {
 .sk-radiance-sticky-bottom-bar {
   display: block;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.heading,
+.rte h1,
+.rte h2,
+.rte h3,
+.shopify-section h1,
+.shopify-section h2,
+.shopify-section h3 {
+  font-family: freight-text-pro, freighttextcmp-pro, 'New York', Georgia, serif !important;
+  font-weight: 500;
+  font-style: normal;
+}
