@@ -58,14 +58,6 @@
       >
     {%- endif -%}
 
-    {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
-      <link
-        rel="preconnect"
-        href="https://fonts.shopifycdn.com"
-        crossorigin
-      >
-    {%- endunless -%}
-
     <title>
       {{ page_title }}
       {%- if current_tags %}
@@ -108,12 +100,6 @@
     {% style %}
       {%- comment -%} Ensure scheme_classes is defined so theme-check doesn't warn about undefined object {%- endcomment -%}
       {%- assign scheme_classes = '' -%}
-            {{ settings.type_body_font | font_face: font_display: 'swap' }}
-            {{ body_font_bold | font_face: font_display: 'swap' }}
-            {{ body_font_italic | font_face: font_display: 'swap' }}
-            {{ body_font_bold_italic | font_face: font_display: 'swap' }}
-            {{ settings.type_header_font | font_face: font_display: 'swap' }}
-
         {% for scheme in settings.color_schemes -%}
               {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
               {% if forloop.index == 1 -%}
@@ -161,7 +147,7 @@
 
             :root {
               --font-body-family: 'sofia-pro', {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
-              --font-body-style: {{ settings.type_body_font.style }};
+              --font-body-style: normal;
               --font-body-weight: 300;
               --font-body-weight-bold: 600;
 
@@ -170,8 +156,8 @@
                 iOS fallback: "New York" is the best system serif match.
               {%- endcomment -%}
               --font-heading-family: 'freight-text-pro', 'freighttextcmp-pro', 'Freight Text Pro', 'FreightTextCmp Pro', 'New York', 'Georgia', serif;
-              --font-heading-style: {{ settings.type_header_font.style }};
-              --font-heading-weight: {{ settings.type_header_font.weight }};
+              --font-heading-style: normal;
+              --font-heading-weight: 400;
 
               --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
               --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
@@ -316,6 +302,7 @@
               box-sizing: border-box;
               font-size: calc(var(--font-body-scale) * 62.5%);
               height: 100%;
+              -webkit-text-size-adjust: 100%;
             }
 
             body {
@@ -330,6 +317,8 @@
               font-family: var(--font-body-family);
               font-style: var(--font-body-style);
               font-weight: var(--font-body-weight);
+              text-rendering: optimizeLegibility;
+              -webkit-font-smoothing: antialiased;
             }
 
             @media screen and (min-width: 750px) {
@@ -354,29 +343,6 @@
       {{ 'component-price.css' | asset_url | stylesheet_tag }}
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
-
-    {%- unless settings.type_body_font.system? -%}
-      {% comment %}theme-check-disable AssetPreload{% endcomment %}
-      <link
-        rel="preload"
-        as="font"
-        href="{{ settings.type_body_font | font_url }}"
-        type="font/woff2"
-        crossorigin
-      >
-      {% comment %}theme-check-enable AssetPreload{% endcomment %}
-    {%- endunless -%}
-    {%- unless settings.type_header_font.system? -%}
-      {% comment %}theme-check-disable AssetPreload{% endcomment %}
-      <link
-        rel="preload"
-        as="font"
-        href="{{ settings.type_header_font | font_url }}"
-        type="font/woff2"
-        crossorigin
-      >
-      {% comment %}theme-check-enable AssetPreload{% endcomment %}
-    {%- endunless -%}
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
       {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}
