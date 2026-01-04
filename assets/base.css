@@ -748,7 +748,7 @@ h6,
   h1,
   h2,
   h3 {
-    font-weight: 500;
+    font-weight: var(--font-heading-weight, 400);
     letter-spacing: -0.01em;
     font-family: var(--font-heading-family);
   }

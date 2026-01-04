@@ -27,10 +27,13 @@
     <link rel="preconnect" href="https://p.typekit.net" crossorigin>
 
     {%- comment -%}
-      Keep ONE kit stylesheet only.
-      If you need fonts from the other kit, merge them into this kit inside Adobe Fonts.
+      Sofia Pro sits in kit jxm0xpk; Freight families are still served from pbt1clx
+      because Adobe does not allow us to merge those kits. Load both stylesheets so
+      the latest font URLs are always pulled directly from Adobe, and let
+      typekit-fonts.css provide the swap-friendly overrides.
     {%- endcomment -%}
     <link rel="stylesheet" href="https://use.typekit.net/jxm0xpk.css" crossorigin>
+    <link rel="stylesheet" href="https://use.typekit.net/pbt1clx.css" crossorigin>
 
     {{ 'typekit-fonts.css' | asset_url | stylesheet_tag }}
 
