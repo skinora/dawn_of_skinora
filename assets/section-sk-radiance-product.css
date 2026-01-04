@@ -449,13 +449,22 @@
   display: flex;
   flex-direction: column;
   gap: clamp(0.75rem, 1.6vw, 1.25rem);
+  width: 100%;
 }
 .sk-radiance-buy-buttons__container {
   display: flex;
   flex-direction: column;
   gap: clamp(0.75rem, 1.6vw, 1.25rem);
+  width: 100%;
 }
 .sk-radiance-product-form {
+  width: 100%;
+}
+
+.sk-radiance-product-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 1.6vw, 1.25rem);
   width: 100%;
 }
 
@@ -483,15 +492,18 @@
   display: flex;
   flex-direction: column;
   gap: clamp(0.75rem, 1.6vw, 1.25rem);
+  width: 100%;
 }
 .sk-radiance-buy-buttons__buttons {
-  width: clamp(260px, 100%, 420px);
-  margin-inline: auto;
+  width: 100%;
+  margin: 0;
   display: flex;
+  align-items: stretch;
 }
 .sk-radiance-buy-buttons__button {
   position: relative;
   overflow: hidden;
+  flex: 1 1 auto;
   inline-size: 100%;
   min-height: 55px;
   max-width: 100%;
