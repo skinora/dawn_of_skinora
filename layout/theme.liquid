@@ -7,20 +7,33 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="theme-color" content="">
     <link rel="canonical" href="{{ canonical_url }}">
+
     {% comment %}
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     {% endcomment %}
 
+    {%- comment -%}
+      ==========================
+      ADOBE FONTS (FIXED FOR iOS)
+      - Use ONE kit only (avoid multiple kits).
+      - Do NOT preload the kit CSS as "style" (can cause Safari timing/fallback issues).
+      - Preconnect only to the actual font domains.
+      ==========================
+    {%- endcomment -%}
+
     <link rel="preconnect" href="https://use.typekit.net" crossorigin>
-    <link rel="preconnect" href="https://fonts.adobe.com" crossorigin>
     <link rel="preconnect" href="https://p.typekit.net" crossorigin>
-    <link rel="preload" as="style" href="https://use.typekit.net/jxm0xpk.css" crossorigin>
-    <link rel="preload" as="style" href="https://use.typekit.net/pbt1clx.css" crossorigin>
+
+    {%- comment -%}
+      Keep ONE kit stylesheet only.
+      If you need fonts from the other kit, merge them into this kit inside Adobe Fonts.
+    {%- endcomment -%}
     <link rel="stylesheet" href="https://use.typekit.net/jxm0xpk.css" crossorigin>
-    <link rel="stylesheet" href="https://use.typekit.net/pbt1clx.css" crossorigin>
+
     {{ 'typekit-fonts.css' | asset_url | stylesheet_tag }}
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -33,8 +46,10 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+
     {%- comment -%} Global Swiper CSS (consolidated from individual sections) {%- endcomment -%}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
     {%- if settings.favicon != blank -%}
       <link
         rel="icon"
@@ -150,8 +165,11 @@
               --font-body-weight: 300;
               --font-body-weight-bold: 600;
 
-              /* TODO: Self-host Freight Text Pro for full iOS reliability */
-              --font-heading-family: 'freight-text-pro', 'freighttextcmp-pro', 'Freight Text Pro', 'FreightTextCmp Pro', 'New York', 'Georgia', 'Times New Roman', {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+              {%- comment -%}
+                Headings: keep your Freight families first.
+                iOS fallback: "New York" is the best system serif match.
+              {%- endcomment -%}
+              --font-heading-family: 'freight-text-pro', 'freighttextcmp-pro', 'Freight Text Pro', 'FreightTextCmp Pro', 'New York', 'Georgia', serif;
               --font-heading-style: {{ settings.type_header_font.style }};
               --font-heading-weight: {{ settings.type_header_font.weight }};
 
@@ -462,8 +480,10 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
     {%- comment -%} Global Swiper JS (consolidated) {%- endcomment -%}
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+
     {% comment %}theme-check-enable RemoteAsset{% endcomment %}
   </body>
 </html>
