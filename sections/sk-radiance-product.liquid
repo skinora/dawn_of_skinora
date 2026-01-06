@@ -650,17 +650,14 @@
   ============================= */
 
   .sk-purchase {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
   }
 
-  .sk-purchase [data-sk-buy-wrapper] + .sk-trust-inline {
-    margin-top: 0.5rem;
-  }
-
-  .sk-trust-inline + .sk-trust-icons {
-    margin-top: 0.75rem;
+  .sk-purchase > * {
+    min-width: 0;
   }
 
   .sk-trust-inline {
