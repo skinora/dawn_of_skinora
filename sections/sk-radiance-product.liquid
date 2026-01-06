@@ -1563,35 +1563,57 @@
         return inputs;
       };
 
-      const normalizeMoneyString = (value) => {
-        if (typeof value !== 'string') return value;
-        let normalized = value.trim();
-        normalized = normalized.replace(/[.,]00(?=\s|$)/g, '');
-        const stripDigits = (token) => token.replace(/[\d.,\s]/g, '');
-        const removeTrailingCurrency = (segments) => {
-          if (!segments.length) return segments;
-          const last = segments[segments.length - 1];
-          if (/[\p{L}]/u.test(last)) {
-            segments.pop();
-          }
-          return segments;
-        };
+      const normalizeMoneyString = (value) =>
+        typeof value === 'string' ? value.trim() : value;
 
-        let tokens = normalized.split(/\s+/);
-        if (tokens.length > 1) {
-          tokens = removeTrailingCurrency(tokens);
-          normalized = tokens.join(' ');
-          tokens = normalized.split(/\s+/);
-          if (tokens.length > 1) {
-            const first = stripDigits(tokens[0]);
-            const last = stripDigits(tokens[tokens.length - 1]);
-            if (first && last && first === last) {
-              tokens.pop();
-              normalized = tokens.join(' ');
-            }
-          }
+      const defaultMoneyFormat = moneyFormat || '{{ amount }}';
+
+      const formatWithDelimiters = (amountInCents, precision = 2, thousands = ',', decimal = '.') => {
+        if (amountInCents == null || isNaN(amountInCents)) return '0';
+
+        const negative = amountInCents < 0 ? '-' : '';
+        const base = Math.abs(amountInCents / 100).toFixed(Math.max(precision, 0));
+        const [integerPart, decimalPart = ''] = base.split('.');
+        const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, thousands);
+
+        if (precision === 0) {
+          return `${negative}${formattedInteger}`;
         }
-        return normalized;
+
+        return `${negative}${formattedInteger}${decimal}${decimalPart}`;
+      };
+
+      const formatMoneyFallback = (cents, formatString = defaultMoneyFormat) => {
+        let value = typeof cents === 'string' ? cents.replace('.', '') : cents;
+        value = isNaN(value) ? 0 : Number(value);
+
+        const placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+        const formatMatch = formatString.match(placeholderRegex);
+        const placeholder = formatMatch ? formatMatch[1] : 'amount';
+        let formattedValue = '';
+
+        switch (placeholder) {
+          case 'amount_no_decimals':
+            formattedValue = formatWithDelimiters(value, 0);
+            break;
+          case 'amount_with_comma_separator':
+            formattedValue = formatWithDelimiters(value, 2, '.', ',');
+            break;
+          case 'amount_no_decimals_with_comma_separator':
+            formattedValue = formatWithDelimiters(value, 0, '.', ',');
+            break;
+          case 'amount_no_decimals_with_space_separator':
+            formattedValue = formatWithDelimiters(value, 0, ' ', ',');
+            break;
+          case 'amount_no_decimals_with_apostrophe_separator':
+            formattedValue = formatWithDelimiters(value, 0, "'", '.');
+            break;
+          case 'amount':
+          default:
+            formattedValue = formatWithDelimiters(value, 2);
+        }
+
+        return formatString.replace(placeholderRegex, formattedValue);
       };
 
       const formatMoney = (cents) => {
@@ -1600,7 +1622,7 @@
             return normalizeMoneyString(window.Shopify.formatMoney(cents, moneyFormat));
           }
         } catch (e) {}
-        return normalizeMoneyString((cents / 100).toFixed(2));
+        return normalizeMoneyString(formatMoneyFallback(cents));
       };
 
       const fetchProductJson = async (handle) => {
