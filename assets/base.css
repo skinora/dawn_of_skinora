@@ -4407,19 +4407,7 @@ small,
 }
 
 .announcement__bar {
-  background: var(--mine-shaft-800);
-  color: var(--color-white);
-}
-
-.announcement__bar a,
-.announcement__bar .announcement-bar__message,
-.announcement__bar .announcement-bar__message *,
-.announcement__bar .link {
-  color: inherit;
-}
-
-.announcement__bar svg {
-  fill: currentColor;
+  background: var(--color-dark);
 }
 
 .announcement__bar h5 {
