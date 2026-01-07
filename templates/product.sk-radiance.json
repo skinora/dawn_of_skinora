@@ -37,6 +37,7 @@
       "blocks": {
         "testimonial_FVNJB8": {
           "type": "testimonial",
+          "disabled": true,
           "settings": {
             "before_image": "shopify://shop_images/kundebildet2.webp",
             "testimonial_title": "Mer jevn hudtone",
@@ -47,6 +48,7 @@
         },
         "testimonial_NxL6Ff": {
           "type": "testimonial",
+          "disabled": true,
           "settings": {
             "before_image": "shopify://shop_images/kundebilde_clear_hud_ble_roligere.webp",
             "testimonial_title": "Klarere hud, glattere overflate",
