@@ -35,17 +35,6 @@
     "sk_before_after_mBrdqd": {
       "type": "sk-before-after",
       "blocks": {
-        "testimonial_W4kX3A": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e_1_3c63e0fb-0357-4b41-bfd6-450216bd2d58.png",
-            "testimonial_title": "Even out skin tone",
-            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
-            "show_verified": true,
-            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
-          }
-        },
         "testimonial_FVNJB8": {
           "type": "testimonial",
           "settings": {
@@ -75,24 +64,12 @@
             "show_verified": true,
             "testimonial_text": "Det som overrasket meg mest var hvor mye jevnere huden ser ut på bilder. Urenheter og røde merker er mindre fremtredende, og huden føles mer balansert."
           }
-        },
-        "testimonial_XyNFDe": {
-          "type": "testimonial",
-          "settings": {
-            "before_image": "shopify://shop_images/722f8e1f86a71e1ce3f287fe320473ab524c090e_1_3c63e0fb-0357-4b41-bfd6-450216bd2d58.png",
-            "testimonial_title": "Even out skin tone",
-            "author_name": "Kate, 5× a week for 8 weeks | Verified Buyer",
-            "show_verified": true,
-            "testimonial_text": "My Skin Feels Smoother And I Can Already Notice A Difference In My Wrinkles And Overall Complexion"
-          }
         }
       },
       "block_order": [
-        "testimonial_W4kX3A",
         "testimonial_FVNJB8",
         "testimonial_NxL6Ff",
-        "testimonial_x7K6W4",
-        "testimonial_XyNFDe"
+        "testimonial_x7K6W4"
       ],
       "name": "SK Before/After Section",
       "settings": {
