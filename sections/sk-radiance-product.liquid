@@ -665,7 +665,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.75rem;
-    font-size: 1.75rem;
+    font-size: clamp(1.8rem, 2.5vw, 2.2rem);
     font-weight: 500;
     line-height: 1.5;
     color: var(--color-neutral-3, #57575f);
@@ -694,6 +694,17 @@
   }
 
   @media (max-width: 768px) {
+    .sk-trust-inline span:first-child::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      margin: 0 8px 0 0;
+      border-radius: 50%;
+      background: var(--color-neutral-4, #9a9aa0);
+      vertical-align: middle;
+    }
+
     .sk-trust-inline span + span::before {
       display: inline-block;
     }
@@ -748,7 +759,7 @@
   }
 
   .sk-trust-inline {
-    font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+    font-size: clamp(1.8rem, 2.5vw, 2.2rem);
     line-height: 1.45;
     padding: 1rem 0;
     margin-top: 0.25rem;
@@ -974,15 +985,15 @@
 
     .sk-hero-info h2,
     .sk-hero-info h3 {
-      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      font-size: clamp(2.2rem, 4vw, 2.8rem) !important;
     }
 
     .sk-hero-info h4 {
-      font-size: clamp(1.5rem, 3.2vw, 2rem);
+      font-size: clamp(1.8rem, 3.8vw, 2.4rem) !important;
     }
 
     .sk-hero-info li {
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-size: clamp(1.7rem, 3.5vw, 2.4rem) !important;
       padding-left: 40px;
     }
   }
