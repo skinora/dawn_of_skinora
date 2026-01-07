@@ -1017,7 +1017,7 @@
 
   .sk-hero-info li {
     position: relative;
-    padding-left: 2.5rem;
+    padding-left: 3rem;
     margin-bottom: 1rem;
     line-height: 1.55;
     color: var(--color-dark, #3a3939);
@@ -1060,26 +1060,23 @@
     content: '';
     position: absolute;
     left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: clamp(1.1rem, 1.05em, 1.5rem);
-    height: clamp(1.1rem, 1.05em, 1.5rem);
+    top: 0.3em;
+    width: 1.1em;
+    height: 1.1em;
     border-radius: 50%;
-    border: 1.5px solid var(--sk-brand);
-    box-sizing: border-box;
+    background: var(--color-brand);
   }
 
   .sk-hero-info li::after {
     content: '';
     position: absolute;
-    left: clamp(0.6rem, 0.8vw, 0.9rem);
-    top: 50%;
-    width: 0.55rem;
-    height: 0.55rem;
-    border-right: 2px solid var(--sk-brand);
-    border-top: 2px solid var(--sk-brand);
-    transform: translate(-50%, -50%) rotate(45deg);
-    border-radius: 0;
+    left: 0.38em;
+    top: 0.53em;
+    width: 0.35em;
+    height: 0.6em;
+    border-right: 2px solid var(--color-white);
+    border-bottom: 2px solid var(--color-white);
+    transform: rotate(45deg);
   }
 </style>
 
