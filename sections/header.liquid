@@ -94,6 +94,7 @@
     font-style: normal;
     letter-spacing: clamp(-0.01em, 0.08vw, 0.05em) !important;
     text-transform: uppercase;
+    font-size: 1.6rem; /* Base font size for large screens */
   }
   /* Mobile drawer typography */
   .menu-drawer__menu-item,
@@ -230,6 +231,115 @@
     justify-self: center;
     display: flex;
     align-items: center;
+  }
+
+  /* Responsive logo scaling - Tablet */
+  @media (min-width: 750px) and (max-width: 1199px) {
+    .header__heading-logo-wrapper {
+      --header-logo-width: 170px !important;
+      width: 170px !important;
+      max-width: 170px !important;
+    }
+    .header__heading-logo-wrapper img,
+    .header__heading-logo-wrapper svg {
+      width: 170px !important;
+      max-width: 170px !important;
+    }
+  }
+
+  /* Responsive logo scaling - Laptop */
+  @media (min-width: 1200px) and (max-width: 1599px) {
+    .header__heading-logo-wrapper {
+      --header-logo-width: 200px !important;
+      width: 200px !important;
+      max-width: 200px !important;
+    }
+    .header__heading-logo-wrapper img,
+    .header__heading-logo-wrapper svg {
+      width: 200px !important;
+      max-width: 200px !important;
+    }
+  }
+
+  /* Responsive logo scaling - Wide Desktop */
+  @media (min-width: 1600px) {
+    .header__heading-logo-wrapper {
+      --header-logo-width: 230px !important;
+      width: 230px !important;
+      max-width: 230px !important;
+    }
+    .header__heading-logo-wrapper img,
+    .header__heading-logo-wrapper svg {
+      width: 230px !important;
+      max-width: 230px !important;
+    }
+  }
+
+  /* Responsive navigation font scaling - Tablet only */
+  @media (min-width: 750px) and (max-width: 1199px) {
+    .sk-header .sk-header__inline-menu .header__menu-item,
+    .menu-drawer__menu-item {
+      font-size: 1.4rem !important;
+    }
+  }
+
+  /* Responsive icon scaling - Tablet */
+  @media (min-width: 750px) and (max-width: 1199px) {
+    .header__icons .header__icon .svg-wrapper svg {
+      width: 19px !important;
+      height: 19px !important;
+    }
+  }
+
+  /* Responsive icon scaling - Laptop */
+  @media (min-width: 1200px) and (max-width: 1599px) {
+    .header__icons .header__icon .svg-wrapper svg {
+      width: 21px !important;
+      height: 21px !important;
+    }
+  }
+
+  /* Responsive icon scaling - Wide Desktop */
+  @media (min-width: 1600px) {
+    .header__icons .header__icon .svg-wrapper svg {
+      width: 24px !important;
+      height: 24px !important;
+    }
+  }
+
+  /* Responsive header spacing - Tablet only */
+  @media (min-width: 750px) and (max-width: 1199px) {
+    .header__menu {
+      gap: 1.8rem !important;
+    }
+
+    .header__icons {
+      gap: 1.2rem !important;
+    }
+
+    .sk-header__inline-menu,
+    .list-menu--inline {
+      gap: 1.8rem !important;
+    }
+  }
+
+  /* Responsive header spacing - Laptop */
+  @media (min-width: 1200px) and (max-width: 1599px) {
+    .header__menu {
+      gap: 1rem !important;
+    }
+
+    .sk-header__inline-menu,
+    .list-menu--inline {
+      gap: 1rem !important;
+    }
+  }
+
+  /* Responsive header padding - Tablet only */
+  @media (min-width: 750px) and (max-width: 1199px) {
+    .section-header .sk-header {
+      padding-inline: 3rem !important;
+    }
   }
 </style>
 
