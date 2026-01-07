@@ -3013,11 +3013,6 @@ input[type='checkbox'] {
     grid-template-areas: 'nav brand icons';
   }
 
-  .sk-header__grid > .sk-header__nav,
-  .sk-header__grid > .header__icons {
-    width: 100%;
-  }
-
   .sk-header__grid > .sk-header__brand {
     pointer-events: auto;
   }
