@@ -1,0 +1,364 @@
+{% comment %}
+  SK Before/After Section
+  Single-image before/after look (visual split only)
+{% endcomment %}
+
+<style>
+  .sk-before-after {
+    padding: 5rem 0;
+    background-color: var(--color-white);
+    position: relative;
+    overflow: visible;
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+  }
+
+  .sk-testimonial-card {
+    width: 100%;
+    background: #fff;
+    border-radius: 0;
+    overflow: hidden;
+    --sk-ba-image-base-height: clamp(260px, 30vw, 360px);
+  }
+
+  /* === SINGLE IMAGE WITH FAKE BEFORE / AFTER SPLIT === */
+
+  .sk-testimonial-card__images {
+    position: relative;
+    height: calc(var(--sk-ba-image-base-height) * 1.15);
+    overflow: hidden;
+  }
+
+  .sk-testimonial-card__images img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* vertical divider */
+  /* pills */
+  .sk-ba-pill {
+    position: absolute;
+    top: 12px;
+    padding: 6px 14px;
+    font-size: 13px;
+    background: rgba(245, 245, 245, 0.95);
+    border-radius: 0;
+    font-weight: 500;
+    color: #333;
+    z-index: 3;
+  }
+
+  .sk-ba-pill--before {
+    left: 12px;
+  }
+  .sk-ba-pill--after {
+    right: 12px;
+  }
+
+  /* === CONTENT === */
+
+  .sk-testimonial-card__content {
+    padding: 18px 20px 22px;
+    text-align: left;
+  }
+
+  .sk-testimonial-card__title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #000;
+  }
+
+  .sk-testimonial-card__meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sk-testimonial-card__text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  .sk-before-after .sk-radiance-product__media-progress {
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 899px) {
+    .sk-before-after .sk-before-after-prev,
+    .sk-before-after .sk-before-after-next {
+      display: none;
+    }
+    .sk-before-after .swiper-button-prev,
+    .sk-before-after .swiper-button-next {
+      display: none;
+    }
+    .sk-before-after .sk-before-after-prev.sk-arrow-visible,
+    .sk-before-after .sk-before-after-next.sk-arrow-visible,
+    .sk-before-after .swiper-button-prev.sk-arrow-visible,
+    .sk-before-after .swiper-button-next.sk-arrow-visible {
+      display: flex !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .sk-before-after .sk-radiance-product__media-progress {
+      .sk-before-after .sk-before-after-prev::after,
+      .sk-before-after .sk-before-after-next::after {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-top: 2px solid var(--color-dark);
+        border-right: 2px solid var(--color-dark);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: border-color 0.25s ease;
+      }
+      .sk-before-after .sk-before-after-prev::after {
+        transform: translate(-50%, -50%) rotate(-135deg);
+      }
+      .sk-before-after .sk-before-after-next::after {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      display: none !important;
+    }
+    .sk-before-after .sk-before-after-prev,
+    .sk-before-after .sk-before-after-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(48, 39, 62, 0.16);
+      background: var(--color-white);
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+      color: var(--color-dark);
+      z-index: 4;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .sk-before-after .sk-before-after-prev.sk-arrow-visible,
+    .sk-before-after .sk-before-after-next.sk-arrow-visible {
+      opacity: 1;
+      pointer-events: auto;
+      display: flex !important;
+    }
+    .sk-before-after .sk-before-after-prev {
+      left: -40px;
+    }
+    .sk-before-after .sk-before-after-next {
+      right: -20px;
+    }
+  }
+
+  .sk-before-after .swiper-button-disabled {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .sk-before-after .sk-arrow-visible.swiper-button-disabled {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Swiper arrows & pagination untouched */
+</style>
+
+<section class="sk-before-after" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    {% if section.settings.section_title != blank %}
+      <div class="sk-section-header sk-section-header--center">
+        <h1 class="sk-section-header__title">
+          {{ section.settings.section_title }}
+        </h1>
+        {% if section.settings.section_subtitle != blank %}
+          <p class="sk-section-header__subtitle">
+            {{ section.settings.section_subtitle }}
+          </p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="swiper sk-before-after-swiper">
+      <div class="swiper-wrapper">
+        {% for item in product.metafields.custom.before_after_testimonials.value %}
+          <div class="swiper-slide">
+            <div class="sk-testimonial-card">
+              <div class="sk-testimonial-card__images">
+                {% assign alt_text = item.alt_text | default: item.title | default: 'Before and after' %}
+                <img
+                  src="{{ item.image | image_url: width: 800 }}"
+                  alt="{{ alt_text | escape }}"
+                  width="{{ item.image.width | default: 800 }}"
+                  height="{{ item.image.height | default: 360 }}"
+                  loading="lazy"
+                >
+
+                <span class="sk-ba-pill sk-ba-pill--before">FØR</span>
+                <span class="sk-ba-pill sk-ba-pill--after">...OG ETTER</span>
+              </div>
+
+              <div class="sk-testimonial-card__content">
+                {% if item.title != blank %}
+                  <h3 class="sk-testimonial-card__title">
+                    {{ item.title }}
+                  </h3>
+                {% endif %}
+
+                {% if item.meta != blank %}
+                  <div class="sk-testimonial-card__meta">
+                    {{ item.meta }}
+                    <span>✔</span>
+                  </div>
+                {% endif %}
+
+                {% if item.quote != blank %}
+                  <p class="sk-testimonial-card__text">"{{ item.quote }}"</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-button-prev sk-before-after-prev"></div>
+      <div class="swiper-button-next sk-before-after-next"></div>
+    </div>
+    {% assign testimonials_count = product.metafields.custom.before_after_testimonials.value | size -%}
+    {%- if testimonials_count > 0 %}
+      <div class="sk-radiance-product__media-progress" role="status" aria-live="polite">
+        <div class="sk-radiance-product__media-progress-squares" role="tablist" aria-label="Testimonials progress">
+          {% for item in product.metafields.custom.before_after_testimonials.value %}
+            <button
+              type="button"
+              class="sk-radiance-product__media-progress-square{% if forloop.first %} sk-radiance-product__media-progress-square--active{% endif %}"
+              data-progress-index="{{ forloop.index0 }}"
+              aria-label="Vis eksempel {{ forloop.index }}"
+              {% if forloop.first %}
+                aria-current="true"
+              {% endif %}
+            ></button>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof Swiper === 'undefined') return;
+
+    const wrapper = document.querySelector('.sk-before-after[data-section-id="{{ section.id }}"]');
+    if (!wrapper) return;
+
+    const swiperElement = wrapper.querySelector('.sk-before-after-swiper');
+    if (!swiperElement) return;
+
+    const swiperInstance = new Swiper(swiperElement, {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      navigation: {
+        nextEl: wrapper.querySelector('.sk-before-after-next'),
+        prevEl: wrapper.querySelector('.sk-before-after-prev'),
+      },
+      breakpoints: {
+        700: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      },
+    });
+
+    const progressBar = wrapper.querySelector('.sk-radiance-product__media-progress');
+    const progressSquares = progressBar
+      ? Array.from(progressBar.querySelectorAll('.sk-radiance-product__media-progress-square'))
+      : [];
+    const prevArrow = wrapper.querySelector('.sk-before-after-prev');
+    const nextArrow = wrapper.querySelector('.sk-before-after-next');
+
+    const updateProgress = (index) => {
+      if (!progressBar) return;
+      const hideProgress = progressSquares.length <= 1;
+      progressBar.classList.toggle('sk-radiance-product__media-progress--hidden', hideProgress);
+      progressBar.setAttribute('aria-hidden', hideProgress ? 'true' : 'false');
+      progressSquares.forEach((square, idx) => {
+        const isActive = idx === index;
+        square.classList.toggle('sk-radiance-product__media-progress-square--active', isActive);
+        if (isActive) {
+          square.setAttribute('aria-current', 'true');
+        } else {
+          square.removeAttribute('aria-current');
+        }
+      });
+    };
+
+    progressSquares.forEach((square, idx) => {
+      square.addEventListener('click', () => swiperInstance.slideTo(idx));
+    });
+
+    const updateDesktopArrows = () => {
+      if (!prevArrow || !nextArrow) return;
+
+      const showPrev = !swiperInstance.isBeginning;
+      const showNext = !swiperInstance.isEnd;
+
+      prevArrow.classList.toggle('sk-arrow-visible', showPrev);
+      nextArrow.classList.toggle('sk-arrow-visible', showNext);
+      prevArrow.classList.toggle('swiper-button-disabled', !showPrev);
+      nextArrow.classList.toggle('swiper-button-disabled', !showNext);
+    };
+
+    swiperInstance.on('init', updateDesktopArrows);
+    swiperInstance.on('slideChangeTransitionEnd', updateDesktopArrows);
+    swiperInstance.on('breakpoint', updateDesktopArrows);
+
+    swiperInstance.on('slideChange', () => {
+      updateProgress(swiperInstance.activeIndex);
+      updateDesktopArrows();
+    });
+
+    updateProgress(swiperInstance.activeIndex);
+    updateDesktopArrows();
+    window.addEventListener('resize', updateDesktopArrows);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "SK Before/After Product",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Title",
+      "default": "Real results"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subtitle",
+      "label": "Subtitle",
+      "default": "See the amazing transformations our customers have achieved"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Before/After Product"
+    }
+  ]
+}
+{% endschema %}
