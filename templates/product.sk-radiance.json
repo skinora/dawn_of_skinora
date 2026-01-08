@@ -77,6 +77,14 @@
         "section_subtitle": "Kundebilder som viser hvordan huden kan se ut etter flere ukers rutine"
       }
     },
+    "sk_before_after_per_product_TjgxQQ": {
+      "type": "sk-before-after-per-product",
+      "name": "SK Before/After Product",
+      "settings": {
+        "section_title": "Kundereiser: før og etter",
+        "section_subtitle": "Kundebilder som viser hvordan huden kan se ut etter flere ukers rutine"
+      }
+    },
     "sk_product_technology_RP8yDt": {
       "type": "sk-product-technology",
       "name": "SK Resultater",
@@ -151,6 +159,7 @@
     "main",
     "sk_product_promotion_logos_r9MTbH",
     "sk_before_after_mBrdqd",
+    "sk_before_after_per_product_TjgxQQ",
     "sk_product_technology_RP8yDt",
     "sk_led_light_work_mDz86m",
     "sk_product_how_to_use_dbAJA9",
