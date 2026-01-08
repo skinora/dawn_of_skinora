@@ -198,39 +198,68 @@
 
     <div class="swiper sk-before-after-swiper">
       <div class="swiper-wrapper">
-        {% for item in product.metafields.custom.before_after_testimonials.value %}
+        {% for item in product.metafields.custom.before_after_testimonial_product.value %}
+          {% liquid
+            assign image_value = item.image.value | default: item.image
+            assign testimonial_alt_text = item.alt_text.value | default: item.alt_text
+            assign testimonial_title = item.title.value | default: item.title
+            assign testimonial_meta = item.meta.value | default: item.meta
+            assign testimonial_quote = item.quote.value | default: item.quote
+            assign display_alt = testimonial_alt_text | default: testimonial_title | default: 'Før og etter – Skinora Clear'
+
+            assign img_src = null
+            assign img_w = 800
+            assign img_h = 360
+
+            if image_value != blank
+              if image_value.preview_image
+                assign img_obj = image_value.preview_image
+                assign img_src = img_obj | image_url: width: 800
+                assign img_w = img_obj.width | default: 800
+                assign img_h = img_obj.height | default: 360
+              elsif image_value.width
+                assign img_obj = image_value
+                assign img_src = img_obj | image_url: width: 800
+                assign img_w = img_obj.width | default: 800
+                assign img_h = img_obj.height | default: 360
+              else
+                assign img_src = image_value | file_url
+              endif
+            endif
+          %}
           <div class="swiper-slide">
             <div class="sk-testimonial-card">
               <div class="sk-testimonial-card__images">
-                {% assign alt_text = item.alt_text | default: item.title | default: 'Before and after' %}
-                <img
-                  src="{{ item.image | image_url: width: 800 }}"
-                  alt="{{ alt_text | escape }}"
-                  width="{{ item.image.width | default: 800 }}"
-                  height="{{ item.image.height | default: 360 }}"
-                  loading="lazy"
-                >
+                {% if img_src %}
+                  <img
+                    src="{{ img_src }}"
+                    alt="{{ display_alt | escape }}"
+                    width="{{ img_w }}"
+                    height="{{ img_h }}"
+                    loading="lazy"
+                  >
+                {% endif %}
 
                 <span class="sk-ba-pill sk-ba-pill--before">FØR</span>
                 <span class="sk-ba-pill sk-ba-pill--after">...OG ETTER</span>
               </div>
 
               <div class="sk-testimonial-card__content">
-                {% if item.title != blank %}
+                {% if testimonial_title != blank %}
                   <h3 class="sk-testimonial-card__title">
-                    {{ item.title }}
+                    {{ testimonial_title }}
                   </h3>
                 {% endif %}
 
-                {% if item.meta != blank %}
+                {% if testimonial_meta != blank %}
                   <div class="sk-testimonial-card__meta">
-                    {{ item.meta }}
+                    {{ testimonial_meta }}
                     <span>✔</span>
                   </div>
                 {% endif %}
 
-                {% if item.quote != blank %}
-                  <p class="sk-testimonial-card__text">"{{ item.quote }}"</p>
+                {% if testimonial_quote != blank %}
+                  <p class="sk-testimonial-card__text">"{{ testimonial_quote }}"</p>
                 {% endif %}
               </div>
             </div>
@@ -240,11 +269,11 @@
       <div class="swiper-button-prev sk-before-after-prev"></div>
       <div class="swiper-button-next sk-before-after-next"></div>
     </div>
-    {% assign testimonials_count = product.metafields.custom.before_after_testimonials.value | size -%}
+    {% assign testimonials_count = product.metafields.custom.before_after_testimonial_product.value | size -%}
     {%- if testimonials_count > 0 %}
       <div class="sk-radiance-product__media-progress" role="status" aria-live="polite">
         <div class="sk-radiance-product__media-progress-squares" role="tablist" aria-label="Testimonials progress">
-          {% for item in product.metafields.custom.before_after_testimonials.value %}
+          {% for item in product.metafields.custom.before_after_testimonial_product.value %}
             <button
               type="button"
               class="sk-radiance-product__media-progress-square{% if forloop.first %} sk-radiance-product__media-progress-square--active{% endif %}"
