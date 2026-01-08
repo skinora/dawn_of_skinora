@@ -174,33 +174,33 @@
 
 <section class="sk-results section" id="sk-results-{{ section.id }}">
   <div class="page-width">
-    {% assign has_header = false %}
-    {% if result_eyebrow != blank %}
-      {% assign has_header = true %}
-    {% endif %}
-    {% if result_heading != blank %}
-      {% assign has_header = true %}
-    {% endif %}
-    {% if result_subheading != blank %}
-      {% assign has_header = true %}
-    {% endif %}
-
-    {% if has_header %}
-      <div class="sk-section-header sk-section-header--center">
-        {% if result_eyebrow != blank %}
-          <p class="sk-section-header__eyebrow sk-copy-eyebrow">{{ result_eyebrow }}</p>
-        {% endif %}
-        {% if result_heading != blank %}
-          <h2 class="sk-section-header__title">{{ result_heading }}</h2>
-        {% endif %}
-        {% if result_subheading != blank %}
-          <p class="sk-section-header__subtitle">{{ result_subheading }}</p>
-        {% endif %}
-      </div>
-    {% endif %}
-
     <div class="sk-results__inner">
       <div class="sk-results__copy">
+        {% assign has_header = false %}
+        {% if result_eyebrow != blank %}
+          {% assign has_header = true %}
+        {% endif %}
+        {% if result_heading != blank %}
+          {% assign has_header = true %}
+        {% endif %}
+        {% if result_subheading != blank %}
+          {% assign has_header = true %}
+        {% endif %}
+
+        {% if has_header %}
+          <div class="sk-section-header">
+            {% if result_eyebrow != blank %}
+              <p class="sk-section-header__eyebrow sk-copy-eyebrow">{{ result_eyebrow }}</p>
+            {% endif %}
+            {% if result_heading != blank %}
+              <h2 class="sk-section-header__title">{{ result_heading }}</h2>
+            {% endif %}
+            {% if result_subheading != blank %}
+              <p class="sk-section-header__subtitle">{{ result_subheading }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+
         {% if result_intro_markup != blank %}
           <div class="sk-results__intro">{{ result_intro_markup }}</div>
         {% endif %}
