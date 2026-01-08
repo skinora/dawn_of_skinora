@@ -353,12 +353,14 @@
     };
 
     swiperInstance.on('init', updateDesktopArrows);
+    swiperInstance.on('slideChange', updateDesktopArrows);
     swiperInstance.on('slideChangeTransitionEnd', updateDesktopArrows);
     swiperInstance.on('breakpoint', updateDesktopArrows);
+    swiperInstance.on('slideChangeTransitionStart', updateDesktopArrows);
+    swiperInstance.on('sliderMove', updateDesktopArrows);
 
     swiperInstance.on('slideChange', () => {
       updateProgress(swiperInstance.activeIndex);
-      updateDesktopArrows();
     });
 
     updateProgress(swiperInstance.activeIndex);
