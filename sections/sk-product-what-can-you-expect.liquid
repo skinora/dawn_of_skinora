@@ -43,7 +43,9 @@
     display: flex;
     gap: 12px;
     font-size: 18px;
+    line-height: 1.6;
     color: var(--brand);
+    position: relative;
   }
 
   .sk-results__list li::before {
@@ -52,7 +54,35 @@
     height: 10px;
     margin-top: 0.45em;
     border-radius: 999px;
-    background: linear-gradient(145deg, var(--brand), var(--accent));
+    background: var(--brand);
+    flex-shrink: 0;
+  }
+
+  /* Rich text field list styling */
+  .sk-results__list ul ul,
+  .sk-results__list ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sk-results__list ul li,
+  .sk-results__list ol li {
+    display: flex;
+    gap: 12px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--brand);
+  }
+
+  .sk-results__list ul li::before,
+  .sk-results__list ol li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    margin-top: 0.45em;
+    border-radius: 999px;
+    background: var(--brand);
     flex-shrink: 0;
   }
 
