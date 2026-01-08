@@ -32,70 +32,12 @@
         "sk_promotion_bgColor": "#f1eff4"
       }
     },
-    "sk_before_after_mBrdqd": {
-      "type": "sk-before-after",
-      "blocks": {
-        "testimonial_FVNJB8": {
-          "type": "testimonial",
-          "settings": {
-            "before_image": "shopify://shop_images/kundebildet2.webp",
-            "testimonial_title": "Mer jevn hudtone",
-            "author_name": "Ingrid M., 5× i uken i 8 uker | Verifisert kjøper",
-            "show_verified": true,
-            "testimonial_text": "Jeg fikk en jevnere tone ganske fort – huden ser roligere ut og sminken legger seg penere. Jeg føler meg mer ‘fresh’ uten å måtte dekke alt."
-          }
-        },
-        "testimonial_NxL6Ff": {
-          "type": "testimonial",
-          "settings": {
-            "before_image": "shopify://shop_images/kundebilde_clear_hud_ble_roligere.webp",
-            "testimonial_title": "Klarere hud, glattere overflate",
-            "author_name": "Sara L., 4–5× i uken i 8 uker | Verifisert kjøper",
-            "show_verified": true,
-            "testimonial_text": "Jeg merket at huden fikk mer glow og at ujevnhetene ble mindre synlige. Det føles som huden er jevnere i teksturen."
-          }
-        },
-        "testimonial_x7K6W4": {
-          "type": "testimonial",
-          "settings": {
-            "before_image": "shopify://shop_images/kundebilde_clear_kvisene_forsvant.webp",
-            "testimonial_title": "Mindre synlige utbrudd",
-            "author_name": "Maja K., 5× i uken i 6–8 uker | Verifisert kjøper",
-            "show_verified": true,
-            "testimonial_text": "Det som overrasket meg mest var hvor mye jevnere huden ser ut på bilder. Urenheter og røde merker er mindre fremtredende, og huden føles mer balansert."
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_FVNJB8",
-        "testimonial_NxL6Ff",
-        "testimonial_x7K6W4"
-      ],
-      "name": "SK Before/After Section",
-      "settings": {
-        "section_title": "Kundereiser: før og etter",
-        "section_subtitle": "Kundebilder som viser hvordan huden kan se ut etter flere ukers rutine"
-      }
-    },
     "sk_before_after_per_product_TjgxQQ": {
       "type": "sk-before-after-per-product",
       "name": "SK Before/After Product",
       "settings": {
         "section_title": "Kundereiser: før og etter",
         "section_subtitle": "Kundebilder som viser hvordan huden kan se ut etter flere ukers rutine"
-      }
-    },
-    "sk_product_technology_RP8yDt": {
-      "type": "sk-product-technology",
-      "name": "SK Resultater",
-      "settings": {
-        "eyebrow": "RESULTATER",
-        "heading": "Hva kan jeg forvente?",
-        "subheading": "Fire klare forbedringer du merker gradvis.",
-        "bullet_intro_text": "<p>Del en kort introduksjon her.</p>",
-        "rich_bullet_content": "<ul><li>Jevnere hudtone</li><li>Fastere hud</li><li>Mer glød</li><li>Mindre sliten hud</li></ul>",
-        "note_text": "Resultater bygges gradvis og påvirkes av hudtype og kontinuitet.",
-        "result_image_alt": "Rolig portrett"
       }
     },
     "sk_led_light_work_mDz86m": {
@@ -158,9 +100,7 @@
   "order": [
     "main",
     "sk_product_promotion_logos_r9MTbH",
-    "sk_before_after_mBrdqd",
     "sk_before_after_per_product_TjgxQQ",
-    "sk_product_technology_RP8yDt",
     "sk_led_light_work_mDz86m",
     "sk_product_how_to_use_dbAJA9",
     "sk_product_why_choose_pwJz83",
