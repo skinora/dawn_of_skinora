@@ -341,6 +341,67 @@
       padding-inline: 3rem !important;
     }
   }
+
+  /* ===== Fix: iPhone logo clipping ===== */
+  @media (max-width: 749px) {
+    /* Give header a bit more vertical room */
+    .header.sk-header {
+      padding-top: 18px !important;
+      padding-bottom: 18px !important;
+      min-height: auto !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    /* Grid must allow height growth */
+    .sk-header__grid {
+      min-height: auto !important;
+      height: auto !important;
+      align-items: center !important;
+      overflow: visible !important;
+    }
+
+    /* Logo brand container must not clip */
+    .sk-header__brand {
+      min-height: auto !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    /* Make the logo link a proper flex box so it centers and doesn't clip */
+    .sk-header__brand .header__heading-link {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-height: auto !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    /* The wrapper must NOT cap height */
+    .header__heading-logo-wrapper {
+      width: clamp(170px, 52vw, 240px) !important;
+      max-width: 100% !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+      line-height: 0 !important; /* removes baseline weirdness */
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    /* Inline SVG must behave like an image */
+    .header__heading-logo-wrapper svg {
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+  }
 </style>
 
 {%- style -%}
