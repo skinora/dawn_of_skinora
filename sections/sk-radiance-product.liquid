@@ -1091,6 +1091,8 @@
   }
 </style>
 
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
 {%- assign product_info_reference = product.metafields.custom.product_info
   | default: product.metafields.product_info
 -%}

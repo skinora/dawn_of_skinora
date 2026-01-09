@@ -19,6 +19,9 @@ if (!customElements.get('product-form')) {
 
       onSubmitHandler(evt) {
         evt.preventDefault();
+        console.log('🛒 ADD TO CART - Starting...');
+        console.log('Cart element at submit:', this.cart);
+
         if (this.submitButton.getAttribute('aria-disabled') === 'true') return;
 
         this.handleErrorMessage();
@@ -34,13 +37,19 @@ if (!customElements.get('product-form')) {
         const formData = new FormData(this.form);
         // Re-check for cart drawer element in case it loaded after constructor
         this.cart = this.cart || document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+        console.log('Cart element after re-check:', this.cart);
+        console.log('Cart-drawer exists?', !!document.querySelector('cart-drawer'));
+
         if (this.cart) {
+          console.log('✓ Cart found - will open drawer');
           formData.append(
             'sections',
             this.cart.getSectionsToRender().map((section) => section.id)
           );
           formData.append('sections_url', window.location.pathname);
           this.cart.setActiveElement(document.activeElement);
+        } else {
+          console.log('✗ NO CART FOUND - will redirect to /cart');
         }
         config.body = formData;
 
@@ -64,10 +73,12 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
+              console.log('🔄 Redirecting to cart page...');
               window.location = window.routes.cart_url;
               return;
             }
 
+            console.log('✓ Product added - rendering cart drawer');
             const startMarker = CartPerformance.createStartingMarker('add:wait-for-subscribers');
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
