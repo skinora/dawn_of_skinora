@@ -32,6 +32,8 @@ if (!customElements.get('product-form')) {
         delete config.headers['Content-Type'];
 
         const formData = new FormData(this.form);
+        // Re-check for cart drawer element in case it loaded after constructor
+        this.cart = this.cart || document.querySelector('cart-notification') || document.querySelector('cart-drawer');
         if (this.cart) {
           formData.append(
             'sections',
