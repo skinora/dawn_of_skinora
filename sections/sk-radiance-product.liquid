@@ -1699,9 +1699,25 @@
       };
 
       const setAvailabilityUI = (available) => {
+        console.log('🎯 setAvailabilityUI called:', {
+          available,
+          buyWrapper,
+          notifyWrapper,
+          buyWrapperExists: !!buyWrapper,
+          notifyWrapperExists: !!notifyWrapper
+        });
         // Toggle buy vs notify
         if (buyWrapper) buyWrapper.style.display = available ? '' : 'none';
         if (notifyWrapper) notifyWrapper.style.display = available ? 'none' : 'block';
+        
+        // Check button state after
+        const submitButton = buyWrapper?.querySelector('[type="submit"]');
+        console.log('🔘 Button state:', {
+          button: submitButton,
+          disabled: submitButton?.disabled,
+          ariaDisabled: submitButton?.getAttribute('aria-disabled'),
+          buttonText: submitButton?.querySelector('.sk-radiance-buy-buttons__button-text')?.textContent
+        });
       };
 
       const setCardUnavailable = (cardEl, isUnavailable, variantId) => {
@@ -1768,6 +1784,13 @@
         try {
           const bundleJson = await fetchProductJson(bundleHandle);
           const bundleVariant = pickDefaultVariant(bundleJson);
+          console.log('🎁 Bundle Debug:', {
+            bundleHandle,
+            bundleJson,
+            bundleVariant,
+            available: bundleVariant?.available,
+            id: bundleVariant?.id
+          });
           if (!bundleVariant) return null;
 
           setBundleCardPrice(bundleVariant);
@@ -1775,6 +1798,7 @@
 
           return { product: bundleJson, variant: bundleVariant };
         } catch (e) {
+          console.error('❌ Bundle hydration error:', e);
           if (bundleCard) bundleCard.style.display = 'none';
           return null;
         }
@@ -1782,22 +1806,49 @@
 
       const applyOffer = async (offerType, bundleData) => {
         let activeVariant = null;
+        let activeProductId = null;
 
         if (offerType === 'single') {
           activeVariant = baseVariant;
+          activeProductId = root.dataset.baseProductId;
         }
 
         if (offerType === 'bundle') {
           if (!bundleData || !bundleData.variant) return;
           activeVariant = bundleData.variant;
+          activeProductId = bundleData.product?.id;
         }
 
         if (!activeVariant) return;
 
+        console.log('🔄 Applying offer:', {
+          offerType,
+          activeVariant,
+          activeProductId,
+          available: activeVariant.available,
+          buyWrapper: buyWrapper,
+          buyWrapperDisplay: buyWrapper?.style.display
+        });
+
         setActiveVariantId(activeVariant.id, offerType);
         setNotifyVariant(activeVariant.id);
+        
+        // Update product-id input if it exists
+        const productIdInputs = document.querySelectorAll('input[name="product-id"]');
+        if (productIdInputs.length && activeProductId) {
+          console.log('📝 Updating product-id inputs:', activeProductId);
+          productIdInputs.forEach(input => {
+            input.value = activeProductId;
+          });
+        }
+        
         replaceSharedPrice(activeVariant);
         setAvailabilityUI(!!activeVariant.available);
+
+        console.log('✅ After setAvailabilityUI:', {
+          buyWrapperDisplay: buyWrapper?.style.display,
+          notifyWrapperDisplay: notifyWrapper?.style.display
+        });
 
         setCardUnavailable(singleCard, offerType === 'single' && !activeVariant.available, activeVariant.id);
         setCardUnavailable(bundleCardWrap, offerType === 'bundle' && !activeVariant.available, activeVariant.id);

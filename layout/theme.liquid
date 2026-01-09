@@ -448,53 +448,6 @@
 
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
-      <script>
-        console.log('=== CART DRAWER DEBUG ===');
-        console.log('Cart type setting:', '{{ settings.cart_type }}');
-
-        window.addEventListener('load', () => {
-          setTimeout(() => {
-            console.log('\n📦 CUSTOM ELEMENTS:');
-            console.log('product-form defined?', !!customElements.get('product-form'));
-            console.log('cart-drawer defined?', !!customElements.get('cart-drawer'));
-
-            console.log('\n🔍 DOM CHECK:');
-            console.log('Cart drawer exists:', !!document.querySelector('cart-drawer'));
-            console.log('Product forms:', document.querySelectorAll('product-form').length);
-            console.log('Product info:', document.querySelectorAll('product-info').length);
-
-            // Check ALL forms
-            const allForms = document.querySelectorAll('form');
-            console.log('Total forms:', allForms.length);
-            allForms.forEach((form, i) => {
-              if (form.action && form.action.includes('cart')) {
-                console.log(`  Cart form ${i + 1}: ${form.id}, action: ${form.action}`);
-              }
-            });
-
-            const productForms = document.querySelectorAll('product-form');
-            productForms.forEach((form, i) => {
-              console.log(`Product form ${i + 1}:`, form);
-              console.log('  - has cart property:', !!form.cart);
-              console.log('  - cart element:', form.cart);
-            });
-
-            if (customElements.get('cart-drawer')) {
-              console.log('✓ CartDrawer custom element is defined');
-            } else {
-              console.log('✗ CartDrawer custom element NOT defined');
-            }
-
-            const cartDrawer = document.querySelector('cart-drawer');
-            if (cartDrawer) {
-              console.log('✓ Cart drawer found in DOM');
-              console.log('Cart drawer classes:', cartDrawer.className);
-            } else {
-              console.log('✗ Cart drawer NOT in DOM - this is the problem!');
-            }
-          }, 200);
-        });
-      </script>
     {%- endif -%}
 
     {%- comment -%} Global Swiper JS (consolidated) {%- endcomment -%}
