@@ -1,14 +1,14 @@
 {
   "sections": {
     "cart-items": {
-      "type": "main-cart-items",
+      "type": "sk-main-cart-items",
       "settings": {
         "padding_top": 36,
         "padding_bottom": 36
       }
     },
     "cart-footer": {
-      "type": "main-cart-footer",
+      "type": "sk-main-cart-footer",
       "blocks": {
         "subtotal": {
           "type": "subtotal",

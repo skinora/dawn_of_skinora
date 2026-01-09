@@ -1,0 +1,144 @@
+/* SK Cart Custom Styles */
+
+/* Totals section - use heading font and brand color */
+.totals__total {
+  font-family: var(--font-heading-family);
+  color: rgb(var(--sk-color-heading-text));
+  text-transform: uppercase;
+  letter-spacing: var(--sk-letter-spacing-button);
+  font-size: var(--sk-font-size-small);
+}
+
+.totals__total-value {
+  font-family: var(--font-heading-family);
+  color: var(--color-brand);
+  font-size: var(--sk-font-size-base);
+  font-weight: 600;
+}
+
+/* Cart note styling */
+.cart__note label {
+  font-family: var(--font-heading-family);
+  color: rgb(var(--sk-color-heading-text));
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: var(--sk-font-size-small);
+}
+
+.cart__note .text-area {
+  font-family: var(--font-body-family);
+  color: rgb(var(--sk-color-body-text));
+  border-color: rgba(var(--sk-color-body-text), 0.2);
+  font-size: var(--sk-font-size-xs);
+}
+
+.cart__note .text-area:focus {
+  border-color: var(--color-brand);
+  outline: none;
+}
+
+/* Tax note styling */
+.tax-note {
+  font-family: var(--font-body-family);
+  color: rgba(var(--sk-color-body-text), 0.7);
+  font-size: var(--sk-font-size-xxs);
+  line-height: var(--sk-line-height-base);
+}
+
+/* Cart page title */
+.cart-items .title--primary {
+  font-family: var(--font-heading-family);
+  color: rgb(var(--sk-color-heading-text));
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Product titles in cart */
+.cart-item__name {
+  font-family: var(--font-heading-family);
+  color: rgb(var(--sk-color-heading-text));
+}
+
+/* Vendor text */
+.cart-item__details .caption-with-letter-spacing {
+  font-family: var(--font-body-family);
+  color: rgba(var(--sk-color-body-text), 0.6);
+}
+
+/* Table headers */
+.cart-items thead .caption-with-letter-spacing {
+  font-family: var(--font-heading-family);
+  color: rgb(var(--sk-color-heading-text));
+}
+
+/* Discount labels */
+.discounts__discount {
+  font-family: var(--font-body-family);
+  color: var(--color-brand);
+  font-size: var(--sk-font-size-xxs);
+}
+
+/* Empty cart message */
+.cart__empty-text {
+  font-family: var(--font-heading-family);
+  color: rgb(var(--sk-color-heading-text));
+}
+
+/* Login title in cart */
+.cart__login-title {
+  font-family: var(--font-heading-family);
+  color: rgb(var(--sk-color-heading-text));
+}
+
+.cart__login-paragraph {
+  font-family: var(--font-body-family);
+  color: rgb(var(--sk-color-body-text));
+  font-size: var(--sk-font-size-small);
+}
+
+/* Product options and properties */
+.product-option {
+  font-family: var(--font-body-family);
+  color: rgba(var(--sk-color-body-text), 0.8);
+  font-size: var(--sk-font-size-xs);
+}
+
+/* Price styling */
+.cart-item__old-price,
+.cart-item__final-price {
+  font-family: var(--font-body-family);
+  color: rgb(var(--sk-color-body-text));
+}
+
+.cart-item__final-price {
+  color: var(--color-brand);
+  font-weight: 600;
+}
+
+/* Quantity rules info */
+.quantity__rules {
+  font-family: var(--font-body-family);
+  color: rgba(var(--sk-color-body-text), 0.7);
+  font-size: var(--sk-font-size-xxs);
+}
+
+/* Volume pricing label */
+.volume-pricing-label {
+  font-family: var(--font-heading-family);
+  color: rgb(var(--sk-color-heading-text));
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Cart CTAs container */
+.cart__ctas {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .cart__ctas {
+    justify-content: flex-end;
+  }
+}
