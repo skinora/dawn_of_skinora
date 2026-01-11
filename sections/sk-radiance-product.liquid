@@ -1111,7 +1111,7 @@
   }
 
   .payment-icons__item svg {
-    height: 2rem;
+    height: 2.67rem;
   }
 </style>
 
@@ -1425,12 +1425,15 @@
             <!-- Buy buttons wrapper (we toggle this) -->
             <div data-sk-buy-wrapper>
               {% if shop.enabled_payment_types.size > 0 %}
+                {%- assign excluded_payment_types = 'american_express,unionpay' | split: ',' -%}
                 <div class="payment-icons">
                   <ul class="payment-icons__list">
                     {% for type in shop.enabled_payment_types %}
-                      <li class="payment-icons__item">
-                        {{ type | payment_type_svg_tag }}
-                      </li>
+                      {%- unless excluded_payment_types contains type -%}
+                        <li class="payment-icons__item">
+                          {{ type | payment_type_svg_tag }}
+                        </li>
+                      {%- endunless -%}
                     {% endfor %}
                   </ul>
                 </div>
