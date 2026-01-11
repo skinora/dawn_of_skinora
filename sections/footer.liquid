@@ -186,28 +186,18 @@
                 <span class="">{{ 'sections.footer.payment' | t }}</span>
               </div>
 
-              <ul class="list list-payment" role="list">
-                {% comment %}
-                  {%- for type in shop.enabled_payment_types -%}
-                    <li class="list-payment__item">
-                      {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-                    </li>
-                  {%- endfor -%}
-                {% endcomment %}
-
-                <li class="list-payment__item">
-                  {{ 'p1.svg' | inline_asset_content }}
-                </li>
-                <li class="list-payment__item">
-                  {{ 'p2.svg' | inline_asset_content }}
-                </li>
-                <li class="list-payment__item">
-                  {{ 'p3.svg' | inline_asset_content }}
-                </li>
-                <li class="list-payment__item">
-                  {{ 'p4.svg' | inline_asset_content }}
-                </li>
-              </ul>
+              {% if shop.enabled_payment_types.size > 0 %}
+                {%- assign excluded_payment_types = 'american_express,unionpay' | split: ',' -%}
+                <ul class="list list-payment" role="list">
+                  {% for type in shop.enabled_payment_types %}
+                    {%- unless excluded_payment_types contains type -%}
+                      <li class="list-payment__item">
+                        {{ type | payment_type_svg_tag }}
+                      </li>
+                    {%- endunless -%}
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
           {%- endif -%}
 
