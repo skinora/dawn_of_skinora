@@ -17,7 +17,7 @@
         "sk_banner_title": "Profesjonell LED-terapi hjemme – utviklet for synlige hudforbedringer",
         "sk_banner_description": "Skinora kombinerer klinisk inspirert LED-teknologi med brukervennlig design, for deg som ønsker synlige resultater uten klinikk",
         "sk_banner_button_link": "shopify://collections/all-products",
-        "sk_banner_button_text": "se hvilken maske passer din hud"
+        "sk_banner_button_text": "STYRK HUDEN – NATURLIG"
       }
     },
     "sk_promotion_logos_giWdMT": {
@@ -338,20 +338,6 @@
         "button_link": "shopify://collections/all-products"
       }
     },
-    "sk_product_technology_Vm78GM": {
-      "type": "sk-product-technology",
-      "name": "SK Technology (Generic)",
-      "settings": {
-        "eyebrow": "RESULTATER",
-        "heading": "TEKNOLOGIEN BAK SKINORA®",
-        "subheading": "Fire klare forbedringer du merker gradvis.",
-        "bullet_intro_text": "<p>Del en kort introduksjon her.</p>",
-        "rich_bullet_content": "<ul><li>Jevnere hudtone</li><li>Fastere hud</li><li>Mer glød</li><li>Mindre sliten hud</li></ul>",
-        "note_text": "Resultater bygges gradvis og påvirkes av hudtype og kontinuitet.",
-        "result_image": "shopify://shop_images/kundebildet2.webp",
-        "result_image_alt": "Rolig portrett"
-      }
-    },
     "sk_faq_accordion_GcMDDq": {
       "type": "sk-faq-accordion",
       "blocks": {
@@ -432,7 +418,6 @@
     "sk_led_technology_kjwDjX",
     "sk_features_pHkfMf",
     "sk_radiance_meq7Gb",
-    "sk_product_technology_Vm78GM",
     "sk_faq_accordion_GcMDDq"
   ]
 }
