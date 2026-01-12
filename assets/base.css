@@ -623,6 +623,12 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   letter-spacing: var(--sk-section-title-spacing);
 }
 
+@media (max-width: 767px) {
+  .sk-section-header__title {
+    font-size: 2.5rem;
+  }
+}
+
 .sk-section-header--center .sk-section-header__title,
 .sk-section-header--right .sk-section-header__title {
   text-align: inherit;

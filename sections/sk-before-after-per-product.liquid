@@ -5,7 +5,7 @@
 
 <style>
   .sk-before-after {
-    padding: 5rem 0;
+    padding: 0 0 5rem;
     background-color: var(--color-white);
     position: relative;
     overflow: visible;
@@ -43,54 +43,78 @@
   /* pills */
   .sk-ba-pill {
     position: absolute;
-    top: 12px;
-    padding: 6px 14px;
-    font-size: 13px;
+    top: 1.2rem;
+    padding: 0.6rem 1.4rem;
+    font-size: clamp(1.2rem, 1.5vw, 1.3rem);
     background: rgba(245, 245, 245, 0.95);
     border-radius: 0;
     font-weight: 500;
-    color: #333;
+    color: var(--color-neutral-3);
     z-index: 3;
   }
 
   .sk-ba-pill--before {
-    left: 12px;
+    left: 1.2rem;
   }
   .sk-ba-pill--after {
-    right: 12px;
+    right: 1.2rem;
   }
 
   /* === CONTENT === */
 
   .sk-testimonial-card__content {
-    padding: 18px 20px 22px;
+    padding: clamp(1.6rem, 2vw, 1.8rem) clamp(1.8rem, 2.5vw, 2rem) clamp(1rem, 1.25vw, 1.1rem);
     text-align: left;
   }
 
   .sk-testimonial-card__title {
-    font-size: 18px;
+    font-size: clamp(1.6rem, 2vw, 1.8rem);
     font-weight: 600;
-    margin-bottom: 6px;
-    color: #000;
+    margin-bottom: 0.6rem;
+    color: var(--color-black);
   }
 
   .sk-testimonial-card__meta {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 12px;
+    font-size: clamp(1.3rem, 1.8vw, 1.4rem);
+    color: var(--color-neutral-2);
+    margin-bottom: 1.2rem;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 0.6rem;
   }
 
   .sk-testimonial-card__text {
-    font-size: 15px;
+    font-size: clamp(1.4rem, 1.8vw, 1.5rem);
     line-height: 1.5;
-    color: #333;
+    color: var(--color-neutral-3);
   }
 
   .sk-before-after .sk-radiance-product__media-progress {
-    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
+
+  .sk-before-after .sk-radiance-product__media-progress-squares {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .sk-before-after .sk-radiance-product__media-progress-square {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-border);
+    transition: background 0.2s ease, transform 0.2s ease;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .sk-before-after .sk-radiance-product__media-progress-square--active {
+    background: var(--color-brand);
+    transform: scale(1.25);
   }
 
   .sk-before-after-viewport {
