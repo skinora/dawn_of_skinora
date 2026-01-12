@@ -93,6 +93,12 @@
     margin-top: 1rem;
   }
 
+  .sk-before-after-viewport {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
   @media (max-width: 899px) {
     .sk-before-after .sk-before-after-prev,
     .sk-before-after .sk-before-after-next {
@@ -113,28 +119,40 @@
   }
 
   @media (min-width: 900px) {
+    .sk-before-after-viewport {
+      overflow: visible;
+    }
+
+    .sk-before-after .sk-before-after-swiper {
+      overflow: hidden !important;
+    }
+
     .sk-before-after .sk-radiance-product__media-progress {
-      .sk-before-after .sk-before-after-prev::after,
-      .sk-before-after .sk-before-after-next::after {
-        content: '';
-        position: absolute;
-        width: 12px;
-        height: 12px;
-        border-top: 2px solid var(--color-dark);
-        border-right: 2px solid var(--color-dark);
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        transition: border-color 0.25s ease;
-      }
-      .sk-before-after .sk-before-after-prev::after {
-        transform: translate(-50%, -50%) rotate(-135deg);
-      }
-      .sk-before-after .sk-before-after-next::after {
-        transform: translate(-50%, -50%) rotate(45deg);
-      }
       display: none !important;
     }
+
+    .sk-before-after .sk-before-after-prev::after,
+    .sk-before-after .sk-before-after-next::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-top: 2px solid var(--color-dark);
+      border-right: 2px solid var(--color-dark);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: border-color 0.25s ease;
+    }
+
+    .sk-before-after .sk-before-after-prev::after {
+      transform: translate(-50%, -50%) rotate(-135deg);
+    }
+
+    .sk-before-after .sk-before-after-next::after {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
     .sk-before-after .sk-before-after-prev,
     .sk-before-after .sk-before-after-next {
       position: absolute;
@@ -145,26 +163,29 @@
       border-radius: 999px;
       border: 1px solid rgba(48, 39, 62, 0.16);
       background: var(--color-white);
+      display: flex;
       justify-content: center;
       align-items: center;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
       color: var(--color-dark);
-      z-index: 4;
+      z-index: 10;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease;
     }
+
     .sk-before-after .sk-before-after-prev.sk-arrow-visible,
     .sk-before-after .sk-before-after-next.sk-arrow-visible {
       opacity: 1;
       pointer-events: auto;
-      display: flex !important;
     }
+
     .sk-before-after .sk-before-after-prev {
-      left: -40px;
+      left: clamp(12px, 2vw, 24px);
     }
+
     .sk-before-after .sk-before-after-next {
-      right: -20px;
+      right: clamp(12px, 2vw, 24px);
     }
   }
 
@@ -196,47 +217,49 @@
       </div>
     {% endif %}
 
-    <div class="swiper sk-before-after-swiper">
-      <div class="swiper-wrapper">
-        {% for block in section.blocks %}
-          <div class="swiper-slide" {{ block.shopify_attributes }}>
-            <div class="sk-testimonial-card">
-              <div class="sk-testimonial-card__images">
-                <img
-                  src="{{ block.settings.before_image | image_url: width: 800 }}"
-                  alt="{{ block.settings.before_image.alt | escape }}"
-                  width="{{ block.settings.before_image.width | default: 800 }}"
-                  height="{{ block.settings.before_image.height | default: 360 }}"
-                  loading="lazy"
-                >
+    <div class="sk-before-after-viewport">
+      <div class="swiper sk-before-after-swiper">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="swiper-slide" {{ block.shopify_attributes }}>
+              <div class="sk-testimonial-card">
+                <div class="sk-testimonial-card__images">
+                  <img
+                    src="{{ block.settings.before_image | image_url: width: 800 }}"
+                    alt="{{ block.settings.before_image.alt | escape }}"
+                    width="{{ block.settings.before_image.width | default: 800 }}"
+                    height="{{ block.settings.before_image.height | default: 360 }}"
+                    loading="lazy"
+                  >
 
-                <span class="sk-ba-pill sk-ba-pill--before">FØR</span>
-                <span class="sk-ba-pill sk-ba-pill--after">...OG ETTER</span>
-              </div>
+                  <span class="sk-ba-pill sk-ba-pill--before">FØR</span>
+                  <span class="sk-ba-pill sk-ba-pill--after">...OG ETTER</span>
+                </div>
 
-              <div class="sk-testimonial-card__content">
-                {% if block.settings.testimonial_title != blank %}
-                  <h3 class="sk-testimonial-card__title">
-                    {{ block.settings.testimonial_title }}
-                  </h3>
-                {% endif %}
+                <div class="sk-testimonial-card__content">
+                  {% if block.settings.testimonial_title != blank %}
+                    <h3 class="sk-testimonial-card__title">
+                      {{ block.settings.testimonial_title }}
+                    </h3>
+                  {% endif %}
 
-                {% if block.settings.author_name != blank %}
-                  <div class="sk-testimonial-card__meta">
-                    {{ block.settings.author_name }}
-                    {% if block.settings.show_verified %}
-                      <span>✔</span>
-                    {% endif %}
-                  </div>
-                {% endif %}
+                  {% if block.settings.author_name != blank %}
+                    <div class="sk-testimonial-card__meta">
+                      {{ block.settings.author_name }}
+                      {% if block.settings.show_verified %}
+                        <span>✔</span>
+                      {% endif %}
+                    </div>
+                  {% endif %}
 
-                {% if block.settings.testimonial_text != blank %}
-                  <p class="sk-testimonial-card__text">“{{ block.settings.testimonial_text }}”</p>
-                {% endif %}
+                  {% if block.settings.testimonial_text != blank %}
+                    <p class="sk-testimonial-card__text">“{{ block.settings.testimonial_text }}”</p>
+                  {% endif %}
+                </div>
               </div>
             </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
+        </div>
       </div>
       <div class="swiper-button-prev sk-before-after-prev"></div>
       <div class="swiper-button-next sk-before-after-next"></div>
@@ -324,12 +347,14 @@
     };
 
     swiperInstance.on('init', updateDesktopArrows);
+    swiperInstance.on('slideChange', updateDesktopArrows);
     swiperInstance.on('slideChangeTransitionEnd', updateDesktopArrows);
     swiperInstance.on('breakpoint', updateDesktopArrows);
+    swiperInstance.on('slideChangeTransitionStart', updateDesktopArrows);
+    swiperInstance.on('sliderMove', updateDesktopArrows);
 
     swiperInstance.on('slideChange', () => {
       updateProgress(swiperInstance.activeIndex);
-      updateDesktopArrows();
     });
 
     updateProgress(swiperInstance.activeIndex);
