@@ -4567,12 +4567,57 @@ a {
 
 .okeReviews[data-oke-container] .oke-is-large .oke-w-reviews-list-item,
 div.okeReviews .oke-is-large .oke-w-reviews-list-item {
-  background: var(--color-bg-light) !important;
-  margin-bottom: 18px !important;
+  background: transparent !important;
+  border-bottom: 1px solid var(--mine-shaft-200) !important;
+  padding-bottom: 28px !important;
+  margin-bottom: 28px !important;
+}
+
+.okeReviews[data-oke-container] .oke-is-large .oke-w-reviews-list-item:last-child,
+div.okeReviews .oke-is-large .oke-w-reviews-list-item:last-child {
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
 }
 
 .oke-w-reviews-list .oke-w-review-side {
   margin-left: 24px !important;
+}
+
+/* Review text styling */
+.oke-w-reviews-main .oke-w-review-content .oke-reviewContent-title,
+.oke-w-reviews-main .oke-w-review-content .oke-reviewContent .oke-reviewContent-title {
+  font-family: var(--font-heading-family) !important;
+  font-size: clamp(1.6rem, 1.8vw, 1.8rem) !important;
+  line-height: 1.6 !important;
+  color: var(--color-brand) !important;
+  font-weight: 500 !important;
+  margin-bottom: 1rem !important;
+}
+
+.oke-w-reviews-main .oke-w-review-content .oke-reviewContent-body,
+.oke-w-reviews-main .oke-w-review-content .oke-reviewContent .oke-reviewContent-body,
+.oke-w-reviews-main .oke-w-reviewReply-body {
+  font-family: var(--font-body-family) !important;
+  font-size: clamp(1.6rem, 1.8vw, 1.8rem) !important;
+  line-height: 1.6 !important;
+  color: rgba(var(--sk-color-body-text), 1) !important;
+}
+
+.oke-w-reviews-main .oke-w-review-header .oke-w-reviewer-name,
+.oke-w-reviews-main .oke-w-reviewer-name {
+  font-family: var(--font-body-family) !important;
+  font-size: clamp(1.6rem, 1.8vw, 1.8rem) !important;
+  line-height: 1.6 !important;
+  font-weight: 500 !important;
+  color: var(--mine-shaft-900) !important;
+}
+
+.oke-w-reviews-main .oke-w-review-date,
+.oke-w-reviews-main .oke-w-verified-buyer {
+  font-family: var(--font-body-family) !important;
+  font-size: clamp(1.6rem, 1.8vw, 1.8rem) !important;
+  line-height: 1.6 !important;
+  color: var(--mine-shaft-500) !important;
 }
 
 .sk-radiance-product-description__content .metafield-rich_text_field h5 strong {
