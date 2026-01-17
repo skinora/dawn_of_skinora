@@ -1431,15 +1431,6 @@
             {% render 'sk-radiance-price', product: product, section: section, show_badges: false %}
           </div>
 
-          <!-- IMPORTANT: keep "id" in sync for the shared CTA -->
-          <input
-            type="hidden"
-            name="id"
-            value="{{ product.selected_or_first_available_variant.id }}"
-            form="{{ product_form_id }}"
-            data-sk-selected-variant-id
-          >
-
           <!-- PURCHASE -->
           <div class="sk-purchase">
             <!-- Buy buttons wrapper (we toggle this) -->
@@ -1464,7 +1455,11 @@
                   </ul>
                 </div>
               {% endif %}
-              {% render 'sk-radiance-buy-buttons', product: product, product_form_id: product_form_id %}
+              {% render 'sk-radiance-buy-buttons',
+                product: product,
+                product_form_id: product_form_id,
+                section_id: section.id
+              %}
             </div>
 
             <div class="sk-trust-inline">
@@ -1597,7 +1592,6 @@
       const baseHandle = root.dataset.baseHandle;
       const bundleHandleFromMeta = root.dataset.bundleHandle;
       const moneyFormat = root.dataset.moneyFormat || '{{ shop.money_format | escape }}';
-      const productFormId = root.dataset.productFormId;
       const baseTitle = {{ product.title | json }};
       const bundleTitleFallback = {{ bundle_title | default: product.title | json }};
 
@@ -1624,23 +1618,65 @@
       const notifyBtn = root.querySelector('[data-sk-notify-button]');
 
       const cardPriceBundle = root.querySelector('[data-sk-card-price="bundle"]');
-      const productForm = document.getElementById(productFormId);
-      const variantFieldSelector = [
-        productFormId ? `form#${productFormId} [name="id"]` : null,
-        productFormId ? `[name="id"][form="${productFormId}"]` : null,
-        `[name="id"][form^="product-form-"]`,
-        productFormId ? `form#${productFormId} .product-variant-id` : null,
-        `.product-variant-id`,
-      ]
-        .filter(Boolean)
-        .join(',');
-      const isDebugMode = new URLSearchParams(window.location.search).get('skdebug') === '1';
-      const debugLog = (message, payload) => {
-        if (!isDebugMode) return;
-        console.debug('[sk-radiance-product]', message, payload);
+      const isSkDebugMode = (() => {
+        try {
+          const href = String(window.location.href || '');
+          const search = String(window.location.search || '');
+          return href.includes('skdebug=1') || search.includes('skdebug=1');
+        } catch (e) {
+          return false;
+        }
+      })();
+
+      const productForm =
+        root.querySelector('form[action^="/cart/add"]') ||
+        root.querySelector('form[action*="/cart/add"]') ||
+        document.querySelector('form[action^="/cart/add"]') ||
+        document.querySelector('form[action*="/cart/add"]');
+
+      const mainProductSection = document.getElementById('MainProduct-{{ section.id }}');
+
+      const applyVariantToInput = (input, variantId) => {
+        if (!input || !variantId) return;
+        const nextValue = String(variantId);
+        input.value = nextValue;
+        input.setAttribute('value', nextValue);
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      };
+
+      const getVariantInputs = () => {
+        const inputs = [];
+
+        if (productForm) {
+          inputs.push(...productForm.querySelectorAll('input[name="id"]'));
+          inputs.push(...productForm.querySelectorAll('.product-variant-id'));
+        }
+
+        inputs.push(...root.querySelectorAll('input[name="id"]'));
+        inputs.push(...root.querySelectorAll('.product-variant-id'));
+
+        return Array.from(new Set(inputs));
       };
       window.__SK_ACTIVE_VARIANT_ID = window.__SK_ACTIVE_VARIANT_ID || baseVariant.id;
       window.__SK_ACTIVE_OFFER = window.__SK_ACTIVE_OFFER || 'single';
+
+      const clearProductFormErrors = () => {
+        document.querySelectorAll('.product-form__error-message-wrapper').forEach((wrap) => {
+          wrap.hidden = true;
+          wrap.style.display = 'none';
+          const msg = wrap.querySelector('.product-form__error-message');
+          if (msg) msg.textContent = '';
+        });
+
+        document
+          .querySelectorAll('[data-product-form-error], .form__message, .product-form__error')
+          .forEach((el) => {
+            el.hidden = true;
+            el.style.display = 'none';
+            if (el.tagName === 'P' || el.tagName === 'DIV') el.textContent = '';
+          });
+      };
 
       const setActiveVariantId = (variantId, offer = 'single') => {
         if (!variantId) return [];
@@ -1648,32 +1684,109 @@
         window.__SK_ACTIVE_VARIANT_ID = variantId;
         window.__SK_ACTIVE_OFFER = offer;
 
-        if (hiddenVariantInput) {
-          hiddenVariantInput.value = variantId;
+        applyVariantToInput(hiddenVariantInput, variantId);
+
+        const inputs = getVariantInputs();
+
+        inputs.forEach((input) => applyVariantToInput(input, variantId));
+
+        // Force-update any other common id inputs (dynamic checkout / buy-now patterns)
+        root.querySelectorAll('input[name="id"], input[name="items[0][id]"]').forEach((el) => {
+          applyVariantToInput(el, variantId);
+        });
+
+        if (mainProductSection) {
+          mainProductSection
+            .querySelectorAll(
+              'form[action^="/cart/add"], form[action*="/cart/add"], form[action^="/cart"], form[action*="/cart"]'
+            )
+            .forEach((form) => {
+              form.querySelectorAll('input[name="id"], .product-variant-id, [data-sk-selected-variant-id]').forEach((el) => {
+                applyVariantToInput(el, variantId);
+              });
+            });
         }
 
-        const inputs = variantFieldSelector
-          ? Array.from(document.querySelectorAll(variantFieldSelector))
-          : [];
+        if (isSkDebugMode) {
+          try {
+            const idInputs = getVariantInputs().filter((el) => el && el.name === 'id');
+            // eslint-disable-next-line no-console
+            console.log('[skdebug] setActiveVariantId', {
+              variantId,
+              offer,
+              productFormFound: !!productForm,
+              productFormIdAttr: productForm ? productForm.getAttribute('id') : null,
+              idInputCount: idInputs.length
+            });
+          } catch (e) {}
+        }
 
-        inputs.forEach((input) => {
-          input.value = variantId;
-          input.dispatchEvent(new Event('change', { bubbles: true }));
-        });
-
-        debugLog('setActiveVariantId', {
-          variantId,
-          offer,
-          inputsUpdated: inputs.length,
-        });
+        clearProductFormErrors();
 
         return inputs;
       };
 
+      // =========================
+      // CAPTURE-PHASE SUBMIT GUARD (proof + last-millisecond fix)
+      // - Logs what is actually submitted (skdebug=1)
+      // - Forces the active variant id into the submitting form before any other submit handlers
+      // =========================
+      (function installCaptureSubmitGuard() {
+        try {
+          if (window.__SK_RADIANCE_CAPTURE_SUBMIT_GUARD_INSTALLED) return;
+          window.__SK_RADIANCE_CAPTURE_SUBMIT_GUARD_INSTALLED = true;
+
+          document.addEventListener(
+            'submit',
+            (event) => {
+              const form = event && event.target;
+              if (!form || form.tagName !== 'FORM') return;
+
+              const action = (form.getAttribute('action') || '').toLowerCase();
+              const isCartAdd = action.includes('/cart/add');
+              if (!isCartAdd) return;
+
+              // Only guard submits originating from this section to avoid side-effects.
+              const inScope =
+                (mainProductSection && mainProductSection.contains(form)) || (root && root.contains(form));
+              if (!inScope) return;
+
+              const activeVariantId = window.__SK_ACTIVE_VARIANT_ID || baseVariant.id;
+              const activeOffer = window.__SK_ACTIVE_OFFER || 'single';
+
+              // Re-sync everything (defensive), then force the actual submitting form's input.
+              setActiveVariantId(activeVariantId, activeOffer);
+
+              const idInput =
+                form.querySelector('input[name="id"][data-sk-selected-variant-id]') ||
+                form.querySelector('input[name="id"]') ||
+                form.querySelector('[name="id"]');
+              applyVariantToInput(idInput, activeVariantId);
+
+              if (isSkDebugMode) {
+                try {
+                  const submittedId = new FormData(form).get('id');
+                  // eslint-disable-next-line no-console
+                  console.log('[skdebug] capture-submit', {
+                    formId: form.id || null,
+                    hasIdInput: !!idInput,
+                    formIdInputValue: idInput ? idInput.value : null,
+                    formDataId: submittedId,
+                    activeVariantId,
+                    activeOffer
+                  });
+                } catch (e) {}
+              }
+            },
+            true
+          );
+        } catch (e) {}
+      })();
+
       const normalizeMoneyString = (value) =>
         typeof value === 'string' ? value.trim() : value;
 
-      const defaultMoneyFormat = moneyFormat || '{{ amount }}';
+      const defaultMoneyFormat = moneyFormat || '{% raw %}{{ amount }}{% endraw %}';
 
       const formatWithDelimiters = (amountInCents, precision = 2, thousands = ',', decimal = '.') => {
         if (amountInCents == null || isNaN(amountInCents)) return '0';
@@ -1763,24 +1876,38 @@
       };
 
       const setAvailabilityUI = (available) => {
-        console.log('🎯 setAvailabilityUI called:', {
-          available,
-          buyWrapper,
-          notifyWrapper,
-          buyWrapperExists: !!buyWrapper,
-          notifyWrapperExists: !!notifyWrapper
-        });
-        // Toggle buy vs notify
         if (buyWrapper) buyWrapper.style.display = available ? '' : 'none';
         if (notifyWrapper) notifyWrapper.style.display = available ? 'none' : 'block';
-        
-        // Check button state after
-        const submitButton = buyWrapper?.querySelector('[type="submit"]');
-        console.log('🔘 Button state:', {
-          button: submitButton,
-          disabled: submitButton?.disabled,
-          ariaDisabled: submitButton?.getAttribute('aria-disabled'),
-          buttonText: submitButton?.querySelector('.sk-radiance-buy-buttons__button-text')?.textContent
+      };
+
+      const setSubmitAvailabilityUI = (available) => {
+        const scope = mainProductSection || root;
+        if (!scope) return;
+
+        const forms = Array.from(
+          scope.querySelectorAll('form[action^="/cart/add"], form[action*="/cart/add"]')
+        );
+        if (!forms.length && productForm) forms.push(productForm);
+
+        forms.forEach((form) => {
+          const productFormEl = form.closest('product-form') || form;
+          const submitBtn = productFormEl.querySelector('button[type="submit"], input[type="submit"]');
+          if (!submitBtn) return;
+
+          if (available) {
+            submitBtn.removeAttribute('disabled');
+            submitBtn.removeAttribute('aria-disabled');
+          } else {
+            submitBtn.setAttribute('disabled', 'disabled');
+            submitBtn.setAttribute('aria-disabled', 'true');
+          }
+
+          const soldOutMessage = submitBtn.querySelector('.sold-out-message');
+          const submitText = submitBtn.querySelector('span');
+          if (soldOutMessage && submitText) {
+            soldOutMessage.classList.toggle('hidden', !!available);
+            submitText.classList.toggle('hidden', !available);
+          }
         });
       };
 
@@ -1848,13 +1975,6 @@
         try {
           const bundleJson = await fetchProductJson(bundleHandle);
           const bundleVariant = pickDefaultVariant(bundleJson);
-          console.log('🎁 Bundle Debug:', {
-            bundleHandle,
-            bundleJson,
-            bundleVariant,
-            available: bundleVariant?.available,
-            id: bundleVariant?.id
-          });
           if (!bundleVariant) return null;
 
           setBundleCardPrice(bundleVariant);
@@ -1862,7 +1982,6 @@
 
           return { product: bundleJson, variant: bundleVariant };
         } catch (e) {
-          console.error('❌ Bundle hydration error:', e);
           if (bundleCard) bundleCard.style.display = 'none';
           return null;
         }
@@ -1885,22 +2004,12 @@
 
         if (!activeVariant) return;
 
-        console.log('🔄 Applying offer:', {
-          offerType,
-          activeVariant,
-          activeProductId,
-          available: activeVariant.available,
-          buyWrapper: buyWrapper,
-          buyWrapperDisplay: buyWrapper?.style.display
-        });
-
         setActiveVariantId(activeVariant.id, offerType);
         setNotifyVariant(activeVariant.id);
         
         // Update product-id input if it exists
         const productIdInputs = document.querySelectorAll('input[name="product-id"]');
         if (productIdInputs.length && activeProductId) {
-          console.log('📝 Updating product-id inputs:', activeProductId);
           productIdInputs.forEach(input => {
             input.value = activeProductId;
           });
@@ -1908,11 +2017,7 @@
         
         replaceSharedPrice(activeVariant);
         setAvailabilityUI(!!activeVariant.available);
-
-        console.log('✅ After setAvailabilityUI:', {
-          buyWrapperDisplay: buyWrapper?.style.display,
-          notifyWrapperDisplay: notifyWrapper?.style.display
-        });
+        setSubmitAvailabilityUI(!!activeVariant.available);
 
         setCardUnavailable(singleCard, offerType === 'single' && !activeVariant.available, activeVariant.id);
         setCardUnavailable(bundleCardWrap, offerType === 'bundle' && !activeVariant.available, activeVariant.id);
@@ -1980,16 +2085,6 @@
         observer.observe(productForm, { childList: true, subtree: true });
       }
 
-      window.SKDebug = () => ({
-        activeVariantId: window.__SK_ACTIVE_VARIANT_ID,
-        activeOffer: window.__SK_ACTIVE_OFFER,
-        inputs: [...document.querySelectorAll('input[name="id"]')].map((input) => ({
-          value: input.value,
-          form: input.getAttribute('form'),
-          inForm: !!input.closest('form'),
-        })),
-      });
-
       // 1) Hydrate bundle card + store data
       const bundleData = await hydrateBundleCard();
 
@@ -2015,6 +2110,7 @@
       });
 
       // 3) Ensure initial offer is applied AND sticky bar is hydrated
+      clearProductFormErrors();
       await applyOffer('single', bundleData);
     });
   </script>

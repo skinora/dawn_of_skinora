@@ -6,11 +6,13 @@ if (!customElements.get('product-form')) {
         super();
 
         this.form = this.querySelector('form');
-        this.variantIdInput.disabled = false;
+        if (!this.form) return;
+
+        if (this.variantIdInput) this.variantIdInput.disabled = false;
         this.form.addEventListener('submit', this.onSubmitHandler.bind(this));
         this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
         this.submitButton = this.querySelector('[type="submit"]');
-        this.submitButtonText = this.submitButton.querySelector('span');
+        this.submitButtonText = this.submitButton ? this.submitButton.querySelector('span') : null;
 
         if (document.querySelector('cart-drawer')) this.submitButton.setAttribute('aria-haspopup', 'dialog');
 
@@ -19,24 +21,46 @@ if (!customElements.get('product-form')) {
 
       onSubmitHandler(evt) {
         evt.preventDefault();
+        if (!this.form || !this.submitButton) return;
         if (this.submitButton.getAttribute('aria-disabled') === 'true') return;
 
         this.handleErrorMessage();
 
         this.submitButton.setAttribute('aria-disabled', true);
         this.submitButton.classList.add('loading');
-        this.querySelector('.loading__spinner').classList.remove('hidden');
+        this.querySelector('.loading__spinner')?.classList.remove('hidden');
 
         const config = fetchConfig('javascript');
         config.headers['X-Requested-With'] = 'XMLHttpRequest';
         delete config.headers['Content-Type'];
 
         const formData = new FormData(this.form);
-        console.log('📦 Form submission:', {
-          variantId: formData.get('id'),
-          formId: this.form.id,
-          formData: Object.fromEntries(formData.entries()),
-        });
+        if (this.variantIdInput && this.variantIdInput.value) {
+          // Ensure we only ever submit a single variant id, even if the form contains
+          // multiple [name="id"] inputs (which can lead to incorrect /cart/add behavior).
+          formData.set('id', this.variantIdInput.value);
+        }
+
+        const isSkDebugMode = (() => {
+          try {
+            const href = String(window.location.href || '');
+            const search = String(window.location.search || '');
+            return href.includes('skdebug=1') || search.includes('skdebug=1');
+          } catch (e) {
+            return false;
+          }
+        })();
+
+        if (isSkDebugMode) {
+          try {
+            // eslint-disable-next-line no-console
+            console.log('[skdebug] product-form submit', {
+              formId: this.form.id || null,
+              formDataId: formData.get('id'),
+              activeVariantId: window.__SK_ACTIVE_VARIANT_ID || null,
+            });
+          } catch (e) {}
+        }
         // Re-check for cart drawer element in case it loaded after constructor
         this.cart = this.cart || document.querySelector('cart-notification') || document.querySelector('cart-drawer');
         if (this.cart) {
@@ -52,16 +76,23 @@ if (!customElements.get('product-form')) {
         fetch(`${routes.cart_add_url}`, config)
           .then((response) => response.json())
           .then((response) => {
-            console.log('📥 Cart response:', response);
             if (response.status) {
-              console.error('❌ Cart error:', response);
+              if (isSkDebugMode) {
+                try {
+                  // eslint-disable-next-line no-console
+                  console.log('[skdebug] /cart/add error json', response);
+                } catch (e) {}
+              }
+
               publish(PUB_SUB_EVENTS.cartError, {
                 source: 'product-form',
                 productVariantId: formData.get('id'),
                 errors: response.errors || response.description,
                 message: response.message,
               });
-              this.handleErrorMessage(response.description);
+              this.handleErrorMessage(
+                response.description || response.message || response.errors || 'Kunne ikke legge i handlekurv.'
+              );
 
               const soldOutMessage = this.submitButton.querySelector('.sold-out-message');
               if (!soldOutMessage) return;
@@ -112,7 +143,7 @@ if (!customElements.get('product-form')) {
             this.submitButton.classList.remove('loading');
             if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
             if (!this.error) this.submitButton.removeAttribute('aria-disabled');
-            this.querySelector('.loading__spinner').classList.add('hidden');
+            this.querySelector('.loading__spinner')?.classList.add('hidden');
 
             CartPerformance.measureFromEvent('add:user-action', evt);
           });
@@ -136,15 +167,19 @@ if (!customElements.get('product-form')) {
       toggleSubmitButton(disable = true, text) {
         if (disable) {
           this.submitButton.setAttribute('disabled', 'disabled');
-          if (text) this.submitButtonText.textContent = text;
+          if (text && this.submitButtonText) this.submitButtonText.textContent = text;
         } else {
           this.submitButton.removeAttribute('disabled');
-          this.submitButtonText.textContent = window.variantStrings.addToCart;
+          if (this.submitButtonText) this.submitButtonText.textContent = window.variantStrings.addToCart;
         }
       }
 
       get variantIdInput() {
-        return this.form.querySelector('[name=id]');
+        return (
+          this.form.querySelector('[name="id"][data-sk-selected-variant-id]') ||
+          this.form.querySelector('[data-sk-selected-variant-id]') ||
+          this.form.querySelector('[name=id]')
+        );
       }
     }
   );

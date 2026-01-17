@@ -1,5 +1,6 @@
 {%- liquid
-  assign product_form_id = 'product-form-' | append: section_id
+  assign resolved_section_id = section_id | default: section.id
+  assign resolved_product_form_id = product_form_id | default: 'product-form-' | append: resolved_section_id
   assign current_variant = product.selected_or_first_available_variant
 -%}
 
@@ -8,7 +9,7 @@
   {{ block.shopify_attributes }}
 >
   <div class="sk-radiance-buy-buttons__container">
-    <product-form class="sk-radiance-product-form" data-section-id="{{ section_id }}">
+    <product-form class="sk-radiance-product-form" data-section-id="{{ resolved_section_id }}">
       <div class="product-form__error-message-wrapper" role="alert" hidden>
         <span class="svg-wrapper">
           {{- 'icon-error.svg' | inline_asset_content -}}
@@ -18,7 +19,7 @@
 
       {%- form 'product',
         product,
-        id: product_form_id,
+        id: resolved_product_form_id,
         class: 'sk-radiance-product-form__form',
         novalidate: 'novalidate',
         data-type: 'add-to-cart-form'
@@ -28,13 +29,14 @@
           name="id"
           value="{{ current_variant.id }}"
           class="product-variant-id"
-          form="{{ product_form_id }}"
+          form="{{ resolved_product_form_id }}"
+          data-sk-selected-variant-id
         >
 
         <div class="sk-radiance-buy-buttons__wrapper">
           <div class="sk-radiance-buy-buttons__buttons">
             <button
-              id="ProductSubmitButton-{{ section_id }}"
+              id="ProductSubmitButton-{{ resolved_section_id }}"
               type="submit"
               name="add"
               class="sk-btn sk-btn--primary sk-radiance-buy-buttons__button"

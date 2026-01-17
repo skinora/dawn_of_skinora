@@ -299,19 +299,28 @@
     }
 
     function findProductForm(btn) {
-      if (btn && btn.dataset && btn.dataset.productForm) {
-        const form = document.getElementById(btn.dataset.productForm);
-        if (form && form.tagName === 'FORM') return form;
-      }
-
       const mainSection = document.getElementById('MainProduct-' + sectionId);
       if (mainSection) {
-        const sectionForm = mainSection.querySelector('form');
+        const sectionForm = mainSection.querySelector('form[action^="/cart/add"], form[action*="/cart/add"]');
         if (sectionForm) return sectionForm;
+
+        const anyForm = mainSection.querySelector('form');
+        if (anyForm) return anyForm;
       }
 
-      const fallback = document.querySelector('form[action*="/cart"], form[action*="/cart/add"]');
+      const fallback = document.querySelector(
+        'form[action^="/cart/add"], form[action*="/cart/add"], form[action^="/cart"], form[action*="/cart"]'
+      );
       return fallback || null;
+    }
+
+    function applyVariantToInput(input, variantId) {
+      if (!input || !variantId) return;
+      const nextValue = String(variantId);
+      input.value = nextValue;
+      input.setAttribute('value', nextValue);
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
     }
 
     function safeSubmitForm(form) {
@@ -348,10 +357,11 @@
       if (!form) return;
 
       if (latestOfferDetail && latestOfferDetail.variantId) {
-        form.querySelectorAll('input[name="id"]').forEach((input) => {
-          input.value = latestOfferDetail.variantId;
-          input.dispatchEvent(new Event('change', { bubbles: true }));
-        });
+        const mainSection = document.getElementById('MainProduct-' + sectionId);
+        const scope = mainSection || form;
+        scope
+          .querySelectorAll('input[name="id"], .product-variant-id, [data-sk-selected-variant-id]')
+          .forEach((input) => applyVariantToInput(input, latestOfferDetail.variantId));
       }
 
       safeSubmitForm(form);
@@ -364,7 +374,7 @@
 
       const variantInput = portal.querySelector('[data-sk-sticky-variant]');
       if (variantInput && detail.variantId) {
-        variantInput.value = detail.variantId;
+        applyVariantToInput(variantInput, detail.variantId);
       }
 
       portal.querySelector('[data-sk-sticky-title]').textContent = detail.title;
@@ -373,6 +383,7 @@
 
       const btn = portal.querySelector('[data-sk-sticky-cta]');
       btn.disabled = !detail.available;
+      btn.setAttribute('aria-disabled', detail.available ? 'false' : 'true');
       btn.textContent = detail.available ? '{{ add_label }}' : '{{ sold_out_label }}';
     }
 
