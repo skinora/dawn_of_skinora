@@ -1110,6 +1110,8 @@
 
   .payment-icons__list {
     display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 0.8rem;
     padding: 0;
     margin: 0;
@@ -1117,8 +1119,19 @@
     vertical-align: middle;
   }
 
-  .payment-icons__item svg {
-    height: 2.67rem;
+  .payment-icons__item {
+    display: flex;
+    align-items: center;
+    line-height: 0;
+  }
+
+  .payment-icons__item svg,
+  .payment-icons__item img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: clamp(2rem, 5vw, 2.67rem);
+    overflow: visible;
   }
 </style>
 
@@ -1445,7 +1458,7 @@
                     {%- comment -%} Vipps - Third-party payment gateway not in Shopify's native list {%- endcomment -%}
                     {% if settings.show_vipps_payment_icon %}
                       <li class="payment-icons__item">
-                        <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="Vipps">
+                        <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="Vipps" height="22" width="">
                       </li>
                     {% endif %}
                   </ul>
@@ -1907,12 +1920,20 @@
         const offerTitle = offerType === 'bundle'
           ? (bundleData && bundleData.product && bundleData.product.title) || bundleTitleFallback || baseTitle
           : baseTitle;
+
+        const priceText = formatMoney(activeVariant.price);
+        const compareText =
+          activeVariant.compare_at_price && activeVariant.compare_at_price > activeVariant.price
+            ? `Verdi ${formatMoney(activeVariant.compare_at_price)}`
+            : '';
         document.dispatchEvent(new CustomEvent('sk:offerchange', {
           detail: {
             offer: offerType,
             variantId: activeVariant.id,
             price: activeVariant.price,
             compare_at_price: activeVariant.compare_at_price,
+            priceText,
+            compareText,
             available: activeVariant.available,
             handle: offerType === 'single' ? baseHandle : bundleHandle,
             title: offerTitle

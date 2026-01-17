@@ -26,6 +26,7 @@
   .sk-dynamic-banner__container {
     display: grid;
     grid-template-columns: minmax(35rem, 40vw) 1fr;
+    column-gap: clamp(2rem, 6vw, 8rem);
     width: 100%;
     align-items: center;
   }
@@ -33,9 +34,11 @@
   /* TEXT BLOCK — SHIFTED RIGHT BY 80px (DYNAMIC) */
   .sk-dynamic-banner__content {
     width: 100%;
-    max-width: 50rem;
+    max-width: 56rem;
     justify-self: start;
-    transform: translateX(clamp(2rem, 80px, 6vw));
+    transform: none;
+    display: grid;
+    gap: clamp(1.6rem, 2.6vw, 3.2rem);
   }
 
   .sk-dynamic-banner__title {
@@ -43,32 +46,25 @@
     color: rgb(var(--sk-color-heading-text));
     font-weight: 500;
     line-height: clamp(1.05, 1.15, 1.2);
-    margin-bottom: clamp(1.2rem, 2.5vw, 1.4rem);
+    margin-bottom: 0;
     letter-spacing: clamp(-0.05rem, -0.35vw, -0.12rem);
     max-width: min(90vw, 60rem);
-  }
-
-  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
-    .sk-dynamic-banner__title {
-      background-image: linear-gradient(
-        135deg,
-        rgba(var(--sk-color-heading-text), 1) 0%,
-        rgba(var(--sk-color-heading-text), 0.9) 45%,
-        rgba(var(--sk-color-heading-text), 0.4)
-      );
-      color: transparent;
-      -webkit-background-clip: text;
-      background-clip: text;
-    }
+    word-break: normal;
+    overflow-wrap: normal;
+    hyphens: manual;
   }
 
   .sk-dynamic-banner__description {
     font-size: clamp(1.4rem, 2.6vw, 1.9rem);
     font-weight: 300;
-    color: rgba(var(--sk-color-body-text), 0.95);
+    color: rgba(var(--color-foreground), 0.85);
+    letter-spacing: 0.1rem;
     line-height: clamp(1.2, 1.4, 1.5);
-    margin-bottom: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 0;
     max-width: clamp(32rem, 60vw, 60rem);
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: manual;
   }
 
   .sk-dynamic-banner__button .sk-btn {
@@ -89,7 +85,6 @@
 
     .sk-dynamic-banner__content {
       max-width: 40rem;
-      transform: translateX(clamp(1rem, 60px, 5vw));
       padding-right: 3rem;
     }
 
@@ -117,25 +112,28 @@
       padding-right: 0;
       max-width: 100%;
       transform: none;
+      gap: clamp(1.4rem, 4.5vw, 2.4rem);
     }
 
     .sk-dynamic-banner__title {
-      font-size: clamp(2rem, 14vw, 3rem);
+      font-size: clamp(1.85rem, 12.5vw, 2.8rem);
       line-height: 1.2;
       max-width: 100%;
+      padding-inline: 0.6rem;
+      text-wrap: balance;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      word-break: normal;
     }
 
     .sk-dynamic-banner__description {
-      font-size: 16px;
+      font-size: clamp(1.1rem, 3.9vw, 1.5rem);
       line-height: 1.4;
       max-width: 100%;
     }
     .sk-dynamic-banner__button .sk-btn {
       width: min(280px, 90vw);
       justify-content: center;
-    }
-    .sk-dynamic-banner__content {
-      padding-bottom: 2rem;
     }
   }
 
@@ -152,7 +150,7 @@
     }
 
     .sk-dynamic-banner__title {
-      font-size: clamp(1.6rem, 12vw, 2.6rem);
+      font-size: clamp(1.4rem, 9.5vw, 2.2rem);
       letter-spacing: -0.02em;
       text-transform: uppercase;
     }
@@ -168,13 +166,28 @@
       font-size: clamp(0.95rem, 2.5vw, 1.1rem);
     }
   }
+
+  /* Very small phones: scale down a touch more to avoid mid-word wraps */
+  @media (max-width: 420px) {
+    .sk-dynamic-banner__title {
+      font-size: clamp(1.25rem, 8.5vw, 1.95rem);
+      letter-spacing: -0.01em;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+
+    .sk-dynamic-banner__description {
+      font-size: clamp(0.98rem, 3.6vw, 1.25rem);
+    }
+  }
 </style>
 
 <section class="sk-dynamic-banner">
   <div class="page-width">
     <div class="sk-dynamic-banner__container">
       <div class="sk-dynamic-banner__content">
-        <h2 class="sk-header__section sk-dynamic-banner__title sk-section-heading sk-section-heading--hxl">
+        <h2 lang="no" class="sk-header__section sk-dynamic-banner__title sk-section-heading sk-section-heading--hxl">
           {{ section.settings.sk_banner_title }}
         </h2>
 

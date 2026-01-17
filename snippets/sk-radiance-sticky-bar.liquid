@@ -23,6 +23,7 @@
     background: linear-gradient(90deg, #c9c6cc, #30273e);
     color: #fff;
     padding: 0.5rem 0;
+    box-sizing: border-box;
 
     display: flex;
     align-items: center;
@@ -33,20 +34,68 @@
     transition: transform 0.28s ease;
   }
 
+  /* Tablet + desktop: make sticky bar ~33% taller */
+  @media (min-width: 750px) {
+    .sk-radiance-sticky-bottom-bar--portal {
+      padding: 0.75rem 0;
+    }
+  }
+
   .sk-radiance-sticky-bottom-bar--portal.visible {
     transform: translateY(0);
   }
 
   .sk-radiance-sticky-bottom-bar {
     width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
+    max-width: none;
+    margin: 0;
     padding: 0 1.25rem;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1.25rem;
+  }
+
+  /* Tablet + desktop: match the taller look from padding: 1.8rem and bring content closer to center */
+  @media (min-width: 750px) {
+    .sk-radiance-sticky-bottom-bar--portal {
+      padding: 1.8rem 18px;
+    }
+
+    .sk-radiance-sticky-bottom-bar {
+      padding: 0;
+    }
+
+    .sk-radiance-sticky-bottom-bar__content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .sk-radiance-sticky-bottom-bar__product-name {
+      font-size: 2.5rem;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .sk-radiance-sticky-bottom-bar__price {
+      font-family: var(--font-body-family, var(--font-heading-family, inherit));
+      font-size: 2.5rem;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .sk-radiance-sticky-bottom-bar__price .sk-price__value,
+    .sk-radiance-sticky-bottom-bar__price .sk-price__current {
+      font: inherit;
+      opacity: 1;
+    }
+
+    .sk-radiance-sticky-bottom-bar__cta {
+      font-size: 2rem;
+      min-height: 4.8rem;
+      padding: 0 48px;
+    }
   }
 
   .sk-radiance-sticky-bottom-bar__content {
@@ -66,8 +115,8 @@
   }
 
   .sk-radiance-sticky-bottom-bar__product-name {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 2.5rem;
+    font-weight: 500;
     color: #fff;
     margin: 0;
     line-height: 1.2;
@@ -78,13 +127,16 @@
 
   .sk-radiance-sticky-bottom-bar__price {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 1.25rem;
     line-height: 1;
   }
 
   .sk-radiance-sticky-bottom-bar__price .sk-price__value {
     font-size: 0.8rem;
     opacity: 0.85;
+    color: #30273e;
   }
 
   .sk-radiance-sticky-bottom-bar__price .sk-price__current {
@@ -93,11 +145,6 @@
   }
 
   .sk-radiance-sticky-bottom-bar__cta {
-    background: #30273e;
-    color: #fff;
-    border: 0;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
     cursor: pointer;
   }
 
@@ -106,6 +153,35 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+
+  /* Tablet + desktop: keep CTA compact (mobile stays full-width via max-width rule below) */
+  @media (min-width: 750px) {
+    /* Ensure desktop/tablet price typography wins over the base small sizes below */
+    .sk-radiance-sticky-bottom-bar__price {
+      font-family: var(--font-body-family, var(--font-heading-family, inherit));
+      font-size: 2.5rem;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .sk-radiance-sticky-bottom-bar__price .sk-price__value,
+    .sk-radiance-sticky-bottom-bar__price .sk-price__current {
+      font-size: inherit;
+      font-weight: inherit;
+      line-height: inherit;
+      opacity: 1;
+    }
+
+    .sk-radiance-sticky-bottom-bar__cta {
+      font-size: 2rem;
+      min-height: 4.8rem;
+      padding: 0 48px;
+    }
+
+    .sk-radiance-sticky-bottom-bar__button {
+      min-width: auto;
+    }
   }
 
   @media (max-width: 749px) {
@@ -149,6 +225,7 @@
   assign section_id = section.id
   assign add_label = 'products.product.add_to_cart' | t
   assign sold_out_label = 'products.product.sold_out' | t
+  assign selected_variant = product.selected_or_first_available_variant
 -%}
 
 <!-- SOURCE TEMPLATE -->
@@ -162,22 +239,32 @@
       </div>
 
       <div class="sk-radiance-sticky-bottom-bar__price">
-        <span class="sk-price__value"></span>
-        <span class="sk-price__current"></span>
+        <span class="sk-price__current">{{ selected_variant.price | money_without_trailing_zeros }}</span>
+        <span class="sk-price__value">
+          {%- if selected_variant.compare_at_price and selected_variant.compare_at_price > selected_variant.price -%}
+            Verdi {{ selected_variant.compare_at_price | money_without_trailing_zeros }}
+          {%- endif -%}
+        </span>
       </div>
 
       <button
         type="button"
-        class="sk-radiance-sticky-bottom-bar__cta sk-radiance-sticky-bottom-bar__button"
+        class="sk-btn sk-btn--primary sk-radiance-sticky-bottom-bar__cta sk-radiance-sticky-bottom-bar__button"
         data-sk-sticky-cta
         data-product-form="{{ product_form_id }}"
-        disabled
+        {%- unless selected_variant.available -%}
+          disabled
+        {%- endunless -%}
       >
-        {{ add_label }}
+        {%- if selected_variant.available -%}
+          {{ add_label }}
+        {%- else -%}
+          {{ sold_out_label }}
+        {%- endif -%}
       </button>
     </div>
 
-    <input type="hidden" data-sk-sticky-variant>
+    <input type="hidden" data-sk-sticky-variant value="{{ selected_variant.id }}">
   </div>
 </div>
 
@@ -189,10 +276,6 @@
     const hero = document.querySelector('#MainProduct-' + sectionId);
 
     let latestOfferDetail = null;
-
-    function formatMoney(cents) {
-      return Shopify?.formatMoney ? Shopify.formatMoney(cents) : (cents / 100).toFixed(2);
-    }
 
     function mountPortal() {
       const source = document.getElementById(sourceId);
@@ -285,9 +368,8 @@
       }
 
       portal.querySelector('[data-sk-sticky-title]').textContent = detail.title;
-      portal.querySelector('.sk-price__current').textContent = formatMoney(detail.price);
-      portal.querySelector('.sk-price__value').textContent =
-        detail.compare_at_price > detail.price ? 'Verdi ' + formatMoney(detail.compare_at_price) : '';
+      portal.querySelector('.sk-price__current').textContent = detail.priceText || '';
+      portal.querySelector('.sk-price__value').textContent = detail.compareText || '';
 
       const btn = portal.querySelector('[data-sk-sticky-cta]');
       btn.disabled = !detail.available;

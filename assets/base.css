@@ -456,6 +456,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 .sk-section-heading--h1 {
   font-size: var(--section-heading-h1);
   line-height: var(--section-heading-h1-line);
+  text-align: center;
 }
 .sk-section-heading--h2 {
   font-size: var(--section-heading-h2);

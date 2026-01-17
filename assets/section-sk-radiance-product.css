@@ -628,6 +628,18 @@
   transition: transform 0.3s ease-in-out;
   padding: 1.35rem 0;
 }
+
+/* Tablet + desktop: make sticky bar ~33% taller */
+@media screen and (min-width: 750px) {
+  .sk-radiance-sticky-bottom-bar {
+    padding: 0;
+  }
+
+  .sk-radiance-sticky-bottom-bar--portal {
+    padding: 1.8rem 18px;
+    box-sizing: border-box;
+  }
+}
 .sk-radiance-sticky-bottom-bar.visible {
   transform: translateY(0);
 }
@@ -637,6 +649,38 @@
   justify-content: space-between;
   gap: 1.5rem;
 }
+
+@media screen and (min-width: 750px) {
+  .sk-radiance-sticky-bottom-bar__content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .sk-radiance-sticky-bottom-bar__product-name {
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .sk-radiance-sticky-bottom-bar__price {
+    font-family: var(--font-body-family, var(--font-heading-family, inherit));
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .sk-radiance-sticky-bottom-bar__price .sk-price__value,
+  .sk-radiance-sticky-bottom-bar__price .sk-price__current {
+    font: inherit;
+    opacity: 1;
+  }
+
+  .sk-radiance-sticky-bottom-bar__cta {
+    font-size: 2rem;
+    min-height: 4.8rem;
+    padding: 0 48px;
+  }
+}
 .sk-radiance-sticky-bottom-bar__info {
   display: flex;
   flex-direction: column;
@@ -645,8 +689,8 @@
   justify-content: center;
 }
 .sk-radiance-sticky-bottom-bar__product-name {
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 2.5rem;
+  font-weight: 500;
   color: var(--color-brand, #30273e);
   margin: 0;
   line-height: 1.3;
@@ -659,6 +703,35 @@
   min-width: clamp(10rem, 24vw, 15rem);
   white-space: nowrap;
   justify-content: center;
+}
+
+/* Tablet + desktop: let base primary button styling control CTA */
+@media screen and (min-width: 750px) {
+  /* Ensure desktop/tablet price typography wins over any base small sizes */
+  .sk-radiance-sticky-bottom-bar__price {
+    font-family: var(--font-body-family, var(--font-heading-family, inherit));
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .sk-radiance-sticky-bottom-bar__price .sk-price__value,
+  .sk-radiance-sticky-bottom-bar__price .sk-price__current {
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    opacity: 1;
+  }
+
+  .sk-radiance-sticky-bottom-bar__cta {
+    font-size: 2rem;
+    min-height: 4.8rem;
+    padding: 0 48px;
+  }
+
+  .sk-radiance-sticky-bottom-bar__button {
+    min-width: auto;
+  }
 }
 
 /* Mobile sticky bar tweaks */
@@ -706,8 +779,7 @@ body.cart-drawer-open .sk-radiance-sticky-bottom-bar--portal {
     font-size: var(--sk-font-size-medium);
   }
   .sk-radiance-sticky-bottom-bar__button {
-    min-width: 180px;
-    padding: 0.875rem 1.5rem;
+    min-width: auto;
   }
 }
 
