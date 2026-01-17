@@ -1451,5 +1451,17 @@
         "default": "scheme-1"
       }
     ]
+  },
+  {
+    "name": "Payment Methods",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_vipps_payment_icon",
+        "label": "Show Vipps payment icon",
+        "default": true,
+        "info": "Display Vipps payment icon alongside other payment methods"
+      }
+    ]
   }
 ]
