@@ -55,11 +55,7 @@
       </div>
 
       {%- if show_rating -%}
-        <div
-          class="okeReviews okeReviews--productListing"
-          data-oke-reviews-product-id="shopify-{{ product.id }}"
-          data-oke-reviews-product-listing-star-rating
-        ></div>
+        {% render 'raiting', product: product %}
       {%- endif -%}
     </div>
 

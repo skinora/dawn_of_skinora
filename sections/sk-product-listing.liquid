@@ -349,11 +349,7 @@
                       <h2 class="sk-product-card__title">{{ product.title | escape }}</h2>
                     </a>
                     <div class="sk-product-card__rating">
-                      <div
-                        class="okeReviews okeReviews--productListing"
-                        data-oke-reviews-product-id="shopify-{{ product.id }}"
-                        data-oke-reviews-product-listing-star-rating
-                      ></div>
+                      {% render 'raiting', product: product %}
                     </div>
                     {% if block.settings.show_description and product.description != blank %}
                       <div class="sk-product-card__description sk-section-body">
