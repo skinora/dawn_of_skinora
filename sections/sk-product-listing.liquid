@@ -348,9 +348,12 @@
                     <a href="{{ product.url }}">
                       <h2 class="sk-product-card__title">{{ product.title | escape }}</h2>
                     </a>
-                    <div class="sk-product-card__rating">
-                      {% render 'raiting', product: product %}
-                    </div>
+                    {%- comment -%} Okendo star rating widget for product cards {%- endcomment -%}
+                    <div
+                      class="okeReviews okeReviews--reviewsSummary-starRating"
+                      data-oke-reviews-product-id="shopify-{{ product.id }}"
+                      data-oke-star-rating
+                    ></div>
                     {% if block.settings.show_description and product.description != blank %}
                       <div class="sk-product-card__description sk-section-body">
                         <p>{{ product.description | strip_html }}</p>

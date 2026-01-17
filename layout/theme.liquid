@@ -453,6 +453,13 @@
     {%- comment -%} Global Swiper JS (consolidated) {%- endcomment -%}
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
 
+    {% comment %} Okendo Reviews script (load once globally) {% endcomment %}
+    <script
+      src="https://cdn-static.okendo.io/reviews-widget-plus/js/okendo-reviews.min.js"
+      defer
+    ></script>
+    <script src="{{ 'okendo-reinit.js' | asset_url }}" defer></script>
+
     {% comment %}theme-check-enable RemoteAsset{% endcomment %}
   </body>
 </html>

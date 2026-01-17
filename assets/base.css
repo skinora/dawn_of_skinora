@@ -5480,3 +5480,31 @@ div.okeReviews .oke-w-review-main {
 .sk-radiance-sticky-bottom-bar {
   display: block;
 }
+
+/* Okendo star rating widget - Product Listing Cards */
+.okeReviews--reviewsSummary-starRating {
+  margin-top: 6px;
+  margin-bottom: 8px;
+  line-height: 1;
+  display: block;
+}
+
+/* Optional: keep stars aligned with your typography */
+.okeReviews--reviewsSummary-starRating .okeReviews-starRating,
+.okeReviews--reviewsSummary-starRating .okeReviews-starRatingContainer {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Star colors - use brand color */
+.okeReviews--reviewsSummary-starRating .oke-starRating-star svg,
+.okeReviews--reviewsSummary-starRating .oke-stars svg,
+.okeReviews .oke-stars-full svg {
+  fill: var(--color-brand) !important;
+}
+
+/* Empty stars - lighter brand color */
+.okeReviews--reviewsSummary-starRating .oke-starRating-star-empty svg,
+.okeReviews .oke-stars-empty svg {
+  fill: rgba(var(--color-brand-rgb), 0.25) !important;
+}
