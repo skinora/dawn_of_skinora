@@ -1366,3 +1366,132 @@ class CartPerformance {
     performance.measure(metricName, `${metricName}:start`, `${metricName}:end`);
   }
 }
+
+// ============================================================
+// skdebug: Global /cart/add payload logger (temporary debugging)
+// - Enable with ?skdebug=1
+// - Logs capture-phase form submits + fetch + XHR to /cart/add(.js)
+// ============================================================
+(function installSkCartAddDebug() {
+  try {
+    const href = String(window.location.href || '');
+    const search = String(window.location.search || '');
+    const isSkDebugMode = href.includes('skdebug=1') || search.includes('skdebug=1');
+    if (!isSkDebugMode) return;
+    if (window.__SK_CART_ADD_DEBUG_INSTALLED) return;
+    window.__SK_CART_ADD_DEBUG_INSTALLED = true;
+
+    const isCartAddUrl = (url) => {
+      try {
+        const u = String(url || '');
+        return u.includes('/cart/add');
+      } catch (e) {
+        return false;
+      }
+    };
+
+    const summarizeBody = (body) => {
+      try {
+        if (!body) return null;
+        if (body instanceof FormData) {
+          return {
+            id: body.get('id'),
+            quantity: body.get('quantity'),
+            items: body.get('items'),
+          };
+        }
+        if (typeof body === 'string') return body.slice(0, 500);
+        if (typeof body === 'object') return body;
+        return String(body);
+      } catch (e) {
+        return '[unserializable body]';
+      }
+    };
+
+    document.addEventListener(
+      'submit',
+      (e) => {
+        const form = e.target;
+        if (!(form instanceof HTMLFormElement)) return;
+        const action = (form.getAttribute('action') || '').toLowerCase();
+        if (!action.includes('/cart/add')) return;
+
+        const fd = new FormData(form);
+        // eslint-disable-next-line no-console
+        console.log('[skdebug] submit /cart/add', {
+          formId: form.id || null,
+          formDataId: fd.get('id'),
+          quantity: fd.get('quantity') || null,
+          activeVariantId: window.__SK_ACTIVE_VARIANT_ID || null,
+          activeOffer: window.__SK_ACTIVE_OFFER || null,
+        });
+      },
+      true
+    );
+
+    const originalFetch = window.fetch;
+    if (typeof originalFetch === 'function') {
+      window.fetch = function (input, init) {
+        const url = typeof input === 'string' ? input : input && input.url;
+        if (isCartAddUrl(url)) {
+          try {
+            // eslint-disable-next-line no-console
+            console.log('[skdebug] fetch /cart/add', {
+              url,
+              method: (init && init.method) || 'GET',
+              body: summarizeBody(init && init.body),
+            });
+          } catch (e) {}
+        }
+        return originalFetch.apply(this, arguments).then((res) => {
+          if (isCartAddUrl(url)) {
+            try {
+              res
+                .clone()
+                .text()
+                .then((text) => {
+                  // eslint-disable-next-line no-console
+                  console.log('[skdebug] fetch /cart/add response', { url, status: res.status, body: text });
+                })
+                .catch(() => {});
+            } catch (e) {}
+          }
+          return res;
+        });
+      };
+    }
+
+    const originalOpen = XMLHttpRequest.prototype.open;
+    const originalSend = XMLHttpRequest.prototype.send;
+    XMLHttpRequest.prototype.open = function (method, url) {
+      try {
+        this.__skdebug_method = method;
+        this.__skdebug_url = url;
+      } catch (e) {}
+      return originalOpen.apply(this, arguments);
+    };
+    XMLHttpRequest.prototype.send = function (body) {
+      try {
+        if (isCartAddUrl(this.__skdebug_url)) {
+          // eslint-disable-next-line no-console
+          console.log('[skdebug] xhr /cart/add', {
+            url: this.__skdebug_url,
+            method: this.__skdebug_method,
+            body: summarizeBody(body),
+          });
+          this.addEventListener('load', function () {
+            try {
+              // eslint-disable-next-line no-console
+              console.log('[skdebug] xhr /cart/add response', {
+                url: this.__skdebug_url,
+                status: this.status,
+                body: this.responseText,
+              });
+            } catch (e) {}
+          });
+        }
+      } catch (e) {}
+      return originalSend.apply(this, arguments);
+    };
+  } catch (e) {}
+})();

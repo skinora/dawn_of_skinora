@@ -1213,11 +1213,11 @@
     <section
       class="sk-product-hero"
       id="sk-radiance-product-hero-{{ section.id }}"
-      data-base-handle="{{ product.handle }}"
+      data-base-handle="{{ product.handle | handleize }}"
       data-base-product-id="{{ product.id }}"
       data-base-variant-id="{{ product.selected_or_first_available_variant.id }}"
       data-base-available="{% if product.selected_or_first_available_variant.available %}true{% else %}false{% endif %}"
-      data-bundle-handle="{{ bundle_handle }}"
+      data-bundle-handle="{{ bundle_handle | handleize }}"
       data-bundle-title="{{ bundle_title | escape }}"
       data-money-format="{{ shop.money_without_trailing_zeros_format | escape }}"
       data-product-form-id="{{ product_form_id }}"
@@ -1846,7 +1846,8 @@
       };
 
       const fetchProductJson = async (handle) => {
-        const res = await fetch(`/products/${handle}.js`, { credentials: 'same-origin' });
+        const safeHandle = encodeURIComponent(String(handle || '').trim());
+        const res = await fetch(`/products/${safeHandle}.js`, { credentials: 'same-origin' });
         if (!res.ok) throw new Error(`Failed to load product JSON: ${handle}`);
         return await res.json();
       };
