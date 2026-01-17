@@ -5480,3 +5480,42 @@ div.okeReviews .oke-w-review-main {
 .sk-radiance-sticky-bottom-bar {
   display: block;
 }
+/* Okendo Product Listing Star Ratings */
+.okeReviews--productListing {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 2rem;
+  margin-top: 0.8rem;
+}
+
+.okeReviews--productListing .okeReviews-reviewsSummary-starRating {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.4rem;
+}
+
+.okeReviews--productListing .oke-stars-container {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.okeReviews--productListing .oke-starRating-reviewCount {
+  font-size: 1.2rem;
+  color: rgba(var(--color-foreground), 0.7);
+  margin-left: 0.4rem;
+}
+
+.okeReviews--productListing svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+/* Adjust for card layouts */
+.cb-card__meta .okeReviews--productListing,
+.sk-product-card__rating .okeReviews--productListing {
+  justify-content: flex-start;
+  margin-top: 0.4rem;
+}

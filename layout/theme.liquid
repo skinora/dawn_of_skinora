@@ -367,6 +367,14 @@
       }
     </script>
 
+    {%- comment -%} Okendo Reviews Integration {%- endcomment -%}
+    <script
+      src="https://cdn-static.okendo.io/reviews-widget-plus/js/okendo-reviews.min.js"
+      type="text/javascript"
+      async
+    ></script>
+    <script src="{{ 'okendo-product-listing.js' | asset_url }}" defer></script>
+
     {% render 'sk-mobile-optimizations' %}
   </head>
 
