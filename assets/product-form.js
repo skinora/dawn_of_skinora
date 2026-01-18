@@ -27,8 +27,19 @@ if (!customElements.get('product-form')) {
         this.handleErrorMessage();
 
         this.submitButton.setAttribute('aria-disabled', true);
-        this.submitButton.classList.add('loading');
-        this.querySelector('.loading__spinner')?.classList.remove('hidden');
+
+        const spinner = this.querySelector('.loading__spinner');
+        let loadingTimer = null;
+
+        // Avoid showing a spinner for fast responses (reduces perceived latency).
+        if (spinner) {
+          loadingTimer = window.setTimeout(() => {
+            this.submitButton.classList.add('loading');
+            spinner.classList.remove('hidden');
+          }, 200);
+        } else {
+          this.submitButton.classList.add('loading');
+        }
 
         const config = fetchConfig('javascript');
         config.headers['X-Requested-With'] = 'XMLHttpRequest';
@@ -112,10 +123,11 @@ if (!customElements.get('product-form')) {
             console.error(e);
           })
           .finally(() => {
+            if (loadingTimer) window.clearTimeout(loadingTimer);
             this.submitButton.classList.remove('loading');
             if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
             if (!this.error) this.submitButton.removeAttribute('aria-disabled');
-            this.querySelector('.loading__spinner')?.classList.add('hidden');
+            spinner?.classList.add('hidden');
 
             CartPerformance.measureFromEvent('add:user-action', evt);
           });
