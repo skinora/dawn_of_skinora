@@ -1159,13 +1159,11 @@
   {%- assign bundle_title = bundle_product_ref.title -%}
 {%- endif -%}
 {%- assign base_variant = product.selected_or_first_available_variant -%}
-{%- assign single_image_url = product.featured_image | image_url: width: 640 -%}
 {%- assign single_image_alt = product.featured_image.alt | default: product.title -%}
 {%- assign bundle_image_obj = bundle_product_ref.featured_image -%}
 {%- if bundle_image_obj == blank -%}
   {%- assign bundle_image_obj = product.featured_image -%}
 {%- endif -%}
-{%- assign bundle_image_url = bundle_image_obj | image_url: width: 640 -%}
 {%- if bundle_image_obj != blank -%}
   {%- assign bundle_image_alt = bundle_image_obj.alt | default: bundle_title | default: product.title -%}
 {%- else -%}
@@ -1336,7 +1334,7 @@
               <div class="sk-offer-card__inner">
                 <div class="sk-offer-card__image-wrapper">
                   <img
-                    src="{{ single_image_url }}"
+                    src="{{ product.featured_image | image_url: width: 640 }}"
                     alt="{{ single_image_alt | escape }}"
                     class="sk-offer-card__image"
                     width="640"
@@ -1390,7 +1388,7 @@
                 <span class="sk-offer-card__badge">Best verdi</span>
                 <div class="sk-offer-card__image-wrapper">
                   <img
-                    src="{{ bundle_image_url }}"
+                    src="{{ bundle_image_obj | image_url: width: 640 }}"
                     alt="{{ bundle_image_alt | escape }}"
                     class="sk-offer-card__image"
                     width="640"
@@ -1975,37 +1973,6 @@
 
       document.addEventListener('sk:offerchange', handleOfferChangeEvent);
 
-      if (productForm) {
-        productForm.addEventListener('submit', () => {
-          setActiveVariantId(
-            window.__SK_ACTIVE_VARIANT_ID || baseVariant.id,
-            window.__SK_ACTIVE_OFFER || 'single'
-          );
-        });
-      }
-
-      if (productForm && window.MutationObserver) {
-        const observer = new MutationObserver((mutations) => {
-          const shouldSync = mutations.some((mutation) =>
-            Array.from(mutation.addedNodes).some((node) => {
-              if (node.nodeType !== Node.ELEMENT_NODE) return false;
-              if (node.matches('[name="id"]')) return true;
-              if (typeof node.querySelector === 'function') {
-                return !!node.querySelector('[name="id"]');
-              }
-              return false;
-            })
-          );
-          if (shouldSync) {
-            setActiveVariantId(
-              window.__SK_ACTIVE_VARIANT_ID || baseVariant.id,
-              window.__SK_ACTIVE_OFFER || 'single'
-            );
-          }
-        });
-        observer.observe(productForm, { childList: true, subtree: true });
-      }
-
       // 1) Hydrate bundle card + store data
       const bundleData = await hydrateBundleCard();
 
@@ -2042,7 +2009,11 @@
   "name": "SK Radiance Product Hero",
   "tag": "section",
   "class": "section",
-  "blocks": [{ "type": "@app" }],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
   "settings": []
 }
 {% endschema %}
