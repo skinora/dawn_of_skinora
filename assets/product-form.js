@@ -40,27 +40,6 @@ if (!customElements.get('product-form')) {
           // multiple [name="id"] inputs (which can lead to incorrect /cart/add behavior).
           formData.set('id', this.variantIdInput.value);
         }
-
-        const isSkDebugMode = (() => {
-          try {
-            const href = String(window.location.href || '');
-            const search = String(window.location.search || '');
-            return href.includes('skdebug=1') || search.includes('skdebug=1');
-          } catch (e) {
-            return false;
-          }
-        })();
-
-        if (isSkDebugMode) {
-          try {
-            // eslint-disable-next-line no-console
-            console.log('[skdebug] product-form submit', {
-              formId: this.form.id || null,
-              formDataId: formData.get('id'),
-              activeVariantId: window.__SK_ACTIVE_VARIANT_ID || null,
-            });
-          } catch (e) {}
-        }
         // Re-check for cart drawer element in case it loaded after constructor
         this.cart = this.cart || document.querySelector('cart-notification') || document.querySelector('cart-drawer');
         if (this.cart) {
@@ -77,13 +56,6 @@ if (!customElements.get('product-form')) {
           .then((response) => response.json())
           .then((response) => {
             if (response.status) {
-              if (isSkDebugMode) {
-                try {
-                  // eslint-disable-next-line no-console
-                  console.log('[skdebug] /cart/add error json', response);
-                } catch (e) {}
-              }
-
               publish(PUB_SUB_EVENTS.cartError, {
                 source: 'product-form',
                 productVariantId: formData.get('id'),

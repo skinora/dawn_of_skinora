@@ -1220,7 +1220,6 @@
       data-bundle-handle="{{ bundle_handle | handleize }}"
       data-bundle-title="{{ bundle_title | escape }}"
       data-money-format="{{ shop.money_without_trailing_zeros_format | escape }}"
-      data-product-form-id="{{ product_form_id }}"
     >
       <div class="sk-hero-grid">
         <!-- ================= LEFT: CANONICAL MEDIA ================= -->
@@ -1618,15 +1617,6 @@
       const notifyBtn = root.querySelector('[data-sk-notify-button]');
 
       const cardPriceBundle = root.querySelector('[data-sk-card-price="bundle"]');
-      const isSkDebugMode = (() => {
-        try {
-          const href = String(window.location.href || '');
-          const search = String(window.location.search || '');
-          return href.includes('skdebug=1') || search.includes('skdebug=1');
-        } catch (e) {
-          return false;
-        }
-      })();
 
       const productForm =
         root.querySelector('form[action^="/cart/add"]') ||
@@ -1707,81 +1697,11 @@
             });
         }
 
-        if (isSkDebugMode) {
-          try {
-            const idInputs = getVariantInputs().filter((el) => el && el.name === 'id');
-            // eslint-disable-next-line no-console
-            console.log('[skdebug] setActiveVariantId', {
-              variantId,
-              offer,
-              productFormFound: !!productForm,
-              productFormIdAttr: productForm ? productForm.getAttribute('id') : null,
-              idInputCount: idInputs.length
-            });
-          } catch (e) {}
-        }
-
         clearProductFormErrors();
 
         return inputs;
       };
 
-      // =========================
-      // CAPTURE-PHASE SUBMIT GUARD (proof + last-millisecond fix)
-      // - Logs what is actually submitted (skdebug=1)
-      // - Forces the active variant id into the submitting form before any other submit handlers
-      // =========================
-      (function installCaptureSubmitGuard() {
-        try {
-          if (window.__SK_RADIANCE_CAPTURE_SUBMIT_GUARD_INSTALLED) return;
-          window.__SK_RADIANCE_CAPTURE_SUBMIT_GUARD_INSTALLED = true;
-
-          document.addEventListener(
-            'submit',
-            (event) => {
-              const form = event && event.target;
-              if (!form || form.tagName !== 'FORM') return;
-
-              const action = (form.getAttribute('action') || '').toLowerCase();
-              const isCartAdd = action.includes('/cart/add');
-              if (!isCartAdd) return;
-
-              // Only guard submits originating from this section to avoid side-effects.
-              const inScope =
-                (mainProductSection && mainProductSection.contains(form)) || (root && root.contains(form));
-              if (!inScope) return;
-
-              const activeVariantId = window.__SK_ACTIVE_VARIANT_ID || baseVariant.id;
-              const activeOffer = window.__SK_ACTIVE_OFFER || 'single';
-
-              // Re-sync everything (defensive), then force the actual submitting form's input.
-              setActiveVariantId(activeVariantId, activeOffer);
-
-              const idInput =
-                form.querySelector('input[name="id"][data-sk-selected-variant-id]') ||
-                form.querySelector('input[name="id"]') ||
-                form.querySelector('[name="id"]');
-              applyVariantToInput(idInput, activeVariantId);
-
-              if (isSkDebugMode) {
-                try {
-                  const submittedId = new FormData(form).get('id');
-                  // eslint-disable-next-line no-console
-                  console.log('[skdebug] capture-submit', {
-                    formId: form.id || null,
-                    hasIdInput: !!idInput,
-                    formIdInputValue: idInput ? idInput.value : null,
-                    formDataId: submittedId,
-                    activeVariantId,
-                    activeOffer
-                  });
-                } catch (e) {}
-              }
-            },
-            true
-          );
-        } catch (e) {}
-      })();
 
       const normalizeMoneyString = (value) =>
         typeof value === 'string' ? value.trim() : value;
