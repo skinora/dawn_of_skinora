@@ -2,7 +2,7 @@
     .sk-product-specifications-{{ section.id }} {
       background: #FFFFFF;
       padding: 7rem 0;
-      margin-bottom: 18rem;
+      margin-bottom: 0;
     }
 
     .sk-product-specifications-{{ section.id }} .sk-specifications__main-heading {
@@ -109,6 +109,24 @@
     .sk-product-specifications-{{ section.id }} .sk-specifications__list .sk-specifications__item h4{
       font-weight: 600;
       color: rgb(var(--sk-color-subheader-text));
+    }
+
+    /* Defensive: ensure rich text/metafield output can't override theme typography */
+    .sk-product-specifications-{{ section.id }} {
+      font-family: var(--font-body-family);
+    }
+
+    .sk-product-specifications-{{ section.id }} * {
+      font-family: inherit !important;
+    }
+
+    .sk-product-specifications-{{ section.id }} h1,
+    .sk-product-specifications-{{ section.id }} h2,
+    .sk-product-specifications-{{ section.id }} h3,
+    .sk-product-specifications-{{ section.id }} h4,
+    .sk-product-specifications-{{ section.id }} h5,
+    .sk-product-specifications-{{ section.id }} h6 {
+      font-family: var(--font-heading-family) !important;
     }
 
     @media only screen and (max-width: 700px) {
