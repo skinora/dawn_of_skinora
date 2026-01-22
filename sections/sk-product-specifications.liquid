@@ -37,7 +37,7 @@
 
     .sk-product-specifications-{{ section.id }} .sk-specifications__item {
       display: flex;
-      align-items: start;
+      align-items: flex-start;
       gap: 16px;
       margin-bottom: 24px;
       /* padding-bottom: 24px; */
@@ -49,7 +49,7 @@
       padding-bottom: 0;
       margin-bottom: 0;
       flex-flow: nowrap;
-      position: relative
+      position: relative;
 
     }
 
@@ -86,10 +86,7 @@
       list-style: none;
       padding: 12px 0 0 0;
       margin: 0;
-      position: absolute;
-      top: 35px;
-      left: 40px;
-
+      position: static;
     }
 
     .sk-product-specifications-{{ section.id }} .sk-specifications__sub-item {
@@ -108,9 +105,6 @@
     }
 
 
-    .sk-specifications__item:last-child .sk-specifications__text{
-      display: none;
-    }
 
     .sk-product-specifications-{{ section.id }} .sk-specifications__list .sk-specifications__item h4{
       font-weight: 600;
@@ -322,16 +316,14 @@
                       {%- endcase -%}
                     </div>
                     <div class="sk-specifications__text sk-section-body">
-                      {{ spec_content }}
-
-                      {%- comment -%} Check for sub-items marked with ++ {%- endcomment -%}
+                      {%- comment -%} If spec_content contains ++, split into main + sub-items and render once {%- endcomment -%}
                       {%- if spec_content contains '++' -%}
                         {%- assign main_and_subs = spec_content | split: '++' -%}
                         {%- assign main_content = main_and_subs[0] -%}
 
                         {{ main_content }}
 
-                        <ul class="sk-specifications__sub-items">
+                        {%- capture subitems_html -%}
                           {%- for i in (1..10) -%}
                             {%- if main_and_subs[i] != blank -%}
                               <li class="sk-specifications__sub-item">
@@ -346,13 +338,23 @@
                                   stroke-linecap="round"
                                   stroke-linejoin="round"
                                 >
-                                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+                                  <circle cx="12" cy="12" r="10"/>
+                                  <line x1="12" y1="8" x2="12" y2="16"/>
+                                  <line x1="8" y1="12" x2="16" y2="12"/>
                                 </svg>
                                 {{ main_and_subs[i] | strip }}
                               </li>
                             {%- endif -%}
                           {%- endfor -%}
-                        </ul>
+                        {%- endcapture -%}
+
+                        {%- if subitems_html contains 'sk-specifications__sub-item' -%}
+                          <ul class="sk-specifications__sub-items">
+                            {{ subitems_html }}
+                          </ul>
+                        {%- endif -%}
+                      {%- else -%}
+                        {{ spec_content }}
                       {%- endif -%}
                     </div>
                   </li>
