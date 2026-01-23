@@ -1,25 +1,188 @@
 {% comment %}
   SECTION: Skinora – Product Specifications (Metaobject-driven)
-  Layout goal: Left image + right content with (1) heading/subheading, (2) 2-col feature card, (3) accordion "Tekniske detaljer"
 
-  Expected Metaobject: product_specification
-  Fields (per your screenshot):
+  Metaobject type handle: product_specification (MUST match Shopify exactly)
+  Fields:
   - section_header (single line text)
   - subheader (single line text)
   - main_image (file/image)
   - image_alt (single line text)
   - tech_details_blocks (list of metaobjects: tech_details_block)
-      tech_details_block fields:
       - title (single line)
-      - content (rich text or multi-line)
+      - content (rich text)
       - icon (file/image)
   - tech_spec_detailed_description (rich text)
-
-  HOW TO CONNECT:
-  Option A (recommended): store a reference on product metafield:
-    product.metafields.custom.product_specification -> Metaobject (product_specification)
-  Option B: pick entry in section settings (works for non-product templates too)
 {% endcomment %}
+
+<style>
+  .sk-specs-{{ section.id }}{
+    background:#fff;
+    padding:64px 0;
+    margin: 0;
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__wrap{
+    display:grid;
+    grid-template-columns:minmax(280px,520px) 1fr;
+    gap:56px;
+    align-items:start;
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__media{ position:relative; }
+
+  .sk-specs-{{ section.id }} .sk-specs__img{
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:18px;
+    object-fit:cover;
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__h{
+    margin:0 0 10px 0;
+    font-family:var(--font-heading-family);
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    font-size:clamp(22px,2.2vw,34px);
+    line-height:1.15;
+    color:rgb(var(--sk-color-heading-text));
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__sub{
+    margin:0 0 22px 0;
+    max-width:58ch;
+    font-family:var(--font-body-family);
+    font-size:16px;
+    line-height:1.6;
+    color:rgba(var(--sk-color-body-text),.9);
+  }
+
+  /* Card */
+  .sk-specs-{{ section.id }} .sk-specs__card{
+    background:rgba(0,0,0,.02);
+    border:1px solid rgba(0,0,0,.08);
+    border-radius:16px;
+    overflow:hidden;
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__cell{
+    display:grid;
+    grid-template-columns:28px 1fr;
+    gap:14px;
+    padding:18px 20px;
+    border-bottom:1px solid rgba(0,0,0,.08);
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__cell:nth-child(odd){
+    border-right:1px solid rgba(0,0,0,.08);
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__icon{
+    width:28px;
+    height:28px;
+    display:grid;
+    place-items:center;
+    color:rgba(var(--sk-color-heading-text),.9);
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__icon img{
+    display:block;
+    width:24px;
+    height:24px;
+    object-fit:contain;
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__title{
+    font-family:var(--font-heading-family);
+    font-weight:600;
+    font-size:15px;
+    line-height:1.2;
+    color:rgb(var(--sk-color-heading-text));
+    margin-bottom:6px;
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__desc{
+    font-family:var(--font-body-family);
+    font-size:14px;
+    line-height:1.5;
+    color:rgba(var(--sk-color-body-text),.9);
+  }
+
+  /* Rich text hygiene */
+  .sk-specs-{{ section.id }} .sk-specs__desc p{ margin:0; }
+  .sk-specs-{{ section.id }} .sk-specs__desc p + p{ margin-top:6px; }
+  .sk-specs-{{ section.id }} .sk-specs__desc ul{ margin:8px 0 0 18px; }
+  .sk-specs-{{ section.id }} .sk-specs__desc li{ margin:6px 0; }
+
+  /* Accordion */
+  .sk-specs-{{ section.id }} .sk-specs__details{
+    border-top:1px solid rgba(0,0,0,.08);
+    background:rgba(255,255,255,.35);
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__summary{
+    list-style:none;
+    cursor:pointer;
+    padding:16px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    font-family:var(--font-heading-family);
+    font-weight:600;
+    color:rgb(var(--sk-color-heading-text));
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__summary::-webkit-details-marker{ display:none; }
+
+  .sk-specs-{{ section.id }} .sk-specs__chev{
+    width:10px;
+    height:10px;
+    border-right:2px solid rgba(var(--sk-color-heading-text),.7);
+    border-bottom:2px solid rgba(var(--sk-color-heading-text),.7);
+    transform:rotate(45deg);
+    transition:transform .18s ease;
+    margin-left:8px;
+  }
+
+  .sk-specs-{{ section.id }} details[open] .sk-specs__chev{
+    transform:rotate(-135deg);
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__details-body{
+    padding:0 20px 18px 20px;
+    font-family:var(--font-body-family);
+    color:rgba(var(--sk-color-body-text),.92);
+    font-size:14px;
+    line-height:1.6;
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__details-body p{ margin:10px 0 0 0; }
+  .sk-specs-{{ section.id }} .sk-specs__details-body ul{ margin:10px 0 0 18px; }
+  .sk-specs-{{ section.id }} .sk-specs__details-body li{ margin:6px 0; }
+
+  @media (max-width:990px){
+    .sk-specs-{{ section.id }} .sk-specs__wrap{
+      grid-template-columns:1fr;
+      gap:26px;
+    }
+    .sk-specs-{{ section.id }} .sk-specs__grid{ grid-template-columns:1fr; }
+    .sk-specs-{{ section.id }} .sk-specs__cell:nth-child(odd){ border-right:none; }
+  }
+
+  @media (max-width:520px){
+    .sk-specs-{{ section.id }}{ padding:42px 0; }
+    .sk-specs-{{ section.id }} .sk-specs__cell{ padding:16px 16px; }
+    .sk-specs-{{ section.id }} .sk-specs__summary{ padding:14px 16px; }
+    .sk-specs-{{ section.id }} .sk-specs__details-body{ padding:0 16px 16px 16px; }
+  }
+</style>
 
 {% liquid
   assign spec = null
@@ -29,6 +192,11 @@
   elsif product and product.metafields.custom.product_specification != blank
     assign spec = product.metafields.custom.product_specification.value
   endif
+
+  assign blocks = blank
+  if spec != blank and spec.tech_details_blocks != blank
+    assign blocks = spec.tech_details_blocks.value
+  endif
 %}
 
 {% if spec != blank %}
@@ -36,17 +204,17 @@
     <div class="page-width sk-specs__wrap">
       <!-- Left: Image -->
       <div class="sk-specs__media">
-        {% if spec.main_image != blank %}
-          {% assign img = spec.main_image %}
+        {% assign img = spec.main_image.value %}
+        {% if img != blank %}
           <img
             class="sk-specs__img"
             src="{{ img | image_url: width: 1200 }}"
-            alt="{{ spec.image_alt | default: product.title | escape }}"
+            alt="{{ spec.image_alt.value | default: product.title | escape }}"
             loading="lazy"
             width="{{ img.width }}"
             height="{{ img.height }}"
           >
-        {% elsif product.featured_image != blank %}
+        {% elsif product and product.featured_image != blank %}
           <img
             class="sk-specs__img"
             src="{{ product.featured_image | image_url: width: 1200 }}"
@@ -60,32 +228,30 @@
 
       <!-- Right: Content -->
       <div class="sk-specs__content">
-        {% if spec.section_header != blank %}
-          <h2 class="sk-specs__h">{{ spec.section_header }}</h2>
+        {% if spec.section_header.value != blank %}
+          <h2 class="sk-specs__h">{{ spec.section_header.value }}</h2>
         {% endif %}
 
-        {% if spec.subheader != blank %}
-          <p class="sk-specs__sub">{{ spec.subheader }}</p>
+        {% if spec.subheader.value != blank %}
+          <p class="sk-specs__sub">{{ spec.subheader.value }}</p>
         {% endif %}
 
-        <!-- Feature card -->
-        {% assign blocks = spec.tech_details_blocks.value %}
         {% if blocks != blank and blocks.size > 0 %}
           <div class="sk-specs__card" role="region" aria-label="Hovedspesifikasjoner">
             <div class="sk-specs__grid">
               {% for b in blocks %}
                 <div class="sk-specs__cell">
                   <div class="sk-specs__icon">
-                    {% if b.icon != blank %}
+                    {% assign icon_img = b.icon.value %}
+                    {% if icon_img != blank %}
                       <img
-                        src="{{ b.icon | image_url: width: 80 }}"
+                        src="{{ icon_img | image_url: width: 80 }}"
                         alt=""
                         loading="lazy"
-                        width="28"
-                        height="28"
+                        width="24"
+                        height="24"
                       >
                     {% else %}
-                      <!-- fallback icon -->
                       <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
                         <path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15h-2v-2h2v2Zm0-4h-2V7h2v6Z"/>
                       </svg>
@@ -93,315 +259,48 @@
                   </div>
 
                   <div class="sk-specs__text">
-                    {% if b.title != blank %}
-                      <div class="sk-specs__title">{{ b.title }}</div>
+                    {% if b.title.value != blank %}
+                      <div class="sk-specs__title">{{ b.title.value }}</div>
                     {% endif %}
 
-                    <div class="sk-specs__desc">
-                      {%- comment -%}
-                        If content is rich text field on metaobject, Shopify usually returns HTML via .value.
-                        If your field is plain text, swap to: {{ b.content | escape | newline_to_br }}
-                      {%- endcomment -%}
-                      {% if b.content != blank %}
-                        {{ b.content.value }}
-                      {% endif %}
-                    </div>
+                    {% if b.content.value != blank %}
+                      <div class="sk-specs__desc">
+                        {{ b.content.value | metafield_tag }}
+                      </div>
+                    {% endif %}
                   </div>
                 </div>
               {% endfor %}
             </div>
 
-            <!-- Accordion inside the same card -->
-            {% if spec.tech_spec_detailed_description != blank %}
+            {% if spec.tech_spec_detailed_description.value != blank %}
               <details class="sk-specs__details">
                 <summary class="sk-specs__summary">
                   <span>Tekniske detaljer</span>
                   <span class="sk-specs__chev" aria-hidden="true"></span>
                 </summary>
-
                 <div class="sk-specs__details-body">
-                  {{ spec.tech_spec_detailed_description.value }}
+                  {{ spec.tech_spec_detailed_description.value | metafield_tag }}
                 </div>
               </details>
             {% endif %}
           </div>
-        {% else %}
-          {% if spec.tech_spec_detailed_description != blank %}
-            <div class="sk-specs__card">
-              <details class="sk-specs__details" open>
-                <summary class="sk-specs__summary">
-                  <span>Tekniske detaljer</span>
-                  <span class="sk-specs__chev" aria-hidden="true"></span>
-                </summary>
-                <div class="sk-specs__details-body">
-                  {{ spec.tech_spec_detailed_description.value }}
-                </div>
-              </details>
-            </div>
-          {% endif %}
+        {% elsif spec.tech_spec_detailed_description.value != blank %}
+          <div class="sk-specs__card">
+            <details class="sk-specs__details" open>
+              <summary class="sk-specs__summary">
+                <span>Tekniske detaljer</span>
+                <span class="sk-specs__chev" aria-hidden="true"></span>
+              </summary>
+              <div class="sk-specs__details-body">
+                {{ spec.tech_spec_detailed_description.value | metafield_tag }}
+              </div>
+            </details>
+          </div>
         {% endif %}
       </div>
     </div>
   </section>
-
-  <style>
-    .sk-specs-{{ section.id }}{
-      background: #fff;
-      padding: 64px 0;
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__wrap{
-      display: grid;
-      grid-template-columns: minmax(280px, 520px) 1fr;
-      gap: 56px;
-      align-items: start;
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__media{
-      position: relative;
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__img{
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 18px;
-      object-fit: cover;
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__h{
-      margin: 0 0 10px 0;
-      font-family: var(--font-heading-family);
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-size: clamp(22px, 2.2vw, 34px);
-      line-height: 1.15;
-      color: rgb(var(--sk-color-heading-text));
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__sub{
-      margin: 0 0 22px 0;
-      max-width: 58ch;
-      font-family: var(--font-body-family);
-      font-size: 16px;
-      line-height: 1.6;
-      color: rgba(var(--sk-color-body-text), 0.9);
-    }
-
-    /* Card */
-    .sk-specs-{{ section.id }} .sk-specs__card{
-      background: rgba(0,0,0,0.02);
-      border: 1px solid rgba(0,0,0,0.08);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__grid{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__cell{
-      display: grid;
-      grid-template-columns: 28px 1fr;
-      gap: 14px;
-      padding: 18px 20px;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__cell:nth-child(odd){
-      border-right: 1px solid rgba(0,0,0,0.08);
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__icon{
-      width: 28px;
-      height: 28px;
-      display: grid;
-      place-items: center;
-      color: rgba(var(--sk-color-heading-text), 0.9);
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__icon img{
-      display: block;
-      width: 24px;
-      height: 24px;
-      object-fit: contain;
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__title{
-      font-family: var(--font-heading-family);
-      font-weight: 600;
-      font-size: 15px;
-      line-height: 1.2;
-      color: rgb(var(--sk-color-heading-text));
-      margin-bottom: 6px;
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__desc{
-      font-family: var(--font-body-family);
-      font-size: 14px;
-      line-height: 1.5;
-      color: rgba(var(--sk-color-body-text), 0.9);
-    }
-
-    /* Make rich text behave */
-    .sk-specs-{{ section.id }} .sk-specs__desc p{ margin: 0; }
-    .sk-specs-{{ section.id }} .sk-specs__desc p + p{ margin-top: 6px; }
-
-    /* Accordion */
-    .sk-specs-{{ section.id }} .sk-specs__details{
-      border-top: 1px solid rgba(0,0,0,0.08);
-      background: rgba(255,255,255,0.35);
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__summary{
-      list-style: none;
-      cursor: pointer;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      font-family: var(--font-heading-family);
-      font-weight: 600;
-      color: rgb(var(--sk-color-heading-text));
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__summary::-webkit-details-marker{
-      display: none;
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__chev{
-      width: 10px;
-      height: 10px;
-      border-right: 2px solid rgba(var(--sk-color-heading-text), 0.7);
-      border-bottom: 2px solid rgba(var(--sk-color-heading-text), 0.7);
-      transform: rotate(45deg);
-      transition: transform .18s ease;
-      margin-left: 8px;
-    }
-
-    .sk-specs-{{ section.id }} details[open] .sk-specs__chev{
-      transform: rotate(-135deg);
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__details-body{
-      padding: 0 20px 18px 20px;
-      font-family: var(--font-body-family);
-      color: rgba(var(--sk-color-body-text), 0.92);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .sk-specs-{{ section.id }} .sk-specs__details-body ul{
-      margin: 10px 0 0 18px;
-    }
-    .sk-specs-{{ section.id }} .sk-specs__details-body li{
-      margin: 6px 0;
-    }
-    .sk-specs-{{ section.id }} .sk-specs__details-body p{
-      margin: 10px 0 0 0;
-    }
-
-    /* Responsive */
-    @media (max-width: 990px){
-      .sk-specs-{{ section.id }} .sk-specs__wrap{
-        grid-template-columns: 1fr;
-        gap: 26px;
-      }
-      .sk-specs-{{ section.id }} .sk-specs__grid{
-        grid-template-columns: 1fr;
-      }
-      .sk-specs-{{ section.id }} .sk-specs__cell:nth-child(odd){
-        border-right: none;
-      }
-    }
-
-    @media (max-width: 520px){
-      .sk-specs-{{ section.id }}{
-        padding: 42px 0;
-      }
-      .sk-specs-{{ section.id }} .sk-specs__cell{
-        padding: 16px 16px;
-      }
-      .sk-specs-{{ section.id }} .sk-specs__summary{
-        padding: 14px 16px;
-      }
-      .sk-specs-{{ section.id }} .sk-specs__details-body{
-        padding: 0 16px 16px 16px;
-      }
-    }
-  </style>
-  {% assign spec = product.metafields.custom.product_specification.value %}
-
-  {% if spec %}
-    <section class="sk-product-specifications-{{ section.id }}">
-      <div class="page-width">
-        <div class="sk-specifications__container">
-          <!-- IMAGE -->
-          {% if spec.main_image %}
-            <div class="sk-specifications__image">
-              <img
-                src="{{ spec.main_image | image_url: width: 600 }}"
-                alt="{{ spec.image_alt | escape }}"
-                loading="lazy"
-                width="600"
-                height="700"
-              >
-            </div>
-          {% endif %}
-
-          <!-- CONTENT -->
-          <div class="sk-specifications__content">
-            <!-- HEADER -->
-            {% if spec.section_header != blank %}
-              <h2 class="sk-specifications__main-heading">
-                {{ spec.section_header }}
-              </h2>
-            {% endif %}
-
-            <!-- SUBHEADER -->
-            {% if spec.subheader != blank %}
-              <p class="sk-specifications__subheading sk-section-body">
-                {{ spec.subheader }}
-              </p>
-            {% endif %}
-
-            <!-- TECH BLOCKS (ICON + TITLE + TEXT) -->
-            {% if spec.tech_details_blocks != blank %}
-              <ul class="sk-specifications__list">
-                {% for block in spec.tech_details_blocks %}
-                  <li class="sk-specifications__item">
-                    <div class="sk-specifications__icon">
-                      {{ block.icon_svg }}
-                    </div>
-
-                    <div class="sk-specifications__text">
-                      <h4>{{ block.title }}</h4>
-                      <p>{{ block.content }}</p>
-                    </div>
-                  </li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-
-            <!-- DETAILED TECH INFO -->
-            {% if spec.tech_info_detailed != blank %}
-              <div class="sk-specifications__details sk-section-body">
-                {{ spec.tech_info_detailed | metafield_tag }}
-              </div>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </section>
-  {% endif %}
-
-{% else %}
-  {%- comment -%}
-    Nothing to render if the metaobject isn't connected.
-  {%- endcomment -%}
 {% endif %}
 
 {% schema %}
