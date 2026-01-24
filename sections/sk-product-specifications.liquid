@@ -209,7 +209,7 @@
           <img
             class="sk-specs__img"
             src="{{ img | image_url: width: 1200 }}"
-            alt="{{ spec.image_alt.value | default: product.title | escape }}"
+            alt="{{ spec.image_alt | default: product.title | escape }}"
             loading="lazy"
             width="{{ img.width }}"
             height="{{ img.height }}"
@@ -228,12 +228,12 @@
 
       <!-- Right: Content -->
       <div class="sk-specs__content">
-        {% if spec.section_header.value != blank %}
-          <h2 class="sk-specs__h">{{ spec.section_header.value }}</h2>
+        {% if spec.section_header != blank %}
+          <h2 class="sk-specs__h">{{ spec.section_header }}</h2>
         {% endif %}
 
-        {% if spec.subheader.value != blank %}
-          <p class="sk-specs__sub">{{ spec.subheader.value }}</p>
+        {% if spec.subheader != blank %}
+          <p class="sk-specs__sub">{{ spec.subheader }}</p>
         {% endif %}
 
         {% if blocks != blank and blocks.size > 0 %}
@@ -259,13 +259,13 @@
                   </div>
 
                   <div class="sk-specs__text">
-                    {% if b.title.value != blank %}
-                      <div class="sk-specs__title">{{ b.title.value }}</div>
+                    {% if b.title != blank %}
+                      <div class="sk-specs__title">{{ b.title }}</div>
                     {% endif %}
 
-                    {% if b.content.value != blank %}
+                    {% if b.content != blank %}
                       <div class="sk-specs__desc">
-                        {{ b.content.value | metafield_tag }}
+                        {{ b.content | metafield_tag }}
                       </div>
                     {% endif %}
                   </div>
@@ -273,19 +273,19 @@
               {% endfor %}
             </div>
 
-            {% if spec.tech_spec_detailed_description.value != blank %}
+            {% if spec.tech_spec_detailed_description != blank %}
               <details class="sk-specs__details">
                 <summary class="sk-specs__summary">
                   <span>Tekniske detaljer</span>
                   <span class="sk-specs__chev" aria-hidden="true"></span>
                 </summary>
                 <div class="sk-specs__details-body">
-                  {{ spec.tech_spec_detailed_description.value | metafield_tag }}
+                  {{ spec.tech_spec_detailed_description | metafield_tag }}
                 </div>
               </details>
             {% endif %}
           </div>
-        {% elsif spec.tech_spec_detailed_description.value != blank %}
+        {% elsif spec.tech_spec_detailed_description != blank %}
           <div class="sk-specs__card">
             <details class="sk-specs__details" open>
               <summary class="sk-specs__summary">
@@ -293,7 +293,7 @@
                 <span class="sk-specs__chev" aria-hidden="true"></span>
               </summary>
               <div class="sk-specs__details-body">
-                {{ spec.tech_spec_detailed_description.value | metafield_tag }}
+                {{ spec.tech_spec_detailed_description | metafield_tag }}
               </div>
             </details>
           </div>
