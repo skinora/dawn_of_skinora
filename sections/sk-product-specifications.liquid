@@ -42,7 +42,7 @@
     overflow:hidden;
     height:100%;
     min-height:clamp(416px, 62vh, 640px);
-    background: rgba(0,0,0,.02);
+    background: rgba(0,0,0,.04);
   }
 
   /* Image fills media box */
@@ -76,7 +76,7 @@
     padding:clamp(8px, 1vw, 12px) clamp(8px, 1.6vw, 16px);
     border-radius:999px;
     background:rgba(255,255,255,.88);
-    border:1px solid rgba(0,0,0,.08);
+    border:1px solid rgba(0,0,0,.10);
     box-shadow:0 8px 24px rgba(0,0,0,.12);
     font-family:var(--font-body-family);
     font-size:13px;
@@ -123,8 +123,8 @@
 
   /* Card */
   .sk-specs-{{ section.id }} .sk-specs__card{
-    background:rgba(0,0,0,.02);
-    border:1px solid rgba(0,0,0,.08);
+    background:rgba(0,0,0,.04);
+    border:1px solid rgba(0,0,0,.10);
     border-radius:16px;
     overflow:hidden;
   }
@@ -139,12 +139,12 @@
     grid-template-columns:28px 1fr;
     gap:clamp(12px, 1.6vw, 16px);
     padding:clamp(16px, 1.6vw, 20px) clamp(16px, 2vw, 24px);
-    border-bottom:1px solid rgba(0,0,0,.08);
+    border-bottom:1px solid rgba(0,0,0,.10);
     align-items:start;
   }
 
   .sk-specs-{{ section.id }} .sk-specs__cell:nth-child(odd){
-    border-right:1px solid rgba(0,0,0,.08);
+    border-right:1px solid rgba(0,0,0,.10);
   }
 
   /* FIX 1: if odd number of cells, make the last one full width on desktop */
@@ -229,7 +229,7 @@
 
   /* Accordion */
   .sk-specs-{{ section.id }} .sk-specs__details{
-    border-top:1px solid rgba(0,0,0,.08);
+    border-top:1px solid rgba(0,0,0,.10);
     background:rgba(255,255,255,.35);
   }
 
@@ -319,7 +319,7 @@
       align-items:start !important;
       padding:16px 16px;
       gap:12px;
-      border-bottom:1px solid rgba(0,0,0,.07);
+      border-bottom:1px solid rgba(0,0,0,.09);
     }
 
     .sk-specs-{{ section.id }} .sk-specs__h{
@@ -339,7 +339,7 @@
     .sk-specs-{{ section.id }} .sk-specs__card{
       border-radius:16px;
       background:rgba(0,0,0,.015);
-      border-color:rgba(0,0,0,.07);
+      border-color:rgba(0,0,0,.09);
     }
 
     .sk-specs-{{ section.id }} .sk-specs__summary{
