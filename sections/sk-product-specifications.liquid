@@ -14,6 +14,8 @@
   - tech_spec_detailed_description (rich text)
 
   3D: Product media (GLB) is rendered natively via Shopify media_tag (best UX).
+
+  PATCH: If odd number of tech cells, last cell becomes full-width on desktop (no fake filler).
 {% endcomment %}
 
 <style>
@@ -140,6 +142,14 @@
 
   .sk-specs-{{ section.id }} .sk-specs__cell:nth-child(odd){
     border-right:1px solid rgba(0,0,0,.08);
+  }
+
+  /* PATCH: if odd number of cells, make the last one full width on desktop */
+  @media (min-width: 991px){
+    .sk-specs-{{ section.id }} .sk-specs__grid .sk-specs__cell:last-child:nth-child(odd){
+      grid-column: 1 / -1;
+      border-right: none;
+    }
   }
 
   .sk-specs-{{ section.id }} .sk-specs__icon{
