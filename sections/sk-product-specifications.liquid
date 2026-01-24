@@ -166,6 +166,24 @@
     }
   }
 
+  @media (min-width: 991px){
+    .sk-specs-{{ section.id }} .sk-specs__cell--inline-list .sk-specs__desc ul{
+      list-style:none;
+      margin:0;
+      padding:0;
+    }
+    .sk-specs-{{ section.id }} .sk-specs__cell--inline-list .sk-specs__desc li{
+      display:inline;
+      margin:0;
+      padding:0;
+    }
+    .sk-specs-{{ section.id }} .sk-specs__cell--inline-list .sk-specs__desc li + li::before{
+      content:" • ";
+      color: var(--sk-brand);
+      opacity:.75;
+    }
+  }
+
   .sk-specs-{{ section.id }} .sk-specs__icon{
     width:28px;
     height:28px;
@@ -455,7 +473,15 @@
                   {% assign is_rich = true %}
                 {% endif %}
 
-                <div class="sk-specs__cell{% if is_rich %} sk-specs__cell--wide{% endif %}">
+                {% assign has_inline_list = false %}
+                {% if is_rich %}
+                  {% capture sk_specs_content_html %}{{ b.content | metafield_tag }}{% endcapture %}
+                  {% if sk_specs_content_html contains '<ul' or sk_specs_content_html contains '<ol' %}
+                    {% assign has_inline_list = true %}
+                  {% endif %}
+                {% endif %}
+
+                <div class="sk-specs__cell{% if is_rich %} sk-specs__cell--wide{% endif %}{% if has_inline_list %} sk-specs__cell--inline-list{% endif %}">
                   <div class="sk-specs__icon">
                     {% assign icon_img = b.icon.value %}
                     {% if icon_img != blank %}
