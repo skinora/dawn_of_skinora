@@ -15,10 +15,11 @@
 {% endcomment %}
 
 <style>
+  /* ===== Base / Desktop ===== */
   .sk-specs-{{ section.id }}{
     background:#fff;
     padding:64px 0;
-    margin: 0;
+    margin:0;
   }
 
   .sk-specs-{{ section.id }} .sk-specs__wrap{
@@ -28,14 +29,20 @@
     align-items:start;
   }
 
-  .sk-specs-{{ section.id }} .sk-specs__media{ position:relative; }
+  /* Control the desktop image size (prevents "HUUUUGE") */
+  .sk-specs-{{ section.id }} .sk-specs__media{
+    position:relative;
+    border-radius:18px;
+    overflow:hidden;
+    height:clamp(420px, 62vh, 640px); /* 👈 key desktop cap */
+  }
 
   .sk-specs-{{ section.id }} .sk-specs__img{
     width:100%;
-    height:auto;
+    height:100%;
     display:block;
-    border-radius:18px;
     object-fit:cover;
+    object-position:center;
   }
 
   .sk-specs-{{ section.id }} .sk-specs__h{
@@ -77,6 +84,7 @@
     gap:14px;
     padding:18px 20px;
     border-bottom:1px solid rgba(0,0,0,.08);
+    align-items:start;
   }
 
   .sk-specs-{{ section.id }} .sk-specs__cell:nth-child(odd){
@@ -98,6 +106,10 @@
     object-fit:contain;
   }
 
+  .sk-specs-{{ section.id }} .sk-specs__text{
+    min-width:0; /* prevents wrapping/overflow oddities */
+  }
+
   .sk-specs-{{ section.id }} .sk-specs__title{
     font-family:var(--font-heading-family);
     font-weight:600;
@@ -112,6 +124,7 @@
     font-size:14px;
     line-height:1.5;
     color:rgba(var(--sk-color-body-text),.9);
+    word-break:break-word;
   }
 
   /* Rich text hygiene */
@@ -167,20 +180,89 @@
   .sk-specs-{{ section.id }} .sk-specs__details-body ul{ margin:10px 0 0 18px; }
   .sk-specs-{{ section.id }} .sk-specs__details-body li{ margin:6px 0; }
 
+  /* ===== Tablet & Mobile ===== */
   @media (max-width:990px){
+    .sk-specs-{{ section.id }}{
+      padding:42px 0;
+    }
+
     .sk-specs-{{ section.id }} .sk-specs__wrap{
       grid-template-columns:1fr;
-      gap:26px;
+      gap:18px;
     }
-    .sk-specs-{{ section.id }} .sk-specs__grid{ grid-template-columns:1fr; }
-    .sk-specs-{{ section.id }} .sk-specs__cell:nth-child(odd){ border-right:none; }
+
+    /* Mobile image: use aspect-ratio (cleaner than fixed height) */
+    .sk-specs-{{ section.id }} .sk-specs__media{
+      height:auto;              /* override desktop clamp */
+      border-radius:18px;
+      overflow:hidden;
+    }
+
+    .sk-specs-{{ section.id }} .sk-specs__img{
+      width:100%;
+      height:auto;
+      aspect-ratio: 4 / 3;
+      object-fit:cover;
+      object-position:center;
+    }
+
+    .sk-specs-{{ section.id }} .sk-specs__grid{
+      grid-template-columns:1fr;
+    }
+
+    .sk-specs-{{ section.id }} .sk-specs__cell:nth-child(odd){
+      border-right:none;
+    }
+
+    /* Hardening against theme overrides */
+    .sk-specs-{{ section.id }} .sk-specs__cell{
+      display:grid !important;
+      grid-template-columns:28px 1fr !important;
+      align-items:start !important;
+      padding:14px 16px;
+      gap:12px;
+      border-bottom:1px solid rgba(0,0,0,.07);
+    }
+
+    .sk-specs-{{ section.id }} .sk-specs__h{
+      margin:6px 0 10px 0;
+      font-size:22px;
+      line-height:1.1;
+      letter-spacing:.05em;
+    }
+
+    .sk-specs-{{ section.id }} .sk-specs__sub{
+      margin:0 0 clamp(12px, 3vw, 16px) 0;
+      font-size:15.5px;
+      line-height:1.65;
+      max-width:62ch;
+    }
+
+    .sk-specs-{{ section.id }} .sk-specs__card{
+      border-radius:18px;
+      background:rgba(0,0,0,.015);
+      border-color:rgba(0,0,0,.07);
+    }
+
+    .sk-specs-{{ section.id }} .sk-specs__summary{
+      padding:16px 16px;
+      min-height:52px;
+    }
+
+    .sk-specs-{{ section.id }} .sk-specs__details-body{
+      padding:0 16px 16px 16px;
+      font-size:14px;
+      line-height:1.65;
+    }
   }
 
   @media (max-width:520px){
-    .sk-specs-{{ section.id }}{ padding:42px 0; }
-    .sk-specs-{{ section.id }} .sk-specs__cell{ padding:16px 16px; }
-    .sk-specs-{{ section.id }} .sk-specs__summary{ padding:14px 16px; }
-    .sk-specs-{{ section.id }} .sk-specs__details-body{ padding:0 16px 16px 16px; }
+    .sk-specs-{{ section.id }} .sk-specs__img{
+      aspect-ratio: 3 / 2;
+    }
+    .sk-specs-{{ section.id }} .sk-specs__h{
+      font-size:20px;
+    }
   }
 </style>
 
