@@ -14,9 +14,10 @@
   - tech_spec_detailed_description (rich text)
 
   3D: Product media (GLB) is rendered natively via Shopify media_tag (best UX).
-  PATCH: If odd number of tech cells, last cell becomes full-width on desktop (no fake filler).
-  PATCH: "Includes in the box" block: bullets -> premium inline list on desktop (keeps bullets on mobile).
-  PATCH: Desktop "weird padding" illusion fix: vertically center cell contents in each row.
+
+  FIXES (stable):
+  1) If odd number of cells, last cell spans full width on desktop.
+  2) Any block with rich text content spans both columns on desktop.
 {% endcomment %}
 
 <style>
@@ -25,7 +26,6 @@
     background:#fff;
     padding:64px 0;
     margin:0;
-    --sk-brand: var(--color-brand, rgb(48, 39, 62));
   }
 
   .sk-specs-{{ section.id }} .sk-specs__wrap{
@@ -146,11 +146,23 @@
     border-right:1px solid rgba(0,0,0,.08);
   }
 
-  /* PATCH: if odd number of cells, make the last one full width on desktop */
+  /* FIX 1: if odd number of cells, make the last one full width on desktop */
   @media (min-width: 991px){
     .sk-specs-{{ section.id }} .sk-specs__grid .sk-specs__cell:last-child:nth-child(odd){
       grid-column: 1 / -1;
       border-right: none;
+    }
+  }
+
+  @media (min-width: 991px){
+    .sk-specs-{{ section.id }} .sk-specs__grid .sk-specs__cell--wide{
+      grid-column: 1 / -1;
+      border-right: none !important; /* kills the middle divider */
+    }
+
+    /* ensure nth-child(odd) divider doesn't reappear */
+    .sk-specs-{{ section.id }} .sk-specs__grid .sk-specs__cell--wide:nth-child(odd){
+      border-right: none !important;
     }
   }
 
@@ -176,16 +188,16 @@
   .sk-specs-{{ section.id }} .sk-specs__title{
     font-family:var(--font-heading-family);
     font-weight:600;
-    font-size:15px;
-    line-height:1.2;
+    font-size:clamp(1.55rem, 0.6vw + 1.35rem, 1.9rem);
+    line-height:1.25;
     color:rgb(var(--sk-color-heading-text));
     margin-bottom:6px;
   }
 
   .sk-specs-{{ section.id }} .sk-specs__desc{
     font-family:var(--font-body-family);
-    font-size:14px;
-    line-height:1.5;
+    font-size:clamp(1.45rem, 0.5vw + 1.25rem, 1.8rem);
+    line-height:1.6;
     color:rgba(var(--sk-color-body-text),.9);
     word-break:break-word;
   }
@@ -195,45 +207,6 @@
   .sk-specs-{{ section.id }} .sk-specs__desc p + p{ margin-top:6px; }
   .sk-specs-{{ section.id }} .sk-specs__desc ul{ margin:8px 0 0 18px; }
   .sk-specs-{{ section.id }} .sk-specs__desc li{ margin:6px 0; }
-
-  /* Brand-colored bullets (markers) */
-  .sk-specs-{{ section.id }} .sk-specs__desc li::marker{ color: var(--sk-brand); }
-  .sk-specs-{{ section.id }} .sk-specs__details-body li::marker{ color: var(--sk-brand); }
-
-  /* PATCH: "Dette følger med..." list becomes inline on desktop */
-  @media (min-width: 991px){
-    .sk-specs-{{ section.id }} .sk-specs__cell--includes .sk-specs__desc ul{
-      list-style:none;
-      margin:0;
-      padding:0;
-    }
-    .sk-specs-{{ section.id }} .sk-specs__cell--includes .sk-specs__desc li{
-      display:inline;
-      margin:0;
-    }
-    .sk-specs-{{ section.id }} .sk-specs__cell--includes .sk-specs__desc li + li:before{
-      content:" • ";
-      color: var(--sk-brand);
-      opacity:.7;
-    }
-  }
-
-  /* PATCH: Fix the "weird padding" illusion on desktop:
-     grid rows match tallest cell; center content so it doesn't look bottom-heavy */
-  @media (min-width: 991px){
-    .sk-specs-{{ section.id }} .sk-specs__cell{
-      align-items:center;
-    }
-    .sk-specs-{{ section.id }} .sk-specs__icon{
-      align-self:center;
-      margin-top:0;
-    }
-    .sk-specs-{{ section.id }} .sk-specs__text{
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-    }
-  }
 
   /* Accordion */
   .sk-specs-{{ section.id }} .sk-specs__details{
@@ -284,7 +257,9 @@
 
   /* ===== Tablet & Mobile ===== */
   @media (max-width:990px){
-    .sk-specs-{{ section.id }}{ padding:42px 0; }
+    .sk-specs-{{ section.id }}{
+      padding:42px 0;
+    }
 
     .sk-specs-{{ section.id }} .sk-specs__wrap{
       grid-template-columns:1fr;
@@ -328,10 +303,6 @@
       border-bottom:1px solid rgba(0,0,0,.07);
     }
 
-    .sk-specs-{{ section.id }} .sk-specs__text{
-      display:block;
-    }
-
     .sk-specs-{{ section.id }} .sk-specs__h{
       margin:6px 0 10px 0;
       font-size:22px;
@@ -372,14 +343,16 @@
   }
 
   @media (max-width:520px){
-    .sk-specs-{{ section.id }} .sk-specs__img{ aspect-ratio: 3 / 2; }
-
+    .sk-specs-{{ section.id }} .sk-specs__img{
+      aspect-ratio: 3 / 2;
+    }
     .sk-specs-{{ section.id }} .sk-specs__media .sk-specs__model-media,
     .sk-specs-{{ section.id }} .sk-specs__media .media{
       aspect-ratio: 3 / 2;
     }
-
-    .sk-specs-{{ section.id }} .sk-specs__h{ font-size:20px; }
+    .sk-specs-{{ section.id }} .sk-specs__h{
+      font-size:20px;
+    }
   }
 </style>
 
@@ -411,7 +384,7 @@
 {% if spec != blank %}
   <section class="sk-specs-{{ section.id }}">
     <div class="page-width sk-specs__wrap">
-      <!-- Left: Media (Shopify native 3D model if present; otherwise image fallback) -->
+      <!-- Left: Media -->
       <div class="sk-specs__media">
         {% if product_model != blank %}
           {{ product_model | media_tag: class: 'sk-specs__model-media', image_size: '1200x' }}
@@ -477,15 +450,12 @@
           <div class="sk-specs__card" role="region" aria-label="Hovedspesifikasjoner">
             <div class="sk-specs__grid">
               {% for b in blocks %}
-                {% assign is_includes = false %}
-                {% if b.title != blank %}
-                  {% assign t = b.title | strip | downcase %}
-                  {% if t contains 'følger med' %}
-                    {% assign is_includes = true %}
-                  {% endif %}
+                {% assign is_rich = false %}
+                {% if b.content != blank %}
+                  {% assign is_rich = true %}
                 {% endif %}
 
-                <div class="sk-specs__cell{% if is_includes %} sk-specs__cell--includes{% endif %}">
+                <div class="sk-specs__cell{% if is_rich %} sk-specs__cell--wide{% endif %}">
                   <div class="sk-specs__icon">
                     {% assign icon_img = b.icon.value %}
                     {% if icon_img != blank %}
@@ -530,7 +500,6 @@
               </details>
             {% endif %}
           </div>
-
         {% elsif spec.tech_spec_detailed_description != blank %}
           <div class="sk-specs__card">
             <details class="sk-specs__details" open>
