@@ -310,19 +310,23 @@
       height:auto;
       border-radius:16px;
       overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .sk-specs-{{ section.id }} .sk-specs__img{
       width:100%;
       height:auto;
-      aspect-ratio: 6 / 5;
+      aspect-ratio: 3 / 2;
       object-fit:cover;
       object-position:center;
     }
 
     .sk-specs-{{ section.id }} .sk-specs__media .sk-specs__model-media,
     .sk-specs-{{ section.id }} .sk-specs__media .media{
-      aspect-ratio: 6 / 5;
+      width:100%;
+      aspect-ratio: 3 / 2;
       height:auto;
     }
 
@@ -384,11 +388,11 @@
 
   @media (max-width:520px){
     .sk-specs-{{ section.id }} .sk-specs__img{
-      aspect-ratio: 6 / 5;
+      aspect-ratio: 3 / 2;
     }
     .sk-specs-{{ section.id }} .sk-specs__media .sk-specs__model-media,
     .sk-specs-{{ section.id }} .sk-specs__media .media{
-      aspect-ratio: 6 / 5;
+      aspect-ratio: 3 / 2;
     }
     .sk-specs-{{ section.id }} .sk-specs__h{
       font-size:20px;
