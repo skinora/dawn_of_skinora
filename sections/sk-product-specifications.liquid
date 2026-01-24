@@ -12,6 +12,7 @@
       - content (rich text)
       - icon (file/image)
   - tech_spec_detailed_description (rich text)
+  - tech_spec_ai_seo (rich text, hidden)
 
   3D: Product media (GLB) is rendered natively via Shopify media_tag (best UX).
 
@@ -561,6 +562,12 @@
                 </summary>
                 <div class="sk-specs__details-body">
                   {{ spec.tech_spec_detailed_description | metafield_tag }}
+
+                  {% if spec.tech_spec_ai_seo != blank %}
+                    <div class="visually-hidden">
+                      {{ spec.tech_spec_ai_seo | metafield_tag }}
+                    </div>
+                  {% endif %}
                 </div>
               </details>
             {% endif %}
@@ -574,6 +581,12 @@
               </summary>
               <div class="sk-specs__details-body">
                 {{ spec.tech_spec_detailed_description | metafield_tag }}
+
+                {% if spec.tech_spec_ai_seo != blank %}
+                  <div class="visually-hidden">
+                    {{ spec.tech_spec_ai_seo | metafield_tag }}
+                  </div>
+                {% endif %}
               </div>
             </details>
           </div>
