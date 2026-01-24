@@ -170,7 +170,7 @@
     .sk-specs-{{ section.id }} .sk-specs__cell--inline-list .sk-specs__desc ul{
       list-style:none;
       margin:0;
-      padding:0 !important;
+      padding:0;
     }
     .sk-specs-{{ section.id }} .sk-specs__cell--inline-list .sk-specs__desc li{
       display:inline;
@@ -178,7 +178,7 @@
       padding:0;
     }
     .sk-specs-{{ section.id }} .sk-specs__cell--inline-list .sk-specs__desc li + li{
-      margin-top:0 !important;
+      margin-top:0;
     }
     .sk-specs-{{ section.id }} .sk-specs__cell--inline-list .sk-specs__desc li + li::before{
       content:" • ";
@@ -224,36 +224,6 @@
     line-height:1.6;
     color:rgba(var(--sk-color-body-text),.9);
     word-break:break-word;
-  }
-
-  /* Rich text hygiene (force-consistent title → first line spacing) */
-  .sk-specs-{{ section.id }} .sk-specs__desc,
-  .sk-specs-{{ section.id }} .sk-specs__desc .metafield-rich_text_field{
-    margin:0 !important;
-  }
-
-  .sk-specs-{{ section.id }} .sk-specs__desc .metafield-rich_text_field *{
-    margin:0 !important;
-  }
-
-  .sk-specs-{{ section.id }} .sk-specs__desc .metafield-rich_text_field p + p{
-    margin-top:8px !important;
-  }
-
-  .sk-specs-{{ section.id }} .sk-specs__desc .metafield-rich_text_field p + ul,
-  .sk-specs-{{ section.id }} .sk-specs__desc .metafield-rich_text_field p + ol,
-  .sk-specs-{{ section.id }} .sk-specs__desc .metafield-rich_text_field ul + p,
-  .sk-specs-{{ section.id }} .sk-specs__desc .metafield-rich_text_field ol + p{
-    margin-top:8px !important;
-  }
-
-  .sk-specs-{{ section.id }} .sk-specs__desc .metafield-rich_text_field ul,
-  .sk-specs-{{ section.id }} .sk-specs__desc .metafield-rich_text_field ol{
-    padding-left:16px !important;
-  }
-
-  .sk-specs-{{ section.id }} .sk-specs__desc .metafield-rich_text_field li + li{
-    margin-top:6px !important;
   }
 
   /* Accordion */
