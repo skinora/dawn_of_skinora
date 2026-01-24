@@ -79,7 +79,9 @@
     "sk_product_specifications_cJY9VW": {
       "type": "sk-product-specifications",
       "name": "SK Product Specifications",
-      "settings": {}
+      "settings": {
+        "specification": "tekniske-spesifikasjoner"
+      }
     },
     "sk_product_faq_accordion_EPRXLb": {
       "type": "sk-product-faq-accordion",
