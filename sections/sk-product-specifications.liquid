@@ -14,8 +14,8 @@
   - tech_spec_detailed_description (rich text)
 
   3D: Product media (GLB) is rendered natively via Shopify media_tag (best UX).
-
   PATCH: If odd number of tech cells, last cell becomes full-width on desktop (no fake filler).
+  PATCH: "Includes in the box" block: bullets -> premium inline list on desktop (keeps bullets on mobile).
 {% endcomment %}
 
 <style>
@@ -24,6 +24,7 @@
     background:#fff;
     padding:64px 0;
     margin:0;
+    --sk-brand: var(--color-brand, rgb(48, 39, 62));
   }
 
   .sk-specs-{{ section.id }} .sk-specs__wrap{
@@ -82,7 +83,7 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     user-select:none;
-    pointer-events:none; /* don’t block dragging the model */
+    pointer-events:none;
   }
 
   .sk-specs-{{ section.id }} .sk-specs__hint-dot{
@@ -194,6 +195,33 @@
   .sk-specs-{{ section.id }} .sk-specs__desc ul{ margin:8px 0 0 18px; }
   .sk-specs-{{ section.id }} .sk-specs__desc li{ margin:6px 0; }
 
+  /* Brand-colored bullets (markers) */
+  .sk-specs-{{ section.id }} .sk-specs__desc li::marker{
+    color: var(--sk-brand);
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__details-body li::marker{
+    color: var(--sk-brand);
+  }
+
+  /* PATCH: "Dette følger med..." list becomes inline on desktop */
+  @media (min-width: 991px){
+    .sk-specs-{{ section.id }} .sk-specs__cell--includes .sk-specs__desc ul{
+      list-style:none;
+      margin:0;
+      padding:0;
+    }
+    .sk-specs-{{ section.id }} .sk-specs__cell--includes .sk-specs__desc li{
+      display:inline;
+      margin:0;
+    }
+    .sk-specs-{{ section.id }} .sk-specs__cell--includes .sk-specs__desc li + li:before{
+      content:" • ";
+      color: var(--sk-brand);
+      opacity:.7;
+    }
+  }
+
   /* Accordion */
   .sk-specs-{{ section.id }} .sk-specs__details{
     border-top:1px solid rgba(0,0,0,.08);
@@ -258,7 +286,6 @@
       overflow:hidden;
     }
 
-    /* Consistent shape on mobile for image + 3D container */
     .sk-specs-{{ section.id }} .sk-specs__img{
       width:100%;
       height:auto;
@@ -267,7 +294,6 @@
       object-position:center;
     }
 
-    /* Force a stable box for Shopify's 3D UI on mobile */
     .sk-specs-{{ section.id }} .sk-specs__media .sk-specs__model-media,
     .sk-specs-{{ section.id }} .sk-specs__media .media{
       aspect-ratio: 4 / 3;
@@ -282,7 +308,6 @@
       border-right:none;
     }
 
-    /* Hardening against theme overrides */
     .sk-specs-{{ section.id }} .sk-specs__cell{
       display:grid !important;
       grid-template-columns:28px 1fr !important;
@@ -439,7 +464,15 @@
           <div class="sk-specs__card" role="region" aria-label="Hovedspesifikasjoner">
             <div class="sk-specs__grid">
               {% for b in blocks %}
-                <div class="sk-specs__cell">
+                {% assign is_includes = false %}
+                {% if b.title != blank %}
+                  {% assign t = b.title | strip | downcase %}
+                  {% if t contains 'følger med' %}
+                    {% assign is_includes = true %}
+                  {% endif %}
+                {% endif %}
+
+                <div class="sk-specs__cell{% if is_includes %} sk-specs__cell--includes{% endif %}">
                   <div class="sk-specs__icon">
                     {% assign icon_img = b.icon.value %}
                     {% if icon_img != blank %}
