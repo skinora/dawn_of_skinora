@@ -5,14 +5,15 @@
   Fields:
   - section_header (single line text)
   - subheader (single line text)
-  - main_image (file/image)
-  - main_model (file)  <-- GLB stored here
+  - main_image (file/image)        <-- used as poster / fallback
   - image_alt (single line text)
   - tech_details_blocks (list of metaobjects: tech_details_block)
       - title (single line)
       - content (rich text)
       - icon (file/image)
   - tech_spec_detailed_description (rich text)
+
+  3D: Product media (GLB) is rendered natively via Shopify media_tag (best UX).
 {% endcomment %}
 
 <style>
@@ -48,12 +49,14 @@
     object-position:center;
   }
 
-  /* 3D viewer fills media box */
-  .sk-specs-{{ section.id }} model-viewer.sk-specs__model{
+  /* Shopify native 3D model media should fill the media box */
+  .sk-specs-{{ section.id }} .sk-specs__media .sk-specs__model-media,
+  .sk-specs-{{ section.id }} .sk-specs__media .media,
+  .sk-specs-{{ section.id }} .sk-specs__media model-viewer,
+  .sk-specs-{{ section.id }} .sk-specs__media .shopify-model-viewer-ui{
     width:100%;
     height:100%;
     display:block;
-    background: transparent;
   }
 
   /* 3D hint overlay */
@@ -245,12 +248,20 @@
       overflow:hidden;
     }
 
-    /* Consistent shape on mobile for BOTH image + 3D */
-    .sk-specs-{{ section.id }} .sk-specs__img,
-    .sk-specs-{{ section.id }} model-viewer.sk-specs__model{
+    /* Consistent shape on mobile for image + 3D container */
+    .sk-specs-{{ section.id }} .sk-specs__img{
       width:100%;
       height:auto;
       aspect-ratio: 4 / 3;
+      object-fit:cover;
+      object-position:center;
+    }
+
+    /* Force a stable box for Shopify's 3D UI on mobile */
+    .sk-specs-{{ section.id }} .sk-specs__media .sk-specs__model-media,
+    .sk-specs-{{ section.id }} .sk-specs__media .media{
+      aspect-ratio: 4 / 3;
+      height:auto;
     }
 
     .sk-specs-{{ section.id }} .sk-specs__grid{
@@ -311,8 +322,11 @@
   }
 
   @media (max-width:520px){
-    .sk-specs-{{ section.id }} .sk-specs__img,
-    .sk-specs-{{ section.id }} model-viewer.sk-specs__model{
+    .sk-specs-{{ section.id }} .sk-specs__img{
+      aspect-ratio: 3 / 2;
+    }
+    .sk-specs-{{ section.id }} .sk-specs__media .sk-specs__model-media,
+    .sk-specs-{{ section.id }} .sk-specs__media .media{
       aspect-ratio: 3 / 2;
     }
     .sk-specs-{{ section.id }} .sk-specs__h{
@@ -340,49 +354,19 @@
     assign img = spec.main_image.value
   endif
 
-  assign model_file = blank
-  if spec != blank and spec.main_model != blank
-    assign model_file = spec.main_model.value
+  assign product_model = blank
+  if product
+    assign product_model = product.media | where: 'media_type', 'model' | first
   endif
 %}
-
-{%- comment -%}
-  Load model-viewer ONCE per page. We mark the page via a global window flag.
-{%- endcomment -%}
-<script>
-  window.__skModelViewerLoaded = window.__skModelViewerLoaded || false;
-</script>
 
 {% if spec != blank %}
   <section class="sk-specs-{{ section.id }}">
     <div class="page-width sk-specs__wrap">
-      <!-- Left: Media (3D if available, otherwise image) -->
+      <!-- Left: Media (Shopify native 3D model if present; otherwise image fallback) -->
       <div class="sk-specs__media">
-        {% if model_file != blank %}
-          <script>
-            if (!window.__skModelViewerLoaded) {
-              window.__skModelViewerLoaded = true;
-              var s = document.createElement('script');
-              s.type = 'module';
-              s.src = 'https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js';
-              document.head.appendChild(s);
-            }
-          </script>
-
-          <model-viewer
-            id="sk-model-{{ section.id }}"
-            class="sk-specs__model"
-            src="{{ model_file.url }}"
-            alt="{{ spec.image_alt | default: product.title | escape }}"
-            camera-controls
-            touch-action="pan-y"
-            interaction-prompt="none"
-            exposure="1"
-            shadow-intensity="0.3"
-            {% if img != blank %}
-              poster="{{ img | image_url: width: 1200 }}"
-            {% endif %}
-          ></model-viewer>
+        {% if product_model != blank %}
+          {{ product_model | media_tag: class: 'sk-specs__model-media', image_size: '1200x' }}
 
           <div id="sk-hint-{{ section.id }}" class="sk-specs__hint" aria-hidden="true">
             <span class="sk-specs__hint-dot"></span>
@@ -391,9 +375,9 @@
 
           <script>
             (function () {
-              var mv = document.getElementById('sk-model-{{ section.id }}');
+              var wrap = document.querySelector('.sk-specs-{{ section.id }} .sk-specs__media');
               var hint = document.getElementById('sk-hint-{{ section.id }}');
-              if (!mv || !hint) return;
+              if (!wrap || !hint) return;
 
               var hidden = false;
               var hide = function () {
@@ -402,11 +386,10 @@
                 hint.classList.add('is-hidden');
               };
 
-              mv.addEventListener('pointerdown', hide, { passive: true });
-              mv.addEventListener('mousedown', hide);
-              mv.addEventListener('touchstart', hide, { passive: true });
+              wrap.addEventListener('pointerdown', hide, { passive: true });
+              wrap.addEventListener('touchstart', hide, { passive: true });
+              wrap.addEventListener('mousedown', hide);
 
-              // Hide after a few seconds to keep it subtle
               setTimeout(hide, 5500);
             })();
           </script>
