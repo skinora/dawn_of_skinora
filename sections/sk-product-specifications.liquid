@@ -19,6 +19,10 @@
   FIXES (stable):
   1) If odd number of cells, last cell spans full width on desktop.
   2) Any block with rich text content spans both columns on desktop.
+
+  PATCH (important):
+  - Product metafield reference MUST win over section.settings override.
+    Otherwise one selected metaobject in Theme Editor can override all products.
 {% endcomment %}
 
 <style>
@@ -388,11 +392,19 @@
 {% liquid
   assign spec = null
 
-  if section.settings.specification != blank
-    assign spec = section.settings.specification
-  elsif product and product.metafields.custom.product_specification != blank
+  comment
+    PATCH: Product metafield MUST win. Theme Editor selection becomes fallback only.
+  endcomment
+  if product and product.metafields.custom.product_specification != blank
     assign spec = product.metafields.custom.product_specification.value
+  elsif section.settings.specification != blank
+    assign spec = section.settings.specification
   endif
+
+  comment
+    OPTIONAL DEBUG (uncomment to verify correct mapping per product):
+    <p style="font-size:12px;opacity:.7">DEBUG: {{ product.title }} | {{ spec.handle }}</p>
+  endcomment
 
   assign blocks = blank
   if spec != blank and spec.tech_details_blocks != blank
