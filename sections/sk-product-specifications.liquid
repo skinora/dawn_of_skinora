@@ -307,18 +307,16 @@
     }
 
     .sk-specs-{{ section.id }} .sk-specs__media{
-      height:auto;
+      width:100%;
+      aspect-ratio: 3 / 2;
       border-radius:16px;
       overflow:hidden;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      height:auto;
     }
 
     .sk-specs-{{ section.id }} .sk-specs__img{
       width:100%;
-      height:auto;
-      aspect-ratio: 3 / 2;
+      height:100%;
       object-fit:cover;
       object-position:center;
     }
@@ -326,8 +324,7 @@
     .sk-specs-{{ section.id }} .sk-specs__media .sk-specs__model-media,
     .sk-specs-{{ section.id }} .sk-specs__media .media{
       width:100%;
-      aspect-ratio: 3 / 2;
-      height:auto;
+      height:100%;
     }
 
     .sk-specs-{{ section.id }} .sk-specs__grid{
@@ -387,13 +384,6 @@
   }
 
   @media (max-width:520px){
-    .sk-specs-{{ section.id }} .sk-specs__img{
-      aspect-ratio: 3 / 2;
-    }
-    .sk-specs-{{ section.id }} .sk-specs__media .sk-specs__model-media,
-    .sk-specs-{{ section.id }} .sk-specs__media .media{
-      aspect-ratio: 3 / 2;
-    }
     .sk-specs-{{ section.id }} .sk-specs__h{
       font-size:20px;
     }
@@ -444,12 +434,41 @@
               var hint = document.getElementById('sk-hint-{{ section.id }}');
               if (!wrap || !hint) return;
 
+              var mq = window.matchMedia && window.matchMedia('(max-width: 990px)');
+              var modelViewer = wrap.querySelector('model-viewer');
+
               var hidden = false;
               var hide = function () {
                 if (hidden) return;
                 hidden = true;
                 hint.classList.add('is-hidden');
               };
+
+              var applyMobileZoom = function () {
+                if (!modelViewer || !mq || !mq.matches) return;
+
+                try {
+                  if (typeof modelViewer.getCameraOrbit === 'function') {
+                    var orbit = modelViewer.getCameraOrbit();
+                    if (orbit && typeof orbit.radius === 'number' && orbit.radius > 0) {
+                      var nextRadius = orbit.radius * 0.85;
+                      modelViewer.setAttribute(
+                        'camera-orbit',
+                        orbit.theta + 'rad ' + orbit.phi + 'rad ' + nextRadius + 'm'
+                      );
+                      return;
+                    }
+                  }
+
+                  modelViewer.setAttribute('camera-orbit', '0deg 75deg 2.6m');
+                } catch (e) {
+                  // no-op
+                }
+              };
+
+              if (modelViewer) {
+                modelViewer.addEventListener('load', applyMobileZoom);
+              }
 
               wrap.addEventListener('pointerdown', hide, { passive: true });
               wrap.addEventListener('touchstart', hide, { passive: true });
