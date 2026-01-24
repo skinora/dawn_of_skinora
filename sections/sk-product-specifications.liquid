@@ -16,6 +16,7 @@
   3D: Product media (GLB) is rendered natively via Shopify media_tag (best UX).
   PATCH: If odd number of tech cells, last cell becomes full-width on desktop (no fake filler).
   PATCH: "Includes in the box" block: bullets -> premium inline list on desktop (keeps bullets on mobile).
+  PATCH: Desktop "weird padding" illusion fix: vertically center cell contents in each row.
 {% endcomment %}
 
 <style>
@@ -196,13 +197,8 @@
   .sk-specs-{{ section.id }} .sk-specs__desc li{ margin:6px 0; }
 
   /* Brand-colored bullets (markers) */
-  .sk-specs-{{ section.id }} .sk-specs__desc li::marker{
-    color: var(--sk-brand);
-  }
-
-  .sk-specs-{{ section.id }} .sk-specs__details-body li::marker{
-    color: var(--sk-brand);
-  }
+  .sk-specs-{{ section.id }} .sk-specs__desc li::marker{ color: var(--sk-brand); }
+  .sk-specs-{{ section.id }} .sk-specs__details-body li::marker{ color: var(--sk-brand); }
 
   /* PATCH: "Dette følger med..." list becomes inline on desktop */
   @media (min-width: 991px){
@@ -219,6 +215,23 @@
       content:" • ";
       color: var(--sk-brand);
       opacity:.7;
+    }
+  }
+
+  /* PATCH: Fix the "weird padding" illusion on desktop:
+     grid rows match tallest cell; center content so it doesn't look bottom-heavy */
+  @media (min-width: 991px){
+    .sk-specs-{{ section.id }} .sk-specs__cell{
+      align-items:center;
+    }
+    .sk-specs-{{ section.id }} .sk-specs__icon{
+      align-self:center;
+      margin-top:0;
+    }
+    .sk-specs-{{ section.id }} .sk-specs__text{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
     }
   }
 
@@ -271,9 +284,7 @@
 
   /* ===== Tablet & Mobile ===== */
   @media (max-width:990px){
-    .sk-specs-{{ section.id }}{
-      padding:42px 0;
-    }
+    .sk-specs-{{ section.id }}{ padding:42px 0; }
 
     .sk-specs-{{ section.id }} .sk-specs__wrap{
       grid-template-columns:1fr;
@@ -317,6 +328,10 @@
       border-bottom:1px solid rgba(0,0,0,.07);
     }
 
+    .sk-specs-{{ section.id }} .sk-specs__text{
+      display:block;
+    }
+
     .sk-specs-{{ section.id }} .sk-specs__h{
       margin:6px 0 10px 0;
       font-size:22px;
@@ -357,16 +372,14 @@
   }
 
   @media (max-width:520px){
-    .sk-specs-{{ section.id }} .sk-specs__img{
-      aspect-ratio: 3 / 2;
-    }
+    .sk-specs-{{ section.id }} .sk-specs__img{ aspect-ratio: 3 / 2; }
+
     .sk-specs-{{ section.id }} .sk-specs__media .sk-specs__model-media,
     .sk-specs-{{ section.id }} .sk-specs__media .media{
       aspect-ratio: 3 / 2;
     }
-    .sk-specs-{{ section.id }} .sk-specs__h{
-      font-size:20px;
-    }
+
+    .sk-specs-{{ section.id }} .sk-specs__h{ font-size:20px; }
   }
 </style>
 
@@ -517,6 +530,7 @@
               </details>
             {% endif %}
           </div>
+
         {% elsif spec.tech_spec_detailed_description != blank %}
           <div class="sk-specs__card">
             <details class="sk-specs__details" open>
