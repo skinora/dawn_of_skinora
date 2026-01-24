@@ -6,6 +6,7 @@
   - section_header (single line text)
   - subheader (single line text)
   - main_image (file/image)
+  - main_model (file)  <-- GLB stored here
   - image_alt (single line text)
   - tech_details_blocks (list of metaobjects: tech_details_block)
       - title (single line)
@@ -29,20 +30,67 @@
     align-items:start;
   }
 
-  /* Control the desktop image size (prevents "HUUUUGE") */
+  /* Controlled media height on desktop */
   .sk-specs-{{ section.id }} .sk-specs__media{
     position:relative;
     border-radius:18px;
     overflow:hidden;
-    height:clamp(420px, 62vh, 640px); /* 👈 key desktop cap */
+    height:clamp(420px, 62vh, 640px);
+    background: rgba(0,0,0,.02);
   }
 
+  /* Image fills media box */
   .sk-specs-{{ section.id }} .sk-specs__img{
     width:100%;
     height:100%;
     display:block;
     object-fit:cover;
     object-position:center;
+  }
+
+  /* 3D viewer fills media box */
+  .sk-specs-{{ section.id }} model-viewer.sk-specs__model{
+    width:100%;
+    height:100%;
+    display:block;
+    background: transparent;
+  }
+
+  /* 3D hint overlay */
+  .sk-specs-{{ section.id }} .sk-specs__hint{
+    position:absolute;
+    left:14px;
+    bottom:14px;
+    z-index:3;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 12px;
+    border-radius:999px;
+    background:rgba(255,255,255,.88);
+    border:1px solid rgba(0,0,0,.08);
+    box-shadow:0 8px 24px rgba(0,0,0,.12);
+    font-family:var(--font-body-family);
+    font-size:13px;
+    line-height:1;
+    color:rgba(var(--sk-color-heading-text),.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    user-select:none;
+    pointer-events:none; /* don’t block dragging the model */
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__hint-dot{
+    width:8px;
+    height:8px;
+    border-radius:999px;
+    background:rgba(var(--sk-color-heading-text),.55);
+  }
+
+  .sk-specs-{{ section.id }} .sk-specs__hint.is-hidden{
+    opacity:0;
+    transform:translateY(6px);
+    transition:opacity .25s ease, transform .25s ease;
   }
 
   .sk-specs-{{ section.id }} .sk-specs__h{
@@ -107,7 +155,7 @@
   }
 
   .sk-specs-{{ section.id }} .sk-specs__text{
-    min-width:0; /* prevents wrapping/overflow oddities */
+    min-width:0;
   }
 
   .sk-specs-{{ section.id }} .sk-specs__title{
@@ -191,19 +239,18 @@
       gap:18px;
     }
 
-    /* Mobile image: use aspect-ratio (cleaner than fixed height) */
     .sk-specs-{{ section.id }} .sk-specs__media{
-      height:auto;              /* override desktop clamp */
+      height:auto;
       border-radius:18px;
       overflow:hidden;
     }
 
-    .sk-specs-{{ section.id }} .sk-specs__img{
+    /* Consistent shape on mobile for BOTH image + 3D */
+    .sk-specs-{{ section.id }} .sk-specs__img,
+    .sk-specs-{{ section.id }} model-viewer.sk-specs__model{
       width:100%;
       height:auto;
       aspect-ratio: 4 / 3;
-      object-fit:cover;
-      object-position:center;
     }
 
     .sk-specs-{{ section.id }} .sk-specs__grid{
@@ -254,10 +301,18 @@
       font-size:14px;
       line-height:1.65;
     }
+
+    .sk-specs-{{ section.id }} .sk-specs__hint{
+      left:12px;
+      bottom:12px;
+      font-size:12.5px;
+      padding:9px 11px;
+    }
   }
 
   @media (max-width:520px){
-    .sk-specs-{{ section.id }} .sk-specs__img{
+    .sk-specs-{{ section.id }} .sk-specs__img,
+    .sk-specs-{{ section.id }} model-viewer.sk-specs__model{
       aspect-ratio: 3 / 2;
     }
     .sk-specs-{{ section.id }} .sk-specs__h{
@@ -279,15 +334,84 @@
   if spec != blank and spec.tech_details_blocks != blank
     assign blocks = spec.tech_details_blocks.value
   endif
+
+  assign img = blank
+  if spec != blank and spec.main_image != blank
+    assign img = spec.main_image.value
+  endif
+
+  assign model_file = blank
+  if spec != blank and spec.main_model != blank
+    assign model_file = spec.main_model.value
+  endif
 %}
+
+{%- comment -%}
+  Load model-viewer ONCE per page. We mark the page via a global window flag.
+{%- endcomment -%}
+<script>
+  window.__skModelViewerLoaded = window.__skModelViewerLoaded || false;
+</script>
 
 {% if spec != blank %}
   <section class="sk-specs-{{ section.id }}">
     <div class="page-width sk-specs__wrap">
-      <!-- Left: Image -->
+      <!-- Left: Media (3D if available, otherwise image) -->
       <div class="sk-specs__media">
-        {% assign img = spec.main_image.value %}
-        {% if img != blank %}
+        {% if model_file != blank %}
+          <script>
+            if (!window.__skModelViewerLoaded) {
+              window.__skModelViewerLoaded = true;
+              var s = document.createElement('script');
+              s.type = 'module';
+              s.src = 'https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js';
+              document.head.appendChild(s);
+            }
+          </script>
+
+          <model-viewer
+            id="sk-model-{{ section.id }}"
+            class="sk-specs__model"
+            src="{{ model_file.url }}"
+            alt="{{ spec.image_alt | default: product.title | escape }}"
+            camera-controls
+            touch-action="pan-y"
+            interaction-prompt="none"
+            exposure="1"
+            shadow-intensity="0.3"
+            {% if img != blank %}
+              poster="{{ img | image_url: width: 1200 }}"
+            {% endif %}
+          ></model-viewer>
+
+          <div id="sk-hint-{{ section.id }}" class="sk-specs__hint" aria-hidden="true">
+            <span class="sk-specs__hint-dot"></span>
+            <span>Trykk og dra for å rotere</span>
+          </div>
+
+          <script>
+            (function () {
+              var mv = document.getElementById('sk-model-{{ section.id }}');
+              var hint = document.getElementById('sk-hint-{{ section.id }}');
+              if (!mv || !hint) return;
+
+              var hidden = false;
+              var hide = function () {
+                if (hidden) return;
+                hidden = true;
+                hint.classList.add('is-hidden');
+              };
+
+              mv.addEventListener('pointerdown', hide, { passive: true });
+              mv.addEventListener('mousedown', hide);
+              mv.addEventListener('touchstart', hide, { passive: true });
+
+              // Hide after a few seconds to keep it subtle
+              setTimeout(hide, 5500);
+            })();
+          </script>
+
+        {% elsif img != blank %}
           <img
             class="sk-specs__img"
             src="{{ img | image_url: width: 1200 }}"
