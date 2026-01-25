@@ -306,16 +306,16 @@
           "type": "card",
           "settings": {
             "icon": "guarantee",
-            "title": "60 dagers fornøydgaranti",
-            "subline": "Trygg test hjemme"
+            "title": "Sendes fra vårt lager i Norge",
+            "subline": "Rask levering"
           }
         },
         "card_UNdbkW": {
           "type": "card",
           "settings": {
             "icon": "guarantee",
-            "title": "60 dagers fornøydgaranti",
-            "subline": "Trygg test hjemme"
+            "title": "Gratis frakt",
+            "subline": "På alle bestillinger"
           }
         }
       },
