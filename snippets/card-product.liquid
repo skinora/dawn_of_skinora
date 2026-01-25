@@ -3,6 +3,7 @@
 {%- endcomment -%}
 
 {%- assign product = card_product -%}
+{%- assign hover_image = product.images[1] -%}
 
 <div class="cb-card">
   <!-- IMAGE -->
@@ -10,13 +11,25 @@
     <div class="cb-card__image-wrapper">
       {%- if product.featured_media -%}
         <img
-          src="{{ product.featured_media | image_url: width: 600 }}"
-          alt="{{ product.featured_media.alt | escape }}"
-          class="cb-card__image"
+          class="cb-card__image cb-card__image-primary"
+          src="{{ product.featured_media | image_url: width: 540, height: 675, crop: 'center' }}"
+          alt="{{ product.featured_media.alt | default: product.title | escape }}"
           loading="lazy"
-          width="{{ product.featured_media.width }}"
-          height="{{ product.featured_media.height }}"
+          width="540"
+          height="675"
+          fetchpriority="high"
         >
+
+        {%- if hover_image -%}
+          <img
+            class="cb-card__image cb-card__image-secondary"
+            src="{{ hover_image | image_url: width: 540, height: 675, crop: 'center' }}"
+            alt="{{ hover_image.alt | default: product.title | escape }}"
+            loading="lazy"
+            width="540"
+            height="675"
+          >
+        {%- endif -%}
       {%- else -%}
         {{ 'product-apparel-2' | placeholder_svg_tag: 'cb-card__image' }}
       {%- endif -%}
@@ -44,7 +57,7 @@
 
     {%- if short_description != blank -%}
       <p class="cb-card__subtitle">
-        {{ short_description | truncate: 110 }}
+        {{ short_description }}
       </p>
     {%- endif -%}
 
@@ -121,13 +134,13 @@
 
       <button
         type="submit"
-        class="cb-card__button"
+        class="sk-btn sk-btn--primary"
         {% unless product.available %}
           disabled
         {% endunless %}
       >
         {% if product.available %}
-          {{ 'products.product.add_to_cart' | t }}
+          KJØP +
         {% else %}
           {{ 'products.product.sold_out' | t }}
         {% endif %}
