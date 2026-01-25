@@ -33,6 +33,12 @@
   max-width: 300px;
 }
 
+@media screen and (min-width: 990px) {
+  .footer__column--brand {
+    margin-inline-end: clamp(1.5rem, 2.5vw, 3rem);
+  }
+}
+
 .footer__column--menu {
   flex: 0.8;
 }
@@ -91,13 +97,16 @@
 
 .footer__newsletter-form .newsletter-form__button {
   position: absolute;
-  right: 0;
+  right: 0 !important;
   top: 0;
   bottom: 0;
   width: 4rem;
   border: none;
   background: transparent;
   cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 0 2rem 2rem 0;
 }
 
 .footer__social-icons {
@@ -294,13 +303,19 @@
   footer .footer_submit_btn {
     min-height: 44px;
     width: auto !important;
-    padding: 0 2rem;
+    padding: 0;
     white-space: nowrap;
   }
 
   .news_letter_join-btn {
-    padding: 0.8rem 2.4rem;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2rem;
     font-size: 1.4rem;
+    border-radius: 0 2rem 2rem 0;
   }
 
   /* Social icons - bigger tap targets */
@@ -974,8 +989,13 @@ footer .field__input:focus {
 .news_letter_join-btn {
   background: var(--color-brand, #30273e);
   color: var(--color-white, #fff);
-  padding: 8px 28px;
-  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  border-radius: 0 2rem 2rem 0;
 }
 
 footer .list-social__item a {
@@ -993,9 +1013,10 @@ footer .list-social__item a:hover {
 
 footer .footer_submit_btn {
   display: flex;
-  gap: 8px;
+  gap: 0;
   width: 136px !important;
   font-size: var(--sk-font-size-medium) !important;
+  padding: 0 !important;
 }
 
 p.newsletter-subtext {
