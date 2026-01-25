@@ -4,6 +4,8 @@
 
 {%- assign product = card_product -%}
 {%- assign hover_image = product.images[1] -%}
+{%- assign card_section_id = section_id | default: 'collection' -%}
+{%- assign product_form_id = 'cb-card-product-form-' | append: card_section_id | append: '-' | append: product.id -%}
 
 <div class="cb-card">
   <!-- IMAGE -->
@@ -79,72 +81,126 @@
 
     <!-- ADD TO CART BUTTON & VARIANTS -->
     {%- assign variant_count = product.variants | size -%}
-    {% form 'product', product, class: 'cb-card__cart' %}
-      {%- if variant_count > 1 -%}
-        {%- assign option_count = product.options | size -%}
-        {%- if option_count == 1 -%}
-          <div class="cb-card__variants" role="radiogroup" aria-label="{{ product.options.first }}">
-            {%- for variant in product.variants -%}
-              <label
-                class="cb-card__variant-swatch{% unless variant.available %} is-disabled{% endunless %}"
-                title="{{ variant.option1 | escape }}"
-                aria-label="{{ variant.option1 | escape }}"
-              >
-                <input
-                  class="cb-card__variant-input"
-                  type="radio"
-                  name="id"
-                  value="{{ variant.id }}"
-                  {% if variant == product.selected_or_first_available_variant %}
-                    checked
-                  {% endif %}
-                  {% unless variant.available %}
-                    disabled
-                  {% endunless %}
-                >
-                <span class="cb-card__variant-chip">{{ variant.option1 | truncate: 6, '' }}</span>
-              </label>
-            {%- endfor -%}
-          </div>
-        {%- else -%}
-          <div class="cb-card__variants cb-card__variants--dropdown">
-            <label class="visually-hidden" for="CardVariantSelect-{{ product.id }}">
-              {{ 'products.product.choose_options' | t }}
-            </label>
-            <select id="CardVariantSelect-{{ product.id }}" name="id" class="cb-card__variant-select">
-              {%- for variant in product.variants -%}
-                <option
-                  value="{{ variant.id }}"
-                  {% if variant == product.selected_or_first_available_variant %}
-                    selected
-                  {% endif %}
-                  {% unless variant.available %}
-                    disabled
-                  {% endunless %}
-                >
-                  {{ variant.title }}
-                </option>
-              {%- endfor -%}
-            </select>
-          </div>
-        {%- endif -%}
-      {%- else -%}
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-      {%- endif -%}
 
-      <button
-        type="submit"
-        class="sk-btn sk-btn--primary"
-        {% unless product.available %}
-          disabled
-        {% endunless %}
-      >
-        {% if product.available %}
-          KJØP +
-        {% else %}
-          {{ 'products.product.sold_out' | t }}
-        {% endif %}
-      </button>
-    {% endform %}
+    <product-form data-section-id="{{ card_section_id }}-{{ product.id }}">
+      <div class="product-form__error-message-wrapper" role="alert" hidden>
+        <span class="svg-wrapper">
+          {{- 'icon-error.svg' | inline_asset_content -}}
+        </span>
+        <span class="product-form__error-message"></span>
+      </div>
+
+      {%- form 'product',
+        product,
+        id: product_form_id,
+        class: 'cb-card__cart',
+        novalidate: 'novalidate',
+        data-type: 'add-to-cart-form'
+      -%}
+        {%- if variant_count > 1 -%}
+          {%- assign option_count = product.options | size -%}
+          {%- if option_count == 1 -%}
+            <input
+              type="hidden"
+              name="id"
+              value="{{ product.selected_or_first_available_variant.id }}"
+              data-sk-selected-variant-id
+            >
+
+            <div class="cb-card__variants" role="radiogroup" aria-label="{{ product.options.first }}">
+              {%- for variant in product.variants -%}
+                <label
+                  class="cb-card__variant-swatch{% unless variant.available %} is-disabled{% endunless %}"
+                  title="{{ variant.option1 | escape }}"
+                  aria-label="{{ variant.option1 | escape }}"
+                >
+                  <input
+                    class="cb-card__variant-input"
+                    type="radio"
+                    name="cb-card-variant-{{ product.id }}"
+                    value="{{ variant.id }}"
+                    {% if variant == product.selected_or_first_available_variant %}
+                      checked
+                    {% endif %}
+                    {% unless variant.available %}
+                      disabled
+                    {% endunless %}
+                  >
+                  <span class="cb-card__variant-chip">{{ variant.option1 | truncate: 6, '' }}</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            <div class="cb-card__variants cb-card__variants--dropdown">
+              <label class="visually-hidden" for="CardVariantSelect-{{ product.id }}">
+                {{ 'products.product.choose_options' | t }}
+              </label>
+              <select id="CardVariantSelect-{{ product.id }}" name="id" class="cb-card__variant-select">
+                {%- for variant in product.variants -%}
+                  <option
+                    value="{{ variant.id }}"
+                    {% if variant == product.selected_or_first_available_variant %}
+                      selected
+                    {% endif %}
+                    {% unless variant.available %}
+                      disabled
+                    {% endunless %}
+                  >
+                    {{ variant.title }}
+                  </option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endif -%}
+        {%- else -%}
+          <input
+            type="hidden"
+            name="id"
+            value="{{ product.selected_or_first_available_variant.id }}"
+            data-sk-selected-variant-id
+          >
+        {%- endif -%}
+
+        <button
+          type="submit"
+          name="add"
+          class="sk-btn sk-btn--primary"
+          {% unless product.available %}
+            disabled
+          {% endunless %}
+        >
+          <span>
+            {% if product.available %}
+              KJØP +
+            {% else %}
+              {{ 'products.product.sold_out' | t }}
+            {% endif %}
+          </span>
+          <div class="loading__spinner hidden">
+            <span class="svg-wrapper">
+              {{- 'loading-spinner.svg' | inline_asset_content -}}
+            </span>
+          </div>
+        </button>
+      {%- endform -%}
+    </product-form>
   </div>
 </div>
+
+<script>
+  (function initSkCbCardVariantSync() {
+    if (window.__SK_CB_CARD_VARIANT_SYNC_INIT__) return;
+    window.__SK_CB_CARD_VARIANT_SYNC_INIT__ = true;
+
+    document.addEventListener('change', function (event) {
+      var input = event.target;
+      if (!input || !input.classList || !input.classList.contains('cb-card__variant-input')) return;
+
+      var form = input.closest('form');
+      if (!form) return;
+      var hiddenId = form.querySelector('[name="id"][data-sk-selected-variant-id]');
+      if (!hiddenId) return;
+      hiddenId.value = input.value;
+    });
+  })();
+</script>
