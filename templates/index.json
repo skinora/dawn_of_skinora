@@ -412,6 +412,42 @@
         "padding_top": 80,
         "padding_bottom": 80
       }
+    },
+    "sk_features_dbTyyp": {
+      "type": "sk-features",
+      "blocks": {
+        "card_g8bBM4": {
+          "type": "card",
+          "settings": {
+            "icon": "guarantee",
+            "title": "60 dagers fornøydgaranti",
+            "subline": "Trygg test hjemme"
+          }
+        },
+        "card_Mdyedk": {
+          "type": "card",
+          "settings": {
+            "icon": "guarantee",
+            "title": "Sendes fra vårt lager i Norge",
+            "subline": "Rask levering"
+          }
+        },
+        "card_BAczxH": {
+          "type": "card",
+          "settings": {
+            "icon": "guarantee",
+            "title": "Gratis frakt",
+            "subline": "På alle bestillinger"
+          }
+        }
+      },
+      "block_order": [
+        "card_g8bBM4",
+        "card_Mdyedk",
+        "card_BAczxH"
+      ],
+      "name": "SK Features",
+      "settings": {}
     }
   },
   "order": [
@@ -422,6 +458,7 @@
     "sk_led_technology_kjwDjX",
     "sk_features_pHkfMf",
     "sk_radiance_meq7Gb",
-    "sk_faq_accordion_GcMDDq"
+    "sk_faq_accordion_GcMDDq",
+    "sk_features_dbTyyp"
   ]
 }
