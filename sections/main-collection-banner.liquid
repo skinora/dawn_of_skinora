@@ -2,15 +2,72 @@
 {{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
+  .collection-hero.section-{{ section.id }} {
+    --sk-collection-header-max: {{ section.settings.header_max_width }}px;
+    --sk-collection-text-align: {{ section.settings.header_align }};
+  }
+
+  .collection-hero.section-{{ section.id }} .collection-hero__inner {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .collection-hero.section-{{ section.id }} .collection-hero__text-wrapper {
+    max-width: var(--sk-collection-header-max);
+    margin-inline: auto;
+    text-align: var(--sk-collection-text-align);
+  }
+
+  .collection-hero.section-{{ section.id }} .collection-hero__title {
+    margin: 0;
+  }
+
+  .collection-hero.section-{{ section.id }} .sk-collection-hero__subheading {
+    margin: 12px 0 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: rgba(var(--color-foreground), 0.72);
+  }
+
+  .collection-hero.section-{{ section.id }} .sk-collection-hero__divider {
+    height: 1px;
+    background: rgba(var(--color-foreground), 0.12);
+    margin: 16px auto 0;
+    width: 100%;
+  }
+
+  .collection-hero.section-{{ section.id }} .sk-collection-hero__description {
+    margin-top: 24px;
+  }
+
   @media screen and (max-width: 749px) {
+    .collection-hero.section-{{ section.id }} .collection-hero__inner {
+      padding-top: 28px;
+      padding-bottom: 28px;
+    }
+
+    .collection-hero.section-{{ section.id }} .sk-collection-hero__description {
+      margin-top: 20px;
+    }
+
     .collection-hero--with-image .collection-hero__inner {
-      padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
+      padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 32px);
     }
   }
 {%- endstyle -%}
 
-<div class="collection-hero color-{{ section.settings.color_scheme }} gradient">
-  {%- if section.settings.show_collection_image and section.settings.hero_image -%}
+{%- assign hero_title = section.settings.heading_override | default: collection.title -%}
+{%- assign subheading_plain = section.settings.subheading | strip_html | strip -%}
+{%- assign has_collection_image = false -%}
+{%- if section.settings.show_collection_image -%}
+  {%- if section.settings.hero_image != blank or collection.image != blank -%}
+    {%- assign has_collection_image = true -%}
+  {%- endif -%}
+{%- endif -%}
+
+<div class="collection-hero section-{{ section.id }} color-{{ section.settings.color_scheme }} gradient{% if has_collection_image %} collection-hero--with-image{% endif %}">
+  {%- if has_collection_image -%}
     <div class="collection-hero__image-full">
       {%- if section.settings.hero_image -%}
         {{ section.settings.hero_image | image_url: width: 2400 | image_tag: loading: 'lazy', alt: collection.title }}
@@ -24,16 +81,25 @@
     <div class="collection-hero__text-wrapper">
       <h1 class="collection-hero__title">
         <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
+        {{- hero_title | escape -}}
       </h1>
 
+      {%- if subheading_plain != blank -%}
+        <p class="sk-collection-hero__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.show_divider -%}
+        <div class="sk-collection-hero__divider" aria-hidden="true"></div>
+      {%- endif -%}
+
       {%- if section.settings.show_collection_description -%}
-        <div class="collection-hero__description rte">{{ collection.description }}</div>
+        <div class="sk-collection-hero__description">
+          <div class="collection-hero__description rte">{{ collection.description }}</div>
+        </div>
       {%- endif -%}
     </div>
   </div>
 </div>
-
 
 {% schema %}
 {
@@ -43,6 +109,43 @@
     {
       "type": "paragraph",
       "content": "t:sections.main-collection-banner.settings.paragraph.content"
+    },
+    {
+      "type": "text",
+      "id": "heading_override",
+      "label": "Heading override",
+      "info": "Optional. If blank, uses collection title."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show divider",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "header_max_width",
+      "min": 480,
+      "max": 960,
+      "step": 16,
+      "unit": "px",
+      "label": "Header max width",
+      "default": 720
+    },
+    {
+      "type": "select",
+      "id": "header_align",
+      "label": "Header alignment",
+      "default": "center",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left", "label": "Left" }
+      ]
     },
     {
       "type": "checkbox",
