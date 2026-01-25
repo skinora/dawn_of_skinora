@@ -9,13 +9,14 @@
 
 {%- assign page_title = page.metafields.custom.legal_title -%}
 {%- assign page_content = page.metafields.custom.legal_content -%}
+{%- assign resolved_heading = page_title.value | default: section.settings.heading -%}
 
 <div class="sk-content-section section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="page-width">
     <div class="sk-content-section__wrapper">
-      {%- if page_title != blank or section.settings.heading != blank -%}
+      {%- if resolved_heading != blank -%}
         <h1 class="sk-header__section sk-content-section__heading sk-section-heading sk-section-heading--h1">
-          {{ section.settings.heading | escape }}
+          {{ resolved_heading | escape }}
         </h1>
       {%- endif -%}
 
