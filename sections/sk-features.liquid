@@ -62,11 +62,19 @@
       grid-auto-columns: minmax(260px, 1fr);
       grid-template-columns: unset;
       overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       overscroll-behavior-x: contain;
       padding-bottom: 8px;
       scroll-snap-type: x mandatory;
       scroll-padding: 16px;
       -webkit-overflow-scrolling: touch;
+    }
+
+    .sk-trustbar__grid::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
     }
 
     .sk-trustbar__card {
