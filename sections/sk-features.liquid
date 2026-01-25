@@ -1,140 +1,189 @@
 <style>
-  .sk-features__container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    justify-items: center;
-    align-content: center;
-    width: min(1200px, 100%);
-    margin: 0 auto;
-  }
-  .sk-features__item {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    max-width: 300px;
-    padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(0.75rem, 1.8vw, 1.25rem);
-    gap: 0.35rem;
-  }
-  .sk-features__heading {
-    text-align: center;
-    margin: 0 0 clamp(16px, 3vw, 28px);
-    color: #30273e;
-  }
-  .sk-features__title {
-    margin: 0;
-    color: #30273e;
-    font-size: clamp(1.5rem, 3.5vw, 2rem);
-    line-height: 30px;
-    font-weight: 600;
-    max-width: 260px;
-    text-transform: none;
-    letter-spacing: 0.01em;
-    white-space: normal;
-  }
-  .sk-features {
+  .sk-trustbar {
     background-color: var(--color-ghost-3);
-    padding-block: clamp(2.5rem, 5vw, 4.5rem);
+    padding: 24px 0;
   }
 
-  @media only screen and (max-width: 900px) {
-    .sk-features__container {
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    }
+  .sk-trustbar__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
   }
 
-  @media only screen and (max-width: 700px) {
-    .sk-features {
-      padding: 3.25rem 0;
-    }
-    .sk-features__title {
-      font-size: clamp(1.6rem, 5vw, 2.2rem);
-      line-height: 1.4;
-    }
+  .sk-trustbar__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
   }
 
-  @media only screen and (max-width: 600px) {
-    .sk-features__container {
-      grid-template-columns: 1fr;
+  .sk-trustbar__card {
+    border: 1px solid rgba(var(--color-foreground), 0.12);
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    background: transparent;
+  }
+
+  .sk-trustbar__icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  .sk-trustbar__icon svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+
+  .sk-trustbar__title {
+    margin: 0;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.25;
+    color: var(--color-neutral-4);
+  }
+
+  .sk-trustbar__sub {
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--color-neutral-2);
+  }
+
+  @media (max-width: 749px) {
+    .sk-trustbar {
+      padding: 16px 0;
     }
 
-    .sk-features__item:not(:last-child)::after {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 1px;
-      background-color: rgba(48, 39, 62, 0.18);
-      margin: clamp(0.75rem, 2vw, 1rem) auto 0;
+    .sk-trustbar__grid {
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(260px, 1fr);
+      grid-template-columns: unset;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      padding-bottom: 8px;
+      scroll-snap-type: x mandatory;
+      scroll-padding: 16px;
+      -webkit-overflow-scrolling: touch;
     }
-    .sk-features__title {
-      font-size: clamp(1.4rem, 4vw, 1.8rem);
-      line-height: 30px;
-      letter-spacing: 0.01em;
-      text-align: center;
-      white-space: normal;
-      padding-top: 0;
-      text-transform: none;
-      font-weight: 400;
-    }
-  }
-  @media screen and (max-width: 749px) {
-    .sk-section-heading {
-      font-size: var(--sk-mobile-heading-size);
-      line-height: var(--sk-mobile-heading-line);
-    }
-    .sk-section-body {
-      font-size: var(--sk-mobile-body-size);
-      line-height: var(--sk-mobile-body-line);
+
+    .sk-trustbar__card {
+      scroll-snap-align: start;
     }
   }
 </style>
 
-<section class="sk-features">
-  <div class="page-width">
-    {% if section.settings.heading != blank %}
-      <h1 class="sk-header__section sk-features__heading sk-section-heading sk-section-heading--h1">
-        {{ section.settings.heading | escape }}
-      </h1>
-    {% endif %}
-    <div class="sk-features__container">
-      {% for block in section.blocks %}
-        <div class="sk-features__item">
-          <span class="sk-features__title sk-section-body">{{ block.settings.sk_features_title }}</span>
+<section class="sk-trustbar">
+  <div class="sk-trustbar__container">
+    <div class="sk-trustbar__grid">
+      {%- for block in section.blocks limit: 3 -%}
+        <div class="sk-trustbar__card" {{ block.shopify_attributes }}>
+          <div class="sk-trustbar__icon" aria-hidden="true">
+            {%- case block.settings.icon -%}
+              {%- when 'guarantee' -%}
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {%- when 'shipping' -%}
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 7h11v10H3V7z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M14 10h4l3 3v4h-7v-7z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M7 17a1.5 1.5 0 103 0 1.5 1.5 0 00-3 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M17 17a1.5 1.5 0 103 0 1.5 1.5 0 00-3 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {%- else -%}
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2v-7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4 7h16l-2 5H6L4 7z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 3v4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            {%- endcase -%}
+          </div>
+
+          <p class="sk-trustbar__title">{{ block.settings.title | escape }}</p>
+
+          {%- if block.settings.subline != blank -%}
+            <p class="sk-trustbar__sub">{{ block.settings.subline | escape }}</p>
+          {%- endif -%}
         </div>
-      {% endfor %}
+      {%- endfor -%}
     </div>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "SK Features",
+  "name": "SK Trustbar",
   "settings": [
     {
-      "type": "text",
-      "id": "heading",
-      "label": "Section heading"
+      "type": "paragraph",
+      "content": "Displays 3 trust cards. Edit the card blocks below."
     }
   ],
   "blocks": [
     {
-      "name": "Logo",
-      "type": "Card",
+      "name": "Card",
+      "type": "card",
       "settings": [
         {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "guarantee", "label": "Guarantee" },
+            { "value": "shipping", "label": "Shipping" },
+            { "value": "free_shipping", "label": "Free shipping" }
+          ],
+          "default": "guarantee"
+        },
+        {
           "type": "text",
-          "id": "sk_features_title",
-          "label": "Title"
+          "id": "title",
+          "label": "Title",
+          "default": "60 dagers fornøydgaranti"
+        },
+        {
+          "type": "text",
+          "id": "subline",
+          "label": "Subline",
+          "default": "Trygg test hjemme"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "SK Features",
-      "category": "Custom"
+      "name": "SK Trustbar",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "icon": "guarantee",
+            "title": "60 dagers fornøydgaranti",
+            "subline": "Trygg test hjemme"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "shipping",
+            "title": "Sendes fra Norge",
+            "subline": "Rask levering"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "free_shipping",
+            "title": "Gratis frakt",
+            "subline": "På alle bestillinger"
+          }
+        }
+      ]
     }
   ]
 }
