@@ -294,34 +294,38 @@
     "sk_features_pHkfMf": {
       "type": "sk-features",
       "blocks": {
-        "card_kHQtcn": {
-          "type": "Card",
+        "card_b4N7DV": {
+          "type": "card",
           "settings": {
-            "sk_features_title": "60 dagers fornøydhetsgaranti"
+            "icon": "guarantee",
+            "title": "60 dagers fornøydgaranti",
+            "subline": "Trygg test hjemme"
           }
         },
-        "card_UCy7PJ": {
-          "type": "Card",
+        "card_6FxrGY": {
+          "type": "card",
           "settings": {
-            "sk_features_title": "Sendes fra vårt lager i Norge"
+            "icon": "guarantee",
+            "title": "60 dagers fornøydgaranti",
+            "subline": "Trygg test hjemme"
           }
         },
-        "card_XrpM6T": {
-          "type": "Card",
+        "card_UNdbkW": {
+          "type": "card",
           "settings": {
-            "sk_features_title": "Gratis frakt på alle bestillinger"
+            "icon": "guarantee",
+            "title": "60 dagers fornøydgaranti",
+            "subline": "Trygg test hjemme"
           }
         }
       },
       "block_order": [
-        "card_kHQtcn",
-        "card_UCy7PJ",
-        "card_XrpM6T"
+        "card_b4N7DV",
+        "card_6FxrGY",
+        "card_UNdbkW"
       ],
       "name": "SK Features",
-      "settings": {
-        "heading": ""
-      }
+      "settings": {}
     },
     "sk_radiance_meq7Gb": {
       "type": "sk-radiance",
