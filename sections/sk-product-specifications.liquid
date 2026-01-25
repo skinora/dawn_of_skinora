@@ -391,11 +391,9 @@
 
 {% liquid
   assign spec = null
-  assign spec_source = 'none'
 
   assign product_spec = null
   assign product_spec_wrapper = null
-  assign product_spec_via = ''
   if product
     assign product_spec_wrapper = product.metafields.custom.product_specification_wrapper.value
 
@@ -407,19 +405,14 @@
     if product_spec_wrapper != blank
       if product_spec_wrapper.system.type == 'product_specification'
         assign product_spec = product_spec_wrapper
-        assign product_spec_via = 'wrapper (is product_specification)'
       elsif product_spec_wrapper.product_specification != blank
         assign product_spec = product_spec_wrapper.product_specification.value
-        assign product_spec_via = 'wrapper.product_specification'
       elsif product_spec_wrapper.specification != blank
         assign product_spec = product_spec_wrapper.specification.value
-        assign product_spec_via = 'wrapper.specification'
       elsif product_spec_wrapper.spec != blank
         assign product_spec = product_spec_wrapper.spec.value
-        assign product_spec_via = 'wrapper.spec'
       elsif product_spec_wrapper.product_spec != blank
         assign product_spec = product_spec_wrapper.product_spec.value
-        assign product_spec_via = 'wrapper.product_spec'
       endif
     endif
   endif
@@ -430,29 +423,19 @@
   endif
 
   comment
-    Spec selection: prefer product metafield; fall back to section setting.
-    NOTE: If the product metafield is not set for a product, the fallback will be used.
+    Spec selection:
+    - On product pages: use product metafield wrapper only.
+    - Outside product context: allow section setting (useful for previews/non-product templates).
   endcomment
   if product
     if product_spec != blank
       assign spec = product_spec
-      assign spec_source = 'product.metafields.custom.product_specification_wrapper'
-    elsif request.design_mode and section_spec != blank
-      assign spec = section_spec
-      assign spec_source = 'section.settings.specification (design_mode fallback)'
     else
       assign spec = null
-      assign spec_source = 'product.metafields.custom.product_specification_wrapper (blank)'
     endif
   elsif section_spec != blank
     assign spec = section_spec
-    assign spec_source = 'section.settings.specification'
   endif
-
-  comment
-    OPTIONAL DEBUG (uncomment to verify correct mapping per product):
-    <p style="font-size:12px;opacity:.7">DEBUG: {{ product.title }} | {{ spec.handle }}</p>
-  endcomment
 
   assign blocks = blank
   if spec != blank and spec.tech_details_blocks != blank
@@ -470,134 +453,10 @@
   endif
 %}
 
-<script>
-  (function () {
-    try {
-      var params = new URLSearchParams(window.location.search);
-      if (params.get('skdebug') !== '1') return;
-
-      var payload = {
-        href: window.location && window.location.href ? window.location.href : '',
-        productHandle: {{ product.handle | default: '' | json }},
-        productId: {{ product.id | default: '' | json }},
-        specSource: {{ spec_source | default: '' | json }},
-        specType: {{ spec.system.type | default: '' | json }},
-        specId: {{ spec.system.id | default: '' | json }},
-        specHandle: {{ spec.system.handle | default: spec.handle | default: '' | json }},
-
-        willRenderSection: {% if spec != blank %}true{% else %}false{% endif %},
-
-        productMetafieldPresent: {% if product_spec != blank %}true{% else %}false{% endif %},
-        productMetafieldVia: {{ product_spec_via | default: '' | json }},
-        wrapperPresent: {% if product_spec_wrapper != blank %}true{% else %}false{% endif %},
-        wrapperType: {{ product_spec_wrapper.system.type | default: '' | json }},
-        wrapperId: {{ product_spec_wrapper.system.id | default: '' | json }},
-        wrapperHandle: {{ product_spec_wrapper.system.handle | default: product_spec_wrapper.handle | default: '' | json }},
-        productMetafieldSpecType: {{ product_spec.system.type | default: '' | json }},
-        productMetafieldSpecId: {{ product_spec.system.id | default: '' | json }},
-        productMetafieldSpecHandle: {{ product_spec.system.handle | default: product_spec.handle | default: '' | json }},
-
-        sectionSettingPresent: {% if section_spec != blank %}true{% else %}false{% endif %},
-        sectionSettingSpecType: {{ section_spec.system.type | default: '' | json }},
-        sectionSettingSpecId: {{ section_spec.system.id | default: '' | json }},
-        sectionSettingSpecHandle: {{ section_spec.system.handle | default: section_spec.handle | default: '' | json }}
-      };
-
-      window.__SK_TECHSPEC_DEBUG = payload;
-      console.info('[SK-Tech-spec debug] {{ section.id }}', payload);
-
-      if (!payload.productMetafieldPresent) {
-        if (payload.willRenderSection) {
-          console.warn('[SK-Tech-spec debug] Using section setting fallback (Theme Editor/design mode).');
-        } else {
-          console.warn('[SK-Tech-spec debug] product.metafields.custom.product_specification_wrapper.value did not resolve to a product_specification on this page.');
-        }
-      }
-
-      // Visible debug banner (only when ?skdebug=1)
-      try {
-        var banner = document.createElement('div');
-        banner.setAttribute('data-sk-techspec-debug-banner', '');
-        banner.style.cssText = [
-          'position:fixed',
-          'left:12px',
-          'right:12px',
-          'bottom:12px',
-          'z-index:999999',
-          'background:#fff',
-          'border:2px solid rgba(0,0,0,.25)',
-          'border-radius:12px',
-          'padding:10px 12px',
-          'font:12px/1.35 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif',
-          'color:#111',
-          'box-shadow:0 10px 30px rgba(0,0,0,.18)'
-        ].join(';');
-
-        var lines = [];
-        lines.push('<strong>SK Tech Spec Debug</strong>');
-        lines.push('product: ' + (payload.productHandle || '(none)') + ' (#' + (payload.productId || '-') + ')');
-        lines.push('will render section: ' + (payload.willRenderSection ? 'YES' : 'NO'));
-        lines.push('selected: ' + (payload.specHandle || '(blank)') + ' (#' + (payload.specId || '-') + ')');
-        lines.push('source: ' + (payload.specSource || '(none)'));
-        lines.push('wrapper present: ' + (payload.wrapperPresent ? 'YES' : 'NO') + ' → ' + (payload.wrapperHandle || '-') + ' (#' + (payload.wrapperId || '-') + ')');
-        lines.push('product metafield resolved: ' + (payload.productMetafieldPresent ? 'YES' : 'NO') + ' via ' + (payload.productMetafieldVia || '-') + ' → ' + (payload.productMetafieldSpecHandle || '-') + ' (#' + (payload.productMetafieldSpecId || '-') + ')');
-        lines.push('section setting set: ' + (payload.sectionSettingPresent ? 'YES' : 'NO') + ' → ' + (payload.sectionSettingSpecHandle || '-') + ' (#' + (payload.sectionSettingSpecId || '-') + ')');
-        banner.innerHTML = lines.join('<br>');
-
-        var close = document.createElement('button');
-        close.type = 'button';
-        close.textContent = '×';
-        close.setAttribute('aria-label', 'Close debug');
-        close.style.cssText = 'position:absolute;top:6px;right:10px;border:0;background:transparent;font-size:18px;line-height:1;cursor:pointer;color:#111;';
-        close.addEventListener('click', function () { banner.remove(); });
-        banner.style.position = 'fixed';
-        banner.appendChild(close);
-
-        document.body.appendChild(banner);
-      } catch (e2) {
-        // no-op
-      }
-    } catch (e) {
-      // no-op
-    }
-  })();
-</script>
-
 {% if spec != blank %}
   <section
     class="sk-specs-{{ section.id }}"
-    data-sk-spec-source="{{ spec_source | escape }}"
-    data-sk-spec-type="{{ spec.system.type | default: '' | escape }}"
-    data-sk-spec-id="{{ spec.system.id | default: '' | escape }}"
-    data-sk-spec-handle="{{ spec.system.handle | default: spec.handle | default: '' | escape }}"
-    data-sk-product-handle="{{ product.handle | default: '' | escape }}"
-    data-sk-product-id="{{ product.id | default: '' | escape }}"
   >
-    <script>
-      (function () {
-        try {
-          var params = new URLSearchParams(window.location.search);
-          if (params.get('skdebug') !== '1') return;
-
-          var el = document.querySelector('.sk-specs-{{ section.id }}');
-          if (!el) return;
-
-          var d = el.dataset || {};
-          console.groupCollapsed('[SK-Tech-spec debug] {{ section.id }}');
-          console.table({
-            productHandle: d.skProductHandle,
-            productId: d.skProductId,
-            specSource: d.skSpecSource,
-            specType: d.skSpecType,
-            specId: d.skSpecId,
-            specHandle: d.skSpecHandle,
-          });
-          console.groupEnd();
-        } catch (e) {
-          // no-op
-        }
-      })();
-    </script>
     <div class="page-width sk-specs__wrap">
       <!-- Left: Media -->
       <div class="sk-specs__media">
