@@ -16,6 +16,7 @@
     max-width: var(--sk-collection-header-max);
     margin-inline: auto;
     text-align: var(--sk-collection-text-align);
+    padding: 0;
   }
 
   .collection-hero.section-{{ section.id }} .collection-hero__title {
@@ -24,21 +25,27 @@
 
   .collection-hero.section-{{ section.id }} .sk-collection-hero__subheading {
     margin: 12px 0 0;
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 300;
     color: rgba(var(--color-foreground), 0.72);
   }
 
   .collection-hero.section-{{ section.id }} .sk-collection-hero__divider {
     height: 1px;
-    background: rgba(var(--color-foreground), 0.12);
-    margin: 16px auto 0;
+    background: var(--color-border-light);
+    margin-top: 32px;
     width: 100%;
+    display: block;
+    align-self: stretch;
   }
 
   .collection-hero.section-{{ section.id }} .sk-collection-hero__description {
     margin-top: 24px;
+  }
+
+  .collection-hero.section-{{ section.id }} .sk-collection-hero__divider + .sk-collection-hero__description {
+    margin-top: 20px;
   }
 
   @media screen and (max-width: 749px) {
@@ -50,33 +57,13 @@
     .collection-hero.section-{{ section.id }} .sk-collection-hero__description {
       margin-top: 20px;
     }
-
-    .collection-hero--with-image .collection-hero__inner {
-      padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 32px);
-    }
   }
 {%- endstyle -%}
 
 {%- assign hero_title = section.settings.heading_override | default: collection.title -%}
 {%- assign subheading_plain = section.settings.subheading | strip_html | strip -%}
-{%- assign has_collection_image = false -%}
-{%- if section.settings.show_collection_image -%}
-  {%- if section.settings.hero_image != blank or collection.image != blank -%}
-    {%- assign has_collection_image = true -%}
-  {%- endif -%}
-{%- endif -%}
 
-<div class="collection-hero section-{{ section.id }} color-{{ section.settings.color_scheme }} gradient{% if has_collection_image %} collection-hero--with-image{% endif %}">
-  {%- if has_collection_image -%}
-    <div class="collection-hero__image-full">
-      {%- if section.settings.hero_image -%}
-        {{ section.settings.hero_image | image_url: width: 2400 | image_tag: loading: 'lazy', alt: collection.title }}
-      {%- else -%}
-        {{ collection.image | image_url: width: 2400 | image_tag: loading: 'lazy', alt: collection.title }}
-      {%- endif -%}
-    </div>
-  {%- endif -%}
-
+<div class="collection-hero section-{{ section.id }} color-{{ section.settings.color_scheme }} gradient">
   <div class="collection-hero__inner container {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
     <div class="collection-hero__text-wrapper">
       <h1 class="collection-hero__title">
@@ -87,17 +74,17 @@
       {%- if subheading_plain != blank -%}
         <p class="sk-collection-hero__subheading">{{ section.settings.subheading }}</p>
       {%- endif -%}
-
-      {%- if section.settings.show_divider -%}
-        <div class="sk-collection-hero__divider" aria-hidden="true"></div>
-      {%- endif -%}
-
-      {%- if section.settings.show_collection_description -%}
-        <div class="sk-collection-hero__description">
-          <div class="collection-hero__description rte">{{ collection.description }}</div>
-        </div>
-      {%- endif -%}
     </div>
+
+    {%- if section.settings.show_divider -%}
+      <div class="sk-collection-hero__divider" aria-hidden="true"></div>
+    {%- endif -%}
+
+    {%- if section.settings.show_collection_description -%}
+      <div class="sk-collection-hero__description">
+        <div class="collection-hero__description rte">{{ collection.description }}</div>
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -152,12 +139,6 @@
       "id": "show_collection_description",
       "default": true,
       "label": "t:sections.main-collection-banner.settings.show_collection_description.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_collection_image",
-      "default": false,
-      "label": "t:sections.main-collection-banner.settings.show_collection_image.label"
     },
     {
       "type": "color_scheme",
