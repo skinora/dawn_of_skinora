@@ -78,6 +78,7 @@
     },
     "sk_product_specifications_cJY9VW": {
       "type": "sk-product-specifications",
+      "disabled": true,
       "name": "SK Product Specifications",
       "settings": {
         "specification": "tekniske-spesifikasjoner-2"
