@@ -1536,7 +1536,9 @@
         const galleryNextButton = sectionEl.querySelector('.sk-hero-gallery-controls .sk-hero-arrow--next');
         const galleryRow = sectionEl.querySelector('.sk-hero-gallery');
 
-        const swiperOptions = { slidesPerView: 1, loop: false, allowTouchMove: true, speed: 400 };
+        const slideCount = thumbnails.length || swiperElement.querySelectorAll('.swiper-slide').length;
+        const shouldLoop = slideCount > 1;
+        const swiperOptions = { slidesPerView: 1, loop: shouldLoop, allowTouchMove: true, speed: 400 };
         if (prevButton && nextButton) swiperOptions.navigation = { prevEl: prevButton, nextEl: nextButton };
 
         const heroSwiper = new Swiper(swiperElement, swiperOptions);
@@ -1557,20 +1559,29 @@
           updateProgressDots(index);
         }
 
-        updateActiveThumb(heroSwiper.activeIndex || 0);
+        updateActiveThumb(typeof heroSwiper.realIndex === 'number' ? heroSwiper.realIndex : heroSwiper.activeIndex || 0);
 
         heroSwiper.on('slideChange', function () {
-          updateActiveThumb(heroSwiper.activeIndex);
+          const index = typeof heroSwiper.realIndex === 'number' ? heroSwiper.realIndex : heroSwiper.activeIndex;
+          updateActiveThumb(index);
         });
 
         thumbnails.forEach((thumb, index) => {
           thumb.addEventListener('click', function () {
+            if (shouldLoop && typeof heroSwiper.slideToLoop === 'function') {
+              heroSwiper.slideToLoop(index);
+              return;
+            }
             heroSwiper.slideTo(index);
           });
         });
 
         progressDots.forEach((dot, index) => {
           dot.addEventListener('click', function () {
+            if (shouldLoop && typeof heroSwiper.slideToLoop === 'function') {
+              heroSwiper.slideToLoop(index);
+              return;
+            }
             heroSwiper.slideTo(index);
           });
         });
