@@ -204,12 +204,16 @@
   }
 
   #sk-wavelengths-{{ section.id }} {
-    overflow-x: clip;
+    overflow-x: clip !important;
+    --swiper-theme-color: var(--sk-color-brand);
+    --swiper-pagination-color: var(--sk-color-brand);
+    --swiper-pagination-bullet-inactive-color: var(--sk-color-brand);
+    --swiper-pagination-bullet-inactive-opacity: 0.25;
   }
 
   @supports not (overflow: clip) {
     #sk-wavelengths-{{ section.id }} {
-      overflow-x: hidden;
+      overflow-x: hidden !important;
     }
   }
 
@@ -225,6 +229,15 @@
 
   .sk-wavelengths__slider .swiper-pagination-bullet {
     margin: 0;
+    background: var(--sk-color-brand) !important;
+    background-color: var(--sk-color-brand) !important;
+    opacity: 0.25;
+  }
+
+  .sk-wavelengths__slider .swiper-pagination-bullet-active {
+    background: var(--sk-color-brand) !important;
+    background-color: var(--sk-color-brand) !important;
+    opacity: 1;
   }
 
   .sk-wavelengths__arrow {
