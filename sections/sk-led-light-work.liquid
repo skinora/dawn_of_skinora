@@ -198,9 +198,19 @@
   .sk-wavelengths__slider .swiper {
     padding: 28px 0 24px;
     overflow: visible;
-    width: calc(100% + 48px);
-    margin-left: -24px;
-    margin-right: -24px;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  #sk-wavelengths-{{ section.id }} {
+    overflow-x: clip;
+  }
+
+  @supports not (overflow: clip) {
+    #sk-wavelengths-{{ section.id }} {
+      overflow-x: hidden;
+    }
   }
 
   .sk-wavelengths__slider .swiper-pagination {
