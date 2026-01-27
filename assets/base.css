@@ -606,7 +606,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 }
 
 .sk-section-header__eyebrow {
-  font-size: 1.9rem;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
   letter-spacing: var(--sk-section-eyebrow-spacing);
   text-transform: uppercase;
   color: rgba(var(--sk-color-body-text), 0.85);
