@@ -55,6 +55,7 @@
     },
     "sk_led_light_work_mDz86m": {
       "type": "sk-led-light-work",
+      "disabled": true,
       "name": "SK Led Light Work",
       "settings": {
         "sk_led_light_work_eyebrow": "VITENSKAPEN BAK SKINORA LED",
@@ -78,7 +79,6 @@
     },
     "sk_product_specifications_cJY9VW": {
       "type": "sk-product-specifications",
-      "disabled": true,
       "name": "SK Product Specifications",
       "settings": {
         "specification": "tekniske-spesifikasjoner-2"
