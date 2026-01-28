@@ -1,0 +1,528 @@
+{% comment %}
+  SK Clinical Studies
+  - Simple, accessible list of study/reference blocks (no accordion)
+  - Uses theme tokens (no hardcoded colors)
+  - Optional JSON-LD ItemList
+{% endcomment %}
+
+<section class="sk-studies" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    {% if section.settings.eyebrow != blank
+      or section.settings.heading != blank
+      or section.settings.intro != blank
+      or section.settings.last_updated != blank
+    %}
+      <header class="sk-studies__header">
+        {% if section.settings.eyebrow != blank %}
+          <p class="sk-studies__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="sk-studies__heading">{{ section.settings.heading | escape }}</h2>
+        {% endif %}
+
+        {% if section.settings.last_updated != blank %}
+          <p class="sk-studies__updated">{{ section.settings.last_updated | escape }}</p>
+        {% endif %}
+
+        {% if section.settings.intro != blank %}
+          <div class="sk-studies__intro rte">
+            {{ section.settings.intro }}
+          </div>
+        {% endif %}
+      </header>
+    {% endif %}
+
+    {%- comment -%} Optional informational chips (not interactive) {%- endcomment -%}
+    {% assign badges_joined = '' %}
+    {% if section.settings.enable_filter and section.settings.show_badges %}
+      {% for block in section.blocks %}
+        {% if block.type == 'study' %}
+          {% assign badge_value = block.settings.badge | strip %}
+          {% if badge_value != blank %}
+            {% capture badges_joined %}{{ badges_joined }}||{{ badge_value }}{% endcapture %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% assign badge_list = badges_joined | split: '||' | uniq %}
+    {% assign has_badges = false %}
+    {% for b in badge_list %}
+      {% assign b_stripped = b | strip %}
+      {% if b_stripped != blank %}
+        {% assign has_badges = true %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+
+    {% if section.settings.enable_filter and has_badges %}
+      <div class="sk-studies__chips" aria-label="Study categories">
+        {% for b in badge_list %}
+          {% assign badge_label = b | strip %}
+          {% if badge_label != blank %}
+            <span class="sk-studies__chip">{{ badge_label | escape }}</span>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% assign list_style_class = '' %}
+    {% if section.settings.list_style == 'plain' %}
+      {% assign list_style_class = ' sk-studies__list--plain' %}
+    {% endif %}
+
+    <ol class="sk-studies__list{{ list_style_class }}">
+      {% for block in section.blocks %}
+        {% if block.type == 'study' %}
+          {% assign title = block.settings.title | strip %}
+          {% if title != blank %}
+            {% assign badge_value = block.settings.badge | strip %}
+            {% assign year_value = block.settings.year %}
+
+            <li class="sk-study" {{ block.shopify_attributes }}>
+              <div class="sk-study__top">
+                <div class="sk-study__top-left">
+                  {% if section.settings.show_badges and badge_value != blank %}
+                    <span class="sk-study__badge">{{ badge_value | escape }}</span>
+                  {% endif %}
+                </div>
+
+                <div class="sk-study__top-right">
+                  {% if section.settings.show_year and year_value != blank %}
+                    <span class="sk-study__year" aria-label="Year">{{ year_value }}</span>
+                  {% endif %}
+                </div>
+              </div>
+
+              <h3 class="sk-study__title">{{ title | escape }}</h3>
+
+              {% if block.settings.source != blank %}
+                <p class="sk-study__source">{{ block.settings.source | escape }}</p>
+              {% endif %}
+
+              {% if block.settings.summary != blank %}
+                <div class="sk-study__summary rte">
+                  {{ block.settings.summary }}
+                </div>
+              {% endif %}
+
+              {% assign has_links = false %}
+              {% if block.settings.primary_url != blank %}{% assign has_links = true %}{% endif %}
+              {% if block.settings.secondary_url != blank %}{% assign has_links = true %}{% endif %}
+              {% if block.settings.doi_url != blank %}{% assign has_links = true %}{% endif %}
+
+              {% if has_links %}
+                <div class="sk-study__links" aria-label="Links">
+                  {% if block.settings.primary_url != blank %}
+                    <a class="sk-study__link sk-study__link--primary" href="{{ block.settings.primary_url }}">
+                      {{ block.settings.primary_label | default: 'Read' | escape }}
+                    </a>
+                  {% endif %}
+
+                  {% if block.settings.secondary_url != blank %}
+                    <a class="sk-study__link" href="{{ block.settings.secondary_url }}">
+                      {{ block.settings.secondary_label | default: 'More' | escape }}
+                    </a>
+                  {% endif %}
+
+                  {% if block.settings.doi_url != blank %}
+                    <a
+                      class="sk-study__link"
+                      href="{{ block.settings.doi_url }}"
+                      target="_blank"
+                      rel="nofollow noopener"
+                      aria-label="Open DOI"
+                    >
+                      {{ block.settings.doi_text | default: 'DOI' | escape }}
+                    </a>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </ol>
+  </div>
+
+  <style>
+    #shopify-section-{{ section.id }} .sk-studies {
+      --sk-space-1: 4px;
+      --sk-space-2: calc(var(--sk-space-1) * 2);
+      --sk-space-3: calc(var(--sk-space-1) * 3);
+      --sk-space-4: calc(var(--sk-space-1) * 4);
+      --sk-space-5: calc(var(--sk-space-1) * 5);
+      --sk-space-6: calc(var(--sk-space-1) * 6);
+      --sk-space-8: calc(var(--sk-space-1) * 8);
+      --sk-space-10: calc(var(--sk-space-1) * 10);
+      --sk-space-12: calc(var(--sk-space-1) * 12);
+
+      background: rgb(var(--color-background));
+      color: rgb(var(--color-foreground));
+      padding-block: clamp(var(--sk-space-8), 4vw, var(--sk-space-12));
+      overflow-x: clip;
+    }
+
+    @supports not (overflow: clip) {
+      #shopify-section-{{ section.id }} .sk-studies {
+        overflow-x: hidden;
+      }
+    }
+
+    #shopify-section-{{ section.id }} .sk-studies * {
+      box-sizing: border-box;
+    }
+
+    #shopify-section-{{ section.id }} .sk-studies__header {
+      max-width: 72ch;
+      margin: 0 auto var(--sk-space-8);
+      text-align: center;
+    }
+
+    #shopify-section-{{ section.id }} .sk-studies__eyebrow {
+      margin: 0 0 var(--sk-space-2);
+      color: rgba(var(--color-foreground), 0.75);
+      letter-spacing: 0.02em;
+    }
+
+    #shopify-section-{{ section.id }} .sk-studies__heading {
+      margin: 0;
+      font-size: clamp(1.5rem, 2.4vw, 2rem);
+      line-height: 1.2;
+    }
+
+    #shopify-section-{{ section.id }} .sk-studies__updated {
+      margin: var(--sk-space-2) 0 0;
+      color: rgba(var(--color-foreground), 0.75);
+      font-size: 0.95em;
+    }
+
+    #shopify-section-{{ section.id }} .sk-studies__intro {
+      margin-top: var(--sk-space-4);
+    }
+
+    #shopify-section-{{ section.id }} .sk-studies__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sk-space-2);
+      justify-content: center;
+      max-width: 72ch;
+      margin: 0 auto var(--sk-space-8);
+      min-width: 0;
+    }
+
+    #shopify-section-{{ section.id }} .sk-studies__chip {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--sk-space-1) var(--sk-space-3);
+      border: 0.1rem solid rgba(var(--color-foreground), 0.2);
+      border-radius: var(--buttons-radius);
+      background: rgba(var(--color-foreground), 0.04);
+      color: rgb(var(--color-foreground));
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    #shopify-section-{{ section.id }} .sk-studies__list {
+      margin: 0;
+      padding-left: var(--sk-space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sk-space-4);
+      max-width: 72ch;
+      margin-inline: auto;
+    }
+
+    #shopify-section-{{ section.id }} .sk-studies__list--plain {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    #shopify-section-{{ section.id }} .sk-study {
+      min-width: 0;
+      max-width: 100%;
+      padding: var(--sk-space-4);
+      border: 0.1rem solid rgba(var(--color-foreground), 0.2);
+      border-radius: var(--text-boxes-radius);
+      background: rgba(var(--color-foreground), 0.03);
+    }
+
+    #shopify-section-{{ section.id }} .sk-study__top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--sk-space-2);
+      min-width: 0;
+      margin-bottom: var(--sk-space-2);
+    }
+
+    #shopify-section-{{ section.id }} .sk-study__top-left,
+    #shopify-section-{{ section.id }} .sk-study__top-right {
+      min-width: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sk-space-2);
+    }
+
+    #shopify-section-{{ section.id }} .sk-study__badge {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--sk-space-1) var(--sk-space-2);
+      border-radius: var(--buttons-radius);
+      border: 0.1rem solid rgba(var(--color-foreground), 0.2);
+      background: rgba(var(--color-foreground), 0.04);
+      line-height: 1;
+      max-width: 100%;
+    }
+
+    #shopify-section-{{ section.id }} .sk-study__year {
+      color: rgba(var(--color-foreground), 0.75);
+      white-space: nowrap;
+    }
+
+    #shopify-section-{{ section.id }} .sk-study__title {
+      margin: 0;
+      font-size: clamp(1.2rem, 1.8vw, 1.4rem);
+      line-height: 1.25;
+    }
+
+    #shopify-section-{{ section.id }} .sk-study__source {
+      margin: var(--sk-space-2) 0 0;
+      color: rgba(var(--color-foreground), 0.75);
+      overflow-wrap: anywhere;
+    }
+
+    #shopify-section-{{ section.id }} .sk-study__summary {
+      margin-top: var(--sk-space-3);
+    }
+
+    #shopify-section-{{ section.id }} .sk-study__links {
+      margin-top: var(--sk-space-4);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sk-space-2);
+      min-width: 0;
+    }
+
+    #shopify-section-{{ section.id }} .sk-study__link {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--sk-space-1) var(--sk-space-3);
+      border-radius: var(--buttons-radius);
+      border: 0.1rem solid rgba(var(--color-foreground), 0.2);
+      background: rgba(var(--color-foreground), 0.02);
+      color: var(--color-brand);
+      text-decoration: none;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    #shopify-section-{{ section.id }} .sk-study__link--primary {
+      border-color: rgba(var(--color-foreground), 0.3);
+      background: rgba(var(--color-foreground), 0.04);
+    }
+
+    #shopify-section-{{ section.id }} .sk-study__link:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+
+    #shopify-section-{{ section.id }} .sk-study__link:focus-visible {
+      outline: var(--focused-base-outline);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 749px) {
+      #shopify-section-{{ section.id }} .sk-studies__list {
+        padding-left: var(--sk-space-4);
+      }
+
+      #shopify-section-{{ section.id }} .sk-study {
+        padding: var(--sk-space-4);
+      }
+    }
+  </style>
+
+  {% if section.settings.show_jsonld %}
+    {% assign position = 0 %}
+    {% capture itemlist_json %}{% endcapture %}
+
+    {% for block in section.blocks %}
+      {% if block.type == 'study' %}
+        {% assign title = block.settings.title | strip %}
+        {% if title != blank %}
+          {% assign position = position | plus: 1 %}
+
+          {% assign item_url = '' %}
+          {% if block.settings.primary_url != blank %}
+            {% assign item_url = block.settings.primary_url %}
+          {% elsif block.settings.doi_url != blank %}
+            {% assign item_url = block.settings.doi_url %}
+          {% elsif block.settings.secondary_url != blank %}
+            {% assign item_url = block.settings.secondary_url %}
+          {% endif %}
+
+          {% capture list_item %}
+            {
+              "@type": "ListItem",
+              "position": {{ position }},
+              "name": {{ title | json }}{% if item_url != blank %},
+              "url": {{ item_url | json }}{% endif %}
+            }
+          {% endcapture %}
+
+          {% if position > 1 %}
+            {% capture itemlist_json %}{{ itemlist_json }},{{ list_item }}{% endcapture %}
+          {% else %}
+            {% capture itemlist_json %}{{ list_item }}{% endcapture %}
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+    {% if position > 0 %}
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "itemListElement": [{{ itemlist_json }}]
+        }
+      </script>
+    {% endif %}
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "SK Clinical Studies",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Clinical studies"
+    },
+    {
+      "type": "text",
+      "id": "last_updated",
+      "label": "Last updated"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro"
+    },
+    {
+      "type": "select",
+      "id": "list_style",
+      "label": "List style",
+      "default": "numbered",
+      "options": [
+        { "value": "numbered", "label": "Numbered" },
+        { "value": "plain", "label": "Plain" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_year",
+      "label": "Show year",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "Show badges",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filter",
+      "label": "Show category chips (informational)",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_jsonld",
+      "label": "Output JSON-LD (ItemList)",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "study",
+      "name": "Study",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Study title"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge/tag"
+        },
+        {
+          "type": "number",
+          "id": "year",
+          "label": "Year"
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "label": "Source / journal"
+        },
+        {
+          "type": "richtext",
+          "id": "summary",
+          "label": "Summary"
+        },
+        {
+          "type": "text",
+          "id": "primary_label",
+          "label": "Primary link label",
+          "default": "Read"
+        },
+        {
+          "type": "url",
+          "id": "primary_url",
+          "label": "Primary link URL"
+        },
+        {
+          "type": "text",
+          "id": "secondary_label",
+          "label": "Secondary link label"
+        },
+        {
+          "type": "url",
+          "id": "secondary_url",
+          "label": "Secondary link URL"
+        },
+        {
+          "type": "text",
+          "id": "doi_text",
+          "label": "DOI text"
+        },
+        {
+          "type": "url",
+          "id": "doi_url",
+          "label": "DOI URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Clinical Studies"
+    }
+  ]
+}
+{% endschema %}
