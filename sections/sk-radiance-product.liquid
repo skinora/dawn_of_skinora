@@ -1254,16 +1254,17 @@
                 {% for image in media_images %}
                   <div class="sk-hero-thumb">
                     <img
-                      src="{{ image | image_url: width: 220 }}"
+                      src="{{ image | image_url: width: 240 }}"
                       srcset="
-                        {{ image | image_url: width: 110 }} 110w,
-                        {{ image | image_url: width: 220 }} 220w,
-                        {{ image | image_url: width: 330 }} 330w
+                        {{ image | image_url: width: 120 }} 120w,
+                        {{ image | image_url: width: 240 }} 240w,
+                        {{ image | image_url: width: 360 }} 360w,
+                        {{ image | image_url: width: 480 }} 480w
                       "
-                      sizes="110px"
+                      sizes="120px"
                       alt="{{ image.alt | default: product.title }}"
-                      width="110"
-                      height="110"
+                      width="120"
+                      height="120"
                       loading="lazy"
                     >
                   </div>
