@@ -14,22 +14,22 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "link_column_Pnb7r9": {
+        "link_column_h4XqLD": {
           "type": "link_column",
           "settings": {
-            "header": "SKINORA®",
-            "item1title": "KONTAKT OSS",
-            "item1seo": "Kontakt Skinora kundeservice – spørsmål om bestilling, frakt og LED-masker",
-            "item1link": "shopify://pages/kundeservice",
-            "item2title": "HJELPESENTER",
-            "item2seo": "Skinora hjelpesenter – vanlige spørsmål om levering, betaling, retur og bruk av LED-masker",
-            "item2link": "shopify://pages/hjelpesenter",
-            "item3title": "GARANTI",
-            "item3seo": "Garanti og reklamasjon hos Skinora – dine rettigheter og våre vilkår",
-            "item3link": "shopify://pages/garanti-og-support",
-            "item4title": "",
-            "item4seo": "",
-            "item4link": "",
+            "header": "BUTIKK",
+            "item1title": "ALLE PRODUKTER",
+            "item1seo": "Se alle Skinora LED-masker og tilbehør",
+            "item1link": "shopify://collections/all",
+            "item2title": "SKINORA® RADIANCE FACE",
+            "item2seo": "Skinora Radiance LED ansiktsmaske med rødlys og nær-infrarød",
+            "item2link": "shopify://products/skinora-radiance-face",
+            "item3title": "SKINORA® RADIANCE NECK",
+            "item3seo": "Skinora Radiance LED maske til hals med rødlys og nær-infrarød",
+            "item3link": "shopify://products/skinora-radiance-neck",
+            "item4title": "SKINORA® CLEAR",
+            "item4seo": "Skinora Clear LED ansiktsmaske med blålys for uren hud",
+            "item4link": "shopify://products/skinora-clear",
             "item5title": "",
             "item5seo": "",
             "item5link": ""
@@ -56,22 +56,22 @@
             "item5link": ""
           }
         },
-        "link_column_h4XqLD": {
+        "link_column_Pnb7r9": {
           "type": "link_column",
           "settings": {
-            "header": "BUTIKK",
-            "item1title": "ALLE PRODUKTER",
-            "item1seo": "Se alle Skinora LED-masker og tilbehør",
-            "item1link": "shopify://collections/all",
-            "item2title": "SKINORA® RADIANCE FACE",
-            "item2seo": "Skinora Radiance LED ansiktsmaske med rødlys og nær-infrarød",
-            "item2link": "shopify://products/skinora-radiance-face",
-            "item3title": "SKINORA® RADIANCE NECK",
-            "item3seo": "Skinora Radiance LED maske til hals med rødlys og nær-infrarød",
-            "item3link": "shopify://products/skinora-radiance-neck",
-            "item4title": "SKINORA® CLEAR",
-            "item4seo": "Skinora Clear LED ansiktsmaske med blålys for uren hud",
-            "item4link": "shopify://products/skinora-clear",
+            "header": "SKINORA®",
+            "item1title": "KONTAKT OSS",
+            "item1seo": "Kontakt Skinora kundeservice – spørsmål om bestilling, frakt og LED-masker",
+            "item1link": "shopify://pages/kundeservice",
+            "item2title": "HJELPESENTER",
+            "item2seo": "Skinora hjelpesenter – vanlige spørsmål om levering, betaling, retur og bruk av LED-masker",
+            "item2link": "shopify://pages/hjelpesenter",
+            "item3title": "GARANTI",
+            "item3seo": "Garanti og reklamasjon hos Skinora – dine rettigheter og våre vilkår",
+            "item3link": "shopify://pages/garanti-og-support",
+            "item4title": "",
+            "item4seo": "",
+            "item4link": "",
             "item5title": "",
             "item5seo": "",
             "item5link": ""
@@ -79,9 +79,9 @@
         }
       },
       "block_order": [
-        "link_column_Pnb7r9",
+        "link_column_h4XqLD",
         "link_column_cN4y4z",
-        "link_column_h4XqLD"
+        "link_column_Pnb7r9"
       ],
       "settings": {
         "color_scheme": "scheme-3",
