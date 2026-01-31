@@ -10,36 +10,73 @@
 
 /* Wrapper – styrer bredde + kolonneplassering */
 .sk-content-section__wrapper {
-  max-width: 700px;
+  max-width: 72ch;
   margin-inline: auto; /* center horizontally while keeping left-aligned text inside */
 }
 
 /* Desktop: align med venstre kant på bildet i about-seksjonen */
 @media screen and (min-width: 990px) {
   .sk-content-section__wrapper {
-    max-width: 640px; /* comfortable readable width */
+    max-width: 72ch; /* comfortable readable width */
     margin: auto;
   }
 }
 
 /* Heading – litt nedtonet, mer premium */
 .sk-content-section__heading {
-  font-size: var(--section-heading-h2);
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: var(--font-heading-weight);
+  font-size: clamp(2.4rem, 2.4vw, var(--section-heading-h2));
   line-height: var(--section-heading-h2-line);
-  font-weight: 700;
-  color: var(--color-brand, #30273e);
-  margin-bottom: 32px;
-  margin-top: 0;
-  max-width: 640px;
+  color: rgba(var(--sk-color-heading-text), 1);
+  margin: 0 0 var(--sk-gap-lg);
+  max-width: 72ch;
 }
 
 /* Avsnitt – bedre line-height + max-width, ikke justify */
+.sk-content-section__content {
+  /* Ensure all rich text (including li, spans, etc) shares the same base typography.
+     base.css also targets .sk-content-section__content p with !important in some breakpoints. */
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: var(--font-body-weight);
+  font-size: clamp(1.35rem, 1.1vw, 1.65rem);
+  line-height: var(--sk-line-height-base);
+  color: rgba(var(--color-foreground), 0.82);
+}
+
 .sk-content-section__content p {
-  font-size: var(--sk-font-size-medium);
-  line-height: 1.7;
-  color: var(--color-neutral-4, #4f4f4f);
-  margin-bottom: 22px;
-  max-width: 700px;
+  /* base.css contains .sk-content-section__content p with !important in some breakpoints */
+  font-size: inherit !important;
+  line-height: inherit !important;
+  color: inherit !important;
+  margin-bottom: var(--sk-gap-md);
+  max-width: 72ch;
+}
+
+/* If richtext outputs <li><p>...</p></li>, keep it consistent */
+.sk-content-section__content li p {
+  font-size: inherit !important;
+  line-height: inherit !important;
+  color: inherit !important;
+  margin: 0;
+  max-width: none;
+}
+
+/* Inline links inside legal text */
+.sk-content-section__content a {
+  color: rgb(var(--color-brand-rgb));
+  font-weight: 600;
+}
+
+.sk-content-section__content a:visited {
+  color: rgb(var(--color-brand-rgb));
+}
+
+.sk-content-section__content a:focus-visible {
+  outline: none;
+  box-shadow: var(--focused-base-box-shadow);
 }
 
 /* Siste avsnitt uten ekstra margin */
@@ -51,30 +88,35 @@
 
 .sk-content-section__content ul {
   padding-left: 0;
-  margin: 28px 0;
+  margin: var(--sk-gap-md) 0;
   list-style: none;
-  max-width: 700px;
+  max-width: 72ch;
 }
 
 .sk-content-section__content ul li {
   position: relative;
-  padding-left: 22px;
-  margin-bottom: 14px;
-  font-size: var(--sk-font-size-medium);
-  line-height: 1.65;
-  color: var(--color-neutral-4, #4f4f4f);
+  padding-left: 2.2rem;
+  margin-bottom: var(--sk-gap-md);
+  font-size: inherit !important;
+  line-height: inherit !important;
+  color: inherit !important;
+}
+
+.sk-content-section__content li a {
+  color: rgb(var(--color-brand-rgb)) !important;
+  font-weight: 600;
 }
 
 /* Custom bullet – liten, stram, ikke standard dot */
 .sk-content-section__content ul li::before {
   content: '';
   position: absolute;
-  top: 9px;
+  top: 0.95em;
   left: 0;
-  width: 8px;
-  height: 8px;
-  background-color: var(--color-brand, #30273e);
-  border-radius: 2px;
+  width: 0.8rem;
+  height: 0.8rem;
+  background-color: rgb(var(--color-brand-rgb));
+  border-radius: 0.4rem;
 }
 
 .sk-content-section__content ul li:last-child {
@@ -85,7 +127,7 @@
 .sk-content-section__button-wrapper {
   display: flex;
   justify-content: flex-start;
-  margin-top: 40px;
+  margin-top: var(--sk-gap-lg);
 }
 
 /* Knapp – mer luft mellom tekst og pil (hvis du legger til ikon senere) */
@@ -93,31 +135,39 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background-color: var(--color-brand, #30273e);
-  color: #ffffff;
-  padding: 16px 34px;
-  border-radius: 8px;
-  font-size: var(--sk-font-size-medium);
+  background-color: rgb(var(--color-brand-rgb));
+  color: rgb(var(--color-background));
+  padding: clamp(12px, 1.6vw, 16px) clamp(18px, 2.6vw, 34px);
+  border-radius: var(--buttons-radius);
+  font-size: clamp(1.45rem, 1.35vw, var(--sk-font-size-medium));
   font-weight: 600;
   text-decoration: none;
-  transition: all 0.3s ease;
-  border: 2px solid var(--color-brand, #30273e);
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease,
+    background-color 200ms ease,
+    color 200ms ease;
+  border: 0.1rem solid rgb(var(--color-brand-rgb));
+}
+
+.sk-content-section__button:focus-visible {
+  outline: none;
+  box-shadow: var(--focused-base-box-shadow);
 }
 
 /* Hover-effekt */
 .sk-content-section__button:hover {
   background-color: transparent;
-  color: var(--color-brand, #30273e);
+  color: rgb(var(--color-brand-rgb));
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(48, 39, 62, 0.15);
+  box-shadow: 0 6px 20px rgba(var(--color-brand-rgb), 0.12);
 }
 
 /* Mobil-justeringer */
 @media screen and (max-width: 749px) {
   .sk-content-section__heading {
-    font-size: calc(var(--section-heading-h2) * 0.9);
-    line-height: var(--section-heading-h2-line);
-    margin-bottom: 24px;
+    margin-bottom: var(--sk-gap-md);
   }
 
   .sk-content-section__wrapper {
@@ -127,5 +177,14 @@
 
   .sk-content-section__button-wrapper {
     justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-content-section__button {
+    transition: none;
+  }
+  .sk-content-section__button:hover {
+    transform: none;
   }
 }

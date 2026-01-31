@@ -9,20 +9,6 @@
  */
 {
   "sections": {
-    "banner": {
-      "type": "sk-help-banner",
-      "settings": {
-        "background_image": "shopify://shop_images/about-section-bg.png",
-        "heading": "",
-        "subheading": "",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "color_scheme": "background-1",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
     "content_section": {
       "type": "sk-legal-content-section",
       "settings": {
@@ -36,7 +22,6 @@
     }
   },
   "order": [
-    "banner",
     "content_section"
   ]
 }
