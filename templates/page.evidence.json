@@ -12,6 +12,22 @@
     "main": {
       "type": "sk-clinical-studies",
       "blocks": {
+        "study_H4QXTE": {
+          "type": "study",
+          "settings": {
+            "title": "830 nm LED fotobiomodulasjon for arrforebygging etter kirurgi – RCT",
+            "badge": "NIR 830 nm · Arr · RCT · Sham-kontrollert",
+            "year": 2022,
+            "source": "Lasers in Medical Science",
+            "summary": "<p>Sham-kontrollert RCT som støtter at 830 nm fotobiomodulasjon kan gi penere arrutvikling og mindre ubehag i rekonvalesens.</p>",
+            "primary_label": "Les mer",
+            "primary_url": "https://pubmed.ncbi.nlm.nih.gov/36045183/",
+            "secondary_label": "PubMed",
+            "secondary_url": "https://pubmed.ncbi.nlm.nih.gov/36045183/",
+            "doi_text": "10.1007/s10103-022-03637-6",
+            "doi_url": "https://doi.org/10.1007/s10103-022-03637-6"
+          }
+        },
         "study_mNFyzx": {
           "type": "study",
           "settings": {
@@ -158,6 +174,7 @@
         }
       },
       "block_order": [
+        "study_H4QXTE",
         "study_mNFyzx",
         "study_p3DBtE",
         "study_icUdyt",
