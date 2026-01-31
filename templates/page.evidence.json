@@ -1,9 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "sk-clinical-studies",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Dokumentasjon & forskning",
+        "heading": "Kliniske studier på LED-lys for hud",
+        "last_updated": "31.01.2026",
+        "intro": "",
+        "list_style": "numbered",
+        "show_year": true,
+        "show_badges": true,
+        "enable_filter": false,
+        "show_jsonld": true
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
