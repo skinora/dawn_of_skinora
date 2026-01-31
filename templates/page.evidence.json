@@ -12,6 +12,22 @@
     "main": {
       "type": "sk-clinical-studies",
       "blocks": {
+        "study_W9x49H": {
+          "type": "study",
+          "settings": {
+            "title": "Én 1072 nm lysbehandling vs lokal aciklovir ved herpes labialis – RCT",
+            "badge": "NIR 1072 nm · Tilheling · RCT",
+            "year": 2001,
+            "source": "Clinical and Experimental Dermatology",
+            "summary": "<p>Randomisert studie som viser at 1072 nm kan være et relevant alternativ/protokoll ved tidlig forkjølelsessår sammenlignet med standard topikal behandling.</p>",
+            "primary_label": "Les mer",
+            "primary_url": "https://pubmed.ncbi.nlm.nih.gov/11298104/",
+            "secondary_label": "Kilde",
+            "secondary_url": "https://doi.org/10.1046/j.1365-2230.2001.00783.x",
+            "doi_text": "10.1046/j.1365-2230.2001.00783.x",
+            "doi_url": "https://doi.org/10.1046/j.1365-2230.2001.00783.x"
+          }
+        },
         "study_BzYrkj": {
           "type": "study",
           "settings": {
@@ -206,6 +222,7 @@
         }
       },
       "block_order": [
+        "study_W9x49H",
         "study_BzYrkj",
         "study_JTeh3c",
         "study_H4QXTE",
