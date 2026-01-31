@@ -67,7 +67,7 @@
       {% assign list_style_class = ' sk-studies__list--plain' %}
     {% endif %}
 
-    <div class="sk-studies__layout">
+    <div class="sk-studies__layout{% if section.settings.enable_filter and has_badges %} sk-studies__layout--with-sidebar{% endif %}">
       {% if section.settings.enable_filter and has_badges %}
         <aside class="sk-studies__sidebar" aria-label="Kategorier">
           <h3 class="sk-studies__side-title">Kategorier</h3>
@@ -233,7 +233,7 @@
     }
 
     @media (min-width: 990px){
-      #shopify-section-{{ section.id }} .sk-studies__layout{
+      #shopify-section-{{ section.id }} .sk-studies__layout--with-sidebar{
         grid-template-columns: minmax(240px, 0.34fr) minmax(0, 1fr);
         align-items: start;
       }
