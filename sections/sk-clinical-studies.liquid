@@ -12,25 +12,25 @@
       or section.settings.intro != blank
       or section.settings.last_updated != blank
     %}
-      <header class="sk-studies__header">
+      <div class="sk-section-header sk-section-header--center">
         {% if section.settings.eyebrow != blank %}
-          <p class="sk-studies__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          <p class="sk-section-header__eyebrow">{{ section.settings.eyebrow | escape }}</p>
         {% endif %}
 
         {% if section.settings.heading != blank %}
-          <h2 class="sk-studies__heading">{{ section.settings.heading | escape }}</h2>
+          <h2 class="sk-section-header__title">{{ section.settings.heading | escape }}</h2>
         {% endif %}
 
         {% if section.settings.last_updated != blank %}
-          <p class="sk-studies__updated">{{ section.settings.last_updated | escape }}</p>
+          <p class="sk-section-header__subtitle">{{ section.settings.last_updated | escape }}</p>
         {% endif %}
 
         {% if section.settings.intro != blank %}
-          <div class="sk-studies__intro rte">
+          <div class="sk-section-header__subtitle rte">
             {{ section.settings.intro }}
           </div>
         {% endif %}
-      </header>
+      </div>
     {% endif %}
 
     {%- comment -%} Optional informational chips (not interactive) {%- endcomment -%}
@@ -192,52 +192,36 @@
       --sk-soft: rgba(var(--color-foreground), 0.028);
       --sk-soft-2: rgba(var(--color-foreground), 0.05);
 
-      --sk-accent: var(--color-brand, rgb(var(--color-foreground)));
+      --sk-accent-rgb: var(--color-brand-rgb, var(--color-foreground));
+      --sk-accent-ink: rgb(var(--sk-accent-rgb));
+      --sk-accent-line: rgba(var(--sk-accent-rgb), 0.34);
+      --sk-accent-border: rgba(var(--sk-accent-rgb), 0.46);
+      --sk-focus: 0 0 0 0.24rem rgba(var(--sk-accent-rgb), 0.28);
 
-      background: rgb(var(--color-background));
+      --sk-accent: var(--sk-accent-ink);
+
+      background: rgb(var(--color-white-rgb, 255, 255, 255));
       color: rgb(var(--color-foreground));
       padding-block: clamp(var(--sk-6), 4vw, var(--sk-8));
     }
 
-    #shopify-section-{{ section.id }} .sk-studies__header{
+    #shopify-section-{{ section.id }} .sk-section-header{
       max-width: var(--sk-max);
       margin: 0 auto var(--sk-6);
-      text-align: center;
     }
 
-    #shopify-section-{{ section.id }} .sk-studies__eyebrow{
-      margin: 0 0 var(--sk-2);
-      font-family: var(--font-heading-family);
-      font-style: var(--font-heading-style);
-      font-weight: var(--font-heading-weight);
-      letter-spacing: .10em;
-      text-transform: uppercase;
-      font-size: .8rem;
-      color: rgba(var(--color-foreground), .65);
+    #shopify-section-{{ section.id }} .sk-section-header__title{
+      position: relative;
     }
 
-    #shopify-section-{{ section.id }} .sk-studies__heading{
-      margin: 0;
-      font-family: var(--font-heading-family);
-      font-style: var(--font-heading-style);
-      font-weight: var(--font-heading-weight);
-      font-size: clamp(1.9rem, 2.4vw, 2.6rem);
-      line-height: 1.15;
-      letter-spacing: -0.015em;
-    }
-
-    #shopify-section-{{ section.id }} .sk-studies__updated{
-      margin: var(--sk-2) 0 0;
-      font-size: .95rem;
-      color: rgba(var(--color-foreground), .65);
-    }
-
-    #shopify-section-{{ section.id }} .sk-studies__intro{
-      margin-top: var(--sk-4);
-      max-width: 74ch;
-      margin-inline: auto;
-      color: rgba(var(--color-foreground), .82);
-      line-height: 1.75;
+    #shopify-section-{{ section.id }} .sk-section-header__title::after{
+      content: "";
+      display: block;
+      width: min(180px, 42vw);
+      height: 0.2rem;
+      margin: var(--sk-3) auto 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(var(--sk-accent-rgb), 0) 0%, rgba(var(--sk-accent-rgb), 0.48) 18%, rgba(var(--sk-accent-rgb), 0.48) 82%, rgba(var(--sk-accent-rgb), 0) 100%);
     }
 
     /* Layout */
@@ -262,6 +246,7 @@
     /* Sidebar */
     #shopify-section-{{ section.id }} .sk-studies__sidebar{
       border: var(--sk-border);
+      border-left: 0.3rem solid var(--sk-accent-line);
       border-radius: var(--text-boxes-radius);
       background: var(--sk-soft);
       padding: var(--sk-4);
@@ -294,11 +279,11 @@
       display: inline-flex;
       align-items: center;
       padding: 8px 12px;
-      border: var(--sk-border);
+      border: 0.1rem solid var(--sk-accent-line);
       border-radius: 999px;
       background: rgba(var(--color-foreground), 0.02);
       font-size: .95rem;
-      color: rgba(var(--color-foreground), .88);
+      color: rgba(var(--color-foreground), .90);
     }
 
     /* List */
@@ -328,7 +313,7 @@
       font-family: var(--font-heading-family);
       font-style: var(--font-heading-style);
       font-weight: var(--font-heading-weight);
-      color: rgba(var(--color-foreground), .55);
+      color: rgba(var(--sk-accent-rgb), .62);
     }
 
     /* Plain mode */
@@ -342,9 +327,9 @@
 
     /* Card */
     #shopify-section-{{ section.id }} .sk-study__card{
-      border: var(--sk-border);
-      border-radius: var(--text-boxes-radius);
-      background: var(--sk-soft);
+      border: 0.1rem solid var(--sk-accent-border);
+      border-radius: calc(var(--text-boxes-radius) + 6px);
+      background: rgb(var(--color-white-rgb, 255, 255, 255));
       padding: clamp(var(--sk-3), 2vw, var(--sk-4));
     }
 
@@ -368,8 +353,8 @@
       align-items: center;
       padding: 6px 10px;
       border-radius: 999px;
-      border: var(--sk-border);
-      background: var(--sk-soft-2);
+      border: 0.1rem solid var(--sk-accent-line);
+      background: rgba(var(--color-foreground), 0.03);
       font-size: .92rem;
       line-height: 1;
       color: rgba(var(--color-foreground), .9);
@@ -386,7 +371,7 @@
       font-family: var(--font-heading-family);
       font-style: var(--font-heading-style);
       font-weight: var(--font-heading-weight);
-      font-size: clamp(1.12rem, 1.4vw, 1.35rem);
+      font-size: clamp(1.6rem, 2.2vw, 2.1rem);
       line-height: 1.25;
     }
 
@@ -400,6 +385,10 @@
       margin-top: var(--sk-3);
       line-height: 1.65;
       color: rgba(var(--color-foreground), .9);
+    }
+
+    #shopify-section-{{ section.id }} .sk-study__summary.rte p{
+      font-size: clamp(1.35rem, 1.6vw, 1.7rem);
     }
 
     /* Links */
@@ -416,28 +405,31 @@
       display: inline-flex;
       align-items: center;
       padding: 10px 14px;
-      border-radius: var(--buttons-radius);
-      border: var(--sk-border);
-      background: rgba(var(--color-foreground), 0.015);
+      border-radius: calc(var(--buttons-radius) + 6px);
+      border: 0.1rem solid var(--sk-accent-border);
+      background: rgb(var(--color-white-rgb, 255, 255, 255));
       color: var(--sk-accent);
       text-decoration: none;
-      font-size: .95rem;
+      font-size: clamp(1.15rem, 1.2vw, 1.4rem);
       line-height: 1;
     }
 
     #shopify-section-{{ section.id }} .sk-study__link--primary{
       font-weight: 600;
-      background: rgba(var(--color-foreground), 0.03);
+      border-color: rgba(var(--sk-accent-rgb), 0.60);
+      box-shadow: 0 0 0 0.1rem rgba(var(--sk-accent-rgb), 0.12);
     }
 
     #shopify-section-{{ section.id }} .sk-study__link:hover{
+      border-color: rgba(var(--sk-accent-rgb), 0.70);
+      background: rgba(var(--color-foreground), 0.02);
       text-decoration: underline;
       text-underline-offset: .22em;
     }
 
     #shopify-section-{{ section.id }} .sk-study__link:focus-visible{
-      outline: var(--focused-base-outline);
-      outline-offset: 2px;
+      outline: none;
+      box-shadow: var(--sk-focus);
     }
 
     @media (max-width: 749px){
