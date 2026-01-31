@@ -440,6 +440,40 @@
     }
   </style>
 
+  <script>
+    (function initSkClinicalStudiesExternalLinks() {
+      var root = document.querySelector('.sk-studies[data-section-id="{{ section.id }}"]');
+      if (!root) return;
+
+      var anchors = root.querySelectorAll('a[href]');
+      if (!anchors || anchors.length === 0) return;
+
+      anchors.forEach(function (a) {
+        var href = a.getAttribute('href');
+        if (!href) return;
+
+        if (href.indexOf('http://') !== 0 && href.indexOf('https://') !== 0) return;
+
+        var url;
+        try {
+          url = new URL(href, window.location.href);
+        } catch (e) {
+          return;
+        }
+
+        if (!url.hostname || url.hostname === window.location.hostname) return;
+
+        a.setAttribute('target', '_blank');
+        var existingRel = (a.getAttribute('rel') || '').toLowerCase();
+        var relParts = existingRel ? existingRel.split(/\s+/) : [];
+        ['noopener', 'nofollow'].forEach(function (token) {
+          if (relParts.indexOf(token) === -1) relParts.push(token);
+        });
+        a.setAttribute('rel', relParts.join(' ').trim());
+      });
+    })();
+  </script>
+
   {% if section.settings.show_jsonld %}
     {% assign position = 0 %}
     {% capture itemlist_json %}{% endcapture %}
