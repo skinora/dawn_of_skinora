@@ -105,10 +105,10 @@
         "heading": "Kliniske studier på LED-lys for hud",
         "last_updated": "Sist oppdatert: 31.01.2026",
         "intro": "<p>På denne siden finner du en etterprøvbar oversikt over kliniske studier og fagfellevurdert forskning på LED-lys (fotobiomodulering) brukt på hud. Kildene gjelder teknologien generelt – og dekker typisk rødt lys, nær-infrarødt lys (NIR) og blått lys, avhengig av problemstilling.</p><p>Studier varierer i protokoll og kvalitet, og resultater kan derfor variere mellom personer og behandlingsoppsett. Vi lenker til originalkilder (DOI/PubMed/ClinicalTrials) der det er tilgjengelig, slik at du enkelt kan sjekke dokumentasjonen selv. Denne siden er en forskningsoversikt og ikke medisinsk rådgivning.</p>",
-        "list_style": "numbered",
+        "list_style": "plain",
         "show_year": true,
         "show_badges": true,
-        "enable_filter": false,
+        "enable_filter": true,
         "show_jsonld": true
       }
     }
