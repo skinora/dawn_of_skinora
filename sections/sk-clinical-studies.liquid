@@ -84,6 +84,12 @@
       {% endif %}
 
       <div class="sk-studies__main">
+        {% if section.settings.seo != blank %}
+          <div class="sk-studies__seo rte visually-hidden">
+            {{ section.settings.seo }}
+          </div>
+        {% endif %}
+
         <ol class="sk-studies__list{{ list_style_class }}">
           {% for block in section.blocks %}
             {% if block.type == 'study' %}
@@ -547,6 +553,11 @@
       "type": "richtext",
       "id": "intro",
       "label": "Intro"
+    },
+    {
+      "type": "richtext",
+      "id": "seo",
+      "label": "SEO"
     },
     {
       "type": "select",
