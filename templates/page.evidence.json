@@ -12,6 +12,22 @@
     "main": {
       "type": "sk-clinical-studies",
       "blocks": {
+        "study_aCAywA": {
+          "type": "study",
+          "settings": {
+            "title": "Rødt LED (660 nm) for ansiktsfornyelse – sham-kontrollert studie",
+            "badge": "Rød LED · RCT · Sham-kontrollert · Hudfornyelse",
+            "year": 2025,
+            "source": "Lasers in Medical Science",
+            "summary": "<p>Sham-kontrollert klinisk studie som støtter at rødt LED kan bidra til jevnere hud og mindre synlige aldringstegn når protokollen er riktig.</p>",
+            "primary_label": "Les mer",
+            "primary_url": "https://pubmed.ncbi.nlm.nih.gov/40167796/",
+            "secondary_label": "Kilde",
+            "secondary_url": "https://doi.org/10.1007/s10103-025-04383-1",
+            "doi_text": "10.1007/s10103-025-04383-1",
+            "doi_url": "https://doi.org/10.1007/s10103-025-04383-1"
+          }
+        },
         "study_zna7B3": {
           "type": "study",
           "settings": {
@@ -30,6 +46,7 @@
         }
       },
       "block_order": [
+        "study_aCAywA",
         "study_zna7B3"
       ],
       "settings": {
