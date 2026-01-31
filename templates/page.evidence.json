@@ -12,6 +12,22 @@
     "main": {
       "type": "sk-clinical-studies",
       "blocks": {
+        "study_wmYfEX": {
+          "type": "study",
+          "settings": {
+            "title": "Blått lys ved akne – systematisk oversikt over kliniske studier",
+            "badge": "Blått lys (~430 nm) · Akne · Systematisk review",
+            "year": 2021,
+            "source": "Sensors",
+            "summary": "<p>ystematisk oversikt som oppsummerer at blålys (og ofte blå+rød) har klinisk støtte for mild–moderat akne, samtidig som den peker på hvilke protokoller som fungerer best.</p>",
+            "primary_label": "Les mer",
+            "primary_url": "https://www.mdpi.com/1424-8220/21/20/6943",
+            "secondary_label": "Kilde",
+            "secondary_url": "https://doi.org/10.3390/s21206943",
+            "doi_text": "10.3390/s21206943",
+            "doi_url": "https://doi.org/10.3390/s21206943"
+          }
+        },
         "study_k7EnGF": {
           "type": "study",
           "settings": {
@@ -238,6 +254,7 @@
         }
       },
       "block_order": [
+        "study_wmYfEX",
         "study_k7EnGF",
         "study_W9x49H",
         "study_BzYrkj",
