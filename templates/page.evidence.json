@@ -11,6 +11,27 @@
   "sections": {
     "main": {
       "type": "sk-clinical-studies",
+      "blocks": {
+        "study_zna7B3": {
+          "type": "study",
+          "settings": {
+            "title": "LED-fototerapi for hudfornyelse (633 og 830 nm) – randomisert split-face studie",
+            "badge": "Rød LED + NIR 830 nm · RCT · Split-face · Hudfornyelse",
+            "year": 2007,
+            "source": "Journal of Photochemistry and Photobiology B",
+            "summary": "<p>Solid split-face RCT som viser at kombinasjonen rød + NIR LED kan gi synlig glattere, fastere hud med målbare forbedringer i hudkvalitet.</p>",
+            "primary_label": "Les mer",
+            "primary_url": "https://pubmed.ncbi.nlm.nih.gov/17566756/",
+            "secondary_label": "DOI",
+            "secondary_url": "https://doi.org/10.1016/j.jphotobiol.2007.04.008",
+            "doi_text": "10.1016/j.jphotobiol.2007.04.008",
+            "doi_url": "https://doi.org/10.1016/j.jphotobiol.2007.04.008"
+          }
+        }
+      },
+      "block_order": [
+        "study_zna7B3"
+      ],
       "settings": {
         "eyebrow": "Dokumentasjon & forskning",
         "heading": "Kliniske studier på LED-lys for hud",
