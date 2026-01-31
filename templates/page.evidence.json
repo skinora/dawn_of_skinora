@@ -12,6 +12,22 @@
     "main": {
       "type": "sk-clinical-studies",
       "blocks": {
+        "study_k7EnGF": {
+          "type": "study",
+          "settings": {
+            "title": "Studieprotokoll: LED-maske (660 nm) for ansiktsfornyelse – sham-kontrollert design",
+            "badge": "Rød LED · Hudfornyelse · Protokoll · Sham",
+            "year": 2021,
+            "source": "ClinicalTrials.gov",
+            "summary": "<p>Registrert protokoll som viser hvordan LED-studier typisk settes opp (dose, hyppighet og endepunkter).</p>",
+            "primary_label": "Les mer",
+            "primary_url": "https://clinicaltrials.gov/study/NCT04911140",
+            "secondary_label": "Kilde",
+            "secondary_url": "",
+            "doi_text": "",
+            "doi_url": ""
+          }
+        },
         "study_W9x49H": {
           "type": "study",
           "settings": {
@@ -222,6 +238,7 @@
         }
       },
       "block_order": [
+        "study_k7EnGF",
         "study_W9x49H",
         "study_BzYrkj",
         "study_JTeh3c",
