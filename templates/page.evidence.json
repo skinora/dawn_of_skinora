@@ -12,6 +12,22 @@
     "main": {
       "type": "sk-clinical-studies",
       "blocks": {
+        "study_d3q6pB": {
+          "type": "study",
+          "settings": {
+            "title": "Hjemmebruk LED-halsenhet – multisenter RCT for halsrynker (sham)",
+            "badge": "Rød LED · NIR · Hals · RCT · Sham-kontrollert",
+            "year": 2024,
+            "source": "Journal of Cosmetic Dermatology",
+            "summary": "<p>Multisenter RCT som støtter at LED på hals kan redusere synlige halsrynker og gi glattere hud, uten rapporterte alvorlige sikkerhetsfunn i studieperioden.</p>",
+            "primary_label": "Les mer",
+            "primary_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11743241/",
+            "secondary_label": "Kilde",
+            "secondary_url": "https://doi.org/10.1111/jocd.16599",
+            "doi_text": "10.1111/jocd.16599",
+            "doi_url": "https://doi.org/10.1111/jocd.16599"
+          }
+        },
         "study_yWxR9C": {
           "type": "study",
           "settings": {
@@ -62,6 +78,7 @@
         }
       },
       "block_order": [
+        "study_d3q6pB",
         "study_yWxR9C",
         "study_aCAywA",
         "study_zna7B3"
