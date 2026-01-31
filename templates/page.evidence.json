@@ -295,7 +295,7 @@
         "list_style": "plain",
         "show_year": true,
         "show_badges": true,
-        "enable_filter": true,
+        "enable_filter": false,
         "show_jsonld": true
       }
     }
