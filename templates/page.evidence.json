@@ -12,6 +12,22 @@
     "main": {
       "type": "sk-clinical-studies",
       "blocks": {
+        "study_EHNbAi": {
+          "type": "study",
+          "settings": {
+            "title": "LED i dermatologi – systematisk oversikt (rød/NIR/blå)",
+            "badge": "Rød LED · NIR · Blått lys (~430 nm) · Systematisk review",
+            "year": 2018,
+            "source": "Lasers in Surgery and Medicine",
+            "summary": "<p>Bred faglig oversikt som viser at LED-teknologi er klinisk undersøkt i flere hudområder – fra akne til hudkvalitet og restitusjon – og gir et sterkt “helhetsbevis” for teknologien.</p>",
+            "primary_label": "Les mer",
+            "primary_url": "https://onlinelibrary.wiley.com/doi/10.1002/lsm.22791",
+            "secondary_label": "Kilde",
+            "secondary_url": "https://doi.org/10.1002/lsm.22791",
+            "doi_text": "10.1002/lsm.22791",
+            "doi_url": "https://doi.org/10.1002/lsm.22791"
+          }
+        },
         "study_wmYfEX": {
           "type": "study",
           "settings": {
@@ -254,6 +270,7 @@
         }
       },
       "block_order": [
+        "study_EHNbAi",
         "study_wmYfEX",
         "study_k7EnGF",
         "study_W9x49H",
