@@ -57,14 +57,9 @@
     {% endfor %}
 
     {% if section.settings.enable_filter and has_badges %}
-      <div class="sk-studies__chips" aria-label="Study categories">
-        {% for b in badge_list %}
-          {% assign badge_label = b | strip %}
-          {% if badge_label != blank %}
-            <span class="sk-studies__chip">{{ badge_label | escape }}</span>
-          {% endif %}
-        {% endfor %}
-      </div>
+      {%- comment -%}
+        Chips moved into sidebar layout below (see .sk-studies__layout)
+      {%- endcomment -%}
     {% endif %}
 
     {% assign list_style_class = '' %}
@@ -72,92 +67,118 @@
       {% assign list_style_class = ' sk-studies__list--plain' %}
     {% endif %}
 
-    <ol class="sk-studies__list{{ list_style_class }}">
-      {% for block in section.blocks %}
-        {% if block.type == 'study' %}
-          {% assign title = block.settings.title | strip %}
-          {% if title != blank %}
-            {% assign badge_value = block.settings.badge | strip %}
-            {% assign year_value = block.settings.year %}
+    <div class="sk-studies__layout">
+      {% if section.settings.enable_filter and has_badges %}
+        <aside class="sk-studies__sidebar" aria-label="Kategorier">
+          <h3 class="sk-studies__side-title">Kategorier</h3>
+          <div class="sk-studies__chips">
+            {% for b in badge_list %}
+              {% assign badge_label = b | strip %}
+              {% if badge_label != blank %}
+                <span class="sk-studies__chip">{{ badge_label | escape }}</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <p class="sk-studies__side-note">Tips: bruk korte tagger. Lange tagger bør splittes i flere chips.</p>
+        </aside>
+      {% endif %}
 
-            <li class="sk-study" {{ block.shopify_attributes }}>
-              <div class="sk-study__card">
-                <div class="sk-study__meta">
-                  {% if section.settings.show_badges and badge_value != blank %}
-                    <span class="sk-study__badge">{{ badge_value | escape }}</span>
-                  {% endif %}
+      <div class="sk-studies__main">
+        <ol class="sk-studies__list{{ list_style_class }}">
+          {% for block in section.blocks %}
+            {% if block.type == 'study' %}
+              {% assign title = block.settings.title | strip %}
+              {% if title != blank %}
+                {% assign badge_value = block.settings.badge | strip %}
+                {% assign year_value = block.settings.year %}
 
-                  {% if section.settings.show_year and year_value != blank %}
-                    <span class="sk-study__year" aria-label="År">{{ year_value }}</span>
-                  {% endif %}
-                </div>
+                <li class="sk-study" {{ block.shopify_attributes }}>
+                  <div class="sk-study__card">
+                    <div class="sk-study__meta">
+                      {% if section.settings.show_badges and badge_value != blank %}
+                        {% assign badge_items = badge_value | replace: '|', '·' | split: '·' %}
+                        <div class="sk-study__badges" aria-label="Tags">
+                          {% for item in badge_items %}
+                            {% assign tag = item | strip %}
+                            {% if tag != blank %}
+                              <span class="sk-study__badge">{{ tag | escape }}</span>
+                            {% endif %}
+                          {% endfor %}
+                        </div>
+                      {% endif %}
 
-                <h3 class="sk-study__title">{{ title | escape }}</h3>
+                      {% if section.settings.show_year and year_value != blank %}
+                        <span class="sk-study__year" aria-label="År">{{ year_value }}</span>
+                      {% endif %}
+                    </div>
 
-                {% if block.settings.source != blank %}
-                  <p class="sk-study__source">{{ block.settings.source | escape }}</p>
-                {% endif %}
+                    <h3 class="sk-study__title">{{ title | escape }}</h3>
 
-                {% if block.settings.summary != blank %}
-                  <div class="sk-study__summary rte">
-                    {{ block.settings.summary }}
+                    {% if block.settings.source != blank %}
+                      <p class="sk-study__source">{{ block.settings.source | escape }}</p>
+                    {% endif %}
+
+                    {% if block.settings.summary != blank %}
+                      <div class="sk-study__summary rte">
+                        {{ block.settings.summary }}
+                      </div>
+                    {% endif %}
+
+                    {% assign has_links = false %}
+                    {% if block.settings.primary_url != blank %}{% assign has_links = true %}{% endif %}
+                    {% if block.settings.secondary_url != blank %}{% assign has_links = true %}{% endif %}
+                    {% if block.settings.doi_url != blank %}{% assign has_links = true %}{% endif %}
+
+                    {% if has_links %}
+                      <div class="sk-study__links" aria-label="Links">
+                        {% if block.settings.primary_url != blank %}
+                          <a
+                            class="sk-study__link sk-study__link--primary"
+                            href="{{ block.settings.primary_url }}"
+                            target="_blank"
+                            rel="nofollow noopener"
+                          >
+                            {{ block.settings.primary_label | default: 'Les mer' | escape }}
+                          </a>
+                        {% endif %}
+
+                        {% if block.settings.secondary_url != blank %}
+                          <a
+                            class="sk-study__link"
+                            href="{{ block.settings.secondary_url }}"
+                            target="_blank"
+                            rel="nofollow noopener"
+                          >
+                            {{ block.settings.secondary_label | default: 'Kilde' | escape }}
+                          </a>
+                        {% endif %}
+
+                        {% if block.settings.doi_url != blank %}
+                          <a
+                            class="sk-study__link"
+                            href="{{ block.settings.doi_url }}"
+                            target="_blank"
+                            rel="nofollow noopener"
+                            aria-label="Open DOI"
+                          >
+                            {{ block.settings.doi_text | default: 'DOI' | escape }}
+                          </a>
+                        {% endif %}
+                      </div>
+                    {% endif %}
                   </div>
-                {% endif %}
-
-                {% assign has_links = false %}
-                {% if block.settings.primary_url != blank %}{% assign has_links = true %}{% endif %}
-                {% if block.settings.secondary_url != blank %}{% assign has_links = true %}{% endif %}
-                {% if block.settings.doi_url != blank %}{% assign has_links = true %}{% endif %}
-
-                {% if has_links %}
-                  <div class="sk-study__links" aria-label="Links">
-                    {% if block.settings.primary_url != blank %}
-                      <a
-                        class="sk-study__link sk-study__link--primary"
-                        href="{{ block.settings.primary_url }}"
-                        target="_blank"
-                        rel="nofollow noopener"
-                      >
-                        {{ block.settings.primary_label | default: 'Les mer' | escape }}
-                      </a>
-                    {% endif %}
-
-                    {% if block.settings.secondary_url != blank %}
-                      <a
-                        class="sk-study__link"
-                        href="{{ block.settings.secondary_url }}"
-                        target="_blank"
-                        rel="nofollow noopener"
-                      >
-                        {{ block.settings.secondary_label | default: 'Kilde' | escape }}
-                      </a>
-                    {% endif %}
-
-                    {% if block.settings.doi_url != blank %}
-                      <a
-                        class="sk-study__link"
-                        href="{{ block.settings.doi_url }}"
-                        target="_blank"
-                        rel="nofollow noopener"
-                        aria-label="Open DOI"
-                      >
-                        {{ block.settings.doi_text | default: 'DOI' | escape }}
-                      </a>
-                    {% endif %}
-                  </div>
-                {% endif %}
-              </div>
-            </li>
-          {% endif %}
-        {% endif %}
-      {% endfor %}
-    </ol>
+                </li>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </ol>
+      </div>
+    </div>
   </div>
 
   <style>
     #shopify-section-{{ section.id }} .sk-studies{
-      /* Rhythm + typography tokens (no hardcoded fonts/colors) */
-      --sk-max: 82ch;
+      --sk-max: 92ch;
 
       --sk-1: 6px;
       --sk-2: 12px;
@@ -166,28 +187,21 @@
       --sk-5: 30px;
       --sk-6: 36px;
       --sk-8: 48px;
-      --sk-10: 60px;
 
-      --sk-border: 0.1rem solid rgba(var(--color-foreground), 0.18);
-      --sk-soft: rgba(var(--color-foreground), 0.035);
-      --sk-soft-2: rgba(var(--color-foreground), 0.055);
+      --sk-border: 0.1rem solid rgba(var(--color-foreground), 0.16);
+      --sk-soft: rgba(var(--color-foreground), 0.028);
+      --sk-soft-2: rgba(var(--color-foreground), 0.05);
+
+      --sk-accent: var(--color-brand, rgb(var(--color-foreground)));
 
       background: rgb(var(--color-background));
       color: rgb(var(--color-foreground));
-      padding-block: clamp(var(--sk-8), 5vw, var(--sk-10));
-      overflow-x: clip;
+      padding-block: clamp(var(--sk-6), 4vw, var(--sk-8));
     }
 
-    @supports not (overflow: clip) {
-      #shopify-section-{{ section.id }} .sk-studies{ overflow-x: hidden; }
-    }
-
-    #shopify-section-{{ section.id }} .sk-studies *{ box-sizing: border-box; }
-
-    /* Header */
     #shopify-section-{{ section.id }} .sk-studies__header{
       max-width: var(--sk-max);
-      margin: 0 auto var(--sk-8);
+      margin: 0 auto var(--sk-6);
       text-align: center;
     }
 
@@ -196,10 +210,10 @@
       font-family: var(--font-heading-family);
       font-style: var(--font-heading-style);
       font-weight: var(--font-heading-weight);
-      letter-spacing: 0.08em;
+      letter-spacing: .10em;
       text-transform: uppercase;
-      font-size: 0.85rem;
-      color: rgba(var(--color-foreground), 0.7);
+      font-size: .8rem;
+      color: rgba(var(--color-foreground), .65);
     }
 
     #shopify-section-{{ section.id }} .sk-studies__heading{
@@ -207,33 +221,73 @@
       font-family: var(--font-heading-family);
       font-style: var(--font-heading-style);
       font-weight: var(--font-heading-weight);
-      font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+      font-size: clamp(1.9rem, 2.4vw, 2.6rem);
       line-height: 1.15;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
     }
 
     #shopify-section-{{ section.id }} .sk-studies__updated{
       margin: var(--sk-2) 0 0;
-      color: rgba(var(--color-foreground), 0.7);
-      font-size: 0.95rem;
+      font-size: .95rem;
+      color: rgba(var(--color-foreground), .65);
     }
 
     #shopify-section-{{ section.id }} .sk-studies__intro{
       margin-top: var(--sk-4);
-      max-width: var(--sk-max);
+      max-width: 74ch;
       margin-inline: auto;
-      color: rgba(var(--color-foreground), 0.85);
-      line-height: 1.7;
+      color: rgba(var(--color-foreground), .82);
+      line-height: 1.75;
     }
 
-    /* Optional chips: make them feel “documentation tags” */
+    /* Layout */
+    #shopify-section-{{ section.id }} .sk-studies__layout{
+      max-width: var(--sk-max);
+      margin: 0 auto;
+      display: grid;
+      gap: var(--sk-4);
+    }
+
+    @media (min-width: 990px){
+      #shopify-section-{{ section.id }} .sk-studies__layout{
+        grid-template-columns: minmax(240px, 0.34fr) minmax(0, 1fr);
+        align-items: start;
+      }
+      #shopify-section-{{ section.id }} .sk-studies__sidebar{
+        position: sticky;
+        top: 18px;
+      }
+    }
+
+    /* Sidebar */
+    #shopify-section-{{ section.id }} .sk-studies__sidebar{
+      border: var(--sk-border);
+      border-radius: var(--text-boxes-radius);
+      background: var(--sk-soft);
+      padding: var(--sk-4);
+    }
+
+    #shopify-section-{{ section.id }} .sk-studies__side-title{
+      margin: 0 0 var(--sk-2);
+      font-family: var(--font-heading-family);
+      font-style: var(--font-heading-style);
+      font-weight: var(--font-heading-weight);
+      font-size: 1.05rem;
+    }
+
+    #shopify-section-{{ section.id }} .sk-studies__side-note{
+      margin: var(--sk-3) 0 0;
+      color: rgba(var(--color-foreground), .65);
+      font-size: .92rem;
+      line-height: 1.55;
+    }
+
+    /* Chips */
     #shopify-section-{{ section.id }} .sk-studies__chips{
       display: flex;
       flex-wrap: wrap;
-      gap: var(--sk-2);
-      justify-content: center;
-      max-width: var(--sk-max);
-      margin: 0 auto var(--sk-8);
+      gap: 10px;
+      margin: 0;
     }
 
     #shopify-section-{{ section.id }} .sk-studies__chip{
@@ -241,45 +295,49 @@
       align-items: center;
       padding: 8px 12px;
       border: var(--sk-border);
-      border-radius: var(--buttons-radius);
-      background: var(--sk-soft);
-      color: rgba(var(--color-foreground), 0.88);
-      font-size: 0.95rem;
-      line-height: 1;
-      white-space: nowrap;
+      border-radius: 999px;
+      background: rgba(var(--color-foreground), 0.02);
+      font-size: .95rem;
+      color: rgba(var(--color-foreground), .88);
     }
 
-    /* LIST: convert OL into a “numbered documentation list” with a number gutter */
+    /* List */
     #shopify-section-{{ section.id }} .sk-studies__list{
-      max-width: var(--sk-max);
-      margin: 0 auto;
+      margin: 0;
       padding: 0;
-      list-style: none;               /* we’ll render our own numbers */
+      list-style: none;
       counter-reset: skstudy;
       display: flex;
       flex-direction: column;
-      gap: var(--sk-4);
+      gap: var(--sk-3);
     }
 
     #shopify-section-{{ section.id }} .sk-study{
       counter-increment: skstudy;
       display: grid;
-      grid-template-columns: 44px 1fr;
+      grid-template-columns: 42px 1fr;
       gap: var(--sk-3);
       align-items: start;
     }
 
-    /* Number column */
     #shopify-section-{{ section.id }} .sk-study::before{
       content: counter(skstudy) ".";
       display: block;
-      padding-top: 10px;
+      padding-top: 14px;
+      text-align: right;
       font-family: var(--font-heading-family);
       font-style: var(--font-heading-style);
       font-weight: var(--font-heading-weight);
-      color: rgba(var(--color-foreground), 0.55);
-      font-size: 1rem;
-      text-align: right;
+      color: rgba(var(--color-foreground), .55);
+    }
+
+    /* Plain mode */
+    #shopify-section-{{ section.id }} .sk-studies__list--plain .sk-study{
+      grid-template-columns: 1fr;
+    }
+    #shopify-section-{{ section.id }} .sk-studies__list--plain .sk-study::before{
+      content: none;
+      display: none;
     }
 
     /* Card */
@@ -287,11 +345,9 @@
       border: var(--sk-border);
       border-radius: var(--text-boxes-radius);
       background: var(--sk-soft);
-      padding: clamp(var(--sk-3), 2.2vw, var(--sk-5));
-      box-shadow: 0 1px 0 rgba(var(--color-foreground), 0.04);
+      padding: clamp(var(--sk-3), 2vw, var(--sk-4));
     }
 
-    /* Meta row */
     #shopify-section-{{ section.id }} .sk-study__meta{
       display: flex;
       align-items: center;
@@ -300,59 +356,60 @@
       margin-bottom: var(--sk-2);
     }
 
-    /* Badge pill */
+    #shopify-section-{{ section.id }} .sk-study__badges{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-width: 0;
+    }
+
     #shopify-section-{{ section.id }} .sk-study__badge{
       display: inline-flex;
       align-items: center;
-      padding: 8px 12px;
-      border-radius: var(--buttons-radius);
-      border: 0.1rem solid rgba(var(--color-foreground), 0.22);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: var(--sk-border);
       background: var(--sk-soft-2);
-      font-size: 0.95rem;
+      font-size: .92rem;
       line-height: 1;
-      color: rgba(var(--color-foreground), 0.9);
-      max-width: 100%;
+      color: rgba(var(--color-foreground), .9);
     }
 
-    /* Year */
     #shopify-section-{{ section.id }} .sk-study__year{
-      font-size: 0.95rem;
-      color: rgba(var(--color-foreground), 0.68);
+      font-size: .92rem;
+      color: rgba(var(--color-foreground), .65);
       white-space: nowrap;
     }
 
-    /* Title */
     #shopify-section-{{ section.id }} .sk-study__title{
       margin: 0;
       font-family: var(--font-heading-family);
       font-style: var(--font-heading-style);
       font-weight: var(--font-heading-weight);
-      font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+      font-size: clamp(1.12rem, 1.4vw, 1.35rem);
       line-height: 1.25;
-      letter-spacing: -0.01em;
     }
 
-    /* Source */
     #shopify-section-{{ section.id }} .sk-study__source{
-      margin: var(--sk-2) 0 0;
-      color: rgba(var(--color-foreground), 0.72);
-      font-size: 0.98rem;
-      overflow-wrap: anywhere;
+      margin: 10px 0 0;
+      color: rgba(var(--color-foreground), .68);
+      font-size: .95rem;
     }
 
-    /* Summary */
     #shopify-section-{{ section.id }} .sk-study__summary{
       margin-top: var(--sk-3);
-      color: rgba(var(--color-foreground), 0.9);
-      line-height: 1.7;
+      line-height: 1.65;
+      color: rgba(var(--color-foreground), .9);
     }
 
-    /* Links as “documentation buttons” */
+    /* Links */
     #shopify-section-{{ section.id }} .sk-study__links{
-      margin-top: var(--sk-4);
+      margin-top: var(--sk-3);
+      padding-top: var(--sk-3);
+      border-top: 0.1rem solid rgba(var(--color-foreground), 0.10);
       display: flex;
       flex-wrap: wrap;
-      gap: var(--sk-2);
+      gap: 10px;
     }
 
     #shopify-section-{{ section.id }} .sk-study__link{
@@ -360,26 +417,22 @@
       align-items: center;
       padding: 10px 14px;
       border-radius: var(--buttons-radius);
-      border: 0.1rem solid rgba(var(--color-foreground), 0.22);
-      background: rgba(var(--color-foreground), 0.02);
-      color: var(--color-brand);
+      border: var(--sk-border);
+      background: rgba(var(--color-foreground), 0.015);
+      color: var(--sk-accent);
       text-decoration: none;
-      font-size: 0.98rem;
+      font-size: .95rem;
       line-height: 1;
-      max-width: 100%;
-      overflow-wrap: anywhere;
-      word-break: break-word;
     }
 
     #shopify-section-{{ section.id }} .sk-study__link--primary{
-      border-color: rgba(var(--color-foreground), 0.28);
-      background: rgba(var(--color-foreground), 0.04);
       font-weight: 600;
+      background: rgba(var(--color-foreground), 0.03);
     }
 
     #shopify-section-{{ section.id }} .sk-study__link:hover{
       text-decoration: underline;
-      text-underline-offset: 0.22em;
+      text-underline-offset: .22em;
     }
 
     #shopify-section-{{ section.id }} .sk-study__link:focus-visible{
@@ -387,15 +440,10 @@
       outline-offset: 2px;
     }
 
-    /* Mobile */
     @media (max-width: 749px){
       #shopify-section-{{ section.id }} .sk-study{
-        grid-template-columns: 32px 1fr;
+        grid-template-columns: 28px 1fr;
         gap: var(--sk-2);
-      }
-      #shopify-section-{{ section.id }} .sk-study::before{
-        padding-top: 12px;
-        font-size: 0.95rem;
       }
     }
   </style>
