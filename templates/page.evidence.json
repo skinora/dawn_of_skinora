@@ -12,6 +12,22 @@
     "main": {
       "type": "sk-clinical-studies",
       "blocks": {
+        "study_p3DBtE": {
+          "type": "study",
+          "settings": {
+            "title": "414 nm LED ved akne – randomisert kontrollert studie",
+            "badge": "Blått lys (~430 nm) · Akne · RCT",
+            "year": 2015,
+            "source": "Journal of Cosmetic and Laser Therapy",
+            "summary": "<p>RCT som støtter at blått LED rundt 414 nm kan redusere akneparametere og gi roligere, jevnere hud hos utvalgte pasienter.</p>",
+            "primary_label": "Les mer",
+            "primary_url": "https://pubmed.ncbi.nlm.nih.gov/25594129/",
+            "secondary_label": "Kilde",
+            "secondary_url": "https://doi.org/10.3109/14764172.2015.1007064",
+            "doi_text": "10.3109/14764172.2015.1007064",
+            "doi_url": "https://doi.org/10.3109/14764172.2015.1007064"
+          }
+        },
         "study_icUdyt": {
           "type": "study",
           "settings": {
@@ -126,6 +142,7 @@
         }
       },
       "block_order": [
+        "study_p3DBtE",
         "study_icUdyt",
         "study_cXP4pk",
         "study_rc4Jy6",
