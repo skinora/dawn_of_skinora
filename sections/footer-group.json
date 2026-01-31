@@ -14,6 +14,27 @@
     "footer": {
       "type": "footer",
       "blocks": {
+        "link_column_Pnb7r9": {
+          "type": "link_column",
+          "settings": {
+            "header": "SKINORA®",
+            "item1title": "KONTAKT OSS",
+            "item1seo": "Kontakt Skinora kundeservice – spørsmål om bestilling, frakt og LED-masker",
+            "item1link": "shopify://pages/kundeservice",
+            "item2title": "HJELPESENTER",
+            "item2seo": "Skinora hjelpesenter – vanlige spørsmål om levering, betaling, retur og bruk av LED-masker",
+            "item2link": "shopify://pages/hjelpesenter",
+            "item3title": "GARANTI",
+            "item3seo": "Garanti og reklamasjon hos Skinora – dine rettigheter og våre vilkår",
+            "item3link": "shopify://pages/garanti-og-support",
+            "item4title": "",
+            "item4seo": "",
+            "item4link": "",
+            "item5title": "",
+            "item5seo": "",
+            "item5link": ""
+          }
+        },
         "link_column_cN4y4z": {
           "type": "link_column",
           "settings": {
@@ -58,6 +79,7 @@
         }
       },
       "block_order": [
+        "link_column_Pnb7r9",
         "link_column_cN4y4z",
         "link_column_h4XqLD"
       ],
