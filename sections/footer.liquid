@@ -123,8 +123,56 @@
         {%- endif -%}
       </div>
 
-      {%- comment -%} Three Menu Columns {%- endcomment -%}
-      {%- if section.settings.footer_menu != blank -%}
+      {%- comment -%}
+        Menu columns
+        - Preferred: blocks (each block has a heading + up to 5 link items)
+        - Fallback: footer_menu setting (nested parent -> children)
+      {%- endcomment -%}
+
+      {%- assign has_footer_link_blocks = false -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'link_column' -%}
+          {%- assign has_footer_link_blocks = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if has_footer_link_blocks -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'link_column' -%}
+            {%- assign block_heading = block.settings.header | strip -%}
+
+            <div class="footer__column footer__column--menu" {{ block.shopify_attributes }}>
+              {%- if block_heading != blank -%}
+                <h3 class="footer__menu-heading">{{ block_heading | escape }}</h3>
+              {%- endif -%}
+
+              <ul class="footer__menu-list list-unstyled">
+                {%- for i in (1..5) -%}
+                  {%- capture title_key -%}item{{ i }}title{%- endcapture -%}
+                  {%- capture seo_key -%}item{{ i }}seo{%- endcapture -%}
+                  {%- capture link_key -%}item{{ i }}link{%- endcapture -%}
+
+                  {%- assign item_title = block.settings[title_key] | strip -%}
+                  {%- assign item_seo = block.settings[seo_key] | strip -%}
+                  {%- assign item_link = block.settings[link_key] -%}
+
+                  {%- if item_title != blank and item_link != blank -%}
+                    <li class="footer__menu-item">
+                      <a href="{{ item_link }}" class="footer__menu-link">
+                        {{ item_title | escape }}
+                        {%- if item_seo != blank -%}
+                          <span class="visually-hidden"> {{ item_seo }} </span>
+                        {%- endif -%}
+                      </a>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- elsif section.settings.footer_menu != blank -%}
         {%- assign footer_menu = linklists[section.settings.footer_menu] -%}
         {%- for parent_link in footer_menu.links limit: 3 -%}
           <div class="footer__column footer__column--menu">
@@ -265,6 +313,7 @@
 {% schema %}
 {
   "name": "t:sections.footer.name",
+  "max_blocks": 6,
   "settings": [
     {
       "type": "color_scheme",
@@ -453,6 +502,34 @@
       "id": "newsletter_top_subtext",
       "label": "Top newsletter subtext",
       "default": "Få inspirasjon, velvære-tips og eksklusive tilbud rett i innboksen. Vi deler kun det som får huden – og deg – til å stråle."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_column",
+      "name": "Link column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "header",
+          "label": "Header"
+        },
+        { "type": "text", "id": "item1title", "label": "Item 1 title" },
+        { "type": "inline_richtext", "id": "item1seo", "label": "Item 1 SEO (sr-only)" },
+        { "type": "url", "id": "item1link", "label": "Item 1 link" },
+        { "type": "text", "id": "item2title", "label": "Item 2 title" },
+        { "type": "inline_richtext", "id": "item2seo", "label": "Item 2 SEO (sr-only)" },
+        { "type": "url", "id": "item2link", "label": "Item 2 link" },
+        { "type": "text", "id": "item3title", "label": "Item 3 title" },
+        { "type": "inline_richtext", "id": "item3seo", "label": "Item 3 SEO (sr-only)" },
+        { "type": "url", "id": "item3link", "label": "Item 3 link" },
+        { "type": "text", "id": "item4title", "label": "Item 4 title" },
+        { "type": "inline_richtext", "id": "item4seo", "label": "Item 4 SEO (sr-only)" },
+        { "type": "url", "id": "item4link", "label": "Item 4 link" },
+        { "type": "text", "id": "item5title", "label": "Item 5 title" },
+        { "type": "inline_richtext", "id": "item5seo", "label": "Item 5 SEO (sr-only)" },
+        { "type": "url", "id": "item5link", "label": "Item 5 link" }
+      ]
     }
   ]
 }
