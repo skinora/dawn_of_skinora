@@ -12,6 +12,22 @@
     "main": {
       "type": "sk-clinical-studies",
       "blocks": {
+        "study_BzYrkj": {
+          "type": "study",
+          "settings": {
+            "title": "1072 nm LED ved herpes labialis (forkjølelsessår) – dobbelblind RCT",
+            "badge": "NIR 1072 nm · Tilheling · RCT · Placebo",
+            "year": 2006,
+            "source": "Clinical and Experimental Dermatology",
+            "summary": "<p>Dobbelblind RCT som støtter at 1072 nm kan bidra til raskere bedring ved forkjølelsessår sammenlignet med placebo.</p>",
+            "primary_label": "Les mer",
+            "primary_url": "https://pubmed.ncbi.nlm.nih.gov/16780494/",
+            "secondary_label": "Kilde",
+            "secondary_url": "https://doi.org/10.1111/j.1365-2230.2006.02191.x",
+            "doi_text": "10.1111/j.1365-2230.2006.02191.x",
+            "doi_url": "https://doi.org/10.1111/j.1365-2230.2006.02191.x"
+          }
+        },
         "study_JTeh3c": {
           "type": "study",
           "settings": {
@@ -190,6 +206,7 @@
         }
       },
       "block_order": [
+        "study_BzYrkj",
         "study_JTeh3c",
         "study_H4QXTE",
         "study_mNFyzx",
