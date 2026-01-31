@@ -12,6 +12,22 @@
     "main": {
       "type": "sk-clinical-studies",
       "blocks": {
+        "study_cXP4pk": {
+          "type": "study",
+          "settings": {
+            "title": "Kombinert blått (415 nm) + rødt (660 nm) lys for akne – RCT",
+            "badge": "Blått lys (~430 nm) · Rød LED · Akne · RCT",
+            "year": 2000,
+            "source": "British Journal of Dermatology",
+            "summary": "<p>Klassisk RCT som viser at kombinasjonen blått + rødt lys kan redusere inflammasjon og gi tydelig bedre akneutfall over behandlingsperioden.</p>",
+            "primary_label": "Les mer",
+            "primary_url": "https://pubmed.ncbi.nlm.nih.gov/10809858/",
+            "secondary_label": "Kilde",
+            "secondary_url": "https://doi.org/10.1046/j.1365-2133.2000.03481.x",
+            "doi_text": "10.1046/j.1365-2133.2000.03481.x",
+            "doi_url": "https://doi.org/10.1046/j.1365-2133.2000.03481.x"
+          }
+        },
         "study_rc4Jy6": {
           "type": "study",
           "settings": {
@@ -94,6 +110,7 @@
         }
       },
       "block_order": [
+        "study_cXP4pk",
         "study_rc4Jy6",
         "study_d3q6pB",
         "study_yWxR9C",
