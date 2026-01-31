@@ -79,9 +79,9 @@
   justify-content: center;
   width: 80px;
   height: 80px;
-  background-color: rgba(var(--color-brand-rgb), 0.08);
-  border: 0.1rem solid rgba(var(--color-brand-rgb), 0.22);
-  border-radius: var(--buttons-radius);
+  background-color: rgb(var(--color-brand-rgb));
+  border: 0.1rem solid rgb(var(--color-brand-rgb));
+  border-radius: calc(var(--buttons-radius) + 6px);
   margin-bottom: 24px;
 }
 
@@ -89,7 +89,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgb(var(--color-brand-rgb));
+  color: rgb(var(--color-background));
 }
 
 .sk-help-categories__icon svg {
