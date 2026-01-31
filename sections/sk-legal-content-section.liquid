@@ -9,7 +9,13 @@
 
 {%- assign page_title = page.metafields.custom.legal_title -%}
 {%- assign page_content = page.metafields.custom.legal_content -%}
-{%- assign resolved_heading = page_title.value | default: section.settings.heading -%}
+
+{%- assign resolved_heading = section.settings.heading -%}
+{%- if page_title != blank -%}
+  {%- assign resolved_heading = page_title.value -%}
+{%- elsif page.title != blank -%}
+  {%- assign resolved_heading = page.title -%}
+{%- endif -%}
 
 <div class="sk-content-section section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="page-width">
@@ -20,12 +26,14 @@
         </h1>
       {%- endif -%}
 
-      {%- if page_content != blank or section.settings.content != blank -%}
+      {%- if page_content != blank or page.content != blank or section.settings.content != blank -%}
         <div class="sk-content-section__content">
           {%- if page_content != blank -%}
             {{ page_content | metafield_tag }}
+          {%- elsif page.content != blank -%}
+            {{ page.content }}
           {%- else -%}
-            {{ section.settings.content | raw }}
+            {{ section.settings.content }}
           {%- endif -%}
         </div>
       {%- endif -%}
@@ -60,7 +68,8 @@
       "type": "html",
       "id": "content",
       "label": "Content",
-      "default": "<p>Add your legal content here.</p>"
+      "info": "Legacy fallback. Recommended: put content in the Page (Online Store → Pages) or use page metafields (custom.legal_content).",
+      "default": ""
     },
     {
       "type": "text",
