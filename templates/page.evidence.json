@@ -12,6 +12,22 @@
     "main": {
       "type": "sk-clinical-studies",
       "blocks": {
+        "study_JTeh3c": {
+          "type": "study",
+          "settings": {
+            "title": "1072 nm lys som anti-ageing – randomisert klinisk studie (selvrapportert)",
+            "badge": "NIR 1072 nm · Hudfornyelse · Klinisk",
+            "year": 2007,
+            "source": "Journal of Cosmetic and Laser Therapy",
+            "summary": "<p>Tidlig klinisk evidens som peker på at 1072 nm kan bidra til forbedret hudutseende, særlig i områder der huden lett ser “trøtt” ut.</p>",
+            "primary_label": "Les mer",
+            "primary_url": "https://pubmed.ncbi.nlm.nih.gov/17852628/",
+            "secondary_label": "Kilde",
+            "secondary_url": "https://doi.org/10.1080/14764170701400085",
+            "doi_text": "10.1080/14764170701400085",
+            "doi_url": "https://doi.org/10.1080/14764170701400085"
+          }
+        },
         "study_H4QXTE": {
           "type": "study",
           "settings": {
@@ -174,6 +190,7 @@
         }
       },
       "block_order": [
+        "study_JTeh3c",
         "study_H4QXTE",
         "study_mNFyzx",
         "study_p3DBtE",
