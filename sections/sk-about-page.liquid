@@ -1,0 +1,598 @@
+{%- comment -%}
+  sk-about-page
+  Single-section About page that consolidates previous About template sections.
+{%- endcomment -%}
+
+{%- style -%}
+  .sk-about-page__section-padding {
+    padding-top: var(--sk-about-page-padding-top, 60px);
+    padding-bottom: var(--sk-about-page-padding-bottom, 60px);
+  }
+
+  .sk-about-page__block {
+    margin-top: 60px;
+  }
+
+  .sk-about-page__block:first-child {
+    margin-top: 0;
+  }
+
+  /* Reuse layouts similar to existing sections (about-section-2 / product-showcase) */
+  .sk-about-page__split {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 80px;
+    align-items: flex-end;
+  }
+
+  .sk-about-page__split--image-left {
+    flex-direction: row;
+  }
+
+  .sk-about-page__split--image-right {
+    flex-direction: row-reverse;
+  }
+
+  .sk-about-page__col {
+    flex: 1 1 320px;
+  }
+
+  .sk-about-page__image-wrapper {
+    position: relative;
+    max-width: clamp(300px, 45vw, 550px);
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .sk-about-page__image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .sk-about-page__eyebrow {
+    font-size: var(--sk-font-size-small);
+    font-weight: 400;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  .sk-about-page__heading {
+    font-size: 72px;
+    font-weight: 600;
+    line-height: 1.05;
+    margin: 0 0 2.5rem;
+    text-transform: uppercase;
+  }
+
+  .sk-about-page__body {
+    max-width: 640px;
+  }
+
+  .sk-about-page__body p {
+    font-size: var(--sk-font-size-medium);
+    line-height: 1.7;
+    margin-top: 20px;
+    margin-bottom: 3.5rem;
+  }
+
+  .sk-about-page__button-wrapper {
+    margin-top: 3rem;
+  }
+
+  .sk-about-page__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* Numbered list */
+  .sk-about-page__numbered {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 60px;
+    align-items: stretch;
+  }
+
+  .sk-about-page__numbered-col {
+    flex: 1 1 320px;
+  }
+
+  .sk-about-page__numbered-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    padding: 16px 0;
+  }
+
+  .sk-about-page__number {
+    font-weight: 600;
+    opacity: 0.7;
+  }
+
+  .sk-about-page__trustbar {
+    background-color: var(--color-ghost-3);
+    padding: 24px 0;
+    border-radius: 0;
+  }
+
+  .sk-about-page__trustbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .sk-about-page__trustbar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .sk-about-page__trustbar-card {
+    border: 1px solid rgba(var(--color-foreground), 0.12);
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    background: transparent;
+    box-shadow: 0 4px 16px rgba(var(--color-foreground), 0.06);
+  }
+
+  .sk-about-page__trustbar-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  .sk-about-page__trustbar-icon svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+    color: rgba(var(--color-foreground), 0.9);
+  }
+
+  .sk-about-page__trustbar-title {
+    margin: 0;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.25;
+    color: rgba(var(--color-foreground), 0.9);
+  }
+
+  .sk-about-page__trustbar-sub {
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  @media (max-width: 749px) {
+    .sk-about-page__split {
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .sk-about-page__heading {
+      font-size: 36px;
+      line-height: 1.15;
+    }
+
+    .sk-about-page__trustbar {
+      padding: 16px 0;
+    }
+
+    .sk-about-page__trustbar-grid {
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(260px, 1fr);
+      grid-template-columns: unset;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      overscroll-behavior-x: contain;
+      padding-bottom: 8px;
+      scroll-snap-type: x mandatory;
+      scroll-padding: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .sk-about-page__trustbar-grid::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    .sk-about-page__trustbar-card {
+      scroll-snap-align: start;
+    }
+  }
+{%- endstyle -%}
+
+{%- assign padding_top = section.settings.padding_top | default: 60 -%}
+{%- assign padding_bottom = section.settings.padding_bottom | default: 60 -%}
+
+<div
+  class="sk-about-page color-{{ section.settings.color_scheme }}"
+  style="--sk-about-page-padding-top: {{ padding_top }}px; --sk-about-page-padding-bottom: {{ padding_bottom }}px;"
+>
+  <div class="page-width sk-about-page__section-padding">
+    {%- if section.settings.show_page_title -%}
+      <div class="sk-about-page__block">
+        <h1 class="sk-header__section sk-section-heading sk-section-heading--hxl">
+          {{ section.settings.custom_title | default: page.title | escape }}
+        </h1>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="h2">{{ section.settings.subtitle | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Block 1: Image left, text right {%- endcomment -%}
+    <div class="sk-about-page__block">
+      <div class="sk-about-page__split sk-about-page__split--image-left">
+        <div class="sk-about-page__col">
+          <div class="sk-about-page__image-wrapper">
+            {%- if section.settings.section_1_image != blank -%}
+              <img
+                srcset="
+                  {%- if section.settings.section_1_image.width >= 375 -%}{{ section.settings.section_1_image | image_url: width: 375 }} 375w,{%- endif -%}
+                  {%- if section.settings.section_1_image.width >= 550 -%}{{ section.settings.section_1_image | image_url: width: 550 }} 550w,{%- endif -%}
+                  {%- if section.settings.section_1_image.width >= 750 -%}{{ section.settings.section_1_image | image_url: width: 750 }} 750w,{%- endif -%}
+                  {{ section.settings.section_1_image | image_url }} {{ section.settings.section_1_image.width }}w
+                "
+                src="{{ section.settings.section_1_image | image_url: width: 550 }}"
+                sizes="(min-width: 990px) 550px, (min-width: 750px) calc(50vw - 5rem), calc(100vw - 3rem)"
+                alt="{{ section.settings.section_1_image.alt | escape }}"
+                class="sk-about-page__image"
+                width="{{ section.settings.section_1_image.width }}"
+                height="{{ section.settings.section_1_image.height }}"
+                loading="eager"
+              >
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="sk-about-page__col">
+          {%- if section.settings.section_1_eyebrow != blank -%}
+            <span class="sk-about-page__eyebrow">{{ section.settings.section_1_eyebrow | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.section_1_heading != blank -%}
+            <h2 class="sk-about-page__heading sk-header__section sk-section-heading sk-section-heading--hxl">
+              {{ section.settings.section_1_heading | escape }}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.section_1_description != blank -%}
+            <div class="sk-about-page__body">{{ section.settings.section_1_description }}</div>
+          {%- endif -%}
+          {%- if section.settings.section_1_button_label != blank -%}
+            <div class="sk-about-page__button-wrapper">
+              <a class="sk-btn sk-btn--primary sk-about-page__btn" href="{{ section.settings.section_1_button_link }}">
+                {{ section.settings.section_1_button_label | escape }}
+                <span class="svg-wrapper sk-btn__icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="29" viewBox="0 0 23 29" fill="none">
+                    <path d="M22.1904 13.8521L21.5352 14.5132L22.1904 15.1763L9.02734 28.4858L6.39453 25.8247L15.6016 16.5142H0.499023V12.5142H15.6016L6.39453 3.20361L9.02734 0.541504L22.1904 13.8521Z" fill="currentColor"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Block 2: Content section {%- endcomment -%}
+    <div class="sk-about-page__block">
+      {%- if section.settings.content_heading != blank -%}
+        <h2 class="sk-header__section sk-section-heading sk-section-heading--h1">
+          {{ section.settings.content_heading | escape }}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.content_body != blank -%}
+        <div class="rte">{{ section.settings.content_body }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Block 3: Image right, text left {%- endcomment -%}
+    <div class="sk-about-page__block">
+      <div class="sk-about-page__split sk-about-page__split--image-right">
+        <div class="sk-about-page__col">
+          <div class="sk-about-page__image-wrapper">
+            {%- if section.settings.section_2_image != blank -%}
+              <img
+                srcset="
+                  {%- if section.settings.section_2_image.width >= 375 -%}{{ section.settings.section_2_image | image_url: width: 375 }} 375w,{%- endif -%}
+                  {%- if section.settings.section_2_image.width >= 550 -%}{{ section.settings.section_2_image | image_url: width: 550 }} 550w,{%- endif -%}
+                  {%- if section.settings.section_2_image.width >= 750 -%}{{ section.settings.section_2_image | image_url: width: 750 }} 750w,{%- endif -%}
+                  {{ section.settings.section_2_image | image_url }} {{ section.settings.section_2_image.width }}w
+                "
+                src="{{ section.settings.section_2_image | image_url: width: 550 }}"
+                sizes="(min-width: 990px) 550px, (min-width: 750px) calc(50vw - 5rem), calc(100vw - 3rem)"
+                alt="{{ section.settings.section_2_image.alt | escape }}"
+                class="sk-about-page__image"
+                width="{{ section.settings.section_2_image.width }}"
+                height="{{ section.settings.section_2_image.height }}"
+                loading="lazy"
+              >
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="sk-about-page__col">
+          {%- if section.settings.section_2_eyebrow != blank -%}
+            <span class="sk-about-page__eyebrow">{{ section.settings.section_2_eyebrow | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.section_2_heading != blank -%}
+            <h2 class="sk-about-page__heading sk-header__section sk-section-heading sk-section-heading--hxl">
+              {{ section.settings.section_2_heading | escape }}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.section_2_description != blank -%}
+            <div class="sk-about-page__body">{{ section.settings.section_2_description }}</div>
+          {%- endif -%}
+          {%- if section.settings.section_2_button_label != blank -%}
+            <div class="sk-about-page__button-wrapper">
+              <a class="sk-btn sk-btn--primary sk-about-page__btn" href="{{ section.settings.section_2_button_link }}">
+                {{ section.settings.section_2_button_label | escape }}
+                <span class="svg-wrapper sk-btn__icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="29" viewBox="0 0 23 29" fill="none">
+                    <path d="M22.1904 13.8521L21.5352 14.5132L22.1904 15.1763L9.02734 28.4858L6.39453 25.8247L15.6016 16.5142H0.499023V12.5142H15.6016L6.39453 3.20361L9.02734 0.541504L22.1904 13.8521Z" fill="currentColor"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Block 4: Numbered items + image {%- endcomment -%}
+    <div class="sk-about-page__block">
+      <div class="sk-about-page__numbered">
+        <div class="sk-about-page__numbered-col">
+          {%- for i in (1..3) -%}
+            {%- assign number_key = 'number_' | append: i -%}
+            {%- assign text_key = 'number_text_' | append: i -%}
+            <div class="sk-about-page__numbered-item">
+              <div class="sk-about-page__number">{{ section.settings[number_key] | escape }}</div>
+              <div class="rte">{{ section.settings[text_key] }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+        <div class="sk-about-page__numbered-col">
+          {%- if section.settings.numbered_image != blank -%}
+            <div class="sk-about-page__image-wrapper">
+              <img
+                srcset="
+                  {%- if section.settings.numbered_image.width >= 400 -%}{{ section.settings.numbered_image | image_url: width: 400 }} 400w,{%- endif -%}
+                  {%- if section.settings.numbered_image.width >= 600 -%}{{ section.settings.numbered_image | image_url: width: 600 }} 600w,{%- endif -%}
+                  {%- if section.settings.numbered_image.width >= 800 -%}{{ section.settings.numbered_image | image_url: width: 800 }} 800w,{%- endif -%}
+                  {{ section.settings.numbered_image | image_url }} {{ section.settings.numbered_image.width }}w
+                "
+                src="{{ section.settings.numbered_image | image_url: width: 600 }}"
+                sizes="600px"
+                alt="{{ section.settings.numbered_image.alt | escape }}"
+                class="sk-about-page__image"
+                width="{{ section.settings.numbered_image.width }}"
+                height="{{ section.settings.numbered_image.height }}"
+                loading="lazy"
+              >
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Block 5: Trustbar (3 cards) {%- endcomment -%}
+  <section class="sk-about-page__trustbar">
+    <div class="sk-about-page__trustbar-container">
+      <div class="sk-about-page__trustbar-grid">
+        {%- for i in (1..3) -%}
+          {%- assign icon_key = 'trust_icon_' | append: i -%}
+          {%- assign title_key = 'trust_title_' | append: i -%}
+          {%- assign sub_key = 'trust_sub_' | append: i -%}
+          <div class="sk-about-page__trustbar-card">
+            <div class="sk-about-page__trustbar-icon" aria-hidden="true">
+              {%- case section.settings[icon_key] -%}
+                {%- when 'guarantee' -%}
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {%- when 'shipping' -%}
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 7h11v10H3V7z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 10h4l3 3v4h-7v-7z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7 17a1.5 1.5 0 103 0 1.5 1.5 0 00-3 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M17 17a1.5 1.5 0 103 0 1.5 1.5 0 00-3 0z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {%- else -%}
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2v-7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M4 7h16l-2 5H6L4 7z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 3v4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+              {%- endcase -%}
+            </div>
+
+            <p class="sk-about-page__trustbar-title">{{ section.settings[title_key] | escape }}</p>
+
+            {%- if section.settings[sub_key] != blank -%}
+              <p class="sk-about-page__trustbar-sub">{{ section.settings[sub_key] | escape }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "SK About Page",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_page_title",
+      "default": false,
+      "label": "Show page title"
+    },
+    {
+      "type": "text",
+      "id": "custom_title",
+      "label": "Custom title",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": ""
+    },
+
+    { "type": "header", "content": "Section 1" },
+    { "type": "text", "id": "section_1_eyebrow", "label": "Eyebrow", "default": "" },
+    { "type": "text", "id": "section_1_heading", "label": "Heading", "default": "Et ærlig behov ble starten på alt" },
+    {
+      "type": "richtext",
+      "id": "section_1_description",
+      "label": "Description",
+      "default": "<p>Vi startet Skinora som en familiebedrift med et klart mål: å gjøre profesjonell hudpleie og well‑aging tilgjengelig for alle som bryr seg om kvalitet. Vi så et marked fylt av overprisede vidundermaskiner og mirakelkurer uten dokumentasjon. Det gjorde oss ikke bare frustrerte – det ga oss et brennende ønske om å skape noe som virkelig virker.</p>"
+    },
+    { "type": "text", "id": "section_1_button_label", "label": "Button label", "default": "Oppdag skinora" },
+    { "type": "url", "id": "section_1_button_link", "label": "Button link", "default": "/collections/all" },
+    { "type": "image_picker", "id": "section_1_image", "label": "Image" },
+
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "content_heading", "label": "Heading", "default": "" },
+    {
+      "type": "richtext",
+      "id": "content_body",
+      "label": "Body",
+      "default": "<p>Vi tror ikke på å jage ungdommen. Well‑aging handler om å omfavne din egen skjønnhet på en intelligent måte. Våre produkter og verktøy er utviklet for å styrke og vedlikeholde huden – ikke maskere den.</p><ul><li>Solid vitenskap og klinisk dokumenterte teknologier<br/></li><li>Teknologier og metoder med reell effekt<br/></li><li>Estetisk design og brukervennlige produkter</li></ul>"
+    },
+
+    { "type": "header", "content": "Section 2" },
+    { "type": "text", "id": "section_2_eyebrow", "label": "Eyebrow", "default": "" },
+    { "type": "text", "id": "section_2_heading", "label": "Heading", "default": "Hvorfor vi bygde Skinora selv" },
+    {
+      "type": "richtext",
+      "id": "section_2_description",
+      "label": "Description",
+      "default": "<p><strong>Vi oppdaget fort hvorfor gode masker er dyre i Norge:</strong><br/><br/>store markups, mange mellomledd – og lite reell effekt.</p><p><strong>Og de maskene som faktisk virker? </strong>Nesten umulige å få tak i her.</p><p><strong>Skinora-maskene</strong> kombinerer <em>klinisk dokumenterte bølgelengder</em>, <em>jevn lysstyrke</em> og <em>synlige resultater</em><br/><br/>— til en pris som ikke er kunstig oppblåst.</p><p><strong>Teknologi som faktisk fungerer. Ikke bare markedsføring.</strong></p>"
+    },
+    { "type": "text", "id": "section_2_button_label", "label": "Button label", "default": "Utforsk skinora" },
+    { "type": "url", "id": "section_2_button_link", "label": "Button link" },
+    { "type": "image_picker", "id": "section_2_image", "label": "Image" },
+
+    { "type": "header", "content": "Numbered Items" },
+    { "type": "text", "id": "number_1", "label": "Number 1", "default": "01" },
+    {
+      "type": "richtext",
+      "id": "number_text_1",
+      "label": "Text 1",
+      "default": "<p><br/>Vi følger de nyeste vitenskapelige standardene<br/><br/></p>"
+    },
+    { "type": "text", "id": "number_2", "label": "Number 2", "default": "02" },
+    {
+      "type": "richtext",
+      "id": "number_text_2",
+      "label": "Text 2",
+      "default": "<p><br/>Vi velger bort korte trendbølger<br/><br/></p>"
+    },
+    { "type": "text", "id": "number_3", "label": "Number 3", "default": "03" },
+    {
+      "type": "richtext",
+      "id": "number_text_3",
+      "label": "Text 3",
+      "default": "<p><br/>Vi investerer i kvalitet, men unngår unødvendige mellomledd<br/><br/></p>"
+    },
+    { "type": "image_picker", "id": "numbered_image", "label": "Numbered image" },
+
+    { "type": "header", "content": "Trustbar" },
+    {
+      "type": "select",
+      "id": "trust_icon_1",
+      "label": "Icon 1",
+      "options": [
+        { "value": "guarantee", "label": "Guarantee" },
+        { "value": "shipping", "label": "Shipping" },
+        { "value": "free_shipping", "label": "Free shipping" }
+      ],
+      "default": "guarantee"
+    },
+    { "type": "text", "id": "trust_title_1", "label": "Title 1", "default": "60 dagers fornøydgaranti" },
+    { "type": "text", "id": "trust_sub_1", "label": "Subline 1", "default": "Trygg test hjemme" },
+
+    {
+      "type": "select",
+      "id": "trust_icon_2",
+      "label": "Icon 2",
+      "options": [
+        { "value": "guarantee", "label": "Guarantee" },
+        { "value": "shipping", "label": "Shipping" },
+        { "value": "free_shipping", "label": "Free shipping" }
+      ],
+      "default": "shipping"
+    },
+    { "type": "text", "id": "trust_title_2", "label": "Title 2", "default": "Sendes fra Norge" },
+    { "type": "text", "id": "trust_sub_2", "label": "Subline 2", "default": "Rask levering" },
+
+    {
+      "type": "select",
+      "id": "trust_icon_3",
+      "label": "Icon 3",
+      "options": [
+        { "value": "guarantee", "label": "Guarantee" },
+        { "value": "shipping", "label": "Shipping" },
+        { "value": "free_shipping", "label": "Free shipping" }
+      ],
+      "default": "free_shipping"
+    },
+    { "type": "text", "id": "trust_title_3", "label": "Title 3", "default": "Gratis frakt" },
+    { "type": "text", "id": "trust_sub_3", "label": "Subline 3", "default": "På alle bestillinger" },
+
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "accent-1", "label": "t:sections.all.colors.accent_1.label" },
+        { "value": "accent-2", "label": "t:sections.all.colors.accent_2.label" },
+        { "value": "background-1", "label": "t:sections.all.colors.background_1.label" },
+        { "value": "background-2", "label": "t:sections.all.colors.background_2.label" },
+        { "value": "inverse", "label": "t:sections.all.colors.inverse.label" }
+      ],
+      "default": "background-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK About Page",
+      "category": "sk"
+    }
+  ]
+}
+{% endschema %}

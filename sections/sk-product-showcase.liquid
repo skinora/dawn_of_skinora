@@ -304,14 +304,19 @@
 
 {% schema %}
 {
-  "name": "About Section 2",
+  "name": "Product Showcase",
   "tag": "section",
   "class": "section",
   "settings": [
-    { "type": "text", "id": "subheading", "label": "Subheading", "default": "REFLECTION YOUR STYLE" },
-    { "type": "text", "id": "heading", "label": "Main Heading", "default": "Clear skin here and now!" },
-    { "type": "richtext", "id": "description", "label": "Description" },
-    { "type": "text", "id": "button_label", "label": "Button Label", "default": "Take a Look" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "" },
+    { "type": "text", "id": "heading", "label": "Main Heading", "default": "Hvorfor vi bygde Skinora selv" },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p><strong>Vi oppdaget fort hvorfor gode masker er dyre i Norge:</strong><br/><br/>store markups, mange mellomledd – og lite reell effekt.</p><p><strong>Og de maskene som faktisk virker? </strong>Nesten umulige å få tak i her.</p><p><strong>Skinora-maskene</strong> kombinerer <em>klinisk dokumenterte bølgelengder</em>, <em>jevn lysstyrke</em> og <em>synlige resultater</em><br/><br/>— til en pris som ikke er kunstig oppblåst.</p><p><strong>Teknologi som faktisk fungerer. Ikke bare markedsføring.</strong></p>"
+    },
+    { "type": "text", "id": "button_label", "label": "Button Label", "default": "Utforsk skinora" },
     { "type": "url", "id": "button_link", "label": "Button Link" },
     { "type": "image_picker", "id": "main_image", "label": "Main Image" },
     { "type": "image_picker", "id": "accent_image", "label": "Accent Image" },
@@ -351,6 +356,6 @@
       "label": "Bottom Padding"
     }
   ],
-  "presets": [{ "name": "About Section 2" }]
+  "presets": [{ "name": "Product Showcase" }]
 }
 {% endschema %}
