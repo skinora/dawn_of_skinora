@@ -514,7 +514,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   font-size: var(--sk-section-eyebrow-size);
   letter-spacing: var(--sk-section-eyebrow-spacing);
   text-transform: uppercase;
-  color: rgba(var(--sk-color-body-text), 0.65);
+  color: rgba(var(--sk-color-body-text), 0.85);
 }
 
 .sk-copy-label {
@@ -1673,14 +1673,11 @@ deferred-media {
   transition: box-shadow var(--duration-short) ease;
 } */
 
-.button:not([disabled]):hover::after,
-.shopify-challenge__button:hover::after,
-.customer button:hover::after,
-.shopify-payment-button__button--unbranded:hover::after {
-  --border-offset: 1.3px;
-  box-shadow:
-    0 0 0 calc(var(--buttons-border-width) + var(--border-offset)) rgba(var(--color-button-text), var(--border-opacity)),
-    0 0 0 calc(var(--buttons-border-width) + 1px) rgba(var(--color-button), var(--alpha-button-background));
+.button:not([disabled]):hover,
+.shopify-challenge__button:hover,
+.customer button:hover,
+.shopify-payment-button__button--unbranded:hover {
+  box-shadow: 0 0 0 1px rgba(var(--color-brand-rgb), 0.6);
 }
 
 .button--secondary:after {

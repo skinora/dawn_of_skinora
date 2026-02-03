@@ -48,8 +48,13 @@
   margin-bottom: var(--sk-space-2);
 }
 
+.sk-about-hero__heading {
+  margin-top: 0;
+  margin-bottom: var(--sk-space-3);
+}
+
 .sk-about-hero__text {
-  margin-top: var(--sk-space-4);
+  margin-top: var(--sk-space-2);
   font-size: clamp(1.6rem, 0.6vw + 1.4rem, 1.95rem);
 }
 
