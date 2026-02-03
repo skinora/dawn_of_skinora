@@ -225,9 +225,10 @@
           </h2>
         {% endif %}
 
-        {% if section.settings.subheading != blank %}
+        {%- assign subheading_text = section.settings.subheading | strip -%}
+        {% if subheading_text != blank and subheading_text != '__' %}
           <span class="sk-about-section-2__subheading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-            {{ section.settings.subheading | escape }}
+            {{ subheading_text | escape }}
           </span>
         {% endif %}
 
@@ -308,7 +309,7 @@
   "tag": "section",
   "class": "section",
   "settings": [
-    { "type": "text", "id": "subheading", "label": "Subheading", "default": "" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "__" },
     { "type": "text", "id": "heading", "label": "Main Heading", "default": "Hvorfor vi bygde Skinora selv" },
     {
       "type": "richtext",
