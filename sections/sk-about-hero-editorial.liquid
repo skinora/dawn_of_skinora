@@ -1,0 +1,266 @@
+{%- comment -%}
+  sk-about-hero-editorial
+  Editorial hero for About page.
+{%- endcomment -%}
+
+{{ 'sk-about-hero-editorial.css' | asset_url | stylesheet_tag }}
+
+{%- assign link_href = '' -%}
+{%- assign link_anchor = section.settings.anchor_id | strip -%}
+{%- assign link_label_text = section.settings.link_label | strip -%}
+{%- if section.settings.link_type == 'anchor' and link_anchor != blank -%}
+  {%- assign link_href = '#' | append: link_anchor -%}
+{%- elsif section.settings.link_url != blank -%}
+  {%- assign link_href = section.settings.link_url -%}
+{%- endif -%}
+
+{%- assign cta_href = '' -%}
+{%- assign cta_anchor = section.settings.cta_anchor_id | strip -%}
+{%- assign cta_label_text = section.settings.cta_label | strip -%}
+{%- if cta_anchor == '__' -%}
+  {%- assign cta_anchor = '' -%}
+{%- endif -%}
+{%- if cta_label_text == '__' -%}
+  {%- assign cta_label_text = '' -%}
+{%- endif -%}
+{%- if cta_anchor != blank -%}
+  {%- assign cta_href = '#' | append: cta_anchor -%}
+{%- elsif section.settings.cta_url != blank -%}
+  {%- assign cta_href = section.settings.cta_url -%}
+{%- endif -%}
+
+{%- assign image_position = 'center center' -%}
+{%- case section.settings.image_focus -%}
+  {%- when 'left' -%}
+    {%- assign image_position = 'left center' -%}
+  {%- when 'right' -%}
+    {%- assign image_position = 'right center' -%}
+{%- endcase -%}
+
+{%- assign ratio_value = '' -%}
+{%- if section.settings.image_ratio != 'auto' and section.settings.image_ratio != blank -%}
+  {%- assign ratio_value = section.settings.image_ratio | replace: '/', ' / ' -%}
+{%- endif -%}
+
+{%- assign show_actions = false -%}
+{%- if link_label_text != blank and link_href != blank -%}
+  {%- assign show_actions = true -%}
+{%- endif -%}
+{%- if cta_label_text != blank and cta_href != blank -%}
+  {%- assign show_actions = true -%}
+{%- endif -%}
+
+<section class="sk-about-hero">
+  <div class="sk-about-hero__inner page-width">
+    <div class="sk-about-hero__grid{% if section.settings.image == blank %} sk-about-hero__grid--single{% endif %}">
+      <div
+        class="sk-about-hero__content{% if section.settings.alignment == 'center' %} sk-about-hero__content--center{% endif %}"
+        style="--sk-about-hero-content-max: {{ section.settings.content_max_width }}px;"
+      >
+        <div class="sk-about-hero__content-inner">
+          {%- assign eyebrow_text = section.settings.eyebrow | strip -%}
+          {%- if eyebrow_text == '__' -%}
+            {%- assign eyebrow_text = '' -%}
+          {%- endif -%}
+          {%- if eyebrow_text != blank -%}
+            <span class="sk-about-hero__eyebrow">{{ eyebrow_text | escape }}</span>
+          {%- endif -%}
+
+          {%- if section.settings.heading != blank -%}
+            <h1 class="sk-about-hero__heading h1">{{ section.settings.heading | escape }}</h1>
+          {%- endif -%}
+
+          {%- if section.settings.body != blank -%}
+            <div class="sk-about-hero__text rte">{{ section.settings.body }}</div>
+          {%- endif -%}
+
+          {%- if show_actions -%}
+            <div class="sk-about-hero__actions">
+              {%- if link_label_text != blank and link_href != blank -%}
+                <a class="sk-about-hero__link" href="{{ link_href }}">{{ link_label_text | escape }}</a>
+              {%- endif -%}
+
+              {%- if cta_label_text != blank and cta_href != blank -%}
+                {%- if section.settings.cta_style == 'primary' -%}
+                  <a class="button" href="{{ cta_href }}">{{ cta_label_text | escape }}</a>
+                {%- elsif section.settings.cta_style == 'secondary' -%}
+                  <a class="button button--secondary" href="{{ cta_href }}">
+                    {{- cta_label_text | escape -}}
+                  </a>
+                {%- else -%}
+                  <a class="sk-about-hero__link" href="{{ cta_href }}">{{ cta_label_text | escape }}</a>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- if section.settings.image != blank -%}
+        <div class="sk-about-hero__media">
+          <div
+            class="sk-about-hero__media-frame{% if ratio_value != blank %} sk-about-hero__media-frame--ratio{% endif %}"
+            {% if ratio_value != blank %}
+              style="--sk-about-hero-media-ratio: {{ ratio_value }}; --sk-about-hero-object-pos: {{ image_position }};"
+            {% else %}
+              style="--sk-about-hero-object-pos: {{ image_position }};"
+            {% endif %}
+          >
+            {%- assign alt_text = section.settings.image_alt | default: section.settings.heading | escape -%}
+            {{
+              section.settings.image
+              | image_url: width: 1600
+              | image_tag:
+                widths: '360, 540, 720, 900, 1080, 1200, 1600',
+                sizes: '(min-width: 990px) 45vw, 100vw',
+                class: 'sk-about-hero__image',
+                alt: alt_text,
+                loading: 'lazy'
+            }}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SK About Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "__"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Et ærlig behov ble starten på alt"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Vi startet Skinora som en familiebedrift med et klart mål: å gjøre profesjonell hudpleie og well‑aging tilgjengelig for alle som bryr seg om kvalitet.</p>"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "Vår filosofi →"
+    },
+    {
+      "type": "select",
+      "id": "link_type",
+      "label": "Link type",
+      "options": [
+        { "value": "anchor", "label": "Anchor" },
+        { "value": "url", "label": "URL" }
+      ],
+      "default": "anchor"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor id (without #)",
+      "default": "filosofi"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "__"
+    },
+    {
+      "type": "select",
+      "id": "cta_style",
+      "label": "CTA style",
+      "options": [
+        { "value": "link", "label": "Text link" },
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" }
+      ],
+      "default": "link"
+    },
+    {
+      "type": "text",
+      "id": "cta_anchor_id",
+      "label": "CTA anchor id (without #)",
+      "default": "__"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "auto", "label": "Auto" },
+        { "value": "1/1", "label": "1/1" },
+        { "value": "4/5", "label": "4/5" },
+        { "value": "16/9", "label": "16/9" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "image_focus",
+      "label": "Image focus",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "min": 320,
+      "max": 720,
+      "step": 4,
+      "unit": "px",
+      "label": "Content max width",
+      "default": 640
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Content alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK About Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,117 @@
+.sk-about-hero {
+  --sk-space-1: 0.25rem;
+  --sk-space-2: 0.5rem;
+  --sk-space-3: 0.75rem;
+  --sk-space-4: 1rem;
+  --sk-space-6: 1.5rem;
+  --sk-space-8: 2rem;
+  --sk-space-10: 2.5rem;
+  --sk-space-12: 3rem;
+  padding-top: var(--sk-space-12);
+  padding-bottom: var(--sk-space-12);
+  color: rgb(var(--color-foreground));
+  background: rgb(var(--color-background));
+}
+
+.sk-about-hero__inner {
+  width: 100%;
+}
+
+.sk-about-hero__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: var(--sk-space-12);
+  align-items: center;
+}
+
+.sk-about-hero__grid--single {
+  grid-template-columns: 1fr;
+}
+
+.sk-about-hero__content {
+  text-align: left;
+}
+
+.sk-about-hero__content--center {
+  text-align: center;
+}
+
+.sk-about-hero__content-inner {
+  max-width: var(--sk-about-hero-content-max, 60ch);
+}
+
+.sk-about-hero__content--center .sk-about-hero__content-inner {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sk-about-hero__eyebrow {
+  display: inline-block;
+  margin-bottom: var(--sk-space-2);
+}
+
+.sk-about-hero__text {
+  margin-top: var(--sk-space-4);
+}
+
+.sk-about-hero__actions {
+  margin-top: var(--sk-space-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sk-space-4);
+  align-items: center;
+}
+
+.sk-about-hero__link {
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.sk-about-hero__link:hover {
+  opacity: 0.75;
+}
+
+.sk-about-hero__media {
+  width: 100%;
+}
+
+.sk-about-hero__media-frame {
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--border-radius, var(--sk-space-2));
+}
+
+.sk-about-hero__media-frame--ratio {
+  aspect-ratio: var(--sk-about-hero-media-ratio);
+}
+
+.sk-about-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--sk-about-hero-object-pos, center center);
+  display: block;
+}
+
+#filosofi {
+  scroll-margin-top: 100px;
+}
+
+@media (max-width: 749px) {
+  .sk-about-hero {
+    padding-top: var(--sk-space-10);
+    padding-bottom: var(--sk-space-10);
+  }
+
+  .sk-about-hero__grid {
+    grid-template-columns: 1fr;
+    gap: var(--sk-space-8);
+  }
+
+  .sk-about-hero__media-frame {
+    max-height: 60vh;
+  }
+}
