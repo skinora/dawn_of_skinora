@@ -63,11 +63,11 @@
             {%- assign eyebrow_text = '' -%}
           {%- endif -%}
           {%- if eyebrow_text != blank -%}
-            <span class="sk-about-hero__eyebrow">{{ eyebrow_text | escape }}</span>
+            <span class="sk-about-hero__eyebrow sk-copy-eyebrow">{{ eyebrow_text | escape }}</span>
           {%- endif -%}
 
           {%- if section.settings.heading != blank -%}
-            <h1 class="sk-about-hero__heading h1">{{ section.settings.heading | escape }}</h1>
+            <h1 class="sk-about-hero__heading sk-section-header__title">{{ section.settings.heading | escape }}</h1>
           {%- endif -%}
 
           {%- if section.settings.body != blank -%}

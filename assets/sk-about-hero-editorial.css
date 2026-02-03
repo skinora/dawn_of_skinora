@@ -52,6 +52,7 @@
 
 .sk-about-hero__text {
   margin-top: var(--sk-space-4);
+  font-size: 1.7rem;
 }
 
 .sk-about-hero__actions {
@@ -113,5 +114,11 @@
 
   .sk-about-hero__media-frame {
     max-height: 60vh;
+  }
+}
+
+@media (min-width: 750px) {
+  .sk-about-hero__text {
+    font-size: clamp(1.7rem, 1.3vw + 1.2rem, 2.1rem);
   }
 }
