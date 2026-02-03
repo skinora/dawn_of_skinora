@@ -9,8 +9,6 @@
   --sk-space-12: 3rem;
   padding-top: var(--sk-space-12);
   padding-bottom: var(--sk-space-12);
-  color: rgb(var(--color-foreground));
-  background: rgb(var(--color-background));
 }
 
 .sk-about-hero__inner {
@@ -52,7 +50,7 @@
 
 .sk-about-hero__text {
   margin-top: var(--sk-space-4);
-  font-size: 1.7rem;
+  font-size: clamp(1.6rem, 0.6vw + 1.4rem, 1.95rem);
 }
 
 .sk-about-hero__actions {
@@ -73,6 +71,12 @@
 
 .sk-about-hero__link:hover {
   opacity: 0.75;
+}
+
+.sk-about-hero__link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  text-decoration: none;
 }
 
 .sk-about-hero__media {
@@ -98,7 +102,13 @@
 }
 
 #filosofi {
-  scroll-margin-top: 100px;
+  scroll-margin-top: var(--header-height, 100px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-about-hero__link {
+    transition: none;
+  }
 }
 
 @media (max-width: 749px) {
@@ -114,11 +124,5 @@
 
   .sk-about-hero__media-frame {
     max-height: 60vh;
-  }
-}
-
-@media (min-width: 750px) {
-  .sk-about-hero__text {
-    font-size: clamp(1.7rem, 1.3vw + 1.2rem, 2.1rem);
   }
 }

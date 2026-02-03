@@ -10,19 +10,13 @@
 {%- assign link_label_text = section.settings.link_label | strip -%}
 {%- if section.settings.link_type == 'anchor' and link_anchor != blank -%}
   {%- assign link_href = '#' | append: link_anchor -%}
-{%- elsif section.settings.link_url != blank -%}
+{%- elsif section.settings.link_type == 'url' and section.settings.link_url != blank -%}
   {%- assign link_href = section.settings.link_url -%}
 {%- endif -%}
 
 {%- assign cta_href = '' -%}
-{%- assign cta_anchor = section.settings.cta_anchor_id | strip -%}
-{%- assign cta_label_text = section.settings.cta_label | strip -%}
-{%- if cta_anchor == '__' -%}
-  {%- assign cta_anchor = '' -%}
-{%- endif -%}
-{%- if cta_label_text == '__' -%}
-  {%- assign cta_label_text = '' -%}
-{%- endif -%}
+{%- assign cta_anchor = section.settings.cta_anchor_id | strip | replace: '​', '' -%}
+{%- assign cta_label_text = section.settings.cta_label | strip | replace: '​', '' -%}
 {%- if cta_anchor != blank -%}
   {%- assign cta_href = '#' | append: cta_anchor -%}
 {%- elsif section.settings.cta_url != blank -%}
@@ -50,18 +44,30 @@
   {%- assign show_actions = true -%}
 {%- endif -%}
 
-<section class="sk-about-hero">
+{%- capture content_style -%}
+  {%- if section.settings.content_max_width != blank -%}
+    --sk-about-hero-content-max: {{ section.settings.content_max_width }}px;
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- assign image_loading = section.settings.image_loading | default: 'lazy' -%}
+{%- assign fetch_priority = 'auto' -%}
+{%- if image_loading == 'eager' -%}
+  {%- assign fetch_priority = 'high' -%}
+{%- endif -%}
+{%- assign alt_text = section.settings.image_alt | default: section.settings.heading | default: page.title | escape -%}
+
+<section class="sk-about-hero color-{{ section.settings.color_scheme }}">
   <div class="sk-about-hero__inner page-width">
     <div class="sk-about-hero__grid{% if section.settings.image == blank %} sk-about-hero__grid--single{% endif %}">
       <div
         class="sk-about-hero__content{% if section.settings.alignment == 'center' %} sk-about-hero__content--center{% endif %}"
-        style="--sk-about-hero-content-max: {{ section.settings.content_max_width }}px;"
+        {% if content_style contains '--sk-about-hero-content-max' %}
+          style="{{ content_style | strip }}"
+        {% endif %}
       >
         <div class="sk-about-hero__content-inner">
-          {%- assign eyebrow_text = section.settings.eyebrow | strip -%}
-          {%- if eyebrow_text == '__' -%}
-            {%- assign eyebrow_text = '' -%}
-          {%- endif -%}
+          {%- assign eyebrow_text = section.settings.eyebrow | strip | replace: '​', '' -%}
           {%- if eyebrow_text != blank -%}
             <span class="sk-about-hero__eyebrow sk-copy-eyebrow">{{ eyebrow_text | escape }}</span>
           {%- endif -%}
@@ -82,7 +88,7 @@
 
               {%- if cta_label_text != blank and cta_href != blank -%}
                 {%- if section.settings.cta_style == 'primary' -%}
-                  <a class="button" href="{{ cta_href }}">{{ cta_label_text | escape }}</a>
+                  <a class="button button--primary" href="{{ cta_href }}">{{ cta_label_text | escape }}</a>
                 {%- elsif section.settings.cta_style == 'secondary' -%}
                   <a class="button button--secondary" href="{{ cta_href }}">
                     {{- cta_label_text | escape -}}
@@ -106,7 +112,6 @@
               style="--sk-about-hero-object-pos: {{ image_position }};"
             {% endif %}
           >
-            {%- assign alt_text = section.settings.image_alt | default: section.settings.heading | escape -%}
             {{
               section.settings.image
               | image_url: width: 1600
@@ -115,7 +120,8 @@
                 sizes: '(min-width: 990px) 45vw, 100vw',
                 class: 'sk-about-hero__image',
                 alt: alt_text,
-                loading: 'lazy'
+                loading: image_loading,
+                fetchpriority: fetch_priority
             }}
           </div>
         </div>
@@ -134,7 +140,7 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "__"
+      "default": "​"
     },
     {
       "type": "text",
@@ -179,7 +185,7 @@
       "type": "text",
       "id": "cta_label",
       "label": "CTA label",
-      "default": "__"
+      "default": "​"
     },
     {
       "type": "select",
@@ -196,7 +202,7 @@
       "type": "text",
       "id": "cta_anchor_id",
       "label": "CTA anchor id (without #)",
-      "default": "__"
+      "default": "​"
     },
     {
       "type": "url",
@@ -212,6 +218,16 @@
       "type": "text",
       "id": "image_alt",
       "label": "Image alt"
+    },
+    {
+      "type": "select",
+      "id": "image_loading",
+      "label": "Image loading",
+      "options": [
+        { "value": "lazy", "label": "Lazy" },
+        { "value": "eager", "label": "Eager" }
+      ],
+      "default": "lazy"
     },
     {
       "type": "select",
@@ -245,6 +261,19 @@
       "unit": "px",
       "label": "Content max width",
       "default": 640
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "accent-1", "label": "t:sections.all.colors.accent_1.label" },
+        { "value": "accent-2", "label": "t:sections.all.colors.accent_2.label" },
+        { "value": "background-1", "label": "t:sections.all.colors.background_1.label" },
+        { "value": "background-2", "label": "t:sections.all.colors.background_2.label" },
+        { "value": "inverse", "label": "t:sections.all.colors.inverse.label" }
+      ],
+      "default": "background-1"
     },
     {
       "type": "select",
