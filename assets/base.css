@@ -905,7 +905,7 @@ h6:empty {
 }
 
 .link--text:hover {
-  color: rgba(var(--color-foreground), 0.9);
+  color: var(--color-brand);
 }
 
 .link-with-icon {
@@ -1016,7 +1016,7 @@ details > * {
 .underlined-link:hover,
 .customer a:hover,
 .inline-richtext a:hover {
-  color: rgb(var(--color-link));
+  color: var(--color-brand);
   text-decoration-thickness: 0.2rem;
 }
 
@@ -1678,6 +1678,8 @@ deferred-media {
 .customer button:hover,
 .shopify-payment-button__button--unbranded:hover {
   box-shadow: 0 0 0 1px rgba(var(--color-brand-rgb), 0.6);
+  outline: 1px solid rgba(var(--color-brand-rgb), 0.6);
+  outline-offset: 0;
 }
 
 .button--secondary:after {
@@ -3939,7 +3941,7 @@ details-disclosure > details {
 }
 
 .rte a:hover {
-  color: rgb(var(--color-link));
+  color: var(--color-brand);
   text-decoration-thickness: 0.2rem;
 }
 

@@ -75,7 +75,9 @@
 }
 
 .sk-about-hero__link:hover {
-  opacity: 0.75;
+  opacity: 1;
+  color: var(--color-brand);
+  text-decoration-thickness: 0.2rem;
 }
 
 .sk-about-hero__link:focus-visible {
