@@ -28,6 +28,15 @@
         {%- if form.posted_successfully? -%}
           <p class="skcs-status skcs-status--success">Takk! Meldingen din er sendt. Vi svarer så fort vi kan.</p>
 
+          <script>
+            (function resetContactForm() {
+              var formEl = document.getElementById('contact_form');
+              if (formEl) {
+                formEl.reset();
+              }
+            })();
+          </script>
+
           {%- comment -%}
             Ønsker du redirect til en takk-side i stedet?
             Fjern kommentaren under og sett riktig URL (f.eks. /pages/takk)
@@ -76,6 +85,20 @@
 
         <button type="submit" class="sk-customer-service__button">Send melding</button>
       {% endform %}
+
+      <script>
+        (function clearContactQuery() {
+          var search = window.location.search || '';
+          if (search.indexOf('contact_posted=true') !== -1 || search.indexOf('form_type=contact') !== -1) {
+            var cleanUrl = window.location.origin + window.location.pathname + window.location.hash;
+            try {
+              window.history.replaceState({}, document.title, cleanUrl);
+            } catch (e) {
+              window.location.href = cleanUrl;
+            }
+          }
+        })();
+      </script>
     </div>
   </div>
 </div>
