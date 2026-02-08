@@ -1,228 +1,303 @@
 <style>
-  .sk-product-how-to-use-{{ section.id }} {
-    background: #FFFFFF;
-    padding: 7rem 0;
-  }
-
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__container {
-    display: flex;
-    align-items: start;
-    flex-wrap: wrap;
-    flex-direction: row-reverse;
-    justify-content: space-around;
-  }
-
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__content {
-    flex: 0 0 480px;
-  }
-
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image {
-    flex: 0 0 540px;
-  }
-
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image img {
-    width: 100%;
-    height: auto;
-    border-radius: 0;
-  }
-
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__heading {
-    font-size: var(--section-heading-h2);
-    line-height: var(--section-heading-h2-line);
-    font-weight: 700;
-    color: #30273E;
-    margin-bottom: 40px;
-  }
-
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__steps {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step .sk-how-to-use__step-content strong {
-    /* font-family: "DM Sans", sans-serif !important; */
-    font-weight: 700;
-    font-size: var(--sk-font-size-medium);
-  }
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step .sk-how-to-use__step-content p {
-    /* font-family: "DM Sans", sans-serif !important; */
-    font-size: var(--sk-font-size-medium);
-    color: #666666;
-    line-height: 20px;
-  }
-  /* .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step:first-child + .sk-how-to-use__step {
-    margin-bottom: 30px;
-  } */
-
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step:last-child {
-    margin-bottom: 0;
-  }
-
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-number {
-    font-size: var(--section-heading-h1);
-    line-height: 1;
-    font-weight: 700;
-    color: #30273E;
-    flex-shrink: 0;
-    width: 80px;
-  }
-
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content h3,
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content h4,
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content strong {
-    font-size: var(--sk-font-size-medium);
-    font-weight: 600;
-    color: #30273E;
-    margin: 0 0 8px 0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content p {
-    font-size: var(--sk-font-size-medium);
-    line-height: 1.6;
-    color: #666666;
-    margin: 0;
-  }
-
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content h3 + p,
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content h4 + p,
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content strong + p {
-    margin-top: 4px;
-  }
-
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-number{
-    /* font-family: "Anton"; */
-    font-size: var(--section-heading-h1);
-    font-weight: 400;
-    color: #30273E;
-  }
-
-  @media only screen and (max-width: 700px) {
-    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image {
-      flex: 0 0 100%;
+    .sk-product-how-to-use-{{ section.id }} {
+      --sk-space-2: 0.5rem;
+      --sk-space-3: 0.75rem;
+      --sk-space-4: 1rem;
+      --sk-space-5: 1.25rem;
+      --sk-space-6: 1.5rem;
+      --sk-space-7: 1.75rem;
+      --sk-space-8: 2rem;
+      --sk-space-10: 2.5rem;
+      --sk-space-12: 3rem;
+      padding: 0 0 var(--sk-space-12);
     }
+
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 600px) minmax(0, 1fr);
+      gap: clamp(2rem, 4vw, 4.5rem);
+      align-items: center;
+    }
+
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__left {
+      width: 100%;
+      min-width: 0;
+      grid-column: 1 / 2;
+    }
+
     .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__content {
-      flex: 0 0 100%;
+      max-width: 600px;
+      position: relative;
     }
 
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__right {
+      width: auto;
+      min-width: 0;
+      max-width: 100%;
+      justify-self: stretch;
+      grid-column: 2 / 3;
+    }
+
+  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image{
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    max-height: 640px;
+    background: rgb(var(--color-background));
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
   }
 
 
-  @media only screen and (max-width: 435px) {
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 35%);
+      pointer-events: none;
+    }
+
     .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__heading {
-      font-size: calc(var(--section-heading-h2) * 0.9);
-      line-height: var(--section-heading-h2-line);
-      margin: 24px 0;
+      text-align: center;
+      margin-bottom: var(--sk-space-8);
     }
+
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__subtitle {
+      margin: 0 0 var(--sk-space-6);
+      color: rgba(var(--sk-color-body-text), 0.8);
+    }
+
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__steps {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      position: relative;
+      padding-left: var(--sk-space-6);
+    }
+
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__steps::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: var(--sk-space-2);
+      bottom: var(--sk-space-2);
+      width: 1px;
+      background: rgba(var(--sk-color-body-text), 0.16);
+    }
+
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step {
+      display: flex;
+      gap: var(--sk-space-5);
+      margin-bottom: var(--sk-space-6);
+    }
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step .sk-how-to-use__step-content strong {
+      font-weight: 600;
+      font-size: var(--sk-font-size-medium);
+    }
+    /* .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step:first-child + .sk-how-to-use__step {
+      margin-bottom: 30px;
+    } */
+
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step:last-child {
+      margin-bottom: 0;
+    }
+
     .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-number {
-      font-size: var(--section-heading-h2);
-      width: 55px;
+      font-size: 1.2rem;
+      line-height: 1.2;
+      font-weight: 400;
+      color: rgba(var(--sk-color-body-text), 0.45);
+      flex-shrink: 0;
+      width: 2.2rem;
+      margin-top: 0.15rem;
     }
 
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step .sk-how-to-use__step-content strong {
-    font-size: var(--sk-font-size-medium);
-  }
-  .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step .sk-how-to-use__step-content p {
-    /* font-family: "DM Sans", sans-serif !important; */
-    font-size: var(--sk-font-size-xxs);
-    line-height: 20px;
-  }
-
-
-
-  }
-  @media screen and (max-width: 749px) {
-    .sk-section-heading {
-      font-size: var(--sk-mobile-heading-size);
-      line-height: var(--sk-mobile-heading-line);
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content h3,
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content h4,
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content strong {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: rgb(var(--color-foreground));
+      margin: 0 0 0.5rem 0;
+      text-transform: none;
+      letter-spacing: 0.01em;
     }
-    .sk-section-body {
-      font-size: var(--sk-mobile-body-size);
-      line-height: var(--sk-mobile-body-line);
+
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content p {
+      font-size: 1.5rem;
+      line-height: 1.6;
+      color: rgba(var(--sk-color-body-text), 0.9);
+      margin: 0;
+      max-width: 56ch;
     }
-  }
+
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content h3 + p,
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content h4 + p,
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-content strong + p {
+      margin-top: 0.5rem;
+    }
+
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-number{
+      font-weight: 400;
+    }
+
+    @media only screen and (max-width: 749px) {
+      .sk-product-how-to-use-{{ section.id }} {
+        padding: var(--sk-space-10) 0;
+      }
+
+      .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image {
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+        border-radius: 12px;
+        max-height: none;
+      }
+
+      .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image img {
+        height: 100%;
+      }
+
+      .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__steps {
+        padding-left: var(--sk-space-5);
+      }
+    }
+
+    @media only screen and (max-width: 640px) {
+      .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+
+    @media only screen and (max-width: 435px) {
+      .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__heading {
+        font-size: calc(var(--section-heading-h2) * 0.9);
+        line-height: var(--section-heading-h2-line);
+        margin: var(--sk-space-6) 0;
+      }
+      .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-number {
+        font-size: calc(var(--sk-font-size-xxs) * 0.8);
+        width: 2.2rem;
+      }
+
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step .sk-how-to-use__step-content strong {
+      font-size: var(--sk-font-size-medium);
+    }
+    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step .sk-how-to-use__step-content p {
+      font-size: var(--sk-font-size-xxs);
+      line-height: 1.6;
+    }
+
+
+
+    }
+    @media screen and (max-width: 749px) {
+      .sk-section-heading {
+        font-size: var(--sk-mobile-heading-size);
+        line-height: var(--sk-mobile-heading-line);
+      }
+      .sk-section-body {
+        font-size: var(--sk-mobile-body-size);
+        line-height: var(--sk-mobile-body-line);
+      }
+    }
 </style>
 
-{%- if product.metafields.custom.how_to_use_content != blank or product.metafields.custom.how_to_use_image != blank -%}
+{%- liquid
+  assign how_to_use_content = product.metafields.custom.how_to_use_content
+  assign how_to_use_image = product.metafields.custom.how_to_use_image.value
+
+  assign has_content = false
+  if how_to_use_content != blank
+    assign has_content = true
+  endif
+
+  assign has_image = false
+  if how_to_use_image != blank
+    assign has_image = true
+  endif
+
+  if has_content
+    assign how_to_use_html = how_to_use_content | metafield_tag
+  else
+    assign how_to_use_html = ''
+  endif
+
+  assign heading_full = ''
+  if how_to_use_html contains '<h3>'
+    assign heading_full = how_to_use_html | split: '<h3>' | last | split: '</h3>' | first | strip
+  elsif how_to_use_html contains '<h2>'
+    assign heading_full = how_to_use_html | split: '<h2>' | last | split: '</h2>' | first | strip
+  endif
+-%}
+
+{%- if has_content or has_image -%}
   <section class="sk-product-how-to-use-{{ section.id }}">
     <div class="page-width">
-      <div class="sk-how-to-use__container">
-        <!-- Image Section -->
-        <div class="sk-how-to-use__image">
-          {%- if product.metafields.custom.how_to_use_image != blank -%}
-            <img
-              src="{{ product.metafields.custom.how_to_use_image | image_url: width: 540, height: 600 }}"
-              alt="{{ product.metafields.custom.how_to_use_image.alt | default: 'How to use' }}"
-              width="540"
-              height="600"
-              loading="lazy"
-            >
-          {%- else -%}
-            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          {%- endif -%}
-        </div>
-        <!-- Content Section -->
-        <div class="sk-how-to-use__content">
-          {%- if product.metafields.custom.how_to_use_content != blank -%}
-            {%- capture how_to_use_html -%}
-              {{ product.metafields.custom.how_to_use_content | metafield_tag }}
-            {%- endcapture -%}
-
-            {%- comment -%} Extract heading (first h2 or h3) {%- endcomment -%}
-            {%- assign heading_start = how_to_use_html | split: '<h2>' | first -%}
-            {%- if heading_start == how_to_use_html -%}
-              {%- assign heading_start = how_to_use_html | split: '<h3>' | first -%}
-              {%- assign heading_end = how_to_use_html | split: '</h3>' | last -%}
-              {%- assign heading_full = how_to_use_html
-                | replace: heading_start, ''
-                | replace: heading_end, ''
-                | replace: '<h3>', ''
-                | replace: '</h3>', ''
-                | strip
-              -%}
-            {%- else -%}
-              {%- assign heading_end = how_to_use_html | split: '</h2>' | last -%}
-              {%- assign heading_full = how_to_use_html
-                | replace: heading_start, ''
-                | replace: heading_end, ''
-                | replace: '<h2>', ''
-                | replace: '</h2>', ''
-                | strip
-              -%}
-            {%- endif -%}
-
+      <div class="sk-how-to-use__wrap">
+        <div class="sk-how-to-use__left">
+          <div class="sk-how-to-use__content">
             {%- if heading_full != blank -%}
-              <h1 class="sk-header__section sk-how-to-use__heading sk-section-heading sk-section-heading--h1">
+              <h1 class="sk-header__section sk-how-to-use__heading sk-section-heading sk-section-heading--h2 sk-section-header__title">
                 {{ heading_full }}
               </h1>
             {%- endif -%}
 
-            {%- comment -%} Parse numbered steps {%- endcomment -%}
-            {%- assign steps_content = how_to_use_html | split: '##' -%}
+            {%- assign subtitle_text = section.settings.subtitle | strip | replace: '__', '' -%}
+            {%- if subtitle_text != blank -%}
+              <p class="sk-how-to-use__subtitle sk-section-body">{{ subtitle_text }}</p>
+            {%- endif -%}
 
+            {%- assign steps_content = how_to_use_html | split: '##' -%}
             <ol class="sk-how-to-use__steps">
               {%- for step in steps_content -%}
                 {%- if step contains '||' -%}
                   {%- assign step_parts = step | split: '||' -%}
-                  {%- assign step_number = step_parts[0] | strip -%}
-                  {%- assign step_text = step_parts[1] | strip -%}
+                  {%- assign step_number = step_parts[0] | strip | replace: '<p>', '' | replace: '</p>', '' -%}
+                  {%- assign step_body = step_parts[1] | strip -%}
 
-                  <li class="sk-how-to-use__step">
-                    <div class="sk-how-to-use__step-number">{{ step_number }}</div>
-                    <div class="sk-how-to-use__step-content sk-section-body">
-                      {{ step_text }}
-                    </div>
-                  </li>
+                  {%- if step_body != blank -%}
+                    <li class="sk-how-to-use__step">
+                      <div class="sk-how-to-use__step-number">{{ step_number }}</div>
+                      <div class="sk-how-to-use__step-content">
+                        {{ step_body }}
+                      </div>
+                    </li>
+                  {%- endif -%}
                 {%- endif -%}
               {%- endfor -%}
             </ol>
+          </div>
+        </div>
+
+        <div class="sk-how-to-use__right">
+          {%- if how_to_use_image != blank -%}
+            {%- liquid
+              assign img_alt = how_to_use_image.alt | default: heading_full | default: product.title
+            -%}
+            <div class="sk-how-to-use__image">
+              {{
+                how_to_use_image
+                | image_url: width: 1600
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '375, 550, 750, 1100, 1500, 2000',
+                  sizes: '(min-width: 750px) 50vw, 100vw',
+                  alt: img_alt
+              }}
+            </div>
           {%- endif -%}
         </div>
       </div>
@@ -236,6 +311,12 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "__"
+    },
     {
       "type": "header",
       "content": "Product-Specific Control"
