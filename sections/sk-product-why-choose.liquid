@@ -1,132 +1,218 @@
 {{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
 
 <style>
-  .sk-product-why-choose-{{ section.id }} {
+  .sk-reasons--{{ section.id }} {
     background: transparent;
     padding: clamp(3rem, 4vw, 5rem) 0;
   }
 
-  .sk-product-why-choose-{{ section.id }} {
-    --pwc-point-number-size: 4.7rem;
-    --pwc-point-question-size: 2.2rem;
-    --pwc-point-detail-size: 1.8rem;
+  .sk-reasons--{{ section.id }} .sk-reasons__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-inline: var(--sk-page-gutter);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 3vw, 3.5rem);
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__layout {
-    display: grid;
-    grid-template-columns: minmax(0, var(--pwc-image-width, 45%)) minmax(0, var(--pwc-text-width, 45%));
-    column-gap: var(--pwc-gap, 10%);
-    align-items: center;
+  .sk-reasons--{{ section.id }} .sk-reasons__layout {
+    display: flex;
+    align-items: stretch;
+    gap: calc(var(--sk-why-gap) * 1%);
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__layout--no-image {
-    grid-template-columns: 1fr;
+  .sk-reasons--{{ section.id }} .sk-reasons__media {
+    flex: 0 0 calc(var(--sk-why-image-width) * 1%);
+    max-width: calc(var(--sk-why-image-width) * 1%);
+    display: flex;
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__image {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-  }
-
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__image img {
+  .sk-reasons--{{ section.id }} .sk-reasons__media img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    border-radius: 16px;
     display: block;
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__content {
+  .sk-reasons--{{ section.id }} .sk-reasons__content-wrap {
+    flex: 1 1 calc(var(--sk-why-text-width) * 1%);
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: clamp(2rem, 3vw, 3.5rem);
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-product-why-choose__points {
-    margin: 1.5rem 0 0;
+  .sk-reasons--{{ section.id }} .sk-reasons__header {
+    max-width: 70ch;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sk-section-header-gap);
+  }
+
+  .sk-reasons--{{ section.id }} .sk-reasons__title {
+    margin: 0;
+    font-size: var(--section-heading-h2);
+    line-height: var(--section-heading-h2-line);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--sk-section-title-spacing);
+    color: rgb(var(--sk-color-heading-text));
+  }
+
+  .sk-reasons--{{ section.id }} .sk-reasons__lead {
+    margin: 0;
+    max-width: 60ch;
+    font-size: clamp(1.6rem, 1.2vw, 2rem);
+    line-height: 1.6;
+    color: rgba(var(--sk-color-body-text), 0.8);
+  }
+
+  .sk-reasons--{{ section.id }} .sk-reasons__list {
+    margin: 0;
     padding: 0;
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: clamp(1.5rem, 2.5vw, 2.5rem);
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__point {
+  .sk-reasons--{{ section.id }} .sk-reasons__item {
     display: grid;
-    grid-template-columns: minmax(0, 10%) minmax(0, 1fr);
-    column-gap: 10%;
-    align-items: stretch;
-    grid-auto-rows: minmax(0, 1fr);
+    grid-template-columns: 64px minmax(0, 1fr);
+    column-gap: clamp(1.6rem, 3vw, 2.6rem);
+    align-items: flex-start;
+    padding-block: clamp(1.2rem, 2vw, 1.8rem);
   }
 
-  section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-number {
-    font-size: var(--pwc-point-number-size);
+  .sk-reasons--{{ section.id }} .sk-reasons__item + .sk-reasons__item {
+    border-top: 1px solid rgba(var(--color-foreground), 0.1);
+  }
+
+  .sk-reasons--{{ section.id }} .sk-reasons__num {
+    font-size: clamp(3.6rem, 4.5vw, 5.2rem);
     line-height: 1;
-    font-weight: 900;
-    align-self: stretch;
+    font-weight: 600;
     font-family: var(--font-heading-family);
-    color: var(--color-brand);
+    color: rgba(var(--color-foreground), 0.32);
   }
 
-  section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-text {
-    display: grid;
-    grid-template-rows: auto auto;
-    gap: 0.35rem;
-    min-height: 100%;
+  .sk-reasons--{{ section.id }} .sk-reasons__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
-  .sk-product-why-choose-{{ section.id }} .sk-why-choose__point-text p {
-    line-height: 1.25;
+  .sk-reasons--{{ section.id }} .sk-reasons__item-title {
     margin: 0;
+    font-weight: 600;
+    font-size: clamp(1.6rem, 1.2vw, 2.1rem);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: rgb(var(--color-foreground));
   }
 
-  section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-question {
-    font-style: italic;
-    font-size: var(--pwc-point-question-size);
+  .sk-reasons--{{ section.id }} .sk-reasons__item-body {
+    margin: 0;
+    max-width: 68ch;
+    font-size: clamp(1.5rem, 1.1vw, 1.8rem);
+    line-height: 1.65;
+    color: rgba(var(--color-foreground), 0.75);
   }
 
-  section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-copy {
-    font-size: var(--pwc-point-detail-size);
+  .sk-reasons--{{ section.id }} .sk-reasons__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    align-items: center;
   }
 
-  @media (max-width: 900px) {
-    .sk-product-why-choose-{{ section.id }} .sk-why-choose__layout {
-      grid-template-columns: 1fr;
-      column-gap: 0;
-      gap: 2rem;
+  .sk-reasons--{{ section.id }} .sk-reasons__link {
+    color: rgb(var(--color-foreground));
+    text-decoration: none;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.3);
+    padding-bottom: 0.2rem;
+  }
+
+  .sk-reasons--{{ section.id }} .sk-reasons__link:hover {
+    color: rgb(var(--color-brand-rgb));
+    border-bottom-color: rgba(var(--color-brand-rgb), 0.5);
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .sk-reasons--{{ section.id }} {
+      padding: clamp(2.6rem, 4vw, 4.2rem) 0;
     }
-    .sk-product-why-choose-{{ section.id }} {
-      --pwc-point-number-size: 3.2rem;
-      --pwc-point-question-size: 2.6rem;
-      --pwc-point-detail-size: 1.6rem;
+
+    .sk-reasons--{{ section.id }} .sk-reasons__inner {
+      gap: clamp(1.8rem, 2.6vw, 3rem);
     }
-    .sk-product-why-choose-{{ section.id }} .sk-why-choose__point {
-      grid-template-columns: 1fr;
+
+    .sk-reasons--{{ section.id }} .sk-reasons__item {
+      grid-template-columns: 52px minmax(0, 1fr);
+      column-gap: clamp(1.2rem, 2.5vw, 2rem);
+    }
+
+    .sk-reasons--{{ section.id }} .sk-reasons__num {
+      font-size: clamp(3.2rem, 4vw, 4.4rem);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .sk-reasons--{{ section.id }} {
+      padding: clamp(2.8rem, 6vw, 3.6rem) 0;
+    }
+
+    .sk-reasons--{{ section.id }} .sk-reasons__inner {
+      padding-inline: clamp(1.6rem, 5vw, 2.6rem);
+    }
+
+    .sk-reasons--{{ section.id }} .sk-reasons__layout {
+      flex-direction: column;
+      gap: clamp(1.8rem, 6vw, 2.6rem);
+    }
+
+    .sk-reasons--{{ section.id }} .sk-reasons__media,
+    .sk-reasons--{{ section.id }} .sk-reasons__content-wrap {
+      flex-basis: auto;
+      max-width: 100%;
+    }
+
+    .sk-reasons--{{ section.id }} .sk-reasons__title {
+      font-size: var(--sk-mobile-heading-size);
+      line-height: var(--sk-mobile-heading-line);
+    }
+
+    .sk-reasons--{{ section.id }} .sk-reasons__lead {
+      font-size: var(--sk-mobile-body-size);
+      line-height: var(--sk-mobile-body-line);
+    }
+
+    .sk-reasons--{{ section.id }} .sk-reasons__item {
+      grid-template-columns: 36px minmax(0, 1fr);
       column-gap: 1rem;
-      grid-template-rows: auto auto;
-      align-items: center;
+      padding-block: 1.6rem;
     }
-    section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-number {
-      display: flex;
+
+    .sk-reasons--{{ section.id }} .sk-reasons__num {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: rgba(var(--color-foreground), 0.08);
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
-      font-size: var(--pwc-point-number-size);
-      color: var(--color-brand);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: rgba(var(--color-foreground), 0.6);
     }
-    section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-number::before,
-    section.sk-product-why-choose-{{ section.id }} .sk-why-choose__point-number::after {
-      content: '';
-      flex: none;
-      width: min(34%, 70px);
-      height: 1px;
-      background: var(--color-brand);
-    }
-  }
 
-  @media (max-width: 749px) {
-    .sk-product-why-choose-{{ section.id }} {
-      padding: clamp(2rem, 4vw, 3rem) 0;
+    .sk-reasons--{{ section.id }} .sk-reasons__item-title {
+      font-size: 1.6rem;
+    }
+
+    .sk-reasons--{{ section.id }} .sk-reasons__item-body {
+      font-size: 1.5rem;
+      line-height: 1.6;
     }
   }
 </style>
@@ -156,63 +242,62 @@
 
 {%- if show_section -%}
   <section
-    class="sk-product-why-choose sk-product-why-choose-{{ section.id }}"
-    style="
-      --pwc-image-width: {{ section.settings.layout_image_width | default: 45 }}%;
-      --pwc-text-width: {{ section.settings.layout_text_width | default: 45 }}%;
-      --pwc-gap: {{ section.settings.layout_gap | default: 10 }}%;
-    "
+    class="sk-product-why-choose sk-reasons sk-reasons--{{ section.id }}"
+    style="--sk-why-image-width: {{ section.settings.layout_image_width }}; --sk-why-text-width: {{ section.settings.layout_text_width }}; --sk-why-gap: {{ section.settings.layout_gap }};"
   >
-    <div class="page-width">
-      <div class="sk-why-choose__layout{% if image_obj == blank %} sk-why-choose__layout--no-image{% endif %}">
+    <div class="sk-reasons__inner">
+      <div class="sk-reasons__layout">
         {% if image_obj != blank %}
-          <div class="sk-why-choose__image">
-            <img
-              src="{{ image_obj | image_url: width: 900 }}"
-              loading="lazy"
-              alt="{{ heading | default: product.title | escape }}"
-              width="900"
-              height="900"
-            >
+          <div class="sk-reasons__media">
+            {{
+              image_obj
+              | image_url: width: 1400
+              | image_tag:
+                widths: '375, 550, 750, 900, 1100, 1400',
+                sizes: '(min-width: 990px) 40vw, (min-width: 750px) 45vw, 100vw',
+                loading: 'lazy',
+                alt: image_obj.alt
+              | default: heading
+            }}
           </div>
         {% endif %}
 
-        <div class="sk-why-choose__content">
+        <div class="sk-reasons__content-wrap">
           {% if heading != blank or subheading != blank %}
-            <div class="sk-section-header sk-section-header--left">
+            <header class="sk-reasons__header">
               {% if heading != blank %}
-                <h2 class="sk-section-heading sk-section-heading--h2 sk-heading-text--strong">
+                <h2 class="sk-reasons__title">
                   {{ heading | escape }}
                 </h2>
               {% endif %}
               {% if subheading != blank %}
-                <p class="sk-section-header__subtitle sk-heading-text--soft">
+                <p class="sk-reasons__lead">
                   {{ subheading | escape }}
                 </p>
               {% endif %}
-            </div>
+            </header>
           {% endif %}
 
           {% if points != blank %}
-            <ol class="sk-product-why-choose__points" aria-label="Why choose">
+            <ol class="sk-reasons__list" aria-label="Why choose">
               {% for point in points limit: 3 %}
                 {% assign point_question = point.question.value | default: '' %}
                 {% assign point_detail = point.point.value | default: '' %}
 
                 {% if point_question != blank or point_detail != blank %}
-                  <li class="sk-why-choose__point">
-                    <span class="sk-why-choose__point-number" aria-hidden="true">
+                  <li class="sk-reasons__item">
+                    <div class="sk-reasons__num" aria-hidden="true">
                       {{ forloop.index }}
-                    </span>
-                    <div class="sk-why-choose__point-text">
+                    </div>
+                    <div class="sk-reasons__content">
                       {% if point_question != blank %}
-                        <p class="sk-why-choose__point-question sk-heading-text--soft">
+                        <h3 class="sk-reasons__item-title">
                           {{ point_question | escape }}
-                        </p>
+                        </h3>
                       {% endif %}
 
                       {% if point_detail != blank %}
-                        <p class="sk-why-choose__point-copy sk-heading-text--strong">
+                        <p class="sk-reasons__item-body">
                           {{ point_detail | escape }}
                         </p>
                       {% endif %}
@@ -221,6 +306,26 @@
                 {% endif %}
               {% endfor %}
             </ol>
+          {% endif %}
+
+          {%- assign cta_label = section.settings.cta_label | strip | replace: '__', '' -%}
+          {%- assign link_label = section.settings.link_label | strip | replace: '__', '' -%}
+          {% if cta_label != blank or link_label != blank %}
+            <div class="sk-reasons__cta">
+              {% if cta_label != blank %}
+                <a
+                  class="button button--primary"
+                  href="{{ section.settings.cta_link | default: '#' }}"
+                >
+                  {{ cta_label | escape }}
+                </a>
+              {% endif %}
+              {% if link_label != blank %}
+                <a class="sk-reasons__link" href="{{ section.settings.link_url | default: '#' }}">
+                  {{ link_label | escape }}
+                </a>
+              {% endif %}
+            </div>
           {% endif %}
         </div>
       </div>
@@ -234,6 +339,28 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Primary button label",
+      "default": "__"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Secondary link label",
+      "default": "__"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Secondary link URL"
+    },
     {
       "type": "range",
       "id": "layout_image_width",
