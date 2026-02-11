@@ -14,28 +14,24 @@
 
     .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__wrap {
       display: grid;
-      grid-template-columns: minmax(0, 600px) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 520px) minmax(0, 1fr);
       gap: clamp(2rem, 4vw, 4.5rem);
       align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      margin-inline: auto;
+      justify-content: center;
     }
 
     .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__left {
       width: 100%;
       min-width: 0;
-      grid-column: 1 / 2;
+      grid-column: 2 / 3;
     }
 
     .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__content {
-      max-width: 600px;
+      max-width: 560px;
       position: relative;
-    }
-
-    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__right {
-      width: auto;
-      min-width: 0;
-      max-width: 100%;
-      justify-self: stretch;
-      grid-column: 2 / 3;
     }
 
   .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image{
@@ -46,9 +42,11 @@
     aspect-ratio: 4 / 5;
     max-height: 640px;
     background: rgb(var(--color-background));
-    display: grid;
-    place-items: center;
     border-radius: 16px;
+    width: 100%;
+    max-width: 520px;
+    grid-column: 1 / 2;
+    justify-self: start;
   }
 
 
@@ -58,14 +56,6 @@
       object-fit: contain;
       object-position: center;
       display: block;
-    }
-
-    .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 35%);
-      pointer-events: none;
     }
 
     .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__heading {
@@ -162,10 +152,15 @@
         aspect-ratio: 4 / 3;
         border-radius: 12px;
         max-height: none;
+        width: 100vw;
+        max-width: none;
+        margin-inline: calc(50% - 50vw);
       }
 
       .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image img {
-        height: 100%;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
       }
 
       .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__steps {
@@ -173,9 +168,18 @@
       }
     }
 
-    @media only screen and (max-width: 640px) {
+    @media only screen and (max-width: 749px) {
       .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__wrap {
         grid-template-columns: 1fr;
+      }
+
+      .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__left {
+        grid-column: 1 / -1;
+      }
+
+      .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image {
+        grid-column: 1 / -1;
+        justify-self: center;
       }
     }
 
@@ -236,10 +240,12 @@
   endif
 
   assign heading_full = ''
-  if how_to_use_html contains '<h3>'
-    assign heading_full = how_to_use_html | split: '<h3>' | last | split: '</h3>' | first | strip
+  if how_to_use_html contains '<h1>'
+    assign heading_full = how_to_use_html | split: '<h1>' | last | split: '</h1>' | first | strip
   elsif how_to_use_html contains '<h2>'
     assign heading_full = how_to_use_html | split: '<h2>' | last | split: '</h2>' | first | strip
+  elsif how_to_use_html contains '<h3>'
+    assign heading_full = how_to_use_html | split: '<h3>' | last | split: '</h3>' | first | strip
   endif
 -%}
 
@@ -247,17 +253,34 @@
   <section class="sk-product-how-to-use-{{ section.id }}">
     <div class="page-width">
       <div class="sk-how-to-use__wrap">
+        {%- if how_to_use_image != blank -%}
+          {%- liquid
+            assign img_alt = how_to_use_image.alt | default: heading_full | default: product.title
+          -%}
+          <div class="sk-how-to-use__image">
+            {{
+              how_to_use_image
+              | image_url: width: 1600
+              | image_tag:
+                loading: 'lazy',
+                widths: '375, 550, 750, 1100, 1500, 2000',
+                sizes: '(min-width: 750px) 50vw, 100vw',
+                alt: img_alt
+            }}
+          </div>
+        {%- endif -%}
+
         <div class="sk-how-to-use__left">
           <div class="sk-how-to-use__content">
             {%- if heading_full != blank -%}
-              <h1 class="sk-header__section sk-how-to-use__heading sk-section-heading sk-section-heading--h2 sk-section-header__title">
+              <h1 class="sk-how-to-use__heading sk-section-header__title sk-heading-size--large sk-heading-text--strong">
                 {{ heading_full }}
               </h1>
             {%- endif -%}
 
             {%- assign subtitle_text = section.settings.subtitle | strip | replace: '__', '' -%}
             {%- if subtitle_text != blank -%}
-              <p class="sk-how-to-use__subtitle sk-section-body">{{ subtitle_text }}</p>
+              <p class="sk-how-to-use__subtitle sk-section-body sk-section-header__subtitle">{{ subtitle_text }}</p>
             {%- endif -%}
 
             {%- assign steps_content = how_to_use_html | split: '##' -%}
@@ -280,25 +303,6 @@
               {%- endfor -%}
             </ol>
           </div>
-        </div>
-
-        <div class="sk-how-to-use__right">
-          {%- if how_to_use_image != blank -%}
-            {%- liquid
-              assign img_alt = how_to_use_image.alt | default: heading_full | default: product.title
-            -%}
-            <div class="sk-how-to-use__image">
-              {{
-                how_to_use_image
-                | image_url: width: 1600
-                | image_tag:
-                  loading: 'lazy',
-                  widths: '375, 550, 750, 1100, 1500, 2000',
-                  sizes: '(min-width: 750px) 50vw, 100vw',
-                  alt: img_alt
-              }}
-            </div>
-          {%- endif -%}
         </div>
       </div>
     </div>
