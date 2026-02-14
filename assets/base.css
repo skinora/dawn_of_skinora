@@ -4892,10 +4892,6 @@ div.okeReviews .oke-w-review-main {
     flex: 0 0 380px !important;
   }
 
-  .sk-dynamic-banner__content {
-    padding-right: 5rem !important;
-  }
-
   .sk-dynamic-banner__container {
     flex-direction: column-reverse !important;
   }
