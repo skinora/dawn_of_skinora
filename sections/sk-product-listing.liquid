@@ -304,17 +304,17 @@
       {% if section.blocks.size > 0 %}
         <div class="sk-product-listing__grid">
           {% for block in section.blocks %}
-            {% assign product = block.settings.product %}
-            {% if product != blank %}
-              {% assign hover_image = product.images[1] %}
+            {% assign card_product = block.settings.product %}
+            {% if card_product != blank %}
+              {% assign hover_image = card_product.images[1] %}
               <div class="sk-product-card" {{ block.shopify_attributes }}>
-                <a href="{{ product.url }}">
+                <a href="{{ card_product.url }}">
                   <div class="sk-product-card__image">
-                    {% if product.featured_media %}
+                    {% if card_product.featured_media %}
                       <img
                         class="sk-product-card__image-primary"
-                        src="{{ product.featured_media | image_url: width: 540, height: 675, crop: 'center' }}"
-                        alt="{{ product.featured_media.alt | default: product.title | escape }}"
+                        src="{{ card_product.featured_media | image_url: width: 540, height: 675, crop: 'center' }}"
+                        alt="{{ card_product.featured_media.alt | default: card_product.title | escape }}"
                         width="540"
                         height="675"
                         loading="lazy"
@@ -324,7 +324,7 @@
                         <img
                           class="sk-product-card__image-secondary"
                           src="{{ hover_image | image_url: width: 540, height: 675, crop: 'center' }}"
-                          alt="{{ hover_image.alt | default: product.title | escape }}"
+                          alt="{{ hover_image.alt | default: card_product.title | escape }}"
                           width="540"
                           height="675"
                           loading="lazy"
@@ -346,42 +346,40 @@
 
                 <div class="sk-product-card__content">
                   <div class="sk-product-card__content-body">
-                    <a href="{{ product.url }}">
-                      <h2 class="sk-product-card__title">{{ product.title | escape }}</h2>
+                    <a href="{{ card_product.url }}">
+                      <h2 class="sk-product-card__title">{{ card_product.title | escape }}</h2>
                     </a>
                     {%- comment -%} Okendo star rating widget for product cards {%- endcomment -%}
+                    <!-- OKENDO DEBUG: {{ card_product.handle }} / {{ card_product.id }} -->
                     <div
                       class="okeReviews okeReviews--reviewsSummary-starRating"
-                      data-oke-reviews-product-id="shopify-{{ product.id }}"
-                      data-sk-product-id="{{ product.id }}"
-                      data-sk-product-handle="{{ product.handle }}"
-                      data-sk-product-title="{{ product.title | escape }}"
+                      data-oke-reviews-product-id="shopify-{{ card_product.id }}"
                       data-oke-star-rating
                     ></div>
-                    {% if block.settings.show_description and product.description != blank %}
+                    {% if block.settings.show_description and card_product.description != blank %}
                       <div class="sk-product-card__description sk-section-body">
-                        <p>{{ product.description | strip_html }}</p>
+                        <p>{{ card_product.description | strip_html }}</p>
                       </div>
                     {% endif %}
                   </div>
 
                   <div class="sk-product-card__footer">
                     <div class="sk-product-card__price">
-                      {% if product.compare_at_price > product.price %}
+                      {% if card_product.compare_at_price > card_product.price %}
                         <span style="text-decoration: line-through; color: var(--color-neutral-5); margin-right: 10px;">
-                          {{ product.compare_at_price | money }}
+                          {{ card_product.compare_at_price | money }}
                         </span>
                       {% endif %}
-                      {{ product.price | money }}
+                      {{ card_product.price | money }}
                     </div>
 
                     {% if block.settings.button_text != blank %}
                       {% liquid
-                        assign product_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id
-                        assign current_variant = product.selected_or_first_available_variant
+                        assign product_form_id = 'product-form-' | append: section.id | append: '-' | append: card_product.id
+                        assign current_variant = card_product.selected_or_first_available_variant
                       %}
 
-                      <product-form data-section-id="{{ section.id }}-{{ product.id }}">
+                      <product-form data-section-id="{{ section.id }}-{{ card_product.id }}">
                         <div class="product-form__error-message-wrapper" role="alert" hidden>
                           <span class="svg-wrapper">
                             {{- 'icon-error.svg' | inline_asset_content -}}
@@ -390,7 +388,7 @@
                         </div>
 
                         {%- form 'product',
-                          product,
+                          card_product,
                           id: product_form_id,
                           class: 'sk-product-listing-form',
                           novalidate: 'novalidate',
