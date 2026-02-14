@@ -10,15 +10,16 @@
       --sk-space-10: 2.5rem;
       --sk-space-12: 3rem;
       padding: 0 0 var(--sk-space-12);
+      margin-top: 0;
     }
 
     .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__wrap {
       display: grid;
-      grid-template-columns: minmax(0, 520px) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
       gap: clamp(2rem, 4vw, 4.5rem);
       align-items: center;
       width: 100%;
-      max-width: 1200px;
+      max-width: 1400px;
       margin-inline: auto;
       justify-content: center;
     }
@@ -44,9 +45,19 @@
     background: rgb(var(--color-background));
     border-radius: 16px;
     width: 100%;
-    max-width: 520px;
+    max-width: none;
     grid-column: 1 / 2;
-    justify-self: start;
+    justify-self: stretch;
+  }
+
+  @media (min-width: 750px) {
+    .sk-product-how-to-use-{{ section.id }}.sk-how-to-use--image-right .sk-how-to-use__image {
+      grid-column: 2 / 3;
+    }
+
+    .sk-product-how-to-use-{{ section.id }}.sk-how-to-use--image-right .sk-how-to-use__left {
+      grid-column: 1 / 2;
+    }
   }
 
 
@@ -59,8 +70,8 @@
     }
 
     .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__heading {
-      text-align: center;
-      margin-bottom: var(--sk-space-8);
+      text-align: inherit;
+      margin: 0;
     }
 
     .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__subtitle {
@@ -144,7 +155,7 @@
 
     @media only screen and (max-width: 749px) {
       .sk-product-how-to-use-{{ section.id }} {
-        padding: var(--sk-space-10) 0;
+        padding: 0 0 var(--sk-space-10);
       }
 
       .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image {
@@ -187,9 +198,7 @@
 
     @media only screen and (max-width: 435px) {
       .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__heading {
-        font-size: calc(var(--section-heading-h2) * 0.9);
-        line-height: var(--section-heading-h2-line);
-        margin: var(--sk-space-6) 0;
+        margin: 0;
       }
       .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-number {
         font-size: calc(var(--sk-font-size-xxs) * 0.8);
@@ -250,7 +259,7 @@
 -%}
 
 {%- if has_content or has_image -%}
-  <section class="sk-product-how-to-use-{{ section.id }}">
+  <section class="sk-product-how-to-use-{{ section.id }} sk-how-to-use--image-{{ section.settings.image_position_desktop }}">
     <div class="page-width">
       <div class="sk-how-to-use__wrap">
         {%- if how_to_use_image != blank -%}
@@ -272,15 +281,19 @@
 
         <div class="sk-how-to-use__left">
           <div class="sk-how-to-use__content">
-            {%- if heading_full != blank -%}
-              <h1 class="sk-how-to-use__heading sk-section-header__title sk-heading-size--large sk-heading-text--strong">
-                {{ heading_full }}
-              </h1>
-            {%- endif -%}
-
             {%- assign subtitle_text = section.settings.subtitle | strip | replace: '__', '' -%}
-            {%- if subtitle_text != blank -%}
-              <p class="sk-how-to-use__subtitle sk-section-body sk-section-header__subtitle">{{ subtitle_text }}</p>
+            {%- if heading_full != blank or subtitle_text != blank -%}
+              <div class="sk-section-header sk-section-header--center">
+                {%- if heading_full != blank -%}
+                  <h1 class="sk-how-to-use__heading sk-section-header__title sk-heading-size--large sk-heading-text--strong">
+                    {{ heading_full }}
+                  </h1>
+                {%- endif -%}
+
+                {%- if subtitle_text != blank -%}
+                  <p class="sk-how-to-use__subtitle sk-section-body sk-section-header__subtitle">{{ subtitle_text }}</p>
+                {%- endif -%}
+              </div>
             {%- endif -%}
 
             {%- assign steps_content = how_to_use_html | split: '##' -%}
@@ -315,6 +328,22 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "select",
+      "id": "image_position_desktop",
+      "label": "Image position (desktop)",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
     {
       "type": "text",
       "id": "subtitle",
