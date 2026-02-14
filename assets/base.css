@@ -5203,11 +5203,6 @@ div.okeReviews .oke-w-review-main {
     margin-top: 78px !important;
   }
 
-  .sk-dynamic-banner__title {
-    font-size: calc(var(--section-heading-hxl) * 0.6) !important;
-    line-height: var(--section-heading-hxl-line);
-  }
-
   .sk-dynamic-banner__description {
     font-size: var(--sk-font-size-medium) !important;
     line-height: 28px !important;
@@ -5442,11 +5437,6 @@ div.okeReviews .oke-w-review-main {
 
   .sk-latest-blogs__featured-overlay {
     padding: 15px !important;
-  }
-
-  .sk-dynamic-banner__title {
-    font-size: calc(var(--sk-font-size-2xl) * 1.0667) !important;
-    line-height: 37px !important;
   }
 
   .sk-dynamic-banner__description {
