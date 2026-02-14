@@ -16,29 +16,6 @@
     margin: 0;
   }
 
-  .sk-radiance__media-frame {
-    position: relative;
-    overflow: hidden;
-    min-height: 0;
-    height: auto;
-    aspect-ratio: 4 / 5;
-    max-height: 640px;
-    background: rgba(var(--color-foreground), 0.04);
-    border-radius: 16px;
-    width: 100%;
-    max-width: 520px;
-    margin: 0 auto;
-    box-shadow: 0 24px 60px rgba(48, 39, 62, 0.12);
-  }
-
-  .sk-radiance__media-frame::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 55%);
-    pointer-events: none;
-  }
-
   .sk-radiance__image,
   .sk-radiance__media-frame svg {
     width: 100%;
@@ -49,7 +26,6 @@
   }
 
   .sk-radiance__media-frame .placeholder-svg {
-    background: rgba(var(--color-foreground), 0.04);
     color: rgba(var(--color-foreground), 0.35);
   }
 
@@ -141,7 +117,6 @@
   @media (max-width: 74.9rem) {
     .sk-radiance__media-frame {
       aspect-ratio: 4 / 3;
-      border-radius: 12px;
       max-height: none;
       width: 100vw;
       max-width: none;
