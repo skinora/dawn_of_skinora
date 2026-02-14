@@ -20,9 +20,17 @@
   .sk-radiance__media-frame svg {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
     display: block;
+  }
+
+  .sk-radiance__media-frame {
+    display: block;
+    overflow: hidden;
+    line-height: 0;
+    aspect-ratio: 4 / 5;
+    width: 100%;
   }
 
   .sk-radiance__media-frame .placeholder-svg {
@@ -136,7 +144,7 @@
   <div class="page-width">
     <div class="sk-radiance__inner">
       <div class="sk-radiance__media">
-        <div class="sk-radiance__media-frame image-with-text__media">
+        <div class="sk-radiance__media-frame">
           {% if section.settings.image != blank %}
             {{
               section.settings.image
