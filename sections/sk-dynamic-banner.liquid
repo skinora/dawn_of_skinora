@@ -113,6 +113,11 @@
       align-items: flex-end;
     }
 
+    .sk-dynamic-banner .page-width,
+    .sk-dynamic-banner__container {
+      height: 100%;
+    }
+
     .sk-dynamic-banner__container {
       display: flex;
       flex-direction: column;
@@ -129,6 +134,7 @@
       gap: clamp(1.4rem, 4.5vw, 2.4rem);
       margin-top: 0;
       margin-inline: auto;
+      min-height: 100%;
     }
 
     .sk-dynamic-banner__title {
@@ -155,11 +161,11 @@
     }
 
     .sk-dynamic-banner__cta {
-      margin-top: -0.4rem;
+      margin-top: auto;
     }
 
     .sk-dynamic-banner--cta-top {
-      align-items: flex-start;
+      align-items: flex-end;
     }
 
     .sk-dynamic-banner--cta-bottom {
