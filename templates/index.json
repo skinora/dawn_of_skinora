@@ -14,10 +14,12 @@
       "name": "SK Dynamic Banner",
       "settings": {
         "sk_banner_img_desktop": "shopify://shop_images/kvinne_og_mann_med_Skinora_radiance_face_og_skinora_clear.png",
+        "sk_banner_img_mobile": "shopify://shop_images/hero_centered.png",
         "sk_banner_title": "Profesjonell LED-terapi hjemme – utviklet for synlige hudforbedringer",
         "sk_banner_description": "Skinora kombinerer klinisk inspirert LED-teknologi med brukervennlig design, for deg som ønsker synlige resultater uten klinikk",
         "sk_banner_button_link": "shopify://collections/all-products",
-        "sk_banner_button_text": "STYRK HUDEN – NATURLIG"
+        "sk_banner_button_text": "STYRK HUDEN – NATURLIG",
+        "sk_banner_cta_position_mobile": "top"
       }
     },
     "sk_promotion_logos_giWdMT": {

@@ -5198,11 +5198,6 @@ div.okeReviews .oke-w-review-main {
     height: auto;
   }
 
-  .sk-dynamic-banner__content {
-    padding-right: 0 !important;
-    margin-top: 78px !important;
-  }
-
   .sk-dynamic-banner__description {
     font-size: var(--sk-font-size-medium) !important;
     line-height: 28px !important;
