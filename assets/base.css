@@ -4597,6 +4597,26 @@ a {
   display: none;
 }
 
+/* Shopify privacy banner: keep above overlays without forcing visibility */
+:root {
+  --sk-privacy-banner-offset: 0px;
+}
+
+html.sk-sticky-bar-visible {
+  --sk-privacy-banner-offset: 80px;
+}
+
+shopify-privacy-banner,
+shopify-customer-privacy-banner,
+#shopify-privacy-banner,
+#shopify-customer-privacy-banner,
+.shopify-pc__banner__dialog {
+  position: fixed;
+  bottom: calc(var(--sk-privacy-banner-offset, 0px) + env(safe-area-inset-bottom, 0px)) !important;
+  z-index: 2147483646;
+  pointer-events: auto;
+}
+
 /* oken reviews styling */
 
 .okeReviews[data-oke-container] .oke-is-large .oke-w-reviews-list-item,

@@ -295,7 +295,9 @@
     function updateVisibility(portal) {
       if (!hero) return;
       const rect = hero.getBoundingClientRect();
-      portal.classList.toggle('visible', rect.bottom < 80);
+      const isVisible = rect.bottom < 80;
+      portal.classList.toggle('visible', isVisible);
+      document.documentElement.classList.toggle('sk-sticky-bar-visible', isVisible);
     }
 
     function findProductForm(btn) {
