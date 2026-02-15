@@ -4588,10 +4588,6 @@ small,
   min-width: 23rem;
 }
 
-.shopify-pc__banner__dialog {
-  display: none !important;
-}
-
 a {
   text-decoration: none;
   color: unset;
