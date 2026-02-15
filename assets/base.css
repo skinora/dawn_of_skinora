@@ -4600,6 +4600,7 @@ a {
 /* Shopify privacy banner: keep above overlays without forcing visibility */
 :root {
   --sk-privacy-banner-offset: 0px;
+  --sk-privacy-banner-z: 2147483001;
 }
 
 html.sk-sticky-bar-visible {
@@ -4613,7 +4614,7 @@ shopify-customer-privacy-banner,
 .shopify-pc__banner__dialog {
   position: fixed;
   bottom: calc(var(--sk-privacy-banner-offset, 0px) + env(safe-area-inset-bottom, 0px)) !important;
-  z-index: 2147483646;
+  z-index: var(--sk-privacy-banner-z);
   pointer-events: auto;
 }
 
