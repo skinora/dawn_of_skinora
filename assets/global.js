@@ -1366,3 +1366,74 @@ class CartPerformance {
     performance.measure(metricName, `${metricName}:start`, `${metricName}:end`);
   }
 }
+
+(function initKlaviyoConsentOpen() {
+  if (window.__SK_KLAVIYO_CONSENT_OPEN) return;
+  window.__SK_KLAVIYO_CONSENT_OPEN = true;
+
+  const klaviyoFormId = 'REERkU';
+  const acceptButtonId = 'shopify-pc__banner__btn-accept';
+  const bannerSelectors =
+    'shopify-privacy-banner, shopify-customer-privacy-banner, #shopify-privacy-banner, #shopify-customer-privacy-banner, .shopify-pc__banner__dialog';
+
+  function openKlaviyoForm() {
+    if (!window._klOnsite) return;
+
+    if (typeof window._klOnsite.openForm === 'function') {
+      window._klOnsite.openForm(klaviyoFormId);
+      return;
+    }
+
+    if (typeof window._klOnsite.push === 'function') {
+      window._klOnsite.push(['openForm', klaviyoFormId]);
+    }
+  }
+
+  function isAcceptNode(node) {
+    if (!node || node.nodeType !== 1) return false;
+    if (node.id === acceptButtonId) return true;
+    if (node.classList && node.classList.contains('shopify-pc__banner__btn-accept')) return true;
+    const testId = node.getAttribute && node.getAttribute('data-testid');
+    if (testId && /accept|agree|consent/i.test(testId)) return true;
+    const ariaLabel = node.getAttribute && node.getAttribute('aria-label');
+    if (ariaLabel && /accept|agree|consent/i.test(ariaLabel)) return true;
+    return false;
+  }
+
+  function didClickAccept(event) {
+    const path = typeof event.composedPath === 'function' ? event.composedPath() : [];
+    if (path.length) {
+      if (path.some(isAcceptNode)) return true;
+      const bannerNode = path.find((node) => node && node.matches && node.matches(bannerSelectors));
+      if (bannerNode) {
+        return !!bannerNode.querySelector(
+          `#${acceptButtonId}, .shopify-pc__banner__btn-accept, [data-testid*="accept"], [aria-label*="Accept"], [aria-label*="accept"]`
+        );
+      }
+    }
+
+    const target = event.target;
+    if (target && target.closest) {
+      if (target.closest(`#${acceptButtonId}, .shopify-pc__banner__btn-accept`)) return true;
+      const banner = target.closest(bannerSelectors);
+      if (banner) {
+        return !!banner.querySelector(
+          `#${acceptButtonId}, .shopify-pc__banner__btn-accept, [data-testid*="accept"], [aria-label*="Accept"], [aria-label*="accept"]`
+        );
+      }
+    }
+
+    return false;
+  }
+
+  document.addEventListener(
+    'click',
+    (event) => {
+      if (!didClickAccept(event)) return;
+      window.setTimeout(() => {
+        openKlaviyoForm();
+      }, 200);
+    },
+    true
+  );
+})();
