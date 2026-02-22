@@ -1,4 +1,5 @@
 {{ 'section-sk-customer-service.css' | asset_url | stylesheet_tag }}
+{{ 'honeypot.css' | asset_url | stylesheet_tag }}
 
 <div class="sk-customer-service page-width py-10">
   <h1 class="sk-header__section sk-section-heading sk-section-heading--h1 sk-customer-service__heading">
@@ -23,7 +24,7 @@
         Send oss en melding
       </h3>
 
-      {% form 'contact', id: 'contact_form', class: 'contact-form' %}
+      {% form 'contact', id: 'contact_form', class: 'contact-form hp-protected' %}
         {%- if form.posted_successfully? -%}
           <p class="skcs-status skcs-status--success">Takk! Meldingen din er sendt. Vi svarer så fort vi kan.</p>
 
@@ -55,16 +56,26 @@
         <input type="hidden" name="contact[tags]" value="Kundeservice, Kontakt">
 
         {%- comment -%}
-          Honeypot (anti-spam). Skjult for brukere, synlig for roboter.
+          ── HONEYPOT LAG 1: Skjult felt ──
+          Usynlig for ekte brukere, men bots fyller det ut automatisk.
         {%- endcomment -%}
-        <input
-          type="text"
-          name="contact[website]"
-          tabindex="-1"
-          autocomplete="off"
-          aria-hidden="true"
-          style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;padding:0;border:0;"
-        >
+        <div class="hp-trap" aria-hidden="true">
+          <label for="hp-website">Nettside (ikke fyll ut)</label>
+          <input
+            type="text"
+            name="hp-website"
+            id="hp-website"
+            autocomplete="off"
+            tabindex="-1"
+            value=""
+          >
+        </div>
+
+        {%- comment -%}
+          ── HONEYPOT LAG 2: Tidssjekk ──
+          Lagrer timestamp ved sidelast. JS blokkerer innsending < 3 sek.
+        {%- endcomment -%}
+        <input type="hidden" name="hp-timestamp" id="hp-timestamp" value="">
 
         <label for="ContactFormName">Navn</label>
         <input type="text" id="ContactFormName" name="contact[name]" autocomplete="name" required>
@@ -101,6 +112,8 @@
     </div>
   </div>
 </div>
+
+<script src="{{ 'honeypot.js' | asset_url }}" defer></script>
 
 {% schema %}
 {

@@ -1,0 +1,18 @@
+/* ============================================================
+   HONEYPOT — Anti-spam protection
+   Hides the honeypot trap field from real users.
+   Bots that auto-fill all fields will be caught.
+   ============================================================ */
+
+.hp-trap {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  pointer-events: none;
+  tab-size: 0;
+  z-index: -1;
+}
