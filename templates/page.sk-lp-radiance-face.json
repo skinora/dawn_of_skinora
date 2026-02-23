@@ -1,0 +1,99 @@
+{
+  "sections": {
+    "main": {
+      "type": "sk-lp-radiance-face",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "review_text": "Etter 6 uker merker jeg virkelig forskjell på hudtonen. Huden ser friskere ut og pigmentflekkene er blitt mindre synlige. Veldig fornøyd!",
+            "review_author": "Wenche S., 52, Oslo"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "review_text": "Bruker den foran TV hver kveld. Enkelt, behagelig og huden kjennes mykere. Gir ikke opp denne rutinen!",
+            "review_author": "Kari M., 47, Stavanger"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "review_text": "Var skeptisk, men etter 4 uker ser jeg tydelig mer glød. Huden føles tettere og fine linjene er blitt mindre synlige.",
+            "review_author": "Tone H., 61, Trondheim"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor ofte bør jeg bruke masken?",
+            "answer": "Vi anbefaler 3–5 økter i uken, à 10 minutter. Du kan bruke den morgen eller kveld – det som passer best for deg."
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Når kan jeg forvente å se resultater?",
+            "answer": "De fleste merker forbedring i glød og hudtone etter 2–4 uker. For mer synlige resultater som jevnere tekstur og reduserte pigmentflekker, anbefaler vi minst 6–8 uker med jevnlig bruk."
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Er LED-lys trygt for huden?",
+            "answer": "Ja. LED-terapi er en ikke-invasiv teknologi som er grundig testet og brukes av hudterapeuter verden over. Den inneholder ingen UV-stråler og er skånsom mot alle hudtyper."
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Kan jeg bruke den sammen med hudpleieproduktene mine?",
+            "answer": "Absolutt. Bruk masken på ren hud, og påfør serum eller fuktighetskrem etterpå for å forsterke effekten. Unngå produkter med retinol rett før bruk."
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Hva om jeg ikke er fornøyd?",
+            "answer": "Du har 60 dagers fornøydgaranti. Hvis du ikke er fornøyd, sender du den tilbake og får full refusjon – ingen spørsmål stilt. Kontakt oss på hello@skinora.no."
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor lang er leveringstiden?",
+            "answer": "Vi sender fra norsk lager, og leveringstiden er normalt 2–4 virkedager. Frakt er alltid gratis."
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6"
+      ],
+      "settings": {
+        "announcement_text": "GRATIS FRAKT I NORGE  |  60 DAGERS FORNØYDGARANTI",
+        "hero_eyebrow": "Skinora® Radiance Face",
+        "hero_title": "Profesjonell LED-terapi hjemme – utviklet for synlige hudforbedringer",
+        "hero_text": "Skinora Radiance bruker klinisk dokumentert LED-teknologi. 10 minutter, 3–5 ganger i uken. Resultater du kan se.",
+        "hero_cta_text": "Kjøp Radiance Face – 4 690 kr",
+        "product_url": "/products/skinora-radiance-face",
+        "price_text": "4 690 kr",
+        "reviews_score": "4.8 av 5 – basert på 102 anmeldelser",
+        "cta_heading": "Klar for synlige resultater?",
+        "cta_text": "Gi huden din den behandlingen den fortjener – hjemme, på dine premisser, med teknologi som faktisk virker.",
+        "cta_button_text": "Bestill Radiance Face nå"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

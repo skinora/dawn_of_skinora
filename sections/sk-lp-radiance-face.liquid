@@ -1,0 +1,621 @@
+{%- comment -%}
+  sk-lp-radiance-face.liquid
+  Landing page section for Skinora® Radiance Face LED mask.
+  Uses a dedicated page template: page.sk-lp-radiance-face.json
+  All styles loaded via: section-sk-lp-radiance-face.css
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp-radiance-face">
+
+  {%- comment -%} ========== 1. ANNOUNCEMENT BAR ========== {%- endcomment -%}
+  <div class="lp-announcement-bar">
+    {{ section.settings.announcement_text }}
+  </div>
+
+  {%- comment -%} ========== 2. HEADER (logo only) ========== {%- endcomment -%}
+  <header class="lp-header">
+    {%- if section.settings.logo != blank -%}
+      <img
+        class="lp-header__logo"
+        src="{{ section.settings.logo | image_url: height: 64 }}"
+        alt="{{ shop.name }}"
+        width="auto"
+        height="32"
+        loading="eager"
+      >
+    {%- else -%}
+      <span class="lp-header__logo-text">{{ shop.name }}</span>
+    {%- endif -%}
+  </header>
+
+  <main>
+
+    {%- comment -%} ========== 3. HERO ========== {%- endcomment -%}
+    <section class="lp-hero">
+      <div class="lp-hero__grid">
+        <div class="lp-hero__content">
+          <p class="lp-eyebrow">{{ section.settings.hero_eyebrow }}</p>
+          <h2 class="lp-hero__title">{{ section.settings.hero_title }}</h2>
+          <p class="lp-hero__text">{{ section.settings.hero_text }}</p>
+          <div class="lp-hero__pills">
+            <span class="lp-hero__pill"><span class="lp-hero__pill-check">✓</span> Norsk merke</span>
+            <span class="lp-hero__pill"><span class="lp-hero__pill-check">✓</span> 60 dagers garanti</span>
+            <span class="lp-hero__pill"><span class="lp-hero__pill-check">✓</span> Gratis frakt</span>
+          </div>
+          <div class="lp-hero__actions">
+            <a href="{{ section.settings.product_url }}" class="lp-btn">{{ section.settings.hero_cta_text }}</a>
+            <a href="#slik-bruker-du" class="lp-hero__link">Se hvordan den brukes (60 sek) ↓</a>
+          </div>
+        </div>
+        <div class="lp-hero__image">
+          {%- if section.settings.hero_image != blank -%}
+            <img
+              src="{{ section.settings.hero_image | image_url: width: 1200 }}"
+              srcset="{{ section.settings.hero_image | image_url: width: 600 }} 600w, {{ section.settings.hero_image | image_url: width: 900 }} 900w, {{ section.settings.hero_image | image_url: width: 1200 }} 1200w"
+              sizes="(max-width: 991px) 100vw, 50vw"
+              alt="{{ section.settings.hero_image.alt | default: 'Skinora Radiance Face' }}"
+              width="{{ section.settings.hero_image.width }}"
+              height="{{ section.settings.hero_image.height }}"
+              loading="eager"
+            >
+          {%- else -%}
+            <div class="lp-hero__image-placeholder">[ Radiance Face produktbilde ]</div>
+          {%- endif -%}
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} ========== 4. TRUST BAR ========== {%- endcomment -%}
+    <section class="lp-trustbar">
+      <div class="lp-container">
+        <div class="lp-trustbar__grid">
+          <div class="lp-trustbar__item">
+            <span class="lp-trustbar__icon">🇳🇴</span>
+            <span class="lp-trustbar__text">Norskutviklet</span>
+          </div>
+          <div class="lp-trustbar__item">
+            <span class="lp-trustbar__icon">📦</span>
+            <span class="lp-trustbar__text">Sendes fra norsk lager</span>
+          </div>
+          <div class="lp-trustbar__item">
+            <span class="lp-trustbar__icon">🔄</span>
+            <span class="lp-trustbar__text">60 dagers garanti</span>
+          </div>
+          <div class="lp-trustbar__item">
+            <span class="lp-trustbar__icon">🔒</span>
+            <span class="lp-trustbar__text">Vipps &amp; Klarna</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} ========== 5. PROBLEM ========== {%- endcomment -%}
+    <section class="lp-problem">
+      <div class="lp-container--narrow">
+        <h2 class="lp-section-heading">Kjenner du igjen dette?</h2>
+        <p class="lp-section-intro">
+          Med årene endres huden – det er helt naturlig.
+          Men du trenger ikke bare akseptere det.
+        </p>
+        <ul class="lp-problem__list">
+          <li class="lp-problem__item">
+            <span class="lp-problem__check">✓</span>
+            Huden ser mer sliten ut enn du føler deg
+          </li>
+          <li class="lp-problem__item">
+            <span class="lp-problem__check">✓</span>
+            Mindre naturlig glød og mer gusten hudtone
+          </li>
+          <li class="lp-problem__item">
+            <span class="lp-problem__check">✓</span>
+            Ujevn hudtone eller pigmentflekker
+          </li>
+          <li class="lp-problem__item">
+            <span class="lp-problem__check">✓</span>
+            Tørrhetslinjer og endret hudtekstur
+          </li>
+          <li class="lp-problem__item">
+            <span class="lp-problem__check">✓</span>
+            Du vil gjøre noe aktivt – uten å oppsøke klinikk
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    {%- comment -%} ========== 6. RESULTS ========== {%- endcomment -%}
+    <section class="lp-results">
+      <div class="lp-container">
+        <h2 class="lp-section-heading">Hva kan du forvente?</h2>
+        <p class="lp-section-intro">Realistiske resultater fra ekte brukere</p>
+        <div class="lp-results__grid">
+          <div class="lp-results__card">
+            <p class="lp-results__period">Etter 2–4 uker</p>
+            <p class="lp-results__text">Mer glød og jevnere uttrykk</p>
+          </div>
+          <div class="lp-results__card">
+            <p class="lp-results__period">Etter 6–8 uker</p>
+            <p class="lp-results__text">Mer stabil hudtone og forbedret tekstur</p>
+          </div>
+          <div class="lp-results__card">
+            <p class="lp-results__period">Over tid</p>
+            <p class="lp-results__text">Well-aging effekt og vedlikehold av hudens vitalitet</p>
+          </div>
+        </div>
+        <p class="lp-results__disclaimer">
+          Resultat varierer fra person til person.
+          Vi lover ikke mirakler – vi lover en plan.
+        </p>
+      </div>
+    </section>
+
+    {%- comment -%} ========== 7. HOW TO USE ========== {%- endcomment -%}
+    <section id="slik-bruker-du" class="lp-how-to-use">
+      <div class="lp-container">
+        <h2 class="lp-section-heading">Slik bruker du den</h2>
+        <p class="lp-section-intro">&nbsp;</p>
+        <div class="lp-steps">
+          <div class="lp-step">
+            <div class="lp-step__number">1</div>
+            <h3 class="lp-step__title">Rens huden</h3>
+            <p class="lp-step__text">Fjern sminke og smuss. Tørk forsiktig.</p>
+          </div>
+          <div class="lp-step">
+            <div class="lp-step__number">2</div>
+            <h3 class="lp-step__title">Bruk masken i 10 minutter</h3>
+            <p class="lp-step__text">Sett på, slå på. Slapp av mens lyset jobber.</p>
+          </div>
+          <div class="lp-step">
+            <div class="lp-step__number">3</div>
+            <h3 class="lp-step__title">Avslutt med fukt eller serum</h3>
+            <p class="lp-step__text">Lås inn effekten med din favoritt fuktighetskrem.</p>
+          </div>
+        </div>
+        <div class="lp-how-to-use__tips">
+          <span class="lp-how-to-use__tip">Fungerer morgen eller kveld</span>
+          <span class="lp-how-to-use__tip">Kan brukes foran TV eller i senga</span>
+          <span class="lp-how-to-use__tip">Anbefalt frekvens: 3–5 ganger i uken</span>
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} ========== 8. WHY RADIANCE ========== {%- endcomment -%}
+    <section class="lp-why-radiance">
+      <div class="lp-container">
+        <h2 class="lp-section-heading">Hvorfor Radiance er annerledes</h2>
+        <p class="lp-section-intro">&nbsp;</p>
+        <div class="lp-why-radiance__grid">
+          <div class="lp-why-radiance__card">
+            <div class="lp-why-radiance__icon">🔬</div>
+            <h3 class="lp-why-radiance__title">Klinisk dokumentert teknologi</h3>
+            <p class="lp-why-radiance__text">
+              LED-bølgelengder som stimulerer hudens naturlige
+              kollagen- og elastinproduksjon.
+            </p>
+          </div>
+          <div class="lp-why-radiance__card">
+            <div class="lp-why-radiance__icon">😌</div>
+            <h3 class="lp-why-radiance__title">Komfortabel passform</h3>
+            <p class="lp-why-radiance__text">
+              Utviklet for daglig hjemmebruk – myk, lett og enkel å ha på.
+            </p>
+          </div>
+          <div class="lp-why-radiance__card">
+            <div class="lp-why-radiance__icon">🎛️</div>
+            <h3 class="lp-why-radiance__title">Enkel å bruke</h3>
+            <p class="lp-why-radiance__text">
+              Få knapper, ingen komplisert rutine. På – og slapp av.
+            </p>
+          </div>
+          <div class="lp-why-radiance__card">
+            <div class="lp-why-radiance__icon">🛡️</div>
+            <h3 class="lp-why-radiance__title">Premium kvalitet og garanti</h3>
+            <p class="lp-why-radiance__text">
+              Norsk kundeservice og 60 dagers fornøydgaranti.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} ========== 9. REVIEWS ========== {%- endcomment -%}
+    <section class="lp-reviews">
+      <div class="lp-container">
+        <h2 class="lp-section-heading">Det norske kvinner sier</h2>
+        <p class="lp-reviews__score">{{ section.settings.reviews_score }}</p>
+        <div class="lp-reviews__grid">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'review' -%}
+              <div class="lp-review-card" {{ block.shopify_attributes }}>
+                <div class="lp-review-card__stars">★★★★★</div>
+                <p class="lp-review-card__text">{{ block.settings.review_text }}</p>
+                <p class="lp-review-card__author">{{ block.settings.review_author }}</p>
+                <p class="lp-review-card__verified">Verifisert kjøper ✓</p>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} ========== 10. TRUST FULL ========== {%- endcomment -%}
+    <section class="lp-trust-full">
+      <div class="lp-container">
+        <h2 class="lp-section-heading">Trygg handel – alltid</h2>
+        <p class="lp-section-intro">&nbsp;</p>
+        <div class="lp-trust-full__grid">
+          <div class="lp-trust-full__card">
+            <div class="lp-trust-full__icon">🔄</div>
+            <h3 class="lp-trust-full__title">60 dagers fornøydgaranti</h3>
+            <p class="lp-trust-full__text">
+              Ikke fornøyd? Du får pengene tilbake – ingen spørsmål.
+            </p>
+          </div>
+          <div class="lp-trust-full__card">
+            <div class="lp-trust-full__icon">📦</div>
+            <h3 class="lp-trust-full__title">Gratis frakt</h3>
+            <p class="lp-trust-full__text">
+              Sendes fra norsk lager. Levering 2–4 virkedager.
+            </p>
+          </div>
+          <div class="lp-trust-full__card">
+            <div class="lp-trust-full__icon">📞</div>
+            <h3 class="lp-trust-full__title">Norsk kundeservice</h3>
+            <p class="lp-trust-full__text">
+              Spørsmål? Vi er her. hello@skinora.no
+            </p>
+          </div>
+          <div class="lp-trust-full__card">
+            <div class="lp-trust-full__icon">💳</div>
+            <h3 class="lp-trust-full__title">Sikker betaling</h3>
+            <p class="lp-trust-full__text">
+              Vipps, Klarna, Visa og Mastercard.
+            </p>
+          </div>
+          <div class="lp-trust-full__card">
+            <div class="lp-trust-full__icon">🏆</div>
+            <h3 class="lp-trust-full__title">2 års reklamasjonsrett</h3>
+            <p class="lp-trust-full__text">
+              Full reklamasjonsrett i henhold til norsk lov.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} ========== 11. WHAT'S IN THE BOX ========== {%- endcomment -%}
+    <section class="lp-whats-in-box">
+      <div class="lp-container">
+        <div class="lp-whats-in-box__grid">
+          <div class="lp-whats-in-box__image-col">
+            {%- if section.settings.unboxing_image != blank -%}
+              <img
+                src="{{ section.settings.unboxing_image | image_url: width: 800 }}"
+                srcset="{{ section.settings.unboxing_image | image_url: width: 400 }} 400w, {{ section.settings.unboxing_image | image_url: width: 600 }} 600w, {{ section.settings.unboxing_image | image_url: width: 800 }} 800w"
+                sizes="(max-width: 991px) 100vw, 50vw"
+                alt="{{ section.settings.unboxing_image.alt | default: 'Hva du får i esken' }}"
+                width="{{ section.settings.unboxing_image.width }}"
+                height="{{ section.settings.unboxing_image.height }}"
+                loading="lazy"
+              >
+            {%- else -%}
+              <div class="lp-whats-in-box__image-placeholder">
+                [ Bilde: Unboxing / innhold i esken ]
+              </div>
+            {%- endif -%}
+          </div>
+          <div class="lp-whats-in-box__content">
+            <h2 class="lp-section-heading">Hva får du i esken?</h2>
+            <ul class="lp-whats-in-box__list">
+              <li class="lp-whats-in-box__item">
+                <span class="lp-whats-in-box__item-icon">💡</span>
+                Skinora® Radiance Face LED-maske
+              </li>
+              <li class="lp-whats-in-box__item">
+                <span class="lp-whats-in-box__item-icon">🔌</span>
+                USB-C ladekabel
+              </li>
+              <li class="lp-whats-in-box__item">
+                <span class="lp-whats-in-box__item-icon">🕶️</span>
+                Øyebeskyttelse
+              </li>
+              <li class="lp-whats-in-box__item">
+                <span class="lp-whats-in-box__item-icon">📖</span>
+                Bruksanvisning (norsk)
+              </li>
+              <li class="lp-whats-in-box__item">
+                <span class="lp-whats-in-box__item-icon">🎁</span>
+                Premium oppbevaringspose
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} ========== 12. FAQ ========== {%- endcomment -%}
+    <section class="lp-faq">
+      <div class="lp-container">
+        <h2 class="lp-section-heading">Ofte stilte spørsmål</h2>
+        <p class="lp-section-intro">&nbsp;</p>
+        <div class="lp-faq__list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'faq' -%}
+              <div class="lp-faq__item" {{ block.shopify_attributes }}>
+                <button class="lp-faq__question" type="button" aria-expanded="false">
+                  {{ block.settings.question }}
+                  <span class="lp-faq__icon">+</span>
+                </button>
+                <div class="lp-faq__answer">
+                  <div class="lp-faq__answer-inner">
+                    {{ block.settings.answer }}
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} ========== 13. CTA FINAL ========== {%- endcomment -%}
+    <section id="kjop" class="lp-cta-final">
+      <div class="lp-container--narrow" style="text-align:center;">
+        <h2 class="lp-cta-final__heading">{{ section.settings.cta_heading }}</h2>
+        <p class="lp-cta-final__text">{{ section.settings.cta_text }}</p>
+        <p class="lp-cta-final__price">{{ section.settings.price_text }}</p>
+        <a href="{{ section.settings.product_url }}" class="lp-btn">
+          {{ section.settings.cta_button_text }}
+        </a>
+        <div class="lp-cta-final__guarantees">
+          <span class="lp-cta-final__guarantee">🔄 60 dagers garanti</span>
+          <span class="lp-cta-final__guarantee">📦 Gratis frakt</span>
+          <span class="lp-cta-final__guarantee">🔒 Sikker betaling</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+{%- comment -%} FAQ accordion JS {%- endcomment -%}
+<script>
+  (function initLpFaqAccordion() {
+    var items = document.querySelectorAll('.sk-lp-radiance-face .lp-faq__item');
+    items.forEach(function (item) {
+      var btn = item.querySelector('.lp-faq__question');
+      btn.addEventListener('click', function () {
+        var isOpen = item.classList.contains('is-open');
+        items.forEach(function (i) {
+          i.classList.remove('is-open');
+          i.querySelector('.lp-faq__question').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "LP Radiance Face",
+  "tag": "section",
+  "class": "sk-lp-radiance-face-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Valgfritt. Hvis tomt brukes butikknavnet som tekst."
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement bar-tekst",
+      "default": "GRATIS FRAKT I NORGE  |  60 DAGERS FORNØYDGARANTI"
+    },
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero-bilde"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Eyebrow-tekst",
+      "default": "Skinora® Radiance Face"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_title",
+      "label": "Hero-tittel",
+      "default": "Profesjonell LED-terapi hjemme – utviklet for synlige hudforbedringer"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "Hero-brødtekst",
+      "default": "Skinora Radiance bruker klinisk dokumentert LED-teknologi. 10 minutter, 3–5 ganger i uken. Resultater du kan se."
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_text",
+      "label": "CTA-knapp hero",
+      "default": "Kjøp Radiance Face – 4 690 kr"
+    },
+    {
+      "type": "header",
+      "content": "Produkt & pris"
+    },
+    {
+      "type": "url",
+      "id": "product_url",
+      "label": "Produktlenke (CTA-knapper)"
+    },
+    {
+      "type": "text",
+      "id": "price_text",
+      "label": "Pris (visning)",
+      "default": "4 690 kr"
+    },
+    {
+      "type": "header",
+      "content": "Anmeldelser"
+    },
+    {
+      "type": "text",
+      "id": "reviews_score",
+      "label": "Anmeldelsesscore (tekst)",
+      "default": "4.8 av 5 – basert på 102 anmeldelser"
+    },
+    {
+      "type": "header",
+      "content": "Hva er i esken"
+    },
+    {
+      "type": "image_picker",
+      "id": "unboxing_image",
+      "label": "Unboxing-bilde"
+    },
+    {
+      "type": "header",
+      "content": "Siste CTA-seksjon"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "CTA-overskrift",
+      "default": "Klar for synlige resultater?"
+    },
+    {
+      "type": "textarea",
+      "id": "cta_text",
+      "label": "CTA-tekst",
+      "default": "Gi huden din den behandlingen den fortjener – hjemme, på dine premisser, med teknologi som faktisk virker."
+    },
+    {
+      "type": "text",
+      "id": "cta_button_text",
+      "label": "CTA-knapptekst",
+      "default": "Bestill Radiance Face nå"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Anmeldelse",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Anmeldelsestekst"
+        },
+        {
+          "type": "text",
+          "id": "review_author",
+          "label": "Forfatter",
+          "info": "F.eks. «Wenche S., 52, Oslo»"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ-spørsmål",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Spørsmål"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Svar"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Radiance Face",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "review_text": "Etter 6 uker merker jeg virkelig forskjell på hudtonen. Huden ser friskere ut og pigmentflekkene er blitt mindre synlige. Veldig fornøyd!",
+            "review_author": "Wenche S., 52, Oslo"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "review_text": "Bruker den foran TV hver kveld. Enkelt, behagelig og huden kjennes mykere. Gir ikke opp denne rutinen!",
+            "review_author": "Kari M., 47, Stavanger"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "review_text": "Var skeptisk, men etter 4 uker ser jeg tydelig mer glød. Huden føles tettere og fine linjene er blitt mindre synlige.",
+            "review_author": "Tone H., 61, Trondheim"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor ofte bør jeg bruke masken?",
+            "answer": "Vi anbefaler 3–5 økter i uken, à 10 minutter. Du kan bruke den morgen eller kveld – det som passer best for deg."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Når kan jeg forvente å se resultater?",
+            "answer": "De fleste merker forbedring i glød og hudtone etter 2–4 uker. For mer synlige resultater som jevnere tekstur og reduserte pigmentflekker, anbefaler vi minst 6–8 uker med jevnlig bruk."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Er LED-lys trygt for huden?",
+            "answer": "Ja. LED-terapi er en ikke-invasiv teknologi som er grundig testet og brukes av hudterapeuter verden over. Den inneholder ingen UV-stråler og er skånsom mot alle hudtyper."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Kan jeg bruke den sammen med hudpleieproduktene mine?",
+            "answer": "Absolutt. Bruk masken på ren hud, og påfør serum eller fuktighetskrem etterpå for å forsterke effekten. Unngå produkter med retinol rett før bruk."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Hva om jeg ikke er fornøyd?",
+            "answer": "Du har 60 dagers fornøydgaranti. Hvis du ikke er fornøyd, sender du den tilbake og får full refusjon – ingen spørsmål stilt. Kontakt oss på hello@skinora.no."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor lang er leveringstiden?",
+            "answer": "Vi sender fra norsk lager, og leveringstiden er normalt 2–4 virkedager. Frakt er alltid gratis."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
