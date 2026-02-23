@@ -402,7 +402,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 16px;
   margin-bottom: 32px;
 }
 
@@ -420,23 +420,31 @@
 .lp-results__step {
   position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
 }
 
-/* vertical line segment per step (except last) */
+/* vertical line segment per step */
 .lp-results__step::before {
   content: '';
   position: absolute;
   left: 17px; /* half of 36px badge minus half of 2px line */
-  top: 36px;
-  bottom: 0;
+  top: 0;
+  bottom: -16px; /* bridge the gap between steps */
   width: 2px;
   background: #d0cbd6;
 }
 
+/* first step: line starts at badge center */
+.lp-results__step:first-child::before {
+  top: 50%;
+}
+
+/* last step: line ends at badge center */
 .lp-results__step:last-child::before {
-  display: none;
+  bottom: auto;
+  height: 50%;
+  top: 0;
 }
 
 /* numbered badge */
@@ -456,7 +464,7 @@
   flex-shrink: 0;
   z-index: 1;
   margin: 0;
-  padding: 0;
+  padding: 2px 0 0;
   line-height: 1;
 }
 
@@ -467,7 +475,7 @@
   padding: 16px;
   text-align: left;
   flex: 1;
-  margin-bottom: 16px;
+  margin-bottom: 0;
 }
 
 .lp-results__period {
