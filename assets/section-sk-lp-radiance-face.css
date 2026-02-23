@@ -832,16 +832,23 @@
   border-radius: 8px;
   padding: 20px 16px;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 14px;
 }
 
 .lp-why-radiance__icon {
-  width: 28px;
-  height: 28px;
+  width: 56px;
+  height: 56px;
   color: #487ab7;
-  margin-bottom: 2px;
   flex-shrink: 0;
+}
+
+.lp-why-radiance__card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
 }
 
 .lp-why-radiance__icon img,
@@ -938,6 +945,8 @@
   }
 
   .lp-why-radiance__card {
+    flex-direction: column;
+    gap: 6px;
     padding: 24px 20px;
   }
 
