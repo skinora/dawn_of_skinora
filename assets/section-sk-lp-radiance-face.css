@@ -388,7 +388,12 @@
 /* ---------- 6. RESULTS (timeline) ---------- */
 .lp-results {
   background: #f8f8f8;
-  padding: 48px 20px;
+  padding: 48px 20px 48px 20px;
+  text-align: center;
+}
+
+.lp-results .lp-section-heading,
+.lp-results .lp-section-intro {
   text-align: center;
 }
 
@@ -399,18 +404,11 @@
   flex-direction: column;
   gap: 0;
   margin-bottom: 32px;
-  padding-left: 48px;
 }
 
-/* vertical connecting line */
+/* no global ::before line — each step draws its own segment */
 .lp-results__timeline::before {
-  content: '';
-  position: absolute;
-  left: 15px;
-  top: 16px;
-  bottom: 16px;
-  width: 2px;
-  background: #d0cbd6;
+  display: none;
 }
 
 /* hide desktop arrows on mobile */
@@ -418,32 +416,46 @@
   display: none;
 }
 
-/* step wrapper */
+/* step wrapper — flex row: badge | card */
 .lp-results__step {
   position: relative;
   display: flex;
   align-items: flex-start;
-  gap: 0;
+  gap: 16px;
+}
+
+/* vertical line segment per step (except last) */
+.lp-results__step::before {
+  content: '';
+  position: absolute;
+  left: 17px; /* half of 36px badge minus half of 2px line */
+  top: 36px;
+  bottom: 0;
+  width: 2px;
+  background: #d0cbd6;
+}
+
+.lp-results__step:last-child::before {
+  display: none;
 }
 
 /* numbered badge */
 .lp-results__badge {
-  position: absolute;
-  left: -48px;
-  top: 16px;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
   border-radius: 50%;
   background: #30273e;
   color: #fff;
   font-family: 'sofia-pro', 'Assistant', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   z-index: 1;
+  margin-top: 0;
 }
 
 .lp-results__card {
@@ -452,7 +464,7 @@
   border-radius: 8px;
   padding: 16px;
   text-align: left;
-  width: 100%;
+  flex: 1;
   margin-bottom: 16px;
 }
 
@@ -494,12 +506,11 @@
     flex-direction: row;
     align-items: stretch;
     gap: 0;
-    padding-left: 0;
     justify-content: center;
   }
 
-  /* hide mobile vertical line */
-  .lp-results__timeline::before {
+  /* hide mobile vertical line segments */
+  .lp-results__step::before {
     display: none;
   }
 
@@ -524,14 +535,11 @@
     align-items: center;
     flex: 1;
     max-width: 280px;
+    gap: 0;
   }
 
   .lp-results__badge {
-    position: static;
     margin-bottom: 12px;
-    width: 36px;
-    height: 36px;
-    font-size: 15px;
   }
 
   .lp-results__card {
