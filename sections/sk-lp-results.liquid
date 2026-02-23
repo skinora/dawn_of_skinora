@@ -14,12 +14,22 @@
       {%- endif -%}
 
       {%- if section.blocks.size > 0 -%}
-        <div class="lp-results__grid">
+        <div class="lp-results__timeline">
           {%- for block in section.blocks -%}
-            <div class="lp-results__card" {{ block.shopify_attributes }}>
-              <p class="lp-results__period">{{ block.settings.period }}</p>
-              <p class="lp-results__text">{{ block.settings.text }}</p>
+            <div class="lp-results__step" {{ block.shopify_attributes }}>
+              <span class="lp-results__badge">{{ forloop.index }}</span>
+              <div class="lp-results__card">
+                <p class="lp-results__period">{{ block.settings.period }}</p>
+                <p class="lp-results__text">{{ block.settings.text }}</p>
+              </div>
             </div>
+            {%- unless forloop.last -%}
+              <div class="lp-results__arrow" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke="#30273e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            {%- endunless -%}
           {%- endfor -%}
         </div>
       {%- endif -%}
