@@ -586,9 +586,62 @@
   margin-bottom: 40px;
 }
 
-/* no global line — each step draws its own segment */
+/* continuous dashed line (background track) */
 .lp-steps::before {
-  display: none;
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 18px;
+  bottom: 18px;
+  width: 0;
+  border-left: 2px dashed #d8d3de;
+  z-index: 0;
+}
+
+/* animated solid draw line */
+.lp-steps::after {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 18px;
+  bottom: 18px;
+  width: 2px;
+  background: #30273e;
+  z-index: 0;
+  animation: sk-draw-line 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes sk-draw-line {
+  0% {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0.8;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  65% {
+    clip-path: inset(0 0 0 0);
+    opacity: 0;
+  }
+  66% {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
+  100% {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-steps::after {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 .lp-step {
@@ -597,30 +650,6 @@
   align-items: center;
   gap: 16px;
   text-align: left;
-}
-
-/* vertical dashed line segment per step */
-.lp-step::after {
-  content: '';
-  position: absolute;
-  left: 17px;
-  top: 0;
-  bottom: -16px;
-  width: 0;
-  border-left: 2px dashed #c5c0cc;
-  z-index: 0;
-}
-
-/* first step: line starts at badge center */
-.lp-step:first-child::after {
-  top: 50%;
-}
-
-/* last step: line ends at badge center */
-.lp-step:last-child::after {
-  bottom: auto;
-  height: 50%;
-  top: 0;
 }
 
 .lp-step__number {
@@ -704,21 +733,18 @@
 
   /* horizontal dashed line connecting badges */
   .lp-steps::before {
-    display: block;
-    content: '';
     top: 18px;
     bottom: auto;
     height: 0;
     width: auto;
     border-left: none;
-    border-top: 2px dashed #c5c0cc;
-    position: absolute;
+    border-top: 2px dashed #d8d3de;
     left: calc(100% / 6);
     right: calc(100% / 6);
   }
 
-  /* hide mobile vertical lines */
-  .lp-step::after {
+  /* hide mobile animated line */
+  .lp-steps::after {
     display: none;
   }
 
