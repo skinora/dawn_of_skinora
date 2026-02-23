@@ -14,24 +14,37 @@
       {%- assign tips = section.blocks | where: 'type', 'tip' -%}
 
       {%- if steps.size > 0 -%}
-        <p class="lp-section-intro">&nbsp;</p>
         <div class="lp-steps">
           {%- for block in steps -%}
             <div class="lp-step" {{ block.shopify_attributes }}>
-              <div class="lp-step__number">{{ forloop.index }}</div>
-              <h3 class="lp-step__title">{{ block.settings.title }}</h3>
-              <p class="lp-step__text">{{ block.settings.text }}</p>
+              <span class="lp-step__number">{{ forloop.index }}</span>
+              <div class="lp-step__body">
+                <h3 class="lp-step__title">{{ block.settings.title }}</h3>
+                <p class="lp-step__text">{{ block.settings.text }}</p>
+              </div>
             </div>
           {%- endfor -%}
         </div>
       {%- endif -%}
 
       {%- if tips.size > 0 -%}
-        <div class="lp-how-to-use__tips">
+        <ul class="lp-how-to-use__tips">
           {%- for block in tips -%}
-            <span class="lp-how-to-use__tip" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+            <li class="lp-how-to-use__tip" {{ block.shopify_attributes }}>
+              <svg
+                class="lp-how-to-use__tip-icon"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path d="M3 8.5l3.5 3.5L13 5" stroke="#30273e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>{{ block.settings.text }}</span>
+            </li>
           {%- endfor -%}
-        </div>
+        </ul>
       {%- endif -%}
     </div>
   </section>

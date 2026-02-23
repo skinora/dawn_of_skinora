@@ -554,78 +554,182 @@
 
 /* ---------- 7. HOW TO USE ---------- */
 .lp-how-to-use {
-  background: #ffffff;
-  padding: 100px 0;
+  background: #f4f4f8;
+  padding: 48px 20px;
   text-align: center;
 }
 
+/* ---- Mobile: vertical timeline ---- */
 .lp-steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 48px;
-  margin-bottom: 48px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-left: 48px;
+  margin-bottom: 40px;
+}
+
+/* vertical dashed line connecting badges */
+.lp-steps::before {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 18px;
+  bottom: 18px;
+  width: 2px;
+  border-left: 2px dashed #c5c0cc;
 }
 
 .lp-step {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  gap: 0;
+  text-align: left;
+  padding-bottom: 16px;
+}
+
+.lp-step:last-child {
+  padding-bottom: 0;
 }
 
 .lp-step__number {
-  width: 40px;
-  height: 40px;
+  position: absolute;
+  left: -48px;
+  top: 0;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: #30273e;
-  color: #ffffff;
-  font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
-  font-size: 18px;
+  color: #fff;
+  font-family: 'sofia-pro', 'Assistant', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
   flex-shrink: 0;
+  z-index: 1;
+}
+
+.lp-step__body {
+  padding-top: 4px;
 }
 
 .lp-step__title {
   font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
-  color: #3a3448;
-  margin-bottom: 10px;
+  color: #30273e;
+  margin-bottom: 4px;
 }
 
 .lp-step__text {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 300;
-  color: #333333;
-  line-height: 1.65;
+  color: #555;
+  line-height: 1.55;
 }
 
+/* tips / bullet list – mobile: vertical, left-aligned */
 .lp-how-to-use__tips {
-  text-align: left;
-  max-width: 480px;
+  list-style: none;
+  padding: 0;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  max-width: 400px;
+  text-align: left;
 }
 
 .lp-how-to-use__tip {
-  font-size: 16px;
-  font-weight: 300;
-  color: #333333;
   display: flex;
   align-items: flex-start;
   gap: 10px;
+  font-size: 15px;
+  font-weight: 300;
+  color: #333;
+  line-height: 1.5;
 }
 
-.lp-how-to-use__tip::before {
-  content: '\2022';
-  color: #30273e;
-  font-weight: 700;
+.lp-how-to-use__tip-icon {
   flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* ---- Desktop ---- */
+@media (min-width: 768px) {
+  .lp-how-to-use {
+    padding: 100px 0;
+  }
+
+  .lp-steps {
+    flex-direction: row;
+    padding-left: 0;
+    gap: 0;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  /* horizontal dashed line connecting badges */
+  .lp-steps::before {
+    left: auto;
+    top: 18px;
+    bottom: auto;
+    width: auto;
+    height: 0;
+    border-left: none;
+    border-top: 2px dashed #c5c0cc;
+    /* span between first and last badge center */
+    position: absolute;
+    left: calc(100% / 6);
+    right: calc(100% / 6);
+  }
+
+  .lp-step {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    max-width: 300px;
+    padding: 0 16px;
+    padding-bottom: 0;
+  }
+
+  .lp-step__number {
+    position: static;
+    margin-bottom: 16px;
+  }
+
+  .lp-step__body {
+    padding-top: 0;
+  }
+
+  .lp-step__title {
+    font-size: 17px;
+    margin-bottom: 8px;
+  }
+
+  .lp-step__text {
+    font-size: 15px;
+    color: #666;
+  }
+
+  /* tips row on desktop */
+  .lp-how-to-use__tips {
+    flex-direction: row;
+    justify-content: center;
+    gap: 32px;
+    max-width: none;
+    text-align: center;
+  }
+
+  .lp-how-to-use__tip {
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+  }
 }
 
 /* ---------- 8. WHY RADIANCE ---------- */
