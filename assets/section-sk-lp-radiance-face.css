@@ -794,7 +794,7 @@
 
 /* ---------- 8. WHY RADIANCE ---------- */
 .lp-why-radiance {
-  background: #f2f2f2;
+  background: #fff;
   padding: 48px 20px;
 }
 
@@ -828,7 +828,7 @@
 }
 
 .lp-why-radiance__card {
-  background: #fff;
+  background: #f4f4f8;
   border-radius: 8px;
   padding: 20px 16px;
   display: flex;
@@ -1314,7 +1314,6 @@
   .lp-reviews__grid {
     grid-template-columns: 1fr;
   }
-
 
   .lp-trust-full__grid {
     grid-template-columns: 1fr;
