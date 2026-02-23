@@ -14,14 +14,16 @@
       {%- endif -%}
 
       {%- if section.blocks.size > 0 -%}
-        <ul class="lp-problem__list">
-          {%- for block in section.blocks -%}
-            <li class="lp-problem__item" {{ block.shopify_attributes }}>
-              <span class="lp-problem__check">✓</span>
-              {{ block.settings.text }}
-            </li>
-          {%- endfor -%}
-        </ul>
+        <div class="lp-problem__list-wrap">
+          <ul class="lp-problem__list">
+            {%- for block in section.blocks -%}
+              <li class="lp-problem__item" {{ block.shopify_attributes }}>
+                <span class="lp-problem__check">✓</span>
+                {{ block.settings.text }}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
       {%- endif -%}
     </div>
   </section>
