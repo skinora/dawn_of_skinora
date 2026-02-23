@@ -835,7 +835,7 @@
   padding: 16px 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0;
   box-shadow: 0 1px 3px rgba(48, 39, 62, 0.04);
   transition:
     box-shadow 0.2s ease,
@@ -849,29 +849,34 @@
   }
 }
 
+.lp-why-radiance__card-head {
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(48, 39, 62, 0.08);
+}
+
 .lp-why-radiance__card-row {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 12px;
+  display: grid !important;
+  grid-template-columns: 40px 1fr !important;
+  column-gap: 12px;
+  align-items: start !important;
 }
 
 .lp-why-radiance__icon {
-  width: 114px;
-  height: 114px;
-  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(48, 39, 62, 0.06);
-  border-radius: 50%;
   color: #487ab7;
+  flex: 0 0 auto;
 }
 
 .lp-why-radiance__icon img,
 .lp-why-radiance__icon svg {
-  width: 60px;
-  height: 60px;
+  display: block;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
 }
 
@@ -879,7 +884,7 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
-  flex: 1;
+  min-width: 0;
 }
 
 .lp-why-radiance__title {
@@ -987,15 +992,10 @@
     padding: 18px 16px;
   }
 
-  .lp-why-radiance__icon {
-    width: 102px;
-    height: 102px;
-  }
-
   .lp-why-radiance__icon img,
   .lp-why-radiance__icon svg {
-    width: 54px;
-    height: 54px;
+    width: 18px;
+    height: 18px;
   }
 
   .lp-why-radiance__cta-row {

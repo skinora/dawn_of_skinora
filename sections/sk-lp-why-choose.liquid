@@ -21,7 +21,9 @@
             <div class="lp-why-radiance__grid">
               {%- for block in section.blocks -%}
                 <div class="lp-why-radiance__card" {{ block.shopify_attributes }}>
-                  <h3 class="lp-why-radiance__title">{{ block.settings.title }}</h3>
+                  <div class="lp-why-radiance__card-head">
+                    <h3 class="lp-why-radiance__title">{{ block.settings.title }}</h3>
+                  </div>
                   <div class="lp-why-radiance__card-row">
                     {%- if block.settings.icon != blank -%}
                       <div class="lp-why-radiance__icon">
