@@ -21,6 +21,7 @@
     },
     "header": {
       "type": "header",
+      "disabled": true,
       "settings": {
         "menu": "main-menu-1",
         "padding_top": 20,
