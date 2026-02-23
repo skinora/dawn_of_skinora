@@ -1,0 +1,105 @@
+{%- comment -%}
+  sk-lp-cta.liquid
+  Final CTA section with heading, text, price, button and guarantee badges.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp">
+  <section id="{{ section.settings.anchor_id | default: 'kjop' }}" class="lp-cta-final">
+    <div class="lp-container--narrow" style="text-align:center;">
+      <h2 class="lp-cta-final__heading">{{ section.settings.heading }}</h2>
+      <p class="lp-cta-final__text">{{ section.settings.text }}</p>
+      <p class="lp-cta-final__price">{{ section.settings.price_text }}</p>
+      <a href="{{ section.settings.product_url }}" class="lp-btn">
+        {{ section.settings.button_text }}
+      </a>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="lp-cta-final__guarantees">
+          {%- for block in section.blocks -%}
+            <span class="lp-cta-final__guarantee" {{ block.shopify_attributes }}>
+              {{ block.settings.icon }}
+              {{ block.settings.text }}
+            </span>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LP CTA",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Klar for synlige resultater?"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Brødtekst",
+      "default": "Gi huden din den behandlingen den fortjener – hjemme, på dine premisser, med teknologi som faktisk virker."
+    },
+    {
+      "type": "text",
+      "id": "price_text",
+      "label": "Pris (visning)",
+      "default": "4 690 kr"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Knapptekst",
+      "default": "Bestill nå"
+    },
+    {
+      "type": "url",
+      "id": "product_url",
+      "label": "Produktlenke"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anker-ID",
+      "default": "kjop"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Garanti-badge",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Ikon (emoji)",
+          "default": "🔄"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Tekst",
+          "default": "60 dagers garanti"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP CTA",
+      "blocks": [
+        { "type": "badge", "settings": { "icon": "🔄", "text": "60 dagers garanti" } },
+        { "type": "badge", "settings": { "icon": "📦", "text": "Gratis frakt" } },
+        { "type": "badge", "settings": { "icon": "🔒", "text": "Sikker betaling" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

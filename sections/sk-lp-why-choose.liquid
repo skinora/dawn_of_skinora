@@ -1,0 +1,108 @@
+{%- comment -%}
+  sk-lp-why-choose.liquid
+  "Why choose us" feature cards for landing pages.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp">
+  <section class="lp-why-radiance">
+    <div class="lp-container">
+      <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
+      <p class="lp-section-intro">&nbsp;</p>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="lp-why-radiance__grid">
+          {%- for block in section.blocks -%}
+            <div class="lp-why-radiance__card" {{ block.shopify_attributes }}>
+              <div class="lp-why-radiance__icon">{{ block.settings.icon }}</div>
+              <h3 class="lp-why-radiance__title">{{ block.settings.title }}</h3>
+              <p class="lp-why-radiance__text">{{ block.settings.text }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LP Why Choose",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Hvorfor Radiance er annerledes"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Kort",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Ikon (emoji)",
+          "default": "🔬"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tittel",
+          "default": "Klinisk dokumentert teknologi"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Tekst",
+          "default": "LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Why Choose",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "icon": "🔬",
+            "title": "Klinisk dokumentert teknologi",
+            "text": "LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "😌",
+            "title": "Komfortabel passform",
+            "text": "Utviklet for daglig hjemmebruk – myk, lett og enkel å ha på."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "🎛️",
+            "title": "Enkel å bruke",
+            "text": "Få knapper, ingen komplisert rutine. På – og slapp av."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "🛡️",
+            "title": "Premium kvalitet og garanti",
+            "text": "Norsk kundeservice og 60 dagers fornøydgaranti."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

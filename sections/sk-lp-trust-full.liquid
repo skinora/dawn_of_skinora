@@ -1,0 +1,108 @@
+{%- comment -%}
+  sk-lp-trust-full.liquid
+  Full trust / guarantee cards section for landing pages.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp">
+  <section class="lp-trust-full">
+    <div class="lp-container">
+      <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
+      <p class="lp-section-intro">&nbsp;</p>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="lp-trust-full__grid">
+          {%- for block in section.blocks -%}
+            <div class="lp-trust-full__card" {{ block.shopify_attributes }}>
+              <div class="lp-trust-full__icon">{{ block.settings.icon }}</div>
+              <h3 class="lp-trust-full__title">{{ block.settings.title }}</h3>
+              <p class="lp-trust-full__text">{{ block.settings.text }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LP Trust Full",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Trygg handel – alltid"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Garantikort",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Ikon (emoji)",
+          "default": "🔄"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tittel",
+          "default": "60 dagers fornøydgaranti"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Tekst",
+          "default": "Ikke fornøyd? Du får pengene tilbake – ingen spørsmål."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Trust Full",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "icon": "🔄",
+            "title": "60 dagers fornøydgaranti",
+            "text": "Ikke fornøyd? Du får pengene tilbake – ingen spørsmål."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "📦",
+            "title": "Gratis frakt",
+            "text": "Sendes fra norsk lager. Levering 2–4 virkedager."
+          }
+        },
+        {
+          "type": "card",
+          "settings": { "icon": "📞", "title": "Norsk kundeservice", "text": "Spørsmål? Vi er her. hello@skinora.no" }
+        },
+        {
+          "type": "card",
+          "settings": { "icon": "💳", "title": "Sikker betaling", "text": "Vipps, Klarna, Visa og Mastercard." }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "🏆",
+            "title": "2 års reklamasjonsrett",
+            "text": "Full reklamasjonsrett i henhold til norsk lov."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

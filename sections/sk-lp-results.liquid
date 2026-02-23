@@ -1,0 +1,96 @@
+{%- comment -%}
+  sk-lp-results.liquid
+  Expected results timeline with dynamic cards.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp">
+  <section class="lp-results">
+    <div class="lp-container">
+      <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.intro != blank -%}
+        <p class="lp-section-intro">{{ section.settings.intro }}</p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="lp-results__grid">
+          {%- for block in section.blocks -%}
+            <div class="lp-results__card" {{ block.shopify_attributes }}>
+              <p class="lp-results__period">{{ block.settings.period }}</p>
+              <p class="lp-results__text">{{ block.settings.text }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.disclaimer != blank -%}
+        <p class="lp-results__disclaimer">{{ section.settings.disclaimer }}</p>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LP Results",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Hva kan du forvente?"
+    },
+    {
+      "type": "text",
+      "id": "intro",
+      "label": "Intro-tekst",
+      "default": "Realistiske resultater fra ekte brukere"
+    },
+    {
+      "type": "textarea",
+      "id": "disclaimer",
+      "label": "Disclaimer-tekst",
+      "default": "Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Resultatkort",
+      "settings": [
+        {
+          "type": "text",
+          "id": "period",
+          "label": "Tidsperiode",
+          "default": "Etter 2–4 uker"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Beskrivelse",
+          "default": "Mer glød og jevnere uttrykk"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Results",
+      "blocks": [
+        { "type": "card", "settings": { "period": "Etter 2–4 uker", "text": "Mer glød og jevnere uttrykk" } },
+        {
+          "type": "card",
+          "settings": { "period": "Etter 6–8 uker", "text": "Mer stabil hudtone og forbedret tekstur" }
+        },
+        {
+          "type": "card",
+          "settings": { "period": "Over tid", "text": "Well-aging effekt og vedlikehold av hudens vitalitet" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

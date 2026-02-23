@@ -1,0 +1,115 @@
+{%- comment -%}
+  sk-lp-how-to-use.liquid
+  Step-by-step usage guide with dynamic steps and tips.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp">
+  <section id="{{ section.settings.anchor_id | default: 'slik-bruker-du' }}" class="lp-how-to-use">
+    <div class="lp-container">
+      <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
+
+      {%- assign steps = section.blocks | where: 'type', 'step' -%}
+      {%- assign tips = section.blocks | where: 'type', 'tip' -%}
+
+      {%- if steps.size > 0 -%}
+        <p class="lp-section-intro">&nbsp;</p>
+        <div class="lp-steps">
+          {%- for block in steps -%}
+            <div class="lp-step" {{ block.shopify_attributes }}>
+              <div class="lp-step__number">{{ forloop.index }}</div>
+              <h3 class="lp-step__title">{{ block.settings.title }}</h3>
+              <p class="lp-step__text">{{ block.settings.text }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if tips.size > 0 -%}
+        <div class="lp-how-to-use__tips">
+          {%- for block in tips -%}
+            <span class="lp-how-to-use__tip" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LP How To Use",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Slik bruker du den"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anker-ID (for hash-lenker)",
+      "default": "slik-bruker-du",
+      "info": "Brukes som id=\"...\" på seksjonen for scroll-navigasjon."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Steg",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Steg-tittel",
+          "default": "Rens huden"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Steg-beskrivelse",
+          "default": "Fjern sminke og smuss. Tørk forsiktig."
+        }
+      ]
+    },
+    {
+      "type": "tip",
+      "name": "Tips",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Tips-tekst",
+          "default": "Fungerer morgen eller kveld"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP How To Use",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Rens huden", "text": "Fjern sminke og smuss. Tørk forsiktig." } },
+        {
+          "type": "step",
+          "settings": { "title": "Bruk masken i 10 minutter", "text": "Sett på, slå på. Slapp av mens lyset jobber." }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Avslutt med fukt eller serum",
+            "text": "Lås inn effekten med din favoritt fuktighetskrem."
+          }
+        },
+        { "type": "tip", "settings": { "text": "Fungerer morgen eller kveld" } },
+        { "type": "tip", "settings": { "text": "Kan brukes foran TV eller i senga" } },
+        { "type": "tip", "settings": { "text": "Anbefalt frekvens: 3–5 ganger i uken" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

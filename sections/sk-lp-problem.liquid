@@ -1,0 +1,76 @@
+{%- comment -%}
+  sk-lp-problem.liquid
+  "Pain-point" section with heading, intro and a dynamic checklist.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp">
+  <section class="lp-problem">
+    <div class="lp-container--narrow">
+      <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.intro != blank -%}
+        <p class="lp-section-intro">{{ section.settings.intro }}</p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="lp-problem__list">
+          {%- for block in section.blocks -%}
+            <li class="lp-problem__item" {{ block.shopify_attributes }}>
+              <span class="lp-problem__check">✓</span>
+              {{ block.settings.text }}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LP Problem",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Kjenner du igjen dette?"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro-tekst",
+      "default": "Med årene endres huden – det er helt naturlig. Men du trenger ikke bare akseptere det."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Problem-punkt",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Tekst",
+          "default": "Huden ser mer sliten ut enn du føler deg"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Problem",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Huden ser mer sliten ut enn du føler deg" } },
+        { "type": "item", "settings": { "text": "Mindre naturlig glød og mer gusten hudtone" } },
+        { "type": "item", "settings": { "text": "Ujevn hudtone eller pigmentflekker" } },
+        { "type": "item", "settings": { "text": "Tørrhetslinjer og endret hudtekstur" } },
+        { "type": "item", "settings": { "text": "Du vil gjøre noe aktivt – uten å oppsøke klinikk" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,61 @@
+{%- comment -%}
+  sk-lp-trustbar.liquid
+  Horizontal trust / USP bar for landing pages. Each item is a dynamic block.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp">
+  <section class="lp-trustbar">
+    <div class="lp-container">
+      <div class="lp-trustbar__grid">
+        {%- for block in section.blocks -%}
+          <div class="lp-trustbar__item" {{ block.shopify_attributes }}>
+            <span class="lp-trustbar__icon">{{ block.settings.icon }}</span>
+            <span class="lp-trustbar__text">{{ block.settings.text }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LP Trust Bar",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust-element",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Ikon (emoji)",
+          "default": "✓"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Tekst",
+          "default": "Gratis frakt"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Trust Bar",
+      "blocks": [
+        { "type": "item", "settings": { "icon": "🇳🇴", "text": "Norskutviklet" } },
+        { "type": "item", "settings": { "icon": "📦", "text": "Sendes fra norsk lager" } },
+        { "type": "item", "settings": { "icon": "🔄", "text": "60 dagers garanti" } },
+        { "type": "item", "settings": { "icon": "🔒", "text": "Vipps & Klarna" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

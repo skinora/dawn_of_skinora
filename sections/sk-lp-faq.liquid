@@ -1,0 +1,118 @@
+{%- comment -%}
+  sk-lp-faq.liquid
+  FAQ accordion for landing pages. Each Q&A pair is a block.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp">
+  <section class="lp-faq">
+    <div class="lp-container">
+      <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
+      <p class="lp-section-intro">&nbsp;</p>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="lp-faq__list" data-lp-faq>
+          {%- for block in section.blocks -%}
+            <div class="lp-faq__item" {{ block.shopify_attributes }}>
+              <button class="lp-faq__question" type="button" aria-expanded="false">
+                {{ block.settings.question }}
+                <span class="lp-faq__icon">+</span>
+              </button>
+              <div class="lp-faq__answer">
+                <div class="lp-faq__answer-inner">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+<script>
+  (function initLpFaqAccordion() {
+    var lists = document.querySelectorAll('[data-lp-faq]');
+    lists.forEach(function (list) {
+      var items = list.querySelectorAll('.lp-faq__item');
+      items.forEach(function (item) {
+        var btn = item.querySelector('.lp-faq__question');
+        btn.addEventListener('click', function () {
+          var isOpen = item.classList.contains('is-open');
+          items.forEach(function (i) {
+            i.classList.remove('is-open');
+            i.querySelector('.lp-faq__question').setAttribute('aria-expanded', 'false');
+          });
+          if (!isOpen) {
+            item.classList.add('is-open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "LP FAQ",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Ofte stilte spørsmål"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ-spørsmål",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Spørsmål"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Svar"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP FAQ",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor ofte bør jeg bruke masken?",
+            "answer": "Vi anbefaler 3–5 økter i uken, à 10 minutter. Du kan bruke den morgen eller kveld – det som passer best for deg."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Når kan jeg forvente å se resultater?",
+            "answer": "De fleste merker forbedring i glød og hudtone etter 2–4 uker. For mer synlige resultater som jevnere tekstur og reduserte pigmentflekker, anbefaler vi minst 6–8 uker med jevnlig bruk."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Er LED-lys trygt for huden?",
+            "answer": "Ja. LED-terapi er en ikke-invasiv teknologi som er grundig testet og brukes av hudterapeuter verden over. Den inneholder ingen UV-stråler og er skånsom mot alle hudtyper."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,44 @@
+{%- comment -%}
+  sk-lp-header.liquid
+  Simple centered logo header for landing pages.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp">
+  <header class="lp-header">
+    {%- if section.settings.logo != blank -%}
+      <img
+        class="lp-header__logo"
+        src="{{ section.settings.logo | image_url: height: 64 }}"
+        alt="{{ shop.name }}"
+        width="auto"
+        height="32"
+        loading="eager"
+      >
+    {%- else -%}
+      <span class="lp-header__logo-text">{{ shop.name }}</span>
+    {%- endif -%}
+  </header>
+</div>
+
+{% schema %}
+{
+  "name": "LP Header",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Valgfritt. Hvis tomt brukes butikknavnet som tekst."
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Header"
+    }
+  ]
+}
+{% endschema %}

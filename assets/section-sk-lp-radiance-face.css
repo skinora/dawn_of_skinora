@@ -4,7 +4,7 @@
    ============================================================ */
 
 /* ---------- SCOPED BASE ---------- */
-.sk-lp-radiance-face {
+.sk-lp {
   font-family: 'sofia-pro', 'Assistant', sans-serif;
   font-weight: 300;
   font-size: 16px;
@@ -15,43 +15,43 @@
   text-rendering: optimizeLegibility;
 }
 
-.sk-lp-radiance-face *,
-.sk-lp-radiance-face *::before,
-.sk-lp-radiance-face *::after {
+.sk-lp *,
+.sk-lp *::before,
+.sk-lp *::after {
   box-sizing: border-box;
 }
 
-.sk-lp-radiance-face img {
+.sk-lp img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-.sk-lp-radiance-face a {
+.sk-lp a {
   color: inherit;
   text-decoration: none;
 }
 
-.sk-lp-radiance-face ul,
-.sk-lp-radiance-face ol {
+.sk-lp ul,
+.sk-lp ol {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.sk-lp-radiance-face h1,
-.sk-lp-radiance-face h2,
-.sk-lp-radiance-face h3,
-.sk-lp-radiance-face h4,
-.sk-lp-radiance-face h5,
-.sk-lp-radiance-face h6 {
+.sk-lp h1,
+.sk-lp h2,
+.sk-lp h3,
+.sk-lp h4,
+.sk-lp h5,
+.sk-lp h6 {
   font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
   color: #3a3448;
   font-weight: 400;
   margin: 0;
 }
 
-.sk-lp-radiance-face p {
+.sk-lp p {
   margin: 0;
 }
 

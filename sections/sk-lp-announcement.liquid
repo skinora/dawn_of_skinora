@@ -1,0 +1,33 @@
+{%- comment -%}
+  sk-lp-announcement.liquid
+  Reusable announcement bar for landing pages.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp">
+  <div class="lp-announcement-bar">
+    {{ section.settings.text }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "LP Announcement Bar",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement-tekst",
+      "default": "GRATIS FRAKT I NORGE  |  60 DAGERS FORNØYDGARANTI"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Announcement Bar"
+    }
+  ]
+}
+{% endschema %}

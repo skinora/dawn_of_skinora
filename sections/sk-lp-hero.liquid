@@ -1,0 +1,137 @@
+{%- comment -%}
+  sk-lp-hero.liquid
+  Hero section with image, title, copy, pills and CTA for landing pages.
+  Pills are dynamic blocks so each LP can customise them.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp">
+  <section class="lp-hero">
+    <div class="lp-hero__grid">
+      <div class="lp-hero__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="lp-eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+
+        <h2 class="lp-hero__title">{{ section.settings.title }}</h2>
+        <p class="lp-hero__text">{{ section.settings.text }}</p>
+
+        {%- assign pills = section.blocks | where: 'type', 'pill' -%}
+        {%- if pills.size > 0 -%}
+          <div class="lp-hero__pills">
+            {%- for block in pills -%}
+              <span class="lp-hero__pill" {{ block.shopify_attributes }}>
+                <span class="lp-hero__pill-check">✓</span> {{ block.settings.text }}
+              </span>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <div class="lp-hero__actions">
+          <a href="{{ section.settings.cta_url }}" class="lp-btn">{{ section.settings.cta_text }}</a>
+          {%- if section.settings.link_text != blank -%}
+            <a href="{{ section.settings.link_url | default: '#' }}" class="lp-hero__link">
+              {{- section.settings.link_text -}}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="lp-hero__image">
+        {%- if section.settings.image != blank -%}
+          <img
+            src="{{ section.settings.image | image_url: width: 1200 }}"
+            srcset="{{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 900 }} 900w, {{ section.settings.image | image_url: width: 1200 }} 1200w"
+            sizes="(max-width: 991px) 100vw, 50vw"
+            alt="{{ section.settings.image.alt | default: section.settings.eyebrow }}"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+            loading="eager"
+          >
+        {%- else -%}
+          <div class="lp-hero__image-placeholder">[ Produktbilde ]</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LP Hero",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero-bilde"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow-tekst",
+      "default": "Skinora® Radiance Face"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Tittel",
+      "default": "Profesjonell LED-terapi hjemme – utviklet for synlige hudforbedringer"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Brødtekst",
+      "default": "Skinora Radiance bruker klinisk dokumentert LED-teknologi. 10 minutter, 3–5 ganger i uken. Resultater du kan se."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA-knapptekst",
+      "default": "Kjøp nå"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA-lenke"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Sekundærlenke tekst",
+      "default": "Se hvordan den brukes (60 sek) ↓"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Sekundærlenke URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pill",
+      "name": "Pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Pill-tekst",
+          "default": "Gratis frakt"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Hero",
+      "blocks": [
+        { "type": "pill", "settings": { "text": "Norsk merke" } },
+        { "type": "pill", "settings": { "text": "60 dagers garanti" } },
+        { "type": "pill", "settings": { "text": "Gratis frakt" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

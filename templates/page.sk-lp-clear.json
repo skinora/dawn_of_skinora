@@ -1,0 +1,187 @@
+{
+  "sections": {
+    "announcement": {
+      "type": "sk-lp-announcement",
+      "settings": {
+        "text": "GRATIS FRAKT I NORGE  |  60 DAGERS FORNØYDGARANTI"
+      }
+    },
+    "header": {
+      "type": "sk-lp-header",
+      "settings": {}
+    },
+    "hero": {
+      "type": "sk-lp-hero",
+      "blocks": {
+        "pill_1": { "type": "pill", "settings": { "text": "Norsk merke" } },
+        "pill_2": { "type": "pill", "settings": { "text": "60 dagers garanti" } },
+        "pill_3": { "type": "pill", "settings": { "text": "Gratis frakt" } }
+      },
+      "block_order": ["pill_1", "pill_2", "pill_3"],
+      "settings": {
+        "eyebrow": "Skinora® Clear",
+        "title": "Målrettet LED-behandling mot uren hud – hjemme",
+        "text": "Skinora Clear bruker blått og rødt LED-lys for å bekjempe urenheter, redusere betennelse og gi huden klarhet. 10 minutter, 3–5 ganger i uken.",
+        "cta_text": "Kjøp Clear nå",
+        "cta_url": "/products/skinora-clear",
+        "link_text": "Se hvordan den brukes (60 sek) ↓",
+        "link_url": "#slik-bruker-du"
+      }
+    },
+    "trustbar": {
+      "type": "sk-lp-trustbar",
+      "blocks": {
+        "tb_1": { "type": "item", "settings": { "icon": "🇳🇴", "text": "Norskutviklet" } },
+        "tb_2": { "type": "item", "settings": { "icon": "📦", "text": "Sendes fra norsk lager" } },
+        "tb_3": { "type": "item", "settings": { "icon": "🔄", "text": "60 dagers garanti" } },
+        "tb_4": { "type": "item", "settings": { "icon": "🔒", "text": "Vipps & Klarna" } }
+      },
+      "block_order": ["tb_1", "tb_2", "tb_3", "tb_4"],
+      "settings": {}
+    },
+    "problem": {
+      "type": "sk-lp-problem",
+      "blocks": {
+        "p_1": { "type": "item", "settings": { "text": "Gjentagende utbrudd av uren hud" } },
+        "p_2": { "type": "item", "settings": { "text": "Rødhet og irritasjon som ikke gir seg" } },
+        "p_3": { "type": "item", "settings": { "text": "Produkter som tørker ut uten å løse problemet" } },
+        "p_4": { "type": "item", "settings": { "text": "Ujevn hudtekstur og synlige porer" } },
+        "p_5": { "type": "item", "settings": { "text": "Du ønsker en skånsom løsning uten sterke kjemikalier" } }
+      },
+      "block_order": ["p_1", "p_2", "p_3", "p_4", "p_5"],
+      "settings": {
+        "heading": "Kjenner du igjen dette?",
+        "intro": "Uren hud handler ikke bare om alder – det handler om å gi huden riktig støtte."
+      }
+    },
+    "results": {
+      "type": "sk-lp-results",
+      "blocks": {
+        "r_1": { "type": "card", "settings": { "period": "Etter 2–4 uker", "text": "Færre nye utbrudd og roligere hud" } },
+        "r_2": { "type": "card", "settings": { "period": "Etter 6–8 uker", "text": "Jevnere hudtone og redusert rødhet" } },
+        "r_3": { "type": "card", "settings": { "period": "Over tid", "text": "Klarere hud og bedre hudbalanse" } }
+      },
+      "block_order": ["r_1", "r_2", "r_3"],
+      "settings": {
+        "heading": "Hva kan du forvente?",
+        "intro": "Realistiske resultater fra ekte brukere",
+        "disclaimer": "Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan."
+      }
+    },
+    "how_to_use": {
+      "type": "sk-lp-how-to-use",
+      "blocks": {
+        "s_1": { "type": "step", "settings": { "title": "Rens huden", "text": "Start med ren hud. Fjern sminke og overflødig olje." } },
+        "s_2": { "type": "step", "settings": { "title": "Bruk Clear i 10 minutter", "text": "Plasser enheten over problemområdet. Slapp av mens lyset jobber." } },
+        "s_3": { "type": "step", "settings": { "title": "Avslutt med lett fukt", "text": "Påfør en lett, ikke-komedogen fuktighetskrem." } },
+        "t_1": { "type": "tip", "settings": { "text": "Best brukt om kvelden etter rens" } },
+        "t_2": { "type": "tip", "settings": { "text": "Kan målrettes mot spesifikke områder" } },
+        "t_3": { "type": "tip", "settings": { "text": "Anbefalt frekvens: 3–5 ganger i uken" } }
+      },
+      "block_order": ["s_1", "s_2", "s_3", "t_1", "t_2", "t_3"],
+      "settings": {
+        "heading": "Slik bruker du den",
+        "anchor_id": "slik-bruker-du"
+      }
+    },
+    "why_choose": {
+      "type": "sk-lp-why-choose",
+      "blocks": {
+        "w_1": { "type": "card", "settings": { "icon": "🔵", "title": "Blått lys mot bakterier", "text": "Dreper akne-bakterier uten antibiotika eller sterke kjemikalier." } },
+        "w_2": { "type": "card", "settings": { "icon": "🔴", "title": "Rødt lys mot betennelse", "text": "Reduserer rødhet og hjelper huden å reparere seg selv raskere." } },
+        "w_3": { "type": "card", "settings": { "icon": "🎯", "title": "Målrettet behandling", "text": "Kompakt design for presis behandling der du trenger det." } },
+        "w_4": { "type": "card", "settings": { "icon": "🛡️", "title": "Skånsom og trygg", "text": "Ingen UV-stråler. Egnet for sensitiv og uren hud." } }
+      },
+      "block_order": ["w_1", "w_2", "w_3", "w_4"],
+      "settings": {
+        "heading": "Hvorfor Clear er annerledes"
+      }
+    },
+    "reviews": {
+      "type": "sk-lp-reviews",
+      "blocks": {
+        "rev_1": { "type": "review", "settings": { "text": "Huden min har aldri vært så rolig. Bruker den hver kveld og merker stor forskjell på rødhet og nye utbrudd.", "author": "Ida L., 28, Bergen" } },
+        "rev_2": { "type": "review", "settings": { "text": "Endelig noe som fungerer uten å tørke ut huden. Etter 6 uker er huden mye jevnere.", "author": "Emilie K., 34, Oslo" } },
+        "rev_3": { "type": "review", "settings": { "text": "Enkel å bruke og gir synlig effekt. Porer og urenheter er tydelig redusert.", "author": "Nora T., 25, Drammen" } }
+      },
+      "block_order": ["rev_1", "rev_2", "rev_3"],
+      "settings": {
+        "heading": "Det kundene våre sier",
+        "score": "4.7 av 5 – basert på 89 anmeldelser"
+      }
+    },
+    "trust_full": {
+      "type": "sk-lp-trust-full",
+      "blocks": {
+        "tf_1": { "type": "card", "settings": { "icon": "🔄", "title": "60 dagers fornøydgaranti", "text": "Ikke fornøyd? Du får pengene tilbake – ingen spørsmål." } },
+        "tf_2": { "type": "card", "settings": { "icon": "📦", "title": "Gratis frakt", "text": "Sendes fra norsk lager. Levering 2–4 virkedager." } },
+        "tf_3": { "type": "card", "settings": { "icon": "📞", "title": "Norsk kundeservice", "text": "Spørsmål? Vi er her. hello@skinora.no" } },
+        "tf_4": { "type": "card", "settings": { "icon": "💳", "title": "Sikker betaling", "text": "Vipps, Klarna, Visa og Mastercard." } },
+        "tf_5": { "type": "card", "settings": { "icon": "🏆", "title": "2 års reklamasjonsrett", "text": "Full reklamasjonsrett i henhold til norsk lov." } }
+      },
+      "block_order": ["tf_1", "tf_2", "tf_3", "tf_4", "tf_5"],
+      "settings": {
+        "heading": "Trygg handel – alltid"
+      }
+    },
+    "whats_in_box": {
+      "type": "sk-lp-whats-in-box",
+      "blocks": {
+        "b_1": { "type": "item", "settings": { "icon": "💡", "text": "Skinora® Clear LED-enhet" } },
+        "b_2": { "type": "item", "settings": { "icon": "🔌", "text": "USB-C ladekabel" } },
+        "b_3": { "type": "item", "settings": { "icon": "📖", "text": "Bruksanvisning (norsk)" } },
+        "b_4": { "type": "item", "settings": { "icon": "🎁", "text": "Oppbevaringsetui" } }
+      },
+      "block_order": ["b_1", "b_2", "b_3", "b_4"],
+      "settings": {
+        "heading": "Hva får du i esken?"
+      }
+    },
+    "faq": {
+      "type": "sk-lp-faq",
+      "blocks": {
+        "faq_1": { "type": "faq", "settings": { "question": "Fungerer Clear mot akne?", "answer": "Clear bruker blått og rødt LED-lys som er klinisk dokumentert for å redusere akne-bakterier og dempe betennelse. Den er spesielt effektiv mot mild til moderat akne." } },
+        "faq_2": { "type": "faq", "settings": { "question": "Hvor ofte bør jeg bruke den?", "answer": "Vi anbefaler 3–5 økter i uken, à 10 minutter. Du kan bruke den morgen eller kveld – det som passer best for deg." } },
+        "faq_3": { "type": "faq", "settings": { "question": "Når kan jeg forvente resultater?", "answer": "De fleste merker roligere hud etter 2–4 uker. For varige forbedringer anbefaler vi minst 6–8 uker med jevnlig bruk." } },
+        "faq_4": { "type": "faq", "settings": { "question": "Kan jeg bruke den med hudpleieproduktene mine?", "answer": "Ja. Bruk den på ren hud, og påfør lette produkter etterpå. Unngå tunge oljer eller retinol rett før behandling." } },
+        "faq_5": { "type": "faq", "settings": { "question": "Hva om jeg ikke er fornøyd?", "answer": "Du har 60 dagers fornøydgaranti. Hvis du ikke er fornøyd, sender du den tilbake og får full refusjon – ingen spørsmål stilt. Kontakt oss på hello@skinora.no." } },
+        "faq_6": { "type": "faq", "settings": { "question": "Hvor lang er leveringstiden?", "answer": "Vi sender fra norsk lager, og leveringstiden er normalt 2–4 virkedager. Frakt er alltid gratis." } }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_5", "faq_6"],
+      "settings": {
+        "heading": "Ofte stilte spørsmål"
+      }
+    },
+    "cta": {
+      "type": "sk-lp-cta",
+      "blocks": {
+        "g_1": { "type": "badge", "settings": { "icon": "🔄", "text": "60 dagers garanti" } },
+        "g_2": { "type": "badge", "settings": { "icon": "📦", "text": "Gratis frakt" } },
+        "g_3": { "type": "badge", "settings": { "icon": "🔒", "text": "Sikker betaling" } }
+      },
+      "block_order": ["g_1", "g_2", "g_3"],
+      "settings": {
+        "heading": "Klar for klarere hud?",
+        "text": "Gi huden din den støtten den trenger – hjemme, på dine premisser, med teknologi som faktisk virker.",
+        "price_text": "",
+        "button_text": "Bestill Clear nå",
+        "product_url": "/products/skinora-clear"
+      }
+    }
+  },
+  "order": [
+    "announcement",
+    "header",
+    "hero",
+    "trustbar",
+    "problem",
+    "results",
+    "how_to_use",
+    "why_choose",
+    "reviews",
+    "trust_full",
+    "whats_in_box",
+    "faq",
+    "cta"
+  ]
+}

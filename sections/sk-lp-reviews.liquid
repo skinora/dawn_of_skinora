@@ -1,0 +1,99 @@
+{%- comment -%}
+  sk-lp-reviews.liquid
+  Customer reviews grid for landing pages. Each review is a block.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp">
+  <section class="lp-reviews">
+    <div class="lp-container">
+      <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.score != blank -%}
+        <p class="lp-reviews__score">{{ section.settings.score }}</p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="lp-reviews__grid">
+          {%- for block in section.blocks -%}
+            <div class="lp-review-card" {{ block.shopify_attributes }}>
+              <div class="lp-review-card__stars">★★★★★</div>
+              <p class="lp-review-card__text">{{ block.settings.text }}</p>
+              <p class="lp-review-card__author">{{ block.settings.author }}</p>
+              <p class="lp-review-card__verified">Verifisert kjøper ✓</p>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LP Reviews",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Det norske kvinner sier"
+    },
+    {
+      "type": "text",
+      "id": "score",
+      "label": "Anmeldelsesscore (tekst)",
+      "default": "4.8 av 5 – basert på 102 anmeldelser"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Anmeldelse",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Anmeldelsestekst"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Forfatter",
+          "info": "F.eks. «Wenche S., 52, Oslo»"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "text": "Etter 6 uker merker jeg virkelig forskjell på hudtonen. Huden ser friskere ut og pigmentflekkene er blitt mindre synlige. Veldig fornøyd!",
+            "author": "Wenche S., 52, Oslo"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "text": "Bruker den foran TV hver kveld. Enkelt, behagelig og huden kjennes mykere. Gir ikke opp denne rutinen!",
+            "author": "Kari M., 47, Stavanger"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "text": "Var skeptisk, men etter 4 uker ser jeg tydelig mer glød. Huden føles tettere og fine linjene er blitt mindre synlige.",
+            "author": "Tone H., 61, Trondheim"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
