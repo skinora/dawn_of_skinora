@@ -55,10 +55,34 @@
     "trustbar": {
       "type": "sk-lp-trustbar",
       "blocks": {
-        "tb_1": { "type": "item", "settings": { "text": "Norskutviklet" } },
-        "tb_2": { "type": "item", "settings": { "text": "Sendes fra norsk lager" } },
-        "tb_3": { "type": "item", "settings": { "text": "60 dagers garanti" } },
-        "tb_4": { "type": "item", "settings": { "text": "Vipps & Klarna" } }
+        "tb_1": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/no_1.svg",
+            "text": "Utviklet i Norge"
+          }
+        },
+        "tb_2": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/lager.svg",
+            "text": "Sendes fra norsk lager"
+          }
+        },
+        "tb_3": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/garanti.svg",
+            "text": "60 dagers garanti"
+          }
+        },
+        "tb_4": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/sikker_betaling.svg",
+            "text": "Vipps & Klarna"
+          }
+        }
       },
       "block_order": [
         "tb_1",
@@ -209,10 +233,34 @@
     "why_choose": {
       "type": "sk-lp-why-choose",
       "blocks": {
-        "w_1": { "type": "card", "settings": { "title": "Klinisk dokumentert teknologi", "text": "LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon." } },
-        "w_2": { "type": "card", "settings": { "title": "Komfortabel passform", "text": "Utviklet for daglig hjemmebruk – myk, lett og enkel å ha på." } },
-        "w_3": { "type": "card", "settings": { "title": "Enkel å bruke", "text": "Få knapper, ingen komplisert rutine. På – og slapp av." } },
-        "w_4": { "type": "card", "settings": { "title": "Premium kvalitet og garanti", "text": "Norsk kundeservice og 60 dagers fornøydgaranti." } }
+        "w_1": {
+          "type": "card",
+          "settings": {
+            "title": "Klinisk dokumentert teknologi",
+            "text": "LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon."
+          }
+        },
+        "w_2": {
+          "type": "card",
+          "settings": {
+            "title": "Komfortabel passform",
+            "text": "Utviklet for daglig hjemmebruk – myk, lett og enkel å ha på."
+          }
+        },
+        "w_3": {
+          "type": "card",
+          "settings": {
+            "title": "Enkel å bruke",
+            "text": "Få knapper, ingen komplisert rutine. På – og slapp av."
+          }
+        },
+        "w_4": {
+          "type": "card",
+          "settings": {
+            "title": "Premium kvalitet og garanti",
+            "text": "Norsk kundeservice og 60 dagers fornøydgaranti."
+          }
+        }
       },
       "block_order": [
         "w_1",
@@ -262,11 +310,41 @@
     "trust_full": {
       "type": "sk-lp-trust-full",
       "blocks": {
-        "tf_1": { "type": "card", "settings": { "title": "60 dagers fornøydgaranti", "text": "Ikke fornøyd? Du får pengene tilbake – ingen spørsmål." } },
-        "tf_2": { "type": "card", "settings": { "title": "Gratis frakt", "text": "Sendes fra norsk lager. Levering 2–4 virkedager." } },
-        "tf_3": { "type": "card", "settings": { "title": "Norsk kundeservice", "text": "Spørsmål? Vi er her. hello@skinora.no" } },
-        "tf_4": { "type": "card", "settings": { "title": "Sikker betaling", "text": "Vipps, Klarna, Visa og Mastercard." } },
-        "tf_5": { "type": "card", "settings": { "title": "2 års reklamasjonsrett", "text": "Full reklamasjonsrett i henhold til norsk lov." } }
+        "tf_1": {
+          "type": "card",
+          "settings": {
+            "title": "60 dagers fornøydgaranti",
+            "text": "Ikke fornøyd? Du får pengene tilbake – ingen spørsmål."
+          }
+        },
+        "tf_2": {
+          "type": "card",
+          "settings": {
+            "title": "Gratis frakt",
+            "text": "Sendes fra norsk lager. Levering 2–4 virkedager."
+          }
+        },
+        "tf_3": {
+          "type": "card",
+          "settings": {
+            "title": "Norsk kundeservice",
+            "text": "Spørsmål? Vi er her. hello@skinora.no"
+          }
+        },
+        "tf_4": {
+          "type": "card",
+          "settings": {
+            "title": "Sikker betaling",
+            "text": "Vipps, Klarna, Visa og Mastercard."
+          }
+        },
+        "tf_5": {
+          "type": "card",
+          "settings": {
+            "title": "2 års reklamasjonsrett",
+            "text": "Full reklamasjonsrett i henhold til norsk lov."
+          }
+        }
       },
       "block_order": [
         "tf_1",
@@ -282,11 +360,36 @@
     "whats_in_box": {
       "type": "sk-lp-whats-in-box",
       "blocks": {
-        "b_1": { "type": "item", "settings": { "text": "Skinora® Radiance Face LED-maske" } },
-        "b_2": { "type": "item", "settings": { "text": "USB-C ladekabel" } },
-        "b_3": { "type": "item", "settings": { "text": "Øyebeskyttelse" } },
-        "b_4": { "type": "item", "settings": { "text": "Bruksanvisning (norsk)" } },
-        "b_5": { "type": "item", "settings": { "text": "Premium oppbevaringspose" } }
+        "b_1": {
+          "type": "item",
+          "settings": {
+            "text": "Skinora® Radiance Face LED-maske"
+          }
+        },
+        "b_2": {
+          "type": "item",
+          "settings": {
+            "text": "USB-C ladekabel"
+          }
+        },
+        "b_3": {
+          "type": "item",
+          "settings": {
+            "text": "Øyebeskyttelse"
+          }
+        },
+        "b_4": {
+          "type": "item",
+          "settings": {
+            "text": "Bruksanvisning (norsk)"
+          }
+        },
+        "b_5": {
+          "type": "item",
+          "settings": {
+            "text": "Premium oppbevaringspose"
+          }
+        }
       },
       "block_order": [
         "b_1",
@@ -360,9 +463,24 @@
     "cta": {
       "type": "sk-lp-cta",
       "blocks": {
-        "g_1": { "type": "badge", "settings": { "text": "60 dagers garanti" } },
-        "g_2": { "type": "badge", "settings": { "text": "Gratis frakt" } },
-        "g_3": { "type": "badge", "settings": { "text": "Sikker betaling" } }
+        "g_1": {
+          "type": "badge",
+          "settings": {
+            "text": "60 dagers garanti"
+          }
+        },
+        "g_2": {
+          "type": "badge",
+          "settings": {
+            "text": "Gratis frakt"
+          }
+        },
+        "g_3": {
+          "type": "badge",
+          "settings": {
+            "text": "Sikker betaling"
+          }
+        }
       },
       "block_order": [
         "g_1",
