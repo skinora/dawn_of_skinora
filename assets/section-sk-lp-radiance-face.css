@@ -448,14 +448,16 @@
   background: #30273e;
   color: #fff;
   font-family: 'sofia-pro', 'Assistant', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   z-index: 1;
-  margin-top: 0;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
 }
 
 .lp-results__card {
