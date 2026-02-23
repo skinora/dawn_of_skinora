@@ -236,6 +236,7 @@
         "w_1": {
           "type": "card",
           "settings": {
+            "icon": "shopify://shop_images/2.svg",
             "title": "Klinisk dokumentert teknologi",
             "text": "LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon."
           }
