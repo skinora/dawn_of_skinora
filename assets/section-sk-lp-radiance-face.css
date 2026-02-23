@@ -582,56 +582,69 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0;
-  padding-left: 48px;
+  gap: 16px;
   margin-bottom: 40px;
 }
 
-/* vertical dashed line connecting badges */
+/* no global line — each step draws its own segment */
 .lp-steps::before {
-  content: '';
-  position: absolute;
-  left: 17px;
-  top: 18px;
-  bottom: 18px;
-  width: 2px;
-  border-left: 2px dashed #c5c0cc;
+  display: none;
 }
 
 .lp-step {
   position: relative;
   display: flex;
-  align-items: flex-start;
-  gap: 0;
+  align-items: center;
+  gap: 16px;
   text-align: left;
-  padding-bottom: 16px;
 }
 
-.lp-step:last-child {
-  padding-bottom: 0;
+/* vertical dashed line segment per step */
+.lp-step::after {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 0;
+  bottom: -16px;
+  width: 0;
+  border-left: 2px dashed #c5c0cc;
+  z-index: 0;
+}
+
+/* first step: line starts at badge center */
+.lp-step:first-child::after {
+  top: 50%;
+}
+
+/* last step: line ends at badge center */
+.lp-step:last-child::after {
+  bottom: auto;
+  height: 50%;
+  top: 0;
 }
 
 .lp-step__number {
-  position: absolute;
-  left: -48px;
-  top: 0;
   width: 36px;
   height: 36px;
+  min-width: 36px;
   border-radius: 50%;
   background: #30273e;
   color: #fff;
   font-family: 'sofia-pro', 'Assistant', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   z-index: 1;
+  margin: 0;
+  padding: 2px 0 0;
+  line-height: 1;
 }
 
 .lp-step__body {
-  padding-top: 4px;
+  flex: 1;
 }
 
 .lp-step__title {
@@ -684,7 +697,6 @@
 
   .lp-steps {
     flex-direction: row;
-    padding-left: 0;
     gap: 0;
     justify-content: center;
     align-items: flex-start;
@@ -692,17 +704,22 @@
 
   /* horizontal dashed line connecting badges */
   .lp-steps::before {
-    left: auto;
+    display: block;
+    content: '';
     top: 18px;
     bottom: auto;
-    width: auto;
     height: 0;
+    width: auto;
     border-left: none;
     border-top: 2px dashed #c5c0cc;
-    /* span between first and last badge center */
     position: absolute;
     left: calc(100% / 6);
     right: calc(100% / 6);
+  }
+
+  /* hide mobile vertical lines */
+  .lp-step::after {
+    display: none;
   }
 
   .lp-step {
@@ -712,11 +729,10 @@
     flex: 1;
     max-width: 300px;
     padding: 0 16px;
-    padding-bottom: 0;
+    gap: 0;
   }
 
   .lp-step__number {
-    position: static;
     margin-bottom: 16px;
   }
 
