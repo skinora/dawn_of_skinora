@@ -832,6 +832,12 @@
   border-radius: 8px;
   padding: 20px 16px;
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lp-why-radiance__card-row {
+  display: flex;
   flex-direction: row;
   align-items: flex-start;
   gap: 14px;
@@ -945,8 +951,6 @@
   }
 
   .lp-why-radiance__card {
-    flex-direction: column;
-    gap: 6px;
     padding: 24px 20px;
   }
 

@@ -21,75 +21,79 @@
             <div class="lp-why-radiance__grid">
               {%- for block in section.blocks -%}
                 <div class="lp-why-radiance__card" {{ block.shopify_attributes }}>
-                  {%- if block.settings.icon != blank -%}
-                    <div class="lp-why-radiance__icon">
-                      <img
-                        src="{{ block.settings.icon | image_url: height: 64 }}"
-                        alt=""
-                        width="32"
-                        height="32"
-                        loading="lazy"
-                      >
-                    </div>
-                  {%- else -%}
-                    <div class="lp-why-radiance__icon">
-                      {%- case forloop.index -%}
-                        {%- when 1 -%}
-                          <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                          >
-                            <path d="M9 3h6M10 3v6.5L4 20h16L14 9.5V3"/><circle cx="12" cy="16" r="2"/>
-                          </svg>
-                        {%- when 2 -%}
-                          <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                          >
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                          </svg>
-                        {%- when 3 -%}
-                          <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                          >
-                            <path d="M18.36 6.64A9 9 0 1 1 5.64 6.64"/><line x1="12" y1="2" x2="12" y2="12"/>
-                          </svg>
-                        {%- when 4 -%}
-                          <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                          >
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
-                          </svg>
-                      {%- endcase -%}
-                    </div>
-                  {%- endif -%}
                   <h3 class="lp-why-radiance__title">{{ block.settings.title }}</h3>
-                  <p class="lp-why-radiance__text">{{ block.settings.text }}</p>
-                  {%- if block.settings.proof != blank -%}
-                    <p class="lp-why-radiance__proof">{{ block.settings.proof }}</p>
-                  {%- endif -%}
+                  <div class="lp-why-radiance__card-row">
+                    {%- if block.settings.icon != blank -%}
+                      <div class="lp-why-radiance__icon">
+                        <img
+                          src="{{ block.settings.icon | image_url: height: 64 }}"
+                          alt=""
+                          width="32"
+                          height="32"
+                          loading="lazy"
+                        >
+                      </div>
+                    {%- else -%}
+                      <div class="lp-why-radiance__icon">
+                        {%- case forloop.index -%}
+                          {%- when 1 -%}
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                            >
+                              <path d="M9 3h6M10 3v6.5L4 20h16L14 9.5V3"/><circle cx="12" cy="16" r="2"/>
+                            </svg>
+                          {%- when 2 -%}
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                            >
+                              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                          {%- when 3 -%}
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                            >
+                              <path d="M18.36 6.64A9 9 0 1 1 5.64 6.64"/><line x1="12" y1="2" x2="12" y2="12"/>
+                            </svg>
+                          {%- when 4 -%}
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                            >
+                              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+                            </svg>
+                        {%- endcase -%}
+                      </div>
+                    {%- endif -%}
+                    <div class="lp-why-radiance__card-body">
+                      <p class="lp-why-radiance__text">{{ block.settings.text }}</p>
+                      {%- if block.settings.proof != blank -%}
+                        <p class="lp-why-radiance__proof">{{ block.settings.proof }}</p>
+                      {%- endif -%}
+                    </div>
+                  </div>
                 </div>
               {%- endfor -%}
             </div>
