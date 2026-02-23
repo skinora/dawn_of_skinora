@@ -244,6 +244,7 @@
         "w_2": {
           "type": "card",
           "settings": {
+            "icon": "shopify://shop_images/9.svg",
             "title": "Komfortabel passform",
             "text": "Utviklet for daglig hjemmebruk – myk, lett og enkel å ha på."
           }
@@ -251,6 +252,7 @@
         "w_3": {
           "type": "card",
           "settings": {
+            "icon": "shopify://shop_images/12.svg",
             "title": "Enkel å bruke",
             "text": "Få knapper, ingen komplisert rutine. På – og slapp av."
           }
@@ -258,6 +260,7 @@
         "w_4": {
           "type": "card",
           "settings": {
+            "icon": "shopify://shop_images/4.svg",
             "title": "Premium kvalitet og garanti",
             "text": "Norsk kundeservice og 60 dagers fornøydgaranti."
           }
