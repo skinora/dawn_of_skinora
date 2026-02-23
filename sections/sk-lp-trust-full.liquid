@@ -15,7 +15,17 @@
         <div class="lp-trust-full__grid">
           {%- for block in section.blocks -%}
             <div class="lp-trust-full__card" {{ block.shopify_attributes }}>
-              <div class="lp-trust-full__icon">{{ block.settings.icon }}</div>
+              {%- if block.settings.icon != blank -%}
+                <div class="lp-trust-full__icon">
+                  <img
+                    src="{{ block.settings.icon | image_url: height: 56 }}"
+                    alt=""
+                    width="28"
+                    height="28"
+                    loading="lazy"
+                  >
+                </div>
+              {%- endif -%}
               <h3 class="lp-trust-full__title">{{ block.settings.title }}</h3>
               <p class="lp-trust-full__text">{{ block.settings.text }}</p>
             </div>
@@ -45,10 +55,9 @@
       "name": "Garantikort",
       "settings": [
         {
-          "type": "text",
+          "type": "image_picker",
           "id": "icon",
-          "label": "Ikon (emoji)",
-          "default": "🔄"
+          "label": "Ikon"
         },
         {
           "type": "text",
@@ -72,7 +81,6 @@
         {
           "type": "card",
           "settings": {
-            "icon": "🔄",
             "title": "60 dagers fornøydgaranti",
             "text": "Ikke fornøyd? Du får pengene tilbake – ingen spørsmål."
           }
@@ -80,23 +88,21 @@
         {
           "type": "card",
           "settings": {
-            "icon": "📦",
             "title": "Gratis frakt",
             "text": "Sendes fra norsk lager. Levering 2–4 virkedager."
           }
         },
         {
           "type": "card",
-          "settings": { "icon": "📞", "title": "Norsk kundeservice", "text": "Spørsmål? Vi er her. hello@skinora.no" }
+          "settings": { "title": "Norsk kundeservice", "text": "Spørsmål? Vi er her. hello@skinora.no" }
         },
         {
           "type": "card",
-          "settings": { "icon": "💳", "title": "Sikker betaling", "text": "Vipps, Klarna, Visa og Mastercard." }
+          "settings": { "title": "Sikker betaling", "text": "Vipps, Klarna, Visa og Mastercard." }
         },
         {
           "type": "card",
           "settings": {
-            "icon": "🏆",
             "title": "2 års reklamasjonsrett",
             "text": "Full reklamasjonsrett i henhold til norsk lov."
           }

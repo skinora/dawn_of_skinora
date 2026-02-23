@@ -32,7 +32,16 @@
             <ul class="lp-whats-in-box__list">
               {%- for block in section.blocks -%}
                 <li class="lp-whats-in-box__item" {{ block.shopify_attributes }}>
-                  <span class="lp-whats-in-box__item-icon">{{ block.settings.icon }}</span>
+                  {%- if block.settings.icon != blank -%}
+                    <span class="lp-whats-in-box__item-icon"
+                      ><img
+                        src="{{ block.settings.icon | image_url: height: 40 }}"
+                        alt=""
+                        width="20"
+                        height="20"
+                        loading="lazy"
+                    ></span>
+                  {%- endif -%}
                   {{ block.settings.text }}
                 </li>
               {%- endfor -%}
@@ -68,10 +77,9 @@
       "name": "Innhold",
       "settings": [
         {
-          "type": "text",
+          "type": "image_picker",
           "id": "icon",
-          "label": "Ikon (emoji)",
-          "default": "💡"
+          "label": "Ikon"
         },
         {
           "type": "text",
@@ -86,11 +94,11 @@
     {
       "name": "LP What's In The Box",
       "blocks": [
-        { "type": "item", "settings": { "icon": "💡", "text": "Skinora® Radiance Face LED-maske" } },
-        { "type": "item", "settings": { "icon": "🔌", "text": "USB-C ladekabel" } },
-        { "type": "item", "settings": { "icon": "🕶️", "text": "Øyebeskyttelse" } },
-        { "type": "item", "settings": { "icon": "📖", "text": "Bruksanvisning (norsk)" } },
-        { "type": "item", "settings": { "icon": "🎁", "text": "Premium oppbevaringspose" } }
+        { "type": "item", "settings": { "text": "Skinora® Radiance Face LED-maske" } },
+        { "type": "item", "settings": { "text": "USB-C ladekabel" } },
+        { "type": "item", "settings": { "text": "Øyebeskyttelse" } },
+        { "type": "item", "settings": { "text": "Bruksanvisning (norsk)" } },
+        { "type": "item", "settings": { "text": "Premium oppbevaringspose" } }
       ]
     }
   ]

@@ -11,7 +11,16 @@
       <div class="lp-trustbar__grid">
         {%- for block in section.blocks -%}
           <div class="lp-trustbar__item" {{ block.shopify_attributes }}>
-            <span class="lp-trustbar__icon">{{ block.settings.icon }}</span>
+            {%- if block.settings.icon != blank -%}
+              <span class="lp-trustbar__icon"
+                ><img
+                  src="{{ block.settings.icon | image_url: height: 96 }}"
+                  alt=""
+                  width="48"
+                  height="48"
+                  loading="lazy"
+              ></span>
+            {%- endif -%}
             <span class="lp-trustbar__text">{{ block.settings.text }}</span>
           </div>
         {%- endfor -%}
@@ -32,10 +41,9 @@
       "name": "Trust-element",
       "settings": [
         {
-          "type": "text",
+          "type": "image_picker",
           "id": "icon",
-          "label": "Ikon (emoji)",
-          "default": "✓"
+          "label": "Ikon"
         },
         {
           "type": "text",
@@ -50,10 +58,10 @@
     {
       "name": "LP Trust Bar",
       "blocks": [
-        { "type": "item", "settings": { "icon": "🇳🇴", "text": "Norskutviklet" } },
-        { "type": "item", "settings": { "icon": "📦", "text": "Sendes fra norsk lager" } },
-        { "type": "item", "settings": { "icon": "🔄", "text": "60 dagers garanti" } },
-        { "type": "item", "settings": { "icon": "🔒", "text": "Vipps & Klarna" } }
+        { "type": "item", "settings": { "text": "Norskutviklet" } },
+        { "type": "item", "settings": { "text": "Sendes fra norsk lager" } },
+        { "type": "item", "settings": { "text": "60 dagers garanti" } },
+        { "type": "item", "settings": { "text": "Vipps & Klarna" } }
       ]
     }
   ]

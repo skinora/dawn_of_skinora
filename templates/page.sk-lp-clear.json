@@ -40,10 +40,10 @@
     "trustbar": {
       "type": "sk-lp-trustbar",
       "blocks": {
-        "tb_1": { "type": "item", "settings": { "icon": "🇳🇴", "text": "Norskutviklet" } },
-        "tb_2": { "type": "item", "settings": { "icon": "📦", "text": "Sendes fra norsk lager" } },
-        "tb_3": { "type": "item", "settings": { "icon": "🔄", "text": "60 dagers garanti" } },
-        "tb_4": { "type": "item", "settings": { "icon": "🔒", "text": "Vipps & Klarna" } }
+        "tb_1": { "type": "item", "settings": { "text": "Norskutviklet" } },
+        "tb_2": { "type": "item", "settings": { "text": "Sendes fra norsk lager" } },
+        "tb_3": { "type": "item", "settings": { "text": "60 dagers garanti" } },
+        "tb_4": { "type": "item", "settings": { "text": "Vipps & Klarna" } }
       },
       "block_order": ["tb_1", "tb_2", "tb_3", "tb_4"],
       "settings": {}
@@ -96,10 +96,10 @@
     "why_choose": {
       "type": "sk-lp-why-choose",
       "blocks": {
-        "w_1": { "type": "card", "settings": { "icon": "🔵", "title": "Blått lys mot bakterier", "text": "Dreper akne-bakterier uten antibiotika eller sterke kjemikalier." } },
-        "w_2": { "type": "card", "settings": { "icon": "🔴", "title": "Rødt lys mot betennelse", "text": "Reduserer rødhet og hjelper huden å reparere seg selv raskere." } },
-        "w_3": { "type": "card", "settings": { "icon": "🎯", "title": "Målrettet behandling", "text": "Kompakt design for presis behandling der du trenger det." } },
-        "w_4": { "type": "card", "settings": { "icon": "🛡️", "title": "Skånsom og trygg", "text": "Ingen UV-stråler. Egnet for sensitiv og uren hud." } }
+        "w_1": { "type": "card", "settings": { "title": "Blått lys mot bakterier", "text": "Dreper akne-bakterier uten antibiotika eller sterke kjemikalier." } },
+        "w_2": { "type": "card", "settings": { "title": "Rødt lys mot betennelse", "text": "Reduserer rødhet og hjelper huden å reparere seg selv raskere." } },
+        "w_3": { "type": "card", "settings": { "title": "Målrettet behandling", "text": "Kompakt design for presis behandling der du trenger det." } },
+        "w_4": { "type": "card", "settings": { "title": "Skånsom og trygg", "text": "Ingen UV-stråler. Egnet for sensitiv og uren hud." } }
       },
       "block_order": ["w_1", "w_2", "w_3", "w_4"],
       "settings": {
@@ -122,11 +122,11 @@
     "trust_full": {
       "type": "sk-lp-trust-full",
       "blocks": {
-        "tf_1": { "type": "card", "settings": { "icon": "🔄", "title": "60 dagers fornøydgaranti", "text": "Ikke fornøyd? Du får pengene tilbake – ingen spørsmål." } },
-        "tf_2": { "type": "card", "settings": { "icon": "📦", "title": "Gratis frakt", "text": "Sendes fra norsk lager. Levering 2–4 virkedager." } },
-        "tf_3": { "type": "card", "settings": { "icon": "📞", "title": "Norsk kundeservice", "text": "Spørsmål? Vi er her. hello@skinora.no" } },
-        "tf_4": { "type": "card", "settings": { "icon": "💳", "title": "Sikker betaling", "text": "Vipps, Klarna, Visa og Mastercard." } },
-        "tf_5": { "type": "card", "settings": { "icon": "🏆", "title": "2 års reklamasjonsrett", "text": "Full reklamasjonsrett i henhold til norsk lov." } }
+        "tf_1": { "type": "card", "settings": { "title": "60 dagers fornøydgaranti", "text": "Ikke fornøyd? Du får pengene tilbake – ingen spørsmål." } },
+        "tf_2": { "type": "card", "settings": { "title": "Gratis frakt", "text": "Sendes fra norsk lager. Levering 2–4 virkedager." } },
+        "tf_3": { "type": "card", "settings": { "title": "Norsk kundeservice", "text": "Spørsmål? Vi er her. hello@skinora.no" } },
+        "tf_4": { "type": "card", "settings": { "title": "Sikker betaling", "text": "Vipps, Klarna, Visa og Mastercard." } },
+        "tf_5": { "type": "card", "settings": { "title": "2 års reklamasjonsrett", "text": "Full reklamasjonsrett i henhold til norsk lov." } }
       },
       "block_order": ["tf_1", "tf_2", "tf_3", "tf_4", "tf_5"],
       "settings": {
@@ -136,10 +136,10 @@
     "whats_in_box": {
       "type": "sk-lp-whats-in-box",
       "blocks": {
-        "b_1": { "type": "item", "settings": { "icon": "💡", "text": "Skinora® Clear LED-enhet" } },
-        "b_2": { "type": "item", "settings": { "icon": "🔌", "text": "USB-C ladekabel" } },
-        "b_3": { "type": "item", "settings": { "icon": "📖", "text": "Bruksanvisning (norsk)" } },
-        "b_4": { "type": "item", "settings": { "icon": "🎁", "text": "Oppbevaringsetui" } }
+        "b_1": { "type": "item", "settings": { "text": "Skinora® Clear LED-enhet" } },
+        "b_2": { "type": "item", "settings": { "text": "USB-C ladekabel" } },
+        "b_3": { "type": "item", "settings": { "text": "Bruksanvisning (norsk)" } },
+        "b_4": { "type": "item", "settings": { "text": "Oppbevaringsetui" } }
       },
       "block_order": ["b_1", "b_2", "b_3", "b_4"],
       "settings": {
@@ -164,9 +164,9 @@
     "cta": {
       "type": "sk-lp-cta",
       "blocks": {
-        "g_1": { "type": "badge", "settings": { "icon": "🔄", "text": "60 dagers garanti" } },
-        "g_2": { "type": "badge", "settings": { "icon": "📦", "text": "Gratis frakt" } },
-        "g_3": { "type": "badge", "settings": { "icon": "🔒", "text": "Sikker betaling" } }
+        "g_1": { "type": "badge", "settings": { "text": "60 dagers garanti" } },
+        "g_2": { "type": "badge", "settings": { "text": "Gratis frakt" } },
+        "g_3": { "type": "badge", "settings": { "text": "Sikker betaling" } }
       },
       "block_order": ["g_1", "g_2", "g_3"],
       "settings": {

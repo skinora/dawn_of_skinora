@@ -19,7 +19,15 @@
         <div class="lp-cta-final__guarantees">
           {%- for block in section.blocks -%}
             <span class="lp-cta-final__guarantee" {{ block.shopify_attributes }}>
-              {{ block.settings.icon }}
+              {%- if block.settings.icon != blank -%}
+                <img
+                  src="{{ block.settings.icon | image_url: height: 32 }}"
+                  alt=""
+                  width="16"
+                  height="16"
+                  loading="lazy"
+                >
+              {%- endif -%}
               {{ block.settings.text }}
             </span>
           {%- endfor -%}
@@ -77,10 +85,9 @@
       "name": "Garanti-badge",
       "settings": [
         {
-          "type": "text",
+          "type": "image_picker",
           "id": "icon",
-          "label": "Ikon (emoji)",
-          "default": "🔄"
+          "label": "Ikon"
         },
         {
           "type": "text",
@@ -95,9 +102,9 @@
     {
       "name": "LP CTA",
       "blocks": [
-        { "type": "badge", "settings": { "icon": "🔄", "text": "60 dagers garanti" } },
-        { "type": "badge", "settings": { "icon": "📦", "text": "Gratis frakt" } },
-        { "type": "badge", "settings": { "icon": "🔒", "text": "Sikker betaling" } }
+        { "type": "badge", "settings": { "text": "60 dagers garanti" } },
+        { "type": "badge", "settings": { "text": "Gratis frakt" } },
+        { "type": "badge", "settings": { "text": "Sikker betaling" } }
       ]
     }
   ]

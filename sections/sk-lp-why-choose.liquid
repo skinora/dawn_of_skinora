@@ -15,7 +15,17 @@
         <div class="lp-why-radiance__grid">
           {%- for block in section.blocks -%}
             <div class="lp-why-radiance__card" {{ block.shopify_attributes }}>
-              <div class="lp-why-radiance__icon">{{ block.settings.icon }}</div>
+              {%- if block.settings.icon != blank -%}
+                <div class="lp-why-radiance__icon">
+                  <img
+                    src="{{ block.settings.icon | image_url: height: 64 }}"
+                    alt=""
+                    width="32"
+                    height="32"
+                    loading="lazy"
+                  >
+                </div>
+              {%- endif -%}
               <h3 class="lp-why-radiance__title">{{ block.settings.title }}</h3>
               <p class="lp-why-radiance__text">{{ block.settings.text }}</p>
             </div>
@@ -45,10 +55,9 @@
       "name": "Kort",
       "settings": [
         {
-          "type": "text",
+          "type": "image_picker",
           "id": "icon",
-          "label": "Ikon (emoji)",
-          "default": "🔬"
+          "label": "Ikon"
         },
         {
           "type": "text",
@@ -72,7 +81,6 @@
         {
           "type": "card",
           "settings": {
-            "icon": "🔬",
             "title": "Klinisk dokumentert teknologi",
             "text": "LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon."
           }
@@ -80,7 +88,6 @@
         {
           "type": "card",
           "settings": {
-            "icon": "😌",
             "title": "Komfortabel passform",
             "text": "Utviklet for daglig hjemmebruk – myk, lett og enkel å ha på."
           }
@@ -88,7 +95,6 @@
         {
           "type": "card",
           "settings": {
-            "icon": "🎛️",
             "title": "Enkel å bruke",
             "text": "Få knapper, ingen komplisert rutine. På – og slapp av."
           }
@@ -96,7 +102,6 @@
         {
           "type": "card",
           "settings": {
-            "icon": "🛡️",
             "title": "Premium kvalitet og garanti",
             "text": "Norsk kundeservice og 60 dagers fornøydgaranti."
           }
