@@ -853,7 +853,7 @@
   display: grid !important;
   grid-template-columns: 56px minmax(0, 1fr) !important;
   column-gap: 14px !important;
-  align-items: start !important;
+  align-items: center !important;
 }
 
 .lp-why-radiance__icon {
@@ -869,10 +869,10 @@
 
 .lp-why-radiance__icon svg,
 .lp-why-radiance__icon img {
-  width: 30px !important;
-  height: 30px !important;
+  width: 56px !important;
+  height: 56px !important;
   display: block !important;
-  max-width: 30px !important;
+  max-width: 56px !important;
   object-fit: contain;
 }
 
@@ -994,8 +994,8 @@
 
   .lp-why-radiance__icon img,
   .lp-why-radiance__icon svg {
-    width: 30px;
-    height: 30px;
+    width: 56px;
+    height: 56px;
   }
 
   .lp-why-radiance__cta-row {
