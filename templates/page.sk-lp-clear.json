@@ -247,6 +247,14 @@
             "text": "Dreper akne-bakterier uten antibiotika eller sterke kjemikalier."
           }
         },
+        "card_G34QkN": {
+          "type": "card",
+          "settings": {
+            "icon": "shopify://shop_images/10.svg",
+            "title": "Fokus på det som faktisk fungerer",
+            "text": "Vi har bevisst valgt bort unødvendige lysfarger. Radiance bruker kun utvalgte bølgelengder som er mest brukt i LED-lysbehandling — for et mer målrettet og konsistent lysbilde"
+          }
+        },
         "w_2": {
           "type": "card",
           "settings": {
@@ -274,6 +282,7 @@
       },
       "block_order": [
         "w_1",
+        "card_G34QkN",
         "w_2",
         "w_3",
         "w_4"
@@ -324,35 +333,35 @@
           "type": "card",
           "settings": {
             "title": "60 dagers fornøydgaranti",
-            "text": "Ikke fornøyd? Du får pengene tilbake – ingen spørsmål."
+            "text": "<p>Ikke fornøyd? Du får pengene tilbake – ingen spørsmål.</p>"
           }
         },
         "tf_2": {
           "type": "card",
           "settings": {
             "title": "Gratis frakt",
-            "text": "Sendes fra norsk lager. Levering 2–4 virkedager."
+            "text": "<p>Sendes fra norsk lager. Levering 2–4 virkedager.</p>"
           }
         },
         "tf_3": {
           "type": "card",
           "settings": {
             "title": "Norsk kundeservice",
-            "text": "Spørsmål? Vi er her. hello@skinora.no"
+            "text": "<p>Spørsmål? Vi er her. hello@skinora.no</p>"
           }
         },
         "tf_4": {
           "type": "card",
           "settings": {
             "title": "Sikker betaling",
-            "text": "Vipps, Klarna, Visa og Mastercard."
+            "text": "<p>Vipps, Klarna, Visa og Mastercard.</p>"
           }
         },
         "tf_5": {
           "type": "card",
           "settings": {
             "title": "2 års reklamasjonsrett",
-            "text": "Full reklamasjonsrett i henhold til norsk lov."
+            "text": "<p>Full reklamasjonsrett i henhold til norsk lov.</p>"
           }
         }
       },
