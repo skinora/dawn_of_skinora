@@ -389,7 +389,7 @@
         "b_3": {
           "type": "item",
           "settings": {
-            "text": "Øyebeskyttelse x 2"
+            "text": "Øyebeskyttelse × 2"
           }
         },
         "b_4": {
@@ -401,7 +401,7 @@
         "b_5": {
           "type": "item",
           "settings": {
-            "text": "Premium oppbevaringspose"
+            "text": "Oppbevaringspose"
           }
         }
       },
