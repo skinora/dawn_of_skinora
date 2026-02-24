@@ -397,6 +397,12 @@
             "text": "USB-C ladekabel"
           }
         },
+        "item_3KrJcj": {
+          "type": "item",
+          "settings": {
+            "text": "Øyebeskytelse × 2"
+          }
+        },
         "b_3": {
           "type": "item",
           "settings": {
@@ -414,6 +420,7 @@
         "b_1",
         "item_dxQ4KC",
         "b_2",
+        "item_3KrJcj",
         "b_3",
         "b_4"
       ],
