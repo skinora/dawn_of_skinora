@@ -247,8 +247,8 @@
           "type": "card",
           "settings": {
             "icon": "shopify://shop_images/1.svg",
-            "title": "1072 nm nær-IR (NIR)",
-            "text": "Radiance inkluderer 1072 nm nær-IR — en bølgelengde valgt for dypere lysområde i LED-behandling"
+            "title": "1072 nm dypt nær-IR (dNIR)",
+            "text": "1072 nm dypt nær-IR – lys rettet mot områdene der kollagen og elastin dannes"
           }
         },
         "card_xRCVi8": {
