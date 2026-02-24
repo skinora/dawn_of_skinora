@@ -273,14 +273,6 @@
             "title": "Jevn lysfordeling",
             "text": "Designet for et stabilt lysbilde over ansiktet – for konsistent hjemmebruk"
           }
-        },
-        "w_4": {
-          "type": "card",
-          "settings": {
-            "icon": "shopify://shop_images/4.svg",
-            "title": "Premium kvalitet og garanti",
-            "text": "Norsk kundeservice og 60 dagers fornøydgaranti"
-          }
         }
       },
       "block_order": [
@@ -288,8 +280,7 @@
         "card_xRCVi8",
         "w_2",
         "w_3",
-        "card_BxaxB7",
-        "w_4"
+        "card_BxaxB7"
       ],
       "settings": {
         "heading": "Hvorfor Radiance er annerledes"
