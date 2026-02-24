@@ -1003,8 +1003,9 @@
 
   .lp-why-radiance__icon img,
   .lp-why-radiance__icon svg {
-    width: 64px;
-    height: 64px;
+    width: 64px !important;
+    height: 64px !important;
+    max-width: 64px !important;
   }
 
   .lp-why-radiance__cta-row {
