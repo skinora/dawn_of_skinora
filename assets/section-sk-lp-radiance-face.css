@@ -1306,60 +1306,107 @@
 
 /* ---------- 13. CTA FINAL ---------- */
 .lp-cta-final {
-  background: #ffffff;
-  padding: 100px 0;
+  background: var(--sk-surface, #ffffff);
+  padding: 80px 0;
   text-align: center;
 }
 
 .lp-cta-final__heading {
-  font-size: clamp(28px, 3vw, 40px);
+  font-size: clamp(26px, 3vw, 38px);
   font-weight: 400;
   color: #3a3448;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   letter-spacing: -0.3px;
-}
-
-.lp-cta-final__text {
-  font-size: 18px;
-  font-weight: 300;
-  color: #333333;
-  line-height: 1.75;
-  margin-bottom: 12px;
-  max-width: 560px;
+  max-width: 20ch;
   margin-left: auto;
   margin-right: auto;
 }
 
+.lp-cta-final__text {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--sk-muted, #5f5f5f);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  max-width: 48ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lp-cta-final__action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
 .lp-cta-final__price {
   font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 500;
-  color: #30273e;
-  margin-bottom: 32px;
+  color: var(--sk-brand, #30273e);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.lp-cta-final__btn {
+  min-width: 280px;
+}
+
+.lp-cta-final__btn:focus-visible {
+  outline: 2px solid var(--sk-brand, #30273e);
+  outline-offset: 2px;
 }
 
 .lp-cta-final__guarantees {
   display: flex;
   justify-content: center;
-  gap: 24px;
+  gap: 20px;
   flex-wrap: wrap;
-  margin-top: 24px;
 }
 
 .lp-cta-final__guarantee {
-  font-size: 13px;
-  font-weight: 300;
-  color: rgba(51, 51, 51, 0.7);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--sk-muted, #5f5f5f);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+  letter-spacing: 0.2px;
 }
 
 .lp-cta-final__guarantee img {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   object-fit: contain;
   flex-shrink: 0;
+  opacity: 0.7;
+}
+
+@media (min-width: 768px) {
+  .lp-cta-final {
+    padding: 100px 0;
+  }
+
+  .lp-cta-final__text {
+    font-size: 17px;
+    margin-bottom: 28px;
+  }
+
+  .lp-cta-final__action {
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .lp-cta-final__price {
+    font-size: 28px;
+  }
+
+  .lp-cta-final__btn {
+    min-width: 340px;
+    width: auto;
+  }
 }
 
 /* ============================================================
@@ -1445,7 +1492,7 @@
   .lp-cta-final__guarantees {
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
   }
 
   .lp-results,

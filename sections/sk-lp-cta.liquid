@@ -10,10 +10,12 @@
     <div class="lp-container--narrow" style="text-align:center;">
       <h2 class="lp-cta-final__heading">{{ section.settings.heading }}</h2>
       <p class="lp-cta-final__text">{{ section.settings.text }}</p>
-      <p class="lp-cta-final__price">{{ section.settings.price_text }}</p>
-      <a href="{{ section.settings.product_url }}" class="lp-btn">
-        {{ section.settings.button_text }}
-      </a>
+      <div class="lp-cta-final__action">
+        <p class="lp-cta-final__price">{{ section.settings.price_text }}</p>
+        <a href="{{ section.settings.product_url }}" class="lp-btn lp-cta-final__btn">
+          {{ section.settings.button_text }}
+        </a>
+      </div>
 
       {%- if section.blocks.size > 0 -%}
         <div class="lp-cta-final__guarantees">
