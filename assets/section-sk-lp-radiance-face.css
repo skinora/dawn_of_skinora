@@ -76,7 +76,7 @@
   justify-content: center;
   gap: 8px;
   background: #30273e;
-  color: #ffffff;
+  color: #ffffff !important;
   border: 1px solid #30273e;
   border-radius: 0;
   padding: 16px 32px;
@@ -95,7 +95,7 @@
 
 .lp-btn:hover {
   background: #ffffff;
-  color: #30273e;
+  color: #30273e !important;
 }
 
 .lp-btn--full {
