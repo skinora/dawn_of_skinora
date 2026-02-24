@@ -342,7 +342,7 @@
           "type": "card",
           "settings": {
             "title": "Norsk kundeservice",
-            "text": "<p><br/>Har du spørsmål? <a href=\"/pages/kundeservice\" title=\"Kundeservice\">Ta kontakt</a> — vi svarer raskt.</p>"
+            "text": "<p>Har du spørsmål? <a href=\"/pages/kundeservice\" title=\"Kundeservice\">Ta kontakt</a> — vi svarer raskt.</p>"
           }
         },
         "tf_4": {
