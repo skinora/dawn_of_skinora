@@ -992,10 +992,19 @@
     padding: 24px 20px;
   }
 
+  .lp-why-radiance__card-row {
+    grid-template-columns: 64px minmax(0, 1fr) !important;
+  }
+
+  .lp-why-radiance__icon {
+    width: 64px;
+    height: 64px;
+  }
+
   .lp-why-radiance__icon img,
   .lp-why-radiance__icon svg {
-    width: 56px;
-    height: 56px;
+    width: 64px;
+    height: 64px;
   }
 
   .lp-why-radiance__cta-row {
