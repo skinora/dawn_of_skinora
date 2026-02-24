@@ -243,6 +243,14 @@
             "text": "LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon"
           }
         },
+        "card_ttFjc6": {
+          "type": "card",
+          "settings": {
+            "icon": "shopify://shop_images/1.svg",
+            "title": "1072 nm nær-IR (NIR)",
+            "text": "Radiance inkluderer 1072 nm nær-IR — en bølgelengde valgt for dypere lysområde i LED-behandling"
+          }
+        },
         "card_xRCVi8": {
           "type": "card",
           "settings": {
@@ -278,6 +286,7 @@
       },
       "block_order": [
         "w_1",
+        "card_ttFjc6",
         "card_xRCVi8",
         "w_2",
         "w_3",
