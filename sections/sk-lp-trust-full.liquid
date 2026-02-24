@@ -27,7 +27,7 @@
                 </div>
               {%- endif -%}
               <h3 class="lp-trust-full__title">{{ block.settings.title }}</h3>
-              <p class="lp-trust-full__text">{{ block.settings.text }}</p>
+              <div class="lp-trust-full__text">{{ block.settings.text }}</div>
             </div>
           {%- endfor -%}
         </div>
@@ -66,10 +66,10 @@
           "default": "60 dagers fornøydgaranti"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "text",
           "label": "Tekst",
-          "default": "Ikke fornøyd? Du får pengene tilbake – ingen spørsmål."
+          "default": "<p>Ikke fornøyd? Du får pengene tilbake – ingen spørsmål.</p>"
         }
       ]
     }
@@ -82,29 +82,29 @@
           "type": "card",
           "settings": {
             "title": "60 dagers fornøydgaranti",
-            "text": "Ikke fornøyd? Du får pengene tilbake – ingen spørsmål."
+            "text": "<p>Ikke fornøyd? Du får pengene tilbake – ingen spørsmål.</p>"
           }
         },
         {
           "type": "card",
           "settings": {
             "title": "Gratis frakt",
-            "text": "Sendes fra norsk lager. Levering 2–4 virkedager."
+            "text": "<p>Sendes fra norsk lager. Levering 2–4 virkedager.</p>"
           }
         },
         {
           "type": "card",
-          "settings": { "title": "Norsk kundeservice", "text": "Spørsmål? Vi er her. hello@skinora.no" }
+          "settings": { "title": "Norsk kundeservice", "text": "<p>Spørsmål? Vi er her. hello@skinora.no</p>" }
         },
         {
           "type": "card",
-          "settings": { "title": "Sikker betaling", "text": "Vipps, Klarna, Visa og Mastercard." }
+          "settings": { "title": "Sikker betaling", "text": "<p>Vipps, Klarna, Visa og Mastercard.</p>" }
         },
         {
           "type": "card",
           "settings": {
             "title": "2 års reklamasjonsrett",
-            "text": "Full reklamasjonsrett i henhold til norsk lov."
+            "text": "<p>Full reklamasjonsrett i henhold til norsk lov.</p>"
           }
         }
       ]

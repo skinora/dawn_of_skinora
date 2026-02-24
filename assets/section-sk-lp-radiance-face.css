@@ -1115,6 +1115,10 @@
   line-height: 1.65;
 }
 
+.lp-trust-full__text p {
+  margin: 0;
+}
+
 /* ---------- 11. WHAT'S IN THE BOX ---------- */
 .lp-whats-in-box {
   background: #ffffff;
