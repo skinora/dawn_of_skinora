@@ -380,6 +380,12 @@
             "text": "Skinora® Radiance Face LED-maske"
           }
         },
+        "item_NHXfiN": {
+          "type": "item",
+          "settings": {
+            "text": "Kontrollenhet med innebygd batteri"
+          }
+        },
         "b_2": {
           "type": "item",
           "settings": {
@@ -407,6 +413,7 @@
       },
       "block_order": [
         "b_1",
+        "item_NHXfiN",
         "b_2",
         "b_3",
         "b_4",
