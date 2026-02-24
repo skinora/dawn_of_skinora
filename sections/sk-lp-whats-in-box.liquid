@@ -12,8 +12,8 @@
         <div class="lp-whats-in-box__image-col">
           {%- if section.settings.image != blank -%}
             <img
-              src="{{ section.settings.image | image_url: width: 800 }}"
-              srcset="{{ section.settings.image | image_url: width: 400 }} 400w, {{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 800 }} 800w"
+              src="{{ section.settings.image | image_url: width: 1200 }}"
+              srcset="{{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 900 }} 900w, {{ section.settings.image | image_url: width: 1200 }} 1200w"
               sizes="(max-width: 991px) 100vw, 50vw"
               alt="{{ section.settings.image.alt | default: 'Hva du får i esken' }}"
               width="{{ section.settings.image.width }}"
