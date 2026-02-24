@@ -266,6 +266,14 @@
             "text": "Få knapper, ingen komplisert rutine. På – og slapp av"
           }
         },
+        "card_BxaxB7": {
+          "type": "card",
+          "settings": {
+            "icon": "shopify://shop_images/17.svg",
+            "title": "Jevn lysfordeling",
+            "text": "Designet for et stabilt lysbilde over ansiktet – for konsistent hjemmebruk"
+          }
+        },
         "w_4": {
           "type": "card",
           "settings": {
@@ -280,6 +288,7 @@
         "card_xRCVi8",
         "w_2",
         "w_3",
+        "card_BxaxB7",
         "w_4"
       ],
       "settings": {
