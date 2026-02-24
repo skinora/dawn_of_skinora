@@ -82,7 +82,7 @@
                     </div>
                     <div class="lp-why-radiance__card-body">
                       <h3 class="lp-why-radiance__title">{{ block.settings.title }}</h3>
-                      <p class="lp-why-radiance__text">{{ block.settings.text }}</p>
+                      <div class="lp-why-radiance__text">{{ block.settings.text }}</div>
                       {%- if block.settings.proof != blank -%}
                         <p class="lp-why-radiance__proof">{{ block.settings.proof }}</p>
                       {%- endif -%}
@@ -179,10 +179,10 @@
           "default": "Klinisk dokumentert teknologi"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "text",
           "label": "Tekst",
-          "default": "LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon."
+          "default": "<p>LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon.</p>"
         },
         {
           "type": "text",
@@ -201,7 +201,7 @@
           "type": "card",
           "settings": {
             "title": "Klinisk dokumentert teknologi",
-            "text": "LED-bølgelengder valgt for å støtte hudens naturlige prosesser over tid.",
+            "text": "<p>LED-bølgelengder valgt for å støtte hudens naturlige prosesser over tid.</p>",
             "proof": "Rød og nær-IR er mye brukt i LED-lysbehandling."
           }
         },
@@ -209,7 +209,7 @@
           "type": "card",
           "settings": {
             "title": "Komfortabel passform",
-            "text": "Utviklet for daglig hjemmebruk – myk, lett og enkel å ha på.",
+            "text": "<p>Utviklet for daglig hjemmebruk – myk, lett og enkel å ha på.</p>",
             "proof": "Myk silikon + justerbar stropp."
           }
         },
@@ -217,7 +217,7 @@
           "type": "card",
           "settings": {
             "title": "Enkel å bruke",
-            "text": "Få knapper, ingen komplisert rutine. På – og slapp av.",
+            "text": "<p>Få knapper, ingen komplisert rutine. På – og slapp av.</p>",
             "proof": "10 minutter. 1 knapp."
           }
         },
@@ -225,7 +225,7 @@
           "type": "card",
           "settings": {
             "title": "Premium kvalitet og garanti",
-            "text": "Norsk kundeservice og 60 dagers fornøydgaranti.",
+            "text": "<p>Norsk kundeservice og 60 dagers fornøydgaranti.</p>",
             "proof": "Rask levering fra Norge."
           }
         }
