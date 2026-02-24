@@ -242,12 +242,20 @@
             "text": "LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon."
           }
         },
+        "card_xRCVi8": {
+          "type": "card",
+          "settings": {
+            "icon": "shopify://shop_images/4.svg",
+            "title": "Premium kvalitet og garanti",
+            "text": "Norsk kundeservice og 60 dagers fornøydgaranti."
+          }
+        },
         "w_2": {
           "type": "card",
           "settings": {
             "icon": "shopify://shop_images/9.svg",
-            "title": "Komfortabel passform",
-            "text": "Utviklet for daglig hjemmebruk – myk, lett og enkel å ha på."
+            "title": "Fokus på det som faktisk brukes",
+            "text": "Vi har bevisst valgt bort unødvendige lysfarger. Radiance bruker kun utvalgte bølgelengder som er mest brukt i LED-lysbehandling — for et mer målrettet og konsistent lysbilde"
           }
         },
         "w_3": {
@@ -269,6 +277,7 @@
       },
       "block_order": [
         "w_1",
+        "card_xRCVi8",
         "w_2",
         "w_3",
         "w_4"
