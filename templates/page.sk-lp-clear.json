@@ -385,6 +385,12 @@
             "text": "Skinora® Clear LED-enhet"
           }
         },
+        "item_dxQ4KC": {
+          "type": "item",
+          "settings": {
+            "text": "Kontrollenhet med innebygd batteri"
+          }
+        },
         "b_2": {
           "type": "item",
           "settings": {
@@ -406,6 +412,7 @@
       },
       "block_order": [
         "b_1",
+        "item_dxQ4KC",
         "b_2",
         "b_3",
         "b_4"
