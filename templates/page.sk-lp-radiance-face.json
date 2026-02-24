@@ -337,35 +337,35 @@
           "type": "card",
           "settings": {
             "title": "60 dagers fornøydgaranti",
-            "text": "Ikke fornøyd? Du får pengene tilbake – ingen spørsmål."
+            "text": "<p>Ikke fornøyd? Du får pengene tilbake – ingen spørsmål.</p>"
           }
         },
         "tf_2": {
           "type": "card",
           "settings": {
             "title": "Gratis frakt",
-            "text": "Sendes fra norsk lager. Levering 2–4 virkedager."
+            "text": "<p>Sendes fra norsk lager. Levering 2–4 virkedager.</p>"
           }
         },
         "tf_3": {
           "type": "card",
           "settings": {
             "title": "Norsk kundeservice",
-            "text": "Spørsmål? Vi er her. hello@skinora.no"
+            "text": "<p><br/>Har du spørsmål? <a href=\"/pages/kundeservice\" title=\"Kundeservice\">Ta kontakt</a> — vi svarer raskt.</p>"
           }
         },
         "tf_4": {
           "type": "card",
           "settings": {
             "title": "Sikker betaling",
-            "text": "Vipps, Klarna, Visa og Mastercard."
+            "text": "<p>Vipps, Klarna, Visa og Mastercard.</p>"
           }
         },
         "tf_5": {
           "type": "card",
           "settings": {
             "title": "2 års reklamasjonsrett",
-            "text": "Full reklamasjonsrett i henhold til norsk lov."
+            "text": "<p>Full reklamasjonsrett i henhold til norsk lov.</p>"
           }
         }
       },
