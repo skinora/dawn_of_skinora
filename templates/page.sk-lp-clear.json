@@ -347,7 +347,7 @@
           "type": "card",
           "settings": {
             "title": "Norsk kundeservice",
-            "text": "<p>Spørsmål? Vi er her. hello@skinora.no</p>"
+            "text": "<p>Har du spørsmål? <a href=\"/pages/kundeservice\" title=\"Kundeservice\">Ta kontakt</a> — vi svarer raskt.</p>"
           }
         },
         "tf_4": {
