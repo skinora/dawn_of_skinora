@@ -1119,6 +1119,13 @@
   margin: 0;
 }
 
+.lp-trust-full__text a {
+  color: #30273e;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* ---------- 11. WHAT'S IN THE BOX ---------- */
 .lp-whats-in-box {
   background: #ffffff;
