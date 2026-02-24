@@ -425,7 +425,8 @@
         "b_4"
       ],
       "settings": {
-        "heading": "Hva får du i esken?"
+        "heading": "Hva får du i esken?",
+        "image": "shopify://shop_images/skinora_radiance_neck_flatlay.webp"
       }
     },
     "faq": {
