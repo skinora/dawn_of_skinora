@@ -420,7 +420,8 @@
         "b_5"
       ],
       "settings": {
-        "heading": "Hva får du i esken?"
+        "heading": "Hva får du i esken?",
+        "image": "shopify://shop_images/skinora_radiance_face_hva_er_i_esken.png"
       }
     },
     "faq": {
