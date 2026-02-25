@@ -71,15 +71,19 @@
         {%- endif -%}
 
         {%- comment -%} ── Value Box ── {%- endcomment -%}
-        {%- if section.settings.big_number != blank -%}
+        {%- if section.settings.value_title != blank -%}
           <div class="lp-value-box">
             <div class="lp-value-box__inner">
               <p class="lp-value-box__title">
                 {%- if section.settings.show_value_icon -%}
                   <span class="lp-value-box__check" aria-hidden="true">✓</span>
                 {%- endif -%}
-                {{- section.settings.big_number -}}
+                {{- section.settings.value_title -}}
               </p>
+
+              {%- if section.settings.value_tag != blank -%}
+                <p class="lp-value-box__tag">{{ section.settings.value_tag }}</p>
+              {%- endif -%}
 
               {%- if section.settings.value_sub_text != blank -%}
                 <p class="lp-value-box__sub">{{ section.settings.value_sub_text }}</p>
@@ -199,27 +203,33 @@
     },
     {
       "type": "text",
-      "id": "big_number",
-      "label": "Tittel-linje",
-      "default": "Skinora® Clear: 4 390 kr (engangskjøp)"
+      "id": "value_title",
+      "label": "Tittel (navn + pris)",
+      "default": "Skinora® Clear — 4 390 kr"
+    },
+    {
+      "type": "text",
+      "id": "value_tag",
+      "label": "Tag-linje (uppercase)",
+      "default": "ENGANGSKJØP · INGEN ABONNEMENT"
     },
     {
       "type": "text",
       "id": "value_sub_text",
       "label": "Undertekst (italic)",
-      "default": "Profesjonell LED-lysterapi – hjemme, når det passer deg"
+      "default": "Profesjonell klinikkteknologi – hjemme, på dine premisser"
     },
     {
       "type": "text",
       "id": "value_roi_line",
       "label": "ROI-linje (bold)",
-      "default": "Tilsvarer ca. 8 LED-økter på klinikk"
+      "default": "= Tilsvarer ca. 8 klinikkøkter"
     },
     {
       "type": "text",
       "id": "value_roi_sub",
       "label": "ROI-undertekst (italic)",
-      "default": "Basert på ca. 550 kr per behandling – etter det er behandlingen i praksis gratis"
+      "default": "Etter det er behandlingen i praksis gratis"
     },
     {
       "type": "checkbox",

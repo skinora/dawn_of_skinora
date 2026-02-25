@@ -57,14 +57,12 @@
         "cta_url": "/products/skinora-clear",
         "link_text": "Se hvordan den brukes (60 sek) ↓",
         "link_url": "#slik-bruker-du",
-        "big_number": "Skinora® Clear: 4 390 kr (engangskjøp)",
-        "value_sub_text": "I komfort av ditt eget hjem",
-        "value_roi_line": "Tilsvarer ca. 8 LED-økter på klinikk",
-        "value_roi_sub": "Basert på ca. 550 kr per behandling – etter det er behandlingen i praksis gratis",
-        "show_value_icon": true,
-        "value_bullet_1": "Klinisk dokumentert LED-teknologi",
-        "value_bullet_2": "",
-        "value_bullet_3": "Spar tusenvis over tid"
+        "value_title": "Skinora® Clear — 4 390 kr",
+        "value_tag": "ENGANGSKJØP · INGEN ABONNEMENT",
+        "value_sub_text": "Profesjonell klinikkteknologi – hjemme, på dine premisser",
+        "value_roi_line": "= Tilsvarer ca. 8 klinikkøkter",
+        "value_roi_sub": "Etter det er behandlingen i praksis gratis",
+        "show_value_icon": true
       }
     },
     "trustbar": {
