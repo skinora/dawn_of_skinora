@@ -69,6 +69,41 @@
             <span class="lp-hero__delivery">Leveringstid 2-4 dager</span>
           </div>
         {%- endif -%}
+
+        {%- comment -%} ── Value Box (inline) ── {%- endcomment -%}
+        {%- if section.settings.big_number != blank -%}
+          <div class="lp-value-box lp-value-box--{{ section.settings.value_color_scheme }}">
+            <div class="lp-value-box__inner">
+              <p class="lp-value-box__number">
+                {%- if section.settings.show_value_icon -%}
+                  <span class="lp-value-box__icon" aria-hidden="true">✓</span>
+                {%- endif -%}
+                {{- section.settings.big_number -}}
+              </p>
+
+              {%- if section.settings.value_sub_text != blank -%}
+                <p class="lp-value-box__sub">{{ section.settings.value_sub_text }}</p>
+              {%- endif -%}
+
+              <hr class="lp-value-box__divider">
+
+              {%- if section.settings.value_price_line != blank -%}
+                <p class="lp-value-box__price">
+                  {%- assign price_parts = section.settings.value_price_line | split: ':' -%}
+                  {%- if price_parts.size > 1 -%}
+                    <span class="lp-value-box__price-name">{{ price_parts[0] }}:</span>{{ price_parts | last }}
+                  {%- else -%}
+                    {{ section.settings.value_price_line }}
+                  {%- endif -%}
+                </p>
+              {%- endif -%}
+
+              {%- if section.settings.value_disclaimer != blank -%}
+                <p class="lp-value-box__note">{{ section.settings.value_disclaimer }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
       </div>
 
       <div class="lp-hero__image">
@@ -140,6 +175,50 @@
       "type": "url",
       "id": "link_url",
       "label": "Sekundærlenke URL"
+    },
+    {
+      "type": "header",
+      "content": "Verdiboks"
+    },
+    {
+      "type": "text",
+      "id": "big_number",
+      "label": "Stort tall",
+      "default": "≈ 9 klinikkbehandlinger"
+    },
+    {
+      "type": "text",
+      "id": "value_sub_text",
+      "label": "Undertekst",
+      "default": "Basert på ca. 550 kr per LED-behandling"
+    },
+    {
+      "type": "text",
+      "id": "value_price_line",
+      "label": "Produktpris-linje",
+      "default": "Skinora Radiance: 4 690 kr (engangskjøp)"
+    },
+    {
+      "type": "text",
+      "id": "value_disclaimer",
+      "label": "Liten merknad",
+      "default": "Pris varierer mellom klinikker. Resultater varierer."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_value_icon",
+      "label": "Vis ikon i verdiboks",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "value_color_scheme",
+      "label": "Verdiboks fargevalg",
+      "options": [
+        { "value": "light", "label": "Lys" },
+        { "value": "dark", "label": "Mørk" }
+      ],
+      "default": "light"
     }
   ],
   "blocks": [

@@ -531,24 +531,12 @@
         "product_url": "/products/skinora-clear",
         "anchor_id": "kjop"
       }
-    },
-    "value_box": {
-      "type": "sk-lp-value-box",
-      "settings": {
-        "big_number": "≈ 9 klinikkbehandlinger",
-        "sub_text": "Basert på ca. 550 kr per LED-behandling",
-        "product_price_line": "Skinora Clear: 4 690 kr (engangskjøp)",
-        "disclaimer": "Pris varierer mellom klinikker. Resultater varierer.",
-        "show_icon": true,
-        "color_scheme": "light"
-      }
     }
   },
   "order": [
     "announcement",
     "header",
     "hero",
-    "value_box",
     "trustbar",
     "problem",
     "results",
