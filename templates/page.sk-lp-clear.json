@@ -62,7 +62,10 @@
         "value_sub_text": "Profesjonell klinikkteknologi – hjemme, på dine premisser",
         "value_roi_line": "= Tilsvarer ca. 8 klinikkøkter",
         "value_roi_sub": "Etter det er behandlingen i praksis gratis",
-        "show_value_icon": true
+        "show_value_icon": true,
+        "value_bullet_1": "Klinisk dokumentert LED-teknologi",
+        "value_bullet_2": "60 dagers fornøydgaranti",
+        "value_bullet_3": "Spar tusenvis over tid"
       }
     },
     "trustbar": {
