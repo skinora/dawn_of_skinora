@@ -239,7 +239,7 @@
           "settings": {
             "icon": "shopify://shop_images/2.svg",
             "title": "Klinisk dokumentert teknologi",
-            "text": "LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon"
+            "text": "<p>LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Se dokumentasjon</a></p>"
           }
         },
         "card_ttFjc6": {
@@ -247,7 +247,7 @@
           "settings": {
             "icon": "shopify://shop_images/1.svg",
             "title": "1072 nm dypt nær-IR (dNIR)",
-            "text": "1072 nm dypt nær-IR – lys rettet mot områdene der kollagen og elastin dannes"
+            "text": "<p>1072 nm dypt nær-IR – lys rettet mot områdene der kollagen og elastin dannes</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Se dokumentasjon</a></p>"
           }
         },
         "card_xRCVi8": {
@@ -255,7 +255,7 @@
           "settings": {
             "icon": "shopify://shop_images/4.svg",
             "title": "Premium kvalitet og garanti",
-            "text": "Norsk kundeservice og 60 dagers fornøydgaranti"
+            "text": "<p>Norsk kundeservice og 60 dagers fornøydgaranti</p>"
           }
         },
         "w_2": {
@@ -263,7 +263,7 @@
           "settings": {
             "icon": "shopify://shop_images/9.svg",
             "title": "Fokus på det som faktisk fungerer",
-            "text": "Vi har bevisst valgt bort unødvendige lysfarger. Radiance bruker kun utvalgte bølgelengder som er mest brukt i LED-lysbehandling — for et mer målrettet og konsistent lysbilde"
+            "text": "<p>Vi har bevisst valgt bort unødvendige lysfarger. Radiance bruker kun utvalgte bølgelengder som er mest brukt i LED-lysbehandling — for et mer målrettet og konsistent lysbilde</p>"
           }
         },
         "w_3": {
@@ -271,7 +271,7 @@
           "settings": {
             "icon": "shopify://shop_images/12.svg",
             "title": "Enkel å bruke",
-            "text": "Få knapper, ingen komplisert rutine. På – og slapp av"
+            "text": "<p>Få knapper, ingen komplisert rutine. På – og slapp av</p>"
           }
         },
         "card_BxaxB7": {
@@ -279,7 +279,7 @@
           "settings": {
             "icon": "shopify://shop_images/17.svg",
             "title": "Jevn lysfordeling",
-            "text": "Designet for et stabilt lysbilde over ansiktet – for konsistent hjemmebruk"
+            "text": "<p>Designet for et stabilt lysbilde over ansiktet – for konsistent hjemmebruk</p>"
           }
         }
       },
@@ -443,6 +443,13 @@
             "answer": "Vi anbefaler 3–5 økter i uken, à 10 minutter. Du kan bruke den morgen eller kveld – det som passer best for deg."
           }
         },
+        "faq_xgRBbg": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvem bør starte litt forsiktig?",
+            "answer": "Hvis du bruker lysømfintlige medisiner, har lysallergi, eller har en hudtilstand som blir lett irritert, anbefaler vi å starte med kortere økter og følge med på huden. Ved epilepsi eller kjent reaksjon på lys, rådfør deg med lege før bruk. Hvis du nylig har gjort laser/peeling/microneedling, vent til huden har roet seg."
+          }
+        },
         "faq_2": {
           "type": "faq",
           "settings": {
@@ -481,6 +488,7 @@
       },
       "block_order": [
         "faq_1",
+        "faq_xgRBbg",
         "faq_2",
         "faq_3",
         "faq_4",
