@@ -5,6 +5,10 @@
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
 
+{%- assign sk_lp_handle = section.settings.product_url | split: '/products/' | last | split: '?' | first -%}
+
+<script src="{{ 'sk-lp-cart-add.js' | asset_url }}" defer="defer"></script>
+
 <div class="sk-lp">
   <section id="{{ section.settings.anchor_id | default: 'kjop' }}" class="lp-cta-final">
     <div class="lp-container--narrow">
@@ -12,9 +16,9 @@
       <p class="lp-cta-final__text">{{ section.settings.text }}</p>
       <div class="lp-cta-final__action">
         <p class="lp-cta-final__price">{{ section.settings.price_text }}</p>
-        <a href="{{ section.settings.product_url }}" class="lp-btn lp-cta-final__btn">
+        <button type="button" class="lp-btn lp-cta-final__btn" data-product-handle="{{ sk_lp_handle }}">
           {{ section.settings.button_text }}
-        </a>
+        </button>
       </div>
 
       {%- if section.blocks.size > 0 -%}

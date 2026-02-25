@@ -7,6 +7,10 @@
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
 
+{%- assign sk_lp_handle = section.settings.product_url | split: '/products/' | last | split: '?' | first -%}
+
+<script src="{{ 'sk-lp-cart-add.js' | asset_url }}" defer="defer"></script>
+
 <div class="sk-lp">
   {%- comment -%} ========== 1. ANNOUNCEMENT BAR ========== {%- endcomment -%}
   <div class="lp-announcement-bar">
@@ -43,7 +47,9 @@
             <span class="lp-hero__pill"><span class="lp-hero__pill-check">✓</span> Gratis frakt</span>
           </div>
           <div class="lp-hero__actions">
-            <a href="{{ section.settings.product_url }}" class="lp-btn">{{ section.settings.hero_cta_text }}</a>
+            <button type="button" class="lp-btn" data-product-handle="{{ sk_lp_handle }}">
+              {{ section.settings.hero_cta_text }}
+            </button>
             <a href="#slik-bruker-du" class="lp-hero__link">Se hvordan den brukes (60 sek) ↓</a>
           </div>
         </div>
@@ -342,9 +348,9 @@
         <h2 class="lp-cta-final__heading">{{ section.settings.cta_heading }}</h2>
         <p class="lp-cta-final__text">{{ section.settings.cta_text }}</p>
         <p class="lp-cta-final__price">{{ section.settings.price_text }}</p>
-        <a href="{{ section.settings.product_url }}" class="lp-btn">
+        <button type="button" class="lp-btn" data-product-handle="{{ sk_lp_handle }}">
           {{ section.settings.cta_button_text }}
-        </a>
+        </button>
         <div class="lp-cta-final__guarantees">
           <span class="lp-cta-final__guarantee">🔄 60 dagers garanti</span>
           <span class="lp-cta-final__guarantee">📦 Gratis frakt</span>

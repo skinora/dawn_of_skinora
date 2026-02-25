@@ -6,6 +6,10 @@
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
 
+{%- assign sk_lp_handle = section.settings.cta_url | split: '/products/' | last | split: '?' | first -%}
+
+<script src="{{ 'sk-lp-cart-add.js' | asset_url }}" defer="defer"></script>
+
 <div class="sk-lp">
   <section class="lp-hero">
     <div class="lp-hero__grid">
@@ -29,7 +33,9 @@
         {%- endif -%}
 
         <div class="lp-hero__actions">
-          <a href="{{ section.settings.cta_url }}" class="lp-btn">{{ section.settings.cta_text }}</a>
+          <button type="button" class="lp-btn" data-product-handle="{{ sk_lp_handle }}">
+            {{ section.settings.cta_text }}
+          </button>
           {%- if section.settings.link_text != blank -%}
             <a href="{{ section.settings.link_url | default: '#' }}" class="lp-hero__link">
               {{- section.settings.link_text -}}
