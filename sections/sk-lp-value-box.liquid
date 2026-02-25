@@ -1,0 +1,199 @@
+{%- comment -%}
+  sk-lp-value-box.liquid
+  "Big Number" value comparison box for landing pages.
+  Place directly after sk-lp-hero in all LP templates (sk-lp-clear, sk-lp-radiance-face, etc.)
+{%- endcomment -%}
+
+<style>
+  .lp-value-box {
+    display: flex;
+    justify-content: center;
+    padding: 0 var(--sk-page-gutter, 1rem);
+  }
+
+  .lp-value-box__inner {
+    width: 100%;
+    max-width: 480px;
+    border-left: 4px solid #30273e;
+    border-radius: 4px;
+    padding: clamp(24px, 4vw, 36px) clamp(20px, 4vw, 32px);
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  /* ── Light scheme (default) ── */
+  .lp-value-box--light .lp-value-box__inner {
+    background: #f7f5f2;
+    color: #1a1a1a;
+  }
+
+  .lp-value-box--light .lp-value-box__sub,
+  .lp-value-box--light .lp-value-box__note {
+    color: #6b6b6b;
+  }
+
+  .lp-value-box--light .lp-value-box__divider {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  /* ── Dark scheme ── */
+  .lp-value-box--dark .lp-value-box__inner {
+    background: #1a1a1a;
+    color: #ffffff;
+    border-left-color: #c8b89c;
+  }
+
+  .lp-value-box--dark .lp-value-box__sub,
+  .lp-value-box--dark .lp-value-box__note {
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .lp-value-box--dark .lp-value-box__divider {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .lp-value-box--dark .lp-value-box__price-name {
+    color: #ffffff;
+  }
+
+  /* ── Elements ── */
+  .lp-value-box__number {
+    font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .lp-value-box__icon {
+    margin-right: 6px;
+  }
+
+  .lp-value-box__sub {
+    font-size: clamp(13px, 2vw, 15px);
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 8px 0 0;
+  }
+
+  .lp-value-box__divider {
+    border: none;
+    border-top: 1px solid;
+    margin: 16px 0;
+  }
+
+  .lp-value-box__price {
+    font-size: clamp(15px, 2.5vw, 17px);
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .lp-value-box__price-name {
+    font-weight: 600;
+    color: #30273e;
+  }
+
+  .lp-value-box__note {
+    font-size: clamp(11px, 1.5vw, 12px);
+    font-weight: 300;
+    line-height: 1.4;
+    margin: 12px 0 0;
+    font-style: italic;
+  }
+
+  @media (min-width: 990px) {
+    .lp-value-box {
+      padding: 0;
+    }
+  }
+</style>
+
+<div class="sk-lp">
+  <section class="lp-value-box lp-value-box--{{ section.settings.color_scheme }}">
+    <div class="lp-value-box__inner">
+      <p class="lp-value-box__number">
+        {%- if section.settings.show_icon -%}
+          <span class="lp-value-box__icon" aria-hidden="true">✓</span>
+        {%- endif -%}
+        {{- section.settings.big_number -}}
+      </p>
+
+      {%- if section.settings.sub_text != blank -%}
+        <p class="lp-value-box__sub">{{ section.settings.sub_text }}</p>
+      {%- endif -%}
+
+      <hr class="lp-value-box__divider">
+
+      {%- if section.settings.product_price_line != blank -%}
+        <p class="lp-value-box__price">
+          {%- assign price_parts = section.settings.product_price_line | split: ':' -%}
+          {%- if price_parts.size > 1 -%}
+            <span class="lp-value-box__price-name">{{ price_parts[0] }}:</span>{{ price_parts | last }}
+          {%- else -%}
+            {{ section.settings.product_price_line }}
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.disclaimer != blank -%}
+        <p class="lp-value-box__note">{{ section.settings.disclaimer }}</p>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LP Value Box",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "big_number",
+      "label": "Stort tall",
+      "default": "≈ 9 klinikkbehandlinger"
+    },
+    {
+      "type": "text",
+      "id": "sub_text",
+      "label": "Undertekst",
+      "default": "Basert på ca. 550 kr per LED-behandling"
+    },
+    {
+      "type": "text",
+      "id": "product_price_line",
+      "label": "Produktpris-linje",
+      "default": "Skinora Radiance: 4 690 kr (engangskjøp)"
+    },
+    {
+      "type": "text",
+      "id": "disclaimer",
+      "label": "Liten merknad",
+      "default": "Pris varierer mellom klinikker. Resultater varierer."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "Vis ikon",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Fargevalg",
+      "options": [
+        { "value": "light", "label": "Lys" },
+        { "value": "dark", "label": "Mørk" }
+      ],
+      "default": "light"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Value Box"
+    }
+  ]
+}
+{% endschema %}
