@@ -440,6 +440,13 @@
             "answer": "Clear bruker blått og rødt LED-lys som er klinisk dokumentert for å redusere akne-bakterier og dempe betennelse. Den er spesielt effektiv mot mild til moderat akne."
           }
         },
+        "faq_xyfpr7": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvem bær være forsiktig med Skinora® Clear (blått lys)?",
+            "answer": "Personer som lett får pigmentflekker (PIH) eller har melasma – særlig ved mørkere hudtyper (Fitzpatrick IV–VI) – bør starte forsiktig og følge med på om huden blir mørkere i flekker. Hvis du ser økt pigmentering, ta pause og vurder å rådføre deg med lege/dermatolog."
+          }
+        },
         "faq_2": {
           "type": "faq",
           "settings": {
@@ -478,6 +485,7 @@
       },
       "block_order": [
         "faq_1",
+        "faq_xyfpr7",
         "faq_2",
         "faq_3",
         "faq_4",
