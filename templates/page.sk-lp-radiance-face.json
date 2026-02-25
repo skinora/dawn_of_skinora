@@ -74,7 +74,7 @@
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/garanti.svg",
-            "text": "60 dagers garanti"
+            "text": "60 dager fornøydgaranti - eller penger tilbake"
           }
         },
         "tb_4": {
@@ -336,7 +336,7 @@
         "tf_1": {
           "type": "card",
           "settings": {
-            "title": "60 dagers fornøydgaranti",
+            "title": "60 dager fornøydgaranti",
             "text": "<p>Ikke fornøyd? Du får pengene tilbake – ingen spørsmål.</p>"
           }
         },
