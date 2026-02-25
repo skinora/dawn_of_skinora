@@ -44,31 +44,33 @@
           {%- endif -%}
         </div>
 
-        <div class="lp-hero__purchase-info">
-          {%- if sk_lp_product != blank -%}
+        {%- if shop.enabled_payment_types.size > 0 -%}
+          {%- assign excluded_payment_types = 'american_express,unionpay' | split: ',' -%}
+          <div class="lp-payment-icons">
+            <ul class="lp-payment-icons__list">
+              {%- for type in shop.enabled_payment_types -%}
+                {%- unless excluded_payment_types contains type -%}
+                  <li class="lp-payment-icons__item">{{ type | payment_type_svg_tag }}</li>
+                {%- endunless -%}
+              {%- endfor -%}
+              {%- if settings.show_vipps_payment_icon -%}
+                <li class="lp-payment-icons__item">
+                  <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="Vipps" height="22" width="">
+                </li>
+              {%- endif -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        {%- if sk_lp_product != blank -%}
+          <div class="lp-hero__meta">
             <span class="lp-hero__price">
               {{- sk_lp_product.price | money_without_trailing_zeros -}}
             </span>
             <span class="lp-hero__divider" aria-hidden="true">·</span>
-          {%- endif -%}
-          {%- if shop.enabled_payment_types.size > 0 -%}
-            {%- assign excluded_payment_types = 'american_express,unionpay' | split: ',' -%}
-            <div class="lp-payment-icons">
-              <ul class="lp-payment-icons__list">
-                {%- for type in shop.enabled_payment_types -%}
-                  {%- unless excluded_payment_types contains type -%}
-                    <li class="lp-payment-icons__item">{{ type | payment_type_svg_tag }}</li>
-                  {%- endunless -%}
-                {%- endfor -%}
-                {%- if settings.show_vipps_payment_icon -%}
-                  <li class="lp-payment-icons__item">
-                    <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="Vipps" height="22" width="">
-                  </li>
-                {%- endif -%}
-              </ul>
-            </div>
-          {%- endif -%}
-        </div>
+            <span class="lp-hero__delivery">Leveringstid 2-4 dager</span>
+          </div>
+        {%- endif -%}
       </div>
 
       <div class="lp-hero__image">
