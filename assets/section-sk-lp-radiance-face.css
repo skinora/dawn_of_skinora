@@ -1504,16 +1504,39 @@
   }
 }
 
-/* ---------- PAYMENT ICONS (LP) ---------- */
+/* ---------- PRICE + PAYMENT ICONS (LP) ---------- */
+.lp-hero__purchase-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.lp-hero__price {
+  font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #30273e;
+  letter-spacing: 0.02em;
+}
+
+.lp-hero__divider {
+  font-size: 24px;
+  color: #b0b0b0;
+  line-height: 1;
+}
+
 .lp-payment-icons {
-  margin-bottom: 12px;
+  margin: 0;
 }
 
 .lp-payment-icons__list {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.8rem;
   padding: 0;
   margin: 0;

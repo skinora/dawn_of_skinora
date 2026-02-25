@@ -7,6 +7,7 @@
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
 
 {%- assign sk_lp_handle = section.settings.cta_url | split: '/products/' | last | split: '?' | first -%}
+{%- assign sk_lp_product = all_products[sk_lp_handle] -%}
 
 <script src="{{ 'sk-lp-cart-add.js' | asset_url }}" defer="defer"></script>
 
@@ -32,24 +33,6 @@
           </div>
         {%- endif -%}
 
-        {%- if shop.enabled_payment_types.size > 0 -%}
-          {%- assign excluded_payment_types = 'american_express,unionpay' | split: ',' -%}
-          <div class="lp-payment-icons">
-            <ul class="lp-payment-icons__list">
-              {%- for type in shop.enabled_payment_types -%}
-                {%- unless excluded_payment_types contains type -%}
-                  <li class="lp-payment-icons__item">{{ type | payment_type_svg_tag }}</li>
-                {%- endunless -%}
-              {%- endfor -%}
-              {%- if settings.show_vipps_payment_icon -%}
-                <li class="lp-payment-icons__item">
-                  <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="Vipps" height="22" width="">
-                </li>
-              {%- endif -%}
-            </ul>
-          </div>
-        {%- endif -%}
-
         <div class="lp-hero__actions">
           <button type="button" class="lp-btn" data-product-handle="{{ sk_lp_handle }}">
             {{ section.settings.cta_text }}
@@ -58,6 +41,32 @@
             <a href="{{ section.settings.link_url | default: '#' }}" class="lp-hero__link">
               {{- section.settings.link_text -}}
             </a>
+          {%- endif -%}
+        </div>
+
+        <div class="lp-hero__purchase-info">
+          {%- if sk_lp_product != blank -%}
+            <span class="lp-hero__price">
+              {{- sk_lp_product.price | money_without_trailing_zeros -}}
+            </span>
+            <span class="lp-hero__divider" aria-hidden="true">·</span>
+          {%- endif -%}
+          {%- if shop.enabled_payment_types.size > 0 -%}
+            {%- assign excluded_payment_types = 'american_express,unionpay' | split: ',' -%}
+            <div class="lp-payment-icons">
+              <ul class="lp-payment-icons__list">
+                {%- for type in shop.enabled_payment_types -%}
+                  {%- unless excluded_payment_types contains type -%}
+                    <li class="lp-payment-icons__item">{{ type | payment_type_svg_tag }}</li>
+                  {%- endunless -%}
+                {%- endfor -%}
+                {%- if settings.show_vipps_payment_icon -%}
+                  <li class="lp-payment-icons__item">
+                    <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="Vipps" height="22" width="">
+                  </li>
+                {%- endif -%}
+              </ul>
+            </div>
           {%- endif -%}
         </div>
       </div>
