@@ -11,7 +11,6 @@
   "sections": {
     "announcement": {
       "type": "sk-lp-announcement",
-      "disabled": true,
       "settings": {
         "text": "GRATIS FRAKT I NORGE  |  60 DAGERS FORNØYDGARANTI"
       }

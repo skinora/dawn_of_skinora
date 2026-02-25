@@ -13,6 +13,7 @@
   "sections": {
     "sk_announcment_bar_tWPjQL": {
       "type": "sk-announcment-bar",
+      "disabled": true,
       "name": "SK Announcement Bar",
       "settings": {
         "text": "Gratis frakt i Norge   |   60 DAGERS fornøydgaranti",
