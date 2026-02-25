@@ -1,3 +1,11 @@
+/* ── Hide global header/announcement on landing pages ── */
+.template-page-sk-lp-clear .section-header,
+.template-page-sk-lp-clear .shopify-section-header-group,
+.template-page-sk-lp-radiance-face .section-header,
+.template-page-sk-lp-radiance-face .shopify-section-header-group {
+  display: none !important;
+}
+
 .sk-section img,
 [class^='sk-'] img,
 [class*=' sk-'] img {
