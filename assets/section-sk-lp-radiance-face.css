@@ -1582,89 +1582,63 @@
 .lp-value-box__inner {
   width: 100%;
   max-width: 480px;
-  border-left: 4px solid #30273e;
-  border-radius: 4px;
-  padding: clamp(20px, 4vw, 32px) clamp(16px, 4vw, 28px);
+  border-left: 3px solid #30273e;
+  border-radius: 0;
+  background: #f8f8f8;
+  padding: 20px 24px;
 }
 
-/* Light scheme */
-.lp-value-box--light .lp-value-box__inner {
-  background: #f7f5f2;
-  color: #1a1a1a;
-}
-
-.lp-value-box--light .lp-value-box__sub,
-.lp-value-box--light .lp-value-box__note {
-  color: #6b6b6b;
-}
-
-.lp-value-box--light .lp-value-box__divider {
-  border-color: rgba(0, 0, 0, 0.1);
-}
-
-/* Dark scheme */
-.lp-value-box--dark .lp-value-box__inner {
-  background: #1a1a1a;
-  color: #ffffff;
-  border-left-color: #c8b89c;
-}
-
-.lp-value-box--dark .lp-value-box__sub,
-.lp-value-box--dark .lp-value-box__note {
-  color: rgba(255, 255, 255, 0.55);
-}
-
-.lp-value-box--dark .lp-value-box__divider {
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
-.lp-value-box--dark .lp-value-box__price-name {
-  color: #ffffff;
-}
-
-/* Elements */
-.lp-value-box__number {
+.lp-value-box__title {
   font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  font-size: 22px;
+  font-weight: 500;
+  color: #3a3448;
+  line-height: 1.35;
   margin: 0;
 }
 
-.lp-value-box__icon {
-  margin-right: 6px;
+.lp-value-box__check {
+  font-weight: 700;
+  color: #30273e;
+  margin-right: 4px;
 }
 
 .lp-value-box__sub {
-  font-size: clamp(13px, 2vw, 15px);
-  font-weight: 400;
-  line-height: 1.5;
-  margin: 8px 0 0;
+  font-family: 'sofia-pro', Assistant, sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  font-style: italic;
+  color: #5f5f5f;
+  line-height: 1.55;
+  margin: 6px 0 0;
 }
 
 .lp-value-box__divider {
   border: none;
-  border-top: 1px solid;
-  margin: 16px 0;
+  border-top: 1px solid rgba(48, 39, 62, 0.12);
+  margin: 14px 0;
 }
 
-.lp-value-box__price {
-  font-size: clamp(15px, 2.5vw, 17px);
-  font-weight: 400;
+.lp-value-box__roi {
+  font-family: 'sofia-pro', Assistant, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #30273e;
   line-height: 1.5;
   margin: 0;
 }
 
-.lp-value-box__price-name {
-  font-weight: 600;
-  color: #30273e;
+.lp-value-box__note {
+  font-family: 'sofia-pro', Assistant, sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+  color: #5f5f5f;
+  line-height: 1.5;
+  margin: 8px 0 0;
 }
 
-.lp-value-box__note {
-  font-size: clamp(11px, 1.5vw, 12px);
-  font-weight: 300;
-  line-height: 1.4;
-  margin: 12px 0 0;
-  font-style: italic;
+/* Value bullets below box */
+.lp-hero__pills--value {
+  margin-top: 16px;
 }

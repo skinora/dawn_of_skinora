@@ -70,13 +70,13 @@
           </div>
         {%- endif -%}
 
-        {%- comment -%} ── Value Box (inline) ── {%- endcomment -%}
+        {%- comment -%} ── Value Box ── {%- endcomment -%}
         {%- if section.settings.big_number != blank -%}
-          <div class="lp-value-box lp-value-box--{{ section.settings.value_color_scheme }}">
+          <div class="lp-value-box">
             <div class="lp-value-box__inner">
-              <p class="lp-value-box__number">
+              <p class="lp-value-box__title">
                 {%- if section.settings.show_value_icon -%}
-                  <span class="lp-value-box__icon" aria-hidden="true">✓</span>
+                  <span class="lp-value-box__check" aria-hidden="true">✓</span>
                 {%- endif -%}
                 {{- section.settings.big_number -}}
               </p>
@@ -87,22 +87,39 @@
 
               <hr class="lp-value-box__divider">
 
-              {%- if section.settings.value_price_line != blank -%}
-                <p class="lp-value-box__price">
-                  {%- assign price_parts = section.settings.value_price_line | split: ':' -%}
-                  {%- if price_parts.size > 1 -%}
-                    <span class="lp-value-box__price-name">{{ price_parts[0] }}:</span>{{ price_parts | last }}
-                  {%- else -%}
-                    {{ section.settings.value_price_line }}
-                  {%- endif -%}
-                </p>
+              {%- if section.settings.value_roi_line != blank -%}
+                <p class="lp-value-box__roi">{{ section.settings.value_roi_line }}</p>
               {%- endif -%}
 
-              {%- if section.settings.value_disclaimer != blank -%}
-                <p class="lp-value-box__note">{{ section.settings.value_disclaimer }}</p>
+              {%- if section.settings.value_roi_sub != blank -%}
+                <p class="lp-value-box__note">{{ section.settings.value_roi_sub }}</p>
               {%- endif -%}
             </div>
           </div>
+
+          {%- comment -%} ── Value bullets ── {%- endcomment -%}
+          {%- if section.settings.value_bullet_1 != blank
+            or section.settings.value_bullet_2 != blank
+            or section.settings.value_bullet_3 != blank
+          -%}
+            <div class="lp-hero__pills lp-hero__pills--value">
+              {%- if section.settings.value_bullet_1 != blank -%}
+                <span class="lp-hero__pill"
+                  ><span class="lp-hero__pill-check">✓</span> {{ section.settings.value_bullet_1 -}}
+                </span>
+              {%- endif -%}
+              {%- if section.settings.value_bullet_2 != blank -%}
+                <span class="lp-hero__pill"
+                  ><span class="lp-hero__pill-check">✓</span> {{ section.settings.value_bullet_2 -}}
+                </span>
+              {%- endif -%}
+              {%- if section.settings.value_bullet_3 != blank -%}
+                <span class="lp-hero__pill"
+                  ><span class="lp-hero__pill-check">✓</span> {{ section.settings.value_bullet_3 -}}
+                </span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
         {%- endif -%}
       </div>
 
@@ -183,42 +200,54 @@
     {
       "type": "text",
       "id": "big_number",
-      "label": "Stort tall",
-      "default": "≈ 9 klinikkbehandlinger"
+      "label": "Tittel-linje",
+      "default": "Skinora® Clear: 4 390 kr (engangskjøp)"
     },
     {
       "type": "text",
       "id": "value_sub_text",
-      "label": "Undertekst",
-      "default": "Basert på ca. 550 kr per LED-behandling"
+      "label": "Undertekst (italic)",
+      "default": "Profesjonell LED-lysterapi – hjemme, når det passer deg"
     },
     {
       "type": "text",
-      "id": "value_price_line",
-      "label": "Produktpris-linje",
-      "default": "Skinora Radiance: 4 690 kr (engangskjøp)"
+      "id": "value_roi_line",
+      "label": "ROI-linje (bold)",
+      "default": "Tilsvarer ca. 8 LED-økter på klinikk"
     },
     {
       "type": "text",
-      "id": "value_disclaimer",
-      "label": "Liten merknad",
-      "default": "Pris varierer mellom klinikker. Resultater varierer."
+      "id": "value_roi_sub",
+      "label": "ROI-undertekst (italic)",
+      "default": "Basert på ca. 550 kr per behandling – etter det er behandlingen i praksis gratis"
     },
     {
       "type": "checkbox",
       "id": "show_value_icon",
-      "label": "Vis ikon i verdiboks",
+      "label": "Vis ✓ ikon i tittel",
       "default": true
     },
     {
-      "type": "select",
-      "id": "value_color_scheme",
-      "label": "Verdiboks fargevalg",
-      "options": [
-        { "value": "light", "label": "Lys" },
-        { "value": "dark", "label": "Mørk" }
-      ],
-      "default": "light"
+      "type": "header",
+      "content": "Verdi-bullets"
+    },
+    {
+      "type": "text",
+      "id": "value_bullet_1",
+      "label": "Bullet 1",
+      "default": "Klinisk dokumentert LED-teknologi"
+    },
+    {
+      "type": "text",
+      "id": "value_bullet_2",
+      "label": "Bullet 2",
+      "default": "30 dagers fornøydgaranti"
+    },
+    {
+      "type": "text",
+      "id": "value_bullet_3",
+      "label": "Bullet 3",
+      "default": "Spar tusenvis over tid"
     }
   ],
   "blocks": [
