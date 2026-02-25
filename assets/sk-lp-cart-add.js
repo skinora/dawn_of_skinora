@@ -53,6 +53,11 @@
       /* 3. Refresh and open cart drawer */
       const cartDrawer = document.querySelector('cart-drawer');
       if (cartDrawer) {
+        /* Remove empty-state classes so the filled cart UI is visible */
+        cartDrawer.classList.remove('is-empty');
+        const drawerItems = cartDrawer.querySelector('cart-drawer-items');
+        if (drawerItems) drawerItems.classList.remove('is-empty');
+
         /* Fetch fresh sections so the drawer shows the updated cart */
         const sectionsUrl = '/cart?sections=cart-drawer,cart-icon-bubble';
         const sectionsRes = await fetch(sectionsUrl);

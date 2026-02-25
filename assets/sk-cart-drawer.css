@@ -273,6 +273,18 @@ cart-drawer-items {
   padding-left: 1rem;
 }
 
+.cart-drawer .cart-item__name {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.cart-drawer .cart-item__name:hover,
+.cart-drawer .cart-item__name:focus-visible {
+  color: #30273e;
+  font-weight: 600;
+}
+
 .cart-drawer .cart-item__details {
   width: auto;
   grid-column: 2 / 4;
