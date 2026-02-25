@@ -29,7 +29,7 @@
                 {%- endif -%}
                 <div class="lp-why-radiance__card-body">
                   <h3 class="lp-why-radiance__title">{{ block.settings.title }}</h3>
-                  <p class="lp-why-radiance__text">{{ block.settings.text }}</p>
+                  <div class="lp-why-radiance__text">{{ block.settings.text }}</div>
                 </div>
               </div>
             </div>
@@ -61,10 +61,10 @@
         { "type": "image_picker", "id": "icon", "label": "Ikon" },
         { "type": "text", "id": "title", "label": "Tittel", "default": "Klinisk dokumentert teknologi" },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "text",
           "label": "Tekst",
-          "default": "LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon."
+          "default": "<p>LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon.</p>"
         }
       ]
     }
@@ -77,25 +77,28 @@
           "type": "card",
           "settings": {
             "title": "Klinisk dokumentert teknologi",
-            "text": "LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon."
+            "text": "<p>LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon.</p>"
           }
         },
         {
           "type": "card",
           "settings": {
             "title": "Komfortabel passform",
-            "text": "Utviklet for daglig hjemmebruk – myk, lett og enkel å ha på."
+            "text": "<p>Utviklet for daglig hjemmebruk – myk, lett og enkel å ha på.</p>"
           }
         },
         {
           "type": "card",
-          "settings": { "title": "Enkel å bruke", "text": "Få knapper, ingen komplisert rutine. På – og slapp av." }
+          "settings": {
+            "title": "Enkel å bruke",
+            "text": "<p>Få knapper, ingen komplisert rutine. På – og slapp av.</p>"
+          }
         },
         {
           "type": "card",
           "settings": {
             "title": "Premium kvalitet og garanti",
-            "text": "Norsk kundeservice og 60 dagers fornøydgaranti."
+            "text": "<p>Norsk kundeservice og 60 dagers fornøydgaranti.</p>"
           }
         }
       ]
