@@ -245,7 +245,7 @@
           "settings": {
             "icon": "shopify://shop_images/10.svg",
             "title": "Blått lys mot bakterier",
-            "text": "Dreper akne-bakterier uten antibiotika eller sterke kjemikalier."
+            "text": "<p>Dreper akne-bakterier uten antibiotika eller sterke kjemikalier.</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Se dokumentasjon</a></p>"
           }
         },
         "card_G34QkN": {
@@ -253,7 +253,7 @@
           "settings": {
             "icon": "shopify://shop_images/2.svg",
             "title": "Fokus på det som faktisk fungerer",
-            "text": "Vi har bevisst valgt bort unødvendige lysfarger. Skinora® Clear bruker kun utvalgte bølgelengder som er mest brukt i LED-lysbehandling — for et mer målrettet og konsistent lysbilde"
+            "text": "<p>Vi har bevisst valgt bort unødvendige lysfarger. Skinora® Clear bruker kun utvalgte bølgelengder som er mest brukt i LED-lysbehandling — for et mer målrettet og konsistent lysbilde</p>"
           }
         },
         "w_2": {
@@ -261,7 +261,7 @@
           "settings": {
             "icon": "shopify://shop_images/11.svg",
             "title": "Rødt lys mot betennelse",
-            "text": "Reduserer rødhet og hjelper huden å reparere seg selv raskere."
+            "text": "<p>Reduserer rødhet og hjelper huden å reparere seg selv raskere.</p>"
           }
         },
         "w_3": {
@@ -269,7 +269,7 @@
           "settings": {
             "icon": "shopify://shop_images/6.svg",
             "title": "Målrettet behandling",
-            "text": "Kompakt design for presis behandling der du trenger det."
+            "text": "<p>Kompakt design for presis behandling der du trenger det.</p>"
           }
         },
         "w_4": {
@@ -277,7 +277,7 @@
           "settings": {
             "icon": "shopify://shop_images/18.svg",
             "title": "Skånsom og trygg",
-            "text": "Ingen UV-stråler. Egnet for sensitiv og uren hud."
+            "text": "<p>Ingen UV-stråler. Egnet for sensitiv og uren hud.</p>"
           }
         }
       },
