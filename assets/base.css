@@ -73,10 +73,8 @@ h2#shopify-pc__banner__body-title,
   --sk-color-subheader-text: rgba(var(--mine-shaft-500), 1);
   --sk-body-text-strong: rgba(var(--sk-color-body-text), 1);
   --sk-body-text-soft: rgba(var(--sk-color-body-text), 0.8);
-  --sk-body-text-muted: rgba(var(--sk-color-body-text), 0.6);
   --sk-heading-text-strong: rgba(var(--sk-color-heading-text), 1);
   --sk-heading-text-soft: rgba(var(--sk-color-heading-text), 0.85);
-  --sk-heading-text-muted: rgba(var(--sk-color-heading-text), 0.7);
   --color-foreground: var(--sk-color-body-text); /* sensible default, overridden by theme settings */
   --color-bg-light: #f1eff4;
   --color-dark: #3a3939;
@@ -106,7 +104,6 @@ h2#shopify-pc__banner__body-title,
   --color-warning-bg: #fff3cd;
   /* Exact-match tokens for remaining literals found in CSS/ SVGs */
   --color-border-2: #e0e0e0; /* used by variant cards */
-  --color-ghost-1: var(--color-bg-light);
   --color-ghost-3: #f8f8f8; /* slight variant used in card thumbnails */
   --color-neutral-5: #999999; /* used for muted price */
   --color-footer-accent: #f5e8da; /* used in footer SVG fills */
@@ -128,7 +125,6 @@ h2#shopify-pc__banner__body-title,
   --sk-font-size-base: 2.185rem; /* ~35px */
   --sk-font-size-small: 1.8208rem; /* ~29px */
   --sk-font-size-medium: 2.0485rem; /* ~32px */
-  --sk-font-size-caption: 1.7071rem; /* ~28px */
   --sk-font-size-button: 2.0393rem; /* ~32px */
   --sk-font-size-large: 2.2761rem; /* ~37px */
   --sk-font-size-xl: 2.9133rem; /* ~47px */
@@ -224,28 +220,6 @@ html {
   max-width: var(--page-width, var(--sk-layout-expanded-width));
   margin: 0 auto;
   padding-inline: clamp(1.2rem, 4vw, 3.2rem);
-}
-
-/* Section content width utilities (unified readable widths) */
-/* Wide: full design width, Default: constrained text width, Narrow: extra small blocks */
-.sk-section-content {
-  width: 100%;
-  max-width: 64rem; /* ~1024px readable text column */
-  margin-inline: auto;
-  padding-inline: var(--sk-page-gutter);
-}
-
-@media screen and (min-width: 990px) {
-  .sk-section-content {
-    max-width: 68rem;
-  }
-}
-
-.sk-section-content--wide {
-  max-width: var(--page-width);
-}
-.sk-section-content--narrow {
-  max-width: 48rem;
 }
 
 body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
@@ -427,10 +401,6 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 ----------------------------------------------*/
 .sk-dynamic-banner__title,
 .sk-product-listing__title,
-.sk-before-after__title,
-.sk-features__title,
-.sk-radiance .sk-image-content__heading,
-.sk-led-light-work__heading,
 .sk-led-mask__title,
 .sk-faq-accordion__title {
   font-weight: 600;
@@ -439,8 +409,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 }
 
 /* Subtitles under section headings (lighter, slightly muted) */
-.sk-product-listing__subtitle,
-.sk-before-after__subtitle {
+.sk-product-listing__subtitle {
   color: rgb(var(--sk-color-subheader-text));
   margin: 0 0 1rem;
   font-weight: 300;
@@ -3938,8 +3907,7 @@ small,
   height: unset;
 }
 
-.sk-btn,
-.sk_primary-button {
+.sk-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3959,15 +3927,13 @@ small,
 
 @media only screen and (max-width: 600px) {
   .sk-btn,
-  .sk-btn--primary,
-  .sk_primary-button {
+  .sk-btn--primary {
     font-size: 2rem;
     padding-inline: clamp(18px, 6vw, 26px);
   }
 }
 
-.sk-btn--primary,
-.sk_primary-button {
+.sk-btn--primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3992,23 +3958,20 @@ small,
 }
 
 @media only screen and (max-width: 749px) {
-  .sk-btn--primary,
-  .sk_primary-button {
+  .sk-btn--primary {
     font-size: clamp(2rem, 4vw, 2.4rem);
     padding-inline: clamp(22px, 6vw, 32px);
   }
 }
 
-.sk-btn--primary:hover,
-.sk_primary-button:hover {
+.sk-btn--primary:hover {
   background-color: var(--color-white);
   color: var(--color-brand);
   border-color: var(--color-brand);
   transform: translateY(-2px);
 }
 
-.sk-btn--primary:active,
-.sk_primary-button:active {
+.sk-btn--primary:active {
   transform: translateY(0);
 }
 
@@ -4042,13 +4005,11 @@ small,
 }
 
 .sk-btn--primary:hover .sk-btn__icon,
-.sk_primary-button:hover .sk-btn__icon,
 .sk-btn--secondary:hover .sk-btn__icon {
   transform: translateX(2px);
 }
 
-.sk-btn.cart-items-pg-btn,
-.sk_primary-button.cart-items-pg-btn {
+.sk-btn.cart-items-pg-btn {
   display: inline-flex !important;
   min-width: 23rem;
 }
@@ -4732,10 +4693,6 @@ footer .footer__column.footer__column--menu a:hover {
 
   .sk-help-categories__grid {
     padding-left: 0 !important;
-  }
-
-  .sk-led-light-work-images-container {
-    width: 355px !important;
   }
 }
 
