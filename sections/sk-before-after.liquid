@@ -254,8 +254,7 @@
                     srcset="
                       {{ block.settings.before_image | image_url: width: 300 }} 300w,
                       {{ block.settings.before_image | image_url: width: 400 }} 400w,
-                      {{ block.settings.before_image | image_url: width: 500 }} 500w,
-                      {{ block.settings.before_image | image_url: width: 700 }} 700w
+                      {{ block.settings.before_image | image_url: width: 500 }} 500w
                     "
                     sizes="(max-width: 749px) 85vw, 400px"
                     alt="{{ block.settings.before_image.alt | escape }}"

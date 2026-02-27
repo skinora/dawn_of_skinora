@@ -317,8 +317,7 @@
                         srcset="
                           {{ card_product.featured_media | image_url: width: 280, height: 350, crop: 'center' }} 280w,
                           {{ card_product.featured_media | image_url: width: 400, height: 500, crop: 'center' }} 400w,
-                          {{ card_product.featured_media | image_url: width: 540, height: 675, crop: 'center' }} 540w,
-                          {{ card_product.featured_media | image_url: width: 760, height: 950, crop: 'center' }} 760w
+                          {{ card_product.featured_media | image_url: width: 540, height: 675, crop: 'center' }} 540w
                         "
                         sizes="(max-width: 549px) 85vw, (max-width: 989px) 45vw, 400px"
                         alt="{{ card_product.featured_media.alt | default: card_product.title | escape }}"
