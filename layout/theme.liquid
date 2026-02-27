@@ -74,7 +74,8 @@
     <link rel="icon" type="image/png" href="{{ 'skinora-48.png' | asset_url }}">
     <link rel="apple-touch-icon" href="{{ 'skinora.png' | asset_url }}">
 
-    {{ 'typekit-fonts.css' | asset_url | stylesheet_tag }}
+    {%- comment -%} typekit-fonts.css deferred — all @font-face rules use font-display:swap {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'typekit-fonts.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- comment -%} Bootstrap deferred — not needed for above-fold hero paint {%- endcomment -%}
     <link
