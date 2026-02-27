@@ -413,6 +413,14 @@
       onload="this.media='all'"
     >
 
+    {%- comment -%} Hover effects — off by default, deferred so it never blocks first paint {%- endcomment -%}
+    <link
+      rel="stylesheet"
+      href="{{ 'component-hover-effects.css' | asset_url }}"
+      media="print"
+      onload="this.media='all'"
+    >
+
     {%- comment -%} Cart drawer CSS deferred — drawer is hidden by inline visibility:hidden until opened {%- endcomment -%}
     {%- if settings.cart_type == 'drawer' -%}
       <link rel="stylesheet" href="{{ 'sk-cart-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
