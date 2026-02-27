@@ -64,11 +64,19 @@
           {%- endif -%}
         </div>
 
-        {%- assign lp_allowed_payment_types = 'visa,klarna' | split: ',' -%}
-        <div class="lp-payment-icons">
-          <ul class="lp-payment-icons__list">
+        {%- comment -%} ═══ BLOCK 1: PAYMENT CLARITY ═══ {%- endcomment -%}
+        <div class="lp-purchase-meta">
+          <div class="lp-purchase-meta__price-row">
+            <span class="lp-purchase-meta__price">{{ sk_lp_product.price | money_without_trailing_zeros }}</span>
+            <span class="lp-purchase-meta__klarna"
+              >eller fra <strong>{{ monthly_price }} kr/mnd</strong> med Klarna</span
+            >
+          </div>
+
+          <div class="lp-purchase-meta__icons">
+            {%- assign lp_allowed = 'visa,master,klarna' | split: ',' -%}
             {%- for type in shop.enabled_payment_types -%}
-              {%- if lp_allowed_payment_types contains type -%}
+              {%- if lp_allowed contains type -%}
                 <li class="lp-payment-icons__item">{{ type | payment_type_svg_tag }}</li>
               {%- endif -%}
             {%- endfor -%}
@@ -77,76 +85,49 @@
                 <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="Vipps" height="22" width="55">
               </li>
             {%- endif -%}
+          </div>
+
+          <ul class="lp-purchase-meta__safety">
+            <li>✔ Rentefri delbetaling</li>
+            <li>✔ 60 dagers fornøydgaranti</li>
+            <li>✔ Gratis frakt · 2–4 virkedager</li>
           </ul>
         </div>
 
-        {%- comment -%} CHANGE 7 — Price meta + Klarna monthly {%- endcomment -%}
-        {%- if sk_lp_product != blank -%}
-          <div class="lp-hero__meta">
-            <span class="lp-hero__price">
-              {{- sk_lp_product.price | money_without_trailing_zeros -}}
-            </span>
-            <span class="lp-hero__divider" aria-hidden="true">·</span>
-            <span class="lp-hero__delivery">Leveringstid 2-4 dager</span>
-            <p class="lp-hero__klarna">
-              Eller fra <strong>{{ monthly_price }} kr/mnd</strong> med Klarna
-            </p>
-          </div>
-        {%- endif -%}
+        {%- comment -%} ═══ BLOCK 2: VALUE JUSTIFICATION (ROI anchor) ═══ {%- endcomment -%}
+        <div class="lp-value-justify">
+          <p class="lp-value-justify__headline">Et klinikkresultat – uten klinikkpris</p>
+          <p class="lp-value-justify__body">
+            En LED-behandling i klinikk koster typisk 800–1.500 kr per økt.<br>
+            Skinora® Radiance Face tilsvarer opptil 6 behandlinger – og kan brukes ubegrenset hjemme.
+          </p>
+          <p class="lp-value-justify__payoff">→ Investeringen betaler seg selv etter få uker.</p>
+        </div>
 
-        {%- comment -%} CHANGE 8 — Value Box {%- endcomment -%}
-        {%- if section.settings.value_roi_line != blank -%}
-          <div class="lp-value-box">
-            <div class="lp-value-box__inner">
-              {%- comment -%} ROI headline — the killer argument, leads the box {%- endcomment -%}
-              <p class="lp-value-box__roi-headline">{{ section.settings.value_roi_line }}</p>
-              {%- if section.settings.value_roi_sub != blank -%}
-                <p class="lp-value-box__roi-sub">{{ section.settings.value_roi_sub }}</p>
-              {%- endif -%}
+        {%- comment -%} ═══ BLOCK 3: PREMIUM PROOF (clinical authority checklist) ═══ {%- endcomment -%}
+        <ul class="lp-proof-list">
+          <li class="lp-proof-list__item">Klinisk dokumentert LED-teknologi</li>
+          <li class="lp-proof-list__item">3 målrettede bølgelengder - ingen unødvendige lysfarger</li>
+          <li class="lp-proof-list__item">1072 nm dypt nær-infrarødt lys (dNIR)</li>
+          <li class="lp-proof-list__item">Optimalisert for hudens kollagenproduksjon</li>
+          <li class="lp-proof-list__item">Brukt av profesjonelle hudterapeuter</li>
+        </ul>
 
-              <hr class="lp-value-box__divider">
+        {%- comment -%} ═══ BLOCK 4: RISK REVERSAL (guarantee) ═══ {%- endcomment -%}
+        <div class="lp-risk-reversal">
+          <p class="lp-risk-reversal__headline">Prøv hjemme i 60 dager – helt risikofritt</p>
+          <p class="lp-risk-reversal__body">
+            Bruk masken 3–5 ganger i uken. Ser du ikke forbedring, får du pengene tilbake. Ingen spørsmål. Ingen risiko.
+          </p>
+        </div>
 
-              {%- comment -%} Price accessibility — Klarna {%- endcomment -%}
-              <p class="lp-value-box__klarna">
-                Eller fra <strong>{{ monthly_price }} kr/mnd</strong> med Klarna
-              </p>
-
-              {%- comment -%} One-time purchase reassurance {%- endcomment -%}
-              {%- if section.settings.value_tag != blank -%}
-                <p class="lp-value-box__tag">{{ section.settings.value_tag }}</p>
-              {%- endif -%}
-
-              {%- comment -%} After breakeven note {%- endcomment -%}
-              {%- if section.settings.value_sub_text != blank -%}
-                <p class="lp-value-box__note">{{ section.settings.value_sub_text }}</p>
-              {%- endif -%}
-            </div>
-          </div>
-
-          {%- comment -%} CHANGE 9 — Bottom value bullets {%- endcomment -%}
-          {%- if section.settings.value_bullet_1 != blank
-            or section.settings.value_bullet_2 != blank
-            or section.settings.value_bullet_3 != blank
-          -%}
-            <div class="lp-hero__pills lp-hero__pills--value">
-              {%- if section.settings.value_bullet_1 != blank -%}
-                <span class="lp-hero__pill"
-                  ><span class="lp-hero__pill-check">✓</span> {{ section.settings.value_bullet_1 -}}
-                </span>
-              {%- endif -%}
-              {%- if section.settings.value_bullet_2 != blank -%}
-                <span class="lp-hero__pill"
-                  ><span class="lp-hero__pill-check">✓</span> {{ section.settings.value_bullet_2 -}}
-                </span>
-              {%- endif -%}
-              {%- if section.settings.value_bullet_3 != blank -%}
-                <span class="lp-hero__pill"
-                  ><span class="lp-hero__pill-check">✓</span> {{ section.settings.value_bullet_3 -}}
-                </span>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-        {%- endif -%}
+        {%- comment -%} ═══ BLOCK 5: TRUST PILLS ═══ {%- endcomment -%}
+        <ul class="lp-trust-pills">
+          <li class="lp-trust-pills__item">✔ Gratis frakt i Norge</li>
+          <li class="lp-trust-pills__item">✔ 2 års reklamasjonsrett</li>
+          <li class="lp-trust-pills__item">✔ Sikker betaling</li>
+          <li class="lp-trust-pills__item">✔ Norsk kundeservice</li>
+        </ul>
 
         {%- comment -%} CHANGE 10 — Mobile sticky CTA {%- endcomment -%}
         <div class="lp-hero__sticky-cta">
@@ -218,84 +199,171 @@
     letter-spacing: 0.04em;
   }
 
-  /* CHANGE 7 — Klarna monthly in meta */
-  .lp-hero__klarna {
-    font-family: sofia-pro, Assistant, sans-serif;
-    font-size: 13px;
-    color: #888;
-    margin: 4px 0 0;
-    display: block;
-    width: 100%;
+  /* ─── BLOCK 1: Payment Clarity ─── */
+  .lp-purchase-meta {
+    margin-top: 16px;
+    padding: 16px 20px;
+    background: #f8f8f8;
+    border-radius: 6px;
+    max-width: 480px;
   }
 
-  /* FIX 2 — Value Box */
-  .lp-value-box {
-    margin-top: 20px;
+  .lp-purchase-meta__price-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
   }
-  .lp-value-box__inner {
-    width: 100%;
-    max-width: 480px;
-    border-left: 4px solid #30273e;
-    background: #f8f8f8;
-    padding: 20px 24px;
-  }
-  .lp-value-box__roi-headline {
+
+  .lp-purchase-meta__price {
     font-family: freight-text-pro, 'Playfair Display', Georgia, serif;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
     color: #30273e;
+  }
+
+  .lp-purchase-meta__klarna {
+    font-family: sofia-pro, Assistant, sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #5f5f5f;
+  }
+
+  .lp-purchase-meta__klarna strong {
+    font-weight: 600;
+    color: #30273e;
+  }
+
+  .lp-purchase-meta__icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .lp-purchase-meta__safety {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+  }
+
+  .lp-purchase-meta__safety li {
+    font-family: sofia-pro, Assistant, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #30273e;
+  }
+
+  /* ─── BLOCK 2: Value Justification ─── */
+  .lp-value-justify {
+    margin-top: 20px;
+    padding: 18px 20px;
+    border-left: 4px solid #30273e;
+    background: #f8f8f8;
+    max-width: 480px;
+  }
+
+  .lp-value-justify__headline {
+    font-family: freight-text-pro, 'Playfair Display', Georgia, serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #3a3448;
+    margin: 0 0 8px;
     line-height: 1.3;
+  }
+
+  .lp-value-justify__body {
+    font-family: sofia-pro, Assistant, sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #5f5f5f;
+    line-height: 1.6;
+    margin: 0 0 8px;
+  }
+
+  .lp-value-justify__payoff {
+    font-family: sofia-pro, Assistant, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #30273e;
     margin: 0;
   }
-  .lp-value-box__roi-sub {
+
+  /* ─── BLOCK 3: Premium Proof ─── */
+  .lp-proof-list {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .lp-proof-list__item {
+    font-family: sofia-pro, Assistant, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: #333;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .lp-proof-list__item::before {
+    content: '✔';
+    position: absolute;
+    left: 0;
+    color: #30273e;
+    font-weight: 700;
+  }
+
+  /* ─── BLOCK 4: Risk Reversal ─── */
+  .lp-risk-reversal {
+    margin-top: 20px;
+    padding: 14px 20px;
+    background: #f0ede8;
+    border-radius: 4px;
+    max-width: 480px;
+  }
+
+  .lp-risk-reversal__headline {
+    font-family: sofia-pro, Assistant, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #30273e;
+    margin: 0 0 4px;
+  }
+
+  .lp-risk-reversal__body {
     font-family: sofia-pro, Assistant, sans-serif;
     font-size: 13px;
     font-weight: 300;
     color: #5f5f5f;
     line-height: 1.5;
-    margin: 6px 0 0;
-  }
-  .lp-value-box__divider {
-    border: none;
-    border-top: 1px solid rgba(48, 39, 62, 0.12);
-    margin: 14px 0;
-  }
-  .lp-value-box__klarna {
-    font-family: sofia-pro, Assistant, sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    color: #30273e;
     margin: 0;
-    line-height: 1.5;
   }
-  .lp-value-box__klarna strong {
-    font-weight: 700;
-    color: #30273e;
+
+  /* ─── BLOCK 5: Trust Pills ─── */
+  .lp-trust-pills {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    max-width: 480px;
   }
-  .lp-value-box__tag {
+
+  .lp-trust-pills__item {
     font-family: sofia-pro, Assistant, sans-serif;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
     color: #5f5f5f;
-    margin: 10px 0 0;
-    line-height: 1.4;
-  }
-  .lp-value-box__note {
-    font-family: sofia-pro, Assistant, sans-serif;
-    font-size: 12px;
-    font-weight: 300;
-    font-style: italic;
-    color: #5f5f5f;
-    margin: 6px 0 0;
-    line-height: 1.5;
-  }
-  /* Hide old value-box title/check/sub — no longer used */
-  .lp-value-box__title,
-  .lp-value-box__check,
-  .lp-value-box__sub {
-    display: none;
   }
 
   /* CHANGE 10 — Mobile sticky CTA */
