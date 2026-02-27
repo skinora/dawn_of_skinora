@@ -161,11 +161,12 @@
       .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image {
         min-height: 0;
         aspect-ratio: 4 / 3;
-        border-radius: 12px;
+        border-radius: 0;
         max-height: none;
         width: 100vw;
         max-width: none;
         margin-inline: calc(50% - 50vw);
+        overflow: clip; /* prevent iOS Safari from scrolling into 100vw overflow */
       }
 
       .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__image img {

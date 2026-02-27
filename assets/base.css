@@ -149,6 +149,7 @@ h2#shopify-pc__banner__body-title,
 html {
   font-size: var(--root-font-size);
   font-family: var(--font-body-family, 'Inter', 'system-ui', sans-serif);
+  overflow-x: clip; /* Prevent iOS Safari horizontal scroll from 100vw children */
 }
 
 .product-card-wrapper .card,
@@ -4427,6 +4428,7 @@ body {
   line-height: var(--sk-line-height-base);
   letter-spacing: 0.01em;
   color: rgb(var(--sk-color-body-text));
+  overflow-x: hidden; /* Prevent horizontal scroll from any overflowing child */
 }
 
 button,

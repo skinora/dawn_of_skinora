@@ -19,7 +19,7 @@
 
 <style>
   .lp-announcement-bar {
-    overflow: hidden;
+    overflow: clip; /* clip instead of hidden — prevents iOS Safari from scrolling into ticker overflow */
     position: relative;
   }
   .lp-announcement-bar__ticker {
