@@ -45,10 +45,11 @@
 
         {%- comment -%} CHANGE 4 — Star rating {%- endcomment -%}
         {%- if section.settings.rating_text != blank -%}
-          <p class="lp-hero__rating">
-            <span class="lp-hero__rating-stars">⭐⭐⭐⭐⭐</span>
-            {{ section.settings.rating_text }}
-          </p>
+          <div class="lp-hero__rating">
+            <span class="lp-hero__rating-stars">★★★★★</span>
+            <span class="lp-hero__rating-score">4.8/5</span>
+            <span class="lp-hero__rating-count">– 102 anmeldelser</span>
+          </div>
         {%- endif -%}
 
         {%- comment -%} CHANGE 6 — CTA button {%- endcomment -%}
@@ -94,34 +95,30 @@
         {%- endif -%}
 
         {%- comment -%} CHANGE 8 — Value Box {%- endcomment -%}
-        {%- if section.settings.value_title != blank -%}
+        {%- if section.settings.value_roi_line != blank -%}
           <div class="lp-value-box">
             <div class="lp-value-box__inner">
-              <p class="lp-value-box__title">
-                {%- if section.settings.show_value_icon -%}
-                  <span class="lp-value-box__check" aria-hidden="true">✓</span>
-                {%- endif -%}
-                {{- section.settings.value_title -}}
-              </p>
-
-              {%- if section.settings.value_tag != blank -%}
-                <p class="lp-value-box__tag">{{ section.settings.value_tag }}</p>
-              {%- endif -%}
-
-              <p class="lp-value-box__klarna">Eller {{ monthly_price }} kr/mnd med Klarna – ingen renter</p>
-
-              {%- if section.settings.value_sub_text != blank -%}
-                <p class="lp-value-box__sub">{{ section.settings.value_sub_text }}</p>
+              {%- comment -%} ROI headline — the killer argument, leads the box {%- endcomment -%}
+              <p class="lp-value-box__roi-headline">{{ section.settings.value_roi_line }}</p>
+              {%- if section.settings.value_roi_sub != blank -%}
+                <p class="lp-value-box__roi-sub">{{ section.settings.value_roi_sub }}</p>
               {%- endif -%}
 
               <hr class="lp-value-box__divider">
 
-              {%- if section.settings.value_roi_line != blank -%}
-                <p class="lp-value-box__roi">{{ section.settings.value_roi_line }}</p>
+              {%- comment -%} Price accessibility — Klarna {%- endcomment -%}
+              <p class="lp-value-box__klarna">
+                Eller <strong>{{ monthly_price }} kr/mnd</strong> med Klarna – ingen renter
+              </p>
+
+              {%- comment -%} One-time purchase reassurance {%- endcomment -%}
+              {%- if section.settings.value_tag != blank -%}
+                <p class="lp-value-box__tag">{{ section.settings.value_tag }}</p>
               {%- endif -%}
 
-              {%- if section.settings.value_roi_sub != blank -%}
-                <p class="lp-value-box__note">{{ section.settings.value_roi_sub }}</p>
+              {%- comment -%} After breakeven note {%- endcomment -%}
+              {%- if section.settings.value_sub_text != blank -%}
+                <p class="lp-value-box__note">{{ section.settings.value_sub_text }}</p>
               {%- endif -%}
             </div>
           </div>
@@ -186,44 +183,118 @@
     font-style: italic;
   }
 
-  /* CHANGE 4 — star rating */
+  /* FIX 1 — Star rating */
   .lp-hero__rating {
-    font-family: 'sofia-pro', Assistant, sans-serif;
-    font-size: 0.85rem;
-    color: #666;
-    margin: 0 0 12px;
     display: flex;
     align-items: center;
     gap: 6px;
+    margin: 0 0 14px;
+    flex-wrap: wrap;
   }
   .lp-hero__rating-stars {
-    letter-spacing: 1px;
+    font-size: 18px;
+    color: #d4a843;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  .lp-hero__rating-score {
+    font-family: sofia-pro, Assistant, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #30273e;
+  }
+  .lp-hero__rating-count {
+    font-family: sofia-pro, Assistant, sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #5f5f5f;
   }
 
   /* CHANGE 6 — hero CTA size bump */
   .lp-btn--hero {
     padding: 18px 36px;
-    font-size: 1.05rem;
+    font-size: 17px;
     letter-spacing: 0.04em;
   }
 
   /* CHANGE 7 — Klarna monthly in meta */
   .lp-hero__klarna {
-    font-family: 'sofia-pro', Assistant, sans-serif;
-    font-size: 0.8rem;
+    font-family: sofia-pro, Assistant, sans-serif;
+    font-size: 13px;
     color: #888;
     margin: 4px 0 0;
     display: block;
     width: 100%;
   }
 
-  /* CHANGE 8 — Klarna line in value box */
+  /* FIX 2 — Value Box */
+  .lp-value-box {
+    margin-top: 20px;
+  }
+  .lp-value-box__inner {
+    width: 100%;
+    max-width: 480px;
+    border-left: 4px solid #30273e;
+    background: #f8f8f8;
+    padding: 20px 24px;
+  }
+  .lp-value-box__roi-headline {
+    font-family: freight-text-pro, 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #30273e;
+    line-height: 1.3;
+    margin: 0;
+  }
+  .lp-value-box__roi-sub {
+    font-family: sofia-pro, Assistant, sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #5f5f5f;
+    line-height: 1.5;
+    margin: 6px 0 0;
+  }
+  .lp-value-box__divider {
+    border: none;
+    border-top: 1px solid rgba(48, 39, 62, 0.12);
+    margin: 14px 0;
+  }
   .lp-value-box__klarna {
-    font-family: 'sofia-pro', Assistant, sans-serif;
-    font-size: 0.78rem;
-    color: #999;
-    margin: 4px 0 8px;
+    font-family: sofia-pro, Assistant, sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: #30273e;
+    margin: 0;
+    line-height: 1.5;
+  }
+  .lp-value-box__klarna strong {
+    font-weight: 700;
+    color: #30273e;
+  }
+  .lp-value-box__tag {
+    font-family: sofia-pro, Assistant, sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #5f5f5f;
+    margin: 10px 0 0;
+    line-height: 1.4;
+  }
+  .lp-value-box__note {
+    font-family: sofia-pro, Assistant, sans-serif;
+    font-size: 12px;
+    font-weight: 300;
     font-style: italic;
+    color: #5f5f5f;
+    margin: 6px 0 0;
+    line-height: 1.5;
+  }
+  /* Hide old value-box title/check/sub — no longer used */
+  .lp-value-box__title,
+  .lp-value-box__check,
+  .lp-value-box__sub {
+    display: none;
   }
 
   /* CHANGE 10 — Mobile sticky CTA */
@@ -251,7 +322,7 @@
       width: 100%;
       max-width: 480px;
       padding: 16px;
-      font-size: 1rem;
+      font-size: 16px;
     }
   }
 </style>
