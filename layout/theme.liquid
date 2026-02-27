@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-    <meta name="theme-color" content="">
+    <meta name="theme-color" content="#30273e">
     <link rel="canonical" href="{{ canonical_url }}">
 
     {% comment %}
@@ -25,6 +25,7 @@
 
     <link rel="preconnect" href="https://use.typekit.net" crossorigin>
     <link rel="preconnect" href="https://p.typekit.net" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
     {%- comment -%}
       Sofia Pro sits in kit jxm0xpk; Freight families are still served from pbt1clx
@@ -82,6 +83,26 @@
     {% endif %}
 
     {% render 'meta-tags' %}
+    {% render 'seo-breadcrumbs-jsonld' %}
+
+    {%- comment -%} WebSite + SearchAction JSON-LD — enables Google sitelinks search box {%- endcomment -%}
+    {%- assign search_url_template = request.origin | append: '/search?q={search_term_string}' -%}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | append: '/' | json }},
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": {{ search_url_template | json }}
+          },
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
 
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>

@@ -74,7 +74,7 @@
             {%- endfor -%}
             {%- if settings.show_vipps_payment_icon -%}
               <li class="lp-payment-icons__item">
-                <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="Vipps" height="22" width="">
+                <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="Vipps" height="22" width="55">
               </li>
             {%- endif -%}
           </ul>
@@ -89,7 +89,7 @@
             <span class="lp-hero__divider" aria-hidden="true">·</span>
             <span class="lp-hero__delivery">Leveringstid 2-4 dager</span>
             <p class="lp-hero__klarna">
-              Eller <strong>{{ monthly_price }} kr/mnd</strong> med Klarna
+              Eller fra <strong>{{ monthly_price }} kr/mnd</strong> med Klarna
             </p>
           </div>
         {%- endif -%}
@@ -108,7 +108,7 @@
 
               {%- comment -%} Price accessibility — Klarna {%- endcomment -%}
               <p class="lp-value-box__klarna">
-                Eller <strong>{{ monthly_price }} kr/mnd</strong> med Klarna – ingen renter
+                Eller fra <strong>{{ monthly_price }} kr/mnd</strong> med Klarna
               </p>
 
               {%- comment -%} One-time purchase reassurance {%- endcomment -%}
@@ -166,6 +166,7 @@
             width="{{ section.settings.image.width }}"
             height="{{ section.settings.image.height }}"
             loading="eager"
+            fetchpriority="high"
           >
         {%- else -%}
           <div class="lp-hero__image-placeholder">[ Produktbilde ]</div>
