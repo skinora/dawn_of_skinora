@@ -254,20 +254,31 @@
               assign display_alt = testimonial_alt_text | default: testimonial_title | default: 'Før og etter – Skinora Clear'
 
               assign img_src = null
-              assign img_w = 800
+              assign img_srcset = ''
+              assign img_w = 460
               assign img_h = 360
 
               if image_value != blank
                 if image_value.preview_image
                   assign img_obj = image_value.preview_image
-                  assign img_src = img_obj | image_url: width: 800
-                  assign img_w = img_obj.width | default: 800
+                  assign img_src = img_obj | image_url: width: 460
+                  assign img_w = img_obj.width | default: 460
                   assign img_h = img_obj.height | default: 360
+                  assign s300 = img_obj | image_url: width: 300
+                  assign s400 = img_obj | image_url: width: 400
+                  assign s500 = img_obj | image_url: width: 500
+                  assign s700 = img_obj | image_url: width: 700
+                  assign img_srcset = s300 | append: ' 300w, ' | append: s400 | append: ' 400w, ' | append: s500 | append: ' 500w, ' | append: s700 | append: ' 700w'
                 elsif image_value.width
                   assign img_obj = image_value
-                  assign img_src = img_obj | image_url: width: 800
-                  assign img_w = img_obj.width | default: 800
+                  assign img_src = img_obj | image_url: width: 460
+                  assign img_w = img_obj.width | default: 460
                   assign img_h = img_obj.height | default: 360
+                  assign s300 = img_obj | image_url: width: 300
+                  assign s400 = img_obj | image_url: width: 400
+                  assign s500 = img_obj | image_url: width: 500
+                  assign s700 = img_obj | image_url: width: 700
+                  assign img_srcset = s300 | append: ' 300w, ' | append: s400 | append: ' 400w, ' | append: s500 | append: ' 500w, ' | append: s700 | append: ' 700w'
                 else
                   assign img_src = image_value | file_url
                 endif

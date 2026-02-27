@@ -325,7 +325,7 @@
                         width="400"
                         height="500"
                         loading="lazy"
-                        fetchpriority="high"
+                        decoding="async"
                       >
                       {% if hover_image %}
                         <img
@@ -334,8 +334,7 @@
                           srcset="
                             {{ hover_image | image_url: width: 280, height: 350, crop: 'center' }} 280w,
                             {{ hover_image | image_url: width: 400, height: 500, crop: 'center' }} 400w,
-                            {{ hover_image | image_url: width: 540, height: 675, crop: 'center' }} 540w,
-                            {{ hover_image | image_url: width: 760, height: 950, crop: 'center' }} 760w
+                            {{ hover_image | image_url: width: 540, height: 675, crop: 'center' }} 540w
                           "
                           sizes="(max-width: 549px) 85vw, (max-width: 989px) 45vw, 400px"
                           alt="{{ hover_image.alt | default: card_product.title | escape }}"
