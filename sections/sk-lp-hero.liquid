@@ -8,6 +8,7 @@
 
 {%- assign sk_lp_handle = section.settings.cta_url | split: '/products/' | last | split: '?' | first -%}
 {%- assign sk_lp_product = all_products[sk_lp_handle] -%}
+{%- assign monthly_price = sk_lp_product.price | divided_by: 100 | divided_by: 36 | round -%}
 
 <script src="{{ 'sk-lp-cart-add.js' | asset_url }}" defer="defer"></script>
 
@@ -19,24 +20,40 @@
           <p class="lp-eyebrow">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
 
+        {%- comment -%} CHANGE 2 — Headline {%- endcomment -%}
         <h2 class="lp-hero__title">{{ section.settings.title }}</h2>
 
-        <ul class="lp-hero__bullets">
-          <li>
-            <span class="lp-hero__bullet-check">✓</span>
-            <span>{{ section.settings.bullet_1 }}</span>
-          </li>
-          <li class="lp-hero__bullet--large">
-            <span class="lp-hero__bullet-check">✓</span>
-            <span>{{ section.settings.bullet_2 }}</span>
-            {%- if section.settings.bullet_disclaimer != blank -%}
-              <p class="lp-hero__disclaimer">{{ section.settings.bullet_disclaimer }}</p>
-            {%- endif -%}
-          </li>
-        </ul>
+        {%- comment -%} CHANGE 3 — Split subtext {%- endcomment -%}
+        {%- if section.settings.text_line_1 != blank -%}
+          <p class="lp-hero__text">{{ section.settings.text_line_1 }}</p>
+        {%- endif -%}
+        {%- if section.settings.text_line_2 != blank -%}
+          <p class="lp-hero__text lp-hero__text--warm">{{ section.settings.text_line_2 }}</p>
+        {%- endif -%}
 
+        {%- comment -%} CHANGE 5 — Trust pills above CTA {%- endcomment -%}
+        {%- assign pills = section.blocks | where: 'type', 'pill' -%}
+        {%- if pills.size > 0 -%}
+          <div class="lp-hero__pills">
+            {%- for block in pills -%}
+              <span class="lp-hero__pill" {{ block.shopify_attributes }}>
+                <span class="lp-hero__pill-check">✓</span> {{ block.settings.text }}
+              </span>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} CHANGE 4 — Star rating {%- endcomment -%}
+        {%- if section.settings.rating_text != blank -%}
+          <p class="lp-hero__rating">
+            <span class="lp-hero__rating-stars">⭐⭐⭐⭐⭐</span>
+            {{ section.settings.rating_text }}
+          </p>
+        {%- endif -%}
+
+        {%- comment -%} CHANGE 6 — CTA button {%- endcomment -%}
         <div class="lp-hero__actions">
-          <button type="button" class="lp-btn" data-product-handle="{{ sk_lp_handle }}">
+          <button type="button" class="lp-btn lp-btn--hero" data-product-handle="{{ sk_lp_handle }}">
             {{ section.settings.cta_text }}
           </button>
           {%- if section.settings.show_link and section.settings.link_text != blank -%}
@@ -62,6 +79,7 @@
           </ul>
         </div>
 
+        {%- comment -%} CHANGE 7 — Price meta + Klarna monthly {%- endcomment -%}
         {%- if sk_lp_product != blank -%}
           <div class="lp-hero__meta">
             <span class="lp-hero__price">
@@ -69,10 +87,13 @@
             </span>
             <span class="lp-hero__divider" aria-hidden="true">·</span>
             <span class="lp-hero__delivery">Leveringstid 2-4 dager</span>
+            <p class="lp-hero__klarna">
+              Eller <strong>{{ monthly_price }} kr/mnd</strong> med Klarna
+            </p>
           </div>
         {%- endif -%}
 
-        {%- comment -%} ── Value Box ── {%- endcomment -%}
+        {%- comment -%} CHANGE 8 — Value Box {%- endcomment -%}
         {%- if section.settings.value_title != blank -%}
           <div class="lp-value-box">
             <div class="lp-value-box__inner">
@@ -86,6 +107,8 @@
               {%- if section.settings.value_tag != blank -%}
                 <p class="lp-value-box__tag">{{ section.settings.value_tag }}</p>
               {%- endif -%}
+
+              <p class="lp-value-box__klarna">Eller {{ monthly_price }} kr/mnd med Klarna – ingen renter</p>
 
               {%- if section.settings.value_sub_text != blank -%}
                 <p class="lp-value-box__sub">{{ section.settings.value_sub_text }}</p>
@@ -103,7 +126,7 @@
             </div>
           </div>
 
-          {%- comment -%} ── Value bullets ── {%- endcomment -%}
+          {%- comment -%} CHANGE 9 — Bottom value bullets {%- endcomment -%}
           {%- if section.settings.value_bullet_1 != blank
             or section.settings.value_bullet_2 != blank
             or section.settings.value_bullet_3 != blank
@@ -127,6 +150,13 @@
             </div>
           {%- endif -%}
         {%- endif -%}
+
+        {%- comment -%} CHANGE 10 — Mobile sticky CTA {%- endcomment -%}
+        <div class="lp-hero__sticky-cta">
+          <button type="button" class="lp-btn lp-btn--sticky" data-product-handle="{{ sk_lp_handle }}">
+            {{ section.settings.cta_text }}
+          </button>
+        </div>
       </div>
 
       <div class="lp-hero__image">
@@ -147,6 +177,84 @@
     </div>
   </section>
 </div>
+
+{%- comment -%} ── Inline styles for new hero elements ── {%- endcomment -%}
+<style>
+  /* CHANGE 3 — warm subtext */
+  .lp-hero__text--warm {
+    color: #8a6a5a;
+    font-style: italic;
+  }
+
+  /* CHANGE 4 — star rating */
+  .lp-hero__rating {
+    font-family: 'sofia-pro', Assistant, sans-serif;
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .lp-hero__rating-stars {
+    letter-spacing: 1px;
+  }
+
+  /* CHANGE 6 — hero CTA size bump */
+  .lp-btn--hero {
+    padding: 18px 36px;
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* CHANGE 7 — Klarna monthly in meta */
+  .lp-hero__klarna {
+    font-family: 'sofia-pro', Assistant, sans-serif;
+    font-size: 0.8rem;
+    color: #888;
+    margin: 4px 0 0;
+    display: block;
+    width: 100%;
+  }
+
+  /* CHANGE 8 — Klarna line in value box */
+  .lp-value-box__klarna {
+    font-family: 'sofia-pro', Assistant, sans-serif;
+    font-size: 0.78rem;
+    color: #999;
+    margin: 4px 0 8px;
+    font-style: italic;
+  }
+
+  /* CHANGE 10 — Mobile sticky CTA */
+  .lp-hero__sticky-cta {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .lp-hero {
+      padding-bottom: 80px;
+    }
+    .lp-hero__sticky-cta {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: #fff;
+      padding: 12px 16px;
+      box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.1);
+      justify-content: center;
+    }
+    .lp-btn--sticky {
+      width: 100%;
+      max-width: 480px;
+      padding: 16px;
+      font-size: 1rem;
+    }
+  }
+</style>
 
 {% schema %}
 {
@@ -169,7 +277,23 @@
       "type": "textarea",
       "id": "title",
       "label": "Tittel",
-      "default": "Profesjonell LED-terapi hjemme – utviklet for synlige hudforbedringer"
+      "default": "Få klinikkresultater hjemme – på bare 10 minutter om dagen"
+    },
+    {
+      "type": "header",
+      "content": "Undertekst"
+    },
+    {
+      "type": "text",
+      "id": "text_line_1",
+      "label": "Undertekst linje 1",
+      "default": "Klinisk dokumentert LED-teknologi – brukt av hudterapeuter verden over."
+    },
+    {
+      "type": "text",
+      "id": "text_line_2",
+      "label": "Undertekst linje 2 (varm/italic)",
+      "default": "10 minutter, 3–5 ganger i uken. Resultater du kan se."
     },
     {
       "type": "header",
@@ -194,10 +318,20 @@
       "default": "Teknisk spesifikasjon. Resultater varierer."
     },
     {
+      "type": "header",
+      "content": "Stjerne- og tillitselementer"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating-tekst (etter stjernene)",
+      "default": "<strong>4.8/5</strong> – basert på 102 anmeldelser"
+    },
+    {
       "type": "text",
       "id": "cta_text",
       "label": "CTA-knapptekst",
-      "default": "Kjøp nå"
+      "default": "Få synlige resultater hjemme →"
     },
     {
       "type": "url",
@@ -253,7 +387,7 @@
       "type": "text",
       "id": "value_roi_sub",
       "label": "ROI-undertekst (italic)",
-      "default": "Etter det er behandlingen, praktisk talt gratis"
+      "default": "Etter det er klinikkbehandlingen i praksis gratis"
     },
     {
       "type": "checkbox",
@@ -275,13 +409,13 @@
       "type": "text",
       "id": "value_bullet_2",
       "label": "Bullet 2",
-      "default": "30 dagers fornøydgaranti"
+      "default": "60 dagers fornøydgaranti"
     },
     {
       "type": "text",
       "id": "value_bullet_3",
       "label": "Bullet 3",
-      "default": "Spar tusenvis over tid"
+      "default": "2 års reklamasjonsrett"
     }
   ],
   "blocks": [
@@ -302,9 +436,9 @@
     {
       "name": "LP Hero",
       "blocks": [
-        { "type": "pill", "settings": { "text": "Norsk merke" } },
-        { "type": "pill", "settings": { "text": "60 dagers garanti" } },
-        { "type": "pill", "settings": { "text": "Gratis frakt" } }
+        { "type": "pill", "settings": { "text": "CE-sertifisert" } },
+        { "type": "pill", "settings": { "text": "60 dagers fornøydgaranti" } },
+        { "type": "pill", "settings": { "text": "Dermatologisk testet" } }
       ]
     }
   ]

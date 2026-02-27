@@ -1,15 +1,53 @@
 {%- comment -%}
   sk-lp-announcement.liquid
   Reusable announcement bar for landing pages.
+  Mobile: marquee ticker animation. Desktop: static centered.
 {%- endcomment -%}
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
 
 <div class="sk-lp">
   <div class="lp-announcement-bar">
-    {{ section.settings.text }}
+    <span class="lp-announcement-bar__static">{{ section.settings.text }}</span>
+    <span class="lp-announcement-bar__ticker" aria-hidden="true">
+      <span>
+        {{- section.settings.text }}&nbsp;&nbsp;&nbsp;&nbsp;{{ section.settings.text }}&nbsp;&nbsp;&nbsp;&nbsp;</span
+      >
+    </span>
   </div>
 </div>
+
+<style>
+  .lp-announcement-bar {
+    overflow: hidden;
+    position: relative;
+  }
+  .lp-announcement-bar__ticker {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .lp-announcement-bar__static {
+      display: none;
+    }
+    .lp-announcement-bar__ticker {
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .lp-announcement-bar__ticker > span {
+      display: inline-block;
+      animation: lp-ticker 18s linear infinite;
+    }
+    @keyframes lp-ticker {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+  }
+</style>
 
 {% schema %}
 {
@@ -21,7 +59,7 @@
       "type": "text",
       "id": "text",
       "label": "Announcement-tekst",
-      "default": "GRATIS FRAKT I NORGE  |  60 DAGERS FORNØYDGARANTI"
+      "default": "⭐ 4.8/5 fra 102+ kunder  |  Gratis frakt i Norge  |  60 dagers fornøydgaranti"
     }
   ],
   "presets": [
