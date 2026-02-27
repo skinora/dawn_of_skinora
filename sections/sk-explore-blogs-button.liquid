@@ -10,9 +10,9 @@
 <div class="sk-explore-blogs-button section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="container">
     {%- if section.settings.heading != blank -%}
-      <h1 class="sk-header__section sk-explore-blogs-button__heading sk-section-heading sk-section-heading--h1">
+      <h2 class="sk-header__section sk-explore-blogs-button__heading sk-section-heading sk-section-heading--h1">
         {{ section.settings.heading | escape }}
-      </h1>
+      </h2>
     {%- endif -%}
     <div class="sk-explore-blogs-button__wrapper">
       {%- if section.settings.button_label != blank -%}
