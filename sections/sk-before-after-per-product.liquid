@@ -279,10 +279,13 @@
                   {% if img_src %}
                     <img
                       src="{{ img_src }}"
+                      srcset="{{ img_srcset }}"
+                      sizes="(max-width: 749px) 85vw, 400px"
                       alt="{{ display_alt | escape }}"
                       width="{{ img_w }}"
                       height="{{ img_h }}"
                       loading="lazy"
+                      decoding="async"
                     >
                   {% endif %}
 

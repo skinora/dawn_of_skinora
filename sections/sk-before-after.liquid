@@ -250,11 +250,19 @@
               <div class="sk-testimonial-card">
                 <div class="sk-testimonial-card__images">
                   <img
-                    src="{{ block.settings.before_image | image_url: width: 800 }}"
+                    src="{{ block.settings.before_image | image_url: width: 460 }}"
+                    srcset="
+                      {{ block.settings.before_image | image_url: width: 300 }} 300w,
+                      {{ block.settings.before_image | image_url: width: 400 }} 400w,
+                      {{ block.settings.before_image | image_url: width: 500 }} 500w,
+                      {{ block.settings.before_image | image_url: width: 700 }} 700w
+                    "
+                    sizes="(max-width: 749px) 85vw, 400px"
                     alt="{{ block.settings.before_image.alt | escape }}"
-                    width="{{ block.settings.before_image.width | default: 800 }}"
+                    width="{{ block.settings.before_image.width | default: 500 }}"
                     height="{{ block.settings.before_image.height | default: 360 }}"
                     loading="lazy"
+                    decoding="async"
                   >
 
                   <span class="sk-ba-pill sk-ba-pill--before">FØR</span>
