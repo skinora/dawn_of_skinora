@@ -1649,6 +1649,48 @@
   margin: 8px 0 0;
 }
 
+/* Hero bullet list (replaces body text + pills) */
+.lp-hero__bullets {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lp-hero__bullets li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px;
+  font-family: 'sofia-pro', Assistant, sans-serif;
+  font-size: 0.95rem;
+  color: inherit;
+  line-height: 1.55;
+}
+
+.lp-hero__bullets .lp-hero__bullet--large {
+  font-size: 1.9rem;
+  line-height: 1.3;
+  font-weight: 400;
+}
+
+.lp-hero__bullet-check {
+  font-weight: 600;
+  color: #30273e;
+  flex-shrink: 0;
+}
+
+.lp-hero__disclaimer {
+  width: 100%;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: #888;
+  margin: 2px 0 0 18px;
+  line-height: 1.4;
+}
+
 /* Value bullets below box */
 .lp-hero__pills--value {
   margin-top: 20px;

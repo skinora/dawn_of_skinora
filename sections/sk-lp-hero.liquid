@@ -20,31 +20,33 @@
         {%- endif -%}
 
         <h2 class="lp-hero__title">{{ section.settings.title }}</h2>
-        <p class="lp-hero__text">{{ section.settings.text }}</p>
 
-        {%- assign pills = section.blocks | where: 'type', 'pill' -%}
-        {%- if pills.size > 0 -%}
-          <div class="lp-hero__pills">
-            {%- for block in pills -%}
-              <span class="lp-hero__pill" {{ block.shopify_attributes }}>
-                <span class="lp-hero__pill-check">✓</span> {{ block.settings.text }}
-              </span>
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
+        <ul class="lp-hero__bullets">
+          <li>
+            <span class="lp-hero__bullet-check">✓</span>
+            <span>{{ section.settings.bullet_1 }}</span>
+          </li>
+          <li class="lp-hero__bullet--large">
+            <span class="lp-hero__bullet-check">✓</span>
+            <span>{{ section.settings.bullet_2 }}</span>
+            {%- if section.settings.bullet_disclaimer != blank -%}
+              <p class="lp-hero__disclaimer">{{ section.settings.bullet_disclaimer }}</p>
+            {%- endif -%}
+          </li>
+        </ul>
 
         <div class="lp-hero__actions">
           <button type="button" class="lp-btn" data-product-handle="{{ sk_lp_handle }}">
             {{ section.settings.cta_text }}
           </button>
-          {%- if section.settings.link_text != blank -%}
+          {%- if section.settings.show_link and section.settings.link_text != blank -%}
             <a href="{{ section.settings.link_url | default: '#' }}" class="lp-hero__link">
               {{- section.settings.link_text -}}
             </a>
           {%- endif -%}
         </div>
 
-        {%- assign lp_allowed_payment_types = 'visa,master,klarna' | split: ',' -%}
+        {%- assign lp_allowed_payment_types = 'visa,klarna' | split: ',' -%}
         <div class="lp-payment-icons">
           <ul class="lp-payment-icons__list">
             {%- for type in shop.enabled_payment_types -%}
@@ -170,10 +172,26 @@
       "default": "Profesjonell LED-terapi hjemme – utviklet for synlige hudforbedringer"
     },
     {
-      "type": "textarea",
-      "id": "text",
-      "label": "Brødtekst",
-      "default": "Skinora Radiance bruker klinisk dokumentert LED-teknologi. 10 minutter, 3–5 ganger i uken. Resultater du kan se."
+      "type": "header",
+      "content": "Kulepunkter"
+    },
+    {
+      "type": "text",
+      "id": "bullet_1",
+      "label": "Kulepunkt 1 (HTML tillatt)",
+      "default": "<strong>Rødt + dNIR (1072 nm)</strong> · 10 minutter, 3-5x/uke. Resultater du kan se."
+    },
+    {
+      "type": "text",
+      "id": "bullet_2",
+      "label": "Kulepunkt 2 (HTML tillatt)",
+      "default": "Ny generasjon <strong>dNIR:</strong> 1072 nm"
+    },
+    {
+      "type": "text",
+      "id": "bullet_disclaimer",
+      "label": "Disclaimer under kulepunkt 2",
+      "default": "Teknisk spesifikasjon. Resultater varierer."
     },
     {
       "type": "text",
@@ -185,6 +203,12 @@
       "type": "url",
       "id": "cta_url",
       "label": "CTA-lenke"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_link",
+      "label": "Vis sekundærlenke",
+      "default": false
     },
     {
       "type": "text",
@@ -223,13 +247,13 @@
       "type": "text",
       "id": "value_roi_line",
       "label": "ROI-linje (bold)",
-      "default": "= Tilsvarer ca. 8 klinikkøkter"
+      "default": "✓ Tilsvarer ca. 8 klinikkøkter"
     },
     {
       "type": "text",
       "id": "value_roi_sub",
       "label": "ROI-undertekst (italic)",
-      "default": "Etter det er behandlingen i praksis gratis"
+      "default": "Etter det er behandlingen, praktisk talt gratis"
     },
     {
       "type": "checkbox",
