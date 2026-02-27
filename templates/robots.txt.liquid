@@ -1,26 +1,12 @@
-User-agent: *
-Disallow: /admin
-Disallow: /account
-Disallow: /cart
-Disallow: /carts
-Disallow: /orders
-Disallow: /checkout
-Disallow: /checkouts/
-Disallow: /search
-Disallow: /*preview_theme_id*
-Disallow: /*preview_script_id*
-Disallow: /*?*oseid=*
+User-agent: * Disallow: /admin Disallow: /account Disallow: /cart Disallow: /carts Disallow: /orders Disallow: /checkout
+Disallow: /checkouts/ Disallow: /search Disallow: /*preview_theme_id* Disallow: /*preview_script_id* Disallow:
+/*?*oseid=*
 
-# Prevent faceted/sorted URL bloat
-Disallow: /collections/*sort_by*
-Disallow: /*/collections/*sort_by*
-Disallow: */collections/*filter*&*filter*
-Disallow: /collections/*+*
-Disallow: /collections/*%2B*
-Disallow: /collections/*%2b*
-Disallow: /*/collections/*+*
-Disallow: /*/collections/*%2B*
-Disallow: /*/collections/*%2b*
+# Block tracking / campaign parameters (duplicate URL prevention) Disallow: /*?*fbclid* Disallow: /*?*gclid* Disallow:
+/*?*utm_* Disallow: /*?*mc_cid* Disallow: /*?*mc_eid*
+
+# Prevent faceted/sorted URL bloat Disallow: /collections/*sort_by* Disallow: /*/collections/*sort_by* Disallow:
+*/collections/*filter*&*filter* Disallow: /collections/*+* Disallow: /collections/*%2B* Disallow: /collections/*%2b*
+Disallow: /*/collections/*+* Disallow: /*/collections/*%2B* Disallow: /*/collections/*%2b*
 
 Sitemap: https://www.skinora.no/sitemap.xml
-

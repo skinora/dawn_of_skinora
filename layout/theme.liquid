@@ -27,26 +27,70 @@
     <link rel="preconnect" href="https://p.typekit.net" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
+    {%- comment -%} Preload critical above-fold fonts (body + heading) for faster LCP text paint {%- endcomment -%}
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="https://use.typekit.net/af/da506f/00000000000000007735f990/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3"
+    >
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="https://use.typekit.net/af/a9e142/00000000000000007735d61f/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"
+    >
+
     {%- comment -%}
       Sofia Pro sits in kit jxm0xpk; Freight families are still served from pbt1clx
       because Adobe does not allow us to merge those kits. Load both stylesheets so
       the latest font URLs are always pulled directly from Adobe, and let
       typekit-fonts.css provide the swap-friendly overrides.
     {%- endcomment -%}
-    <link rel="stylesheet" href="https://use.typekit.net/jxm0xpk.css" crossorigin>
-    <link rel="stylesheet" href="https://use.typekit.net/pbt1clx.css" crossorigin>
+    {%- comment -%}
+      Adobe kit CSS deferred — typekit-fonts.css (below) has all @font-face rules
+      with font-display:swap and direct woff2 URLs, so fonts render immediately.
+      The kit CSS loads async for Adobe licensing/fallback.
+    {%- endcomment -%}
+    <link
+      rel="stylesheet"
+      href="https://use.typekit.net/jxm0xpk.css"
+      crossorigin
+      media="print"
+      onload="this.media='all'"
+    >
+    <noscript><link rel="stylesheet" href="https://use.typekit.net/jxm0xpk.css" crossorigin></noscript>
+    <link
+      rel="stylesheet"
+      href="https://use.typekit.net/pbt1clx.css"
+      crossorigin
+      media="print"
+      onload="this.media='all'"
+    >
+    <noscript><link rel="stylesheet" href="https://use.typekit.net/pbt1clx.css" crossorigin></noscript>
     {%- comment -%} Favicon {%- endcomment -%}
     <link rel="icon" type="image/png" href="{{ 'skinora-48.png' | asset_url }}">
     <link rel="apple-touch-icon" href="{{ 'skinora.png' | asset_url }}">
 
     {{ 'typekit-fonts.css' | asset_url | stylesheet_tag }}
 
+    {%- comment -%} Bootstrap deferred — not needed for above-fold hero paint {%- endcomment -%}
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
+      media="print"
+      onload="this.media='all'"
     >
+    <noscript
+      ><link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        crossorigin="anonymous"
+    ></noscript>
     <script
       async
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -54,8 +98,14 @@
       crossorigin="anonymous"
     ></script>
 
-    {%- comment -%} Global Swiper CSS (consolidated from individual sections) {%- endcomment -%}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    {%- comment -%} Swiper CSS deferred — only needed when carousels render (below fold) {%- endcomment -%}
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+      media="print"
+      onload="this.media='all'"
+    >
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
 
     {%- if settings.favicon != blank -%}
       <link

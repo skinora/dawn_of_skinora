@@ -5,6 +5,16 @@
   All styles loaded via: section-sk-lp-radiance-face.css
 {%- endcomment -%}
 
+{%- if section.settings.hero_image != blank -%}
+  <link
+    rel="preload"
+    as="image"
+    imagesrcset="{{ section.settings.hero_image | image_url: width: 400 }} 400w, {{ section.settings.hero_image | image_url: width: 600 }} 600w, {{ section.settings.hero_image | image_url: width: 800 }} 800w, {{ section.settings.hero_image | image_url: width: 1000 }} 1000w, {{ section.settings.hero_image | image_url: width: 1200 }} 1200w, {{ section.settings.hero_image | image_url: width: 1600 }} 1600w"
+    imagesizes="(max-width: 991px) 100vw, 50vw"
+    fetchpriority="high"
+  >
+{%- endif -%}
+
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
 
 {%- assign sk_lp_handle = section.settings.product_url | split: '/products/' | last | split: '?' | first -%}
@@ -56,13 +66,14 @@
         <div class="lp-hero__image">
           {%- if section.settings.hero_image != blank -%}
             <img
-              src="{{ section.settings.hero_image | image_url: width: 1600 }}"
-              srcset="{{ section.settings.hero_image | image_url: width: 600 }} 600w, {{ section.settings.hero_image | image_url: width: 900 }} 900w, {{ section.settings.hero_image | image_url: width: 1200 }} 1200w, {{ section.settings.hero_image | image_url: width: 1600 }} 1600w, {{ section.settings.hero_image | image_url: width: 2000 }} 2000w, {{ section.settings.hero_image | image_url: width: 2400 }} 2400w"
+              src="{{ section.settings.hero_image | image_url: width: 800 }}"
+              srcset="{{ section.settings.hero_image | image_url: width: 400 }} 400w, {{ section.settings.hero_image | image_url: width: 600 }} 600w, {{ section.settings.hero_image | image_url: width: 800 }} 800w, {{ section.settings.hero_image | image_url: width: 1000 }} 1000w, {{ section.settings.hero_image | image_url: width: 1200 }} 1200w, {{ section.settings.hero_image | image_url: width: 1600 }} 1600w"
               sizes="(max-width: 991px) 100vw, 50vw"
               alt="{{ section.settings.hero_image.alt | default: 'Skinora Radiance Face' }}"
               width="{{ section.settings.hero_image.width }}"
               height="{{ section.settings.hero_image.height }}"
               loading="eager"
+              fetchpriority="high"
             >
           {%- else -%}
             <div class="lp-hero__image-placeholder">[ Radiance Face produktbilde ]</div>

@@ -1237,6 +1237,8 @@
                     <div class="swiper-slide">
                       <img
                         src="{{ image | image_url: width: 900 }}"
+                        srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w"
+                        sizes="(max-width: 991px) calc(100vw - 3rem), 450px"
                         alt="{{ image.alt | default: product.title | append: ' LED light therapy device' }}"
                         width="900"
                         height="900"

@@ -11,7 +11,9 @@
   "sections": {
     "hero": {
       "type": "sk-about-hero-editorial",
-      "settings": {}
+      "settings": {
+        "image_loading": "eager"
+      }
     },
     "philosophy_anchor": {
       "type": "custom-liquid",

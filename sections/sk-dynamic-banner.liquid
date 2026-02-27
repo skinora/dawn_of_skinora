@@ -1,6 +1,35 @@
+{%- comment -%} Preload LCP background images per breakpoint {%- endcomment -%}
+{%- if section.settings.sk_banner_img_mobile != blank -%}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ section.settings.sk_banner_img_mobile | image_url: width: 900 }}"
+    media="(max-width: 700px)"
+    fetchpriority="high"
+  >
+{%- endif -%}
+{%- if section.settings.sk_banner_img_tablet != blank -%}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ section.settings.sk_banner_img_tablet | image_url: width: 1500 }}"
+    media="(min-width: 701px) and (max-width: 1000px)"
+    fetchpriority="high"
+  >
+{%- endif -%}
+{%- if section.settings.sk_banner_img_desktop != blank -%}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ section.settings.sk_banner_img_desktop | image_url: width: 1600 }}"
+    media="(min-width: 1001px)"
+    fetchpriority="high"
+  >
+{%- endif -%}
+
 <style>
   .sk-dynamic-banner {
-    background-image: url('{{ section.settings.sk_banner_img_desktop | image_url: width: 2200 }}');
+    background-image: url('{{ section.settings.sk_banner_img_desktop | image_url: width: 1600 }}');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

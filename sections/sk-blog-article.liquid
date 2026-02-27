@@ -9,8 +9,7 @@
             srcset="
               {%- if article.image.width >= 750 -%}{{ article.image | image_url: width: 750 }} 750w,{%- endif -%}
               {%- if article.image.width >= 1100 -%}{{ article.image | image_url: width: 1100 }} 1100w,{%- endif -%}
-              {%- if article.image.width >= 1500 -%}{{ article.image | image_url: width: 1500 }} 1500w,{%- endif -%}
-              {{ article.image | image_url }} {{ article.image.width }}w
+              {%- if article.image.width >= 1500 -%}{{ article.image | image_url: width: 1500 }} 1500w{%- endif -%}
             "
             src="{{ article.image | image_url: width: 1100 }}"
             sizes="(min-width: 1200px) 1100px, calc(100vw - 3rem)"
@@ -19,6 +18,7 @@
             width="{{ article.image.width }}"
             height="{{ article.image.height }}"
             loading="eager"
+            fetchpriority="high"
           >
         </div>
       {%- endif -%}

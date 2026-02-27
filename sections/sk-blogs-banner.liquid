@@ -1,3 +1,13 @@
+{%- if section.settings.background_image != blank -%}
+  <link
+    rel="preload"
+    as="image"
+    imagesrcset="{%- if section.settings.background_image.width >= 750 -%}{{ section.settings.background_image | image_url: width: 750 }} 750w,{%- endif -%}{%- if section.settings.background_image.width >= 1100 -%}{{ section.settings.background_image | image_url: width: 1100 }} 1100w,{%- endif -%}{%- if section.settings.background_image.width >= 1500 -%}{{ section.settings.background_image | image_url: width: 1500 }} 1500w,{%- endif -%}{%- if section.settings.background_image.width >= 1920 -%}{{ section.settings.background_image | image_url: width: 1920 }} 1920w{%- endif -%}"
+    imagesizes="100vw"
+    fetchpriority="high"
+  >
+{%- endif -%}
+
 {{ 'section-sk-help-banner.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
@@ -15,8 +25,7 @@
           {%- if section.settings.background_image.width >= 750 -%}{{ section.settings.background_image | image_url: width: 750 }} 750w,{%- endif -%}
           {%- if section.settings.background_image.width >= 1100 -%}{{ section.settings.background_image | image_url: width: 1100 }} 1100w,{%- endif -%}
           {%- if section.settings.background_image.width >= 1500 -%}{{ section.settings.background_image | image_url: width: 1500 }} 1500w,{%- endif -%}
-          {%- if section.settings.background_image.width >= 1920 -%}{{ section.settings.background_image | image_url: width: 1920 }} 1920w,{%- endif -%}
-          {{ section.settings.background_image | image_url }} {{ section.settings.background_image.width }}w
+          {%- if section.settings.background_image.width >= 1920 -%}{{ section.settings.background_image | image_url: width: 1920 }} 1920w{%- endif -%}
         "
         src="{{ section.settings.background_image | image_url: width: 1920 }}"
         sizes="100vw"
@@ -25,6 +34,7 @@
         width="{{ section.settings.background_image.width }}"
         height="{{ section.settings.background_image.height }}"
         loading="eager"
+        fetchpriority="high"
       >
     {%- endif -%}
     <div class="sk-help-banner__overlay"></div>

@@ -25,7 +25,7 @@
         "cta_url": "",
         "image": "shopify://shop_images/ChatGPT_Image_Dec_13_2025_04_03_16_PM.png",
         "image_alt": "Arbeidsmiljø hos Skinora",
-        "image_loading": "lazy",
+        "image_loading": "eager",
         "image_ratio": "1/1",
         "image_focus": "center",
         "content_max_width": 640,
