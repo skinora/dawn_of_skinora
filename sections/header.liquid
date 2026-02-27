@@ -466,7 +466,11 @@
 
       <!-- CENTER: LOGO -->
       <div class="sk-header__brand">
-        <a href="{{ routes.root_url }}" class="header__heading-link link link--text">
+        <a
+          href="{{ routes.root_url }}"
+          class="header__heading-link link link--text"
+          aria-label="{{ shop.name }}"
+        >
           <div class="header__heading-logo-wrapper" style="--header-logo-width: {{ settings.logo_width }}px;">
             {{ 'custom-logo.svg' | inline_asset_content }}
           </div>
@@ -487,7 +491,12 @@
           </a>
         {%- endif -%}
 
-        <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+        <a
+          href="{{ routes.cart_url }}"
+          class="header__icon header__icon--cart link focus-inset"
+          id="cart-icon-bubble"
+          aria-label="{{ 'sections.cart.title' | t }} ({{ cart.item_count }})"
+        >
           <span class="svg-wrapper{% if cart == empty %} cart-empty{% endif %}">
             {{ 'icon-cart-empty.svg' | inline_asset_content }}
           </span>
