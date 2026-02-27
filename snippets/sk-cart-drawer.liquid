@@ -4,9 +4,9 @@
   Usage: {% render 'sk-cart-drawer' %}
 {% endcomment %}
 
-{{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'sk-cart-drawer.css' | asset_url | stylesheet_tag }}
+{%- comment -%} Deferred — cart drawer is hidden until opened; sk-cart-drawer.css already loaded in theme.liquid {%- endcomment -%}
+<link rel="stylesheet" href="{{ 'quantity-popover.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-card.css' | asset_url }}" media="print" onload="this.media='all'">
 
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
