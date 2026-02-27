@@ -77,25 +77,12 @@
     {%- comment -%} typekit-fonts.css deferred — all @font-face rules use font-display:swap {%- endcomment -%}
     <link rel="stylesheet" href="{{ 'typekit-fonts.css' | asset_url }}" media="print" onload="this.media='all'">
 
-    {%- comment -%} Bootstrap deferred — not needed for above-fold hero paint {%- endcomment -%}
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-      media="print"
-      onload="this.media='all'"
-    >
-    <noscript
-      ><link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        crossorigin="anonymous"
-    ></noscript>
     {%- comment -%}
-      Bootstrap JS removed (80 KB) — replaced by sk-accordion.js (~0.5 KB).
-      Only the collapse/accordion behaviour was used (FAQ sections).
+      Bootstrap CSS removed (24.7 KiB CDN) — replaced by sk-accordion.css (~0.6 KiB).
+      Only accordion/collapse component was used (FAQ sections).
+      Bootstrap JS was already replaced by sk-accordion.js (~0.5 KB).
     {%- endcomment -%}
+    {{ 'sk-accordion.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'sk-accordion.js' | asset_url }}" defer></script>
 
     {%- comment -%} Swiper CSS deferred — only needed when carousels render (below fold) {%- endcomment -%}
