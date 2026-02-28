@@ -1,9 +1,20 @@
 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
-{{ 'section-footer.css' | asset_url | stylesheet_tag }}
-{{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-menu.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Footer CSS deferred — footer is always below the fold.
+  media="print" onload pattern prevents render-blocking.
+{%- endcomment -%}
+<link rel="stylesheet" href="{{ 'section-footer.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-newsletter.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-list-payment.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-list-social.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>
+  {{ 'section-footer.css' | asset_url | stylesheet_tag }}
+  {{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
+  {{ 'component-list-menu.css' | asset_url | stylesheet_tag }}
+  {{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
+  {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+</noscript>
 
 {%- style -%}
   .section-{{ section.id }}-padding {

@@ -1,4 +1,6 @@
-{{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
+{%- comment -%} Below-fold section — defer CSS to avoid blocking first paint {%- endcomment -%}
+<link rel="stylesheet" href="{{ 'component-image-with-text.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}</noscript>
 
 <style>
   .sk-radiance {

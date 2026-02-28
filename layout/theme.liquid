@@ -112,26 +112,21 @@
       typekit-fonts.css provide the swap-friendly overrides.
     {%- endcomment -%}
     {%- comment -%}
-      Adobe kit CSS deferred — typekit-fonts.css (below) has all @font-face rules
-      with font-display:swap and direct woff2 URLs, so fonts render immediately.
-      The kit CSS loads async for Adobe licensing/fallback.
+      Adobe kit CSS lazy-loaded after window.load — typekit-fonts.css (below) has
+      all @font-face rules with direct woff2 URLs, so fonts render immediately.
+      The kit CSS loads post-load for Adobe licensing/font-tracking compliance only.
     {%- endcomment -%}
-    <link
-      rel="stylesheet"
-      href="https://use.typekit.net/jxm0xpk.css"
-      crossorigin
-      media="print"
-      onload="this.media='all'"
-    >
-    <noscript><link rel="stylesheet" href="https://use.typekit.net/jxm0xpk.css" crossorigin></noscript>
-    <link
-      rel="stylesheet"
-      href="https://use.typekit.net/pbt1clx.css"
-      crossorigin
-      media="print"
-      onload="this.media='all'"
-    >
-    <noscript><link rel="stylesheet" href="https://use.typekit.net/pbt1clx.css" crossorigin></noscript>
+    <script>
+      window.addEventListener('load', function () {
+        ['https://use.typekit.net/jxm0xpk.css', 'https://use.typekit.net/pbt1clx.css'].forEach(function (h) {
+          var l = document.createElement('link');
+          l.rel = 'stylesheet';
+          l.href = h;
+          l.crossOrigin = '';
+          document.head.appendChild(l);
+        });
+      });
+    </script>
     {%- comment -%} Favicon {%- endcomment -%}
     <link rel="icon" type="image/png" href="{{ 'skinora-48.png' | asset_url }}">
     <link rel="apple-touch-icon" href="{{ 'skinora.png' | asset_url }}">
@@ -273,7 +268,7 @@
             }
 
             :root {
-              --font-body-family: 'sofia-pro', {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+              --font-body-family: 'sofia-pro', 'sofia-pro-fallback', {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
               --font-body-style: normal;
               --font-body-weight: 300;
               --font-body-weight-bold: 600;
@@ -282,7 +277,7 @@
                 Headings: keep your Freight families first.
                 iOS fallback: "New York" is the best system serif match.
               {%- endcomment -%}
-              --font-heading-family: 'freight-text-pro', 'freighttextcmp-pro', 'Freight Text Pro', 'FreightTextCmp Pro', 'New York', 'Georgia', serif;
+              --font-heading-family: 'freight-text-pro', 'freight-text-pro-fallback', 'freighttextcmp-pro', 'Freight Text Pro', 'FreightTextCmp Pro', 'New York', 'Georgia', serif;
               --font-heading-style: normal;
               --font-heading-weight: 400;
 
