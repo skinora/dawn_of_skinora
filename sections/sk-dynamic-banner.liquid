@@ -75,6 +75,8 @@
     display: grid;
     gap: clamp(1.6rem, 2.6vw, 3.2rem);
     padding: 0.6rem;
+    /* Reserve minimum space to prevent CLS from font fallback differences */
+    min-height: 18rem;
   }
 
   .sk-dynamic-banner__title {
@@ -132,6 +134,7 @@
     .sk-dynamic-banner__content {
       max-width: 40rem;
       padding-right: 3rem;
+      min-height: 16rem;
     }
 
     .sk-dynamic-banner__title {

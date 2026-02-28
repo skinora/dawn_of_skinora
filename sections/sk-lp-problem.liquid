@@ -6,15 +6,16 @@
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
 
 <!-- BLOCK: Premium Proof (relocated from Hero) -->
-<div class="sk-lp">
-  <ul class="lp-proof-list" style="max-width:480px;margin:0 auto 0;">
-    <li class="lp-proof-list__item">Klinisk dokumentert LED-teknologi</li>
-    <li class="lp-proof-list__item">3 målrettede bølgelengder - ingen unødvendige lysfarger</li>
-    <li class="lp-proof-list__item">1072 nm dypt nær-infrarødt lys (dNIR)</li>
-    <li class="lp-proof-list__item">Optimalisert for hudens kollagenproduksjon</li>
-    <li class="lp-proof-list__item">Brukt av profesjonelle hudterapeuter</li>
-  </ul>
-</div>
+{%- assign proof_blocks = section.blocks | where: 'type', 'proof' -%}
+{%- if proof_blocks.size > 0 -%}
+  <div class="sk-lp">
+    <ul class="lp-proof-list" style="max-width:480px;margin:0 auto 0;">
+      {%- for block in proof_blocks -%}
+        <li class="lp-proof-list__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
 
 <!-- SECTION: Pain Agitation -->
 <div class="sk-lp">
@@ -122,6 +123,18 @@
           "id": "text",
           "label": "Tekst",
           "default": "Huden ser mer sliten ut enn du føler deg"
+        }
+      ]
+    },
+    {
+      "type": "proof",
+      "name": "Proof-punkt",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Tekst",
+          "default": "Klinisk dokumentert LED-teknologi"
         }
       ]
     }

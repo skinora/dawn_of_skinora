@@ -92,12 +92,36 @@
         "show_value_icon": true,
         "value_bullet_1": "Klinisk dokumentert LED-teknologi",
         "value_bullet_2": "60 dagers fornøydgaranti",
-        "value_bullet_3": "Spar tusenvis over tid"
+        "value_bullet_3": "Spar tusenvis over tid",
+        "rating_score": "4.8",
+        "review_count": "102",
+        "testimonial_quote": "Etter 6 uker merker jeg virkelig forskjell på hudtonen – huden ser friskere ut.",
+        "testimonial_author": "Wenche S., 52, Oslo · Verifisert kjøper"
       }
     },
     "problem": {
       "type": "sk-lp-problem",
       "blocks": {
+        "proof_1": {
+          "type": "proof",
+          "settings": { "text": "Klinisk dokumentert LED-teknologi" }
+        },
+        "proof_2": {
+          "type": "proof",
+          "settings": { "text": "3 målrettede bølgelengder – ingen unødvendige lysfarger" }
+        },
+        "proof_3": {
+          "type": "proof",
+          "settings": { "text": "1072 nm dypt nær-infrarødt lys (dNIR)" }
+        },
+        "proof_4": {
+          "type": "proof",
+          "settings": { "text": "Optimalisert for hudens kollagenproduksjon" }
+        },
+        "proof_5": {
+          "type": "proof",
+          "settings": { "text": "Brukt av profesjonelle hudterapeuter" }
+        },
         "p_1": {
           "type": "item",
           "settings": {
@@ -130,6 +154,11 @@
         }
       },
       "block_order": [
+        "proof_1",
+        "proof_2",
+        "proof_3",
+        "proof_4",
+        "proof_5",
         "p_1",
         "p_2",
         "p_3",
@@ -335,7 +364,9 @@
       ],
       "settings": {
         "heading": "Det norske kvinner sier",
-        "score": "4.8 av 5 – basert på 102 anmeldelser"
+        "score": "4.8 av 5 – basert på 102 anmeldelser",
+        "midpage_cta_text": "Få din Radiance Face nå",
+        "midpage_klarna_text": "Fra 130 kr/mnd med Klarna"
       }
     },
     "trust_full": {
@@ -476,6 +507,27 @@
             "question": "Hvor lang er leveringstiden?",
             "answer": "Vi sender fra norsk lager, og leveringstiden er normalt 2–4 virkedager. Frakt er alltid gratis."
           }
+        },
+        "faq_freq": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor ofte må jeg bruke den for at det skal være verdt det?",
+            "answer": "Vi anbefaler 3–5 ganger i uken, 10 minutter per økt. Det tilsvarer én sesong med favorittserien din i uken. Mange merker de første resultatene etter 2–4 uker med jevn bruk. Og fordi du betaler én gang og bruker den ubegrenset, blir prisen per behandling lavere jo mer du bruker den."
+          }
+        },
+        "faq_noresult": {
+          "type": "faq",
+          "settings": {
+            "question": "Hva om jeg ikke ser noen forskjell?",
+            "answer": "Da vil vi at du skal sende den tilbake – og du får pengene tilbake, uten spørsmål. Det er hele poenget med vår 60 dagers fornøydgaranti. Vi er trygge på at jevn bruk gir resultater, men vi vet at hud er individuell. Har du ikke sett endring innen 60 dager, kontakter du oss på hello@skinora.no – og vi ordner resten."
+          }
+        },
+        "faq_price": {
+          "type": "faq",
+          "settings": {
+            "question": "Er 4.690 kr mye å betale for en LED-maske?",
+            "answer": "Sammenlignet med klinikk er det faktisk det motsatte. Én LED-behandling hos hudterapeut koster typisk 800–1.500 kr. Med Skinora® Radiance Face betaler du én gang og kan bruke masken ubegrenset hjemme. Etter bare 3–6 behandlinger har produktet betalt seg selv – resten er ren gevinst. Du kan også dele opp betalingen med Klarna fra 130 kr/mnd."
+          }
         }
       },
       "block_order": [
@@ -485,7 +537,10 @@
         "faq_3",
         "faq_4",
         "faq_5",
-        "faq_6"
+        "faq_6",
+        "faq_freq",
+        "faq_noresult",
+        "faq_price"
       ],
       "settings": {
         "heading": "Ofte stilte spørsmål"
@@ -524,7 +579,8 @@
         "price_text": "",
         "button_text": "Legg i handlekurv",
         "product_url": "/products/skinora-radiance-face",
-        "anchor_id": "kjop"
+        "anchor_id": "kjop",
+        "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra 130 kr/mnd med Klarna</strong>"
       }
     }
   },

@@ -42,9 +42,12 @@
 
 <!-- SECTION: Mid-Page CTA -->
 <div class="lp-midpage-cta" style="text-align:center;padding:32px 20px 8px;">
-  <a href="#" class="lp-btn lp-btn--primary" style="display:inline-block;"> Få din Radiance Face nå </a>
+  <a href="#kjop" class="lp-btn lp-btn--primary" style="display:inline-block;">
+    {{- section.settings.midpage_cta_text | default: 'Bestill nå' -}}
+  </a>
   <p style="font-family:sofia-pro,Assistant,sans-serif;font-size:12px;color:#5f5f5f;margin:10px 0 0;">
-    ✔ 60 dagers fornøydgaranti &nbsp;·&nbsp; ✔ Gratis frakt &nbsp;·&nbsp; ✔ Fra 130 kr/mnd med Klarna
+    ✔ 60 dagers fornøydgaranti &nbsp;·&nbsp; ✔ Gratis frakt &nbsp;·&nbsp; ✔
+    {{ section.settings.midpage_klarna_text | default: 'Fra 130 kr/mnd med Klarna' }}
   </p>
 </div>
 
@@ -65,6 +68,22 @@
       "id": "score",
       "label": "Anmeldelsesscore (tekst)",
       "default": "4.8 av 5 – basert på 102 anmeldelser"
+    },
+    {
+      "type": "header",
+      "content": "Mid-page CTA"
+    },
+    {
+      "type": "text",
+      "id": "midpage_cta_text",
+      "label": "CTA-knapptekst",
+      "default": "Bestill nå"
+    },
+    {
+      "type": "text",
+      "id": "midpage_klarna_text",
+      "label": "Klarna-tekst",
+      "default": "Fra 130 kr/mnd med Klarna"
     }
   ],
   "blocks": [

@@ -15,11 +15,11 @@
     {%- endcomment -%}
     <link rel="preload" href="{{ 'base.css' | asset_url }}" as="style">
 
-    {% comment %}
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    {% endcomment %}
+    {%- comment -%}
+      Google Fonts removed — not used. Adobe Fonts (Typekit) is the sole font
+      provider. If any Shopify app re-injects Google Fonts CSS, the performance
+      interceptor below converts it to non-blocking automatically.
+    {%- endcomment -%}
 
     {%- comment -%}
       ==========================
@@ -67,7 +67,7 @@
       the preloaded woff2 files BEFORE first paint, eliminating font-swap CLS.
       Uses font-display:optional → if the preloaded file is cached the font
       applies instantly; if not, fallback sticks for this navigation (no swap).
-      The deferred typekit-fonts.css below covers all remaining weights with swap.
+      The deferred typekit-fonts.css below covers all remaining weights with optional.
     {%- endcomment -%}
     <style>
       /* Critical @font-face — matches preloaded woff2 files.
