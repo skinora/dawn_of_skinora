@@ -31,8 +31,13 @@
     {%- endcomment -%}
 
     <link rel="preconnect" href="https://use.typekit.net" crossorigin>
-    <link rel="preconnect" href="https://p.typekit.net" crossorigin>
-    {%- comment -%} cdn.jsdelivr.net dns-prefetch removed — Bootstrap CDN no longer used {%- endcomment -%}
+    {%- comment -%}
+      p.typekit.net preconnect removed — only used by Adobe tracking beacon which loads
+      after window.load via kit CSS. Early preconnect wasted a connection slot.
+      cdn.jsdelivr.net / cdn-static.okendo.io get lightweight dns-prefetch only (non-critical).
+    {%- endcomment -%}
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn-static.okendo.io">
 
     {%- comment -%} Preload critical above-fold fonts (body + heading) for faster LCP text paint {%- endcomment -%}
     <link
@@ -216,6 +221,66 @@
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    {%- comment -%}
+      Performance interceptor — runs BEFORE {{ content_for_header }} so the
+      MutationObserver can catch nodes as Shopify inserts them.
+      1. Converts accelerated-checkout-backwards-compat.css from render-blocking
+         to non-blocking (media=print → onload → all).
+      2. Defers any Google Fonts CSS injected by apps (same pattern).
+      3. Delays heavy third-party scripts (Meta pixel, Klaviyo, GTM/gtag) until
+         first user interaction OR 2 s timeout. Purchase tracking + GA4 are
+         preserved because scripts fire well before any conversion page.
+    {%- endcomment -%}
+    <script>
+      (function () {
+        var deferCSS = /accelerated-checkout|fonts\.googleapis\.com/;
+        var delayJS = /connect\.facebook\.net|static\.klaviyo\.com|googletagmanager\.com/;
+        var saved = [];
+        var done = false;
+
+        var mo = new MutationObserver(function (list) {
+          for (var i = 0; i < list.length; i++) {
+            var nodes = list[i].addedNodes;
+            for (var j = 0; j < nodes.length; j++) {
+              var n = nodes[j];
+              if (n.nodeType !== 1) continue;
+              /* Non-critical CSS → non-blocking */
+              if (n.tagName === 'LINK' && n.rel === 'stylesheet' && deferCSS.test(n.href || '')) {
+                n.media = 'print';
+                n.onload = function () {
+                  this.media = 'all';
+                };
+              }
+              /* Marketing scripts → delay until interaction / timeout */
+              if (n.tagName === 'SCRIPT' && n.src && delayJS.test(n.src)) {
+                saved.push(n.src);
+                n.type = 'text/plain';
+              }
+            }
+          }
+        });
+
+        mo.observe(document.documentElement, { childList: true, subtree: true });
+
+        function fire() {
+          if (done) return;
+          done = true;
+          mo.disconnect();
+          saved.forEach(function (src) {
+            var s = document.createElement('script');
+            s.src = src;
+            s.async = true;
+            document.body.appendChild(s);
+          });
+        }
+
+        ['mouseover', 'touchstart', 'scroll', 'keydown'].forEach(function (e) {
+          document.addEventListener(e, fire, { once: true, passive: true });
+        });
+        setTimeout(fire, 2000);
+      })();
+    </script>
 
     {{ content_for_header }}
 
@@ -588,14 +653,39 @@
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-    {%- comment -%} Global Swiper JS (consolidated) {%- endcomment -%}
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
-
-    {% comment %} Okendo Reviews script (load once globally) {% endcomment %}
-    <script
-      src="https://cdn-static.okendo.io/reviews-widget-plus/js/okendo-reviews.min.js"
-      defer
-    ></script>
+    {%- comment -%}
+      Swiper + Okendo — idle-loaded on first interaction OR requestIdleCallback
+      (2 s deadline). Both are below-fold; loading them after FCP frees main-thread
+      budget for paint. Replaces the old <script defer> tags.
+    {%- endcomment -%}
+    <script>
+      (function () {
+        var urls = [
+          'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+          'https://cdn-static.okendo.io/reviews-widget-plus/js/okendo-reviews.min.js',
+        ];
+        var loaded = false;
+        function load() {
+          if (loaded) return;
+          loaded = true;
+          urls.forEach(function (src) {
+            var s = document.createElement('script');
+            s.src = src;
+            s.async = true;
+            document.body.appendChild(s);
+          });
+        }
+        /* Trigger: first scroll/touch OR idle callback (2 s fallback) */
+        ['scroll', 'touchstart', 'mouseover'].forEach(function (e) {
+          document.addEventListener(e, load, { once: true, passive: true });
+        });
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(load, { timeout: 2000 });
+        } else {
+          setTimeout(load, 2000);
+        }
+      })();
+    </script>
 
     {% comment %}theme-check-enable RemoteAsset{% endcomment %}
   </body>

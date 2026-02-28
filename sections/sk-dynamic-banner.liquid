@@ -1,9 +1,15 @@
-{%- comment -%} Preload LCP background images per breakpoint {%- endcomment -%}
+{%- comment -%}
+  Preload LCP background images per breakpoint.
+  - Mobile: 750px = 375px viewport × 2 DPR (covers ~95% of phones).
+  - Tablet: 1200px (sufficient for 1000px viewport × density).
+  - Desktop: 1600px (max practical for full-viewport background).
+  Shopify CDN auto-serves WebP when browser supports it via Accept header.
+{%- endcomment -%}
 {%- if section.settings.sk_banner_img_mobile != blank -%}
   <link
     rel="preload"
     as="image"
-    href="{{ section.settings.sk_banner_img_mobile | image_url: width: 900 }}"
+    href="{{ section.settings.sk_banner_img_mobile | image_url: width: 750 }}"
     media="(max-width: 700px)"
     fetchpriority="high"
   >
@@ -12,7 +18,7 @@
   <link
     rel="preload"
     as="image"
-    href="{{ section.settings.sk_banner_img_tablet | image_url: width: 1500 }}"
+    href="{{ section.settings.sk_banner_img_tablet | image_url: width: 1200 }}"
     media="(min-width: 701px) and (max-width: 1000px)"
     fetchpriority="high"
   >
@@ -115,7 +121,7 @@
   /* TABLET */
   @media (max-width: 1000px) {
     .sk-dynamic-banner {
-      background-image: url('{{ section.settings.sk_banner_img_tablet | image_url: width: 1500 }}');
+      background-image: url('{{ section.settings.sk_banner_img_tablet | image_url: width: 1200 }}');
       height: 100vh;
     }
 
@@ -137,7 +143,7 @@
   /* MOBILE */
   @media (max-width: 700px) {
     .sk-dynamic-banner {
-      background-image: url('{{ section.settings.sk_banner_img_mobile | image_url: width: 900 }}');
+      background-image: url('{{ section.settings.sk_banner_img_mobile | image_url: width: 750 }}');
       height: 100vh;
       align-items: flex-end;
     }
