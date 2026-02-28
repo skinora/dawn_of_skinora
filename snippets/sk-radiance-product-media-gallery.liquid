@@ -318,6 +318,7 @@
       if (!thumbViewport) return;
       const thumb = thumbnails[index];
       if (!thumb) return;
+      // Batch reads first to avoid forced reflow
       const viewportRect = thumbViewport.getBoundingClientRect();
       const thumbRect = thumb.getBoundingClientRect();
       const withinView = thumbRect.left >= viewportRect.left && thumbRect.right <= viewportRect.right;
@@ -328,7 +329,8 @@
             : thumbRect.right - viewportRect.right + 6;
         thumbViewport.scrollBy({ left: offset, behavior: smooth ? 'smooth' : 'auto' });
       }
-      updateThumbNavButtons();
+      // Defer nav button update to avoid read-after-write (scrollBy is a write)
+      requestAnimationFrame(updateThumbNavButtons);
     }
 
     function scrollThumbsByPage(direction) {
@@ -423,8 +425,10 @@
     }
 
     toggleThumbNavVisibility();
-    updateThumbNavButtons();
-    updateThumbMetrics();
+    requestAnimationFrame(function () {
+      updateThumbNavButtons();
+      updateThumbMetrics();
+    });
 
     // Keyboard navigation (only when focus is inside wrapper)
     wrapper.addEventListener('keydown', (e) => {

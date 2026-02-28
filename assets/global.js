@@ -592,10 +592,9 @@ class HeaderDrawer extends MenuDrawer {
     this.header = this.header || document.querySelector('.section-header');
     this.borderOffset =
       this.borderOffset || this.closest('.header-wrapper').classList.contains('header-wrapper--border-bottom') ? 1 : 0;
-    document.documentElement.style.setProperty(
-      '--header-bottom-position',
-      `${parseInt(this.header.getBoundingClientRect().bottom - this.borderOffset)}px`,
-    );
+    // Read geometric value BEFORE any DOM writes to avoid forced reflow
+    const headerBottom = parseInt(this.header.getBoundingClientRect().bottom - this.borderOffset);
+    document.documentElement.style.setProperty('--header-bottom-position', `${headerBottom}px`);
     this.header.classList.add('menu-open');
 
     setTimeout(() => {
@@ -816,9 +815,13 @@ class SliderComponent extends HTMLElement {
     // This should be refactored as part of https://github.com/Shopify/dawn/issues/2057
     if (!this.slider || !this.nextButton) return;
 
+    // ── Batch all geometric READS first ──
     const previousPage = this.currentPage;
     this.currentPage = Math.round(this.slider.scrollLeft / this.sliderItemOffset) + 1;
+    const isFirstSlideVisible = this.isSlideVisible(this.sliderItemsToShow[0]) && this.slider.scrollLeft === 0;
+    const isLastSlideVisible = this.isSlideVisible(this.sliderItemsToShow[this.sliderItemsToShow.length - 1]);
 
+    // ── Then all DOM WRITES ──
     if (this.currentPageElement && this.pageTotalElement) {
       this.currentPageElement.textContent = this.currentPage;
       this.pageTotalElement.textContent = this.totalPages;
@@ -837,13 +840,13 @@ class SliderComponent extends HTMLElement {
 
     if (this.enableSliderLooping) return;
 
-    if (this.isSlideVisible(this.sliderItemsToShow[0]) && this.slider.scrollLeft === 0) {
+    if (isFirstSlideVisible) {
       this.prevButton.setAttribute('disabled', 'disabled');
     } else {
       this.prevButton.removeAttribute('disabled');
     }
 
-    if (this.isSlideVisible(this.sliderItemsToShow[this.sliderItemsToShow.length - 1])) {
+    if (isLastSlideVisible) {
       this.nextButton.setAttribute('disabled', 'disabled');
     } else {
       this.nextButton.removeAttribute('disabled');
@@ -1407,7 +1410,7 @@ class CartPerformance {
       const bannerNode = path.find((node) => node && node.matches && node.matches(bannerSelectors));
       if (bannerNode) {
         return !!bannerNode.querySelector(
-          `#${acceptButtonId}, .shopify-pc__banner__btn-accept, [data-testid*="accept"], [aria-label*="Accept"], [aria-label*="accept"]`
+          `#${acceptButtonId}, .shopify-pc__banner__btn-accept, [data-testid*="accept"], [aria-label*="Accept"], [aria-label*="accept"]`,
         );
       }
     }
@@ -1418,7 +1421,7 @@ class CartPerformance {
       const banner = target.closest(bannerSelectors);
       if (banner) {
         return !!banner.querySelector(
-          `#${acceptButtonId}, .shopify-pc__banner__btn-accept, [data-testid*="accept"], [aria-label*="Accept"], [aria-label*="accept"]`
+          `#${acceptButtonId}, .shopify-pc__banner__btn-accept, [data-testid*="accept"], [aria-label*="Accept"], [aria-label*="accept"]`,
         );
       }
     }
@@ -1434,6 +1437,6 @@ class CartPerformance {
         openKlaviyoForm();
       }, 200);
     },
-    true
+    true,
   );
 })();

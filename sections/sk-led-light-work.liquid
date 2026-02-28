@@ -620,9 +620,10 @@
   function skTriggerShimmer(tag) {
     if (!tag) return;
     tag.classList.remove('sk-tag--shimmer');
-    // Force reflow to restart animation
-    void tag.offsetWidth;
-    tag.classList.add('sk-tag--shimmer');
+    // Defer reflow to next frame to avoid synchronous forced reflow
+    requestAnimationFrame(function () {
+      tag.classList.add('sk-tag--shimmer');
+    });
     window.setTimeout(function () {
       tag.classList.remove('sk-tag--shimmer');
     }, 1600);
@@ -723,11 +724,30 @@
       prevBtn.dataset.visible = track.scrollLeft > 2 ? 'true' : 'false';
       nextBtn.dataset.visible = track.scrollLeft + track.clientWidth < track.scrollWidth - 2 ? 'true' : 'false';
     }
-    track.addEventListener('scroll', updateArrows, { passive: true });
+    var arrowTicking = false;
+    track.addEventListener(
+      'scroll',
+      function () {
+        if (!arrowTicking) {
+          arrowTicking = true;
+          requestAnimationFrame(function () {
+            updateArrows();
+            arrowTicking = false;
+          });
+        }
+      },
+      { passive: true }
+    );
 
+    /* Cache slide width — updated via ResizeObserver to avoid per-click reflow */
+    var cachedSlideW = slides[0] ? slides[0].offsetWidth + 20 : 0;
+    if (window.ResizeObserver && slides[0]) {
+      new ResizeObserver(function (entries) {
+        cachedSlideW = entries[0].contentRect.width + 20;
+      }).observe(slides[0]);
+    }
     function step(dir) {
-      var w = slides[0].offsetWidth + 20;
-      track.scrollBy({ left: dir * w, behavior: 'smooth' });
+      track.scrollBy({ left: dir * cachedSlideW, behavior: 'smooth' });
     }
     if (prevBtn)
       prevBtn.addEventListener('click', function () {
@@ -746,7 +766,9 @@
     });
 
     updateArrows();
-    skTriggerAllShimmers(sectionEl);
+    requestAnimationFrame(function () {
+      skTriggerAllShimmers(sectionEl);
+    });
   });
 </script>
 

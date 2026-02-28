@@ -260,6 +260,9 @@
    * CLS guard — mirror deferred-CSS overrides so they apply at first paint.
    * Keeps the same rules in base-deferred.css for specificity/override safety.
    */
+  @media (max-width: 1000px) {
+    .sk-dynamic-banner__container { flex-direction: column-reverse !important; }
+  }
   @media (max-width: 700px) {
     .sk-dynamic-banner__img { width: 360px; }
     .sk-dynamic-banner__img img { width: 100%; height: auto; }

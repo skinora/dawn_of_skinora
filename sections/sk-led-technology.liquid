@@ -541,7 +541,7 @@
 
       track.addEventListener('scroll', handleScroll, { passive: true });
       window.addEventListener('resize', () => requestAnimationFrame(updateActiveDot));
-      updateActiveDot();
+      requestAnimationFrame(updateActiveDot);
     });
   })();
 </script>

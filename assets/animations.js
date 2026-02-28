@@ -50,42 +50,65 @@ function initializeScrollZoomAnimationTrigger() {
 
   animationTriggerElements.forEach((element) => {
     let elementIsVisible = false;
-    const observer = new IntersectionObserver((elements) => {
+    // Cache geometric values — updated only when element resizes (avoids forced reflow on scroll)
+    let cachedOffsetTop = 0;
+    let cachedHeight = 0;
+
+    function updateCachedGeometry() {
+      const rect = element.getBoundingClientRect();
+      cachedOffsetTop = rect.top + window.scrollY;
+      cachedHeight = rect.height;
+    }
+
+    const visibilityObserver = new IntersectionObserver((elements) => {
       elements.forEach((entry) => {
         elementIsVisible = entry.isIntersecting;
       });
     });
-    observer.observe(element);
+    visibilityObserver.observe(element);
 
-    element.style.setProperty('--zoom-in-ratio', 1 + scaleAmount * percentageSeen(element));
+    // Use ResizeObserver to keep cached geometry fresh without scroll-time reflows
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(() => updateCachedGeometry());
+      ro.observe(element);
+    }
 
+    // Initial geometry read (single reflow at init, not per-scroll)
+    updateCachedGeometry();
+    element.style.setProperty('--zoom-in-ratio', 1 + scaleAmount * percentageSeenCached(cachedOffsetTop, cachedHeight));
+
+    let ticking = false;
     window.addEventListener(
       'scroll',
-      throttle(() => {
-        if (!elementIsVisible) return;
-
-        element.style.setProperty('--zoom-in-ratio', 1 + scaleAmount * percentageSeen(element));
-      }),
-      { passive: true }
+      () => {
+        if (!elementIsVisible || ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          element.style.setProperty(
+            '--zoom-in-ratio',
+            1 + scaleAmount * percentageSeenCached(cachedOffsetTop, cachedHeight),
+          );
+          ticking = false;
+        });
+      },
+      { passive: true },
     );
   });
 }
 
-function percentageSeen(element) {
+function percentageSeenCached(elementPositionY, elementHeight) {
   const viewportHeight = window.innerHeight;
   const scrollY = window.scrollY;
-  const elementPositionY = element.getBoundingClientRect().top + scrollY;
-  const elementHeight = element.offsetHeight;
 
   if (elementPositionY > scrollY + viewportHeight) {
-    // If we haven't reached the image yet
+    // If we haven't reached the element yet
     return 0;
   } else if (elementPositionY + elementHeight < scrollY) {
-    // If we've completely scrolled past the image
+    // If we've completely scrolled past the element
     return 100;
   }
 
-  // When the image is in the viewport
+  // When the element is in the viewport
   const distance = scrollY + viewportHeight - elementPositionY;
   let percentage = distance / ((viewportHeight + elementHeight) / 100);
   return Math.round(percentage);

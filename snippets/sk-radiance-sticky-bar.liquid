@@ -394,7 +394,21 @@
 
     portal.addEventListener('click', handlePortalClick);
 
-    window.addEventListener('scroll', () => updateVisibility(portal), { passive: true });
+    /* ── Scroll-driven visibility with rAF gate (avoids forced reflow per scroll tick) ── */
+    let stickyTicking = false;
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!stickyTicking) {
+          stickyTicking = true;
+          requestAnimationFrame(() => {
+            updateVisibility(portal);
+            stickyTicking = false;
+          });
+        }
+      },
+      { passive: true }
+    );
     window.addEventListener('resize', () => updateVisibility(portal));
 
     document.addEventListener('sk:offerchange', (e) => updateSticky(e.detail));

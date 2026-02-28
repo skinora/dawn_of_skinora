@@ -226,6 +226,11 @@
     <script>
       (function () {
         var deferCSS = /accelerated-checkout|fonts\.googleapis\.com/;
+        /* Adobe kit CSS — injected by content_for_header (Shopify Adobe Fonts
+           integration). Redundant: typekit-fonts.css already self-hosts every weight
+           with font-display:optional. Kit CSS re-declares @font-face with
+           font-display:auto — triggers FOIT and CLS (the 0.851 offender). Block it. */
+        var blockCSS = /use\.typekit\.net\/[a-z0-9]+\.css/;
         var delayJS = /connect\.facebook\.net|static\.klaviyo\.com|googletagmanager\.com/;
         var saved = [];
         var done = false;
@@ -236,6 +241,13 @@
             for (var j = 0; j < nodes.length; j++) {
               var n = nodes[j];
               if (n.nodeType !== 1) continue;
+              /* Adobe kit CSS → strip entirely (redundant, CLS-causing) */
+              if (n.tagName === 'LINK' && n.rel === 'stylesheet' && blockCSS.test(n.href || '')) {
+                n.media = 'not all';
+                n.disabled = true;
+                if (n.parentNode) n.parentNode.removeChild(n);
+                continue;
+              }
               /* Non-critical CSS → non-blocking */
               if (n.tagName === 'LINK' && n.rel === 'stylesheet' && deferCSS.test(n.href || '')) {
                 n.media = 'print';
@@ -274,6 +286,64 @@
     </script>
 
     {{ content_for_header }}
+
+    {%- comment -%}
+      Re-assert font-display:optional AFTER content_for_header.
+      Shopify injects Adobe kit CSS (jxm0xpk.css / pbt1clx.css) via content_for_header
+      which redeclares @font-face with font-display:auto, causing FOIT and CLS.
+      These declarations come LAST → override the kit (last @font-face wins).
+      src URLs match the preloaded woff2 files so no extra downloads.
+    {%- endcomment -%}
+    <style>
+      @font-face {
+        font-family: 'sofia-pro';
+        font-style: normal;
+        font-weight: 300;
+        font-display: optional;
+        src: url('https://use.typekit.net/af/da506f/00000000000000007735f990/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3')
+          format('woff2');
+      }
+      @font-face {
+        font-family: 'sofia-pro';
+        font-style: normal;
+        font-weight: 400;
+        font-display: optional;
+        src: url('https://use.typekit.net/af/1fbf9b/00000000000000007735f98d/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3')
+          format('woff2');
+      }
+      @font-face {
+        font-family: 'sofia-pro';
+        font-style: italic;
+        font-weight: 400;
+        font-display: optional;
+        src: url('https://use.typekit.net/af/a80b27/00000000000000007735f98c/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3')
+          format('woff2');
+      }
+      @font-face {
+        font-family: 'sofia-pro';
+        font-style: normal;
+        font-weight: 600;
+        font-display: optional;
+        src: url('https://use.typekit.net/af/e7e7b3/00000000000000007735f99a/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3')
+          format('woff2');
+      }
+      @font-face {
+        font-family: 'freight-text-pro';
+        font-style: normal;
+        font-weight: 400;
+        font-display: optional;
+        src: url('https://use.typekit.net/af/a9e142/00000000000000007735d61f/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3')
+          format('woff2');
+      }
+      @font-face {
+        font-family: 'freight-text-pro';
+        font-style: normal;
+        font-weight: 700;
+        font-display: optional;
+        src: url('https://use.typekit.net/af/9e97d3/00000000000000007735d62a/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3')
+          format('woff2');
+      }
+    </style>
 
     {%- liquid
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
