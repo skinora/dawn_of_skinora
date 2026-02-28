@@ -144,14 +144,16 @@
     <noscript>{{ 'sk-accordion.css' | asset_url | stylesheet_tag }}</noscript>
     <script src="{{ 'sk-accordion.js' | asset_url }}" defer></script>
 
-    {%- comment -%} Swiper CSS deferred — only needed when carousels render (below fold) {%- endcomment -%}
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-      media="print"
-      onload="this.media='all'"
-    >
-    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
+    {%- comment -%} Swiper CSS — only needed on PDP for hero gallery (sk-radiance-product). All other carousels use scroll-snap. {%- endcomment -%}
+    {%- if template.name == 'product' -%}
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+        media="print"
+        onload="this.media='all'"
+      >
+      <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
+    {%- endif -%}
 
     {%- if settings.favicon != blank -%}
       <link
@@ -643,14 +645,18 @@
     {%- endif -%}
 
     {%- comment -%}
-      Swiper + Okendo — idle-loaded on first interaction OR requestIdleCallback
-      (2 s deadline). Both are below-fold; loading them after FCP frees main-thread
-      budget for paint. Replaces the old <script defer> tags.
+      Okendo + (PDP-only) Swiper — idle-loaded on first interaction OR
+      requestIdleCallback (2 s deadline). Both are below-fold; loading them
+      after FCP frees main-thread budget for paint.
+      Swiper is only needed on product pages (hero gallery in sk-radiance-product).
+      All other carousels now use CSS scroll-snap.
     {%- endcomment -%}
     <script>
       (function () {
         var urls = [
+          {%- if template.name == 'product' -%}
           'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+          {%- endif -%}
           'https://cdn-static.okendo.io/reviews-widget-plus/js/okendo-reviews.min.js',
         ];
         var loaded = false;

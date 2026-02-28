@@ -1,6 +1,6 @@
 {% comment %}
   SK Before/After Section
-  Single-image before/after look (visual split only)
+  Scroll-snap carousel — zero external JS dependencies.
 {% endcomment %}
 
 <style>
@@ -12,9 +12,11 @@
     overflow: visible;
   }
 
-  .swiper-slide {
+  .sk-ba-slide {
     display: flex;
     justify-content: center;
+    scroll-snap-align: start;
+    flex-shrink: 0;
   }
 
   .sk-testimonial-card {
@@ -24,8 +26,6 @@
     overflow: hidden;
     --sk-ba-image-base-height: clamp(260px, 30vw, 360px);
   }
-
-  /* === SINGLE IMAGE WITH FAKE BEFORE / AFTER SPLIT === */
 
   .sk-testimonial-card__images {
     position: relative;
@@ -40,8 +40,6 @@
     display: block;
   }
 
-  /* vertical divider */
-  /* pills */
   .sk-ba-pill {
     position: absolute;
     top: 12px;
@@ -53,15 +51,12 @@
     color: #333;
     z-index: 3;
   }
-
   .sk-ba-pill--before {
     left: 12px;
   }
   .sk-ba-pill--after {
     right: 12px;
   }
-
-  /* === CONTENT === */
 
   .sk-testimonial-card__content {
     padding: clamp(1.6rem, 2vw, 1.8rem) clamp(1.8rem, 2.5vw, 2rem) clamp(1rem, 1.25vw, 1.1rem);
@@ -90,19 +85,18 @@
     color: var(--color-neutral-3);
   }
 
-  .sk-before-after .sk-radiance-product__media-progress {
+  /* === PROGRESS DOTS (mobile only) === */
+  .sk-before-after .sk-ba-progress {
     display: flex;
     justify-content: center;
     margin-top: 0.75rem;
   }
-
-  .sk-before-after .sk-radiance-product__media-progress-squares {
+  .sk-before-after .sk-ba-progress__dots {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
   }
-
-  .sk-before-after .sk-radiance-product__media-progress-square {
+  .sk-before-after .sk-ba-progress__dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
@@ -112,119 +106,108 @@
     padding: 0;
     cursor: pointer;
   }
-
-  .sk-before-after .sk-radiance-product__media-progress-square--active {
+  .sk-before-after .sk-ba-progress__dot--active {
     background: var(--color-brand);
     transform: scale(1.25);
   }
 
+  /* === SCROLL-SNAP TRACK === */
   .sk-before-after-viewport {
     position: relative;
     overflow: hidden;
     width: 100%;
   }
 
-  @media (max-width: 899px) {
-    .sk-before-after .sk-before-after-prev,
-    .sk-before-after .sk-before-after-next {
-      display: none;
+  .sk-ba-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+  .sk-ba-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 1 slide on mobile */
+  .sk-ba-slide {
+    flex: 0 0 100%;
+  }
+
+  @media (min-width: 700px) {
+    .sk-ba-slide {
+      flex: 0 0 calc(50% - 10px);
     }
-    .sk-before-after .swiper-button-prev,
-    .sk-before-after .swiper-button-next {
-      display: none;
-    }
-    .sk-before-after .sk-before-after-prev.sk-arrow-visible,
-    .sk-before-after .sk-before-after-next.sk-arrow-visible,
-    .sk-before-after .swiper-button-prev.sk-arrow-visible,
-    .sk-before-after .swiper-button-next.sk-arrow-visible {
-      display: flex !important;
-      opacity: 1 !important;
-      pointer-events: auto !important;
+  }
+  @media (min-width: 1024px) {
+    .sk-ba-slide {
+      flex: 0 0 calc(33.333% - 14px);
     }
   }
 
+  /* === ARROWS === */
+  .sk-before-after .sk-ba-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: var(--color-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    cursor: pointer;
+    padding: 0;
+  }
+  .sk-before-after .sk-ba-arrow::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-top: 2px solid var(--color-brand);
+    border-right: 2px solid var(--color-brand);
+    top: 50%;
+    left: 50%;
+    transition: border-color 0.25s ease;
+  }
+  .sk-before-after .sk-ba-arrow--prev {
+    left: clamp(12px, 2vw, 24px);
+  }
+  .sk-before-after .sk-ba-arrow--next {
+    right: clamp(12px, 2vw, 24px);
+  }
+  .sk-before-after .sk-ba-arrow--prev::after {
+    transform: translate(-50%, -50%) rotate(-135deg);
+  }
+  .sk-before-after .sk-ba-arrow--next::after {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  .sk-before-after .sk-ba-arrow[data-visible='true'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Hide dots on desktop (3-up shows all); allow overflow for arrows */
   @media (min-width: 900px) {
+    .sk-before-after .sk-ba-progress {
+      display: none !important;
+    }
     .sk-before-after-viewport {
       overflow: visible;
     }
-
-    .sk-before-after .sk-before-after-swiper {
-      overflow: hidden !important;
-    }
-
-    .sk-before-after .sk-radiance-product__media-progress {
-      display: none !important;
-    }
-
-    .sk-before-after .sk-before-after-prev::after,
-    .sk-before-after .sk-before-after-next::after {
-      content: '';
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      border-top: 2px solid var(--color-brand);
-      border-right: 2px solid var(--color-brand);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transition: border-color 0.25s ease;
-    }
-
-    .sk-before-after .sk-before-after-prev::after {
-      transform: translate(-50%, -50%) rotate(-135deg);
-    }
-
-    .sk-before-after .sk-before-after-next::after {
-      transform: translate(-50%, -50%) rotate(45deg);
-    }
-
-    .sk-before-after .sk-before-after-prev,
-    .sk-before-after .sk-before-after-next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      border: 1px solid var(--color-border);
-      background: var(--color-white);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
-      color: var(--color-dark);
-      z-index: 10;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease;
-    }
-
-    .sk-before-after .sk-before-after-prev.sk-arrow-visible,
-    .sk-before-after .sk-before-after-next.sk-arrow-visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .sk-before-after .sk-before-after-prev {
-      left: clamp(12px, 2vw, 24px);
-    }
-
-    .sk-before-after .sk-before-after-next {
-      right: clamp(12px, 2vw, 24px);
+    .sk-ba-track {
+      overflow: hidden;
     }
   }
-
-  .sk-before-after .swiper-button-disabled {
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-
-  .sk-before-after .sk-arrow-visible.swiper-button-disabled {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-  }
-
-  /* Swiper arrows & pagination untouched */
 </style>
 
 <section class="sk-before-after" data-section-id="{{ section.id }}">
@@ -243,67 +226,63 @@
     {% endif %}
 
     <div class="sk-before-after-viewport">
-      <div class="swiper sk-before-after-swiper">
-        <div class="swiper-wrapper">
-          {% for block in section.blocks %}
-            <div class="swiper-slide" {{ block.shopify_attributes }}>
-              <div class="sk-testimonial-card">
-                <div class="sk-testimonial-card__images">
-                  <img
-                    src="{{ block.settings.before_image | image_url: width: 460 }}"
-                    srcset="
-                      {{ block.settings.before_image | image_url: width: 300 }} 300w,
-                      {{ block.settings.before_image | image_url: width: 400 }} 400w,
-                      {{ block.settings.before_image | image_url: width: 500 }} 500w
-                    "
-                    sizes="(max-width: 749px) 85vw, 400px"
-                    alt="{{ block.settings.before_image.alt | escape }}"
-                    width="{{ block.settings.before_image.width | default: 500 }}"
-                    height="{{ block.settings.before_image.height | default: 360 }}"
-                    loading="lazy"
-                    decoding="async"
-                  >
+      <div class="sk-ba-track">
+        {% for block in section.blocks %}
+          <div class="sk-ba-slide" {{ block.shopify_attributes }}>
+            <div class="sk-testimonial-card">
+              <div class="sk-testimonial-card__images">
+                <img
+                  src="{{ block.settings.before_image | image_url: width: 460 }}"
+                  srcset="
+                    {{ block.settings.before_image | image_url: width: 300 }} 300w,
+                    {{ block.settings.before_image | image_url: width: 400 }} 400w,
+                    {{ block.settings.before_image | image_url: width: 500 }} 500w
+                  "
+                  sizes="(max-width: 749px) 85vw, 400px"
+                  alt="{{ block.settings.before_image.alt | escape }}"
+                  width="{{ block.settings.before_image.width | default: 500 }}"
+                  height="{{ block.settings.before_image.height | default: 360 }}"
+                  loading="lazy"
+                  decoding="async"
+                >
+                <span class="sk-ba-pill sk-ba-pill--before">FØR</span>
+                <span class="sk-ba-pill sk-ba-pill--after">...OG ETTER</span>
+              </div>
 
-                  <span class="sk-ba-pill sk-ba-pill--before">FØR</span>
-                  <span class="sk-ba-pill sk-ba-pill--after">...OG ETTER</span>
-                </div>
-
-                <div class="sk-testimonial-card__content">
-                  {% if block.settings.testimonial_title != blank %}
-                    <h3 class="sk-testimonial-card__title">
-                      {{ block.settings.testimonial_title }}
-                    </h3>
-                  {% endif %}
-
-                  {% if block.settings.author_name != blank %}
-                    <div class="sk-testimonial-card__meta">
-                      {{ block.settings.author_name }}
-                      {% if block.settings.show_verified %}
-                        <span>✔</span>
-                      {% endif %}
-                    </div>
-                  {% endif %}
-
-                  {% if block.settings.testimonial_text != blank %}
-                    <p class="sk-testimonial-card__text">“{{ block.settings.testimonial_text }}”</p>
-                  {% endif %}
-                </div>
+              <div class="sk-testimonial-card__content">
+                {% if block.settings.testimonial_title != blank %}
+                  <h3 class="sk-testimonial-card__title">
+                    {{ block.settings.testimonial_title }}
+                  </h3>
+                {% endif %}
+                {% if block.settings.author_name != blank %}
+                  <div class="sk-testimonial-card__meta">
+                    {{ block.settings.author_name }}
+                    {% if block.settings.show_verified -%}
+                      <span>✔</span>
+                    {%- endif %}
+                  </div>
+                {% endif %}
+                {% if block.settings.testimonial_text != blank %}
+                  <p class="sk-testimonial-card__text">"{{ block.settings.testimonial_text }}"</p>
+                {% endif %}
               </div>
             </div>
-          {% endfor %}
-        </div>
+          </div>
+        {% endfor %}
       </div>
-      <div class="swiper-button-prev sk-before-after-prev"></div>
-      <div class="swiper-button-next sk-before-after-next"></div>
+      <button type="button" class="sk-ba-arrow sk-ba-arrow--prev" aria-label="Forrige" data-visible="false"></button>
+      <button type="button" class="sk-ba-arrow sk-ba-arrow--next" aria-label="Neste" data-visible="false"></button>
     </div>
+
     {% if section.blocks.size > 0 %}
-      <div class="sk-radiance-product__media-progress" role="status" aria-live="polite">
-        <div class="sk-radiance-product__media-progress-squares" role="tablist" aria-label="Testimonials progress">
+      <div class="sk-ba-progress" role="status" aria-live="polite">
+        <div class="sk-ba-progress__dots" role="tablist" aria-label="Testimonials progress">
           {% for block in section.blocks %}
             <button
               type="button"
-              class="sk-radiance-product__media-progress-square{% if forloop.first %} sk-radiance-product__media-progress-square--active{% endif %}"
-              data-progress-index="{{ forloop.index0 }}"
+              class="sk-ba-progress__dot{% if forloop.first %} sk-ba-progress__dot--active{% endif %}"
+              data-index="{{ forloop.index0 }}"
               aria-label="Vis eksempel {{ forloop.index }}"
               {% if forloop.first %}
                 aria-current="true"
@@ -317,82 +296,60 @@
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    if (typeof Swiper === 'undefined') return;
+  {%- comment -%} Scroll-snap carousel — no Swiper dependency {%- endcomment -%}
+  (function () {
+    var root = document.querySelector('.sk-before-after[data-section-id="{{ section.id }}"]');
+    if (!root) return;
+    var track = root.querySelector('.sk-ba-track');
+    var slides = root.querySelectorAll('.sk-ba-slide');
+    var prevBtn = root.querySelector('.sk-ba-arrow--prev');
+    var nextBtn = root.querySelector('.sk-ba-arrow--next');
+    var dots = root.querySelectorAll('.sk-ba-progress__dot');
+    if (!track || !slides.length) return;
 
-    const wrapper = document.querySelector('.sk-before-after[data-section-id="{{ section.id }}"]');
-    if (!wrapper) return;
-
-    const swiperElement = wrapper.querySelector('.sk-before-after-swiper');
-    if (!swiperElement) return;
-
-    const swiperInstance = new Swiper(swiperElement, {
-      slidesPerView: 1,
-      spaceBetween: 20,
-      navigation: {
-        nextEl: wrapper.querySelector('.sk-before-after-next'),
-        prevEl: wrapper.querySelector('.sk-before-after-prev'),
-      },
-      breakpoints: {
-        700: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 },
-      },
-    });
-
-    const progressBar = wrapper.querySelector('.sk-radiance-product__media-progress');
-    const progressSquares = progressBar
-      ? Array.from(progressBar.querySelectorAll('.sk-radiance-product__media-progress-square'))
-      : [];
-    const prevArrow = wrapper.querySelector('.sk-before-after-prev');
-    const nextArrow = wrapper.querySelector('.sk-before-after-next');
-
-    const updateProgress = (index) => {
-      if (!progressBar) return;
-      const hideProgress = progressSquares.length <= 1;
-      progressBar.classList.toggle('sk-radiance-product__media-progress--hidden', hideProgress);
-      progressBar.setAttribute('aria-hidden', hideProgress ? 'true' : 'false');
-      progressSquares.forEach((square, idx) => {
-        const isActive = idx === index;
-        square.classList.toggle('sk-radiance-product__media-progress-square--active', isActive);
-        if (isActive) {
-          square.setAttribute('aria-current', 'true');
-        } else {
-          square.removeAttribute('aria-current');
-        }
+    var activeIndex = 0;
+    function setActive(idx) {
+      if (idx === activeIndex && idx !== 0) return;
+      activeIndex = idx;
+      dots.forEach(function (d, i) {
+        var on = i === idx;
+        d.classList.toggle('sk-ba-progress__dot--active', on);
+        on ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current');
       });
-    };
+      updateArrows();
+    }
 
-    progressSquares.forEach((square, idx) => {
-      square.addEventListener('click', () => swiperInstance.slideTo(idx));
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && e.intersectionRatio > 0.5)
+          setActive(Array.prototype.indexOf.call(slides, e.target));
+      });
+    }, { root: track, threshold: 0.5 });
+    slides.forEach(function (s) { io.observe(s); });
+
+    function updateArrows() {
+      if (!prevBtn || !nextBtn) return;
+      prevBtn.dataset.visible = track.scrollLeft > 2 ? 'true' : 'false';
+      nextBtn.dataset.visible =
+        track.scrollLeft + track.clientWidth < track.scrollWidth - 2 ? 'true' : 'false';
+    }
+    track.addEventListener('scroll', updateArrows, { passive: true });
+
+    function step(dir) {
+      var w = slides[0].offsetWidth + 20;
+      track.scrollBy({ left: dir * w, behavior: 'smooth' });
+    }
+    if (prevBtn) prevBtn.addEventListener('click', function () { step(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { step(1); });
+
+    dots.forEach(function (d) {
+      d.addEventListener('click', function () {
+        var i = parseInt(d.dataset.index, 10);
+        if (slides[i]) slides[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+      });
     });
-
-    const updateDesktopArrows = () => {
-      if (!prevArrow || !nextArrow) return;
-
-      const showPrev = !swiperInstance.isBeginning;
-      const showNext = !swiperInstance.isEnd;
-
-      prevArrow.classList.toggle('sk-arrow-visible', showPrev);
-      nextArrow.classList.toggle('sk-arrow-visible', showNext);
-      prevArrow.classList.toggle('swiper-button-disabled', !showPrev);
-      nextArrow.classList.toggle('swiper-button-disabled', !showNext);
-    };
-
-    swiperInstance.on('init', updateDesktopArrows);
-    swiperInstance.on('slideChange', updateDesktopArrows);
-    swiperInstance.on('slideChangeTransitionEnd', updateDesktopArrows);
-    swiperInstance.on('breakpoint', updateDesktopArrows);
-    swiperInstance.on('slideChangeTransitionStart', updateDesktopArrows);
-    swiperInstance.on('sliderMove', updateDesktopArrows);
-
-    swiperInstance.on('slideChange', () => {
-      updateProgress(swiperInstance.activeIndex);
-    });
-
-    updateProgress(swiperInstance.activeIndex);
-    updateDesktopArrows();
-    window.addEventListener('resize', updateDesktopArrows);
-  });
+    updateArrows();
+  })();
 </script>
 
 {% schema %}
@@ -444,7 +401,7 @@
           "type": "textarea",
           "id": "testimonial_text",
           "label": "Quote",
-          "default": "I’ve seen a real improvement in my sun spots and pigmentation."
+          "default": "I've seen a real improvement in my sun spots and pigmentation."
         }
       ]
     }

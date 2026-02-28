@@ -14,3 +14,5 @@ scan_sections.py
 scan_sections.js
 
 .github/copilot-instructions.md
+
+*.bak

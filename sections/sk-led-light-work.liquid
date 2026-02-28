@@ -16,13 +16,9 @@
     background: rgb(var(--color-background));
   }
 
-  /* Section-only overflow guard + Swiper theme vars (no globals). */
+  /* Section-only overflow guard. */
   #sk-wavelengths-{{ section.id }} {
     overflow-x: clip !important;
-    --swiper-theme-color: var(--sk-color-brand);
-    --swiper-pagination-color: var(--sk-color-brand);
-    --swiper-pagination-bullet-inactive-color: var(--sk-color-brand);
-    --swiper-pagination-bullet-inactive-opacity: 0.25;
   }
 
   @supports not (overflow: clip) {
@@ -219,15 +215,24 @@
     margin-top: 0;
   }
 
-  /* Swiper container (keep padding/overflow; remove 100vw forcing). */
-  .sk-wavelengths__slider .swiper {
+  /* Scroll-snap track (mobile carousel). */
+  .sk-llw-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
     padding: calc(var(--sk-spacing-unit) * 7) 0 calc(var(--sk-spacing-unit) * 6);
-    overflow: visible;
-    width: 100%;
-    margin: 0;
+  }
+  .sk-llw-track::-webkit-scrollbar { display: none; }
+  .sk-llw-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
   }
 
-  .sk-wavelengths__slider .swiper-pagination {
+  .sk-llw-dots {
     position: static;
     margin: calc(var(--sk-spacing-unit) * 1) auto 0;
     width: auto;
@@ -237,17 +242,22 @@
     gap: calc(var(--sk-spacing-unit) * 2);
   }
 
-  .sk-wavelengths__slider .swiper-pagination-bullet {
+  .sk-llw-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
     margin: 0;
-    background: var(--sk-color-brand) !important;
-    background-color: var(--sk-color-brand) !important;
+    background: var(--sk-color-brand);
     opacity: 0.25;
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
 
-  .sk-wavelengths__slider .swiper-pagination-bullet-active {
-    background: var(--sk-color-brand) !important;
-    background-color: var(--sk-color-brand) !important;
+  .sk-llw-dot--active {
     opacity: 1;
+    transform: scale(1.25);
   }
 
   .sk-wavelengths__arrow {
@@ -284,7 +294,7 @@
     color: rgba(var(--color-foreground), 0.6);
   }
 
-  .sk-wavelengths__arrow.swiper-button-disabled {
+  .sk-wavelengths__arrow[data-visible="false"] {
     opacity: 0;
     pointer-events: none;
   }
@@ -307,10 +317,7 @@
     transform: rotate(45deg);
   }
 
-  .sk-wavelengths__slider .swiper-button-prev::after,
-  .sk-wavelengths__slider .swiper-button-next::after {
-    display: none;
-  }
+
 
   /* === MOBILE SLIDER === */
   @media (max-width: 750px) {
@@ -492,98 +499,107 @@
         {% endfor %}
       </div>
 
-      <!-- MOBILE SWIPER -->
-      <div class="sk-wavelengths__slider sk-wavelengths-swiper-{{ section.id }}">
-        <div class="swiper llw-swiper-{{ section.id }}">
-          <div class="swiper-wrapper">
-            {% for card in product.metafields.custom.led_light_work_cards.value %}
-              {% liquid
-                assign card_image = card.image.value | default: card.image
-                assign card_eyebrow = card.eyebrow.value | default: card.eyebrow
-                assign card_title = card.title.value | default: card.title
-                assign title_parts = card_title | split: '|'
-                assign card_primary_title = ''
-                assign card_secondary_title = ''
-                if title_parts.size > 1
-                  assign card_primary_title = title_parts[0] | strip
-                  assign card_secondary_title = title_parts[1] | strip
-                else
-                  assign card_secondary_title = card_title | strip
-                endif
-                assign card_benefits = card.benefits.value | default: card.benefits
-                assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
-                assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
-              %}
-              <div class="swiper-slide">
-                <div class="sk-wavelength{% if card_show_highlight %} sk-wavelength--has-tag{% endif %}">
-                  {% if card_show_highlight %}
-                    <span class="sk-tag">
-                      {{ card_highlight_tag | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
-                    </span>
-                  {% endif %}
+      <!-- MOBILE SCROLL-SNAP SLIDER -->
+      <div class="sk-wavelengths__slider">
+        <div class="sk-llw-track">
+          {% for card in product.metafields.custom.led_light_work_cards.value %}
+            {% liquid
+              assign card_image = card.image.value | default: card.image
+              assign card_eyebrow = card.eyebrow.value | default: card.eyebrow
+              assign card_title = card.title.value | default: card.title
+              assign title_parts = card_title | split: '|'
+              assign card_primary_title = ''
+              assign card_secondary_title = ''
+              if title_parts.size > 1
+                assign card_primary_title = title_parts[0] | strip
+                assign card_secondary_title = title_parts[1] | strip
+              else
+                assign card_secondary_title = card_title | strip
+              endif
+              assign card_benefits = card.benefits.value | default: card.benefits
+              assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
+              assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
+            %}
+            <div class="sk-llw-slide">
+              <div class="sk-wavelength{% if card_show_highlight %} sk-wavelength--has-tag{% endif %}">
+                {% if card_show_highlight %}
+                  <span class="sk-tag">
+                    {{ card_highlight_tag | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
+                  </span>
+                {% endif %}
 
-                  {% if card_image %}
-                    <div class="sk-wavelength__visual">
-                      <img
-                        src="{{ card_image | image_url: width: 800 }}"
-                        alt="{{ card_title | default: 'Skinora LED lys' | escape }}"
-                        loading="lazy"
-                        width="{{ card_image.width | default: 800 }}"
-                        height="{{ card_image.height | default: 600 }}"
-                      >
-                    </div>
-                  {% endif %}
+                {% if card_image %}
+                  <div class="sk-wavelength__visual">
+                    <img
+                      src="{{ card_image | image_url: width: 800 }}"
+                      alt="{{ card_title | default: 'Skinora LED lys' | escape }}"
+                      loading="lazy"
+                      width="{{ card_image.width | default: 800 }}"
+                      height="{{ card_image.height | default: 600 }}"
+                    >
+                  </div>
+                {% endif %}
 
-                  {% if card_eyebrow != blank or card_primary_title != blank or card_secondary_title != blank %}
-                    <div class="sk-wavelength__header">
-                      {% if card_eyebrow != blank %}
-                        <p class="sk-wavelength__eyebrow sk-copy-eyebrow">{{ card_eyebrow }}</p>
-                      {% endif %}
+                {% if card_eyebrow != blank or card_primary_title != blank or card_secondary_title != blank %}
+                  <div class="sk-wavelength__header">
+                    {% if card_eyebrow != blank %}
+                      <p class="sk-wavelength__eyebrow sk-copy-eyebrow">{{ card_eyebrow }}</p>
+                    {% endif %}
 
-                      {% if card_primary_title != blank or card_secondary_title != blank %}
-                        <h3 class="sk-wavelength__title">
-                          {% if card_primary_title != blank %}
-                            {{ card_primary_title }}
-                          {% endif %}
-                          {% if card_primary_title != blank and card_secondary_title != blank %}
-                            |
-                          {% endif %}
-                          {% if card_secondary_title != blank %}
-                            <em>{{ card_secondary_title }}</em>
-                          {% endif %}
-                        </h3>
-                      {% endif %}
-                    </div>
-                  {% endif %}
-
-                  {% if card_benefits != blank %}
-                    <ul class="sk-wavelength__benefits">
-                      {% assign items = card_benefits | newline_to_br | split: '<br />' %}
-                      {% for item in items %}
-                        {% assign line = item | strip %}
-                        {% if line != blank %}
-                          <li>{{ line }}</li>
+                    {% if card_primary_title != blank or card_secondary_title != blank %}
+                      <h3 class="sk-wavelength__title">
+                        {% if card_primary_title != blank %}
+                          {{ card_primary_title }}
                         {% endif %}
-                      {% endfor %}
-                    </ul>
-                  {% endif %}
-                </div>
+                        {% if card_primary_title != blank and card_secondary_title != blank %}
+                          |
+                        {% endif %}
+                        {% if card_secondary_title != blank %}
+                          <em>{{ card_secondary_title }}</em>
+                        {% endif %}
+                      </h3>
+                    {% endif %}
+                  </div>
+                {% endif %}
+
+                {% if card_benefits != blank %}
+                  <ul class="sk-wavelength__benefits">
+                    {% assign items = card_benefits | newline_to_br | split: '<br />' %}
+                    {% for item in items %}
+                      {% assign line = item | strip %}
+                      {% if line != blank %}
+                        <li>{{ line }}</li>
+                      {% endif %}
+                    {% endfor %}
+                  </ul>
+                {% endif %}
               </div>
-            {% endfor %}
-          </div>
-          <div class="swiper-pagination"></div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="sk-llw-dots">
+          {% for card in product.metafields.custom.led_light_work_cards.value %}
+            <button
+              type="button"
+              class="sk-llw-dot{% if forloop.first %} sk-llw-dot--active{% endif %}"
+              data-index="{{ forloop.index0 }}"
+              aria-label="Vis kort {{ forloop.index }}"
+            ></button>
+          {% endfor %}
         </div>
         <button
           type="button"
-          class="sk-wavelengths__arrow sk-wavelengths__arrow--prev swiper-button-prev"
+          class="sk-wavelengths__arrow sk-wavelengths__arrow--prev"
           aria-label="Forrige lysbilde"
+          data-visible="false"
         >
           <span class="sk-wavelengths__arrow-icon" aria-hidden="true"></span>
         </button>
         <button
           type="button"
-          class="sk-wavelengths__arrow sk-wavelengths__arrow--next swiper-button-next"
+          class="sk-wavelengths__arrow sk-wavelengths__arrow--next"
           aria-label="Neste lysbilde"
+          data-visible="true"
         >
           <span class="sk-wavelengths__arrow-icon" aria-hidden="true"></span>
         </button>
@@ -660,60 +676,76 @@
     }
 
     skInitShimmerObserver(sectionEl);
-    var mql = window.matchMedia('(max-width: 750px)');
-    var swiperInstance = null;
-    var sliderRoot = sectionEl.querySelector('.sk-wavelengths-swiper-{{ section.id }}');
-    var container = sliderRoot ? sliderRoot.querySelector('.swiper') : null;
 
-    function setup() {
-      if (!container) return;
-
-      if (mql.matches && !swiperInstance) {
-        var options = {
-          slidesPerView: 1,
-          spaceBetween: 20,
-        };
-
-        var paginationEl = container.querySelector('.swiper-pagination');
-        if (paginationEl) {
-          options.pagination = {
-            el: paginationEl,
-            clickable: true,
-          };
-        }
-
-        var prevArrow = sliderRoot ? sliderRoot.querySelector('.sk-wavelengths__arrow--prev') : null;
-        var nextArrow = sliderRoot ? sliderRoot.querySelector('.sk-wavelengths__arrow--next') : null;
-        if (prevArrow && nextArrow) {
-          options.navigation = {
-            prevEl: prevArrow,
-            nextEl: nextArrow,
-          };
-        }
-
-        options.on = {
-          slideChangeTransitionStart: function (swiper) {
-            var activeSlide = swiper.slides ? swiper.slides[swiper.activeIndex] : null;
-            if (activeSlide) {
-              activeSlide.querySelectorAll('.sk-tag').forEach(skTriggerShimmer);
-            }
-          },
-        };
-
-        swiperInstance = new Swiper(container, options);
-        // Initial shimmer on the first slide
-        var initialSlide = swiperInstance.slides ? swiperInstance.slides[swiperInstance.activeIndex] : null;
-        if (initialSlide) {
-          initialSlide.querySelectorAll('.sk-tag').forEach(skTriggerShimmer);
-        }
-      } else if (!mql.matches && swiperInstance) {
-        swiperInstance.destroy(true, true);
-        swiperInstance = null;
-      }
+    /* --- Mobile scroll-snap carousel --- */
+    var track = sectionEl.querySelector('.sk-llw-track');
+    var slides = sectionEl.querySelectorAll('.sk-llw-slide');
+    var dots = sectionEl.querySelectorAll('.sk-llw-dot');
+    var prevBtn = sectionEl.querySelector('.sk-wavelengths__arrow--prev');
+    var nextBtn = sectionEl.querySelector('.sk-wavelengths__arrow--next');
+    if (!track || !slides.length) {
+      skTriggerAllShimmers(sectionEl);
+      return;
     }
 
-    setup();
-    mql.addEventListener('change', setup);
+    var activeIndex = 0;
+
+    function setActive(idx) {
+      if (idx === activeIndex && idx !== 0) return;
+      activeIndex = idx;
+      dots.forEach(function (d, i) {
+        d.classList.toggle('sk-llw-dot--active', i === idx);
+      });
+      /* Shimmer on active slide */
+      if (slides[idx]) {
+        slides[idx].querySelectorAll('.sk-tag').forEach(skTriggerShimmer);
+      }
+      updateArrows();
+    }
+
+    /* Track active slide via IntersectionObserver */
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && e.intersectionRatio > 0.5) {
+            setActive(Array.prototype.indexOf.call(slides, e.target));
+          }
+        });
+      },
+      { root: track, threshold: 0.5 }
+    );
+    slides.forEach(function (s) {
+      io.observe(s);
+    });
+
+    function updateArrows() {
+      if (!prevBtn || !nextBtn) return;
+      prevBtn.dataset.visible = track.scrollLeft > 2 ? 'true' : 'false';
+      nextBtn.dataset.visible = track.scrollLeft + track.clientWidth < track.scrollWidth - 2 ? 'true' : 'false';
+    }
+    track.addEventListener('scroll', updateArrows, { passive: true });
+
+    function step(dir) {
+      var w = slides[0].offsetWidth + 20;
+      track.scrollBy({ left: dir * w, behavior: 'smooth' });
+    }
+    if (prevBtn)
+      prevBtn.addEventListener('click', function () {
+        step(-1);
+      });
+    if (nextBtn)
+      nextBtn.addEventListener('click', function () {
+        step(1);
+      });
+
+    dots.forEach(function (d) {
+      d.addEventListener('click', function () {
+        var i = parseInt(d.dataset.index, 10);
+        if (slides[i]) slides[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+      });
+    });
+
+    updateArrows();
     skTriggerAllShimmers(sectionEl);
   });
 </script>
