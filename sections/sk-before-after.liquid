@@ -281,12 +281,11 @@
           {% for block in section.blocks %}
             <button
               type="button"
+              role="tab"
               class="sk-ba-progress__dot{% if forloop.first %} sk-ba-progress__dot--active{% endif %}"
               data-index="{{ forloop.index0 }}"
               aria-label="Vis eksempel {{ forloop.index }}"
-              {% if forloop.first %}
-                aria-current="true"
-              {% endif %}
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
             ></button>
           {% endfor %}
         </div>

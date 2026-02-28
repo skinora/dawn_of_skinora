@@ -205,23 +205,28 @@
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    {%- comment -%} performance-loader.js — tiny utility for lazy-loading scripts/CSS (onIdle, onVisible, onInteraction) {%- endcomment -%}
+    <script src="{{ 'performance-loader.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
+    {%- comment -%} search-form.js only needed when predictive search is on {%- endcomment -%}
+    {%- if settings.predictive_search_enabled -%}
+      <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
 
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
     {%- comment -%}
-      Performance interceptor — runs BEFORE {{ content_for_header }} so the
+      Performance interceptor — runs BEFORE content_for_header so the
       MutationObserver can catch nodes as Shopify inserts them.
       1. Converts accelerated-checkout-backwards-compat.css from render-blocking
          to non-blocking (media=print → onload → all).
       2. Defers any Google Fonts CSS injected by apps (same pattern).
       3. Delays heavy third-party scripts (Meta pixel, Klaviyo, GTM/gtag) until
-         first user interaction OR 2 s timeout. Purchase tracking + GA4 are
-         preserved because scripts fire well before any conversion page.
+         first user interaction OR 5 s timeout. This keeps the 0-5 s TBT window
+         clean. Purchase tracking + GA4 still fire well before any conversion.
     {%- endcomment -%}
     <script>
       (function () {
@@ -281,7 +286,7 @@
         ['mouseover', 'touchstart', 'scroll', 'keydown'].forEach(function (e) {
           document.addEventListener(e, fire, { once: true, passive: true });
         });
-        setTimeout(fire, 2000);
+        setTimeout(fire, 5000);
       })();
     </script>
 
@@ -716,30 +721,21 @@
 
     {%- comment -%}
       Okendo — idle-loaded on first interaction OR requestIdleCallback
-      (2 s deadline). Below-fold; loading after FCP frees main-thread budget.
+      (5 s deadline). Below-fold; delayed loading frees main-thread budget
+      during the critical LCP + TBT measurement window (0-5 s).
+      Uses SKLoader from performance-loader.js for consistent deferred loading.
+      Both onInteraction and onIdle race — whichever fires first wins (deduplicated).
     {%- endcomment -%}
-    <script>
-      (function () {
-        var src = 'https://cdn-static.okendo.io/reviews-widget-plus/js/okendo-reviews.min.js';
-        var loaded = false;
-        function load() {
-          if (loaded) return;
-          loaded = true;
-          var s = document.createElement('script');
-          s.src = src;
-          s.async = true;
-          document.body.appendChild(s);
+    {%- comment -%} Okendo only renders widgets on product pages — skip loading on other pages. {%- endcomment -%}
+    {%- if request.page_type == 'product' -%}
+      <script>
+        if (window.SKLoader) {
+          var okSrc = 'https://cdn-static.okendo.io/reviews-widget-plus/js/okendo-reviews.min.js';
+          SKLoader.onInteraction(okSrc, { events: ['scroll', 'touchstart', 'mouseover'] });
+          SKLoader.onIdle(okSrc, { timeout: 5000 });
         }
-        ['scroll', 'touchstart', 'mouseover'].forEach(function (e) {
-          document.addEventListener(e, load, { once: true, passive: true });
-        });
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(load, { timeout: 2000 });
-        } else {
-          setTimeout(load, 2000);
-        }
-      })();
-    </script>
+      </script>
+    {%- endif -%}
 
     {% comment %}theme-check-enable RemoteAsset{% endcomment %}
   </body>

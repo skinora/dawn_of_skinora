@@ -12,8 +12,18 @@
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
 <style>
+  /* Critical: position:fixed MUST be in sync CSS to prevent CLS.
+     Without this, the drawer is in-flow on first paint (taking a body grid row),
+     then jumps to position:fixed when sk-cart-drawer.css loads → massive shift.
+     visibility:hidden keeps it invisible; sk-cart-drawer.css refines the rest.
+     Do NOT add width/height/overflow here — they would override the deferred
+     sk-cart-drawer.css rules (same specificity, later source order wins) and
+     prevent the drawer from opening. */
   .drawer {
     visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
 </style>
 

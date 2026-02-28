@@ -21,6 +21,13 @@
   }
 }
 
+/* ── CLS guard: below-fold Shopify sections get content-visibility:auto ── */
+/* Skips first section (hero) — only targets 2nd+ sections in main */
+.content-for-layout > .shopify-section:nth-child(n + 2) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
 .sk-section img,
 [class^='sk-'] img,
 [class*=' sk-'] img {
@@ -30,6 +37,20 @@
 #shopify-pc__banner__btn-manage-prefs,
 #shopify-pc__banner__btn-decline {
   display: none !important;
+}
+
+/* ── Klaviyo popup — prevent CLS on injection ── */
+[class*='klaviyo'] img,
+[class*='kl-private'] img {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+[id^='klaviyo-'],
+.klaviyo-form,
+.needsclick[class*='kl-'] {
+  contain: layout style;
 }
 
 #shopify-pc__banner__btn-accept {
@@ -1310,15 +1331,16 @@ deferred-media {
 }
 
 .shopify-section-header-hidden {
-  top: calc(-1 * var(--header-height));
+  transform: translateY(calc(-1 * var(--header-height)));
 }
 
 .shopify-section-header-hidden.menu-open {
-  top: 0;
+  transform: translateY(0);
 }
 
 .section-header.animate {
-  transition: top 0.15s ease-out;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
 }
 
 .shopify-section-group-header-group {

@@ -6,15 +6,16 @@
 }
 
 .shopify-section-header-hidden {
-  top: calc(-1 * var(--header-height));
+  transform: translateY(calc(-1 * var(--header-height)));
 }
 
 .shopify-section-header-hidden.menu-open {
-  top: 0;
+  transform: translateY(0);
 }
 
 .section-header.animate {
-  transition: top 0.15s ease-out;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
 }
 
 .shopify-section-group-header-group {
@@ -772,7 +773,9 @@ details[open] .modal-overlay::after {
   position: absolute;
   opacity: 1;
   transform: scale(1);
-  transition: transform 150ms ease, opacity 150ms ease;
+  transition:
+    transform 150ms ease,
+    opacity 150ms ease;
 }
 
 details:not([open]) > .header__icon--menu .icon-close,
@@ -948,7 +951,9 @@ details[open] > .header__menu-item .icon-caret {
 }
 
 .header__submenu {
-  transition: opacity var(--duration-default) ease, transform var(--duration-default) ease;
+  transition:
+    opacity var(--duration-default) ease,
+    transform var(--duration-default) ease;
 }
 
 .global-settings-popup,

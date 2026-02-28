@@ -1302,10 +1302,11 @@
                 {% for image in media_images %}
                   <button
                     type="button"
+                    role="tab"
                     class="sk-hero-progress-dot{% if forloop.first %} is-active{% endif %}"
                     data-media-index="{{ forloop.index0 }}"
                     aria-label="View media {{ forloop.index }}"
-                    aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+                    aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
                   ></button>
                 {% endfor %}
               </div>

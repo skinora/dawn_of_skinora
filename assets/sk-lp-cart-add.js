@@ -28,12 +28,10 @@
     /* ── Prevent double-clicks ── */
     if (btn.classList.contains('is-loading')) return;
     btn.classList.add('is-loading');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '<span class="lp-btn__spinner"></span> Legger til…';
 
     try {
       /* 1. Fetch product JSON to get the first available variant */
-      const productRes = await fetch('/products/' + handle + '.js');
+      const productRes = await fetch('/products/' + handle + '.js', { cache: 'default' });
       if (!productRes.ok) throw new Error('Product not found');
       const product = await productRes.json();
 
@@ -74,7 +72,6 @@
       window.location.href = '/products/' + handle;
     } finally {
       btn.classList.remove('is-loading');
-      btn.innerHTML = originalText;
     }
   });
 })();

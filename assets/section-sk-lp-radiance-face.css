@@ -109,23 +109,7 @@
 .lp-btn.is-loading {
   pointer-events: none;
   opacity: 0.7;
-}
-
-.lp-btn__spinner {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid currentColor;
-  border-right-color: transparent;
-  border-radius: 50%;
-  animation: lp-spin 0.6s linear infinite;
-  vertical-align: middle;
-}
-
-@keyframes lp-spin {
-  to {
-    transform: rotate(360deg);
-  }
+  cursor: wait;
 }
 
 .lp-btn--full {
