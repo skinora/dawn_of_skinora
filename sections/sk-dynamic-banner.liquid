@@ -1,37 +1,32 @@
 {%- comment -%}
-  Preload LCP background images per breakpoint.
-  - Mobile: 750px = 375px viewport × 2 DPR (covers ~95% of phones).
-  - Tablet: 1200px (sufficient for 1000px viewport × density).
-  - Desktop: 1600px (max practical for full-viewport background).
-  Shopify CDN auto-serves WebP when browser supports it via Accept header.
+  Preload LCP background images via image_tag preload:true.
+  Shopify injects the <link rel="preload"> into <head> via content_for_header,
+  so the browser discovers them earlier than manual preload links in <body>.
+  The rendered <img> tags are visually hidden — preload is the only purpose.
 {%- endcomment -%}
-{%- if section.settings.sk_banner_img_mobile != blank -%}
-  <link
-    rel="preload"
-    as="image"
-    href="{{ section.settings.sk_banner_img_mobile | image_url: width: 750 }}"
-    media="(max-width: 700px)"
-    fetchpriority="high"
-  >
-{%- endif -%}
-{%- if section.settings.sk_banner_img_tablet != blank -%}
-  <link
-    rel="preload"
-    as="image"
-    href="{{ section.settings.sk_banner_img_tablet | image_url: width: 1200 }}"
-    media="(min-width: 701px) and (max-width: 1000px)"
-    fetchpriority="high"
-  >
-{%- endif -%}
-{%- if section.settings.sk_banner_img_desktop != blank -%}
-  <link
-    rel="preload"
-    as="image"
-    href="{{ section.settings.sk_banner_img_desktop | image_url: width: 1600 }}"
-    media="(min-width: 1001px)"
-    fetchpriority="high"
-  >
-{%- endif -%}
+<div style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  {%- if section.settings.sk_banner_img_mobile != blank -%}
+    {{
+      section.settings.sk_banner_img_mobile
+      | image_url: width: 750
+      | image_tag: preload: true, loading: 'eager', fetchpriority: 'high', alt: ''
+    }}
+  {%- endif -%}
+  {%- if section.settings.sk_banner_img_tablet != blank -%}
+    {{
+      section.settings.sk_banner_img_tablet
+      | image_url: width: 1200
+      | image_tag: preload: true, loading: 'eager', alt: ''
+    }}
+  {%- endif -%}
+  {%- if section.settings.sk_banner_img_desktop != blank -%}
+    {{
+      section.settings.sk_banner_img_desktop
+      | image_url: width: 1600
+      | image_tag: preload: true, loading: 'eager', alt: ''
+    }}
+  {%- endif -%}
+</div>
 
 <style>
   .sk-dynamic-banner {
@@ -261,18 +256,37 @@
    * Keeps the same rules in base-deferred.css for specificity/override safety.
    */
   @media (max-width: 1000px) {
-    .sk-dynamic-banner__container { flex-direction: column-reverse !important; }
+    .sk-dynamic-banner__container {
+      flex-direction: column-reverse !important;
+    }
   }
   @media (max-width: 700px) {
-    .sk-dynamic-banner__img { width: 360px; }
-    .sk-dynamic-banner__img img { width: 100%; height: auto; }
-    .sk-dynamic-banner__description { font-size: var(--sk-font-size-medium); line-height: 28px; }
-    .sk-dynamic-banner__button { width: 30rem; }
+    .sk-dynamic-banner__img {
+      width: 360px;
+    }
+    .sk-dynamic-banner__img img {
+      width: 100%;
+      height: auto;
+    }
+    .sk-dynamic-banner__description {
+      font-size: var(--sk-font-size-medium);
+      line-height: 28px;
+    }
+    .sk-dynamic-banner__button {
+      width: 30rem;
+    }
   }
   @media (max-width: 435px) {
-    .sk-dynamic-banner { height: 84vh; }
-    .sk-dynamic-banner__description { font-size: var(--sk-font-size-xxs); line-height: 20px; }
-    .sk-dynamic-banner__button { width: 25rem; }
+    .sk-dynamic-banner {
+      height: 84vh;
+    }
+    .sk-dynamic-banner__description {
+      font-size: var(--sk-font-size-xxs);
+      line-height: 20px;
+    }
+    .sk-dynamic-banner__button {
+      width: 25rem;
+    }
   }
 </style>
 

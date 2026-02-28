@@ -283,6 +283,15 @@
           });
         }
 
+        /* Expose: disconnect observer early once content_for_header is done,
+           but keep delayed-fire for saved marketing scripts. */
+        window.__SK_PERF = {
+          disconnectObserver: function () {
+            mo.disconnect();
+          },
+          fire: fire,
+        };
+
         ['mouseover', 'touchstart', 'scroll', 'keydown'].forEach(function (e) {
           document.addEventListener(e, fire, { once: true, passive: true });
         });
@@ -291,6 +300,16 @@
     </script>
 
     {{ content_for_header }}
+
+    {%- comment -%}
+      Disconnect the performance interceptor's MutationObserver now that
+      content_for_header has been rendered. All CSS/script injections it
+      needs to catch are already processed. Leaving it running would fire
+      the callback on every subsequent DOM mutation — unnecessary TBT cost.
+    {%- endcomment -%}
+    <script>
+      if (window.__SK_PERF) window.__SK_PERF.disconnectObserver();
+    </script>
 
     {%- comment -%}
       Re-assert font-display:optional AFTER content_for_header.
