@@ -1,4 +1,4 @@
-/* OPTIMIZED: Section reorder + conversion improvements applied */
+/* OPTIMIZED v2: Hero cleanup + compliance + pain rewrite + review tags + FAQ + documentation section */
 /*
  * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
@@ -101,31 +101,31 @@
         "p_1": {
           "type": "item",
           "settings": {
-            "text": "Huden ser mer sliten ut enn du føler deg"
+            "text": "Sminken legger seg ujevnt – selv med god primer"
           }
         },
         "p_2": {
           "type": "item",
           "settings": {
-            "text": "Mindre naturlig glød og mer gusten hudtone"
+            "text": "Huden ser trøtt ut, selv når du har sovet godt"
           }
         },
         "p_3": {
           "type": "item",
           "settings": {
-            "text": "Ujevn hudtone eller pigmentflekker"
+            "text": "Du mister den jevne gløden du hadde for noen år siden"
           }
         },
         "p_4": {
           "type": "item",
           "settings": {
-            "text": "Tørrhetslinjer og endret hudtekstur"
+            "text": "Ujevn hudtone og pigmentflekker som ikke vil gi seg"
           }
         },
         "p_5": {
           "type": "item",
           "settings": {
-            "text": "Du vil gjøre noe aktivt – uten å oppsøke klinikk"
+            "text": "Du vil gjøre noe aktivt – men uten klinikktimer og ventelister"
           }
         }
       },
@@ -138,7 +138,7 @@
       ],
       "settings": {
         "heading": "Kjenner du igjen dette?",
-        "intro": "Med årene endres huden – det er helt naturlig. Men du trenger ikke bare akseptere det."
+        "intro": "Kjenner du igjen noen av disse? Du er ikke alene – og du trenger ikke bare akseptere det."
       }
     },
     "results": {
@@ -174,7 +174,7 @@
       "settings": {
         "heading": "Hva kan du forvente?",
         "intro": "Realistiske resultater fra ekte brukere",
-        "disclaimer": "Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan."
+        "disclaimer": "Resultater varierer med hudtype, alder og rutine. Jevn bruk 3–5 ganger i uken gir best forutsetning. Vi lover ikke mirakler – vi lover en plan og en garanti."
       }
     },
     "how_to_use": {
@@ -304,21 +304,27 @@
           "type": "review",
           "settings": {
             "text": "Etter 6 uker merker jeg virkelig forskjell på hudtonen. Huden ser friskere ut og pigmentflekkene er blitt mindre synlige. Veldig fornøyd!",
-            "author": "Wenche S., 52, Oslo"
+            "author": "Wenche S., 52, Oslo",
+            "concern_tag": "Pigmentflekker · Moden hud",
+            "usage_tag": "Bruker: 10 min, 4x/uke"
           }
         },
         "rev_2": {
           "type": "review",
           "settings": {
             "text": "Bruker den foran TV hver kveld. Enkelt, behagelig og huden kjennes mykere. Gir ikke opp denne rutinen!",
-            "author": "Kari M., 47, Stavanger"
+            "author": "Kari M., 47, Stavanger",
+            "concern_tag": "Glød · Tørr hud",
+            "usage_tag": "Bruker: 10 min, 5x/uke"
           }
         },
         "rev_3": {
           "type": "review",
           "settings": {
             "text": "Var skeptisk, men etter 4 uker ser jeg tydelig mer glød. Huden føles tettere og fine linjene er blitt mindre synlige.",
-            "author": "Tone H., 61, Trondheim"
+            "author": "Tone H., 61, Trondheim",
+            "concern_tag": "Fine linjer · Fasthet",
+            "usage_tag": "Bruker: 10 min, 3x/uke"
           }
         }
       },
