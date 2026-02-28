@@ -118,32 +118,21 @@
     </style>
 
     {%- comment -%}
-      Sofia Pro sits in kit jxm0xpk; Freight families are still served from pbt1clx
-      because Adobe does not allow us to merge those kits. Load both stylesheets so
-      the latest font URLs are always pulled directly from Adobe, and let
-      typekit-fonts.css provide the swap-friendly overrides.
+      Adobe kit CSS REMOVED — it was the #1 CLS offender (0.851 score).
+      Kit CSS (jxm0xpk.css + pbt1clx.css) injected its own @font-face rules with
+      DIFFERENT source URLs and uncontrolled font-display (auto/block), overriding
+      our tuned inline optional declarations. Different URLs = browser re-downloads
+      fonts → text disappears → reappears → massive layout shift on <main>.
+      typekit-fonts.css already self-hosts all font URLs from use.typekit.net with
+      controlled font-display:optional, so the kit CSS provided zero rendering value.
+      Adobe font-tracking/licensing is handled by the typekit-fonts.css URLs which
+      still point to use.typekit.net (Adobe's CDN).
     {%- endcomment -%}
-    {%- comment -%}
-      Adobe kit CSS lazy-loaded after window.load — typekit-fonts.css (below) has
-      all @font-face rules with direct woff2 URLs, so fonts render immediately.
-      The kit CSS loads post-load for Adobe licensing/font-tracking compliance only.
-    {%- endcomment -%}
-    <script>
-      window.addEventListener('load', function () {
-        ['https://use.typekit.net/jxm0xpk.css', 'https://use.typekit.net/pbt1clx.css'].forEach(function (h) {
-          var l = document.createElement('link');
-          l.rel = 'stylesheet';
-          l.href = h;
-          l.crossOrigin = '';
-          document.head.appendChild(l);
-        });
-      });
-    </script>
     {%- comment -%} Favicon {%- endcomment -%}
     <link rel="icon" type="image/png" href="{{ 'skinora-48.png' | asset_url }}">
     <link rel="apple-touch-icon" href="{{ 'skinora.png' | asset_url }}">
 
-    {%- comment -%} typekit-fonts.css deferred — all @font-face rules use font-display:swap {%- endcomment -%}
+    {%- comment -%} typekit-fonts.css deferred — all @font-face rules use font-display:optional (zero CLS) {%- endcomment -%}
     <link rel="stylesheet" href="{{ 'typekit-fonts.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- comment -%}
