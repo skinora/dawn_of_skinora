@@ -1,3 +1,4 @@
+/* OPTIMIZED: Section reorder + conversion improvements applied */
 /*
  * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
@@ -239,48 +240,48 @@
           "type": "card",
           "settings": {
             "icon": "shopify://shop_images/2.svg",
-            "title": "Klinisk dokumentert teknologi",
-            "text": "<p>LED-bølgelengder som stimulerer hudens naturlige kollagen- og elastinproduksjon</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Se dokumentasjon</a></p>"
+            "title": "Teknologi som faktisk virker",
+            "text": "<p>Bølgelengder brukt av hudklinikker – stimulerer hudens egen kollagen- og elastinproduksjon</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Se dokumentasjon</a></p>"
           }
         },
         "card_ttFjc6": {
           "type": "card",
           "settings": {
             "icon": "shopify://shop_images/1.svg",
-            "title": "1072 nm dypt nær-IR (dNIR)",
-            "text": "<p>1072 nm dypt nær-IR – lys rettet mot områdene der kollagen og elastin dannes</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Se dokumentasjon</a></p>"
+            "title": "Trenger dypt inn i huden",
+            "text": "<p>Spesialfrekvens som når ned dit kollagen og elastin faktisk dannes</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Se dokumentasjon</a></p>"
           }
         },
         "card_xRCVi8": {
           "type": "card",
           "settings": {
             "icon": "shopify://shop_images/4.svg",
-            "title": "Premium kvalitet og garanti",
-            "text": "<p>Norsk kundeservice og 60 dagers fornøydgaranti</p>"
+            "title": "Trygt og risikofritt",
+            "text": "<p>Norsk kundeservice, 60 dagers fornøydgaranti – du tar ingen risiko</p>"
           }
         },
         "w_2": {
           "type": "card",
           "settings": {
             "icon": "shopify://shop_images/9.svg",
-            "title": "Fokus på det som faktisk fungerer",
-            "text": "<p>Vi har bevisst valgt bort unødvendige lysfarger. Radiance bruker kun utvalgte bølgelengder som er mest brukt i LED-lysbehandling — for et mer målrettet og konsistent lysbilde</p>"
+            "title": "Ingen unødvendig støy",
+            "text": "<p>Vi har valgt bort alt som ikke har dokumentert effekt – kun det som gir deg resultater</p>"
           }
         },
         "w_3": {
           "type": "card",
           "settings": {
             "icon": "shopify://shop_images/12.svg",
-            "title": "Enkel å bruke",
-            "text": "<p>Få knapper, ingen komplisert rutine. På – og slapp av</p>"
+            "title": "10 minutter – og slapp av",
+            "text": "<p>Ingen komplisert rutine. Sett på masken, trykk på – og se favorittserien din</p>"
           }
         },
         "card_BxaxB7": {
           "type": "card",
           "settings": {
             "icon": "shopify://shop_images/17.svg",
-            "title": "Jevn lysfordeling",
-            "text": "<p>Designet for et stabilt lysbilde over ansiktet – for konsistent hjemmebruk</p>"
+            "title": "Hele ansiktet behandles likt",
+            "text": "<p>Designet for jevn dekning – ingen mørke flekker, konsekvent resultat hver gang</p>"
           }
         }
       },
@@ -293,7 +294,7 @@
         "card_BxaxB7"
       ],
       "settings": {
-        "heading": "Hvorfor Skinora® Radiance er annerledes"
+        "heading": "Synlige resultater – forenklet"
       }
     },
     "reviews": {
@@ -334,20 +335,6 @@
     "trust_full": {
       "type": "sk-lp-trust-full",
       "blocks": {
-        "tf_1": {
-          "type": "card",
-          "settings": {
-            "title": "60 dagers fornøydgaranti",
-            "text": "<p>Ikke fornøyd? Du får pengene tilbake – ingen spørsmål.</p>"
-          }
-        },
-        "tf_2": {
-          "type": "card",
-          "settings": {
-            "title": "Gratis frakt",
-            "text": "<p>Sendes fra norsk lager. Levering 2–4 virkedager.</p>"
-          }
-        },
         "tf_3": {
           "type": "card",
           "settings": {
@@ -371,14 +358,12 @@
         }
       },
       "block_order": [
-        "tf_1",
-        "tf_2",
         "tf_3",
         "tf_4",
         "tf_5"
       ],
       "settings": {
-        "heading": "Trygg handel – alltid"
+        "heading": "Du er alltid ivaretatt"
       }
     },
     "whats_in_box": {

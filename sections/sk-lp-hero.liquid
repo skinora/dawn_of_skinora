@@ -24,6 +24,7 @@
 
 <script src="{{ 'sk-lp-cart-add.js' | asset_url }}" defer="defer"></script>
 
+<!-- SECTION: Hero -->
 <div class="sk-lp">
   <section class="lp-hero">
     <div class="lp-hero__grid">
@@ -63,6 +64,11 @@
             <span class="lp-hero__rating-count">– 102 anmeldelser</span>
           </div>
         {%- endif -%}
+
+        <p class="lp-hero__testimonial-snippet" style="font-family:sofia-pro,Assistant,sans-serif;font-size:13px;font-style:italic;color:#5f5f5f;margin:0 0 14px;max-width:420px;">
+          "Etter 6 uker merker jeg virkelig forskjell på hudtonen – huden ser friskere ut."
+          <strong style="font-style:normal;color:#30273e;">— Wenche S., 52, Oslo · Verifisert kjøper</strong>
+        </p>
 
         {%- comment -%} CHANGE 6 — CTA button {%- endcomment -%}
         <div class="lp-hero__actions">
@@ -114,6 +120,32 @@
             Skinora® Radiance Face tilsvarer opptil 6 behandlinger – og kan brukes ubegrenset hjemme.
           </p>
           <p class="lp-value-justify__payoff">→ Investeringen betaler seg selv etter få uker.</p>
+          <table class="lp-value-table" style="width:100%;border-collapse:collapse;margin-top:12px;font-family:sofia-pro,Assistant,sans-serif;font-size:13px;">
+            <thead>
+              <tr>
+                <th style="text-align:left;padding:6px 8px;border-bottom:1px solid #d9d3cc;color:#30273e;font-weight:600;"></th>
+                <th style="text-align:center;padding:6px 8px;border-bottom:1px solid #d9d3cc;color:#30273e;font-weight:600;">Klinikk</th>
+                <th style="text-align:center;padding:6px 8px;border-bottom:1px solid #d9d3cc;color:#30273e;font-weight:600;">Skinora</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding:6px 8px;color:#5f5f5f;">Kostnad</td>
+                <td style="text-align:center;padding:6px 8px;color:#5f5f5f;">800–1500 kr/økt</td>
+                <td style="text-align:center;padding:6px 8px;font-weight:600;color:#30273e;">4.690 kr én gang</td>
+              </tr>
+              <tr style="background:#f0ede8;">
+                <td style="padding:6px 8px;color:#5f5f5f;">Behandlinger</td>
+                <td style="text-align:center;padding:6px 8px;color:#5f5f5f;">Betaler hver gang</td>
+                <td style="text-align:center;padding:6px 8px;font-weight:600;color:#30273e;">Ubegrenset</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 8px;color:#5f5f5f;">Bekvemmelighet</td>
+                <td style="text-align:center;padding:6px 8px;color:#5f5f5f;">Tidsbestilling</td>
+                <td style="text-align:center;padding:6px 8px;font-weight:600;color:#30273e;">Hjemme, når du vil</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         {%- comment -%} ═══ BLOCK 3: PREMIUM PROOF (clinical authority checklist) ═══ {%- endcomment -%}
@@ -172,6 +204,9 @@
           <button type="button" class="lp-btn lp-btn--sticky" data-product-handle="{{ sk_lp_handle }}">
             {{ section.settings.cta_text }}
           </button>
+          <p style="font-family:sofia-pro,Assistant,sans-serif;font-size:11px;color:#5f5f5f;margin:4px 0 0;text-align:center;">
+            Fra 130 kr/mnd med Klarna · 60 dagers garanti
+          </p>
         </div>
       </div>
 

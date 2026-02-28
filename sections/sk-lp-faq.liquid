@@ -5,6 +5,7 @@
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
 
+<!-- SECTION: FAQ -->
 <div class="sk-lp">
   <section class="lp-faq">
     <div class="lp-container">
@@ -26,6 +27,24 @@
               </div>
             </div>
           {%- endfor -%}
+
+          {%- comment -%} Price justification FAQ — hardcoded for conversion {%- endcomment -%}
+          <div class="lp-faq__item">
+            <button class="lp-faq__question" type="button" aria-expanded="false">
+              Er 4.690 kr mye å betale for en LED-maske?
+              <span class="lp-faq__icon">+</span>
+            </button>
+            <div class="lp-faq__answer">
+              <div class="lp-faq__answer-inner">
+                <p>
+                  Sammenlignet med klinikk er det faktisk det motsatte. Én LED-behandling hos hudterapeut koster typisk
+                  800–1.500 kr. Med Skinora® Radiance Face betaler du én gang og kan bruke masken ubegrenset hjemme.
+                  Etter bare 3–6 behandlinger har produktet betalt seg selv – resten er ren gevinst. Du kan også dele
+                  opp betalingen med Klarna fra 130 kr/mnd.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       {%- endif -%}
     </div>

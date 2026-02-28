@@ -6,12 +6,15 @@
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
 
+<!-- SECTION: Announcement Bar -->
 <div class="sk-lp">
   <div class="lp-announcement-bar">
     <span class="lp-announcement-bar__static">{{ section.settings.text }}</span>
     <span class="lp-announcement-bar__ticker" aria-hidden="true">
       <span>
-        {{- section.settings.text }}&nbsp;&nbsp;&nbsp;&nbsp;{{ section.settings.text }}&nbsp;&nbsp;&nbsp;&nbsp;</span
+        {{- section.settings.text }}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Populær vare – begrenset
+        lager&nbsp;&nbsp;&nbsp;&nbsp;{{ section.settings.text }}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Populær vare –
+        begrenset lager&nbsp;&nbsp;&nbsp;&nbsp;</span
       >
     </span>
   </div>
