@@ -8,6 +8,13 @@
     <meta name="theme-color" content="#30273e">
     <link rel="canonical" href="{{ canonical_url }}">
 
+    {%- comment -%}
+      Preload base.css early — it's the main render-blocking stylesheet declared
+      much later (after content_for_header). Early preload lets the browser start
+      fetching in parallel with fonts and app scripts.
+    {%- endcomment -%}
+    <link rel="preload" href="{{ 'base.css' | asset_url }}" as="style">
+
     {% comment %}
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
