@@ -175,7 +175,11 @@
             {{
               section.settings.image
               | image_url: width: 1600
-              | image_tag: class: 'sk-radiance__image', loading: 'lazy', sizes: '(max-width: 749px) 100vw, 50vw'
+              | image_tag:
+                class: 'sk-radiance__image',
+                loading: 'eager',
+                fetchpriority: 'high',
+                sizes: '(max-width: 749px) 100vw, 50vw'
             }}
           {% else %}
             {{ 'image' | placeholder_svg_tag: 'sk-radiance__image' }}

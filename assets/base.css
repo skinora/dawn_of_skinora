@@ -6,6 +6,21 @@
   display: none !important;
 }
 
+/* ── CLS guard: header min-height prevents collapse before JS loads ── */
+.section-header {
+  min-height: 60px; /* mobile baseline */
+}
+@media (min-width: 750px) {
+  .section-header {
+    min-height: 80px;
+  }
+}
+@media (min-width: 990px) {
+  .section-header {
+    min-height: 116px;
+  }
+}
+
 .sk-section img,
 [class^='sk-'] img,
 [class*=' sk-'] img {
@@ -1875,7 +1890,6 @@ menu-drawer + .header__search {
   }
 }
 
-
 /* Header menu drawer */
 .header__icon--menu .icon {
   display: block;
@@ -2588,9 +2602,7 @@ footer .footer__column.footer__column--menu a:hover {
     height: auto;
     max-height: 1.75rem;
   }
-
 }
-
 
 /* Allow sticky bar JS to control visibility */
 .sk-radiance-sticky-bottom-bar {

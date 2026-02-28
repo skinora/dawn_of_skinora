@@ -255,6 +255,22 @@
       font-size: clamp(0.98rem, 3.6vw, 1.25rem);
     }
   }
+
+  /*
+   * CLS guard — mirror deferred-CSS overrides so they apply at first paint.
+   * Keeps the same rules in base-deferred.css for specificity/override safety.
+   */
+  @media (max-width: 700px) {
+    .sk-dynamic-banner__img { width: 360px; }
+    .sk-dynamic-banner__img img { width: 100%; height: auto; }
+    .sk-dynamic-banner__description { font-size: var(--sk-font-size-medium); line-height: 28px; }
+    .sk-dynamic-banner__button { width: 30rem; }
+  }
+  @media (max-width: 435px) {
+    .sk-dynamic-banner { height: 84vh; }
+    .sk-dynamic-banner__description { font-size: var(--sk-font-size-xxs); line-height: 20px; }
+    .sk-dynamic-banner__button { width: 25rem; }
+  }
 </style>
 
 <section class="sk-dynamic-banner sk-dynamic-banner--cta-{{ section.settings.sk_banner_cta_position_mobile }}">
