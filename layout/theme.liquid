@@ -14,6 +14,7 @@
       fetching in parallel with fonts and app scripts.
     {%- endcomment -%}
     <link rel="preload" href="{{ 'base.css' | asset_url }}" as="style">
+    <link rel="preload" href="{{ 'sk-base.css' | asset_url }}" as="style">
 
     {%- comment -%}
       Google Fonts removed — not used. Adobe Fonts (Typekit) is the sole font
@@ -608,9 +609,12 @@
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'sk-base.css' | asset_url | stylesheet_tag }}
     {%- comment -%} Non-critical base CSS (grid, forms, buttons, modals, rte, spinners) — deferred {%- endcomment -%}
     <link rel="stylesheet" href="{{ 'base-deferred.css' | asset_url }}" media="print" onload="this.media='all'">
     <noscript>{{ 'base-deferred.css' | asset_url | stylesheet_tag }}</noscript>
+    <link rel="stylesheet" href="{{ 'sk-base-deferred.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript>{{ 'sk-base-deferred.css' | asset_url | stylesheet_tag }}</noscript>
     <link
       rel="stylesheet"
       href="{{ 'component-cart-items.css' | asset_url }}"
