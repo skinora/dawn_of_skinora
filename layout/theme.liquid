@@ -144,15 +144,15 @@
     <noscript>{{ 'sk-accordion.css' | asset_url | stylesheet_tag }}</noscript>
     <script src="{{ 'sk-accordion.js' | asset_url }}" defer></script>
 
-    {%- comment -%} Swiper CSS — only needed on PDP for hero gallery (sk-radiance-product). All other carousels use scroll-snap. {%- endcomment -%}
+    {%- comment -%}
+      Swiper — PDP only (hero gallery). Loaded as defer (non-render-blocking
+      but executes before DOMContentLoaded so initHeroSwiper() finds it).
+      CSS loaded normally (above-fold gallery — deferred CSS would cause CLS).
+      All other carousels use CSS scroll-snap.
+    {%- endcomment -%}
     {%- if template.name == 'product' -%}
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-        media="print"
-        onload="this.media='all'"
-      >
-      <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
     {%- endif -%}
 
     {%- if settings.favicon != blank -%}
@@ -645,32 +645,21 @@
     {%- endif -%}
 
     {%- comment -%}
-      Okendo + (PDP-only) Swiper — idle-loaded on first interaction OR
-      requestIdleCallback (2 s deadline). Both are below-fold; loading them
-      after FCP frees main-thread budget for paint.
-      Swiper is only needed on product pages (hero gallery in sk-radiance-product).
-      All other carousels now use CSS scroll-snap.
+      Okendo — idle-loaded on first interaction OR requestIdleCallback
+      (2 s deadline). Below-fold; loading after FCP frees main-thread budget.
     {%- endcomment -%}
     <script>
       (function () {
-        var urls = [
-          {%- if template.name == 'product' -%}
-          'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
-          {%- endif -%}
-          'https://cdn-static.okendo.io/reviews-widget-plus/js/okendo-reviews.min.js',
-        ];
+        var src = 'https://cdn-static.okendo.io/reviews-widget-plus/js/okendo-reviews.min.js';
         var loaded = false;
         function load() {
           if (loaded) return;
           loaded = true;
-          urls.forEach(function (src) {
-            var s = document.createElement('script');
-            s.src = src;
-            s.async = true;
-            document.body.appendChild(s);
-          });
+          var s = document.createElement('script');
+          s.src = src;
+          s.async = true;
+          document.body.appendChild(s);
         }
-        /* Trigger: first scroll/touch OR idle callback (2 s fallback) */
         ['scroll', 'touchstart', 'mouseover'].forEach(function (e) {
           document.addEventListener(e, load, { once: true, passive: true });
         });
