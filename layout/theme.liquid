@@ -42,6 +42,68 @@
       crossorigin
       href="https://use.typekit.net/af/a9e142/00000000000000007735d61f/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"
     >
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="https://use.typekit.net/af/e7e7b3/00000000000000007735f99a/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3"
+    >
+
+    {%- comment -%}
+      Critical @font-face declarations — inlined so the browser can match
+      the preloaded woff2 files BEFORE first paint, eliminating font-swap CLS.
+      Uses font-display:optional → if the preloaded file is cached the font
+      applies instantly; if not, fallback sticks for this navigation (no swap).
+      The deferred typekit-fonts.css below covers all remaining weights with swap.
+    {%- endcomment -%}
+    <style>
+      /* Critical @font-face — matches preloaded woff2 files.
+         font-display:optional → use cached font or stick with fallback (no swap CLS).
+         Fallback @font-face with size-adjust below for metric-matched fallbacks. */
+      @font-face {
+        font-family: 'sofia-pro';
+        font-style: normal;
+        font-weight: 300;
+        font-display: optional;
+        src: url('https://use.typekit.net/af/da506f/00000000000000007735f990/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3')
+          format('woff2');
+      }
+      @font-face {
+        font-family: 'sofia-pro';
+        font-style: normal;
+        font-weight: 600;
+        font-display: optional;
+        src: url('https://use.typekit.net/af/e7e7b3/00000000000000007735f99a/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3')
+          format('woff2');
+      }
+      @font-face {
+        font-family: 'freight-text-pro';
+        font-style: normal;
+        font-weight: 400;
+        font-display: optional;
+        src: url('https://use.typekit.net/af/a9e142/00000000000000007735d61f/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3')
+          format('woff2');
+      }
+      /* Metric-matched fallback — prevents CLS even when custom font misses
+         the optional window. size-adjust calibrated to sofia-pro / freight-text-pro. */
+      @font-face {
+        font-family: 'sofia-pro-fallback';
+        src: local('Arial');
+        size-adjust: 101%;
+        ascent-override: 98%;
+        descent-override: 25%;
+        line-gap-override: 0%;
+      }
+      @font-face {
+        font-family: 'freight-text-pro-fallback';
+        src: local('Georgia');
+        size-adjust: 108%;
+        ascent-override: 95%;
+        descent-override: 27%;
+        line-gap-override: 0%;
+      }
+    </style>
 
     {%- comment -%}
       Sofia Pro sits in kit jxm0xpk; Freight families are still served from pbt1clx

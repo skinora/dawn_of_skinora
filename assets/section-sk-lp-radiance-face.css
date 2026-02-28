@@ -13,7 +13,7 @@
   --sk-surface: #ffffff;
   --sk-surface-soft: #f2f2f2;
 
-  font-family: 'sofia-pro', 'Assistant', sans-serif;
+  font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
   font-weight: 300;
   font-size: 16px;
   line-height: 1.6;
@@ -53,7 +53,7 @@
 .sk-lp h4,
 .sk-lp h5,
 .sk-lp h6 {
-  font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
+  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
   color: #3a3448;
   font-weight: 400;
   margin: 0;
@@ -88,7 +88,7 @@
   border: 1px solid #30273e;
   border-radius: 0;
   padding: 16px 32px;
-  font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
+  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
   font-size: 18px;
   font-weight: 400;
   text-transform: uppercase;
@@ -175,7 +175,7 @@
 }
 
 .lp-header__logo-text {
-  font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
+  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
   font-size: 28px;
   font-weight: 400;
   color: #3a3448;
@@ -204,7 +204,7 @@
 }
 
 .lp-eyebrow {
-  font-family: 'sofia-pro', 'Assistant', sans-serif;
+  font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
@@ -525,7 +525,7 @@
   border-radius: 50%;
   background: #30273e;
   color: #fff;
-  font-family: 'sofia-pro', 'Assistant', sans-serif;
+  font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
   font-size: 16px;
   font-weight: 600;
   display: flex;
@@ -549,7 +549,7 @@
 }
 
 .lp-results__period {
-  font-family: 'sofia-pro', 'Assistant', sans-serif;
+  font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -559,7 +559,7 @@
 }
 
 .lp-results__text {
-  font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
+  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
   font-size: 16px;
   font-weight: 400;
   color: #30273e;
@@ -729,7 +729,7 @@
   border-radius: 50%;
   background: #30273e;
   color: #fff;
-  font-family: 'sofia-pro', 'Assistant', sans-serif;
+  font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
   font-size: 16px;
   font-weight: 600;
   display: flex;
@@ -747,7 +747,7 @@
 }
 
 .lp-step__title {
-  font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
+  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
   font-size: 16px;
   font-weight: 700;
   color: #30273e;
@@ -954,7 +954,7 @@
 }
 
 .lp-why-radiance__title {
-  font-family: 'sofia-pro', 'Assistant', sans-serif;
+  font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -1106,7 +1106,7 @@
 }
 
 .lp-reviews__score {
-  font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
+  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
   font-size: 18px;
   color: #3a3448;
   margin-bottom: 48px;
@@ -1143,7 +1143,7 @@
 }
 
 .lp-review-card__author {
-  font-family: 'sofia-pro', 'Assistant', sans-serif;
+  font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
   font-size: 13px;
   font-weight: 600;
   color: #30273e;
@@ -1192,7 +1192,7 @@
 }
 
 .lp-trust-full__title {
-  font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
+  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
   font-size: 18px;
   font-weight: 700;
   color: #3a3448;
@@ -1305,7 +1305,7 @@
   background: none;
   border: none;
   padding: 24px 0;
-  font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
+  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
   font-size: 19px;
   font-weight: 500;
   color: #3a3448;
@@ -1393,7 +1393,7 @@
 }
 
 .lp-cta-final__price {
-  font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
+  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
   font-size: clamp(24px, 2.2vw, 30px);
   font-weight: 500;
   color: var(--sk-brand, #30273e);
@@ -1543,7 +1543,7 @@
 }
 
 .lp-hero__price {
-  font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
+  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
   font-size: 20px;
   font-weight: 600;
   color: #30273e;
@@ -1607,7 +1607,7 @@
 }
 
 .lp-value-box__title {
-  font-family: 'freight-text-pro', 'Playfair Display', Georgia, serif;
+  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
   font-size: 24px;
   font-weight: 500;
   color: #3a3448;
@@ -1622,7 +1622,7 @@
 }
 
 .lp-value-box__tag {
-  font-family: 'sofia-pro', Assistant, sans-serif;
+  font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
   font-size: 13px;
   font-weight: 400;
   text-transform: uppercase;
@@ -1633,7 +1633,7 @@
 }
 
 .lp-value-box__sub {
-  font-family: 'sofia-pro', Assistant, sans-serif;
+  font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
   font-size: 14px;
   font-weight: 300;
   font-style: italic;
@@ -1649,7 +1649,7 @@
 }
 
 .lp-value-box__roi {
-  font-family: 'sofia-pro', Assistant, sans-serif;
+  font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
   font-size: 15px;
   font-weight: 600;
   color: #30273e;
@@ -1658,7 +1658,7 @@
 }
 
 .lp-value-box__note {
-  font-family: 'sofia-pro', Assistant, sans-serif;
+  font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
   font-size: 13px;
   font-weight: 300;
   font-style: italic;
@@ -1682,7 +1682,7 @@
   flex-wrap: wrap;
   align-items: flex-start;
   gap: 8px;
-  font-family: 'sofia-pro', Assistant, sans-serif;
+  font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
   font-size: 0.95rem;
   color: inherit;
   line-height: 1.55;
@@ -1718,7 +1718,7 @@
 }
 
 .lp-hero__pills--value .lp-hero__pill {
-  font-family: 'sofia-pro', Assistant, sans-serif;
+  font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
   font-size: 14px;
   font-weight: 300;
   color: #333;
