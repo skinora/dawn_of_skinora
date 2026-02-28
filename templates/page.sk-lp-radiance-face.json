@@ -35,12 +35,44 @@
           "settings": {
             "text": "Gratis frakt"
           }
+        },
+        "tb_1": {
+          "type": "trustbar_item",
+          "settings": {
+            "icon": "shopify://shop_images/no_1.svg",
+            "text": "Utviklet i Norge"
+          }
+        },
+        "tb_2": {
+          "type": "trustbar_item",
+          "settings": {
+            "icon": "shopify://shop_images/lager.svg",
+            "text": "Sendes fra norsk lager"
+          }
+        },
+        "tb_3": {
+          "type": "trustbar_item",
+          "settings": {
+            "icon": "shopify://shop_images/garanti.svg",
+            "text": "60 dagers fornøydgaranti - eller penger tilbake"
+          }
+        },
+        "tb_4": {
+          "type": "trustbar_item",
+          "settings": {
+            "icon": "shopify://shop_images/sikker_betaling.svg",
+            "text": "Vipps & Klarna"
+          }
         }
       },
       "block_order": [
         "pill_1",
         "pill_2",
-        "pill_3"
+        "pill_3",
+        "tb_1",
+        "tb_2",
+        "tb_3",
+        "tb_4"
       ],
       "settings": {
         "image": "shopify://shop_images/skinora_radiance_face_hero.png",
@@ -61,46 +93,6 @@
         "value_bullet_2": "60 dagers fornøydgaranti",
         "value_bullet_3": "Spar tusenvis over tid"
       }
-    },
-    "trustbar": {
-      "type": "sk-lp-trustbar",
-      "blocks": {
-        "tb_1": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/no_1.svg",
-            "text": "Utviklet i Norge"
-          }
-        },
-        "tb_2": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/lager.svg",
-            "text": "Sendes fra norsk lager"
-          }
-        },
-        "tb_3": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/garanti.svg",
-            "text": "60 dagers fornøydgaranti - eller penger tilbake"
-          }
-        },
-        "tb_4": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/sikker_betaling.svg",
-            "text": "Vipps & Klarna"
-          }
-        }
-      },
-      "block_order": [
-        "tb_1",
-        "tb_2",
-        "tb_3",
-        "tb_4"
-      ],
-      "settings": {}
     },
     "problem": {
       "type": "sk-lp-problem",
@@ -548,14 +540,13 @@
   "order": [
     "announcement",
     "hero",
-    "trustbar",
     "problem",
     "results",
-    "how_to_use",
-    "why_choose",
     "reviews",
-    "trust_full",
+    "why_choose",
+    "how_to_use",
     "whats_in_box",
+    "trust_full",
     "faq",
     "cta"
   ]

@@ -141,6 +141,32 @@
           <li class="lp-trust-pills__item">✔ Norsk kundeservice</li>
         </ul>
 
+        {%- comment -%} ═══ MERGED: Mini Trust Bar (formerly standalone section) ═══ {%- endcomment -%}
+        {%- assign trustbar_items = section.blocks | where: 'type', 'trustbar_item' -%}
+        {%- if trustbar_items.size > 0 -%}
+          <section class="lp-trustbar">
+            <div class="lp-container">
+              <div class="lp-trustbar__grid">
+                {%- for block in trustbar_items -%}
+                  <div class="lp-trustbar__item" {{ block.shopify_attributes }}>
+                    {%- if block.settings.icon != blank -%}
+                      <span class="lp-trustbar__icon"
+                        ><img
+                          src="{{ block.settings.icon | image_url: height: 96 }}"
+                          alt=""
+                          width="48"
+                          height="48"
+                          loading="lazy"
+                      ></span>
+                    {%- endif -%}
+                    <span class="lp-trustbar__text">{{ block.settings.text }}</span>
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          </section>
+        {%- endif -%}
+
         {%- comment -%} CHANGE 10 — Mobile sticky CTA {%- endcomment -%}
         <div class="lp-hero__sticky-cta">
           <button type="button" class="lp-btn lp-btn--sticky" data-product-handle="{{ sk_lp_handle }}">
@@ -590,6 +616,23 @@
           "type": "text",
           "id": "text",
           "label": "Pill-tekst",
+          "default": "Gratis frakt"
+        }
+      ]
+    },
+    {
+      "type": "trustbar_item",
+      "name": "Trust-element",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Ikon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Tekst",
           "default": "Gratis frakt"
         }
       ]
