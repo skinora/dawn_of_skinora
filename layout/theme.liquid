@@ -25,7 +25,7 @@
 
     <link rel="preconnect" href="https://use.typekit.net" crossorigin>
     <link rel="preconnect" href="https://p.typekit.net" crossorigin>
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    {%- comment -%} cdn.jsdelivr.net dns-prefetch removed — Bootstrap CDN no longer used {%- endcomment -%}
 
     {%- comment -%} Preload critical above-fold fonts (body + heading) for faster LCP text paint {%- endcomment -%}
     <link
@@ -82,7 +82,8 @@
       Only accordion/collapse component was used (FAQ sections).
       Bootstrap JS was already replaced by sk-accordion.js (~0.5 KB).
     {%- endcomment -%}
-    {{ 'sk-accordion.css' | asset_url | stylesheet_tag }}
+    <link rel="stylesheet" href="{{ 'sk-accordion.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript>{{ 'sk-accordion.css' | asset_url | stylesheet_tag }}</noscript>
     <script src="{{ 'sk-accordion.js' | asset_url }}" defer></script>
 
     {%- comment -%} Swiper CSS deferred — only needed when carousels render (below fold) {%- endcomment -%}
