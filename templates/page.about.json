@@ -16,7 +16,7 @@
         "heading": "Om Skinora®",
         "body": "<p><br/>Skinora ble startet med et enkelt mål: å gjøre velbegrunnet LED-lysterapi hjemme tilgjengelig – uten overdrevne løfter og uten unødvendig overprising.<br/>Vi tror på well-aging: små, synlige forbedringer over tid, basert på rutine og kvalitet.<br/>Derfor prioriterer vi dokumentasjon, tydelige spesifikasjoner og trygg kundeservice i Norge.</p>",
         "link_label": "Se våre produkter →",
-        "link_type": "anchor",
+        "link_type": "url",
         "anchor_id": "filosofi",
         "link_url": "shopify://collections/all",
         "cta_label": "",
