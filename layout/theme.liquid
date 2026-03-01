@@ -38,6 +38,9 @@
       cdn.jsdelivr.net / cdn-static.okendo.io get lightweight dns-prefetch only (non-critical).
     {%- endcomment -%}
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    {%- if template.name == 'product' -%}
+      <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    {%- endif -%}
     <link rel="dns-prefetch" href="https://cdn-static.okendo.io">
 
     {%- comment -%} Preload critical above-fold fonts (body + heading) for faster LCP text paint {%- endcomment -%}

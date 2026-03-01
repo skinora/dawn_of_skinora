@@ -1,4 +1,16 @@
 {%- comment -%}
+  CLS guard — reserves 100vh for the section wrapper immediately.
+  Prevents layout shift from late-applied .sk-dynamic-banner { height:100vh }.
+  contain:layout style scopes reflows to this subtree.
+{%- endcomment -%}
+<style>
+  #shopify-section-{{ section.id }} {
+    min-height: 100vh;
+    contain: layout style;
+  }
+</style>
+
+{%- comment -%}
   Preload LCP background images via image_tag preload:true.
   Shopify injects the <link rel="preload"> into <head> via content_for_header,
   so the browser discovers them earlier than manual preload links in <body>.
@@ -291,12 +303,13 @@
 </style>
 
 <section class="sk-dynamic-banner sk-dynamic-banner--cta-{{ section.settings.sk_banner_cta_position_mobile }}">
+  <h1 class="visually-hidden">Skinora® Norge – LED-ansiktsmasker for well-aging, glød og uren hud</h1>
   <div class="page-width">
     <div class="sk-dynamic-banner__container">
       <div class="sk-dynamic-banner__content">
-        <h1 lang="no" class="sk-header__section sk-dynamic-banner__title">
+        <h2 lang="no" class="sk-header__section sk-dynamic-banner__title">
           {{ section.settings.sk_banner_title }}
-        </h1>
+        </h2>
 
         <p class="sk-section-body sk-dynamic-banner__description">
           {{ section.settings.sk_banner_description }}

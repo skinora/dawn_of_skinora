@@ -974,11 +974,6 @@ footer .footer__column.footer__column--menu a:hover {
     position: relative;
     z-index: 1;
   }
-  @media screen and (min-width: 990px) {
-    header.sk-header .sk-header__brand {
-      pointer-events: auto !important;
-    }
-  }
 
   header.sk-header .header__search {
     display: inline-flex;
@@ -1061,5 +1056,11 @@ footer .footer__column.footer__column--menu a:hover {
     left: 50%;
     transform: translateX(-50%);
     pointer-events: none;
+  }
+
+  .sk-header__grid > .sk-header__brand .header__heading-link {
+    pointer-events: auto;
+    position: relative;
+    z-index: 1;
   }
 }
