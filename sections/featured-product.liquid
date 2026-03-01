@@ -489,9 +489,7 @@
 
   {%- comment -%} Only emit Product JSON-LD when NOT on a product page (avoids duplicate with main-product / sk-radiance-product) {%- endcomment -%}
   {%- unless request.page_type == 'product' -%}
-    <script type="application/ld+json">
-      {{ product | structured_data }}
-    </script>
+    {%- render 'sk-product-jsonld' -%}
   {%- endunless -%}
 
   {% if product.media.size > 0 %}

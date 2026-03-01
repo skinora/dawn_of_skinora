@@ -5,6 +5,7 @@
 {%- endcomment -%}
 
 {%- if request.page_type == 'product' -%}
+  <!-- [SCHEMA-DEBUG] BreadcrumbList (product) — snippets/seo-breadcrumbs-jsonld.liquid -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -40,6 +41,7 @@
   </script>
 
 {%- elsif request.page_type == 'collection' -%}
+  <!-- [SCHEMA-DEBUG] BreadcrumbList (collection) — snippets/seo-breadcrumbs-jsonld.liquid -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -61,6 +63,7 @@
   </script>
 
 {%- elsif request.page_type == 'article' -%}
+  <!-- [SCHEMA-DEBUG] BreadcrumbList (article) — snippets/seo-breadcrumbs-jsonld.liquid -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -88,6 +91,7 @@
   </script>
 
 {%- elsif request.page_type == 'page' -%}
+  <!-- [SCHEMA-DEBUG] BreadcrumbList (page) — snippets/seo-breadcrumbs-jsonld.liquid -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",

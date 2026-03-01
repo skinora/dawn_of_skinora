@@ -311,6 +311,27 @@
       </div>
     </div>
   </section>
+
+  {%- comment -%} FAQPage JSON-LD — matches the visible Q&A above {%- endcomment -%}
+  <!-- [SCHEMA-DEBUG] FAQPage — sections/sk-product-faq-accordion.liquid -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for faq_item in product.metafields.custom.faq_item.value -%}
+          {
+            "@type": "Question",
+            "name": {{ faq_item.question | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ faq_item.answer | strip_html | strip_newlines | strip | json }}
+            }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
 {%- endif -%}
 
 {% schema %}

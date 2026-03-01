@@ -372,6 +372,30 @@
   </main>
 </div>
 
+{%- comment -%} FAQPage JSON-LD — matches the visible LP FAQ accordion above {%- endcomment -%}
+{%- assign lp_faq_blocks = section.blocks | where: 'type', 'faq' -%}
+{%- if lp_faq_blocks.size > 0 -%}
+  <!-- [SCHEMA-DEBUG] FAQPage — sections/sk-lp-radiance-face.liquid -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in lp_faq_blocks -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ block.settings.answer | strip_html | strip_newlines | strip | json }}
+            }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
 {%- comment -%} FAQ accordion JS {%- endcomment -%}
 <script>
   (function initLpFaqAccordion() {

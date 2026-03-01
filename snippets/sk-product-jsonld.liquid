@@ -1,0 +1,62 @@
+{%- comment -%}
+  sk-product-jsonld.liquid
+  Custom Product JSON-LD with brand, sku, gtin and Offer(s).
+  Replaces Shopify's {{ product | structured_data }} on product pages
+  to add fields Google requires for full Product rich-result eligibility.
+{%- endcomment -%}
+
+{%- liquid
+  assign pj_first = product.selected_or_first_available_variant
+  assign pj_desc = product.description | strip_html | strip_newlines | strip | truncate: 5000
+-%}
+<!-- [SCHEMA-DEBUG] Product — snippets/sk-product-jsonld.liquid -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "url": {{ request.origin | append: product.url | json }},
+    "description": {{ pj_desc | json }},
+    "image": [
+      {%- for img in product.images -%}
+        {{ img | image_url: width: 1200 | json }}{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ],
+    "brand": {
+      "@type": "Brand",
+      "name": "Skinora"
+    }
+    {%- if pj_first.sku != blank -%}
+      ,"sku": {{ pj_first.sku | json }}
+    {%- endif -%}
+    {%- if pj_first.barcode != blank -%}
+      ,"gtin": {{ pj_first.barcode | json }}
+    {%- endif -%}
+    {%- if product.metafields.reviews.rating.value != blank and product.metafields.reviews.rating_count > 0 -%}
+    ,"aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": {{ product.metafields.reviews.rating.value.rating | json }},
+      "bestRating": {{ product.metafields.reviews.rating.value.scale_max | json }},
+      "ratingCount": {{ product.metafields.reviews.rating_count | json }}
+    }
+    {%- endif -%}
+    ,"offers": [
+      {%- for variant in product.variants -%}
+        {
+          "@type": "Offer",
+          "url": {{ request.origin | append: variant.url | json }},
+          "price": {{ variant.price | divided_by: 100.0 }},
+          "priceCurrency": {{ cart.currency.iso_code | json }},
+          "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "itemCondition": "https://schema.org/NewCondition"
+          {%- if variant.sku != blank -%}
+            ,"sku": {{ variant.sku | json }}
+          {%- endif -%}
+          {%- if variant.barcode != blank -%}
+            ,"gtin": {{ variant.barcode | json }}
+          {%- endif -%}
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+</script>

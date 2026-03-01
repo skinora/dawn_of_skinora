@@ -192,6 +192,7 @@
       ONE Organization + ONE WebSite — no other files should output these types.
       Removed the duplicate Organization block that was in sections/footer.liquid.
     {%- endcomment -%}
+    <!-- [SCHEMA-DEBUG] Organization + WebSite — layout/theme.liquid -->
     {%- assign search_url_template = request.origin | append: '/search?q={search_term_string}' -%}
     {%- assign sk_logo_url = 'Skinora_dark.png' | asset_url | prepend: 'https:' -%}
     <script type="application/ld+json">
@@ -222,6 +223,9 @@
             ],
             "address": {
               "@type": "PostalAddress",
+              "streetAddress": "Håvevegen 45",
+              "postalCode": "3830",
+              "addressLocality": "Ulefoss",
               "addressCountry": "NO"
             },
             "contactPoint": [{
@@ -358,6 +362,32 @@
     <script>
       if (window.__SK_PERF) window.__SK_PERF.disconnectObserver();
     </script>
+
+    {%- comment -%}
+      Strip duplicate Product JSON-LD injected by apps (e.g. Okendo) via
+      content_for_header. Our custom sk-product-jsonld.liquid already emits
+      a complete Product schema with aggregateRating — duplicates cause
+      Google Search Console warnings.
+    {%- endcomment -%}
+    {%- if request.page_type == 'product' -%}
+      <script>
+        /* This runs in <head> right after content_for_header.
+           Our custom Product JSON-LD (in <body>) hasn't been parsed yet,
+           so any Product schema found here is app-injected (e.g. Okendo). */
+        (function () {
+          document.querySelectorAll('script[type="application/ld+json"]').forEach(function (el) {
+            try {
+              var d = JSON.parse(el.textContent);
+              var t = d['@type'];
+              if (t === 'Product' || (Array.isArray(t) && t.indexOf('Product') !== -1)) {
+                el.parentNode.removeChild(el);
+                console.debug('[SK] Removed app-injected duplicate Product JSON-LD');
+              }
+            } catch (_) {}
+          });
+        })();
+      </script>
+    {%- endif -%}
 
     {%- comment -%}
       Re-assert font-display:optional AFTER content_for_header.

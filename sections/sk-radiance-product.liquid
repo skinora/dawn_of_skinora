@@ -1524,9 +1524,7 @@
 
   {% render 'sk-radiance-sticky-bar', section: section, product: product, product_form_id: product_form_id %}
 
-  <script type="application/ld+json">
-    {{ product | structured_data }}
-  </script>
+  {%- render 'sk-product-jsonld' -%}
 
   <script>
     document.addEventListener('DOMContentLoaded', async function () {

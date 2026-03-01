@@ -125,9 +125,7 @@
 
     {%- comment -%} SEO media assignment removed (unused) {%- endcomment -%}
 
-    <script type="application/ld+json">
-      {{ product | structured_data }}
-    </script>
+    {%- render 'sk-product-jsonld' -%}
   </div>
 </product-info>
 
