@@ -187,22 +187,66 @@
     {% render 'meta-tags' %}
     {% render 'seo-breadcrumbs-jsonld' %}
 
-    {%- comment -%} WebSite + SearchAction JSON-LD — enables Google sitelinks search box {%- endcomment -%}
+    {%- comment -%}
+      Global Brand + Site JSON-LD (@graph)
+      ONE Organization + ONE WebSite — no other files should output these types.
+      Removed the duplicate Organization block that was in sections/footer.liquid.
+    {%- endcomment -%}
     {%- assign search_url_template = request.origin | append: '/search?q={search_term_string}' -%}
+    {%- assign sk_logo_url = 'Skinora_dark.png' | asset_url | prepend: 'https:' -%}
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": {{ shop.name | json }},
-        "url": {{ request.origin | append: '/' | json }},
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": {
-            "@type": "EntryPoint",
-            "urlTemplate": {{ search_url_template | json }}
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": {{ shop.url | append: '#organization' | json }},
+            "name": "Skinora",
+            "url": {{ shop.url | json }},
+            "logo": {
+              "@type": "ImageObject",
+              "url": {{ sk_logo_url | json }},
+              "@id": {{ shop.url | append: '#logo' | json }}
+            },
+            "image": { "@id": {{ shop.url | append: '#logo' | json }} },
+            "sameAs": [
+              {%- assign sk_socials = '' -%}
+              {%- if settings.social_instagram_link != blank -%}{%- assign sk_socials = sk_socials | append: settings.social_instagram_link | append: '|' -%}{%- endif -%}
+              {%- if settings.social_facebook_link != blank -%}{%- assign sk_socials = sk_socials | append: settings.social_facebook_link | append: '|' -%}{%- endif -%}
+              {%- if settings.social_tiktok_link != blank -%}{%- assign sk_socials = sk_socials | append: settings.social_tiktok_link | append: '|' -%}{%- endif -%}
+              {%- if settings.social_youtube_link != blank -%}{%- assign sk_socials = sk_socials | append: settings.social_youtube_link | append: '|' -%}{%- endif -%}
+              {%- if settings.social_twitter_link != blank -%}{%- assign sk_socials = sk_socials | append: settings.social_twitter_link | append: '|' -%}{%- endif -%}
+              {%- if settings.social_pinterest_link != blank -%}{%- assign sk_socials = sk_socials | append: settings.social_pinterest_link | append: '|' -%}{%- endif -%}
+              {%- assign sk_sameas = sk_socials | split: '|' | reject: '' -%}
+              {%- for u in sk_sameas -%}{{ u | json }}{% unless forloop.last %}, {% endunless %}{%- endfor -%}
+            ],
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "NO"
+            },
+            "contactPoint": [{
+              "@type": "ContactPoint",
+              "contactType": "customer support",
+              "email": {{ shop.email | json }},
+              "areaServed": "NO"
+            }]
           },
-          "query-input": "required name=search_term_string"
-        }
+          {
+            "@type": "WebSite",
+            "@id": {{ shop.url | append: '#website' | json }},
+            "url": {{ request.origin | append: '/' | json }},
+            "name": "Skinora",
+            "publisher": { "@id": {{ shop.url | append: '#organization' | json }} },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": {{ search_url_template | json }}
+              },
+              "query-input": "required name=search_term_string"
+            }
+          }
+        ]
       }
     </script>
 
