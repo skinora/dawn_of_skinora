@@ -6,8 +6,8 @@
 .sk-blog-grid__header {
   display: flex;
   align-items: flex-start;
-  gap: 80px;
-  margin-bottom: 60px;
+  gap: 32px;
+  margin-bottom: 40px;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -48,7 +48,9 @@
 .sk-blog-grid__post {
   flex: 0 0 calc(33.333% - 20px);
   min-width: 350px;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .sk-blog-grid__post[style*='display: none'] {
@@ -158,4 +160,102 @@
   background-color: var(--color-muted-2, #4a3d5c);
   border-color: var(--color-muted-2, #4a3d5c);
   color: var(--color-white, #ffffff);
+}
+
+/* ── Tablet ── */
+@media (max-width: 1024px) {
+  .sk-blog-grid {
+    padding: 48px 0;
+  }
+
+  .sk-blog-grid__header {
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 36px;
+    padding: 0 24px;
+  }
+
+  .sk-blog-grid__heading-section {
+    flex: 0 0 auto;
+  }
+
+  .sk-blog-grid__heading {
+    font-size: calc(var(--section-heading-h1) * 0.8);
+  }
+
+  .sk-blog-grid__posts {
+    gap: 20px;
+    padding: 0 24px;
+  }
+
+  .sk-blog-grid__post {
+    flex: 0 0 calc(50% - 10px);
+    min-width: 0;
+  }
+
+  .sk-blog-grid__post-image-wrapper {
+    height: 240px;
+  }
+
+  .sk-blog-grid__post-title {
+    font-size: calc(var(--sk-font-size-large) * 0.7);
+  }
+
+  .sk-blog-grid__post-subtitle {
+    font-size: calc(var(--sk-font-size-medium) * 0.7);
+  }
+
+  .sk-blog-grid__post-overlay {
+    padding: 30px 20px 20px 20px;
+  }
+}
+
+/* ── Mobile ── */
+@media (max-width: 700px) {
+  .sk-blog-grid {
+    padding: 36px 0;
+  }
+
+  .sk-blog-grid__header {
+    padding: 0 16px;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .sk-blog-grid__heading {
+    font-size: calc(var(--section-heading-h1) * 0.6);
+  }
+
+  .sk-blog-grid__posts {
+    gap: 16px;
+    padding: 0 16px;
+    margin-bottom: 36px;
+  }
+
+  .sk-blog-grid__post {
+    flex: 0 0 100%;
+  }
+
+  .sk-blog-grid__post-image-wrapper {
+    height: 200px;
+  }
+
+  .sk-blog-grid__post-title {
+    font-size: calc(var(--sk-font-size-large) * 0.55);
+    line-height: 1.25;
+  }
+
+  .sk-blog-grid__post-subtitle {
+    font-size: calc(var(--sk-font-size-medium) * 0.55);
+  }
+
+  .sk-blog-grid__post-overlay {
+    padding: 24px 16px 16px 16px;
+  }
+
+  .sk-blog-grid__pagination-btn {
+    width: 40px;
+    height: 40px;
+    font-size: var(--sk-font-size-base, 16px);
+  }
 }
