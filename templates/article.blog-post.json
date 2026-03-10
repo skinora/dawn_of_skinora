@@ -1,21 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "sk-blog-article",
-      "blocks": {
-        "two_images_content_hLqRYY": {
-          "type": "two_images_content",
-          "settings": {
-            "image_left": "shopify://shop_images/Image_8.png",
-            "image_right_1": "shopify://shop_images/Image_9.png",
-            "image_right_2": "shopify://shop_images/Image_10.png",
-            "content": "<p>Healthy skin starts with balance and care, supported by innovations that make visible changes over time. Skinora Radiance is designed to help improve clarity.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "two_images_content_hLqRYY"
-      ],
       "settings": {
         "show_featured_image": true,
         "color_scheme": "background-1",
@@ -61,6 +56,7 @@
     "explore_button": {
       "type": "sk-explore-blogs-button",
       "settings": {
+        "heading": "",
         "button_label": "Explore More Blogs",
         "button_link": "/pages/blogs",
         "color_scheme": "background-1",

@@ -12,6 +12,14 @@
     "blog_grid": {
       "type": "sk-blog-grid",
       "blocks": {
+        "blog_post_cekjge": {
+          "type": "blog_post",
+          "settings": {
+            "post_title": "Well-aging: Hva det betyr – og hvorfor “anti-aging” ofte gjør huden verre",
+            "post_subtitle": "How it Helps Fight Acne",
+            "post_link": ""
+          }
+        },
         "post_1": {
           "type": "blog_post",
           "settings": {
@@ -68,6 +76,7 @@
         }
       },
       "block_order": [
+        "blog_post_cekjge",
         "post_1",
         "post_2",
         "post_3",
@@ -78,8 +87,6 @@
       "settings": {
         "heading": "Våre Hudinnsikter – For Well-Aging, Hudhelse og Problemfri Hud",
         "description": "<p>Hos Skinora tror vi på hudpleie som gir deg både trygghet og resultater. Med kunnskap, teknologi og gode rutiner hjelper vi deg å møte aldringstegn, akne og andre hudutfordringer – på en naturlig måte.</p>",
-        "show_pagination": true,
-        "posts_per_page": 4,
         "color_scheme": "accent-1",
         "padding_top": 80,
         "padding_bottom": 80
