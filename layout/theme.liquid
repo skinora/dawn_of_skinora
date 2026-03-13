@@ -687,6 +687,7 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'sk-base.css' | asset_url | stylesheet_tag }}
+    {{ 'sk-design-fixes.css' | asset_url | stylesheet_tag }}
     {%- comment -%} Non-critical base CSS (grid, forms, buttons, modals, rte, spinners) — deferred {%- endcomment -%}
     <link rel="stylesheet" href="{{ 'base-deferred.css' | asset_url }}" media="print" onload="this.media='all'">
     <noscript>{{ 'base-deferred.css' | asset_url | stylesheet_tag }}</noscript>
@@ -760,6 +761,42 @@
     </main>
 
     {% sections 'footer-group' %}
+
+    {%- comment -%} Back to top button {%- endcomment -%}
+    <button class="sk-back-to-top" aria-label="Tilbake til toppen" type="button">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="18 15 12 9 6 15"/>
+      </svg>
+    </button>
+    <script>
+      (function () {
+        var btn = document.querySelector('.sk-back-to-top');
+        if (!btn) return;
+        var shown = false;
+        function toggle() {
+          var y = window.scrollY || window.pageYOffset;
+          if (y > 600 && !shown) {
+            shown = true;
+            btn.classList.add('is-visible');
+          } else if (y <= 600 && shown) {
+            shown = false;
+            btn.classList.remove('is-visible');
+          }
+        }
+        window.addEventListener('scroll', toggle, { passive: true });
+        btn.addEventListener('click', function () {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      })();
+    </script>
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>

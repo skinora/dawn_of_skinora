@@ -8,16 +8,50 @@
       margin-top: 2rem;
     }
   }
+
+  .template-404__helpful-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  .template-404__helpful-links a {
+    color: var(--color-brand, #30273e);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-size: 1.5rem;
+  }
+
+  .template-404__helpful-links a:hover {
+    color: rgb(194, 121, 44);
+  }
+
+  .template-404__logo {
+    display: block;
+    max-width: 180px;
+    margin: 0 auto 24px;
+  }
 </style>
 
 <div class="template-404 page-width page-margin center">
+  <div class="template-404__logo">
+    {{ 'custom-logo.svg' | inline_asset_content }}
+  </div>
   <p>
     {{ 'templates.404.subtext' | t }}
   </p>
   <h1 class="title">
     {{ 'templates.404.title' | t }}
   </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
+  <a href="{{ routes.all_products_collection_url }}" class="button sk-btn sk-btn--primary">
     {{ 'general.continue_shopping' | t }}
   </a>
+  <nav class="template-404__helpful-links" aria-label="Nyttige lenker">
+    <a href="{{ routes.root_url }}">Hjem</a>
+    <a href="{{ routes.collections_url }}/all">Alle produkter</a>
+    <a href="/pages/kundeservice">Kontakt oss</a>
+  </nav>
 </div>

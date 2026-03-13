@@ -10,7 +10,7 @@
   --sk-color-card-bg: var(--color-white);
   --sk-color-card-border: rgba(var(--color-brand-rgb), 0.14);
   --sk-color-card-shadow: rgba(var(--color-brand-rgb), 0.08);
-  --sk-color-input-border: rgba(var(--color-brand-rgb), 0.22);
+  --sk-color-input-border: rgba(var(--color-brand-rgb), 0.4);
   --sk-color-placeholder: var(--color-neutral-5);
   --sk-color-focus-ring: rgba(var(--color-brand-rgb), 0.15);
   --sk-color-button-bg: var(--color-brand);
@@ -54,7 +54,7 @@
 .sk-customer-service__form {
   background: var(--sk-color-card-bg);
   border: 1.5px solid var(--sk-color-card-border);
-  border-radius: 0;
+  border-radius: 8px;
   padding: clamp(18px, 2.4vw, 28px);
   box-shadow: 0 8px 22px var(--sk-color-card-shadow);
 }
@@ -85,7 +85,7 @@
 
 .sk-customer-service__form label {
   grid-column: span 1;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: var(--sk-color-heading);
   margin-bottom: 6px;
 }
@@ -99,9 +99,12 @@
   border-radius: 0;
   border: 1.5px solid var(--sk-color-input-border);
   padding: 12px 14px;
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   background: var(--sk-color-card-bg);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
 }
 
 .sk-customer-service__form textarea {
@@ -126,17 +129,20 @@
 /* Button */
 .sk-customer-service__button {
   grid-column: 1 / -1;
-  justify-self: start;
+  justify-self: end;
   appearance: none;
   border: 0;
-  border-radius: 0;
+  border-radius: 4px;
   background: var(--sk-color-button-bg);
   color: var(--color-white);
   padding: 12px 20px;
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 10px 22px var(--sk-color-button-shadow);
-  transition: background 0.15s ease, transform 0.05s ease, box-shadow 0.15s ease;
+  transition:
+    background 0.15s ease,
+    transform 0.05s ease,
+    box-shadow 0.15s ease;
 }
 .sk-customer-service__button:hover {
   background: var(--sk-color-button-hover);

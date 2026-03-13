@@ -1,0 +1,916 @@
+/* ═══════════════════════════════════════════════════════════
+   sk-design-fixes.css — Comprehensive design audit fixes
+   Covers: typography, buttons, spacing, forms, footer,
+   responsive, product/collection/info pages, global.
+   Loaded after sk-base.css for override priority.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────────
+   3. TYPOGRAPHY — Normalize base & heading sizes
+   ────────────────────────────────────────────────────────── */
+
+/* Body font: increase weight from 300→400 for readability */
+body {
+  font-weight: 400;
+  font-size: 1.6rem;
+  letter-spacing: 0.02rem;
+}
+
+@media screen and (min-width: 750px) {
+  body {
+    font-size: 1.6rem;
+  }
+}
+
+/* Override Dawn's --font-body-weight in the theme style block */
+:root {
+  --font-body-weight: 400;
+  /* Normalize font size tokens to a clean scale */
+  --sk-font-size-base: 1.6rem;
+  --sk-font-size-small: 1.4rem;
+  --sk-font-size-medium: 1.6rem;
+  --sk-font-size-large: 1.8rem;
+  --sk-font-size-button: 1.6rem;
+  --sk-font-size-xl: 2.4rem;
+  --sk-font-size-2xl: 2.8rem;
+  --sk-font-size-3xl: 3.6rem;
+  --sk-font-size-display: 4.2rem;
+  --sk-font-size-hero: 5.4rem;
+  --sk-font-size-xs: 1.3rem;
+  --sk-font-size-xxs: 1.2rem;
+  /* Clean letter-spacing tokens */
+  --sk-ls-heading: 0.05rem;
+  --sk-ls-uppercase: 0.15rem;
+  --sk-ls-body: 0.01rem;
+}
+
+/* Paragraphs: enforce consistent sizing */
+p {
+  font-size: inherit;
+  line-height: 1.65;
+}
+
+/* H2: standardize to two sizes — section headings & hero */
+h2,
+.h2 {
+  font-size: var(--sk-font-size-2xl);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: var(--sk-ls-heading);
+}
+
+/* H3: one consistent style */
+h3,
+.h3 {
+  font-size: var(--sk-font-size-xl);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: var(--sk-ls-heading);
+}
+
+/* Letter-spacing standardization */
+[style*='text-transform: uppercase'],
+.sk-section-heading,
+.sk-copy-eyebrow,
+.sk-section-header__eyebrow {
+  letter-spacing: var(--sk-ls-uppercase);
+}
+
+/* Decorative/large text keeps weight 300 */
+.sk-dynamic-banner__description,
+.sk-section-header__subtitle,
+.sk-copy-lead {
+  font-weight: 300;
+}
+
+/* ──────────────────────────────────────────────────────────
+   2. HEADER / NAVIGATION
+   ────────────────────────────────────────────────────────── */
+
+/* Nav link weight: 300→400 for readability */
+.sk-header .sk-header__inline-menu .header__menu-item,
+.sk-header .header__menu-item {
+  font-weight: 400;
+}
+
+/* Header inner grid: balanced 1fr / auto / 1fr so nav ↔ logo ↔ icons
+   have equal breathing room. max-width keeps it from stretching on ultrawides. */
+.sk-header__grid {
+  grid-template-columns: 1fr auto 1fr !important;
+  column-gap: clamp(3rem, 4vw, 6rem) !important;
+  max-width: 1400px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+/* Logo column: let it size to intrinsic image width, not a bloated calc */
+.sk-header__grid > .sk-header__brand {
+  width: auto !important;
+  max-width: var(--header-logo-width, 200px);
+}
+
+/* Dropdown panel polish */
+.sk-header .header__submenu,
+.header__submenu.list-menu.list-menu--disclosure {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  padding: 12px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Cart count badge */
+.cart-count-bubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 50%;
+  background-color: var(--color-brand);
+  color: var(--color-white);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.header__icon--cart {
+  position: relative;
+}
+
+/* ──────────────────────────────────────────────────────────
+   4. BUTTONS — Consolidate styles
+   ────────────────────────────────────────────────────────── */
+
+/* All buttons: consistent border-radius 4px */
+.sk-btn,
+.sk-btn--primary,
+.sk-btn--secondary,
+.button,
+.shopify-challenge__button,
+button[type='submit'],
+.form__submit {
+  border-radius: 4px;
+}
+
+/* Primary CTA: switch to sofia-pro for modern feel */
+.sk-btn--primary {
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-style: normal;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  padding: 16px 32px;
+  border-radius: 4px;
+  gap: 8px;
+}
+
+/* Secondary/outline buttons: consistent style */
+.sk-btn--secondary {
+  font-family: var(--font-body-family);
+  font-weight: 500;
+  font-size: 1.4rem;
+  padding: 14px 28px;
+  border-radius: 4px;
+  border: 2px solid var(--color-brand);
+  background-color: transparent;
+  color: var(--color-brand);
+}
+
+/* "KJØP +" button icon spacing */
+.sk-product-listing .sk-btn--primary,
+.card-product .sk-btn--primary {
+  gap: 8px;
+}
+
+/* Newsletter button + input height match: 48px */
+.footer__newsletter-form .field__input,
+.footer__newsletter-form .newsletter-form__button,
+.newsletter-form .field__input,
+.newsletter-form .newsletter-form__button,
+.footer_submit_btn,
+.news_letter_join-btn {
+  height: 48px;
+  min-height: 48px;
+}
+
+/* Newsletter button pill shape consistency → match input */
+.footer__newsletter-form .newsletter-form__button,
+.footer_submit_btn {
+  border-radius: 0 4px 4px 0;
+}
+
+.footer__newsletter-form .field__input,
+.newsletter-form .field__input {
+  border-radius: 4px 0 0 4px;
+}
+
+/* "Skriv en anmeldelse" review button alignment */
+.okeReviews .okeReviews-reviews-controls .okeReviews-writeReview-button {
+  border: 2px solid var(--color-brand);
+  background-color: transparent;
+  color: var(--color-brand);
+  border-radius: 4px;
+  font-family: var(--font-body-family);
+  font-weight: 500;
+}
+
+.okeReviews .okeReviews-reviews-controls .okeReviews-writeReview-button:hover {
+  background-color: var(--color-brand);
+  color: var(--color-white);
+}
+
+/* Dawn default button override */
+.button {
+  border-radius: 4px;
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+/* ──────────────────────────────────────────────────────────
+   5. SPACING / PADDING / MARGINS
+   ────────────────────────────────────────────────────────── */
+
+/* Consistent horizontal page padding */
+.page-width {
+  padding-inline: clamp(24px, 4vw, 60px);
+}
+
+/* Hero section alignment fix */
+.sk-dynamic-banner .page-width {
+  padding-inline: clamp(24px, 4vw, 60px);
+}
+
+/* Product cards: uniform gap */
+.sk-product-listing__grid,
+.sk-product-listing .grid {
+  gap: 24px;
+}
+
+/* Before/After cards: consistent text alignment */
+.sk-before-after__card-text,
+.sk-before-after .card__content {
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* FAQ section: container centering */
+.sk-faq-accordion__container {
+  max-width: 900px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 60px);
+}
+
+/* FAQ "Les mer" button: center align */
+.sk-faq-accordion__cta,
+.sk-faq-accordion .sk-btn--secondary {
+  display: block;
+  text-align: center;
+  margin-inline: auto;
+  width: fit-content;
+}
+
+/* Product page variant card: more padding */
+.sk-radiance-product .product-form__input--pill-card,
+.sk-radiance-product .variant-card,
+.sk-offer-card {
+  padding: 16px;
+}
+
+/* Product page checkmark list: consistent gap */
+.sk-product-why-choose__item,
+.sk-product-why-choose li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* Product page tech specs: uniform row padding */
+.sk-product-specifications__row,
+.sk-product-specifications .spec-row {
+  padding: 16px 0;
+}
+
+/* Collection page: wider grid */
+.template-collection .collection .grid,
+.template-collection .main-collection-product-grid .grid,
+.template-collection .page-width {
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+/* ──────────────────────────────────────────────────────────
+   6. FORMS
+   ────────────────────────────────────────────────────────── */
+
+/* Contact form: larger labels & inputs */
+.contact .field__label,
+.contact-form .field__label,
+.form .field__label {
+  font-size: 1.4rem;
+}
+
+.contact .field__input,
+.contact-form .field__input,
+.form .field__input,
+.contact textarea,
+.form textarea {
+  font-size: 1.6rem;
+  border: 1px solid rgba(48, 39, 62, 0.4);
+}
+
+/* Contact form submit button alignment */
+.contact .form__submit,
+.contact-form .form__submit {
+  margin-inline: auto;
+}
+
+/* Newsletter email input: visible border */
+.footer__newsletter-form .field__input,
+.newsletter-form .field__input,
+.footer-top_section .field__input {
+  border: 1px solid rgba(48, 39, 62, 0.3);
+  font-size: 1.6rem;
+}
+
+/* Search input: fix excessive right padding */
+.search__input,
+.predictive-search__input {
+  padding: 15px 50px 15px 15px;
+}
+
+/* iOS zoom prevention: enforce 16px on all inputs */
+input[type='text'],
+input[type='email'],
+input[type='tel'],
+input[type='search'],
+input[type='password'],
+input[type='number'],
+textarea,
+select {
+  font-size: 1.6rem;
+}
+
+/* ──────────────────────────────────────────────────────────
+   7. FOOTER
+   ────────────────────────────────────────────────────────── */
+
+/* Footer background */
+footer.footer,
+.footer,
+.footer.color-scheme-1 {
+  background-color: rgb(58, 52, 72);
+  color: var(--color-white);
+}
+
+/* Footer padding increase */
+footer.footer .footer__content-top,
+.footer .footer__content-top {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+
+footer.footer .footer__content-bottom,
+.footer .footer__content-bottom {
+  padding-bottom: 40px;
+}
+
+/* Footer heading size normalization */
+.footer-top_section .sk-section-heading--h1,
+.footer-top_section h2 {
+  font-size: 2.8rem;
+  font-weight: 600;
+}
+
+/* Footer link columns: reduce size from 21.85px→14px */
+.footer__menu-link,
+.footer__menu-item a,
+footer .footer__column--menu a {
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.footer__menu-link:hover,
+footer .footer__column--menu a:hover {
+  color: var(--color-lilac);
+}
+
+/* Footer column headings */
+.footer__menu-heading,
+footer h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--sk-ls-uppercase);
+  color: var(--color-white);
+}
+
+/* Footer text: ensure white */
+.footer__brand-description,
+.footer__copyright,
+.footer .copyright__content,
+.newsletter-subtext {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.4rem;
+}
+
+/* Social media icons: minimum tap target */
+.footer__social-icons a,
+.footer .social-icons__link {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer__social-icons svg,
+.footer .social-icons__link svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Payment icons: spacing from copyright */
+.footer .list-payment {
+  margin-top: 16px;
+}
+
+/* Footer newsletter section override (top section) */
+.footer-top_section {
+  background-color: rgb(58, 52, 72);
+  color: var(--color-white);
+}
+
+.footer-top_section .field__input {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.footer-top_section .field__input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-top_section .newsletter-form__button,
+.footer-top_section .footer_submit_btn {
+  background-color: var(--color-white);
+  color: var(--color-brand);
+  border: none;
+  font-weight: 600;
+}
+
+/* ──────────────────────────────────────────────────────────
+   8. RESPONSIVE / TABLET (750px–989px)
+   ────────────────────────────────────────────────────────── */
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  /* Product card grids: 2-column on tablet */
+  .grid--3-col-desktop,
+  .grid--4-col-desktop,
+  .sk-product-listing__grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* FAQ width constraint */
+  .sk-faq-accordion__container {
+    max-width: 700px;
+    padding-inline: 24px;
+  }
+
+  /* Icon/badge marquee sizing */
+  .sk-promotion-logos__icon svg,
+  .sk-promotion-logos .sk-trustbar__icon svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Hero text sizing */
+  .sk-dynamic-banner__title {
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+  }
+
+  .sk-dynamic-banner__description {
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
+  }
+
+  /* Blog grid: 2 columns */
+  .sk-blog-grid__posts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* About page: balanced columns */
+  .sk-about .image-with-text__grid,
+  .sk-about__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────
+   9. MOBILE (under 750px)
+   ────────────────────────────────────────────────────────── */
+
+@media screen and (max-width: 749px) {
+  /* Hamburger menu: proper tap targets */
+  header-drawer summary,
+  .menu-drawer__menu-item {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Product cards: single column on small mobile */
+  @media (max-width: 500px) {
+    .grid--2-col-tablet-down {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Newsletter form: stack vertically */
+  .footer__newsletter-form .field,
+  .footer-top_section .field {
+    flex-direction: column;
+  }
+
+  .footer__newsletter-form .field__input,
+  .footer-top_section .field__input {
+    border-radius: 4px;
+    width: 100%;
+  }
+
+  .footer__newsletter-form .newsletter-form__button,
+  .footer-top_section .newsletter-form__button {
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  /* Before/after cards: horizontal scroll */
+  .sk-before-after__grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding-bottom: 16px;
+  }
+
+  .sk-before-after__card {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+  }
+
+  /* Page padding mobile */
+  .page-width {
+    padding-inline: 16px;
+  }
+}
+
+/* Sticky bar vs Klaviyo conflict */
+.sk-radiance-sticky-bottom-bar {
+  z-index: 89999;
+}
+
+/* ──────────────────────────────────────────────────────────
+   10. PRODUCT PAGE FIXES
+   ────────────────────────────────────────────────────────── */
+
+/* Hide variant selector when only 1 variant */
+.product-form__input[data-variant-count='1'],
+.sk-offer-card[data-variant-count='1'] .variant-card__radio {
+  display: none;
+}
+
+/* Image gallery thumbnails: normalize */
+.product-media-gallery .thumbnail-list__item img,
+.product-media-gallery .thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+}
+
+/* PAKKERABATT badge positioning */
+.sk-product-listing .card--badge,
+.card-product .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  z-index: 2;
+}
+
+/* Payment icons: move below ATC */
+.sk-radiance-product .shopify-payment-button,
+.sk-radiance-product .payment-icons-below-atc {
+  order: 10;
+}
+
+/* Sticky bar text vertical centering */
+.sk-radiance-sticky-bottom-bar .sk-sticky-bar__inner,
+.sk-radiance-sticky-bottom-bar [class*='sticky-bar__content'] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ──────────────────────────────────────────────────────────
+   11. COLLECTION PAGE
+   ────────────────────────────────────────────────────────── */
+
+/* Page title: uppercase sans-serif consistency */
+.template-collection .collection-hero__title,
+.template-collection .title,
+.main-collection-banner .title,
+.collection-hero__title {
+  font-family: var(--font-heading-family);
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: var(--sk-ls-uppercase);
+  font-weight: 600;
+}
+
+/* Wider card grid */
+.template-collection .collection-product-grid,
+.template-collection .main-collection-product-grid {
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+/* Collection product grid: fill available space */
+.template-collection .grid--3-col-desktop {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.template-collection .grid--4-col-desktop {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ──────────────────────────────────────────────────────────
+   12. ABOUT PAGE (/pages/om-skinora)
+   ────────────────────────────────────────────────────────── */
+
+/* 50/50 column split */
+.template-page-about .image-with-text__grid,
+.sk-about .image-with-text__grid,
+.sk-about__grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Numbered items styling */
+.sk-numbered-list__item-number,
+.sk-about .numbered-item__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-brand);
+  color: var(--color-white);
+  font-size: 1.6rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* "Se våre produkter →" link → proper button */
+.sk-about a[href*='/collections'],
+.sk-about .button--link-to-products {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border: 2px solid var(--color-brand);
+  border-radius: 4px;
+  color: var(--color-brand);
+  font-family: var(--font-body-family);
+  font-weight: 500;
+  font-size: 1.4rem;
+  text-decoration: none;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.sk-about a[href*='/collections']:hover {
+  background-color: var(--color-brand);
+  color: var(--color-white);
+}
+
+/* ──────────────────────────────────────────────────────────
+   13. BLOG PAGE
+   ────────────────────────────────────────────────────────── */
+
+/* Blog card overlay: reduce opacity */
+.sk-blog-grid__post-overlay {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* Blog header: center layout */
+.sk-blog-grid__header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.sk-blog-grid__heading-section,
+.sk-blog-grid__content-section {
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+/* Blog card hover effect */
+.sk-blog-grid__post {
+  transition: transform 0.3s ease;
+}
+
+.sk-blog-grid__post:hover {
+  transform: scale(1.02);
+}
+
+/* ──────────────────────────────────────────────────────────
+   14. DOCUMENTATION PAGE (Clinical Studies)
+   ────────────────────────────────────────────────────────── */
+
+/* Badge font size increase */
+.sk-studies__chip,
+.sk-studies__badge,
+.sk-studies .badge-pill {
+  font-size: 1.2rem;
+  padding: 4px 10px;
+}
+
+/* Study card buttons: better click targets */
+.sk-studies__link,
+.sk-studies .btn-outline-sm,
+.sk-studies a[href*='doi'],
+.sk-studies a[href*='pubmed'] {
+  font-size: 1.3rem;
+  padding: 8px 14px;
+  min-height: 36px;
+}
+
+/* Year indicator: darker */
+.sk-studies__year,
+.sk-studies .study-year {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* ──────────────────────────────────────────────────────────
+   15. INFO PAGES (Frakt, Retur, Personvern, Vilkår)
+   ────────────────────────────────────────────────────────── */
+
+/* Content max-width for readable lines */
+.template-page .main-page-content,
+.template-page .page-width--narrow,
+.template-page .rte,
+.sk-legal-content-section .rte,
+.sk-legal-content-section__body {
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+/* Bullet list markers: brand orange */
+.template-page .rte ul li::marker,
+.sk-legal-content-section .rte ul li::marker,
+.rte ul li::marker {
+  color: rgb(194, 121, 44);
+}
+
+/* ──────────────────────────────────────────────────────────
+   16. CART PAGE
+   ────────────────────────────────────────────────────────── */
+
+/* Empty cart: reduce top whitespace */
+.template-cart .cart--empty {
+  padding-top: 40px;
+}
+
+/* ──────────────────────────────────────────────────────────
+   17. 404 PAGE
+   ────────────────────────────────────────────────────────── */
+
+.template-404 {
+  text-align: center;
+  padding: 80px 24px;
+}
+
+.template-404 .title {
+  font-size: var(--sk-font-size-display);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.template-404 p {
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  color: rgba(var(--color-foreground), 0.7);
+}
+
+.template-404 .button {
+  margin-bottom: 32px;
+}
+
+.template-404__helpful-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+.template-404__helpful-links a {
+  color: var(--color-brand);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ──────────────────────────────────────────────────────────
+   18. GLOBAL / MISC
+   ────────────────────────────────────────────────────────── */
+
+/* Link styling consistency */
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Exception: nav, buttons, cards shouldn't underline */
+.sk-header a:hover,
+.sk-btn:hover,
+.sk-btn--primary:hover,
+.sk-btn--secondary:hover,
+.button:hover,
+.card-product a:hover,
+.footer__menu-link:hover,
+.footer-top_section a:hover,
+nav a:hover {
+  text-decoration: none;
+}
+
+/* Focus states: visible outlines on all interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+/* Promotion logos (icon bar): normalize icon sizes */
+.sk-promotion-logos__card svg,
+.sk-promotion-logos .card svg {
+  width: 56px;
+  height: 56px;
+}
+
+/* Back to top button (global utility) */
+.sk-back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-brand);
+  color: var(--color-white);
+  border: none;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.sk-back-to-top.is-visible {
+  display: flex;
+}
+
+.sk-back-to-top:hover {
+  transform: translateY(-2px);
+}
+
+.sk-back-to-top svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Ensure Klaviyo doesn't overlap sticky bar on mobile */
+@media screen and (max-width: 749px) {
+  .klaviyo-form-trigger,
+  .needsclick.kl-private-reset-css-Xuajs1 {
+    bottom: 90px !important;
+  }
+}

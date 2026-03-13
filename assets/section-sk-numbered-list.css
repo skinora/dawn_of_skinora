@@ -29,9 +29,16 @@
 
 .sk-numbered-list__number {
   flex: 0 0 auto;
-  font-size: 120px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--color-brand, #30273e);
+  color: var(--color-white, #ffffff);
+  font-size: 24px;
   font-weight: 700;
-  color: var(--color-brand, #30273e);
   line-height: 1;
   position: relative;
 }

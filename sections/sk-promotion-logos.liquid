@@ -43,13 +43,16 @@
       justify-content: space-around;
   }
   .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card{
-      flex: 0 0 100px
+      flex: 0 0 56px;
+      width: 56px;
+      height: 56px;
   }
   .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card img,
   .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card svg{
-      width:100%;
-      height: auto;
+      width: 56px;
+      height: 56px;
       display: block;
+      object-fit: contain;
   }
 
   .primary {
