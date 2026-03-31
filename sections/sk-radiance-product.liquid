@@ -626,6 +626,7 @@
       align-items: baseline;
       justify-content: center;
       gap: 4rem;
+      min-height: 3.6rem;
     }
 
     .sk-shared-price .sk-radiance-price .sk-price__current {
@@ -635,6 +636,7 @@
       color: var(--color-neutral-4, #49494a);
       line-height: 1;
       position: relative;
+      min-height: 1em;
     }
 
     .sk-shared-price .sk-radiance-price .sk-price__value {
@@ -642,16 +644,23 @@
       font-weight: 500;
       color: var(--sk-brand, #30273e);
       text-transform: none;
+      min-height: 1.2em;
+      display: inline-block;
     }
 
-    .sk-shared-price .sk-radiance-price .sk-price__value:empty {
-      display: none;
+    .sk-shared-price .sk-radiance-price .sk-price__value:empty,
+    .sk-shared-price .sk-radiance-price .sk-price__value[hidden] {
+      visibility: hidden;
+      display: inline-block !important;
     }
 
     @media (max-width: 767px) {
       .sk-shared-price .sk-radiance-price .sk-price__current,
       .sk-shared-price .sk-radiance-price .sk-price__value {
         font-size: 2.5rem;
+      }
+      .sk-shared-price .sk-radiance-price .sk-price {
+        min-height: 2.8rem;
       }
     }
 
@@ -1820,7 +1829,8 @@
         const shouldShowCompare = compareAt && compareAt > price;
         if (valueEl) {
           valueEl.textContent = shouldShowCompare ? `Verdi ${formatMoney(compareAt)}` : '';
-          valueEl.hidden = !shouldShowCompare;
+          valueEl.removeAttribute('hidden');
+          valueEl.style.visibility = shouldShowCompare ? 'visible' : 'hidden';
         }
 
         currentEl.textContent = formatMoney(price);
