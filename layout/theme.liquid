@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="theme-color" content="#30273e">
+    {%- if product.tags contains 'noindex' -%}
+      <meta name="robots" content="noindex, nofollow">
+    {%- endif -%}
     <link rel="canonical" href="{{ canonical_url }}">
 
     {%- comment -%}
@@ -351,7 +354,38 @@
       })();
     </script>
 
-    {{ content_for_header }}
+    {%- comment -%}
+      Server-side filtering of content_for_header:
+      Strip any Product JSON-LD injected by apps (e.g. Okendo Rich Snippets)
+      so only our sk-product-jsonld.liquid controls the Product schema.
+      This ensures Google sees ONE authoritative Product schema in View Source.
+    {%- endcomment -%}
+    {%- capture cfh -%}{{ content_for_header }}{%- endcapture -%}
+    {%- if request.page_type == 'product' and cfh contains '"@type": "Product"' -%}
+      {%- assign cfh_parts = cfh | split: '<script type="application/ld+json">' -%}
+      {%- for part in cfh_parts -%}
+        {%- if forloop.first -%}
+          {{- part -}}
+        {%- elsif part contains '"@type": "Product"' or part contains '"@type":"Product"' -%}
+          {%- assign part_tails = part | split: '</script>' -%}
+          {%- for tail in part_tails -%}
+            {%- unless forloop.first -%}
+              {%- unless forloop.last -%}
+                {{- tail -}}
+                </script>
+              {%- else -%}
+                {{- tail -}}
+              {%- endunless -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        {%- else -%}
+          <script type="application/ld+json">
+            {{- part -}}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {{- cfh -}}
+    {%- endif -%}
 
     {%- comment -%}
       Disconnect the performance interceptor's MutationObserver now that
@@ -362,32 +396,6 @@
     <script>
       if (window.__SK_PERF) window.__SK_PERF.disconnectObserver();
     </script>
-
-    {%- comment -%}
-      Strip duplicate Product JSON-LD injected by apps (e.g. Okendo) via
-      content_for_header. Our custom sk-product-jsonld.liquid already emits
-      a complete Product schema with aggregateRating — duplicates cause
-      Google Search Console warnings.
-    {%- endcomment -%}
-    {%- if request.page_type == 'product' -%}
-      <script>
-        /* This runs in <head> right after content_for_header.
-           Our custom Product JSON-LD (in <body>) hasn't been parsed yet,
-           so any Product schema found here is app-injected (e.g. Okendo). */
-        (function () {
-          document.querySelectorAll('script[type="application/ld+json"]').forEach(function (el) {
-            try {
-              var d = JSON.parse(el.textContent);
-              var t = d['@type'];
-              if (t === 'Product' || (Array.isArray(t) && t.indexOf('Product') !== -1)) {
-                el.parentNode.removeChild(el);
-                console.debug('[SK] Removed app-injected duplicate Product JSON-LD');
-              }
-            } catch (_) {}
-          });
-        })();
-      </script>
-    {%- endif -%}
 
     {%- comment -%}
       Re-assert font-display:optional AFTER content_for_header.
