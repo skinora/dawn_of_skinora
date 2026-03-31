@@ -441,9 +441,11 @@
     }
 
     .sk-offer-card__price .sk-price__value {
-      font-size: 1.5rem;
+      font-size: 1.35rem;
       font-weight: 400;
-      color: var(--color-neutral-2, #6b6b76);
+      color: var(--color-neutral-2, #9a9aa0);
+      text-decoration: line-through;
+      text-decoration-thickness: 1px;
       text-transform: none;
       letter-spacing: 0;
       min-height: 1.15rem;
@@ -452,6 +454,7 @@
 
     .sk-offer-card__price .sk-price__value:empty {
       visibility: hidden;
+      text-decoration: none;
     }
 
     .sk-offer-card__price .sk-price__current {
@@ -459,6 +462,24 @@
       font-weight: 600;
       color: var(--color-neutral-4, #49494a);
       position: relative;
+    }
+
+    .sk-offer-card__price .sk-price__badge {
+      display: inline-block;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--sk-brand, #30273e);
+      background: color-mix(in srgb, var(--color-lilac, #cdb7ed) 30%, #fff);
+      border: 1.5px solid var(--sk-brand, #30273e);
+      padding: 0.25em 0.6em;
+      border-radius: 5px;
+      line-height: 1.3;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    .sk-offer-card__price .sk-price__badge:empty {
+      display: none;
     }
 
     }
@@ -502,7 +523,7 @@
       }
 
       .sk-offer-card__price .sk-price__value {
-        font-size: 1.5rem;
+        font-size: 1.35rem;
         opacity: 0.8;
         min-height: 1.15rem;
       }
@@ -640,9 +661,11 @@
     }
 
     .sk-shared-price .sk-radiance-price .sk-price__value {
-      font-size: 3rem;
-      font-weight: 500;
-      color: var(--sk-brand, #30273e);
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--color-neutral-2, #9a9aa0);
+      text-decoration: line-through;
+      text-decoration-thickness: 1.5px;
       text-transform: none;
       min-height: 1.2em;
       display: inline-block;
@@ -652,12 +675,36 @@
     .sk-shared-price .sk-radiance-price .sk-price__value[hidden] {
       visibility: hidden;
       display: inline-block !important;
+      text-decoration: none;
+    }
+
+    .sk-shared-price .sk-radiance-price .sk-price__badge {
+      display: inline-block;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--sk-brand, #30273e);
+      background: color-mix(in srgb, var(--color-lilac, #cdb7ed) 30%, #fff);
+      border: 1.5px solid var(--sk-brand, #30273e);
+      padding: 0.25em 0.75em;
+      border-radius: 6px;
+      line-height: 1.3;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    .sk-shared-price .sk-radiance-price .sk-price__badge:empty {
+      display: none;
     }
 
     @media (max-width: 767px) {
-      .sk-shared-price .sk-radiance-price .sk-price__current,
-      .sk-shared-price .sk-radiance-price .sk-price__value {
+      .sk-shared-price .sk-radiance-price .sk-price__current {
         font-size: 2.5rem;
+      }
+      .sk-shared-price .sk-radiance-price .sk-price__value {
+        font-size: 1.6rem;
+      }
+      .sk-shared-price .sk-radiance-price .sk-price__badge {
+        font-size: 1.15rem;
       }
       .sk-shared-price .sk-radiance-price .sk-price {
         min-height: 2.8rem;
@@ -1382,12 +1429,20 @@
                     <div class="sk-price">
                       <span class="sk-price__value">
                         {%- if base_variant.compare_at_price and base_variant.compare_at_price > base_variant.price -%}
-                          Verdi {{ base_variant.compare_at_price | money_without_trailing_zeros }}
+                          {{ base_variant.compare_at_price | money_without_trailing_zeros }}
                         {%- endif -%}
                       </span>
                       <span class="sk-price__current">
                         {{ base_variant.price | money_without_trailing_zeros }}
                       </span>
+                      {%- if base_variant.compare_at_price and base_variant.compare_at_price > base_variant.price -%}
+                        {%- assign savings_pct = base_variant.compare_at_price
+                          | minus: base_variant.price
+                          | times: 100
+                          | divided_by: base_variant.compare_at_price
+                        -%}
+                        <span class="sk-price__badge">Spar {{ savings_pct }}%</span>
+                      {%- endif -%}
                     </div>
                   </div>
                 </div>
@@ -1811,6 +1866,21 @@
         return await res.json();
       };
 
+      const calcSavingsPercent = (compareAt, price) => {
+        if (!compareAt || !price || compareAt <= price) return 0;
+        return Math.round(((compareAt - price) / compareAt) * 100);
+      };
+
+      const ensureBadgeEl = (container) => {
+        let badge = container.querySelector('.sk-price__badge');
+        if (!badge) {
+          badge = document.createElement('span');
+          badge.className = 'sk-price__badge';
+          container.appendChild(badge);
+        }
+        return badge;
+      };
+
       const pickDefaultVariant = (productJson) => {
         if (!productJson || !productJson.variants) return null;
         return productJson.variants.find((v) => v.available) || productJson.variants[0] || null;
@@ -1823,15 +1893,22 @@
         const currentEl = sharedPriceEl.querySelector('.sk-price__current');
         if (!currentEl) return;
 
+        const priceContainer = currentEl.closest('.sk-price') || sharedPriceEl;
+        const badgeEl = ensureBadgeEl(priceContainer);
+
         const compareAt = variant.compare_at_price;
         const price = variant.price;
 
         const shouldShowCompare = compareAt && compareAt > price;
+        const pct = calcSavingsPercent(compareAt, price);
+
         if (valueEl) {
-          valueEl.textContent = shouldShowCompare ? `Verdi ${formatMoney(compareAt)}` : '';
+          valueEl.textContent = shouldShowCompare ? formatMoney(compareAt) : '';
           valueEl.removeAttribute('hidden');
           valueEl.style.visibility = shouldShowCompare ? 'visible' : 'hidden';
         }
+
+        badgeEl.textContent = shouldShowCompare && pct > 0 ? `Spar ${pct}%` : '';
 
         currentEl.textContent = formatMoney(price);
       };
@@ -1915,13 +1992,19 @@
         if (!cardPriceBundle || !variant) return;
         const valueEl = cardPriceBundle.querySelector('.sk-price__value');
         const currentEl = cardPriceBundle.querySelector('.sk-price__current');
+        const priceContainer = (currentEl && currentEl.closest('.sk-price')) || cardPriceBundle;
+        const badgeEl = ensureBadgeEl(priceContainer);
+
+        const pct = calcSavingsPercent(variant.compare_at_price, variant.price);
+
         if (valueEl) {
           if (variant.compare_at_price && variant.compare_at_price > variant.price) {
-            valueEl.textContent = `Verdi ${formatMoney(variant.compare_at_price)}`;
+            valueEl.textContent = formatMoney(variant.compare_at_price);
           } else {
             valueEl.textContent = '';
           }
         }
+        badgeEl.textContent = pct > 0 ? `Spar ${pct}%` : '';
         if (currentEl) {
           currentEl.textContent = formatMoney(variant.price);
         }
@@ -1988,10 +2071,12 @@
           : baseTitle;
 
         const priceText = formatMoney(activeVariant.price);
+        const savingsPct = calcSavingsPercent(activeVariant.compare_at_price, activeVariant.price);
         const compareText =
           activeVariant.compare_at_price && activeVariant.compare_at_price > activeVariant.price
-            ? `Verdi ${formatMoney(activeVariant.compare_at_price)}`
+            ? formatMoney(activeVariant.compare_at_price)
             : '';
+        const badgeText = savingsPct > 0 ? `Spar ${savingsPct}%` : '';
         document.dispatchEvent(new CustomEvent('sk:offerchange', {
           detail: {
             offer: offerType,
@@ -2000,6 +2085,7 @@
             compare_at_price: activeVariant.compare_at_price,
             priceText,
             compareText,
+            badgeText,
             available: activeVariant.available,
             handle: offerType === 'single' ? baseHandle : bundleHandle,
             title: offerTitle
