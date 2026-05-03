@@ -20,37 +20,85 @@
 <!-- SECTION: Pain Agitation -->
 <div class="sk-lp">
   <section class="lp-problem">
-    <div class="lp-container--narrow">
-      <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
-      {%- if section.settings.intro != blank -%}
-        <p class="lp-section-intro">{{ section.settings.intro }}</p>
-      {%- endif -%}
+    <div class="lp-problem__grid {% if section.settings.image == blank %}lp-problem__grid--single{% endif %}">
+      <div class="lp-problem__text-col">
+        <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
+        {%- if section.settings.intro != blank -%}
+          <p class="lp-section-intro">{{ section.settings.intro }}</p>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="lp-problem__list-wrap">
+            <ul class="lp-problem__list">
+              {%- for block in section.blocks -%}
+                <li class="lp-problem__item" {{ block.shopify_attributes }}>
+                  <span class="lp-problem__check">✓</span>
+                  {{ block.settings.text }}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      </div>
 
       {%- if section.settings.image -%}
-        <div class="lp-problem__image" style="margin-bottom:24px;">
-          {{
-            section.settings.image
-            | image_url: width: 1200
-            | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '100vw'
-          }}
-        </div>
-      {%- endif -%}
-
-      {%- if section.blocks.size > 0 -%}
-        <div class="lp-problem__list-wrap">
-          <ul class="lp-problem__list">
-            {%- for block in section.blocks -%}
-              <li class="lp-problem__item" {{ block.shopify_attributes }}>
-                <span class="lp-problem__check">✓</span>
-                {{ block.settings.text }}
-              </li>
-            {%- endfor -%}
-          </ul>
+        <div class="lp-problem__image-col">
+          <img
+            src="{{ section.settings.image | image_url: width: 800 }}"
+            srcset="{{ section.settings.image | image_url: width: 400 }} 400w, {{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 800 }} 800w"
+            sizes="(max-width: 749px) 100vw, 50vw"
+            alt="{{ section.settings.image.alt | default: section.settings.heading }}"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+            loading="lazy"
+            class="lp-problem__image"
+          >
         </div>
       {%- endif -%}
     </div>
   </section>
 </div>
+
+<style>
+  #shopify-section-{{ section.id }} .lp-problem__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  #shopify-section-{{ section.id }} .lp-problem__grid--single {
+    grid-template-columns: 1fr;
+    max-width: 680px;
+  }
+  #shopify-section-{{ section.id }} .lp-problem__image-col {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  #shopify-section-{{ section.id }} .lp-problem__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .lp-problem__grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    #shopify-section-{{ section.id }} .lp-problem__image-col {
+      order: -1;
+    }
+    #shopify-section-{{ section.id }} .lp-problem__image {
+      max-height: 400px;
+    }
+  }
+</style>
 
 <!-- SECTION: Dokumentasjon & trygg bruk -->
 <section class="lp-section lp-doc-section" style="padding:40px 20px;background:#f8f8f8;">
