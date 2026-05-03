@@ -1,4 +1,3 @@
-/* OPTIMIZED v2: Hero cleanup + compliance + pain rewrite + review tags + FAQ + documentation section */
 /*
  * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
@@ -79,9 +78,19 @@
         "image": "shopify://shop_images/skinora_radiance_face_hero.png",
         "eyebrow": "Skinora® Radiance Face",
         "title": "Profesjonell LED-terapi hjemme – utviklet for synlige hudforbedringer",
-        "text": "Skinora Radiance bruker klinisk dokumentert LED-teknologi. 10 minutter, 3–5 ganger i uken. Resultater du kan se.",
+        "text_line_1": "Klinisk dokumentert LED-teknologi – brukt av hudterapeuter verden over.",
+        "text_line_2": "10 minutter, 3–5 ganger i uken. Resultater du kan se.",
+        "bullet_1": "<strong>Rødt + dNIR (1072 nm)</strong> · 10 minutter, 3-5x/uke. Resultater du kan se.",
+        "bullet_2": "Ny generasjon <strong>dNIR:</strong> 1072 nm",
+        "bullet_disclaimer": "Teknisk spesifikasjon. Resultater varierer.",
+        "rating_text": "<strong>4.8/5</strong> – basert på 102 anmeldelser",
+        "rating_score": "4.8",
+        "review_count": "102",
+        "testimonial_quote": "Etter 6 uker merker jeg virkelig forskjell på hudtonen – huden ser friskere ut.",
+        "testimonial_author": "Wenche S., 52, Oslo · Verifisert kjøper",
         "cta_text": "Kjøp Radiance Face",
         "cta_url": "/products/skinora-radiance-face",
+        "show_link": false,
         "link_text": "Se hvordan den brukes (60 sek) ↓",
         "link_url": "#slik-bruker-du",
         "value_title": "Skinora® Radiance Face — 4 690 kr",
@@ -92,36 +101,12 @@
         "show_value_icon": true,
         "value_bullet_1": "Klinisk dokumentert LED-teknologi",
         "value_bullet_2": "60 dagers fornøydgaranti",
-        "value_bullet_3": "Spar tusenvis over tid",
-        "rating_score": "4.8",
-        "review_count": "102",
-        "testimonial_quote": "Etter 6 uker merker jeg virkelig forskjell på hudtonen – huden ser friskere ut.",
-        "testimonial_author": "Wenche S., 52, Oslo · Verifisert kjøper"
+        "value_bullet_3": "Spar tusenvis over tid"
       }
     },
     "problem": {
       "type": "sk-lp-problem",
       "blocks": {
-        "proof_1": {
-          "type": "proof",
-          "settings": { "text": "Klinisk dokumentert LED-teknologi" }
-        },
-        "proof_2": {
-          "type": "proof",
-          "settings": { "text": "3 målrettede bølgelengder – ingen unødvendige lysfarger" }
-        },
-        "proof_3": {
-          "type": "proof",
-          "settings": { "text": "1072 nm dypt nær-infrarødt lys (dNIR)" }
-        },
-        "proof_4": {
-          "type": "proof",
-          "settings": { "text": "Optimalisert for hudens kollagenproduksjon" }
-        },
-        "proof_5": {
-          "type": "proof",
-          "settings": { "text": "Brukt av profesjonelle hudterapeuter" }
-        },
         "p_1": {
           "type": "item",
           "settings": {
@@ -154,11 +139,6 @@
         }
       },
       "block_order": [
-        "proof_1",
-        "proof_2",
-        "proof_3",
-        "proof_4",
-        "proof_5",
         "p_1",
         "p_2",
         "p_3",
@@ -167,7 +147,8 @@
       ],
       "settings": {
         "heading": "Kjenner du igjen dette?",
-        "intro": "Kjenner du igjen noen av disse? Du er ikke alene – og du trenger ikke bare akseptere det."
+        "intro": "Kjenner du igjen noen av disse? Du er ikke alene – og du trenger ikke bare akseptere det.",
+        "image": "shopify://shop_images/skinora_radiance_face_wearing_mask.png"
       }
     },
     "results": {
@@ -206,60 +187,47 @@
         "disclaimer": "Resultater varierer med hudtype, alder og rutine. Jevn bruk 3–5 ganger i uken gir best forutsetning. Vi lover ikke mirakler – vi lover en plan og en garanti."
       }
     },
-    "how_to_use": {
-      "type": "sk-lp-how-to-use",
+    "reviews": {
+      "type": "sk-lp-reviews",
       "blocks": {
-        "s_1": {
-          "type": "step",
+        "rev_1": {
+          "type": "review",
           "settings": {
-            "title": "Rens huden",
-            "text": "Fjern sminke og smuss. Tørk forsiktig."
+            "text": "Etter 6 uker merker jeg virkelig forskjell på hudtonen. Huden ser friskere ut og pigmentflekkene er blitt mindre synlige. Veldig fornøyd!",
+            "author": "Wenche S., 52, Oslo",
+            "concern_tag": "Pigmentflekker · Moden hud",
+            "usage_tag": "Bruker: 10 min, 4x/uke"
           }
         },
-        "s_2": {
-          "type": "step",
+        "rev_2": {
+          "type": "review",
           "settings": {
-            "title": "Bruk masken i 10 minutter",
-            "text": "Sett på, slå på. Slapp av mens lyset jobber."
+            "text": "Bruker den foran TV hver kveld. Enkelt, behagelig og huden kjennes mykere. Gir ikke opp denne rutinen!",
+            "author": "Kari M., 47, Stavanger",
+            "concern_tag": "Glød · Tørr hud",
+            "usage_tag": "Bruker: 10 min, 5x/uke"
           }
         },
-        "s_3": {
-          "type": "step",
+        "rev_3": {
+          "type": "review",
           "settings": {
-            "title": "Avslutt med fukt eller serum",
-            "text": "Lås inn effekten med din favoritt fuktighetskrem."
-          }
-        },
-        "t_1": {
-          "type": "tip",
-          "settings": {
-            "text": "Fungerer morgen eller kveld"
-          }
-        },
-        "t_2": {
-          "type": "tip",
-          "settings": {
-            "text": "Kan brukes foran TV eller i senga"
-          }
-        },
-        "t_3": {
-          "type": "tip",
-          "settings": {
-            "text": "Anbefalt frekvens: 3–5 ganger i uken"
+            "text": "Var skeptisk, men etter 4 uker ser jeg tydelig mer glød. Huden føles tettere og fine linjene er blitt mindre synlige.",
+            "author": "Tone H., 61, Trondheim",
+            "concern_tag": "Fine linjer · Fasthet",
+            "usage_tag": "Bruker: 10 min, 3x/uke"
           }
         }
       },
       "block_order": [
-        "s_1",
-        "s_2",
-        "s_3",
-        "t_1",
-        "t_2",
-        "t_3"
+        "rev_1",
+        "rev_2",
+        "rev_3"
       ],
       "settings": {
-        "heading": "Slik bruker du den",
-        "anchor_id": "slik-bruker-du"
+        "heading": "Det norske kvinner sier",
+        "score": "4.8 av 5 – basert på 102 anmeldelser",
+        "midpage_cta_text": "Få din Radiance Face nå",
+        "midpage_klarna_text": "Fra 130 kr/mnd med Klarna"
       }
     },
     "why_choose": {
@@ -326,81 +294,60 @@
         "heading": "Synlige resultater – forenklet"
       }
     },
-    "reviews": {
-      "type": "sk-lp-reviews",
+    "how_to_use": {
+      "type": "sk-lp-how-to-use",
       "blocks": {
-        "rev_1": {
-          "type": "review",
+        "s_1": {
+          "type": "step",
           "settings": {
-            "text": "Etter 6 uker merker jeg virkelig forskjell på hudtonen. Huden ser friskere ut og pigmentflekkene er blitt mindre synlige. Veldig fornøyd!",
-            "author": "Wenche S., 52, Oslo",
-            "concern_tag": "Pigmentflekker · Moden hud",
-            "usage_tag": "Bruker: 10 min, 4x/uke"
+            "title": "Rens huden",
+            "text": "Fjern sminke og smuss. Tørk forsiktig."
           }
         },
-        "rev_2": {
-          "type": "review",
+        "s_2": {
+          "type": "step",
           "settings": {
-            "text": "Bruker den foran TV hver kveld. Enkelt, behagelig og huden kjennes mykere. Gir ikke opp denne rutinen!",
-            "author": "Kari M., 47, Stavanger",
-            "concern_tag": "Glød · Tørr hud",
-            "usage_tag": "Bruker: 10 min, 5x/uke"
+            "title": "Bruk masken i 10 minutter",
+            "text": "Sett på, slå på. Slapp av mens lyset jobber."
           }
         },
-        "rev_3": {
-          "type": "review",
+        "s_3": {
+          "type": "step",
           "settings": {
-            "text": "Var skeptisk, men etter 4 uker ser jeg tydelig mer glød. Huden føles tettere og fine linjene er blitt mindre synlige.",
-            "author": "Tone H., 61, Trondheim",
-            "concern_tag": "Fine linjer · Fasthet",
-            "usage_tag": "Bruker: 10 min, 3x/uke"
+            "title": "Avslutt med fukt eller serum",
+            "text": "Lås inn effekten med din favoritt fuktighetskrem."
+          }
+        },
+        "t_1": {
+          "type": "tip",
+          "settings": {
+            "text": "Fungerer morgen eller kveld"
+          }
+        },
+        "t_2": {
+          "type": "tip",
+          "settings": {
+            "text": "Kan brukes foran TV eller i senga"
+          }
+        },
+        "t_3": {
+          "type": "tip",
+          "settings": {
+            "text": "Anbefalt frekvens: 3–5 ganger i uken"
           }
         }
       },
       "block_order": [
-        "rev_1",
-        "rev_2",
-        "rev_3"
+        "s_1",
+        "s_2",
+        "s_3",
+        "t_1",
+        "t_2",
+        "t_3"
       ],
       "settings": {
-        "heading": "Det norske kvinner sier",
-        "score": "4.8 av 5 – basert på 102 anmeldelser",
-        "midpage_cta_text": "Få din Radiance Face nå",
-        "midpage_klarna_text": "Fra 130 kr/mnd med Klarna"
-      }
-    },
-    "trust_full": {
-      "type": "sk-lp-trust-full",
-      "blocks": {
-        "tf_3": {
-          "type": "card",
-          "settings": {
-            "title": "Norsk kundeservice",
-            "text": "<p>Har du spørsmål? <a href=\"/pages/kundeservice\" title=\"Kundeservice\">Ta kontakt</a> — vi svarer raskt.</p>"
-          }
-        },
-        "tf_4": {
-          "type": "card",
-          "settings": {
-            "title": "Sikker betaling",
-            "text": "<p>Vipps, Klarna, Visa og Mastercard.</p>"
-          }
-        },
-        "tf_5": {
-          "type": "card",
-          "settings": {
-            "title": "2 års reklamasjonsrett",
-            "text": "<p>Full reklamasjonsrett i henhold til norsk lov.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "tf_3",
-        "tf_4",
-        "tf_5"
-      ],
-      "settings": {
-        "heading": "Du er alltid ivaretatt"
+        "heading": "Slik bruker du den",
+        "anchor_id": "slik-bruker-du"
       }
     },
     "whats_in_box": {
@@ -454,6 +401,40 @@
       "settings": {
         "heading": "Hva får du i esken?",
         "image": "shopify://shop_images/skinora_radiance_face_hva_er_i_esken.png"
+      }
+    },
+    "trust_full": {
+      "type": "sk-lp-trust-full",
+      "blocks": {
+        "tf_3": {
+          "type": "card",
+          "settings": {
+            "title": "Norsk kundeservice",
+            "text": "<p>Har du spørsmål? <a href=\"/pages/kundeservice\" title=\"Kundeservice\">Ta kontakt</a> — vi svarer raskt.</p>"
+          }
+        },
+        "tf_4": {
+          "type": "card",
+          "settings": {
+            "title": "Sikker betaling",
+            "text": "<p>Vipps, Klarna, Visa og Mastercard.</p>"
+          }
+        },
+        "tf_5": {
+          "type": "card",
+          "settings": {
+            "title": "2 års reklamasjonsrett",
+            "text": "<p>Full reklamasjonsrett i henhold til norsk lov.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "tf_3",
+        "tf_4",
+        "tf_5"
+      ],
+      "settings": {
+        "heading": "Du er alltid ivaretatt"
       }
     },
     "faq": {

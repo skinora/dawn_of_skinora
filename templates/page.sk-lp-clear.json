@@ -52,15 +52,14 @@
         "image": "shopify://shop_images/Skinora_Clear_bruk_maske_som_en_del_av_hudpleie.webp",
         "eyebrow": "Skinora® Clear",
         "title": "Målrettet LED-behandling mot uren hud",
-        "text": "Skinora Clear bruker blått og rødt LED-lys for å bekjempe urenheter, redusere betennelse og gi huden klarhet – på bare 10 minutter, 3–5 ganger i uken.",
-        "cta_text": "Få klarere hud nå",
-        "cta_url": "/products/skinora-clear",
-        "link_text": "Se hvordan den brukes (60 sek) ↓",
-        "link_url": "#slik-bruker-du",
         "rating_score": "4.7",
         "review_count": "89",
         "testimonial_quote": "Huden min har aldri vært så rolig. Bruker den hver kveld og merker stor forskjell på rødhet og nye utbrudd.",
         "testimonial_author": "Ida L., 28, Bergen · Verifisert kjøper",
+        "cta_text": "Få klarere hud nå",
+        "cta_url": "/products/skinora-clear",
+        "link_text": "Se hvordan den brukes (60 sek) ↓",
+        "link_url": "#slik-bruker-du",
         "value_title": "Skinora® Clear — 4 390 kr",
         "value_tag": "ENGANGSKJØP · INGEN ABONNEMENT",
         "value_sub_text": "Profesjonell klinikkteknologi – hjemme, på dine premisser",
@@ -117,23 +116,33 @@
       "blocks": {
         "proof_1": {
           "type": "proof",
-          "settings": { "text": "Klinisk dokumentert LED-teknologi" }
+          "settings": {
+            "text": "Klinisk dokumentert LED-teknologi"
+          }
         },
         "proof_2": {
           "type": "proof",
-          "settings": { "text": "2 målrettede bølgelengder – blått og rødt lys" }
+          "settings": {
+            "text": "2 målrettede bølgelengder – blått og rødt lys"
+          }
         },
         "proof_3": {
           "type": "proof",
-          "settings": { "text": "Blått lys (415 nm) reduserer akne-bakterier" }
+          "settings": {
+            "text": "Blått lys (415 nm) reduserer akne-bakterier"
+          }
         },
         "proof_4": {
           "type": "proof",
-          "settings": { "text": "Optimalisert for klarere hud og redusert betennelse" }
+          "settings": {
+            "text": "Optimalisert for klarere hud og redusert betennelse"
+          }
         },
         "proof_5": {
           "type": "proof",
-          "settings": { "text": "Brukt av profesjonelle hudterapeuter" }
+          "settings": {
+            "text": "Brukt av profesjonelle hudterapeuter"
+          }
         },
         "p_1": {
           "type": "item",
