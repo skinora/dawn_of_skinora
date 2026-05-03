@@ -18,6 +18,14 @@
         <div class="lp-reviews__grid">
           {%- for block in section.blocks -%}
             <div class="lp-review-card" {{ block.shopify_attributes }}>
+              {%- if block.settings.image -%}
+                <div
+                  class="lp-review-card__avatar"
+                  style="width:48px;height:48px;border-radius:50%;overflow:hidden;margin-bottom:8px;"
+                >
+                  {{ block.settings.image | image_url: width: 96 | image_tag: loading: 'lazy', widths: '48,96' }}
+                </div>
+              {%- endif -%}
               <div class="lp-review-card__stars">★★★★★</div>
               {%- if block.settings.concern_tag != blank -%}
                 <span style="display:inline-block;background:#f0ede8;font-family:sofia-pro,Assistant,sans-serif;font-size:11px;font-weight:600;color:#30273e;padding:3px 10px;border-radius:20px;margin-bottom:8px;">
@@ -113,6 +121,11 @@
           "id": "usage_tag",
           "label": "Bruksfrekvens-tagg",
           "info": "F.eks. «Bruker: 10 min, 4x/uke»"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Kundebilde (valgfritt)"
         }
       ]
     }

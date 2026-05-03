@@ -26,6 +26,16 @@
         <p class="lp-section-intro">{{ section.settings.intro }}</p>
       {%- endif -%}
 
+      {%- if section.settings.image -%}
+        <div class="lp-problem__image" style="margin-bottom:24px;">
+          {{
+            section.settings.image
+            | image_url: width: 1200
+            | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '100vw'
+          }}
+        </div>
+      {%- endif -%}
+
       {%- if section.blocks.size > 0 -%}
         <div class="lp-problem__list-wrap">
           <ul class="lp-problem__list">
@@ -111,6 +121,11 @@
       "id": "intro",
       "label": "Intro-tekst",
       "default": "Med årene endres huden – det er helt naturlig. Men du trenger ikke bare akseptere det."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Bilde (valgfritt)"
     }
   ],
   "blocks": [

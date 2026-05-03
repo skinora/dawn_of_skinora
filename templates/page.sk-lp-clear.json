@@ -53,7 +53,7 @@
         "eyebrow": "Skinora® Clear",
         "title": "Målrettet LED-behandling mot uren hud",
         "text": "Skinora Clear bruker blått og rødt LED-lys for å bekjempe urenheter, redusere betennelse og gi huden klarhet – på bare 10 minutter, 3–5 ganger i uken.",
-        "cta_text": "Kjøp Clear nå",
+        "cta_text": "Få klarere hud nå",
         "cta_url": "/products/skinora-clear",
         "link_text": "Se hvordan den brukes (60 sek) ↓",
         "link_url": "#slik-bruker-du",
@@ -138,31 +138,49 @@
         "p_1": {
           "type": "item",
           "settings": {
-            "text": "Gjentagende utbrudd av uren hud"
+            "text": "Du våkner med nye utbrudd – selv når du gjør alt riktig"
           }
         },
         "p_2": {
           "type": "item",
           "settings": {
-            "text": "Rødhet og irritasjon som ikke gir seg"
+            "text": "Rødheten ligger der hele tiden, uansett hva du smører på"
           }
         },
         "p_3": {
           "type": "item",
           "settings": {
-            "text": "Produkter som tørker ut uten å løse problemet"
+            "text": "Du har brukt kremer og serumer som tørker ut huden uten å fikse årsaken"
           }
         },
         "p_4": {
           "type": "item",
           "settings": {
-            "text": "Ujevn hudtekstur og synlige porer"
+            "text": "Du kjenner deg usikker uten foundation – og det irriterer deg"
           }
         },
         "p_5": {
           "type": "item",
           "settings": {
-            "text": "Du ønsker en skånsom løsning uten sterke kjemikalier"
+            "text": "Huden føles ujevn og grov, spesielt rundt kjeve og panne"
+          }
+        },
+        "p_6": {
+          "type": "item",
+          "settings": {
+            "text": "Du vil ikke gå på antibiotika eller sterke medisiner for noe som burde være løsbart"
+          }
+        },
+        "p_7": {
+          "type": "item",
+          "settings": {
+            "text": "Du er lei av å kaste penger på produkter som lover mye, men leverer lite"
+          }
+        },
+        "p_8": {
+          "type": "item",
+          "settings": {
+            "text": "Du drømmer om å se i speilet uten å fokusere på det som er feil"
           }
         }
       },
@@ -176,11 +194,14 @@
         "p_2",
         "p_3",
         "p_4",
-        "p_5"
+        "p_5",
+        "p_6",
+        "p_7",
+        "p_8"
       ],
       "settings": {
         "heading": "Kjenner du igjen dette?",
-        "intro": "Uren hud handler ikke bare om alder – det handler om å gi huden riktig støtte."
+        "intro": "Du har prøvd det meste. Likevel kommer utbruddene tilbake, rødheten forsvinner ikke, og huden føles aldri helt i balanse."
       }
     },
     "results": {
@@ -337,21 +358,24 @@
           "type": "review",
           "settings": {
             "text": "Huden min har aldri vært så rolig. Bruker den hver kveld og merker stor forskjell på rødhet og nye utbrudd.",
-            "author": "Ida L., 28, Bergen"
+            "author": "Ida L., 28, Bergen",
+            "concern_tag": "Rødhet & utbrudd · 10 min, 5x/uke"
           }
         },
         "rev_2": {
           "type": "review",
           "settings": {
             "text": "Endelig noe som fungerer uten å tørke ut huden. Etter 6 uker er huden mye jevnere.",
-            "author": "Emilie K., 34, Oslo"
+            "author": "Emilie K., 34, Oslo",
+            "concern_tag": "Tørr, uren hud · 10 min, 4x/uke"
           }
         },
         "rev_3": {
           "type": "review",
           "settings": {
             "text": "Enkel å bruke og gir synlig effekt. Porer og urenheter er tydelig redusert.",
-            "author": "Nora T., 25, Drammen"
+            "author": "Nora T., 25, Drammen",
+            "concern_tag": "Porer & ujevn hud · 10 min, 3x/uke"
           }
         }
       },
@@ -363,7 +387,7 @@
       "settings": {
         "heading": "Det kundene våre sier",
         "score": "4.7 av 5 – basert på 89 anmeldelser",
-        "midpage_cta_text": "Få din Clear nå",
+        "midpage_cta_text": "Få klarere hud nå",
         "midpage_klarna_text": "Fra 122 kr/mnd med Klarna"
       }
     },
@@ -591,7 +615,7 @@
         "heading": "Klar for klarere hud?",
         "text": "Gi huden din den støtten den trenger – hjemme, på dine premisser, med teknologi som faktisk virker.",
         "price_text": "",
-        "button_text": "Bestill Clear nå",
+        "button_text": "Få klarere hud nå",
         "product_url": "/products/skinora-clear",
         "anchor_id": "kjop",
         "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra 122 kr/mnd med Klarna</strong>"

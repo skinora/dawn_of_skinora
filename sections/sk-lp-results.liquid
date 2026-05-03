@@ -14,6 +14,16 @@
         <p class="lp-section-intro">{{ section.settings.intro }}</p>
       {%- endif -%}
 
+      {%- if section.settings.image -%}
+        <div class="lp-results__image" style="text-align:center;margin-bottom:32px;">
+          {{
+            section.settings.image
+            | image_url: width: 1200
+            | image_tag: loading: 'lazy', widths: '600,900,1200', sizes: '(max-width: 991px) 100vw, 800px'
+          }}
+        </div>
+      {%- endif -%}
+
       {%- if section.blocks.size > 0 -%}
         <div class="lp-results__timeline">
           {%- for block in section.blocks -%}
@@ -65,6 +75,11 @@
       "id": "disclaimer",
       "label": "Disclaimer-tekst",
       "default": "Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Before/After-bilde"
     }
   ],
   "blocks": [
