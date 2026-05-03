@@ -9,7 +9,7 @@
 {%- assign proof_blocks = section.blocks | where: 'type', 'proof' -%}
 {%- if proof_blocks.size > 0 -%}
   <div class="sk-lp">
-    <ul class="lp-proof-list" style="max-width:480px;margin:0 auto 0;">
+    <ul class="lp-proof-list" style="max-width:480px;margin:0 auto 24px;">
       {%- for block in proof_blocks -%}
         <li class="lp-proof-list__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
       {%- endfor -%}

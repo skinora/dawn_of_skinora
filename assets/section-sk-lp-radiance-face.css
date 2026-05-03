@@ -185,6 +185,15 @@
   flex-direction: column;
   justify-content: center;
   padding: 60px clamp(32px, 4vw, 64px);
+  overflow: visible;
+  min-height: 0;
+}
+
+/* When content is taller than the image, don't vertically centre — just let it flow */
+.lp-hero__content:has(.lp-trust-pills) {
+  justify-content: flex-start;
+  padding-top: 48px;
+  padding-bottom: 48px;
 }
 
 .lp-eyebrow {
