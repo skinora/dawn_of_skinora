@@ -151,40 +151,25 @@
         "image": "shopify://shop_images/skinora_radiance_face_wearing_mask.png"
       }
     },
-    "results": {
-      "type": "sk-lp-results",
-      "blocks": {
-        "r_1": {
-          "type": "card",
-          "settings": {
-            "period": "Etter 2–4 uker",
-            "text": "Mer glød og jevnere uttrykk"
-          }
-        },
-        "r_2": {
-          "type": "card",
-          "settings": {
-            "period": "Etter 6–8 uker",
-            "text": "Mer stabil hudtone og forbedret tekstur"
-          }
-        },
-        "r_3": {
-          "type": "card",
-          "settings": {
-            "period": "Over tid",
-            "text": "Well-aging effekt og vedlikehold av hudens vitalitet"
-          }
-        }
-      },
-      "block_order": [
-        "r_1",
-        "r_2",
-        "r_3"
-      ],
+    "lp_results_EBb64M": {
+      "type": "lp-results",
+      "name": "LP Results Timeline",
       "settings": {
         "heading": "Hva kan du forvente?",
-        "intro": "Realistiske resultater fra ekte brukere",
-        "disclaimer": "Resultater varierer med hudtype, alder og rutine. Jevn bruk 3–5 ganger i uken gir best forutsetning. Vi lover ikke mirakler – vi lover en plan og en garanti."
+        "intro_text": "Realistiske resultater fra ekte brukere",
+        "disclaimer": "Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.",
+        "image_1": "shopify://shop_images/uke0_for_bruk.png",
+        "image_1_label": "UKE 0",
+        "image_1_title": "Trøtt og livløs hud",
+        "image_1_description": "Mørke ringer, matt hud, fine linjer",
+        "image_2": "shopify://shop_images/uke4_bruk.png",
+        "image_2_label": "UKE 4",
+        "image_2_title": "Merkbar forbedring",
+        "image_2_description": "Redusert rødhet, litt mer glød og fuktighet",
+        "image_3": "shopify://shop_images/uke8_bruk.png",
+        "image_3_label": "UKE 8+",
+        "image_3_title": "Glødende og jevn",
+        "image_3_description": "Jevn hudtone, stram og frisk kompleksjon"
       }
     },
     "reviews": {
@@ -569,7 +554,7 @@
     "announcement",
     "hero",
     "problem",
-    "results",
+    "lp_results_EBb64M",
     "reviews",
     "why_choose",
     "how_to_use",
