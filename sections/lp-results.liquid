@@ -249,8 +249,29 @@
     }
 
     .lp-results-timeline__progress {
-      grid-template-columns: 1fr;
-      gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .lp-results-timeline__progress-item {
+      aspect-ratio: 2 / 3;
+    }
+
+    .lp-results-timeline__progress-label {
+      font-size: 9px;
+      letter-spacing: 1px;
+    }
+
+    .lp-results-timeline__progress-title {
+      font-size: 13px;
+    }
+
+    .lp-results-timeline__progress-desc {
+      font-size: 11px;
+    }
+
+    .lp-results-timeline__progress-overlay {
+      padding: 12px 8px;
     }
   }
 </style>
