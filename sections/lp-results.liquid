@@ -5,35 +5,67 @@
 {%- endcomment -%}
 
 <style>
-  .lp-results {
-    background: #f9f8f6;
-    padding: 60px 20px;
+  .lp-results-timeline {
+    --sk-brand: #30273e;
+    --sk-text: #333333;
+    --sk-muted: #5f5f5f;
+    --sk-hairline: rgba(48, 39, 62, 0.12);
+    --sk-surface: #ffffff;
+    --sk-surface-soft: #f2f2f2;
+
+    background: #f8f8f8;
+    padding: 64px 0;
+    font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    color: var(--sk-text);
   }
 
-  .lp-results__inner {
-    max-width: 1100px;
+  .lp-results-timeline *,
+  .lp-results-timeline *::before,
+  .lp-results-timeline *::after {
+    box-sizing: border-box;
+  }
+
+  .lp-results-timeline img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .lp-results-timeline p:not(.lp-results-timeline__disclaimer) {
+    margin: 0;
+  }
+
+  .lp-results-timeline__container {
+    max-width: 1200px;
     margin: 0 auto;
+    padding-left: clamp(16px, 2vw, 32px);
+    padding-right: clamp(16px, 2vw, 32px);
   }
 
-  .lp-results__heading {
+  .lp-results-timeline__heading {
     text-align: center;
-    font-size: 28px;
-    font-weight: 700;
-    color: #1a1a1a;
+    font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
+    font-size: 34px;
+    font-weight: 400;
+    letter-spacing: 0.6px;
+    color: #3a3448;
     margin: 0 0 12px;
-    line-height: 1.3;
+    line-height: 1.15;
   }
 
-  .lp-results__intro {
+  .lp-results-timeline__intro {
     text-align: center;
-    font-size: 16px;
-    color: #7a7a7a;
-    margin: 0 0 40px;
-    line-height: 1.5;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--sk-muted);
+    margin: 0 0 48px;
+    line-height: 1.75;
   }
 
   /* ── Result cards row ── */
-  .lp-results__cards {
+  .lp-results-timeline__cards {
     display: flex;
     align-items: stretch;
     justify-content: center;
@@ -41,130 +73,147 @@
     margin: 0 0 32px;
   }
 
-  .lp-results__card-wrapper {
+  .lp-results-timeline__card-wrapper {
     display: flex;
     align-items: center;
     flex: 1;
     max-width: 320px;
   }
 
-  .lp-results__card {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  .lp-results-timeline__card {
+    background: var(--sk-surface);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(48, 39, 62, 0.04);
     padding: 32px 24px 28px;
     text-align: center;
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
   }
 
-  .lp-results__number {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: #1a1a1a;
+  @media (hover: hover) {
+    .lp-results-timeline__card:hover {
+      box-shadow: 0 4px 12px rgba(48, 39, 62, 0.08);
+      transform: translateY(-2px);
+    }
+  }
+
+  .lp-results-timeline__number {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: var(--sk-brand);
     color: #ffffff;
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 0 18px;
+    padding: 2px 0 0;
+    margin: 0 0 16px;
     flex-shrink: 0;
   }
 
-  .lp-results__time {
-    font-size: 12px;
-    letter-spacing: 0.08em;
+  .lp-results-timeline__time {
+    font-size: 13px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: #999999;
+    color: var(--sk-muted);
     margin: 0 0 8px;
     font-weight: 600;
   }
 
-  .lp-results__desc {
-    font-size: 18px;
-    font-weight: 600;
-    color: #1a1a1a;
-    line-height: 1.4;
+  .lp-results-timeline__desc {
+    font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: #3a3448;
+    line-height: 1.3;
     margin: 0;
   }
 
-  .lp-results__arrow {
-    font-size: 24px;
-    color: #cccccc;
-    padding: 0 16px;
+  .lp-results-timeline__arrow {
+    font-size: 20px;
+    color: var(--sk-hairline);
+    padding: 0 12px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     user-select: none;
+    color: #80748e;
   }
 
-  .lp-results__disclaimer {
+  .lp-results-timeline__disclaimer {
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
     font-style: italic;
-    color: #999999;
+    color: var(--sk-muted);
     max-width: 700px;
-    margin: 0 auto;
-    line-height: 1.5;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+    font-weight: 300;
+    display: block;
+    width: 100%;
   }
 
   /* ── Progress images row ── */
-  .lp-results__progress {
+  .lp-results-timeline__progress {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     margin-top: 48px;
   }
 
-  .lp-results__progress-item {
+  .lp-results-timeline__progress-item {
     position: relative;
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
     aspect-ratio: 3 / 4;
   }
 
-  .lp-results__progress-img {
+  .lp-results-timeline__progress-img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .lp-results__progress-overlay {
+  .lp-results-timeline__progress-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     padding: 20px 16px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to top, rgba(48, 39, 62, 0.65) 0%, rgba(48, 39, 62, 0) 100%);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     color: #ffffff;
   }
 
-  .lp-results__progress-label {
+  .lp-results-timeline__progress-label {
     font-size: 11px;
-    letter-spacing: 0.1em;
+    letter-spacing: 2px;
     text-transform: uppercase;
     margin: 0 0 4px;
     opacity: 0.85;
     font-weight: 600;
   }
 
-  .lp-results__progress-title {
+  .lp-results-timeline__progress-title {
+    font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 500;
     margin: 0 0 4px;
     line-height: 1.3;
   }
 
-  .lp-results__progress-desc {
+  .lp-results-timeline__progress-desc {
     font-size: 14px;
     font-style: italic;
+    font-weight: 300;
     margin: 0;
     line-height: 1.4;
     opacity: 0.85;
@@ -172,60 +221,64 @@
 
   /* ── Mobile ── */
   @media (max-width: 768px) {
-    .lp-results {
-      padding: 40px 16px;
+    .lp-results-timeline {
+      padding: 48px 0;
     }
 
-    .lp-results__heading {
-      font-size: 24px;
+    .lp-results-timeline__heading {
+      font-size: 28px;
     }
 
-    .lp-results__cards {
+    .lp-results-timeline__intro {
+      margin-bottom: 36px;
+    }
+
+    .lp-results-timeline__cards {
       flex-direction: column;
       align-items: center;
       gap: 16px;
     }
 
-    .lp-results__card-wrapper {
+    .lp-results-timeline__card-wrapper {
       max-width: 100%;
       width: 100%;
     }
 
-    .lp-results__arrow {
+    .lp-results-timeline__arrow {
       display: none;
     }
 
-    .lp-results__progress {
+    .lp-results-timeline__progress {
       grid-template-columns: 1fr;
       gap: 16px;
     }
   }
 </style>
 
-<section class="lp-results">
-  <div class="lp-results__inner">
+<section class="lp-results-timeline">
+  <div class="lp-results-timeline__container">
     {%- if section.settings.heading != blank -%}
-      <h2 class="lp-results__heading">{{ section.settings.heading | escape }}</h2>
+      <h2 class="lp-results-timeline__heading">{{ section.settings.heading | escape }}</h2>
     {%- endif -%}
 
     {%- if section.settings.intro_text != blank -%}
-      <p class="lp-results__intro">{{ section.settings.intro_text | escape }}</p>
+      <p class="lp-results-timeline__intro">{{ section.settings.intro_text | escape }}</p>
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
-      <div class="lp-results__cards">
+      <div class="lp-results-timeline__cards">
         {%- for block in section.blocks -%}
           {%- if forloop.index > 1 -%}
-            <span class="lp-results__arrow" aria-hidden="true">→</span>
+            <span class="lp-results-timeline__arrow" aria-hidden="true">→</span>
           {%- endif -%}
-          <div class="lp-results__card-wrapper" {{ block.shopify_attributes }}>
-            <div class="lp-results__card">
-              <div class="lp-results__number">{{ forloop.index }}</div>
+          <div class="lp-results-timeline__card-wrapper" {{ block.shopify_attributes }}>
+            <div class="lp-results-timeline__card">
+              <div class="lp-results-timeline__number">{{ forloop.index }}</div>
               {%- if block.settings.time_period != blank -%}
-                <p class="lp-results__time">{{ block.settings.time_period | escape }}</p>
+                <p class="lp-results-timeline__time">{{ block.settings.time_period | escape }}</p>
               {%- endif -%}
               {%- if block.settings.description != blank -%}
-                <p class="lp-results__desc">{{ block.settings.description | escape }}</p>
+                <p class="lp-results-timeline__desc">{{ block.settings.description | escape }}</p>
               {%- endif -%}
             </div>
           </div>
@@ -234,7 +287,7 @@
     {%- endif -%}
 
     {%- if section.settings.disclaimer != blank -%}
-      <p class="lp-results__disclaimer">{{ section.settings.disclaimer | escape }}</p>
+      <p class="lp-results-timeline__disclaimer">{{ section.settings.disclaimer | escape }}</p>
     {%- endif -%}
 
     {%- assign has_progress = false -%}
@@ -246,7 +299,7 @@
     {%- endif -%}
 
     {%- if has_progress -%}
-      <div class="lp-results__progress">
+      <div class="lp-results-timeline__progress">
         {%- for i in (1..3) -%}
           {%- assign img_key = 'image_' | append: i -%}
           {%- assign label_key = 'image_' | append: i | append: '_label' -%}
@@ -254,28 +307,28 @@
           {%- assign desc_key = 'image_' | append: i | append: '_description' -%}
           {%- assign img = section.settings[img_key] -%}
           {%- if img != blank -%}
-            <div class="lp-results__progress-item">
+            <div class="lp-results-timeline__progress-item">
               {{
                 img
                 | image_url: width: 800
                 | image_tag:
-                  class: 'lp-results__progress-img',
+                  class: 'lp-results-timeline__progress-img',
                   loading: 'lazy',
                   widths: '375, 560, 800',
                   sizes: '(max-width: 768px) 100vw, 33vw'
               }}
-              <div class="lp-results__progress-overlay">
+              <div class="lp-results-timeline__progress-overlay">
                 {%- assign label_val = section.settings[label_key] -%}
                 {%- assign title_val = section.settings[title_key] -%}
                 {%- assign desc_val = section.settings[desc_key] -%}
                 {%- if label_val != blank -%}
-                  <p class="lp-results__progress-label">{{ label_val | escape }}</p>
+                  <p class="lp-results-timeline__progress-label">{{ label_val | escape }}</p>
                 {%- endif -%}
                 {%- if title_val != blank -%}
-                  <p class="lp-results__progress-title">{{ title_val | escape }}</p>
+                  <p class="lp-results-timeline__progress-title">{{ title_val | escape }}</p>
                 {%- endif -%}
                 {%- if desc_val != blank -%}
-                  <p class="lp-results__progress-desc">{{ desc_val | escape }}</p>
+                  <p class="lp-results-timeline__progress-desc">{{ desc_val | escape }}</p>
                 {%- endif -%}
               </div>
             </div>
