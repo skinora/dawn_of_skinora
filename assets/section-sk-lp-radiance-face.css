@@ -78,14 +78,15 @@
   padding-right: clamp(16px, 2vw, 32px);
 }
 
+/* Action accent: #A0522D (burnt terracotta) for all primary CTAs */
 .lp-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: #30273e;
+  background: #a0522d;
   color: #ffffff !important;
-  border: 1px solid #30273e;
+  border: 1px solid #a0522d;
   border-radius: 0;
   padding: 16px 32px;
   font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
@@ -102,8 +103,8 @@
 }
 
 .lp-btn:hover {
-  background: #ffffff;
-  color: #30273e !important;
+  background: #8b4420;
+  color: #ffffff !important;
 }
 
 .lp-btn.is-loading {
@@ -1145,10 +1146,11 @@
   margin-bottom: 4px;
 }
 
+/* Verified buyer label — accent color for trust signal */
 .lp-review-card__verified {
   font-size: 12px;
   font-weight: 300;
-  color: rgba(51, 51, 51, 0.6);
+  color: #a0522d;
 }
 
 /* ---------- 10. TRUST FULL ---------- */
