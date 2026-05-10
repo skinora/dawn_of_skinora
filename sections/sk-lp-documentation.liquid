@@ -8,17 +8,17 @@
 
 <div class="sk-lp">
   <section class="lp-doc">
-    <div class="lp-doc__container">
-      <h2 class="lp-doc__heading">{{ section.settings.heading }}</h2>
+    <div class="lp-container">
+      <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
       {%- if section.settings.intro != blank -%}
-        <p class="lp-doc__intro">{{ section.settings.intro }}</p>
+        <p class="lp-section-intro">{{ section.settings.intro }}</p>
       {%- endif -%}
 
       {%- if section.blocks.size > 0 -%}
         <div class="lp-doc__grid">
           {%- for block in section.blocks -%}
             <div class="lp-doc__card" {{ block.shopify_attributes }}>
-              <p class="lp-doc__card-title">{{ block.settings.title }}</p>
+              <h3 class="lp-doc__card-title">{{ block.settings.title }}</h3>
               <div class="lp-doc__card-text">{{ block.settings.text }}</div>
             </div>
           {%- endfor -%}
@@ -30,87 +30,57 @@
 
 <style>
   .lp-doc {
-    padding: 48px 0;
+    padding: 100px 0;
     background: #f8f8f8;
-  }
-
-  .lp-doc__container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-
-  .lp-doc__heading {
-    font-family: freight-text-pro, freight-text-pro-fallback, 'Playfair Display', Georgia, serif;
-    font-size: 24px;
-    font-weight: 500;
-    color: #30273e;
-    margin: 0 0 8px;
     text-align: center;
-    line-height: 1.2;
-  }
-
-  .lp-doc__intro {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 14px;
-    font-weight: 300;
-    color: #5f5f5f;
-    line-height: 1.7;
-    text-align: center;
-    margin: 0 0 28px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .lp-doc__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
   }
 
   .lp-doc__card {
-    background: #fff;
-    padding: 18px 20px;
-    border-radius: 6px;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 0;
+    padding: 32px;
+    text-align: left;
   }
 
   .lp-doc__card-title {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: #30273e;
-    margin: 0 0 6px;
+    font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #3a3448;
+    margin: 0 0 8px;
   }
 
   .lp-doc__card-text {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 300;
-    color: #5f5f5f;
-    line-height: 1.6;
+    color: #333333;
+    line-height: 1.65;
+  }
+
+  .lp-doc__card-text p {
     margin: 0;
   }
 
   .lp-doc__card-text a {
     color: #30273e;
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  .lp-doc__card-text a:hover {
+    font-weight: 500;
     text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 749px) {
     .lp-doc {
-      padding: 36px 0;
+      padding: 60px 0;
     }
     .lp-doc__grid {
       grid-template-columns: 1fr;
-    }
-    .lp-doc__heading {
-      font-size: 20px;
     }
   }
 </style>
