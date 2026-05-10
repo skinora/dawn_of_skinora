@@ -207,16 +207,48 @@
             "concern_tag": "Fine linjer · Fasthet",
             "usage_tag": "Bruker: 10 min, 3x/uke"
           }
+        },
+        "rev_4": {
+          "type": "review",
+          "settings": {
+            "text": "Jeg var litt skeptisk i starten, men etter fem uker ser jeg tydelig at de fine linjene rundt øynene har blitt mykere. Huden kjennes fastere og mer levende. Bruker den mens jeg leser om kvelden.",
+            "author": "Sissel R., 58, Bergen",
+            "concern_tag": "Fine linjer · Fasthet",
+            "usage_tag": "Bruker: 10 min, 4x/uke"
+          }
+        },
+        "rev_5": {
+          "type": "review",
+          "settings": {
+            "text": "Har slitt med mørke ringer under øynene i årevis. Etter en måned er de ikke borte, men merkbart lysere. Og huden generelt ser mye ferskere ut. Mannen min la merke til det uten at jeg sa noe.",
+            "author": "Anette L., 44, Drammen",
+            "concern_tag": "Mørke ringer · Trøtt hud",
+            "usage_tag": "Bruker: 10 min, 5x/uke"
+          }
+        },
+        "rev_6": {
+          "type": "review",
+          "settings": {
+            "text": "Huden min har alltid vært litt ujevn og rød, spesielt på kinnene. Etter seks uker er rødheten blitt mye roligere og hudtonen ser jevnere ut. Enkelt å bruke og jeg syns den er behagelig å ha på.",
+            "author": "Marte K., 49, Stavanger",
+            "concern_tag": "Ujevn hudtone · Rødhet",
+            "usage_tag": "Bruker: 10 min, 3x/uke"
+          }
         }
       },
       "block_order": [
         "rev_1",
         "rev_2",
-        "rev_3"
+        "rev_3",
+        "rev_4",
+        "rev_5",
+        "rev_6"
       ],
       "settings": {
         "heading": "Ekte resultater fra ekte brukere",
         "score": "4.8 av 5 – basert på 102 anmeldelser",
+        "rating_score": "4.8",
+        "review_count": "102",
         "midpage_cta_text": "Få din Radiance Face nå",
         "midpage_klarna_text": "Fra 130 kr/mnd med Klarna"
       }

@@ -51,13 +51,16 @@
       "settings": {
         "image": "shopify://shop_images/Skinora_Clear_bruk_maske_som_en_del_av_hudpleie.webp",
         "eyebrow": "Skinora® Clear",
-        "title": "Målrettet LED-behandling mot uren hud",
+        "title": "Klarere hud uten sterke midler – hjemme, på 10 minutter",
         "rating_score": "4.7",
         "review_count": "89",
         "testimonial_quote": "Huden min har aldri vært så rolig. Bruker den hver kveld og merker stor forskjell på rødhet og nye utbrudd.",
         "testimonial_author": "Ida L., 28, Bergen · Verifisert kjøper",
-        "cta_text": "Få klarere hud nå",
+        "cta_text": "Prøv risikofritt i 60 dager",
         "cta_url": "/products/skinora-clear",
+        "show_urgency": true,
+        "urgency_text": "⚡ Populær vare – begrenset antall igjen",
+        "sticky_cta_text": "Prøv risikofritt →",
         "link_text": "Se hvordan den brukes (60 sek) ↓",
         "link_url": "#slik-bruker-du",
         "value_title": "Skinora® Clear — 4 390 kr",
@@ -394,8 +397,10 @@
         "rev_3"
       ],
       "settings": {
-        "heading": "Det kundene våre sier",
+        "heading": "Ekte resultater fra ekte brukere",
         "score": "4.7 av 5 – basert på 89 anmeldelser",
+        "rating_score": "4.7",
+        "review_count": "89",
         "midpage_cta_text": "Få klarere hud nå",
         "midpage_klarna_text": "Fra 122 kr/mnd med Klarna"
       }
@@ -624,7 +629,7 @@
         "heading": "Klar for klarere hud?",
         "text": "Gi huden din den støtten den trenger – hjemme, på dine premisser, med teknologi som faktisk virker.",
         "price_text": "",
-        "button_text": "Få klarere hud nå",
+        "button_text": "Bestill nå – risikofritt",
         "product_url": "/products/skinora-clear",
         "anchor_id": "kjop",
         "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra 122 kr/mnd med Klarna</strong>"
