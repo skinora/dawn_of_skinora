@@ -77,19 +77,22 @@
       "settings": {
         "image": "shopify://shop_images/skinora_radiance_face_hero.png",
         "eyebrow": "Skinora® Radiance Face",
-        "title": "Profesjonell LED-terapi hjemme – utviklet for synlige hudforbedringer",
-        "text_line_1": "Klinisk dokumentert LED-teknologi – brukt av hudterapeuter verden over.",
-        "text_line_2": "10 minutter, 3–5 ganger i uken. Resultater du kan se.",
-        "bullet_1": "<strong>Rødt + dNIR (1072 nm)</strong> · 10 minutter, 3-5x/uke. Resultater du kan se.",
-        "bullet_2": "Ny generasjon <strong>dNIR:</strong> 1072 nm",
-        "bullet_disclaimer": "Teknisk spesifikasjon. Resultater varierer.",
+        "title": "Gi huden tilbake gløden – hjemme, på 10 minutter",
+        "text_line_1": "Resultater du kan se og føle – uten klinikktimer, ventelister eller dyre behandlinger.",
+        "text_line_2": "Bare 10 minutter om dagen. Huden din fortjener det.",
+        "bullet_1": "<strong>Synlig glød</strong> allerede etter 2–4 uker med jevn bruk",
+        "bullet_2": "<strong>Profesjonell teknologi</strong> brukt av hudklinikker – nå hjemme hos deg",
+        "bullet_disclaimer": "",
         "rating_text": "<strong>4.8/5</strong> – basert på 102 anmeldelser",
         "rating_score": "4.8",
         "review_count": "102",
         "testimonial_quote": "Etter 6 uker merker jeg virkelig forskjell på hudtonen – huden ser friskere ut.",
         "testimonial_author": "Wenche S., 52, Oslo · Verifisert kjøper",
-        "cta_text": "Kjøp Radiance Face",
+        "cta_text": "Prøv risikofritt i 60 dager",
         "cta_url": "/products/skinora-radiance-face",
+        "show_urgency": true,
+        "urgency_text": "⚡ Populær vare – begrenset antall igjen",
+        "sticky_cta_text": "Prøv risikofritt →",
         "show_link": false,
         "link_text": "Se hvordan den brukes (60 sek) ↓",
         "link_url": "#slik-bruker-du",
@@ -162,14 +165,17 @@
         "image_1_label": "UKE 0",
         "image_1_title": "Trøtt og livløs hud",
         "image_1_description": "Mørke ringer, matt hud, fine linjer",
+        "image_1_author": "Maria, 48 – Oslo",
         "image_2": "shopify://shop_images/uke4_bruk.png",
         "image_2_label": "UKE 4",
         "image_2_title": "Merkbar forbedring",
         "image_2_description": "Redusert rødhet, litt mer glød og fuktighet",
+        "image_2_author": "Maria, 48 – Oslo",
         "image_3": "shopify://shop_images/uke8_bruk.png",
         "image_3_label": "UKE 8+",
         "image_3_title": "Glødende og jevn",
-        "image_3_description": "Jevn hudtone, stram og frisk kompleksjon"
+        "image_3_description": "Jevn hudtone, stram og frisk kompleksjon",
+        "image_3_author": "Maria, 48 – Oslo"
       }
     },
     "reviews": {
@@ -209,7 +215,7 @@
         "rev_3"
       ],
       "settings": {
-        "heading": "Det norske kvinner sier",
+        "heading": "Ekte resultater fra ekte brukere",
         "score": "4.8 av 5 – basert på 102 anmeldelser",
         "midpage_cta_text": "Få din Radiance Face nå",
         "midpage_klarna_text": "Fra 130 kr/mnd med Klarna"
@@ -223,15 +229,15 @@
           "settings": {
             "icon": "shopify://shop_images/2.svg",
             "title": "Teknologi som faktisk virker",
-            "text": "<p>Bølgelengder brukt av hudklinikker – stimulerer hudens egen kollagen- og elastinproduksjon</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Se dokumentasjon</a></p>"
+            "text": "<p>Samme lysbølger som brukes i klinikk – vekker hudens egne reparasjonsmekanismer innenfra</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Les mer om forskningen</a></p>"
           }
         },
         "card_ttFjc6": {
           "type": "card",
           "settings": {
             "icon": "shopify://shop_images/1.svg",
-            "title": "Trenger dypt inn i huden",
-            "text": "<p>Spesialfrekvens som når ned dit kollagen og elastin faktisk dannes</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Se dokumentasjon</a></p>"
+            "title": "Virker der det teller",
+            "text": "<p>Lyset når dypt nok til å gjøre en reell forskjell – der ny, frisk hud faktisk dannes</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Les mer om forskningen</a></p>"
           }
         },
         "card_xRCVi8": {
@@ -543,7 +549,7 @@
         "heading": "Klar for synlige resultater?",
         "text": "Gi huden din den behandlingen den fortjener – hjemme, på dine premisser, med teknologi som faktisk virker.",
         "price_text": "",
-        "button_text": "Legg i handlekurv",
+        "button_text": "Bestill nå – risikofritt",
         "product_url": "/products/skinora-radiance-face",
         "anchor_id": "kjop",
         "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra 130 kr/mnd med Klarna</strong>"

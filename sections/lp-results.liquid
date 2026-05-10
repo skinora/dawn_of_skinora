@@ -219,6 +219,15 @@
     opacity: 0.85;
   }
 
+  .lp-results-timeline__progress-author {
+    font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 6px 0 0;
+    opacity: 0.9;
+    letter-spacing: 0.3px;
+  }
+
   /* ── Mobile ── */
   @media (max-width: 768px) {
     .lp-results-timeline {
@@ -343,6 +352,8 @@
                 {%- assign label_val = section.settings[label_key] -%}
                 {%- assign title_val = section.settings[title_key] -%}
                 {%- assign desc_val = section.settings[desc_key] -%}
+                {%- assign author_key = 'image_' | append: i | append: '_author' -%}
+                {%- assign author_val = section.settings[author_key] -%}
                 {%- if label_val != blank -%}
                   <p class="lp-results-timeline__progress-label">{{ label_val | escape }}</p>
                 {%- endif -%}
@@ -351,6 +362,9 @@
                 {%- endif -%}
                 {%- if desc_val != blank -%}
                   <p class="lp-results-timeline__progress-desc">{{ desc_val | escape }}</p>
+                {%- endif -%}
+                {%- if author_val != blank -%}
+                  <p class="lp-results-timeline__progress-author">{{ author_val | escape }}</p>
                 {%- endif -%}
               </div>
             </div>
@@ -412,6 +426,12 @@
       "default": "Mørke ringer, matt hud, fine linjer"
     },
     {
+      "type": "text",
+      "id": "image_1_author",
+      "label": "Author (name, age)",
+      "default": "Maria, 48 \u2013 Oslo"
+    },
+    {
       "type": "header",
       "content": "Progress image 2"
     },
@@ -439,6 +459,12 @@
       "default": "Redusert rødhet, litt mer glød og fuktighet"
     },
     {
+      "type": "text",
+      "id": "image_2_author",
+      "label": "Author (name, age)",
+      "default": "Maria, 48 \u2013 Oslo"
+    },
+    {
       "type": "header",
       "content": "Progress image 3"
     },
@@ -464,6 +490,12 @@
       "id": "image_3_description",
       "label": "Description",
       "default": "Jevn hudtone, stram og frisk kompleksjon"
+    },
+    {
+      "type": "text",
+      "id": "image_3_author",
+      "label": "Author (name, age)",
+      "default": "Maria, 48 \u2013 Oslo"
     }
   ],
   "blocks": [
