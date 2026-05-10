@@ -1,0 +1,193 @@
+{%- comment -%}
+  sk-lp-documentation.liquid
+  Trust-building documentation section for landing pages.
+  Rewritten as confidence-builder rather than clinical disclaimer.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<div class="sk-lp">
+  <section class="lp-doc">
+    <div class="lp-doc__container">
+      <h2 class="lp-doc__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.intro != blank -%}
+        <p class="lp-doc__intro">{{ section.settings.intro }}</p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="lp-doc__grid">
+          {%- for block in section.blocks -%}
+            <div class="lp-doc__card" {{ block.shopify_attributes }}>
+              <p class="lp-doc__card-title">{{ block.settings.title }}</p>
+              <div class="lp-doc__card-text">{{ block.settings.text }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+<style>
+  .lp-doc {
+    padding: 48px 0;
+    background: #f8f8f8;
+  }
+
+  .lp-doc__container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .lp-doc__heading {
+    font-family: freight-text-pro, freight-text-pro-fallback, 'Playfair Display', Georgia, serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #30273e;
+    margin: 0 0 8px;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .lp-doc__intro {
+    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #5f5f5f;
+    line-height: 1.7;
+    text-align: center;
+    margin: 0 0 28px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .lp-doc__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .lp-doc__card {
+    background: #fff;
+    padding: 18px 20px;
+    border-radius: 6px;
+  }
+
+  .lp-doc__card-title {
+    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #30273e;
+    margin: 0 0 6px;
+  }
+
+  .lp-doc__card-text {
+    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #5f5f5f;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .lp-doc__card-text a {
+    color: #30273e;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .lp-doc__card-text a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 600px) {
+    .lp-doc {
+      padding: 36px 0;
+    }
+    .lp-doc__grid {
+      grid-template-columns: 1fr;
+    }
+    .lp-doc__heading {
+      font-size: 20px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP Dokumentasjon",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Trygg teknologi – grundig testet"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro-tekst",
+      "default": "LED-lysbehandling er brukt av hudklinikker verden over. Her er det du trenger å vite."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Dokumentasjonskort",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tittel",
+          "default": "Dokumentert teknologi"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Tekst",
+          "default": "<p>LED-bølgelengder i rødt og nær-infrarødt spekter er grundig studert og brukes daglig i profesjonell hudpleie.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Dokumentasjon",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "Dokumentert teknologi",
+            "text": "<p>LED-bølgelengder i rødt og nær-infrarødt spekter er grundig studert og brukes daglig i profesjonell hudpleie. <a href=\"/pages/kliniske-studier\">Les mer →</a></p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Resultater over tid",
+            "text": "<p>Effekten avhenger av hudtype og bruksmønster. Jevn bruk 3–5 ganger i uken gir best resultat.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Trygt og skånsomt",
+            "text": "<p>Ikke-invasiv, uten UV-stråler. Leveres med øyebeskyttelse og norsk bruksanvisning.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Start forsiktig hvis…",
+            "text": "<p>Du bruker lysømfintlige medisiner, har epilepsi, nylig har gjort laser/peeling, eller er gravid. Les alltid bruksanvisningen.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -428,6 +428,44 @@
         "heading": "Du er alltid ivaretatt"
       }
     },
+    "documentation": {
+      "type": "sk-lp-documentation",
+      "blocks": {
+        "doc_1": {
+          "type": "card",
+          "settings": {
+            "title": "Dokumentert teknologi",
+            "text": "<p>LED-bølgelengder i rødt og nær-infrarødt spekter er grundig studert og brukes daglig i profesjonell hudpleie. <a href=\"/pages/kliniske-studier\">Les mer →</a></p>"
+          }
+        },
+        "doc_2": {
+          "type": "card",
+          "settings": {
+            "title": "Resultater over tid",
+            "text": "<p>Effekten avhenger av hudtype og bruksmønster. Jevn bruk 3–5 ganger i uken gir best resultat.</p>"
+          }
+        },
+        "doc_3": {
+          "type": "card",
+          "settings": {
+            "title": "Trygt og skånsomt",
+            "text": "<p>Ikke-invasiv, uten UV-stråler. Leveres med øyebeskyttelse og norsk bruksanvisning.</p>"
+          }
+        },
+        "doc_4": {
+          "type": "card",
+          "settings": {
+            "title": "Start forsiktig hvis…",
+            "text": "<p>Du bruker lysømfintlige medisiner, har epilepsi, nylig har gjort laser/peeling, eller er gravid. Les alltid bruksanvisningen.</p>"
+          }
+        }
+      },
+      "block_order": ["doc_1", "doc_2", "doc_3", "doc_4"],
+      "settings": {
+        "heading": "Trygg teknologi – grundig testet",
+        "intro": "LED-lysbehandling er brukt av hudklinikker verden over. Her er det du trenger å vite."
+      }
+    },
     "faq": {
       "type": "sk-lp-faq",
       "blocks": {
@@ -566,6 +604,7 @@
     "how_to_use",
     "whats_in_box",
     "trust_full",
+    "documentation",
     "faq",
     "cta"
   ]
