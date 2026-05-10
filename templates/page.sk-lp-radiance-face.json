@@ -76,14 +76,14 @@
       ],
       "settings": {
         "image": "shopify://shop_images/skinora_radiance_face_hero.png",
-        "eyebrow": "Skinora® Radiance Face",
+        "eyebrow": "For hud fra 35+",
         "title": "Gi huden tilbake gløden – hjemme, på 10 minutter",
         "text_line_1": "Resultater du kan se og føle – uten klinikktimer, ventelister eller dyre behandlinger.",
         "text_line_2": "Bare 10 minutter om dagen. Huden din fortjener det.",
-        "bullet_1": "<strong>Synlig glød</strong> allerede etter 2–4 uker med jevn bruk",
-        "bullet_2": "<strong>Profesjonell teknologi</strong> brukt av hudklinikker – nå hjemme hos deg",
+        "bullet_1": "Synlig glød allerede etter 2–4 uker med jevn bruk",
+        "bullet_2": "Profesjonell teknologi brukt av hudklinikker – nå hjemme hos deg",
         "bullet_disclaimer": "",
-        "rating_text": "<strong>4.8/5</strong> – basert på 102 anmeldelser",
+        "rating_text": "4.8/5 – basert på 102 anmeldelser",
         "rating_score": "4.8",
         "review_count": "102",
         "testimonial_quote": "Etter 6 uker merker jeg virkelig forskjell på hudtonen – huden ser friskere ut.",
@@ -492,7 +492,12 @@
           }
         }
       },
-      "block_order": ["doc_1", "doc_2", "doc_3", "doc_4"],
+      "block_order": [
+        "doc_1",
+        "doc_2",
+        "doc_3",
+        "doc_4"
+      ],
       "settings": {
         "heading": "Trygg teknologi – grundig testet",
         "intro": "LED-lysbehandling er brukt av hudklinikker verden over. Her er det du trenger å vite."
