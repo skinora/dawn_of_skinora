@@ -176,9 +176,18 @@
 
   .lp-results-timeline__progress-img {
     display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center top;
+  }
+
+  .lp-results-timeline__progress-item:last-child .lp-results-timeline__progress-img {
+    transform: scale(1.3);
+    transform-origin: center center;
   }
 
   .lp-results-timeline__progress-overlay {
