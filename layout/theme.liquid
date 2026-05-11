@@ -9,7 +9,22 @@
     {%- if product.tags contains 'noindex' -%}
       <meta name="robots" content="noindex, nofollow">
     {%- endif -%}
-    <link rel="canonical" href="{{ canonical_url }}">
+    {%- liquid
+      assign canonical_override = ''
+      if template contains 'page'
+        case page.handle
+          when 'skinora-radiance-face'
+            assign canonical_override = shop.url | append: '/products/skinora-radiance-face'
+          when 'skinora-clear'
+            assign canonical_override = shop.url | append: '/products/skinora-clear'
+        endcase
+      endif
+    -%}
+    {%- if canonical_override != blank -%}
+      <link rel="canonical" href="{{ canonical_override }}">
+    {%- else -%}
+      <link rel="canonical" href="{{ canonical_url }}">
+    {%- endif -%}
 
     {%- comment -%}
       Preload base.css early — it's the main render-blocking stylesheet declared

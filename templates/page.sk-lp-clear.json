@@ -217,27 +217,27 @@
       }
     },
     "results": {
-      "type": "sk-lp-results",
+      "type": "lp-results",
       "blocks": {
         "r_1": {
-          "type": "card",
+          "type": "result_card",
           "settings": {
-            "period": "Etter 2–4 uker",
-            "text": "Færre nye utbrudd og roligere hud"
+            "time_period": "Etter 2–4 uker",
+            "description": "Færre nye utbrudd og roligere hud"
           }
         },
         "r_2": {
-          "type": "card",
+          "type": "result_card",
           "settings": {
-            "period": "Etter 6–8 uker",
-            "text": "Jevnere hudtone og redusert rødhet"
+            "time_period": "Etter 6–8 uker",
+            "description": "Jevnere hudtone og redusert rødhet"
           }
         },
         "r_3": {
-          "type": "card",
+          "type": "result_card",
           "settings": {
-            "period": "Over tid",
-            "text": "Klarere hud og bedre hudbalanse"
+            "time_period": "Over tid",
+            "description": "Klarere hud og bedre hudbalanse"
           }
         }
       },
@@ -248,8 +248,18 @@
       ],
       "settings": {
         "heading": "Hva kan du forvente?",
-        "intro": "Realistiske resultater fra ekte brukere",
-        "disclaimer": "Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan."
+        "intro_text": "Realistiske resultater fra ekte brukere",
+        "disclaimer": "Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.",
+        "before_label": "UKE 0",
+        "after_label": "UKE 8+",
+        "slider_a_before_image": "",
+        "slider_a_after_image": "",
+        "slider_a_customer": "",
+        "slider_a_concern": "",
+        "slider_b_before_image": "",
+        "slider_b_after_image": "",
+        "slider_b_customer": "",
+        "slider_b_concern": ""
       }
     },
     "how_to_use": {
