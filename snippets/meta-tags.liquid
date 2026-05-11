@@ -11,6 +11,10 @@
   elsif request.page_type == 'password'
     assign og_url = request.origin
   endif
+
+  if page.handle == 'skinora-radiance-face' or page.handle == 'skinora-clear'
+    assign og_type = 'product'
+  endif
 %}
 
 <meta property="og:site_name" content="{{ shop.name }}">
