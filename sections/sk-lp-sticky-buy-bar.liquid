@@ -126,37 +126,54 @@
     }
 
     .sk-sticky-bar__btn {
-      display: block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
       width: 100%;
-      min-height: 44px;
-      padding: 14px 16px;
-      border: none;
-      border-radius: 4px;
-      background: #7a4a26;
-      color: #fff;
-      font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-      font-size: 14px;
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 16px;
       font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       line-height: 1;
-      text-align: center;
+      color: var(--lp-cta-fg, #fff);
+      background: var(--lp-cta-bg, #30273e);
+      border: 1px solid var(--lp-cta-bg, #30273e);
+      border-radius: var(--lp-cta-radius, 12px);
+      box-shadow: var(--lp-cta-shadow, 0 6px 18px rgba(48, 39, 62, 0.28)),
+        var(--lp-cta-inset, inset 0 1px 0 rgba(255, 255, 255, 0.12));
       cursor: pointer;
-      transition: background 150ms ease;
+      transition: transform 180ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 180ms cubic-bezier(0.2, 0.7, 0.2, 1),
+        background-color 180ms ease;
       -webkit-appearance: none;
     }
 
     .sk-sticky-bar__btn:hover,
     .sk-sticky-bar__btn:focus-visible {
-      background: #63391c;
+      background: var(--lp-cta-bg-hover, #3d3450);
+      box-shadow: var(--lp-cta-shadow-hover, 0 12px 28px rgba(48, 39, 62, 0.36)),
+        var(--lp-cta-inset, inset 0 1px 0 rgba(255, 255, 255, 0.12));
+      transform: translateY(-2px);
+    }
+
+    .sk-sticky-bar__btn:active {
+      background: var(--lp-cta-bg-active, #221a2e);
+      transform: translateY(0);
     }
 
     .sk-sticky-bar__btn:focus-visible {
-      outline: 2px solid #7a4a26;
-      outline-offset: 2px;
+      outline: 3px solid var(--lp-cta-focus, #e8d7b5);
+      outline-offset: 3px;
     }
 
     .sk-sticky-bar__btn:disabled {
-      opacity: 0.7;
-      cursor: wait;
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
     }
 
     .sk-sticky-bar__error {
@@ -196,6 +213,12 @@
     @media (prefers-reduced-motion: reduce) {
       .sk-sticky-bar {
         transition: none;
+      }
+      .sk-sticky-bar__btn {
+        transition: none;
+      }
+      .sk-sticky-bar__btn:hover {
+        transform: none;
       }
       .sk-sticky-bar__error {
         transition: none;

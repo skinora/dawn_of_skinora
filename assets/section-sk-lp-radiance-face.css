@@ -78,33 +78,76 @@
   padding-right: clamp(16px, 2vw, 32px);
 }
 
-/* Action accent: #A0522D (burnt terracotta) for all primary CTAs */
+/* ---- LP CTA SYSTEM — brand purple ---- */
+:root {
+  --lp-cta-bg: #30273e;
+  --lp-cta-bg-hover: #3d3450;
+  --lp-cta-bg-active: #221a2e;
+  --lp-cta-fg: #ffffff;
+  --lp-cta-focus: #e8d7b5;
+  --lp-cta-radius: 12px;
+  --lp-cta-shadow: 0 6px 18px rgba(48, 39, 62, 0.28), 0 2px 4px rgba(48, 39, 62, 0.18);
+  --lp-cta-shadow-hover: 0 12px 28px rgba(48, 39, 62, 0.36), 0 4px 8px rgba(48, 39, 62, 0.22);
+  --lp-cta-inset: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
 .lp-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  background: #a0522d;
-  color: #ffffff !important;
-  border: 1px solid #a0522d;
-  border-radius: 0;
-  padding: 16px 32px;
-  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
-  font-size: 18px;
-  font-weight: 400;
+  gap: 10px;
+  min-height: 56px;
+  padding: 16px 36px;
+  width: auto;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  letter-spacing: 1.44px;
+  line-height: 1;
+  color: var(--lp-cta-fg);
+  background: var(--lp-cta-bg);
+  border: 1px solid var(--lp-cta-bg);
+  border-radius: var(--lp-cta-radius);
+  box-shadow: var(--lp-cta-shadow), var(--lp-cta-inset);
   cursor: pointer;
-  transition:
-    background 0.25s ease,
-    color 0.25s ease;
   text-decoration: none;
-  line-height: 1.2;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 180ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 180ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    background-color 180ms ease;
+  will-change: transform;
 }
 
-.lp-btn:hover {
-  background: #8b4420;
-  color: #ffffff !important;
+.lp-btn:hover,
+.lp-btn:focus-visible {
+  background: var(--lp-cta-bg-hover);
+  box-shadow: var(--lp-cta-shadow-hover), var(--lp-cta-inset);
+  transform: translateY(-2px);
+  color: var(--lp-cta-fg);
+}
+
+.lp-btn:active {
+  background: var(--lp-cta-bg-active);
+  transform: translateY(0);
+  box-shadow:
+    0 3px 10px rgba(48, 39, 62, 0.3),
+    var(--lp-cta-inset);
+}
+
+.lp-btn:focus-visible {
+  outline: 3px solid var(--lp-cta-focus);
+  outline-offset: 3px;
+}
+
+.lp-btn[disabled],
+.lp-btn[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .lp-btn.is-loading {
@@ -113,8 +156,42 @@
   cursor: wait;
 }
 
-.lp-btn--full {
-  width: 100%;
+/* Shine sweep on hero + final CTAs */
+.lp-btn--hero::before,
+.lp-cta-final__btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.18) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 700ms ease;
+  pointer-events: none;
+}
+.lp-btn--hero:hover::before,
+.lp-cta-final__btn:hover::before {
+  transform: translateX(120%);
+}
+
+/* Arrow animation helper */
+.lp-btn__arrow {
+  display: inline-block;
+  transition: transform 200ms ease;
+}
+.lp-btn:hover .lp-btn__arrow {
+  transform: translateX(4px);
+}
+
+/* Inverted variant — for dark/purple sections */
+.lp-btn--inverted {
+  background: #ffffff;
+  color: var(--lp-cta-bg);
+  border-color: #ffffff;
+}
+.lp-btn--inverted:hover,
+.lp-btn--inverted:focus-visible {
+  background: #ffffff;
+  color: var(--lp-cta-bg-active);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
 }
 
 .lp-section-heading {
@@ -705,6 +782,16 @@
   .lp-steps::after {
     animation: none;
     opacity: 0;
+  }
+  .lp-btn {
+    transition: none;
+  }
+  .lp-btn:hover {
+    transform: none;
+  }
+  .lp-btn--hero::before,
+  .lp-cta-final__btn::before {
+    display: none;
   }
 }
 
@@ -1498,11 +1585,14 @@
 
 .lp-cta-final__btn {
   min-width: min(320px, 100%);
+  min-height: 64px;
+  padding: 20px 48px;
+  font-size: 19px;
 }
 
 .lp-cta-final__btn:focus-visible {
-  outline: 2px solid var(--sk-brand, #30273e);
-  outline-offset: 2px;
+  outline: 3px solid var(--lp-cta-focus, #e8d7b5);
+  outline-offset: 3px;
 }
 
 .lp-cta-final__guarantees {
@@ -1602,8 +1692,9 @@
   .lp-btn {
     width: 100%;
     justify-content: center;
-    font-size: 16px;
-    padding: 14px 24px;
+    min-height: 60px;
+    font-size: 17px;
+    padding: 18px 24px;
   }
 
   .lp-cta-final__guarantees {
