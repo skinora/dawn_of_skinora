@@ -20,6 +20,7 @@
 
 {%- assign sk_lp_handle = section.settings.cta_url | split: '/products/' | last | split: '?' | first -%}
 {%- assign sk_lp_product = all_products[sk_lp_handle] -%}
+{%- assign sk_lp_variant = sk_lp_product.selected_or_first_available_variant -%}
 {%- assign monthly_price = sk_lp_product.price | divided_by: 100 | divided_by: 36 | round -%}
 {%- assign cost_per_treatment = sk_lp_product.price | divided_by: 100 | divided_by: 156 | round -%}
 
@@ -80,9 +81,24 @@
 
         {%- comment -%} CHANGE 6 — CTA button {%- endcomment -%}
         <div class="lp-hero__actions">
-          <button type="button" class="lp-btn lp-btn--hero" data-product-handle="{{ sk_lp_handle }}">
-            {{ section.settings.cta_text }}
-          </button>
+          <form
+            action="{{ routes.cart_add_url }}"
+            method="post"
+            enctype="multipart/form-data"
+            class="lp-cta-form"
+            data-cta="hero"
+          >
+            <input type="hidden" name="id" value="{{ sk_lp_variant.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button
+              type="submit"
+              class="lp-btn lp-btn--hero"
+              data-product-handle="{{ sk_lp_handle }}"
+              aria-label="{{ section.settings.cta_text }}"
+            >
+              {{ section.settings.cta_text }}
+            </button>
+          </form>
           {%- if section.settings.show_link and section.settings.link_text != blank -%}
             <a href="{{ section.settings.link_url | default: '#' }}" class="lp-hero__link">
               {{- section.settings.link_text -}}
@@ -247,9 +263,24 @@
 
     {%- comment -%} Mobile sticky CTA — outside grid for proper fixed positioning {%- endcomment -%}
     <div class="lp-hero__sticky-cta" id="lp-sticky-cta" aria-hidden="true">
-      <button type="button" class="lp-btn lp-btn--sticky" data-product-handle="{{ sk_lp_handle }}">
-        {{ section.settings.sticky_cta_text | default: section.settings.cta_text }}
-      </button>
+      <form
+        action="{{ routes.cart_add_url }}"
+        method="post"
+        enctype="multipart/form-data"
+        class="lp-cta-form"
+        data-cta="sticky"
+      >
+        <input type="hidden" name="id" value="{{ sk_lp_variant.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <button
+          type="submit"
+          class="lp-btn lp-btn--sticky"
+          data-product-handle="{{ sk_lp_handle }}"
+          aria-label="{{ section.settings.sticky_cta_text | default: section.settings.cta_text }}"
+        >
+          {{ section.settings.sticky_cta_text | default: section.settings.cta_text }}
+        </button>
+      </form>
       <p style="font-family:sofia-pro,Assistant,sans-serif;font-size:11px;color:#5f5f5f;margin:4px 0 0;text-align:center;">
         Fra {{ monthly_price }} kr/mnd med Klarna · 60 dagers garanti
       </p>

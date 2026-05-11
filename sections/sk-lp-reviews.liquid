@@ -53,10 +53,28 @@
 </div>
 
 <!-- SECTION: Mid-Page CTA -->
+{%- assign reviews_handle = section.settings.product_url | split: '/products/' | last | split: '?' | first -%}
+{%- assign reviews_product = all_products[reviews_handle] -%}
+{%- assign reviews_variant = reviews_product.selected_or_first_available_variant -%}
 <div class="lp-midpage-cta" style="text-align:center;padding:32px 20px 8px;">
-  <a href="#kjop" class="lp-btn lp-btn--primary" style="display:inline-block;">
-    {{- section.settings.midpage_cta_text | default: 'Bestill nå' -}}
-  </a>
+  <form
+    action="{{ routes.cart_add_url }}"
+    method="post"
+    enctype="multipart/form-data"
+    class="lp-cta-form"
+    data-cta="midpage"
+  >
+    <input type="hidden" name="id" value="{{ reviews_variant.id }}">
+    <input type="hidden" name="quantity" value="1">
+    <button
+      type="submit"
+      class="lp-btn"
+      data-product-handle="{{ reviews_handle }}"
+      aria-label="{{ section.settings.midpage_cta_text | default: 'Bestill nå' }}"
+    >
+      {{- section.settings.midpage_cta_text | default: 'Bestill nå' -}}
+    </button>
+  </form>
   <p style="font-family:sofia-pro,Assistant,sans-serif;font-size:12px;color:#5f5f5f;margin:10px 0 0;">
     ✔ 60 dagers fornøydgaranti &nbsp;·&nbsp; ✔ Gratis frakt &nbsp;·&nbsp; ✔
     {{ section.settings.midpage_klarna_text | default: 'Fra 130 kr/mnd med Klarna' }}
@@ -96,6 +114,12 @@
     {
       "type": "header",
       "content": "Mid-page CTA"
+    },
+    {
+      "type": "text",
+      "id": "product_url",
+      "label": "Produkt-URL (f.eks. /products/skinora-clear)",
+      "default": "/products/skinora-clear"
     },
     {
       "type": "text",

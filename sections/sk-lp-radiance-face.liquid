@@ -18,6 +18,8 @@
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
 
 {%- assign sk_lp_handle = section.settings.product_url | split: '/products/' | last | split: '?' | first -%}
+{%- assign sk_lp_product = all_products[sk_lp_handle] -%}
+{%- assign sk_lp_variant = sk_lp_product.selected_or_first_available_variant -%}
 
 <script src="{{ 'sk-lp-cart-add.js' | asset_url }}" defer="defer"></script>
 
@@ -57,9 +59,18 @@
             <span class="lp-hero__pill"><span class="lp-hero__pill-check">✓</span> Gratis frakt</span>
           </div>
           <div class="lp-hero__actions">
-            <button type="button" class="lp-btn" data-product-handle="{{ sk_lp_handle }}">
-              {{ section.settings.hero_cta_text }}
-            </button>
+            <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="lp-cta-form" data-cta="hero">
+              <input type="hidden" name="id" value="{{ sk_lp_variant.id }}">
+              <input type="hidden" name="quantity" value="1">
+              <button
+                type="submit"
+                class="lp-btn"
+                data-product-handle="{{ sk_lp_handle }}"
+                aria-label="{{ section.settings.hero_cta_text }}"
+              >
+                {{ section.settings.hero_cta_text }}
+              </button>
+            </form>
             <a href="#slik-bruker-du" class="lp-hero__link">Se hvordan den brukes (60 sek) ↓</a>
           </div>
         </div>
@@ -359,9 +370,18 @@
         <h2 class="lp-cta-final__heading">{{ section.settings.cta_heading }}</h2>
         <p class="lp-cta-final__text">{{ section.settings.cta_text }}</p>
         <p class="lp-cta-final__price">{{ section.settings.price_text }}</p>
-        <button type="button" class="lp-btn" data-product-handle="{{ sk_lp_handle }}">
-          {{ section.settings.cta_button_text }}
-        </button>
+        <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="lp-cta-form" data-cta="final">
+          <input type="hidden" name="id" value="{{ sk_lp_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button
+            type="submit"
+            class="lp-btn"
+            data-product-handle="{{ sk_lp_handle }}"
+            aria-label="{{ section.settings.cta_button_text }}"
+          >
+            {{ section.settings.cta_button_text }}
+          </button>
+        </form>
         <div class="lp-cta-final__guarantees">
           <span class="lp-cta-final__guarantee">🔄 60 dagers garanti</span>
           <span class="lp-cta-final__guarantee">📦 Gratis frakt</span>

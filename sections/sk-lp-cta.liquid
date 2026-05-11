@@ -6,6 +6,8 @@
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
 
 {%- assign sk_lp_handle = section.settings.product_url | split: '/products/' | last | split: '?' | first -%}
+{%- assign sk_lp_product = all_products[sk_lp_handle] -%}
+{%- assign sk_lp_variant = sk_lp_product.selected_or_first_available_variant -%}
 
 <script src="{{ 'sk-lp-cart-add.js' | asset_url }}" defer="defer"></script>
 
@@ -23,9 +25,18 @@
         >
           ⚡ Populær vare – sendes innen 2 virkedager
         </p>
-        <button type="button" class="lp-btn lp-cta-final__btn" data-product-handle="{{ sk_lp_handle }}">
-          {{ section.settings.button_text }}
-        </button>
+        <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="lp-cta-form" data-cta="final">
+          <input type="hidden" name="id" value="{{ sk_lp_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button
+            type="submit"
+            class="lp-btn lp-cta-final__btn"
+            data-product-handle="{{ sk_lp_handle }}"
+            aria-label="{{ section.settings.button_text }}"
+          >
+            {{ section.settings.button_text }}
+          </button>
+        </form>
         <p
           class="lp-cta-trust"
           style="font-family:sofia-pro,Assistant,sans-serif;font-size:11px;color:#5f5f5f;margin:6px 0 0;text-align:center;"

@@ -1,33 +1,48 @@
 /**
  * sk-lp-cart-add.js
  * —————————————————————————————————————————————————————
- * Intercepts clicks on .lp-btn[data-product-handle] buttons,
- * adds the first available variant to cart via /cart/add.js,
- * then refreshes and opens the cart drawer.
+ * Intercepts submit on form.lp-cta-form elements, adds the
+ * product to cart via AJAX, then opens the cart drawer.
  *
- * Usage:
- *   <button class="lp-btn"
- *           data-product-handle="skinora-radiance-face">
- *     Kjøp nå
- *   </button>
+ * Graceful degradation: each form has action="/cart/add" with a
+ * hidden variant-id input, so if JS fails the browser submits
+ * the form natively and the product is still added.
  *
- * Loaded once in layout or via a shared LP snippet.
+ * Usage (Liquid):
+ *   <form action="/cart/add" method="post"
+ *         enctype="multipart/form-data" class="lp-cta-form">
+ *     <input type="hidden" name="id" value="{{ variant.id }}">
+ *     <input type="hidden" name="quantity" value="1">
+ *     <button type="submit" class="lp-btn"
+ *             data-product-handle="skinora-clear">
+ *       Kjøp nå
+ *     </button>
+ *   </form>
  * —————————————————————————————————————————————————————
  */
 (function skLpCartAdd() {
   'use strict';
 
-  document.addEventListener('click', async function (e) {
-    const btn = e.target.closest('.lp-btn[data-product-handle]');
+  document.addEventListener('submit', async function (e) {
+    const form = e.target.closest('form.lp-cta-form');
+    if (!form) return;
+
+    const btn = form.querySelector('button[type="submit"]');
     if (!btn) return;
-    e.preventDefault();
 
     const handle = btn.dataset.productHandle;
     if (!handle) return;
 
-    /* ── Prevent double-clicks ── */
+    /* Prevent native submit — AJAX takes over */
+    e.preventDefault();
+
+    /* ── Prevent double-submits ── */
     if (btn.classList.contains('is-loading')) return;
     btn.classList.add('is-loading');
+    btn.disabled = true;
+
+    const originalText = btn.textContent;
+    btn.textContent = 'Legger til\u2026';
 
     try {
       /* 1. Fetch product JSON to get the first available variant */
@@ -48,30 +63,39 @@
       });
       if (!addRes.ok) throw new Error('Add-to-cart failed');
 
-      /* 3. Refresh and open cart drawer */
+      /* 3. Success state */
+      btn.textContent = 'Lagt til \u2713';
+
+      /* 4. Refresh and open cart drawer */
       const cartDrawer = document.querySelector('cart-drawer');
       if (cartDrawer) {
-        /* Remove empty-state classes so the filled cart UI is visible */
         cartDrawer.classList.remove('is-empty');
         const drawerItems = cartDrawer.querySelector('cart-drawer-items');
         if (drawerItems) drawerItems.classList.remove('is-empty');
 
-        /* Fetch fresh sections so the drawer shows the updated cart */
         const sectionsUrl = '/cart?sections=cart-drawer,cart-icon-bubble';
         const sectionsRes = await fetch(sectionsUrl);
         const sections = await sectionsRes.json();
 
         cartDrawer.renderContents({ id: variant.id, sections: sections });
       } else {
-        /* Fallback: redirect to cart page if drawer not present */
         window.location.href = '/cart';
+        return;
       }
+
+      /* 5. Revert button text after brief delay */
+      setTimeout(function () {
+        btn.textContent = originalText;
+        btn.classList.remove('is-loading');
+        btn.disabled = false;
+      }, 1500);
     } catch (err) {
       console.error('[sk-lp-cart-add]', err);
-      /* Fallback: navigate to product page */
-      window.location.href = '/products/' + handle;
-    } finally {
+      btn.textContent = originalText;
       btn.classList.remove('is-loading');
+      btn.disabled = false;
+      /* Fallback: submit the form natively */
+      form.submit();
     }
   });
 })();
