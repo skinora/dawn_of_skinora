@@ -25,7 +25,13 @@
         >
           ⚡ Populær vare – sendes innen 2 virkedager
         </p>
-        <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="lp-cta-form" data-cta="final">
+        <form
+          action="{{ routes.cart_add_url }}"
+          method="post"
+          enctype="multipart/form-data"
+          class="lp-cta-form"
+          data-cta="final"
+        >
           <input type="hidden" name="id" value="{{ sk_lp_variant.id }}">
           <input type="hidden" name="quantity" value="1">
           <button
