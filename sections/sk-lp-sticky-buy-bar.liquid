@@ -46,6 +46,13 @@
   </aside>
 
   <style>
+    /* Sticky bar must escape its Shopify section's content-visibility containing block */
+    .shopify-section.sk-lp-sticky-buy-bar-wrapper,
+    .sk-lp-sticky-buy-bar-wrapper {
+      content-visibility: visible !important;
+      contain: none !important;
+    }
+
     /* ── Sticky buy-bar — scoped under .sk-sticky-bar ── */
     .sk-sticky-bar {
       display: block;
