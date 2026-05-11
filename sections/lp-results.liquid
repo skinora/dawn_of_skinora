@@ -1,7 +1,6 @@
 {%- comment -%}
   Section: lp-results
-  Before/after comparison slider with midpoint card.
-  Refactored from 3-column grid to interactive slider.
+  Two independent before/after comparison sliders, side by side on desktop.
 {%- endcomment -%}
 
 <style>
@@ -12,7 +11,6 @@
     --sk-muted: #5f5f5f;
     --sk-hairline: rgba(48, 39, 62, 0.12);
     --sk-surface: #ffffff;
-    --sk-surface-soft: #f2f2f2;
 
     background: #f8f8f8;
     padding: 64px 0;
@@ -76,7 +74,7 @@
     font-weight: 300;
   }
 
-  /* ── Result cards row (kept from original) ── */
+  /* ── Result cards row ── */
   #lp-results-timeline .lp-results__cards {
     display: flex;
     align-items: stretch;
@@ -156,12 +154,53 @@
     color: #80748e;
   }
 
-  /* ── Comparison layout ── */
-  #lp-results-timeline .lp-results__comparison {
+  /* ── Dual-slider grid ── */
+  #lp-results-timeline .lp-results__sliders {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* ── Slider card (wrapper around slider + caption) ── */
+  #lp-results-timeline .lp-slider-card {
     display: flex;
-    align-items: flex-start;
-    gap: 32px;
-    justify-content: center;
+    flex-direction: column;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  #lp-results-timeline .lp-slider-card__caption {
+    text-align: center;
+    padding: 16px 12px 0;
+  }
+
+  #lp-results-timeline .lp-slider-card__timeline {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sk-muted);
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  #lp-results-timeline .lp-slider-card__customer {
+    font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #3a3448;
+    margin: 0 0 4px;
+  }
+
+  #lp-results-timeline .lp-slider-card__concern {
+    font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--sk-muted);
+    margin: 0;
   }
 
   /* ── Slider ── */
@@ -173,10 +212,6 @@
     cursor: col-resize;
     aspect-ratio: 3 / 4;
     width: 100%;
-    max-width: 560px;
-    margin-left: auto;
-    margin-right: auto;
-    flex-shrink: 0;
     user-select: none;
     -webkit-user-select: none;
     touch-action: none;
@@ -209,7 +244,6 @@
     max-width: none;
   }
 
-  /* After layer sits below; before layer clips on top */
   #lp-results-timeline .lp-slider__after {
     z-index: 1;
   }
@@ -219,7 +253,7 @@
     clip-path: inset(0 0 0 0);
   }
 
-  /* ── Divider line + handle ── */
+  /* ── Divider + handle ── */
   #lp-results-timeline .lp-slider__divider {
     position: absolute;
     top: 0;
@@ -289,63 +323,6 @@
     right: 12px;
   }
 
-  /* ── Midpoint card ── */
-  #lp-results-timeline .lp-results__midpoint {
-    flex-shrink: 0;
-    width: 260px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(48, 39, 62, 0.08);
-    background: var(--sk-surface);
-  }
-
-  #lp-results-timeline .lp-results__midpoint-img-wrap {
-    position: relative;
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-  }
-
-  #lp-results-timeline .lp-results__midpoint-img-wrap img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    max-width: none;
-  }
-
-  #lp-results-timeline .lp-results__midpoint-body {
-    padding: 16px 20px 20px;
-    text-align: center;
-  }
-
-  #lp-results-timeline .lp-results__midpoint-label {
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--sk-muted);
-    font-weight: 600;
-    margin: 0 0 4px;
-  }
-
-  #lp-results-timeline .lp-results__midpoint-caption {
-    font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
-    font-size: 16px;
-    font-weight: 500;
-    color: #3a3448;
-    line-height: 1.4;
-    margin: 0 0 6px;
-  }
-
-  #lp-results-timeline .lp-results__midpoint-author {
-    font-size: 12px;
-    font-weight: 300;
-    color: var(--sk-muted);
-    margin: 0;
-  }
-
   /* ── Mobile ── */
   @media (max-width: 767px) {
     #lp-results-timeline {
@@ -379,22 +356,13 @@
       display: none;
     }
 
-    #lp-results-timeline .lp-slider {
-      aspect-ratio: 3 / 4;
+    #lp-results-timeline .lp-results__sliders {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    #lp-results-timeline .lp-slider-card {
       max-width: 420px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    #lp-results-timeline .lp-results__comparison {
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-    }
-
-    #lp-results-timeline .lp-results__midpoint {
-      width: 100%;
-      max-width: 360px;
     }
   }
 
@@ -443,99 +411,138 @@
       </div>
     {%- endif -%}
 
-    {%- comment -%} Before / After Slider {%- endcomment -%}
-    {%- if section.settings.image_1 != blank and section.settings.image_3 != blank -%}
-      <div class="lp-results__comparison">
-        <div class="lp-slider" data-lp-slider>
-          {%- comment -%} After layer (right side — UKE 8+) {%- endcomment -%}
-          <div class="lp-slider__after">
-            {{
-              section.settings.image_3
-              | image_url: width: 1200
-              | image_tag:
-                loading: 'lazy',
-                decoding: 'async',
-                widths: '600, 900, 1200',
-                sizes: '(max-width: 767px) 100vw, 720px'
-            }}
-          </div>
-
-          {%- comment -%} Before layer (left side — UKE 0), clipped {%- endcomment -%}
-          <div class="lp-slider__before" data-lp-before>
-            {{
-              section.settings.image_1
-              | image_url: width: 1200
-              | image_tag:
-                loading: 'lazy',
-                decoding: 'async',
-                widths: '600, 900, 1200',
-                sizes: '(max-width: 767px) 100vw, 720px'
-            }}
-          </div>
-
-          {%- comment -%} Divider line {%- endcomment -%}
-          <div class="lp-slider__divider" data-lp-divider></div>
-
-          {%- comment -%} Draggable handle {%- endcomment -%}
-          <button
-            class="lp-slider__handle"
-            data-lp-handle
-            type="button"
-            role="slider"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            aria-valuenow="50"
-            aria-label="Sammenlign før og etter"
-            tabindex="0"
-          >
-            <svg viewBox="0 0 20 20" aria-hidden="true">
-              <polyline points="7,4 3,10 7,16"></polyline>
-              <polyline points="13,4 17,10 13,16"></polyline>
-            </svg>
-          </button>
-
-          {%- comment -%} Labels {%- endcomment -%}
-          <span class="lp-slider__pill lp-slider__pill--before">
-            {{ section.settings.image_1_label | default: 'FØR' | escape }}
-          </span>
-          <span class="lp-slider__pill lp-slider__pill--after">
-            {{ section.settings.image_3_label | default: 'ETTER' | escape }}
-          </span>
-        </div>
-
-        {%- comment -%} Midpoint card — UKE 4 {%- endcomment -%}
-        {%- if section.settings.image_2 != blank -%}
-          <div class="lp-results__midpoint">
-            <div class="lp-results__midpoint-img-wrap">
+    {%- comment -%} Dual before/after sliders {%- endcomment -%}
+    <div class="lp-results__sliders">
+      {%- comment -%} ── Slider A ── {%- endcomment -%}
+      {%- if section.settings.slider_a_before_image != blank and section.settings.slider_a_after_image != blank -%}
+        <div class="lp-slider-card">
+          <div class="lp-slider" data-lp-slider>
+            <div class="lp-slider__after">
               {{
-                section.settings.image_2
-                | image_url: width: 800
+                section.settings.slider_a_after_image
+                | image_url: width: 1200
                 | image_tag:
                   loading: 'lazy',
                   decoding: 'async',
-                  widths: '400, 600, 800',
-                  sizes: '(max-width: 767px) 360px, 260px'
+                  widths: '600, 900, 1200',
+                  sizes: '(max-width: 767px) 100vw, 480px'
               }}
             </div>
-            <div class="lp-results__midpoint-body">
-              {%- if section.settings.image_2_label != blank -%}
-                <p class="lp-results__midpoint-label">{{ section.settings.image_2_label | escape }}</p>
-              {%- endif -%}
-              {%- if section.settings.midpoint_caption != blank -%}
-                <p class="lp-results__midpoint-caption">{{ section.settings.midpoint_caption | escape }}</p>
-              {%- else -%}
-                {%- if section.settings.image_2_title != blank -%}
-                  <p class="lp-results__midpoint-caption">{{ section.settings.image_2_title | escape }}</p>
-                {%- endif -%}
-              {%- endif -%}
-              {%- if section.settings.image_2_author != blank -%}
-                <p class="lp-results__midpoint-author">{{ section.settings.image_2_author | escape }}</p>
-              {%- endif -%}
+            <div class="lp-slider__before" data-lp-before>
+              {{
+                section.settings.slider_a_before_image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  decoding: 'async',
+                  widths: '600, 900, 1200',
+                  sizes: '(max-width: 767px) 100vw, 480px'
+              }}
             </div>
+            <div class="lp-slider__divider" data-lp-divider></div>
+            <button
+              class="lp-slider__handle"
+              data-lp-handle
+              type="button"
+              role="slider"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="50"
+              aria-label="Sammenlign før og etter"
+              tabindex="0"
+            >
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <polyline points="7,4 3,10 7,16"></polyline>
+                <polyline points="13,4 17,10 13,16"></polyline>
+              </svg>
+            </button>
+            <span class="lp-slider__pill lp-slider__pill--before">
+              {{ section.settings.before_label | default: 'UKE 0' | escape }}
+            </span>
+            <span class="lp-slider__pill lp-slider__pill--after">
+              {{ section.settings.after_label | default: 'UKE 8+' | escape }}
+            </span>
           </div>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
+          <div class="lp-slider-card__caption">
+            <p class="lp-slider-card__timeline">
+              {{ section.settings.before_label | default: 'UKE 0' | escape }} →
+              {{ section.settings.after_label | default: 'UKE 8+' | escape }}
+            </p>
+            {%- if section.settings.slider_a_customer != blank -%}
+              <p class="lp-slider-card__customer">{{ section.settings.slider_a_customer | escape }}</p>
+            {%- endif -%}
+            {%- if section.settings.slider_a_concern != blank -%}
+              <p class="lp-slider-card__concern">{{ section.settings.slider_a_concern | escape }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} ── Slider B ── {%- endcomment -%}
+      {%- if section.settings.slider_b_before_image != blank and section.settings.slider_b_after_image != blank -%}
+        <div class="lp-slider-card">
+          <div class="lp-slider" data-lp-slider>
+            <div class="lp-slider__after">
+              {{
+                section.settings.slider_b_after_image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  decoding: 'async',
+                  widths: '600, 900, 1200',
+                  sizes: '(max-width: 767px) 100vw, 480px'
+              }}
+            </div>
+            <div class="lp-slider__before" data-lp-before>
+              {{
+                section.settings.slider_b_before_image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  decoding: 'async',
+                  widths: '600, 900, 1200',
+                  sizes: '(max-width: 767px) 100vw, 480px'
+              }}
+            </div>
+            <div class="lp-slider__divider" data-lp-divider></div>
+            <button
+              class="lp-slider__handle"
+              data-lp-handle
+              type="button"
+              role="slider"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="50"
+              aria-label="Sammenlign før og etter"
+              tabindex="0"
+            >
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <polyline points="7,4 3,10 7,16"></polyline>
+                <polyline points="13,4 17,10 13,16"></polyline>
+              </svg>
+            </button>
+            <span class="lp-slider__pill lp-slider__pill--before">
+              {{ section.settings.before_label | default: 'UKE 0' | escape }}
+            </span>
+            <span class="lp-slider__pill lp-slider__pill--after">
+              {{ section.settings.after_label | default: 'UKE 8+' | escape }}
+            </span>
+          </div>
+          <div class="lp-slider-card__caption">
+            <p class="lp-slider-card__timeline">
+              {{ section.settings.before_label | default: 'UKE 0' | escape }} →
+              {{ section.settings.after_label | default: 'UKE 8+' | escape }}
+            </p>
+            {%- if section.settings.slider_b_customer != blank -%}
+              <p class="lp-slider-card__customer">{{ section.settings.slider_b_customer | escape }}</p>
+            {%- endif -%}
+            {%- if section.settings.slider_b_concern != blank -%}
+              <p class="lp-slider-card__concern">{{ section.settings.slider_b_concern | escape }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
   </div>
 </section>
 
@@ -543,106 +550,101 @@
   (function () {
     var root = document.getElementById('lp-results-timeline');
     if (!root) return;
-    var slider = root.querySelector('[data-lp-slider]');
-    if (!slider) return;
 
-    var before = slider.querySelector('[data-lp-before]');
-    var divider = slider.querySelector('[data-lp-divider]');
-    var handle = slider.querySelector('[data-lp-handle]');
-    var pos = 50; // percent
+    function initSlider(slider) {
+      var before = slider.querySelector('[data-lp-before]');
+      var divider = slider.querySelector('[data-lp-divider]');
+      var handle = slider.querySelector('[data-lp-handle]');
+      var pos = 50;
 
-    function setPos(p) {
-      pos = Math.max(0, Math.min(100, p));
-      var pct = pos + '%';
-      before.style.clipPath = 'inset(0 ' + (100 - pos) + '% 0 0)';
-      divider.style.left = pct;
-      handle.style.left = pct;
-      handle.setAttribute('aria-valuenow', Math.round(pos));
-    }
+      function setPos(p) {
+        pos = Math.max(0, Math.min(100, p));
+        before.style.clipPath = 'inset(0 ' + (100 - pos) + '% 0 0)';
+        divider.style.left = pos + '%';
+        handle.style.left = pos + '%';
+        handle.setAttribute('aria-valuenow', Math.round(pos));
+      }
 
-    function pctFromEvent(e) {
-      var r = slider.getBoundingClientRect();
-      var x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
-      return (x / r.width) * 100;
-    }
+      function pctFromEvent(e) {
+        var r = slider.getBoundingClientRect();
+        var x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+        return (x / r.width) * 100;
+      }
 
-    // Pointer drag
-    var dragging = false;
-    function onDown(e) {
-      dragging = true;
-      setPos(pctFromEvent(e));
-      e.preventDefault();
-    }
-    function onMove(e) {
-      if (!dragging) return;
-      setPos(pctFromEvent(e));
-    }
-    function onUp() {
-      dragging = false;
-    }
+      var dragging = false;
 
-    slider.addEventListener('mousedown', onDown);
-    slider.addEventListener('touchstart', onDown, { passive: false });
-    document.addEventListener('mousemove', onMove);
-    document.addEventListener('touchmove', onMove, { passive: true });
-    document.addEventListener('mouseup', onUp);
-    document.addEventListener('touchend', onUp);
+      function onDown(e) {
+        dragging = true;
+        setPos(pctFromEvent(e));
+        e.preventDefault();
+      }
+      function onMove(e) {
+        if (!dragging) return;
+        setPos(pctFromEvent(e));
+      }
+      function onUp() {
+        dragging = false;
+      }
 
-    // Click anywhere on slider to jump
-    slider.addEventListener('click', function (e) {
-      setPos(pctFromEvent(e));
-    });
+      slider.addEventListener('mousedown', onDown);
+      slider.addEventListener('touchstart', onDown, { passive: false });
 
-    // Keyboard
-    handle.addEventListener('keydown', function (e) {
-      var step = 1;
-      if (e.key === 'ArrowLeft' || e.key === 'Left') setPos(pos - step);
-      else if (e.key === 'ArrowRight' || e.key === 'Right') setPos(pos + step);
-      else if (e.key === 'Home') setPos(0);
-      else if (e.key === 'End') setPos(100);
-      else return;
-      e.preventDefault();
-    });
+      // Scoped move/up: attach to document but guard per-slider
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('touchmove', onMove, { passive: true });
+      document.addEventListener('mouseup', onUp);
+      document.addEventListener('touchend', onUp);
 
-    // Init position
-    setPos(50);
+      slider.addEventListener('click', function (e) {
+        setPos(pctFromEvent(e));
+      });
 
-    // Hint animation on first scroll into view
-    if ('IntersectionObserver' in window) {
-      var animated = false;
-      var obs = new IntersectionObserver(
-        function (entries) {
-          if (entries[0].isIntersecting && !animated) {
-            animated = true;
-            obs.disconnect();
-            var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (reducedMotion) return;
-            // Smooth sweep: 50 → 75 → 50
-            var dur = 600; // ms per leg
-            var start = null;
-            function sweep(ts) {
-              if (!start) start = ts;
-              var elapsed = ts - start;
-              var t;
-              if (elapsed < dur) {
-                t = elapsed / dur;
-                setPos(50 + 25 * t);
-              } else if (elapsed < dur * 2) {
-                t = (elapsed - dur) / dur;
-                setPos(75 - 25 * t);
-              } else {
-                setPos(50);
-                return;
+      handle.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft' || e.key === 'Left') setPos(pos - 1);
+        else if (e.key === 'ArrowRight' || e.key === 'Right') setPos(pos + 1);
+        else if (e.key === 'Home') setPos(0);
+        else if (e.key === 'End') setPos(100);
+        else return;
+        e.preventDefault();
+      });
+
+      setPos(50);
+
+      // Hint animation — scoped per slider
+      if ('IntersectionObserver' in window) {
+        var animated = false;
+        var obs = new IntersectionObserver(
+          function (entries) {
+            if (entries[0].isIntersecting && !animated) {
+              animated = true;
+              obs.disconnect();
+              if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+              var dur = 600;
+              var start = null;
+              function sweep(ts) {
+                if (!start) start = ts;
+                var elapsed = ts - start;
+                if (elapsed < dur) {
+                  setPos(50 + 25 * (elapsed / dur));
+                } else if (elapsed < dur * 2) {
+                  setPos(75 - 25 * ((elapsed - dur) / dur));
+                } else {
+                  setPos(50);
+                  return;
+                }
+                requestAnimationFrame(sweep);
               }
               requestAnimationFrame(sweep);
             }
-            requestAnimationFrame(sweep);
-          }
-        },
-        { threshold: 0.4 }
-      );
-      obs.observe(slider);
+          },
+          { threshold: 0.4 }
+        );
+        obs.observe(slider);
+      }
     }
+
+    // Init each slider independently
+    root.querySelectorAll('[data-lp-slider]').forEach(initSlider);
   })();
 </script>
 
@@ -671,108 +673,67 @@
     },
     {
       "type": "text",
-      "id": "midpoint_caption",
-      "label": "Midpoint caption",
-      "default": "Merkbar forbedring etter 4 uker."
-    },
-    {
-      "type": "header",
-      "content": "Before image (UKE 0)"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_1",
-      "label": "Image"
-    },
-    {
-      "type": "text",
-      "id": "image_1_label",
-      "label": "Label",
+      "id": "before_label",
+      "label": "Before label",
       "default": "UKE 0"
     },
     {
       "type": "text",
-      "id": "image_1_title",
-      "label": "Title",
-      "default": "Trøtt og livløs hud"
-    },
-    {
-      "type": "text",
-      "id": "image_1_description",
-      "label": "Description",
-      "default": "Mørke ringer, matt hud, fine linjer"
-    },
-    {
-      "type": "text",
-      "id": "image_1_author",
-      "label": "Author (name, age)",
-      "default": "Maria, 48 – Oslo"
-    },
-    {
-      "type": "header",
-      "content": "Midpoint image (UKE 4)"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_2",
-      "label": "Image"
-    },
-    {
-      "type": "text",
-      "id": "image_2_label",
-      "label": "Label",
-      "default": "UKE 4"
-    },
-    {
-      "type": "text",
-      "id": "image_2_title",
-      "label": "Title",
-      "default": "Merkbar forbedring"
-    },
-    {
-      "type": "text",
-      "id": "image_2_description",
-      "label": "Description",
-      "default": "Redusert rødhet, litt mer glød og fuktighet"
-    },
-    {
-      "type": "text",
-      "id": "image_2_author",
-      "label": "Author (name, age)",
-      "default": "Maria, 48 – Oslo"
-    },
-    {
-      "type": "header",
-      "content": "After image (UKE 8+)"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_3",
-      "label": "Image"
-    },
-    {
-      "type": "text",
-      "id": "image_3_label",
-      "label": "Label",
+      "id": "after_label",
+      "label": "After label",
       "default": "UKE 8+"
     },
     {
-      "type": "text",
-      "id": "image_3_title",
-      "label": "Title",
-      "default": "Glødende og jevn"
+      "type": "header",
+      "content": "Slider A"
+    },
+    {
+      "type": "image_picker",
+      "id": "slider_a_before_image",
+      "label": "Before image"
+    },
+    {
+      "type": "image_picker",
+      "id": "slider_a_after_image",
+      "label": "After image"
     },
     {
       "type": "text",
-      "id": "image_3_description",
-      "label": "Description",
-      "default": "Jevn hudtone, stram og frisk kompleksjon"
+      "id": "slider_a_customer",
+      "label": "Customer name",
+      "default": "Maria, 48 \u2013 Oslo"
     },
     {
       "type": "text",
-      "id": "image_3_author",
-      "label": "Author (name, age)",
-      "default": "Maria, 48 – Oslo"
+      "id": "slider_a_concern",
+      "label": "Skin concern",
+      "default": "Fine linjer og tr\u00f8tt hud"
+    },
+    {
+      "type": "header",
+      "content": "Slider B"
+    },
+    {
+      "type": "image_picker",
+      "id": "slider_b_before_image",
+      "label": "Before image"
+    },
+    {
+      "type": "image_picker",
+      "id": "slider_b_after_image",
+      "label": "After image"
+    },
+    {
+      "type": "text",
+      "id": "slider_b_customer",
+      "label": "Customer name",
+      "default": "Ingrid, 42 \u2013 Bergen"
+    },
+    {
+      "type": "text",
+      "id": "slider_b_concern",
+      "label": "Skin concern",
+      "default": "R\u00f8dhet og ujevn hudtone"
     }
   ],
   "blocks": [
@@ -785,13 +746,13 @@
           "type": "text",
           "id": "time_period",
           "label": "Time period",
-          "default": "Etter 2–4 uker"
+          "default": "Etter 2\u20134 uker"
         },
         {
           "type": "text",
           "id": "description",
           "label": "Description",
-          "default": "Færre nye utbrudd og roligere hud"
+          "default": "F\u00e6rre nye utbrudd og roligere hud"
         }
       ]
     }
@@ -803,14 +764,14 @@
         {
           "type": "result_card",
           "settings": {
-            "time_period": "Etter 2–4 uker",
-            "description": "Færre nye utbrudd og roligere hud"
+            "time_period": "Etter 2\u20134 uker",
+            "description": "F\u00e6rre nye utbrudd og roligere hud"
           }
         },
         {
           "type": "result_card",
           "settings": {
-            "time_period": "Etter 6–8 uker",
+            "time_period": "Etter 6\u20138 uker",
             "description": "Synlig jevnere hudtone og tekstur"
           }
         },
