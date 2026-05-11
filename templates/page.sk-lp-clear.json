@@ -515,7 +515,10 @@
       ],
       "settings": {
         "heading": "Hva får du i esken?",
-        "image": "shopify://shop_images/Skinora_clear_hva_er_i_esken_flatlay.png"
+        "image": "shopify://shop_images/Skinora_clear_hva_er_i_esken_flatlay.png",
+        "product_link_intro": "Vil du se alle tekniske spesifikasjoner, variant-valg og leveringsdetaljer?",
+        "product_link_text": "Se hele produktsiden for Skinora® Clear",
+        "product_link_url": "/products/skinora-clear"
       }
     },
     "faq": {

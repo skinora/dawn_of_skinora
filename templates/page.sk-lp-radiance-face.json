@@ -418,7 +418,10 @@
       ],
       "settings": {
         "heading": "Hva får du i esken?",
-        "image": "shopify://shop_images/skinora_radiance_face_hva_er_i_esken.png"
+        "image": "shopify://shop_images/skinora_radiance_face_hva_er_i_esken.png",
+        "product_link_intro": "Vil du se alle tekniske spesifikasjoner, variant-valg og leveringsdetaljer?",
+        "product_link_text": "Se hele produktsiden for Skinora® Radiance Face",
+        "product_link_url": "/products/skinora-radiance-face"
       }
     },
     "trust_full": {
