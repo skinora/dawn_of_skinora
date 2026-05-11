@@ -628,6 +628,18 @@
         "anchor_id": "kjop",
         "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra 130 kr/mnd med Klarna</strong>"
       }
+    },
+    "sticky_buy_bar": {
+      "type": "sk-lp-sticky-buy-bar",
+      "settings": {
+        "enabled": true,
+        "product": "skinora-radiance-face",
+        "price": "4 690 kr",
+        "subprice": "eller fra 130 kr/mnd med Klarna",
+        "cta_label": "Prøv risikofritt →",
+        "trigger_selector": ".lp-hero__actions",
+        "hide_selector": ".lp-cta-final"
+      }
     }
   },
   "order": [
@@ -642,6 +654,7 @@
     "trust_full",
     "documentation",
     "faq",
-    "cta"
+    "cta",
+    "sticky_buy_bar"
   ]
 }

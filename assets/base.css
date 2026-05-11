@@ -1574,6 +1574,10 @@ details-disclosure > details {
 }
 
 /* Typography */
+html {
+  overflow-x: hidden; /* Prevent horizontal scroll — on html so body stays the natural flow container and position:fixed works */
+}
+
 body {
   font-family: var(--font-body-family);
   font-style: var(--font-body-style);
@@ -1582,7 +1586,6 @@ body {
   line-height: var(--sk-line-height-base);
   letter-spacing: 0.01em;
   color: rgb(var(--sk-color-body-text));
-  overflow-x: hidden; /* Prevent horizontal scroll from any overflowing child */
 }
 
 button,
