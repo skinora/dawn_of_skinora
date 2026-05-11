@@ -57,10 +57,10 @@
         "testimonial_quote": "Huden min har aldri vært så rolig. Bruker den hver kveld og merker stor forskjell på rødhet og nye utbrudd.",
         "testimonial_author": "Ida L., 28, Bergen · Verifisert kjøper",
         "cta_text": "Prøv risikofritt i 60 dager",
-        "cta_url": "/products/skinora-clear",
+        "sticky_cta_text": "Prøv risikofritt →",
         "show_urgency": true,
         "urgency_text": "⚡ Populær vare – begrenset antall igjen",
-        "sticky_cta_text": "Prøv risikofritt →",
+        "cta_url": "/products/skinora-clear",
         "link_text": "Se hvordan den brukes (60 sek) ↓",
         "link_url": "#slik-bruker-du",
         "value_title": "Skinora® Clear — 4 390 kr",
@@ -515,10 +515,7 @@
       ],
       "settings": {
         "heading": "Hva får du i esken?",
-        "image": "shopify://shop_images/Skinora_clear_hva_er_i_esken_flatlay.png",
-        "product_link_intro": "Vil du se alle tekniske spesifikasjoner, variant-valg og leveringsdetaljer?",
-        "product_link_text": "Se hele produktsiden for Skinora® Clear",
-        "product_link_url": "/products/skinora-clear"
+        "image": "shopify://shop_images/Skinora_clear_hva_er_i_esken_flatlay.png"
       }
     },
     "faq": {
