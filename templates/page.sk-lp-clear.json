@@ -124,36 +124,6 @@
     "problem": {
       "type": "sk-lp-problem",
       "blocks": {
-        "proof_1": {
-          "type": "proof",
-          "settings": {
-            "text": "Klinisk dokumentert LED-teknologi"
-          }
-        },
-        "proof_2": {
-          "type": "proof",
-          "settings": {
-            "text": "2 målrettede bølgelengder – blått og rødt lys"
-          }
-        },
-        "proof_3": {
-          "type": "proof",
-          "settings": {
-            "text": "Blått lys (415 nm) reduserer akne-bakterier"
-          }
-        },
-        "proof_4": {
-          "type": "proof",
-          "settings": {
-            "text": "Optimalisert for klarere hud og redusert betennelse"
-          }
-        },
-        "proof_5": {
-          "type": "proof",
-          "settings": {
-            "text": "Brukt av profesjonelle hudterapeuter"
-          }
-        },
         "p_1": {
           "type": "item",
           "settings": {
@@ -204,11 +174,6 @@
         }
       },
       "block_order": [
-        "proof_1",
-        "proof_2",
-        "proof_3",
-        "proof_4",
-        "proof_5",
         "p_1",
         "p_2",
         "p_3",
