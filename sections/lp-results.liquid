@@ -1,11 +1,12 @@
 {%- comment -%}
   Section: lp-results
-  Landing page results timeline with numbered step cards,
-  disclaimer, and 3-image progress row.
+  Before/after comparison slider with midpoint card.
+  Refactored from 3-column grid to interactive slider.
 {%- endcomment -%}
 
 <style>
-  .lp-results-timeline {
+  /* ── Base ── */
+  #lp-results-timeline {
     --sk-brand: #30273e;
     --sk-text: #333333;
     --sk-muted: #5f5f5f;
@@ -21,30 +22,30 @@
     color: var(--sk-text);
   }
 
-  .lp-results-timeline *,
-  .lp-results-timeline *::before,
-  .lp-results-timeline *::after {
+  #lp-results-timeline *,
+  #lp-results-timeline *::before,
+  #lp-results-timeline *::after {
     box-sizing: border-box;
   }
 
-  .lp-results-timeline img {
+  #lp-results-timeline img {
     max-width: 100%;
     height: auto;
     display: block;
   }
 
-  .lp-results-timeline p:not(.lp-results-timeline__disclaimer) {
+  #lp-results-timeline p {
     margin: 0;
   }
 
-  .lp-results-timeline__container {
+  #lp-results-timeline .lp-results__container {
     max-width: 1200px;
     margin: 0 auto;
     padding-left: clamp(16px, 2vw, 32px);
     padding-right: clamp(16px, 2vw, 32px);
   }
 
-  .lp-results-timeline__heading {
+  #lp-results-timeline .lp-results__heading {
     text-align: center;
     font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
     font-size: 34px;
@@ -55,17 +56,28 @@
     line-height: 1.15;
   }
 
-  .lp-results-timeline__intro {
+  #lp-results-timeline .lp-results__intro {
     text-align: center;
     font-size: 18px;
     font-weight: 300;
     color: var(--sk-muted);
-    margin: 0 0 48px;
+    margin: 0 0 16px;
     line-height: 1.75;
   }
 
-  /* ── Result cards row ── */
-  .lp-results-timeline__cards {
+  #lp-results-timeline .lp-results__disclaimer {
+    text-align: center;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--sk-muted);
+    max-width: 700px;
+    margin: 0 auto 48px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ── Result cards row (kept from original) ── */
+  #lp-results-timeline .lp-results__cards {
     display: flex;
     align-items: stretch;
     justify-content: center;
@@ -73,14 +85,14 @@
     margin: 0 0 32px;
   }
 
-  .lp-results-timeline__card-wrapper {
+  #lp-results-timeline .lp-results__card-wrapper {
     display: flex;
     align-items: center;
     flex: 1;
     max-width: 320px;
   }
 
-  .lp-results-timeline__card {
+  #lp-results-timeline .lp-results__card {
     background: var(--sk-surface);
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(48, 39, 62, 0.04);
@@ -94,13 +106,13 @@
   }
 
   @media (hover: hover) {
-    .lp-results-timeline__card:hover {
+    #lp-results-timeline .lp-results__card:hover {
       box-shadow: 0 4px 12px rgba(48, 39, 62, 0.08);
       transform: translateY(-2px);
     }
   }
 
-  .lp-results-timeline__number {
+  #lp-results-timeline .lp-results__number {
     width: 36px;
     height: 36px;
     border-radius: 999px;
@@ -116,7 +128,7 @@
     flex-shrink: 0;
   }
 
-  .lp-results-timeline__time {
+  #lp-results-timeline .lp-results__time {
     font-size: 13px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -125,7 +137,7 @@
     font-weight: 600;
   }
 
-  .lp-results-timeline__desc {
+  #lp-results-timeline .lp-results__desc {
     font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
     font-size: 17px;
     font-weight: 500;
@@ -134,9 +146,8 @@
     margin: 0;
   }
 
-  .lp-results-timeline__arrow {
+  #lp-results-timeline .lp-results__arrow {
     font-size: 20px;
-    color: var(--sk-hairline);
     padding: 0 12px;
     flex-shrink: 0;
     display: flex;
@@ -145,175 +156,276 @@
     color: #80748e;
   }
 
-  .lp-results-timeline__disclaimer {
-    text-align: center;
-    font-size: 14px;
-    font-style: italic;
-    color: var(--sk-muted);
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.6;
-    font-weight: 300;
-    display: block;
-    width: 100%;
+  /* ── Comparison layout ── */
+  #lp-results-timeline .lp-results__comparison {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+    justify-content: center;
   }
 
-  /* ── Progress images row ── */
-  .lp-results-timeline__progress {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-top: 48px;
-  }
-
-  .lp-results-timeline__progress-item {
+  /* ── Slider ── */
+  #lp-results-timeline .lp-slider {
     position: relative;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
-    aspect-ratio: 3 / 4;
+    box-shadow: 0 4px 20px rgba(48, 39, 62, 0.1);
+    cursor: col-resize;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    max-width: 720px;
+    flex-shrink: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
   }
 
-  .lp-results-timeline__progress-img {
-    display: block;
+  #lp-results-timeline .lp-slider__after,
+  #lp-results-timeline .lp-slider__before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  #lp-results-timeline .lp-slider__after img,
+  #lp-results-timeline .lp-slider__before img {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center center;
+    object-position: center top;
+    max-width: none;
   }
 
-  .lp-results-timeline__progress-overlay {
+  /* After layer sits below; before layer clips on top */
+  #lp-results-timeline .lp-slider__after {
+    z-index: 1;
+  }
+
+  #lp-results-timeline .lp-slider__before {
+    z-index: 2;
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* ── Divider line + handle ── */
+  #lp-results-timeline .lp-slider__divider {
     position: absolute;
+    top: 0;
     bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 20px 16px;
-    background: linear-gradient(to top, rgba(48, 39, 62, 0.65) 0%, rgba(48, 39, 62, 0) 100%);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    color: #ffffff;
+    width: 2px;
+    background: #ffffff;
+    z-index: 3;
+    pointer-events: none;
+    transform: translateX(-50%);
   }
 
-  .lp-results-timeline__progress-label {
+  #lp-results-timeline .lp-slider__handle {
+    position: absolute;
+    top: 50%;
+    z-index: 4;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: col-resize;
+    outline: none;
+    border: none;
+    padding: 0;
+  }
+
+  #lp-results-timeline .lp-slider__handle:focus-visible {
+    outline: 2px solid var(--sk-brand);
+    outline-offset: 2px;
+  }
+
+  #lp-results-timeline .lp-slider__handle svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: var(--sk-brand);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ── Pills ── */
+  #lp-results-timeline .lp-slider__pill {
+    position: absolute;
+    bottom: 12px;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.55);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 4px;
+    pointer-events: none;
+  }
+
+  #lp-results-timeline .lp-slider__pill--before {
+    left: 12px;
+  }
+
+  #lp-results-timeline .lp-slider__pill--after {
+    right: 12px;
+  }
+
+  /* ── Midpoint card ── */
+  #lp-results-timeline .lp-results__midpoint {
+    flex-shrink: 0;
+    width: 260px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(48, 39, 62, 0.08);
+    background: var(--sk-surface);
+  }
+
+  #lp-results-timeline .lp-results__midpoint-img-wrap {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+  }
+
+  #lp-results-timeline .lp-results__midpoint-img-wrap img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    max-width: none;
+  }
+
+  #lp-results-timeline .lp-results__midpoint-body {
+    padding: 16px 20px 20px;
+    text-align: center;
+  }
+
+  #lp-results-timeline .lp-results__midpoint-label {
     font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin: 0 0 4px;
-    opacity: 0.85;
+    color: var(--sk-muted);
     font-weight: 600;
+    margin: 0 0 4px;
   }
 
-  .lp-results-timeline__progress-title {
+  #lp-results-timeline .lp-results__midpoint-caption {
     font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
-    margin: 0 0 4px;
-    line-height: 1.3;
-  }
-
-  .lp-results-timeline__progress-desc {
-    font-size: 14px;
-    font-style: italic;
-    font-weight: 300;
-    margin: 0;
+    color: #3a3448;
     line-height: 1.4;
-    opacity: 0.85;
+    margin: 0 0 6px;
   }
 
-  .lp-results-timeline__progress-author {
-    font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
+  #lp-results-timeline .lp-results__midpoint-author {
     font-size: 12px;
-    font-weight: 600;
-    margin: 6px 0 0;
-    opacity: 0.9;
-    letter-spacing: 0.3px;
+    font-weight: 300;
+    color: var(--sk-muted);
+    margin: 0;
   }
 
   /* ── Mobile ── */
-  @media (max-width: 768px) {
-    .lp-results-timeline {
+  @media (max-width: 767px) {
+    #lp-results-timeline {
       padding: 48px 0;
     }
 
-    .lp-results-timeline__heading {
+    #lp-results-timeline .lp-results__heading {
       font-size: 28px;
     }
 
-    .lp-results-timeline__intro {
+    #lp-results-timeline .lp-results__intro {
+      margin-bottom: 12px;
+    }
+
+    #lp-results-timeline .lp-results__disclaimer {
       margin-bottom: 36px;
     }
 
-    .lp-results-timeline__cards {
+    #lp-results-timeline .lp-results__cards {
       flex-direction: column;
       align-items: center;
       gap: 16px;
     }
 
-    .lp-results-timeline__card-wrapper {
+    #lp-results-timeline .lp-results__card-wrapper {
       max-width: 100%;
       width: 100%;
     }
 
-    .lp-results-timeline__arrow {
+    #lp-results-timeline .lp-results__arrow {
       display: none;
     }
 
-    .lp-results-timeline__progress {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+    #lp-results-timeline .lp-slider {
+      aspect-ratio: 3 / 4;
+      max-width: 100%;
     }
 
-    .lp-results-timeline__progress-item {
-      aspect-ratio: 2 / 3;
+    #lp-results-timeline .lp-results__comparison {
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
     }
 
-    .lp-results-timeline__progress-label {
-      font-size: 9px;
-      letter-spacing: 1px;
+    #lp-results-timeline .lp-results__midpoint {
+      width: 100%;
+      max-width: 360px;
     }
+  }
 
-    .lp-results-timeline__progress-title {
-      font-size: 12px;
-      margin: 0;
-    }
-
-    .lp-results-timeline__progress-desc {
-      display: none;
-    }
-
-    .lp-results-timeline__progress-overlay {
-      padding: 8px 6px;
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    #lp-results-timeline .lp-slider__divider,
+    #lp-results-timeline .lp-slider__handle,
+    #lp-results-timeline .lp-slider__before {
+      transition: none !important;
     }
   }
 </style>
 
-<section class="lp-results-timeline">
-  <div class="lp-results-timeline__container">
+<section id="lp-results-timeline" class="lp-results-timeline">
+  <div class="lp-results__container">
     {%- if section.settings.heading != blank -%}
-      <h2 class="lp-results-timeline__heading">{{ section.settings.heading | escape }}</h2>
+      <h2 class="lp-results__heading">{{ section.settings.heading | escape }}</h2>
     {%- endif -%}
 
     {%- if section.settings.intro_text != blank -%}
-      <p class="lp-results-timeline__intro">{{ section.settings.intro_text | escape }}</p>
+      <p class="lp-results__intro">{{ section.settings.intro_text | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.disclaimer != blank -%}
+      <p class="lp-results__disclaimer">{{ section.settings.disclaimer | escape }}</p>
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
-      <div class="lp-results-timeline__cards">
+      <div class="lp-results__cards">
         {%- for block in section.blocks -%}
           {%- if forloop.index > 1 -%}
-            <span class="lp-results-timeline__arrow" aria-hidden="true">→</span>
+            <span class="lp-results__arrow" aria-hidden="true">→</span>
           {%- endif -%}
-          <div class="lp-results-timeline__card-wrapper" {{ block.shopify_attributes }}>
-            <div class="lp-results-timeline__card">
-              <div class="lp-results-timeline__number">{{ forloop.index }}</div>
+          <div class="lp-results__card-wrapper" {{ block.shopify_attributes }}>
+            <div class="lp-results__card">
+              <div class="lp-results__number">{{ forloop.index }}</div>
               {%- if block.settings.time_period != blank -%}
-                <p class="lp-results-timeline__time">{{ block.settings.time_period | escape }}</p>
+                <p class="lp-results__time">{{ block.settings.time_period | escape }}</p>
               {%- endif -%}
               {%- if block.settings.description != blank -%}
-                <p class="lp-results-timeline__desc">{{ block.settings.description | escape }}</p>
+                <p class="lp-results__desc">{{ block.settings.description | escape }}</p>
               {%- endif -%}
             </div>
           </div>
@@ -321,63 +433,208 @@
       </div>
     {%- endif -%}
 
-    {%- if section.settings.disclaimer != blank -%}
-      <p class="lp-results-timeline__disclaimer">{{ section.settings.disclaimer | escape }}</p>
-    {%- endif -%}
+    {%- comment -%} Before / After Slider {%- endcomment -%}
+    {%- if section.settings.image_1 != blank and section.settings.image_3 != blank -%}
+      <div class="lp-results__comparison">
+        <div class="lp-slider" data-lp-slider>
+          {%- comment -%} After layer (right side — UKE 8+) {%- endcomment -%}
+          <div class="lp-slider__after">
+            {{
+              section.settings.image_3
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'lazy',
+                decoding: 'async',
+                widths: '600, 900, 1200',
+                sizes: '(max-width: 767px) 100vw, 720px'
+            }}
+          </div>
 
-    {%- assign has_progress = false -%}
-    {%- if section.settings.image_1 != blank
-      or section.settings.image_2 != blank
-      or section.settings.image_3 != blank
-    -%}
-      {%- assign has_progress = true -%}
-    {%- endif -%}
+          {%- comment -%} Before layer (left side — UKE 0), clipped {%- endcomment -%}
+          <div class="lp-slider__before" data-lp-before>
+            {{
+              section.settings.image_1
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'lazy',
+                decoding: 'async',
+                widths: '600, 900, 1200',
+                sizes: '(max-width: 767px) 100vw, 720px'
+            }}
+          </div>
 
-    {%- if has_progress -%}
-      <div class="lp-results-timeline__progress">
-        {%- for i in (1..3) -%}
-          {%- assign img_key = 'image_' | append: i -%}
-          {%- assign label_key = 'image_' | append: i | append: '_label' -%}
-          {%- assign title_key = 'image_' | append: i | append: '_title' -%}
-          {%- assign desc_key = 'image_' | append: i | append: '_description' -%}
-          {%- assign img = section.settings[img_key] -%}
-          {%- if img != blank -%}
-            <div class="lp-results-timeline__progress-item">
+          {%- comment -%} Divider line {%- endcomment -%}
+          <div class="lp-slider__divider" data-lp-divider></div>
+
+          {%- comment -%} Draggable handle {%- endcomment -%}
+          <button
+            class="lp-slider__handle"
+            data-lp-handle
+            type="button"
+            role="slider"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="50"
+            aria-label="Sammenlign før og etter"
+            tabindex="0"
+          >
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <polyline points="7,4 3,10 7,16"></polyline>
+              <polyline points="13,4 17,10 13,16"></polyline>
+            </svg>
+          </button>
+
+          {%- comment -%} Labels {%- endcomment -%}
+          <span class="lp-slider__pill lp-slider__pill--before">
+            {{ section.settings.image_1_label | default: 'FØR' | escape }}
+          </span>
+          <span class="lp-slider__pill lp-slider__pill--after">
+            {{ section.settings.image_3_label | default: 'ETTER' | escape }}
+          </span>
+        </div>
+
+        {%- comment -%} Midpoint card — UKE 4 {%- endcomment -%}
+        {%- if section.settings.image_2 != blank -%}
+          <div class="lp-results__midpoint">
+            <div class="lp-results__midpoint-img-wrap">
               {{
-                img
+                section.settings.image_2
                 | image_url: width: 800
                 | image_tag:
-                  class: 'lp-results-timeline__progress-img',
                   loading: 'lazy',
-                  widths: '375, 560, 800',
-                  sizes: '(max-width: 768px) 100vw, 33vw'
+                  decoding: 'async',
+                  widths: '400, 600, 800',
+                  sizes: '(max-width: 767px) 360px, 260px'
               }}
-              <div class="lp-results-timeline__progress-overlay">
-                {%- assign label_val = section.settings[label_key] -%}
-                {%- assign title_val = section.settings[title_key] -%}
-                {%- assign desc_val = section.settings[desc_key] -%}
-                {%- assign author_key = 'image_' | append: i | append: '_author' -%}
-                {%- assign author_val = section.settings[author_key] -%}
-                {%- if label_val != blank -%}
-                  <p class="lp-results-timeline__progress-label">{{ label_val | escape }}</p>
-                {%- endif -%}
-                {%- if title_val != blank -%}
-                  <p class="lp-results-timeline__progress-title">{{ title_val | escape }}</p>
-                {%- endif -%}
-                {%- if desc_val != blank -%}
-                  <p class="lp-results-timeline__progress-desc">{{ desc_val | escape }}</p>
-                {%- endif -%}
-                {%- if author_val != blank -%}
-                  <p class="lp-results-timeline__progress-author">{{ author_val | escape }}</p>
-                {%- endif -%}
-              </div>
             </div>
-          {%- endif -%}
-        {%- endfor -%}
+            <div class="lp-results__midpoint-body">
+              {%- if section.settings.image_2_label != blank -%}
+                <p class="lp-results__midpoint-label">{{ section.settings.image_2_label | escape }}</p>
+              {%- endif -%}
+              {%- if section.settings.midpoint_caption != blank -%}
+                <p class="lp-results__midpoint-caption">{{ section.settings.midpoint_caption | escape }}</p>
+              {%- else -%}
+                {%- if section.settings.image_2_title != blank -%}
+                  <p class="lp-results__midpoint-caption">{{ section.settings.image_2_title | escape }}</p>
+                {%- endif -%}
+              {%- endif -%}
+              {%- if section.settings.image_2_author != blank -%}
+                <p class="lp-results__midpoint-author">{{ section.settings.image_2_author | escape }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>
 </section>
+
+<script>
+  (function () {
+    var root = document.getElementById('lp-results-timeline');
+    if (!root) return;
+    var slider = root.querySelector('[data-lp-slider]');
+    if (!slider) return;
+
+    var before = slider.querySelector('[data-lp-before]');
+    var divider = slider.querySelector('[data-lp-divider]');
+    var handle = slider.querySelector('[data-lp-handle]');
+    var pos = 50; // percent
+
+    function setPos(p) {
+      pos = Math.max(0, Math.min(100, p));
+      var pct = pos + '%';
+      before.style.clipPath = 'inset(0 ' + (100 - pos) + '% 0 0)';
+      divider.style.left = pct;
+      handle.style.left = pct;
+      handle.setAttribute('aria-valuenow', Math.round(pos));
+    }
+
+    function pctFromEvent(e) {
+      var r = slider.getBoundingClientRect();
+      var x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+      return (x / r.width) * 100;
+    }
+
+    // Pointer drag
+    var dragging = false;
+    function onDown(e) {
+      dragging = true;
+      setPos(pctFromEvent(e));
+      e.preventDefault();
+    }
+    function onMove(e) {
+      if (!dragging) return;
+      setPos(pctFromEvent(e));
+    }
+    function onUp() {
+      dragging = false;
+    }
+
+    slider.addEventListener('mousedown', onDown);
+    slider.addEventListener('touchstart', onDown, { passive: false });
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('touchmove', onMove, { passive: true });
+    document.addEventListener('mouseup', onUp);
+    document.addEventListener('touchend', onUp);
+
+    // Click anywhere on slider to jump
+    slider.addEventListener('click', function (e) {
+      setPos(pctFromEvent(e));
+    });
+
+    // Keyboard
+    handle.addEventListener('keydown', function (e) {
+      var step = 1;
+      if (e.key === 'ArrowLeft' || e.key === 'Left') setPos(pos - step);
+      else if (e.key === 'ArrowRight' || e.key === 'Right') setPos(pos + step);
+      else if (e.key === 'Home') setPos(0);
+      else if (e.key === 'End') setPos(100);
+      else return;
+      e.preventDefault();
+    });
+
+    // Init position
+    setPos(50);
+
+    // Hint animation on first scroll into view
+    if ('IntersectionObserver' in window) {
+      var animated = false;
+      var obs = new IntersectionObserver(
+        function (entries) {
+          if (entries[0].isIntersecting && !animated) {
+            animated = true;
+            obs.disconnect();
+            var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reducedMotion) return;
+            // Smooth sweep: 50 → 75 → 50
+            var dur = 600; // ms per leg
+            var start = null;
+            function sweep(ts) {
+              if (!start) start = ts;
+              var elapsed = ts - start;
+              var t;
+              if (elapsed < dur) {
+                t = elapsed / dur;
+                setPos(50 + 25 * t);
+              } else if (elapsed < dur * 2) {
+                t = (elapsed - dur) / dur;
+                setPos(75 - 25 * t);
+              } else {
+                setPos(50);
+                return;
+              }
+              requestAnimationFrame(sweep);
+            }
+            requestAnimationFrame(sweep);
+          }
+        },
+        { threshold: 0.4 }
+      );
+      obs.observe(slider);
+    }
+  })();
+</script>
 
 {% schema %}
 {
@@ -403,8 +660,14 @@
       "default": "Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan."
     },
     {
+      "type": "text",
+      "id": "midpoint_caption",
+      "label": "Midpoint caption",
+      "default": "Merkbar forbedring etter 4 uker."
+    },
+    {
       "type": "header",
-      "content": "Progress image 1"
+      "content": "Before image (UKE 0)"
     },
     {
       "type": "image_picker",
@@ -433,11 +696,11 @@
       "type": "text",
       "id": "image_1_author",
       "label": "Author (name, age)",
-      "default": "Maria, 48 \u2013 Oslo"
+      "default": "Maria, 48 – Oslo"
     },
     {
       "type": "header",
-      "content": "Progress image 2"
+      "content": "Midpoint image (UKE 4)"
     },
     {
       "type": "image_picker",
@@ -466,11 +729,11 @@
       "type": "text",
       "id": "image_2_author",
       "label": "Author (name, age)",
-      "default": "Maria, 48 \u2013 Oslo"
+      "default": "Maria, 48 – Oslo"
     },
     {
       "type": "header",
-      "content": "Progress image 3"
+      "content": "After image (UKE 8+)"
     },
     {
       "type": "image_picker",
@@ -499,7 +762,7 @@
       "type": "text",
       "id": "image_3_author",
       "label": "Author (name, age)",
-      "default": "Maria, 48 \u2013 Oslo"
+      "default": "Maria, 48 – Oslo"
     }
   ],
   "blocks": [
