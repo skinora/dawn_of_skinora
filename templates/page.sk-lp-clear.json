@@ -344,6 +344,15 @@
     "reviews": {
       "type": "sk-lp-reviews",
       "blocks": {
+        "review_wxnFyr": {
+          "type": "review",
+          "settings": {
+            "text": "Hadde i flere år utbrudd på brystet og øvre rygg som gjorde at jeg unngikk åpne topper, kjoler og strand. Pinlig å skrive om, men sant. Begynte å bruke Skinora® Clear mot brystkassen 3–4 kvelder i uken. Etter en måned var det allerede tydelig færre nye utbrudd, og etter to måneder er huden glattere enn den har vært siden tenårene. Det handler ikke bare om hud — det handler om å slippe å tenke på det.",
+            "author": "Linnea S., 26, Stavanger",
+            "concern_tag": "Brystakne (\"bacne\") og selvtillit",
+            "usage_tag": ""
+          }
+        },
         "review_ktegL7": {
           "type": "review",
           "settings": {
@@ -391,6 +400,7 @@
         }
       },
       "block_order": [
+        "review_wxnFyr",
         "review_ktegL7",
         "review_CC7jeb",
         "rev_1",
