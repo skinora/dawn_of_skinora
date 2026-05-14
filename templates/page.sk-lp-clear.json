@@ -623,6 +623,16 @@
     "cross_sell": {
       "type": "sk-lp-cross-sell",
       "blocks": {
+        "product_card_fwAQPc": {
+          "type": "product_card",
+          "settings": {
+            "product": "skinora-radiance-neck",
+            "eyebrow_tag": "HALS",
+            "show_benefit": false,
+            "benefit": "",
+            "show_price": false
+          }
+        },
         "product_card_jhnGra": {
           "type": "product_card",
           "settings": {
@@ -635,6 +645,7 @@
         }
       },
       "block_order": [
+        "product_card_fwAQPc",
         "product_card_jhnGra"
       ],
       "settings": {
