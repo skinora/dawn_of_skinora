@@ -623,26 +623,19 @@
     "cross_sell": {
       "type": "sk-lp-cross-sell",
       "blocks": {
-        "product_card_P6xLYc": {
-          "type": "product_card",
-          "settings": {
-            "product": "skinora-radiance-neck",
-            "eyebrow_tag": "HALS",
-            "benefit": "Rødt og NIR-lys for fastere, mer utstrålende hud."
-          }
-        },
-        "product_card_zmEKtR": {
+        "product_card_jhnGra": {
           "type": "product_card",
           "settings": {
             "product": "skinora-radiance-face",
             "eyebrow_tag": "ANSIKT",
-            "benefit": "Rødt og NIR-lys for fastere, mer utstrålende hud."
+            "show_benefit": false,
+            "benefit": "",
+            "show_price": false
           }
         }
       },
       "block_order": [
-        "cs_face",
-        "cs_neck"
+        "product_card_jhnGra"
       ],
       "settings": {
         "eyebrow": "OPPDAG MER",
