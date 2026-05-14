@@ -1,65 +1,70 @@
 {%- comment -%}
   sk-lp-cross-sell.liquid
-  Editorial cross-sell product tiles for landing pages.
-  - Block-based: each "product_card" block = one tile with its own product + eyebrow tag + benefit.
+  Tight, centered cross-sell tiles for landing pages.
+  - Block-based: each "product_card" block = one tile.
   - Auto-excludes the current page's matching product (e.g. on /pages/skinora-clear, skips skinora-clear).
-  - Strict 4:5 image frame, SVG-skipping, lazy-loaded.
+  - Card shows: image (4:5) + eyebrow tag + product name + "Utforsk →".
+  - Price + benefit are hidden by default (gated behind per-block toggles).
+  - Image source: first non-SVG product image, falls back to featured_image.
+  - Background defaults to transparent so the section blends with the rest of the page.
 {%- endcomment -%}
 
 {%- liquid
-  assign bg_color = section.settings.background_color | default: '#FAF7F2'
+  assign bg_color = section.settings.background_color | default: 'transparent'
   assign current_handle = page.handle
-  assign current_product_handle = page.handle | remove: 'skinora-' | prepend: 'skinora-'
 -%}
 
 <style>
   .sk-xsell {
     background: {{ bg_color }};
-    padding: 96px 0;
+    {% if bg_color == 'transparent' or bg_color == '' %}
+    border-top: 1px solid rgba(20, 30, 55, 0.08);
+    border-bottom: 1px solid rgba(20, 30, 55, 0.08);
+    {% endif %}
     font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
     color: #1A2543;
   }
-  .sk-xsell__container {
-    max-width: 1240px;
+  .sk-xsell__inner {
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 80px 24px;
+    text-align: center;
   }
   .sk-xsell__header {
     max-width: 560px;
-    margin: 0 0 48px;
+    margin: 0 auto 40px;
   }
   .sk-xsell__eyebrow {
     font-size: 11px;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #1A2543;
+    color: #6B7280;
     font-weight: 600;
     margin: 0 0 12px;
   }
-  .sk-xsell__heading {
+  .sk-xsell__h2 {
     font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
-    font-size: clamp(28px, 4vw, 40px);
-    font-weight: 400;
-    line-height: 1.15;
+    font-size: clamp(24px, 3.2vw, 32px);
+    line-height: 1.2;
     color: #1A2543;
-    margin: 0 0 16px;
+    margin: 0 0 12px;
+    font-weight: 500;
   }
   .sk-xsell__sub {
-    font-size: 17px;
-    font-weight: 300;
-    line-height: 1.5;
+    font-size: 15px;
+    line-height: 1.55;
     color: #4A5568;
     margin: 0;
   }
 
   .sk-xsell__grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 32px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 260px));
+    gap: 24px;
     justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
   .sk-xsell__grid > li {
     display: flex;
@@ -70,14 +75,15 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 420px;
-    background: #fff;
+    max-width: 260px;
+    background: #FAFAFA;
     border: 1px solid rgba(20, 30, 55, 0.06);
-    border-radius: 20px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     text-decoration: none;
     color: inherit;
-    padding: 16px 16px 24px;
+    padding: 12px 12px 20px;
+    text-align: center;
     transition:
       transform 280ms cubic-bezier(0.4, 0, 0.2, 1),
       box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -85,15 +91,15 @@
   .sk-xsell__card:focus-visible {
     outline: 2px solid #1A2543;
     outline-offset: 4px;
-    border-radius: 22px;
+    border-radius: 18px;
   }
 
   .sk-xsell__media {
     aspect-ratio: 4 / 5;
-    border-radius: 14px;
+    border-radius: 12px;
     overflow: hidden;
-    background: linear-gradient(160deg, #EEF1F6 0%, #E2E8F0 100%);
-    margin-bottom: 20px;
+    background: linear-gradient(160deg, #F1F4F8 0%, #E5EAF2 100%);
+    margin-bottom: 16px;
   }
   .sk-xsell__media img {
     width: 100%;
@@ -109,95 +115,72 @@
     align-items: center;
     justify-content: center;
     color: #94A3B8;
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
-  .sk-xsell__body {
-    padding: 0 4px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
   .sk-xsell__tag {
-    display: inline-block;
+    display: block;
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #6B7280;
     font-weight: 500;
-    margin: 0 0 8px;
+    margin-bottom: 6px;
   }
   .sk-xsell__name {
     font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
-    font-size: clamp(18px, 1.4vw, 22px);
+    font-size: 17px;
     font-weight: 500;
     color: #1A2543;
-    margin: 0 0 8px;
+    margin: 0 0 12px;
     line-height: 1.25;
   }
   .sk-xsell__benefit {
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.5;
     color: #4A5568;
-    margin: 0 0 16px;
-    flex: 1;
+    margin: 0 0 10px;
   }
   .sk-xsell__price {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     color: #1A2543;
     margin: 0 0 12px;
   }
   .sk-xsell__cta {
     display: inline-block;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     color: #1A2543;
     letter-spacing: 0.02em;
+    padding-bottom: 2px;
+    border-bottom: 1px solid currentColor;
     transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .sk-xsell__section-cta-wrap {
-    text-align: center;
-    margin-top: 48px;
-  }
   .sk-xsell__section-cta {
     display: inline-block;
-    position: relative;
-    color: #1A2543;
+    margin-top: 32px;
+    font-size: 14px;
     font-weight: 600;
-    font-size: 15px;
+    color: #1A2543;
     text-decoration: none;
-    padding-bottom: 4px;
-  }
-  .sk-xsell__section-cta::after {
-    content: '';
-    position: absolute;
-    left: 25%;
-    bottom: 0;
-    width: 50%;
-    height: 1px;
-    background: #1A2543;
-    transition: left 280ms cubic-bezier(0.4, 0, 0.2, 1), width 280ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .sk-xsell__section-cta:hover::after,
-  .sk-xsell__section-cta:focus-visible::after {
-    left: 0;
-    width: 100%;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
   }
 
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     .sk-xsell__card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 28px rgba(20, 30, 55, 0.10);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 22px rgba(20, 30, 55, 0.08);
     }
     .sk-xsell__card:hover .sk-xsell__media img {
       transform: scale(1.04);
     }
     .sk-xsell__card:hover .sk-xsell__cta {
-      transform: translateX(4px);
+      transform: translateX(3px);
     }
   }
 
@@ -215,30 +198,46 @@
     }
   }
 
-  @media (max-width: 749px) {
-    .sk-xsell {
-      padding: 64px 0;
-    }
-    .sk-xsell__container {
-      padding: 0 16px;
+  @media (max-width: 640px) {
+    .sk-xsell__inner {
+      padding: 56px 16px;
     }
     .sk-xsell__header {
-      text-align: center;
-      margin: 0 auto 32px;
+      margin-bottom: 28px;
     }
     .sk-xsell__grid {
-      gap: 20px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      justify-content: stretch;
+    }
+    .sk-xsell__card {
+      max-width: none;
+      padding: 10px 10px 16px;
+      border-radius: 14px;
+    }
+    .sk-xsell__media {
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+    .sk-xsell__name {
+      font-size: 15px;
+    }
+    .sk-xsell__tag {
+      font-size: 10px;
+    }
+    .sk-xsell__cta {
+      font-size: 12px;
     }
   }
 </style>
 
 <section class="sk-xsell" aria-labelledby="sk-xsell-heading">
-  <div class="sk-xsell__container">
+  <div class="sk-xsell__inner">
     <div class="sk-xsell__header">
       {%- if section.settings.eyebrow != blank -%}
         <p class="sk-xsell__eyebrow">{{ section.settings.eyebrow }}</p>
       {%- endif -%}
-      <h2 id="sk-xsell-heading" class="sk-xsell__heading">{{ section.settings.heading }}</h2>
+      <h2 id="sk-xsell-heading" class="sk-xsell__h2">{{ section.settings.heading }}</h2>
       {%- if section.settings.subheading != blank -%}
         <p class="sk-xsell__sub">{{ section.settings.subheading }}</p>
       {%- endif -%}
@@ -249,73 +248,65 @@
         {%- if block.type != 'product_card' -%}{%- continue -%}{%- endif -%}
         {%- assign p = block.settings.product -%}
         {%- if p == blank -%}{%- continue -%}{%- endif -%}
-        {%- if p.handle == current_handle or p.handle == current_product_handle -%}{%- continue -%}{%- endif -%}
+        {%- if p.handle == current_handle -%}{%- continue -%}{%- endif -%}
 
-        {%- comment -%} Pick a real raster image, skipping SVG line-art {%- endcomment -%}
+        {%- comment -%} First non-SVG image, fall back to featured_image {%- endcomment -%}
         {%- assign card_img = blank -%}
-        {%- assign feat_src = p.featured_image.src | default: '' -%}
-        {%- assign feat_is_svg = false -%}
-        {%- if feat_src contains '.svg' -%}{%- assign feat_is_svg = true -%}{%- endif -%}
-        {%- if p.featured_image and feat_is_svg == false -%}
-          {%- assign card_img = p.featured_image -%}
-        {%- endif -%}
+        {%- for img in p.images -%}
+          {%- assign img_src = img.src | downcase -%}
+          {%- unless img_src contains '.svg' -%}
+            {%- assign card_img = img -%}
+            {%- break -%}
+          {%- endunless -%}
+        {%- endfor -%}
         {%- if card_img == blank -%}
-          {%- for media in p.media -%}
-            {%- assign m_src = media.src | default: '' -%}
-            {%- assign m_is_svg = false -%}
-            {%- if m_src contains '.svg' -%}{%- assign m_is_svg = true -%}{%- endif -%}
-            {%- if media.media_type == 'image' and m_is_svg == false -%}
-              {%- assign card_img = media -%}
-              {%- break -%}
-            {%- endif -%}
-          {%- endfor -%}
+          {%- assign card_img = p.featured_image -%}
         {%- endif -%}
 
         {%- assign tag_label = block.settings.eyebrow_tag -%}
-        {%- assign benefit_text = block.settings.benefit -%}
-        {%- assign card_alt = p.title | append: ' – ' | append: benefit_text | default: p.title -%}
-        {%- capture card_aria -%}Utforsk {{ p.title }} – fra {{ p.price | money }}{%- endcapture -%}
+        {%- capture card_aria -%}Utforsk {{ p.title }}{%- endcapture -%}
 
         <li {{ block.shopify_attributes }}>
           <a href="{{ p.url }}" class="sk-xsell__card" aria-label="{{ card_aria | escape }}">
             <div class="sk-xsell__media">
               {%- if card_img != blank -%}
                 <img
-                  src="{{ card_img | image_url: width: 800 }}"
-                  srcset="{{ card_img | image_url: width: 400 }} 400w, {{ card_img | image_url: width: 800 }} 800w, {{ card_img | image_url: width: 1200 }} 1200w"
-                  sizes="(min-width: 768px) 380px, 90vw"
-                  width="800"
-                  height="1000"
+                  src="{{ card_img | image_url: width: 600 }}"
+                  srcset="{{ card_img | image_url: width: 300 }} 300w, {{ card_img | image_url: width: 600 }} 600w, {{ card_img | image_url: width: 900 }} 900w"
+                  sizes="(min-width: 768px) 260px, 45vw"
+                  width="600"
+                  height="750"
                   loading="lazy"
                   decoding="async"
-                  alt="{{ card_alt | escape }}"
+                  alt="{{ p.title | escape }}"
                 >
               {%- else -%}
                 <span class="sk-xsell__media-placeholder">{{ p.title }}</span>
               {%- endif -%}
             </div>
-            <div class="sk-xsell__body">
-              {%- if tag_label != blank -%}
-                <span class="sk-xsell__tag" aria-hidden="true">{{ tag_label }}</span>
-              {%- endif -%}
-              <h3 class="sk-xsell__name">{{ p.title }}</h3>
-              {%- if benefit_text != blank -%}
-                <p class="sk-xsell__benefit">{{ benefit_text }}</p>
-              {%- endif -%}
+            {%- if tag_label != blank -%}
+              <span class="sk-xsell__tag" aria-hidden="true">{{ tag_label }}</span>
+            {%- endif -%}
+            <h3 class="sk-xsell__name">{{ p.title }}</h3>
+            {%- if block.settings.show_benefit and block.settings.benefit != blank -%}
+              <p class="sk-xsell__benefit">{{ block.settings.benefit }}</p>
+            {%- endif -%}
+            {%- if block.settings.show_price -%}
               <p class="sk-xsell__price">fra {{ p.price | money }}</p>
-              <span class="sk-xsell__cta">Utforsk →</span>
-            </div>
+            {%- endif -%}
+            <span class="sk-xsell__cta">Utforsk →</span>
           </a>
         </li>
       {%- endfor -%}
     </ul>
 
     {%- if section.settings.show_section_cta and section.settings.section_cta_text != blank -%}
-      <div class="sk-xsell__section-cta-wrap">
-        <a href="{{ section.settings.section_cta_url | default: '/collections/all' }}" class="sk-xsell__section-cta">
-          {{ section.settings.section_cta_text }} →
-        </a>
-      </div>
+      <a
+        href="{{ section.settings.section_cta_url | default: '/collections/all' }}"
+        class="sk-xsell__section-cta"
+      >
+        {{ section.settings.section_cta_text }} →
+      </a>
     {%- endif -%}
   </div>
 </section>
@@ -378,7 +369,7 @@
       "type": "color",
       "id": "background_color",
       "label": "Bakgrunnsfarge",
-      "default": "#FAF7F2"
+      "info": "La st\u00e5 tom for transparent (anbefales \u2014 seksjonen flyter med resten av siden)."
     }
   ],
   "blocks": [
@@ -398,10 +389,25 @@
           "default": "ANSIKT"
         },
         {
+          "type": "header",
+          "content": "Valgfri tilleggsinfo"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_benefit",
+          "label": "Vis fordeltekst",
+          "default": false
+        },
+        {
           "type": "text",
           "id": "benefit",
-          "label": "Kort fordel (1 setning)",
-          "default": "Rødt og NIR-lys for fastere, mer utstrålende hud."
+          "label": "Kort fordel (1 setning)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_price",
+          "label": "Vis pris",
+          "default": false
         }
       ]
     }
@@ -410,10 +416,7 @@
     {
       "name": "LP Cross-sell",
       "category": "Skinora",
-      "blocks": [
-        { "type": "product_card" },
-        { "type": "product_card" }
-      ]
+      "blocks": [{ "type": "product_card" }, { "type": "product_card" }]
     }
   ]
 }

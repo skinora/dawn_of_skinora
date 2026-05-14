@@ -641,8 +641,8 @@
         }
       },
       "block_order": [
-        "product_card_P6xLYc",
-        "product_card_zmEKtR"
+        "cs_face",
+        "cs_neck"
       ],
       "settings": {
         "eyebrow": "OPPDAG MER",
@@ -651,7 +651,7 @@
         "show_section_cta": true,
         "section_cta_text": "Se alle Skinora-produkter",
         "section_cta_url": "shopify://collections/all",
-        "background_color": "#faf7f2"
+        "background_color": ""
       }
     },
     "sticky_buy_bar": {
