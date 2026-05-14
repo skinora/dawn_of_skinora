@@ -372,15 +372,65 @@
     "tech_specs": {
       "type": "sk-lp-tech-specs",
       "blocks": {
-        "spec_1": { "type": "spec", "settings": { "label": "LED-bølgelengder", "value": "630 nm (rødt) + 830 nm (nær-infrarødt)" } },
-        "spec_2": { "type": "spec", "settings": { "label": "Antall LED-er", "value": "[CONFIRM]" } },
-        "spec_3": { "type": "spec", "settings": { "label": "Behandlingstid", "value": "10 minutter per økt" } },
-        "spec_4": { "type": "spec", "settings": { "label": "Batteri", "value": "USB-C oppladbart, ca. 20 behandlinger per lading" } },
-        "spec_5": { "type": "spec", "settings": { "label": "Sertifisering", "value": "CE" } },
-        "spec_6": { "type": "spec", "settings": { "label": "Materiale", "value": "Medisinsk silikon" } },
-        "spec_7": { "type": "spec", "settings": { "label": "Vekt", "value": "[CONFIRM]" } }
+        "spec_1": {
+          "type": "spec",
+          "settings": {
+            "label": "LED-bølgelengder",
+            "value": "630 nm (rødt) + 830 nm (nær-infrarødt) + 1072 nm (dypt nær-infrarødt)"
+          }
+        },
+        "spec_2": {
+          "type": "spec",
+          "settings": {
+            "label": "Antall LED-er",
+            "value": "[CONFIRM]"
+          }
+        },
+        "spec_3": {
+          "type": "spec",
+          "settings": {
+            "label": "Behandlingstid",
+            "value": "10 minutter per økt"
+          }
+        },
+        "spec_4": {
+          "type": "spec",
+          "settings": {
+            "label": "Batteri",
+            "value": "USB-C oppladbart, ca. 20 behandlinger per lading"
+          }
+        },
+        "spec_5": {
+          "type": "spec",
+          "settings": {
+            "label": "Sertifisering",
+            "value": "CE"
+          }
+        },
+        "spec_6": {
+          "type": "spec",
+          "settings": {
+            "label": "Materiale",
+            "value": "Medisinsk silikon"
+          }
+        },
+        "spec_7": {
+          "type": "spec",
+          "settings": {
+            "label": "Vekt",
+            "value": "[CONFIRM]"
+          }
+        }
       },
-      "block_order": ["spec_1", "spec_2", "spec_3", "spec_4", "spec_5", "spec_6", "spec_7"],
+      "block_order": [
+        "spec_1",
+        "spec_2",
+        "spec_3",
+        "spec_4",
+        "spec_5",
+        "spec_6",
+        "spec_7"
+      ],
       "settings": {
         "heading": "Tekniske spesifikasjoner"
       }
@@ -611,18 +661,89 @@
     "skinora_faq": {
       "type": "skinora-faq",
       "blocks": {
-        "sfaq_1": { "type": "faq", "settings": { "question": "Hvor raskt ser jeg resultater?", "answer": "De fleste merker forskjell etter 3–4 uker med jevn bruk 3–5 ganger i uken. Tydelige resultater på fine linjer og hudtone kommer typisk mellom uke 6 og 12." } },
-        "sfaq_2": { "type": "faq", "settings": { "question": "Hvor ofte bør jeg bruke masken?", "answer": "Vi anbefaler 10 minutter, 3–5 ganger i uken. Daglig bruk er trygt, men ikke nødvendig." } },
-        "sfaq_3": { "type": "faq", "settings": { "question": "Er LED-lys trygt for huden?", "answer": "Ja. Rødt og nær-infrarødt LED-lys er ikke-invasivt, inneholder ingen UV-stråler, og brukes daglig av hudklinikker over hele verden." } },
-        "sfaq_4": { "type": "faq", "settings": { "question": "Kan jeg bruke masken sammen med retinol eller syrer?", "answer": "Ja, men vi anbefaler å bruke LED-masken på ren, tørr hud før du legger på aktive serum eller krem." } },
-        "sfaq_5": { "type": "faq", "settings": { "question": "Fungerer den på rosacea og rødhet?", "answer": "Mange opplever at rødt LED-lys kan dempe rødhet over tid. Start forsiktig og lytt til huden." } },
-        "sfaq_6": { "type": "faq", "settings": { "question": "Når bør jeg IKKE bruke masken?", "answer": "Hvis du er gravid, bruker lysømfintlige medisiner, har epilepsi, eller nylig har gjort laser/peeling – snakk med lege først." } },
-        "sfaq_7": { "type": "faq", "settings": { "question": "Hva er forskjellen på Skinora og dyrere merker som CurrentBody og Omnilux?", "answer": "Samme bølgelengder og medisinsk grade LED, til en mer tilgjengelig pris – med norsk kundeservice og 60 dagers fornøydgaranti." } },
-        "sfaq_8": { "type": "faq", "settings": { "question": "Hvor lang er leveringstiden?", "answer": "2–4 virkedager i Norge. Gratis frakt på alle ordrer." } },
-        "sfaq_9": { "type": "faq", "settings": { "question": "Hva er fornøydgarantien?", "answer": "60 dager. Hvis du ikke er fornøyd, sender du masken tilbake og får pengene tilbake. Ingen spørsmål." } },
-        "sfaq_10": { "type": "faq", "settings": { "question": "Hvor mange behandlinger holder batteriet?", "answer": "Cirka 20 fulle behandlinger per lading via USB-C." } }
+        "sfaq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor raskt ser jeg resultater?",
+            "answer": "De fleste merker forskjell etter 3–4 uker med jevn bruk 3–5 ganger i uken. Tydelige resultater på fine linjer og hudtone kommer typisk mellom uke 6 og 12."
+          }
+        },
+        "sfaq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor ofte bør jeg bruke masken?",
+            "answer": "Vi anbefaler 10 minutter, 3–5 ganger i uken. Daglig bruk er trygt, men ikke nødvendig."
+          }
+        },
+        "sfaq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Er LED-lys trygt for huden?",
+            "answer": "Ja. Rødt og nær-infrarødt LED-lys er ikke-invasivt, inneholder ingen UV-stråler, og brukes daglig av hudklinikker over hele verden."
+          }
+        },
+        "sfaq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Kan jeg bruke masken sammen med retinol eller syrer?",
+            "answer": "Ja, men vi anbefaler å bruke LED-masken på ren, tørr hud før du legger på aktive serum eller krem."
+          }
+        },
+        "sfaq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Fungerer den på rosacea og rødhet?",
+            "answer": "Mange opplever at rødt LED-lys kan dempe rødhet over tid. Start forsiktig og lytt til huden."
+          }
+        },
+        "sfaq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "Når bør jeg IKKE bruke masken?",
+            "answer": "Hvis du er gravid, bruker lysømfintlige medisiner, har epilepsi, eller nylig har gjort laser/peeling – snakk med lege først."
+          }
+        },
+        "sfaq_7": {
+          "type": "faq",
+          "settings": {
+            "question": "Hva er forskjellen på Skinora og dyrere merker som CurrentBody og Omnilux?",
+            "answer": "Samme bølgelengder og medisinsk grade LED, til en mer tilgjengelig pris – med norsk kundeservice og 60 dagers fornøydgaranti."
+          }
+        },
+        "sfaq_8": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor lang er leveringstiden?",
+            "answer": "2–4 virkedager i Norge. Gratis frakt på alle ordrer."
+          }
+        },
+        "sfaq_9": {
+          "type": "faq",
+          "settings": {
+            "question": "Hva er fornøydgarantien?",
+            "answer": "60 dager. Hvis du ikke er fornøyd, sender du masken tilbake og får pengene tilbake. Ingen spørsmål."
+          }
+        },
+        "sfaq_10": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor mange behandlinger holder batteriet?",
+            "answer": "Cirka 20 fulle behandlinger per lading via USB-C."
+          }
+        }
       },
-      "block_order": ["sfaq_1", "sfaq_2", "sfaq_3", "sfaq_4", "sfaq_5", "sfaq_6", "sfaq_7", "sfaq_8", "sfaq_9", "sfaq_10"],
+      "block_order": [
+        "sfaq_1",
+        "sfaq_2",
+        "sfaq_3",
+        "sfaq_4",
+        "sfaq_5",
+        "sfaq_6",
+        "sfaq_7",
+        "sfaq_8",
+        "sfaq_9",
+        "sfaq_10"
+      ],
       "settings": {
         "heading": "Ofte stilte spørsmål"
       }
