@@ -623,6 +623,16 @@
     "cross_sell": {
       "type": "sk-lp-cross-sell",
       "blocks": {
+        "product_card_bYabFG": {
+          "type": "product_card",
+          "settings": {
+            "product": "",
+            "eyebrow_tag": "ANSIKT",
+            "show_benefit": false,
+            "benefit": "",
+            "show_price": false
+          }
+        },
         "product_card_fwAQPc": {
           "type": "product_card",
           "settings": {
@@ -645,6 +655,7 @@
         }
       },
       "block_order": [
+        "product_card_bYabFG",
         "product_card_fwAQPc",
         "product_card_jhnGra"
       ],
@@ -654,7 +665,7 @@
         "subheading": "Bygg ditt komplette LED-rituale – designet for ansikt, hals og kropp.",
         "show_section_cta": true,
         "section_cta_text": "Se alle Skinora-produkter",
-        "section_cta_url": "shopify://collections/all",
+        "section_cta_url": "shopify://collections/bestselgere-fra-skinora®-premium-led-masker",
         "background_color": ""
       }
     },
