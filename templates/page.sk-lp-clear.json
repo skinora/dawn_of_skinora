@@ -623,6 +623,14 @@
     "cross_sell": {
       "type": "sk-lp-cross-sell",
       "blocks": {
+        "product_card_P6xLYc": {
+          "type": "product_card",
+          "settings": {
+            "product": "skinora-radiance-neck",
+            "eyebrow_tag": "HALS",
+            "benefit": "Rødt og NIR-lys for fastere, mer utstrålende hud."
+          }
+        },
         "product_card_zmEKtR": {
           "type": "product_card",
           "settings": {
@@ -633,6 +641,7 @@
         }
       },
       "block_order": [
+        "product_card_P6xLYc",
         "product_card_zmEKtR"
       ],
       "settings": {
