@@ -366,7 +366,9 @@
             "author": "Sondre B., 29, Oslo",
             "concern_tag": "Voksenakne, post-akne-arr og rødhet",
             "usage_tag": "",
+            "before_image": "shopify://shop_images/kundebildet_for.png",
             "before_alt": "Før behandling med Skinora Clear",
+            "after_image": "shopify://shop_images/kundebilde_etter.png",
             "after_alt": "Etter 8 uker med Skinora Clear",
             "before_label": "Før",
             "after_label": "Etter"
