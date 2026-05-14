@@ -351,9 +351,9 @@
             "author": "Linnea S., 26, Stavanger",
             "concern_tag": "PANNE & T-SONE",
             "usage_tag": "",
-            "image": "shopify://shop_images/panne_tsone_kviser_for.png",
-            "before_image": "shopify://shop_images/samme_person_kviser_er_borte_etter_bruk.png",
+            "before_image": "shopify://shop_images/panne_tsone_kviser_for.png",
             "before_alt": "Før behandling med Skinora Clear",
+            "after_image": "shopify://shop_images/samme_person_kviser_er_borte_etter_bruk.png",
             "after_alt": "Etter 8 uker med Skinora Clear",
             "before_label": "Før",
             "after_label": "Etter"
