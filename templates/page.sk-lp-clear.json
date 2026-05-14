@@ -426,7 +426,9 @@
             "author": "Nora T., 25, Drammen",
             "concern_tag": "T-sone, nærkontakt-skam · 10 min, 3x/uke",
             "usage_tag": "",
+            "before_image": "shopify://shop_images/kunde_for_bildet.webp",
             "before_alt": "Før behandling med Skinora Clear",
+            "after_image": "shopify://shop_images/kundebildet_etter.webp",
             "after_alt": "Etter 8 uker med Skinora Clear",
             "before_label": "Før",
             "after_label": "Etter"
