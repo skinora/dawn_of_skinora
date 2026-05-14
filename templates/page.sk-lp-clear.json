@@ -344,6 +344,15 @@
     "reviews": {
       "type": "sk-lp-reviews",
       "blocks": {
+        "review_CC7jeb": {
+          "type": "review",
+          "settings": {
+            "text": "Jeg har slitt med smertefulle kuler langs kjeven og haken siden jeg var 24 — alltid verst rett før mensen, alltid på samme sted. Har prøvd antibiotika, p-piller, retinol, klinikkbehandlinger. Noe hjalp en stund, så kom det tilbake. Etter åtte uker med Skinora® Clear, 4 ganger i uken, er det stille på huden min. Jeg våkner ikke til en ny verkende kul. Det høres så enkelt ut, men det har endret hverdagen min.",
+            "author": "Marte H., 34, Trondheim",
+            "concern_tag": "Smertefulle kuler langs kjeven",
+            "usage_tag": ""
+          }
+        },
         "rev_1": {
           "type": "review",
           "settings": {
@@ -373,6 +382,7 @@
         }
       },
       "block_order": [
+        "review_CC7jeb",
         "rev_1",
         "rev_2",
         "rev_3"
