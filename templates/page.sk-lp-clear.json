@@ -411,7 +411,9 @@
             "author": "Emilie K., 34, Oslo",
             "concern_tag": "Tørr, uren hud · 10 min, 4x/uke",
             "usage_tag": "",
+            "before_image": "shopify://shop_images/acneutsatthud_bildet_for.png",
             "before_alt": "Før behandling med Skinora Clear",
+            "after_image": "shopify://shop_images/kundebildet_etter.jpg",
             "after_alt": "Etter 8 uker med Skinora Clear",
             "before_label": "Før",
             "after_label": "Etter"
