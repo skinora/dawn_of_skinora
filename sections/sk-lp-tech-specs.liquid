@@ -1,0 +1,131 @@
+{%- comment -%}
+  sk-lp-tech-specs.liquid
+  Technical specifications section for Skinora Radiance Face.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .sk-tech-specs {
+    padding: 48px 0;
+  }
+  .sk-tech-specs__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .sk-tech-specs__heading {
+    font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: #3a3448;
+    text-align: center;
+    margin: 0 0 32px;
+  }
+  .sk-tech-specs__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
+    font-size: 15px;
+  }
+  .sk-tech-specs__table tr {
+    border-bottom: 1px solid #e0dcd6;
+  }
+  .sk-tech-specs__table td {
+    padding: 14px 12px;
+    vertical-align: top;
+  }
+  .sk-tech-specs__table td:first-child {
+    font-weight: 600;
+    color: #30273e;
+    width: 45%;
+  }
+  .sk-tech-specs__table td:last-child {
+    font-weight: 300;
+    color: #5f5f5f;
+  }
+  @media (max-width: 749px) {
+    .sk-tech-specs__heading {
+      font-size: 24px;
+    }
+    .sk-tech-specs__table {
+      font-size: 14px;
+    }
+    .sk-tech-specs__table td {
+      padding: 12px 8px;
+    }
+  }
+</style>
+
+<!-- SECTION: Technical Specifications -->
+<div class="sk-lp">
+  <section class="sk-tech-specs">
+    <div class="sk-tech-specs__container">
+      <h2 class="sk-tech-specs__heading">{{ section.settings.heading }}</h2>
+      <table class="sk-tech-specs__table">
+        <tbody>
+          {%- for block in section.blocks -%}
+            <tr {{ block.shopify_attributes }}>
+              <td>{{ block.settings.label }}</td>
+              <td>{{ block.settings.value }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LP Tech Specs",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Tekniske spesifikasjoner"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Spesifikasjon",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Egenskap"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Verdi"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Tech Specs",
+      "blocks": [
+        {
+          "type": "spec",
+          "settings": { "label": "LED-bølgelengder", "value": "630 nm (rødt) + 830 nm (nær-infrarødt)" }
+        },
+        { "type": "spec", "settings": { "label": "Antall LED-er", "value": "[CONFIRM]" } },
+        { "type": "spec", "settings": { "label": "Behandlingstid", "value": "10 minutter per økt" } },
+        {
+          "type": "spec",
+          "settings": { "label": "Batteri", "value": "USB-C oppladbart, ca. 20 behandlinger per lading" }
+        },
+        { "type": "spec", "settings": { "label": "Sertifisering", "value": "CE" } },
+        { "type": "spec", "settings": { "label": "Materiale", "value": "Medisinsk silikon" } },
+        { "type": "spec", "settings": { "label": "Vekt", "value": "[CONFIRM]" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

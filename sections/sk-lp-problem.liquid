@@ -47,10 +47,11 @@
             src="{{ section.settings.image | image_url: width: 800 }}"
             srcset="{{ section.settings.image | image_url: width: 400 }} 400w, {{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 800 }} 800w"
             sizes="(max-width: 749px) 100vw, 50vw"
-            alt="{{ section.settings.image.alt | default: section.settings.heading }}"
+            alt="{{ section.settings.image.alt | default: 'Kvinne bruker Skinora Radiance Face LED-maske hjemme' }}"
             width="{{ section.settings.image.width }}"
             height="{{ section.settings.image.height }}"
             loading="lazy"
+            decoding="async"
             class="lp-problem__image"
           >
         </div>

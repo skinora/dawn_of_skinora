@@ -41,6 +41,7 @@
     {%- endcomment -%}
 
     <link rel="preconnect" href="https://use.typekit.net" crossorigin>
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     {%- comment -%}
       p.typekit.net preconnect removed — only used by Adobe tracking beacon which loads
       after window.load via kit CSS. Early preconnect wasted a connection slot.
@@ -176,25 +177,115 @@
       >
     {%- endif -%}
 
-    <title>
-      {{ page_title }}
-      {%- if current_tags %}
-        &ndash; tagged "{{ current_tags | join: ', ' }}"
-      {%- endif -%}
-      {%- if current_page != 1 %}
-        &ndash; Page {{ current_page -}}
-      {%- endif -%}
-      {%- unless page_title contains shop.name %}
-        &ndash; {{ shop.name -}}
-      {%- endunless -%}
-    </title>
+    {%- if request.page_type == 'page' and page.handle == 'skinora-radiance-face' -%}
+      <title>LED-maske for ansiktet | Skinora Radiance Face – Profesjonell hudpleie hjemme</title>
+      <meta
+        name="description"
+        content="Få klinikkresultat hjemme på 10 min/dag. Norsk LED-maske, 4,8★ av 102 anmeldelser. 60 dagers fornøydgaranti, gratis frakt. Test risikofritt."
+      >
+    {%- else -%}
+      <title>
+        {{ page_title }}
+        {%- if current_tags %}
+          &ndash; tagged "{{ current_tags | join: ', ' }}"
+        {%- endif -%}
+        {%- if current_page != 1 %}
+          &ndash; Page {{ current_page -}}
+        {%- endif -%}
+        {%- unless page_title contains shop.name %}
+          &ndash; {{ shop.name -}}
+        {%- endunless -%}
+      </title>
 
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}">
-    {% endif %}
+      {% if page_description %}
+        <meta name="description" content="{{ page_description | escape }}">
+      {% endif %}
+    {%- endif -%}
 
     {% render 'meta-tags' %}
     {% render 'seo-breadcrumbs-jsonld' %}
+
+    {%- if request.page_type == 'page' and page.handle == 'skinora-radiance-face' -%}
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "Skinora Radiance Face",
+          "image": [
+            "https://www.skinora.no/cdn/shop/files/skinora-radiance-face-1.jpg",
+            "https://www.skinora.no/cdn/shop/files/skinora-radiance-face-2.jpg"
+          ],
+          "description": "LED-maske for ansiktet med rødt og nær-infrarødt lys. Profesjonell hudpleie hjemme på 10 minutter om dagen.",
+          "sku": "SKN-RF-001",
+          "brand": { "@type": "Brand", "name": "Skinora" },
+          "offers": {
+            "@type": "Offer",
+            "url": "https://www.skinora.no/pages/skinora-radiance-face",
+            "priceCurrency": "NOK",
+            "price": "4690.00",
+            "availability": "https://schema.org/InStock",
+            "itemCondition": "https://schema.org/NewCondition",
+            "shippingDetails": {
+              "@type": "OfferShippingDetails",
+              "shippingRate": { "@type": "MonetaryAmount", "value": "0", "currency": "NOK" },
+              "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "NO" }
+            },
+            "hasMerchantReturnPolicy": {
+              "@type": "MerchantReturnPolicy",
+              "applicableCountry": "NO",
+              "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+              "merchantReturnDays": 60,
+              "returnMethod": "https://schema.org/ReturnByMail",
+              "returnFees": "https://schema.org/FreeReturn"
+            }
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "102",
+            "bestRating": "5"
+          },
+          "review": [
+            {
+              "@type": "Review",
+              "author": { "@type": "Person", "name": "Wenche S." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+              "reviewBody": "Etter 6 uker merker jeg virkelig forskjell på hudtonen. Huden ser friskere ut og pigmentflekkene er blitt mindre synlige."
+            },
+            {
+              "@type": "Review",
+              "author": { "@type": "Person", "name": "Kari M." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+              "reviewBody": "Bruker den foran TV hver kveld. Enkelt, behagelig og huden kjennes mykere."
+            },
+            {
+              "@type": "Review",
+              "author": { "@type": "Person", "name": "Tone H." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+              "reviewBody": "Var skeptisk, men etter 4 uker ser jeg tydelig mer glød. Huden føles fastere og fine linjene mindre synlige."
+            },
+            {
+              "@type": "Review",
+              "author": { "@type": "Person", "name": "Sissel R." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+              "reviewBody": "Etter fem uker ser jeg at fine linjer rundt øynene har blitt mykere. Huden kjennes fastere og mer levende."
+            },
+            {
+              "@type": "Review",
+              "author": { "@type": "Person", "name": "Anette L." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+              "reviewBody": "Mørke ringer er merkbart lysere etter en måned, og huden ser mye ferskere ut."
+            },
+            {
+              "@type": "Review",
+              "author": { "@type": "Person", "name": "Marte K." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+              "reviewBody": "Etter seks uker er rødheten i kinnene roligere og hudtonen jevnere."
+            }
+          ]
+        }
+      </script>
+    {%- endif -%}
 
     {%- comment -%}
       Global Brand + Site JSON-LD (@graph)

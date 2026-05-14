@@ -1,0 +1,226 @@
+{%- comment -%}
+  skinora-faq.liquid
+  Accessible FAQ section using native <details>/<summary> elements.
+  Includes FAQPage JSON-LD structured data.
+  Designed specifically for /pages/skinora-radiance-face.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .sk-faq {
+    padding: 64px 0;
+    background: #f8f8f8;
+  }
+  .sk-faq__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .sk-faq__heading {
+    font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
+    font-size: 34px;
+    font-weight: 400;
+    color: #3a3448;
+    text-align: center;
+    margin: 0 0 40px;
+  }
+  .sk-faq__item {
+    border-bottom: 1px solid #e0dcd6;
+  }
+  .sk-faq__item summary {
+    font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #30273e;
+    padding: 20px 0;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .sk-faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+  .sk-faq__item summary::after {
+    content: '+';
+    font-size: 22px;
+    font-weight: 300;
+    color: #5f5f5f;
+    transition: transform 0.2s ease;
+  }
+  .sk-faq__item[open] summary::after {
+    content: '−';
+  }
+  .sk-faq__answer {
+    font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: #5f5f5f;
+    line-height: 1.7;
+    padding: 0 0 20px;
+  }
+  @media (max-width: 749px) {
+    .sk-faq {
+      padding: 48px 0;
+    }
+    .sk-faq__heading {
+      font-size: 28px;
+      margin-bottom: 28px;
+    }
+  }
+</style>
+
+<!-- SECTION: FAQ (details/summary) -->
+<div class="sk-lp">
+  <section class="sk-faq">
+    <div class="sk-faq__container">
+      <h2 class="sk-faq__heading">{{ section.settings.heading }}</h2>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="sk-faq__list">
+          {%- for block in section.blocks -%}
+            <details class="sk-faq__item" {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.question }}</summary>
+              <div class="sk-faq__answer">{{ block.settings.answer }}</div>
+            </details>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+{%- comment -%} FAQPage JSON-LD structured data {%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ block.settings.answer | strip_html | json }}
+            }
+          }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Skinora FAQ",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Ofte stilte spørsmål"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ-spørsmål",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Spørsmål"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Svar"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Skinora FAQ",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor raskt ser jeg resultater?",
+            "answer": "De fleste merker forskjell etter 3–4 uker med jevn bruk 3–5 ganger i uken. Tydelige resultater på fine linjer og hudtone kommer typisk mellom uke 6 og 12."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor ofte bør jeg bruke masken?",
+            "answer": "Vi anbefaler 10 minutter, 3–5 ganger i uken. Daglig bruk er trygt, men ikke nødvendig."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Er LED-lys trygt for huden?",
+            "answer": "Ja. Rødt og nær-infrarødt LED-lys er ikke-invasivt, inneholder ingen UV-stråler, og brukes daglig av hudklinikker over hele verden."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Kan jeg bruke masken sammen med retinol eller syrer?",
+            "answer": "Ja, men vi anbefaler å bruke LED-masken på ren, tørr hud før du legger på aktive serum eller krem."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Fungerer den på rosacea og rødhet?",
+            "answer": "Mange opplever at rødt LED-lys kan dempe rødhet over tid. Start forsiktig og lytt til huden."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Når bør jeg IKKE bruke masken?",
+            "answer": "Hvis du er gravid, bruker lysømfintlige medisiner, har epilepsi, eller nylig har gjort laser/peeling – snakk med lege først."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Hva er forskjellen på Skinora og dyrere merker som CurrentBody og Omnilux?",
+            "answer": "Samme bølgelengder og medisinsk grade LED, til en mer tilgjengelig pris – med norsk kundeservice og 60 dagers fornøydgaranti."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor lang er leveringstiden?",
+            "answer": "2–4 virkedager i Norge. Gratis frakt på alle ordrer."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Hva er fornøydgarantien?",
+            "answer": "60 dager. Hvis du ikke er fornøyd, sender du masken tilbake og får pengene tilbake. Ingen spørsmål."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor mange behandlinger holder batteriet?",
+            "answer": "Cirka 20 fulle behandlinger per lading via USB-C."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

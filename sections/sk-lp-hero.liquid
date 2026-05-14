@@ -31,6 +31,26 @@
   <section class="lp-hero">
     <div class="lp-hero__grid">
       <div class="lp-hero__content">
+        {%- comment -%} Trust seal badge — 60 dagers fornøydgaranti {%- endcomment -%}
+        <div class="lp-hero__trust-seal" aria-hidden="false">
+          <svg
+            width="80"
+            height="80"
+            viewBox="0 0 80 80"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="60 dagers fornøydgaranti"
+          >
+            <circle cx="40" cy="40" r="38" stroke="#30273e" stroke-width="2" fill="#fff"/>
+            <circle cx="40" cy="40" r="34" stroke="#d4a843" stroke-width="1.5" fill="none"/>
+            <text x="40" y="32" text-anchor="middle" font-family="sofia-pro, sans-serif" font-size="10" font-weight="600" fill="#30273e">60 DAGER</text>
+            <text x="40" y="46" text-anchor="middle" font-family="sofia-pro, sans-serif" font-size="8" font-weight="400" fill="#5f5f5f">FORNØYD-</text>
+            <text x="40" y="57" text-anchor="middle" font-family="sofia-pro, sans-serif" font-size="8" font-weight="400" fill="#5f5f5f">GARANTI</text>
+            <path d="M32 64 L40 68 L48 64" stroke="#d4a843" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+
         {%- if section.settings.eyebrow != blank -%}
           <p class="lp-eyebrow">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
@@ -108,9 +128,18 @@
 
         {%- comment -%} Urgency indicator {%- endcomment -%}
         {%- if section.settings.show_urgency and section.settings.urgency_text != blank -%}
-          <p class="lp-urgency-hero">
-            {{ section.settings.urgency_text }}
-          </p>
+          {%- assign sk_qty = sk_lp_variant.inventory_quantity -%}
+          {%- if sk_qty != blank and sk_qty > 0 and sk_qty < 50 -%}
+            <p class="lp-urgency-hero">⚡ Sendes innen 24 timer · {{ sk_qty }} stk på lager</p>
+          {%- elsif sk_qty == blank or sk_qty >= 50 -%}
+            <p class="lp-urgency-hero">
+              {{ section.settings.urgency_text }}
+            </p>
+          {%- else -%}
+            <p class="lp-urgency-hero">
+              {{ section.settings.urgency_text }}
+            </p>
+          {%- endif -%}
         {%- endif -%}
 
         {%- comment -%} ═══ BLOCK 1: PAYMENT CLARITY ═══ {%- endcomment -%}
@@ -229,6 +258,7 @@
                         ><img
                           src="{{ block.settings.icon | image_url: height: 96 }}"
                           alt=""
+                          role="presentation"
                           width="48"
                           height="48"
                           loading="lazy"
@@ -249,7 +279,7 @@
             src="{{ section.settings.image | image_url: width: 800 }}"
             srcset="{{ section.settings.image | image_url: width: 400 }} 400w, {{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1000 }} 1000w, {{ section.settings.image | image_url: width: 1200 }} 1200w, {{ section.settings.image | image_url: width: 1600 }} 1600w"
             sizes="(max-width: 991px) 100vw, 50vw"
-            alt="{{ section.settings.image.alt | default: section.settings.eyebrow }}"
+            alt="{{ section.settings.image.alt | default: 'Kvinne bruker Skinora Radiance Face LED-maske hjemme' }}"
             width="{{ section.settings.image.width }}"
             height="{{ section.settings.image.height }}"
             loading="eager"
@@ -318,6 +348,27 @@
   .lp-hero__text--warm {
     color: #8a6a5a;
     font-style: italic;
+  }
+
+  /* Trust seal badge */
+  .lp-hero__content {
+    position: relative;
+  }
+  .lp-hero__trust-seal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+  }
+  @media (max-width: 991px) {
+    .lp-hero__trust-seal {
+      top: -8px;
+      right: -4px;
+    }
+    .lp-hero__trust-seal svg {
+      width: 64px;
+      height: 64px;
+    }
   }
 
   /* FIX 1 — Star rating */

@@ -5,6 +5,13 @@
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
 
+<style>
+  :root {
+    --cta-bg: #30273e;
+    /* --cta-bg: #C8964A; */ /* A/B test: warm gold alternative */
+  }
+</style>
+
 {%- assign sk_lp_handle = section.settings.product_url | split: '/products/' | last | split: '?' | first -%}
 {%- assign sk_lp_product = all_products[sk_lp_handle] -%}
 {%- assign sk_lp_variant = sk_lp_product.selected_or_first_available_variant -%}
@@ -23,7 +30,7 @@
           class="lp-urgency"
           style="font-family:sofia-pro,Assistant,sans-serif;font-size:13px;font-weight:600;color:#a0522d;text-align:center;margin:0 0 12px;"
         >
-          ⚡ Populær vare – sendes innen 2 virkedager
+          ⚡ Sendes innen 24 timer · Norsk lager
         </p>
         <form
           action="{{ routes.cart_add_url }}"

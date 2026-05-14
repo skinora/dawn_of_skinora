@@ -384,7 +384,7 @@
         "review_count": "89",
         "product_url": "/products/skinora-clear",
         "midpage_cta_text": "Få klarere hud nå",
-        "midpage_klarna_text": "Fra 122 kr/mnd med Klarna"
+        "midpage_klarna_text": "Fra 163 kr/mnd med Klarna"
       }
     },
     "trust_full": {
@@ -563,7 +563,7 @@
           "type": "faq",
           "settings": {
             "question": "Er 4.390 kr mye å betale for LED-behandling?",
-            "answer": "Sammenlignet med klinikk er det faktisk det motsatte. Én LED-behandling hos hudterapeut koster typisk 800–1.500 kr. Med Skinora® Clear betaler du én gang og kan bruke den ubegrenset hjemme. Etter bare 3–6 behandlinger har produktet betalt seg selv – resten er ren gevinst. Du kan også dele opp betalingen med Klarna fra 122 kr/mnd."
+            "answer": "Sammenlignet med klinikk er det faktisk det motsatte. Én LED-behandling hos hudterapeut koster typisk 800–1.500 kr. Med Skinora® Clear betaler du én gang og kan bruke den ubegrenset hjemme. Etter bare 3–6 behandlinger har produktet betalt seg selv – resten er ren gevinst. Du kan også dele opp betalingen med Klarna fra 163 kr/mnd."
           }
         }
       },
@@ -617,7 +617,7 @@
         "button_text": "Bestill nå – risikofritt",
         "product_url": "/products/skinora-clear",
         "anchor_id": "kjop",
-        "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra 122 kr/mnd med Klarna</strong>"
+        "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra 163 kr/mnd med Klarna</strong>"
       }
     },
     "sticky_buy_bar": {
@@ -626,7 +626,7 @@
         "enabled": true,
         "product": "skinora-clear",
         "price": "4 390 kr",
-        "subprice": "eller fra 122 kr/mnd med Klarna",
+        "subprice": "eller fra 163 kr/mnd med Klarna",
         "cta_label": "Prøv risikofritt →",
         "trigger_selector": ".lp-hero__actions",
         "hide_selector": ".lp-cta-final"
