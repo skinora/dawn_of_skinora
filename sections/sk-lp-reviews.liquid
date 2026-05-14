@@ -5,6 +5,121 @@
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
 
+<style>
+  .sk-review__ba {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 16px 0 0;
+    max-width: 260px;
+  }
+  .sk-review__ba-item {
+    margin: 0;
+  }
+  .sk-review__ba-btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1px solid rgba(20, 30, 55, 0.08);
+    border-radius: 10px;
+    background: #fafafa;
+    overflow: hidden;
+    cursor: zoom-in;
+    transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 220ms;
+  }
+  .sk-review__ba-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(20, 30, 55, 0.1);
+  }
+  .sk-review__ba-btn:focus-visible {
+    outline: 2px solid #1a2543;
+    outline-offset: 3px;
+  }
+  .sk-review__ba-btn img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+  .sk-review__ba-label {
+    position: absolute;
+    left: 6px;
+    bottom: 6px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+    background: rgba(20, 30, 55, 0.78);
+    padding: 3px 8px;
+    border-radius: 4px;
+    pointer-events: none;
+  }
+
+  .sk-ba-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 15, 30, 0.88);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 24px;
+  }
+  .sk-ba-lightbox[aria-hidden='false'] {
+    display: flex;
+  }
+  .sk-ba-lightbox__img {
+    max-width: min(92vw, 900px);
+    max-height: 88vh;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+  .sk-ba-lightbox__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    color: #1a2543;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sk-ba-lightbox__close:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 640px) {
+    .sk-review__ba {
+      max-width: none;
+      gap: 6px;
+    }
+    .sk-review__ba-label {
+      font-size: 9px;
+      padding: 2px 6px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sk-review__ba-btn {
+      transition: none !important;
+    }
+    .sk-review__ba-btn:hover {
+      transform: none;
+    }
+  }
+</style>
+
 <!-- SECTION: Social Proof / Reviews -->
 <div class="sk-lp">
   <section class="lp-reviews">
@@ -37,6 +152,54 @@
                 </span>
               {%- endif -%}
               <p class="lp-review-card__text">{{ block.settings.text }}</p>
+              {%- if block.settings.before_image != blank and block.settings.after_image != blank -%}
+                <div class="sk-review__ba" data-ba>
+                  <figure class="sk-review__ba-item">
+                    <button
+                      type="button"
+                      class="sk-review__ba-btn"
+                      data-ba-open
+                      data-ba-src="{{ block.settings.before_image | image_url: width: 1400 }}"
+                      data-ba-alt="{{ block.settings.before_alt | escape }}"
+                      aria-label="Forstørr før-bilde: {{ block.settings.before_alt | escape }}"
+                    >
+                      <img
+                        src="{{ block.settings.before_image | image_url: width: 200 }}"
+                        srcset="{{ block.settings.before_image | image_url: width: 200 }} 200w, {{ block.settings.before_image | image_url: width: 400 }} 400w"
+                        sizes="(min-width: 768px) 120px, 30vw"
+                        width="200"
+                        height="250"
+                        alt="{{ block.settings.before_alt | escape }}"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                      <span class="sk-review__ba-label">{{ block.settings.before_label | default: 'Før' }}</span>
+                    </button>
+                  </figure>
+                  <figure class="sk-review__ba-item">
+                    <button
+                      type="button"
+                      class="sk-review__ba-btn"
+                      data-ba-open
+                      data-ba-src="{{ block.settings.after_image | image_url: width: 1400 }}"
+                      data-ba-alt="{{ block.settings.after_alt | escape }}"
+                      aria-label="Forstørr etter-bilde: {{ block.settings.after_alt | escape }}"
+                    >
+                      <img
+                        src="{{ block.settings.after_image | image_url: width: 200 }}"
+                        srcset="{{ block.settings.after_image | image_url: width: 200 }} 200w, {{ block.settings.after_image | image_url: width: 400 }} 400w"
+                        sizes="(min-width: 768px) 120px, 30vw"
+                        width="200"
+                        height="250"
+                        alt="{{ block.settings.after_alt | escape }}"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                      <span class="sk-review__ba-label">{{ block.settings.after_label | default: 'Etter' }}</span>
+                    </button>
+                  </figure>
+                </div>
+              {%- endif -%}
               <p class="lp-review-card__author">{{ block.settings.author }}</p>
               <p class="lp-review-card__verified">Verifisert kjøper ✓</p>
               {%- if block.settings.usage_tag != blank -%}
@@ -80,6 +243,62 @@
     {{ section.settings.midpage_klarna_text | default: 'Fra 130 kr/mnd med Klarna' }}
   </p>
 </div>
+
+<div
+  class="sk-ba-lightbox"
+  id="sk-ba-lightbox-{{ section.id }}"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Forstørret bilde"
+  aria-hidden="true"
+  data-ba-lightbox
+>
+  <button type="button" class="sk-ba-lightbox__close" data-ba-close aria-label="Lukk forstørret bilde">×</button>
+  {%- comment -%} theme-check-disable ImgWidthAndHeight, AssetUrlFilters {%- endcomment -%}
+  <img class="sk-ba-lightbox__img" src="" alt="" width="900" height="1125" data-ba-lightbox-img>
+  {%- comment -%} theme-check-enable ImgWidthAndHeight, AssetUrlFilters {%- endcomment -%}
+</div>
+
+<script>
+  (function initSkBaLightbox() {
+    var lb = document.getElementById('sk-ba-lightbox-{{ section.id }}');
+    if (!lb || lb.dataset.skBaInit === '1') return;
+    lb.dataset.skBaInit = '1';
+    var img = lb.querySelector('[data-ba-lightbox-img]');
+    var closeBtn = lb.querySelector('[data-ba-close]');
+    var lastFocus = null;
+
+    function open(src, alt) {
+      lastFocus = document.activeElement;
+      img.src = src;
+      img.alt = alt || '';
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+    function close() {
+      lb.setAttribute('aria-hidden', 'true');
+      img.src = '';
+      img.alt = '';
+      document.body.style.overflow = '';
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    }
+
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-ba-open]');
+      if (!t) return;
+      e.preventDefault();
+      open(t.getAttribute('data-ba-src'), t.getAttribute('data-ba-alt'));
+    });
+    closeBtn.addEventListener('click', close);
+    lb.addEventListener('click', function (e) {
+      if (e.target === lb) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lb.getAttribute('aria-hidden') === 'false') close();
+    });
+  })();
+</script>
 
 {% schema %}
 {
@@ -166,6 +385,46 @@
           "type": "image_picker",
           "id": "image",
           "label": "Kundebilde (valgfritt)"
+        },
+        {
+          "type": "header",
+          "content": "Før / etter-bilder (valgfritt)"
+        },
+        {
+          "type": "image_picker",
+          "id": "before_image",
+          "label": "Før-bilde"
+        },
+        {
+          "type": "text",
+          "id": "before_alt",
+          "label": "Alt-tekst, før-bilde",
+          "info": "Beskriv hva bildet viser, f.eks. 'Panne med små røde utbrudd, uke 0'.",
+          "default": "Før behandling med Skinora Clear"
+        },
+        {
+          "type": "image_picker",
+          "id": "after_image",
+          "label": "Etter-bilde"
+        },
+        {
+          "type": "text",
+          "id": "after_alt",
+          "label": "Alt-tekst, etter-bilde",
+          "info": "Beskriv hva bildet viser, f.eks. 'Panne med rolig hud, uke 8'.",
+          "default": "Etter 8 uker med Skinora Clear"
+        },
+        {
+          "type": "text",
+          "id": "before_label",
+          "label": "Merkelapp, før",
+          "default": "Før"
+        },
+        {
+          "type": "text",
+          "id": "after_label",
+          "label": "Merkelapp, etter",
+          "default": "Etter"
         }
       ]
     }
