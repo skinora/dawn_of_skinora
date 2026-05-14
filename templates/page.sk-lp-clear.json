@@ -623,25 +623,17 @@
     "cross_sell": {
       "type": "sk-lp-cross-sell",
       "blocks": {
-        "cs_face": {
+        "product_card_zmEKtR": {
           "type": "product_card",
           "settings": {
             "product": "skinora-radiance-face",
             "eyebrow_tag": "ANSIKT",
             "benefit": "Rødt og NIR-lys for fastere, mer utstrålende hud."
           }
-        },
-        "cs_neck": {
-          "type": "product_card",
-          "settings": {
-            "product": "skinora-radiance-neck",
-            "eyebrow_tag": "HALS & DEKOLLETÉ",
-            "benefit": "Målrettet LED-pleie for halsen — ofte glemt, alltid synlig."
-          }
         }
       },
       "block_order": [
-        "card_meta_W9CmxP"
+        "product_card_zmEKtR"
       ],
       "settings": {
         "eyebrow": "OPPDAG MER",
@@ -679,8 +671,8 @@
     "trust_full",
     "whats_in_box",
     "faq",
-    "cross_sell",
     "cta",
+    "cross_sell",
     "sticky_buy_bar"
   ]
 }
