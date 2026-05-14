@@ -623,12 +623,20 @@
     "cross_sell": {
       "type": "sk-lp-cross-sell",
       "blocks": {
-        "card_meta_W9CmxP": {
-          "type": "card_meta",
+        "cs_face": {
+          "type": "product_card",
+          "settings": {
+            "product": "skinora-radiance-face",
+            "eyebrow_tag": "ANSIKT",
+            "benefit": "Rødt og NIR-lys for fastere, mer utstrålende hud."
+          }
+        },
+        "cs_neck": {
+          "type": "product_card",
           "settings": {
             "product": "skinora-radiance-neck",
-            "tag": "HALS & DEKOLLETÉ",
-            "benefit": "gdgffgf"
+            "eyebrow_tag": "HALS & DEKOLLETÉ",
+            "benefit": "Målrettet LED-pleie for halsen — ofte glemt, alltid synlig."
           }
         }
       },
@@ -639,9 +647,6 @@
         "eyebrow": "OPPDAG MER",
         "heading": "Andre Skinora-produkter",
         "subheading": "Bygg ditt komplette LED-rituale – designet for ansikt, hals og kropp.",
-        "products": [
-          "skinora-radiance-face"
-        ],
         "show_section_cta": true,
         "section_cta_text": "Se alle Skinora-produkter",
         "section_cta_url": "shopify://collections/all",
@@ -674,8 +679,8 @@
     "trust_full",
     "whats_in_box",
     "faq",
-    "cta",
     "cross_sell",
+    "cta",
     "sticky_buy_bar"
   ]
 }

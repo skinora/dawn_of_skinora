@@ -1,14 +1,15 @@
 {%- comment -%}
   sk-lp-cross-sell.liquid
   Editorial cross-sell product tiles for landing pages.
-  - Auto-fetches product data via product_list setting (or falls back to manual blocks).
-  - Auto-excludes the current page's matching product handle.
-  - Premium "matted print" card style on warm-cream background.
+  - Block-based: each "product_card" block = one tile with its own product + eyebrow tag + benefit.
+  - Auto-excludes the current page's matching product (e.g. on /pages/skinora-clear, skips skinora-clear).
+  - Strict 4:5 image frame, SVG-skipping, lazy-loaded.
 {%- endcomment -%}
 
 {%- liquid
   assign bg_color = section.settings.background_color | default: '#FAF7F2'
   assign current_handle = page.handle
+  assign current_product_handle = page.handle | remove: 'skinora-' | prepend: 'skinora-'
 -%}
 
 <style>
@@ -56,21 +57,27 @@
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 32px;
+    justify-content: center;
+  }
+  .sk-xsell__grid > li {
+    display: flex;
+    justify-content: center;
   }
 
   .sk-xsell__card {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 420px;
     background: #fff;
     border: 1px solid rgba(20, 30, 55, 0.06);
     border-radius: 20px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     text-decoration: none;
     color: inherit;
-    overflow: hidden;
-    height: 100%;
+    padding: 16px 16px 24px;
     transition:
       transform 280ms cubic-bezier(0.4, 0, 0.2, 1),
       box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -81,24 +88,26 @@
     border-radius: 22px;
   }
 
-  .sk-xsell__image-wrap {
-    margin: 16px 16px 0;
+  .sk-xsell__media {
+    aspect-ratio: 4 / 5;
     border-radius: 14px;
     overflow: hidden;
     background: linear-gradient(160deg, #EEF1F6 0%, #E2E8F0 100%);
-    aspect-ratio: 4 / 5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin-bottom: 20px;
   }
-  .sk-xsell__image {
+  .sk-xsell__media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .sk-xsell__image-placeholder {
+  .sk-xsell__media-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #94A3B8;
     font-size: 13px;
     letter-spacing: 0.08em;
@@ -106,22 +115,23 @@
   }
 
   .sk-xsell__body {
-    padding: 20px 20px 24px;
+    padding: 0 4px;
     display: flex;
     flex-direction: column;
     flex: 1;
   }
   .sk-xsell__tag {
+    display: inline-block;
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #6B7280;
-    margin: 0 0 8px;
     font-weight: 500;
+    margin: 0 0 8px;
   }
   .sk-xsell__name {
     font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
-    font-size: 22px;
+    font-size: clamp(18px, 1.4vw, 22px);
     font-weight: 500;
     color: #1A2543;
     margin: 0 0 8px;
@@ -129,7 +139,6 @@
   }
   .sk-xsell__benefit {
     font-size: 15px;
-    font-weight: 400;
     line-height: 1.5;
     color: #4A5568;
     margin: 0 0 16px;
@@ -139,20 +148,15 @@
     font-size: 16px;
     font-weight: 600;
     color: #1A2543;
-    margin: 0 0 16px;
+    margin: 0 0 12px;
   }
   .sk-xsell__cta {
+    display: inline-block;
     font-size: 14px;
     font-weight: 600;
     color: #1A2543;
     letter-spacing: 0.02em;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .sk-xsell__cta-arrow {
     transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
-    display: inline-block;
   }
 
   .sk-xsell__section-cta-wrap {
@@ -189,11 +193,25 @@
       transform: translateY(-4px);
       box-shadow: 0 12px 28px rgba(20, 30, 55, 0.10);
     }
-    .sk-xsell__card:hover .sk-xsell__image {
+    .sk-xsell__card:hover .sk-xsell__media img {
       transform: scale(1.04);
     }
-    .sk-xsell__card:hover .sk-xsell__cta-arrow {
+    .sk-xsell__card:hover .sk-xsell__cta {
       transform: translateX(4px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sk-xsell__card,
+    .sk-xsell__media img,
+    .sk-xsell__cta {
+      transition: none !important;
+    }
+    .sk-xsell__card:hover {
+      transform: none;
+    }
+    .sk-xsell__card:hover .sk-xsell__media img {
+      transform: none;
     }
   }
 
@@ -211,9 +229,6 @@
     .sk-xsell__grid {
       gap: 20px;
     }
-    .sk-xsell__name {
-      font-size: 18px;
-    }
   }
 </style>
 
@@ -230,101 +245,69 @@
     </div>
 
     <ul class="sk-xsell__grid" role="list">
-      {%- comment -%} Render from product_list setting if any, else fall back to blocks {%- endcomment -%}
-      {%- assign rendered_count = 0 -%}
-      {%- for product in section.settings.products -%}
-        {%- if product.handle == current_handle -%}
-          {%- continue -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type != 'product_card' -%}{%- continue -%}{%- endif -%}
+        {%- assign p = block.settings.product -%}
+        {%- if p == blank -%}{%- continue -%}{%- endif -%}
+        {%- if p.handle == current_handle or p.handle == current_product_handle -%}{%- continue -%}{%- endif -%}
+
+        {%- comment -%} Pick a real raster image, skipping SVG line-art {%- endcomment -%}
+        {%- assign card_img = blank -%}
+        {%- assign feat_src = p.featured_image.src | default: '' -%}
+        {%- assign feat_is_svg = false -%}
+        {%- if feat_src contains '.svg' -%}{%- assign feat_is_svg = true -%}{%- endif -%}
+        {%- if p.featured_image and feat_is_svg == false -%}
+          {%- assign card_img = p.featured_image -%}
         {%- endif -%}
-        {%- assign rendered_count = rendered_count | plus: 1 -%}
-        {%- assign tag_label = '' -%}
-        {%- assign benefit_text = '' -%}
-        {%- for block in section.blocks -%}
-          {%- if block.settings.product != blank and block.settings.product.handle == product.handle -%}
-            {%- assign tag_label = block.settings.tag -%}
-            {%- assign benefit_text = block.settings.benefit -%}
-          {%- endif -%}
-        {%- endfor -%}
-        {%- assign card_alt = product.featured_image.alt | default: product.title -%}
-        {%- capture card_aria -%}Utforsk {{ product.title }} – fra {{ product.price | money }}{%- endcapture -%}
-        <li>
-          <a href="{{ product.url }}" class="sk-xsell__card" aria-label="{{ card_aria | escape }}">
-            <div class="sk-xsell__image-wrap">
-              {%- if product.featured_image -%}
+        {%- if card_img == blank -%}
+          {%- for media in p.media -%}
+            {%- assign m_src = media.src | default: '' -%}
+            {%- assign m_is_svg = false -%}
+            {%- if m_src contains '.svg' -%}{%- assign m_is_svg = true -%}{%- endif -%}
+            {%- if media.media_type == 'image' and m_is_svg == false -%}
+              {%- assign card_img = media -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+
+        {%- assign tag_label = block.settings.eyebrow_tag -%}
+        {%- assign benefit_text = block.settings.benefit -%}
+        {%- assign card_alt = p.title | append: ' – ' | append: benefit_text | default: p.title -%}
+        {%- capture card_aria -%}Utforsk {{ p.title }} – fra {{ p.price | money }}{%- endcapture -%}
+
+        <li {{ block.shopify_attributes }}>
+          <a href="{{ p.url }}" class="sk-xsell__card" aria-label="{{ card_aria | escape }}">
+            <div class="sk-xsell__media">
+              {%- if card_img != blank -%}
                 <img
-                  class="sk-xsell__image"
-                  src="{{ product.featured_image | image_url: width: 800 }}"
-                  srcset="{{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 800 }} 800w, {{ product.featured_image | image_url: width: 1000 }} 1000w"
-                  sizes="(max-width: 749px) 100vw, (max-width: 1240px) 50vw, 400px"
-                  alt="{{ card_alt | escape }}"
+                  src="{{ card_img | image_url: width: 800 }}"
+                  srcset="{{ card_img | image_url: width: 400 }} 400w, {{ card_img | image_url: width: 800 }} 800w, {{ card_img | image_url: width: 1200 }} 1200w"
+                  sizes="(min-width: 768px) 380px, 90vw"
                   width="800"
                   height="1000"
                   loading="lazy"
                   decoding="async"
+                  alt="{{ card_alt | escape }}"
                 >
               {%- else -%}
-                <span class="sk-xsell__image-placeholder">{{ product.title }}</span>
+                <span class="sk-xsell__media-placeholder">{{ p.title }}</span>
               {%- endif -%}
             </div>
             <div class="sk-xsell__body">
               {%- if tag_label != blank -%}
-                <p class="sk-xsell__tag" aria-hidden="true">{{ tag_label }}</p>
+                <span class="sk-xsell__tag" aria-hidden="true">{{ tag_label }}</span>
               {%- endif -%}
-              <p class="sk-xsell__name">{{ product.title }}</p>
+              <h3 class="sk-xsell__name">{{ p.title }}</h3>
               {%- if benefit_text != blank -%}
                 <p class="sk-xsell__benefit">{{ benefit_text }}</p>
               {%- endif -%}
-              <p class="sk-xsell__price">fra {{ product.price | money }}</p>
-              <span class="sk-xsell__cta">Utforsk <span class="sk-xsell__cta-arrow" aria-hidden="true">→</span></span>
+              <p class="sk-xsell__price">fra {{ p.price | money }}</p>
+              <span class="sk-xsell__cta">Utforsk →</span>
             </div>
           </a>
         </li>
       {%- endfor -%}
-
-      {%- if rendered_count == 0 -%}
-        {%- comment -%} Fallback: render blocks where a product is selected {%- endcomment -%}
-        {%- for block in section.blocks -%}
-          {%- if block.settings.product != blank and block.settings.product.handle != current_handle -%}
-            {%- assign p = block.settings.product -%}
-            {%- assign card_alt = p.featured_image.alt | default: p.title -%}
-            {%- capture card_aria -%}Utforsk {{ p.title }} – fra {{ p.price | money }}{%- endcapture -%}
-            <li {{ block.shopify_attributes }}>
-              <a href="{{ p.url }}" class="sk-xsell__card" aria-label="{{ card_aria | escape }}">
-                <div class="sk-xsell__image-wrap">
-                  {%- if p.featured_image -%}
-                    <img
-                      class="sk-xsell__image"
-                      src="{{ p.featured_image | image_url: width: 800 }}"
-                      srcset="{{ p.featured_image | image_url: width: 400 }} 400w, {{ p.featured_image | image_url: width: 600 }} 600w, {{ p.featured_image | image_url: width: 800 }} 800w, {{ p.featured_image | image_url: width: 1000 }} 1000w"
-                      sizes="(max-width: 749px) 100vw, (max-width: 1240px) 50vw, 400px"
-                      alt="{{ card_alt | escape }}"
-                      width="800"
-                      height="1000"
-                      loading="lazy"
-                      decoding="async"
-                    >
-                  {%- else -%}
-                    <span class="sk-xsell__image-placeholder">{{ p.title }}</span>
-                  {%- endif -%}
-                </div>
-                <div class="sk-xsell__body">
-                  {%- if block.settings.tag != blank -%}
-                    <p class="sk-xsell__tag" aria-hidden="true">{{ block.settings.tag }}</p>
-                  {%- endif -%}
-                  <p class="sk-xsell__name">{{ p.title }}</p>
-                  {%- if block.settings.benefit != blank -%}
-                    <p class="sk-xsell__benefit">{{ block.settings.benefit }}</p>
-                  {%- endif -%}
-                  <p class="sk-xsell__price">fra {{ p.price | money }}</p>
-                  <span class="sk-xsell__cta"
-                    >Utforsk <span class="sk-xsell__cta-arrow" aria-hidden="true">→</span></span
-                  >
-                </div>
-              </a>
-            </li>
-          {%- endif -%}
-        {%- endfor -%}
-      {%- endif -%}
     </ul>
 
     {%- if section.settings.show_section_cta and section.settings.section_cta_text != blank -%}
@@ -342,6 +325,7 @@
   "name": "LP Cross-sell",
   "tag": "section",
   "class": "sk-lp-section",
+  "max_blocks": 4,
   "settings": [
     {
       "type": "header",
@@ -366,13 +350,6 @@
       "default": "Bygg ditt komplette LED-rituale – designet for ansikt, hals og kropp."
     },
     {
-      "type": "product_list",
-      "id": "products",
-      "label": "Produkter",
-      "limit": 3,
-      "info": "Velg opp til 3 produkter. Det aktuelle produktet for siden filtreres automatisk bort."
-    },
-    {
       "type": "header",
       "content": "Seksjons-CTA"
     },
@@ -391,8 +368,7 @@
     {
       "type": "url",
       "id": "section_cta_url",
-      "label": "CTA-lenke",
-      "default": "/collections/all"
+      "label": "CTA-lenke"
     },
     {
       "type": "header",
@@ -407,13 +383,9 @@
   ],
   "blocks": [
     {
-      "type": "card_meta",
-      "name": "Kort-metadata (valgfritt)",
+      "type": "product_card",
+      "name": "Produktkort",
       "settings": [
-        {
-          "type": "paragraph",
-          "content": "Knytt eyebrow-tag og fordeltekst til et spesifikt produkt valgt over."
-        },
         {
           "type": "product",
           "id": "product",
@@ -421,14 +393,15 @@
         },
         {
           "type": "text",
-          "id": "tag",
-          "label": "Eyebrow-tag",
-          "info": "F.eks. ANSIKT, HALS & DEKOLLETÉ, KROPP"
+          "id": "eyebrow_tag",
+          "label": "Kategori-tag",
+          "default": "ANSIKT"
         },
         {
           "type": "text",
           "id": "benefit",
-          "label": "Fordeltekst (maks 70 tegn)"
+          "label": "Kort fordel (1 setning)",
+          "default": "Rødt og NIR-lys for fastere, mer utstrålende hud."
         }
       ]
     }
@@ -437,7 +410,10 @@
     {
       "name": "LP Cross-sell",
       "category": "Skinora",
-      "blocks": [{ "type": "card_meta" }, { "type": "card_meta" }]
+      "blocks": [
+        { "type": "product_card" },
+        { "type": "product_card" }
+      ]
     }
   ]
 }
