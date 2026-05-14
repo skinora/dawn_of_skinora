@@ -34,21 +34,31 @@
 </div>
 
 {%- comment -%} FAQPage JSON-LD structured data {%- endcomment -%}
-{%- if section.blocks.size > 0 -%}
+{%- assign faq_ld_count = 0 -%}
+{%- for block in section.blocks -%}
+  {%- if block.settings.question != blank and block.settings.answer != blank -%}
+    {%- assign faq_ld_count = faq_ld_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if faq_ld_count > 0 -%}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
+        {%- assign faq_ld_idx = 0 -%}
         {%- for block in section.blocks -%}
-          {
-            "@type": "Question",
-            "name": {{ block.settings.question | json }},
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": {{ block.settings.answer | strip_html | json }}
-            }
-          }{%- unless forloop.last -%},{%- endunless -%}
+          {%- if block.settings.question != blank and block.settings.answer != blank -%}
+            {%- assign faq_ld_idx = faq_ld_idx | plus: 1 -%}
+            {
+              "@type": "Question",
+              "name": {{ block.settings.question | json }},
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": {{ block.settings.answer | strip_html | strip_newlines | json }}
+              }
+            }{%- if faq_ld_idx < faq_ld_count -%},{%- endif -%}
+          {%- endif -%}
         {%- endfor -%}
       ]
     }

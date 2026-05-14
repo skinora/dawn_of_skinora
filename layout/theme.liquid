@@ -458,6 +458,30 @@
       This ensures Google sees ONE authoritative Product schema in View Source.
     {%- endcomment -%}
     {%- capture cfh -%}{{ content_for_header }}{%- endcapture -%}
+    {%- comment -%}
+      Strip empty JSON-LD blocks injected by apps (e.g. Okendo on non-product pages).
+      Uses broad 'application/ld+json' match to catch variants with extra attributes
+      like <script type="application/ld+json" data-source="app-name">.
+    {%- endcomment -%}
+    {%- assign _ld_parts = cfh | split: '</script>' -%}
+    {%- capture cfh -%}
+      {%- for _part in _ld_parts -%}
+        {%- if _part contains 'application/ld+json' -%}
+          {%- assign _before_ld = _part | split: '<script' | first -%}
+          {%- assign _after_script_open = _part | split: '<script' | last -%}
+          {%- assign _tag_attrs = _after_script_open | split: '>' | first -%}
+          {%- assign _tag_full = _tag_attrs | prepend: '<script' | append: '>' -%}
+          {%- assign _ld_body = _part | split: _tag_full | last | strip -%}
+          {{- _before_ld -}}
+          {%- if _ld_body != blank -%}
+            <script type="application/ld+json">{{- _ld_body -}}</script>
+          {%- endif -%}
+        {%- else -%}
+          {{- _part -}}
+          {%- unless forloop.last -%}</script>{%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
     {%- if request.page_type == 'product' and cfh contains '"@type": "Product"' -%}
       {%- assign cfh_parts = cfh | split: '<script type="application/ld+json">' -%}
       {%- for part in cfh_parts -%}
