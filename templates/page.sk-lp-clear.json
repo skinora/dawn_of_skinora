@@ -185,7 +185,8 @@
       ],
       "settings": {
         "heading": "Kjenner du igjen dette?",
-        "intro": "Du har prøvd det meste. Likevel kommer utbruddene tilbake, rødheten forsvinner ikke, og huden føles aldri helt i balanse."
+        "intro": "Du har prøvd det meste. Likevel kommer utbruddene tilbake, rødheten forsvinner ikke, og huden føles aldri helt i balanse.",
+        "image": "shopify://shop_images/kvinne_prover_a_sminke_acneutsatt_hud.png"
       }
     },
     "results": {
