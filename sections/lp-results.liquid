@@ -415,14 +415,20 @@
     <div class="lp-results__sliders">
       {%- comment -%} ── Slider A ── {%- endcomment -%}
       {%- if section.settings.slider_a_before_image != blank and section.settings.slider_a_after_image != blank -%}
+        {%- assign slider_a_after_alt = 'Før og etter 8 uker med Skinora LED-maske – '
+          | append: section.settings.slider_a_customer
+        -%}
+        {%- assign slider_a_before_alt = 'Før bruk – ' | append: section.settings.slider_a_customer -%}
         <div class="lp-slider-card">
           <div class="lp-slider" data-lp-slider>
             <div class="lp-slider__after">
               {{
                 section.settings.slider_a_after_image
                 | image_url: width: 1200
-                | image_tag: loading: 'lazy', decoding: 'async', alt: 'Før og etter 8 uker med Skinora LED-maske – '
-                | append: section.settings.slider_a_customer,
+                | image_tag:
+                  loading: 'lazy',
+                  decoding: 'async',
+                  alt: slider_a_after_alt,
                   widths: '600, 900, 1200',
                   sizes: '(max-width: 767px) 100vw, 480px'
               }}
@@ -431,8 +437,10 @@
               {{
                 section.settings.slider_a_before_image
                 | image_url: width: 1200
-                | image_tag: loading: 'lazy', decoding: 'async', alt: 'Før bruk – '
-                | append: section.settings.slider_a_customer,
+                | image_tag:
+                  loading: 'lazy',
+                  decoding: 'async',
+                  alt: slider_a_before_alt,
                   widths: '600, 900, 1200',
                   sizes: '(max-width: 767px) 100vw, 480px'
               }}
@@ -478,14 +486,20 @@
 
       {%- comment -%} ── Slider B ── {%- endcomment -%}
       {%- if section.settings.slider_b_before_image != blank and section.settings.slider_b_after_image != blank -%}
+        {%- assign slider_b_after_alt = 'Før og etter 8 uker med Skinora LED-maske – '
+          | append: section.settings.slider_b_customer
+        -%}
+        {%- assign slider_b_before_alt = 'Før bruk – ' | append: section.settings.slider_b_customer -%}
         <div class="lp-slider-card">
           <div class="lp-slider" data-lp-slider>
             <div class="lp-slider__after">
               {{
                 section.settings.slider_b_after_image
                 | image_url: width: 1200
-                | image_tag: loading: 'lazy', decoding: 'async', alt: 'Før og etter 8 uker med Skinora LED-maske – '
-                | append: section.settings.slider_b_customer,
+                | image_tag:
+                  loading: 'lazy',
+                  decoding: 'async',
+                  alt: slider_b_after_alt,
                   widths: '600, 900, 1200',
                   sizes: '(max-width: 767px) 100vw, 480px'
               }}
@@ -494,8 +508,10 @@
               {{
                 section.settings.slider_b_before_image
                 | image_url: width: 1200
-                | image_tag: loading: 'lazy', decoding: 'async', alt: 'Før bruk – '
-                | append: section.settings.slider_b_customer,
+                | image_tag:
+                  loading: 'lazy',
+                  decoding: 'async',
+                  alt: slider_b_before_alt,
                   widths: '600, 900, 1200',
                   sizes: '(max-width: 767px) 100vw, 480px'
               }}
