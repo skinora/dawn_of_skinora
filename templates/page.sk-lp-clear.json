@@ -381,7 +381,9 @@
             "author": "Marte H., 34, Trondheim",
             "concern_tag": "Hormonell akne på hake og kjeve",
             "usage_tag": "",
+            "before_image": "shopify://shop_images/for.png",
             "before_alt": "Før behandling med Skinora Clear",
+            "after_image": "shopify://shop_images/etter.png",
             "after_alt": "Etter 8 uker med Skinora Clear",
             "before_label": "Før",
             "after_label": "Etter"
