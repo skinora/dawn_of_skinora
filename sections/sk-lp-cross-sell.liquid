@@ -1,0 +1,136 @@
+{%- comment -%}
+  sk-lp-cross-sell.liquid
+  Simple cross-sell links section for landing pages.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .sk-cross-sell {
+    padding: 48px 0;
+    background: #f8f8f8;
+  }
+  .sk-cross-sell__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .sk-cross-sell__heading {
+    font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: #3a3448;
+    text-align: center;
+    margin: 0 0 32px;
+  }
+  .sk-cross-sell__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .sk-cross-sell__card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #e0dcd6;
+    transition: box-shadow 0.2s ease;
+  }
+  .sk-cross-sell__card:hover {
+    box-shadow: 0 4px 16px rgba(48, 39, 62, 0.1);
+  }
+  .sk-cross-sell__card-title {
+    font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #30273e;
+    margin: 0 0 8px;
+  }
+  .sk-cross-sell__card-text {
+    font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #5f5f5f;
+    margin: 0;
+    line-height: 1.5;
+  }
+  @media (max-width: 749px) {
+    .sk-cross-sell__grid {
+      grid-template-columns: 1fr;
+    }
+    .sk-cross-sell__heading {
+      font-size: 24px;
+    }
+  }
+</style>
+
+<div class="sk-lp">
+  <section class="sk-cross-sell">
+    <div class="sk-cross-sell__container">
+      <h2 class="sk-cross-sell__heading">{{ section.settings.heading }}</h2>
+      <div class="sk-cross-sell__grid">
+        {%- for block in section.blocks -%}
+          <a href="{{ block.settings.url }}" class="sk-cross-sell__card" {{ block.shopify_attributes }}>
+            <p class="sk-cross-sell__card-title">{{ block.settings.title }}</p>
+            <p class="sk-cross-sell__card-text">{{ block.settings.text }}</p>
+          </a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LP Cross-sell",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Andre Skinora-produkter"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Produkt-lenke",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tittel"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Beskrivelse"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Cross-sell",
+      "blocks": [
+        {
+          "type": "link",
+          "settings": {
+            "title": "Skinora Radiance Face",
+            "text": "For moden hud og fine linjer",
+            "url": "/pages/skinora-radiance-face"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

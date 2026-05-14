@@ -21,8 +21,8 @@
 {%- assign sk_lp_handle = section.settings.cta_url | split: '/products/' | last | split: '?' | first -%}
 {%- assign sk_lp_product = all_products[sk_lp_handle] -%}
 {%- assign sk_lp_variant = sk_lp_product.selected_or_first_available_variant -%}
-{%- assign monthly_price = sk_lp_product.price | divided_by: 100 | divided_by: 36 | round -%}
-{%- assign cost_per_treatment = sk_lp_product.price | divided_by: 100 | divided_by: 156 | round -%}
+{%- assign monthly_price = sk_lp_product.price | plus: 0.0 | divided_by: 100.0 | divided_by: 36.0 | round -%}
+{%- assign cost_per_treatment = sk_lp_product.price | plus: 0.0 | divided_by: 100.0 | divided_by: 156.0 | round -%}
 
 <script src="{{ 'sk-lp-cart-add.js' | asset_url }}" defer="defer"></script>
 
@@ -108,18 +108,9 @@
 
         {%- comment -%} Urgency indicator {%- endcomment -%}
         {%- if section.settings.show_urgency and section.settings.urgency_text != blank -%}
-          {%- assign sk_qty = sk_lp_variant.inventory_quantity -%}
-          {%- if sk_qty != blank and sk_qty > 0 and sk_qty < 50 -%}
-            <p class="lp-urgency-hero">⚡ Sendes innen 24 timer · {{ sk_qty }} stk på lager</p>
-          {%- elsif sk_qty == blank or sk_qty >= 50 -%}
-            <p class="lp-urgency-hero">
-              {{ section.settings.urgency_text }}
-            </p>
-          {%- else -%}
-            <p class="lp-urgency-hero">
-              {{ section.settings.urgency_text }}
-            </p>
-          {%- endif -%}
+          <p class="lp-urgency-hero">
+            {{ section.settings.urgency_text }}
+          </p>
         {%- endif -%}
 
         {%- comment -%} ═══ BLOCK 1: PAYMENT CLARITY ═══ {%- endcomment -%}
@@ -259,10 +250,9 @@
             src="{{ section.settings.image | image_url: width: 800 }}"
             srcset="{{ section.settings.image | image_url: width: 400 }} 400w, {{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1000 }} 1000w, {{ section.settings.image | image_url: width: 1200 }} 1200w, {{ section.settings.image | image_url: width: 1600 }} 1600w"
             sizes="(max-width: 991px) 100vw, 50vw"
-            alt="{{ section.settings.image.alt | default: 'Kvinne bruker Skinora Radiance Face LED-maske hjemme' }}"
+            alt="{{ section.settings.image.alt | default: section.settings.title }}"
             width="{{ section.settings.image.width }}"
             height="{{ section.settings.image.height }}"
-            loading="eager"
             fetchpriority="high"
             decoding="async"
           >

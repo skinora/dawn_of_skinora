@@ -183,6 +183,12 @@
         name="description"
         content="Få klinikkresultat hjemme på 10 min/dag. Norsk LED-maske, 4,8★ av 102 anmeldelser. 60 dagers fornøydgaranti, gratis frakt. Test risikofritt."
       >
+    {%- elsif request.page_type == 'page' and page.handle == 'skinora-clear' -%}
+      <title>Skinora® Clear – LED-maske for uren og akneutsatt hud</title>
+      <meta
+        name="description"
+        content="Klarere hud på 10 min/dag. Skinora® Clear LED-maske – enkel hjemmebehandling for uren og akneutsatt hud. 4,7★ av 89. 60 dagers fornøydgaranti."
+      >
     {%- else -%}
       <title>
         {{ page_title }}
@@ -281,6 +287,67 @@
               "author": { "@type": "Person", "name": "Marte K." },
               "reviewRating": { "@type": "Rating", "ratingValue": "5" },
               "reviewBody": "Etter seks uker er rødheten i kinnene roligere og hudtonen jevnere."
+            }
+          ]
+        }
+      </script>
+    {%- endif -%}
+
+    {%- if request.page_type == 'page' and page.handle == 'skinora-clear' -%}
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "Skinora® Clear",
+          "image": ["https://www.skinora.no/cdn/shop/files/Skinora_Clear_bruk_maske_som_en_del_av_hudpleie.webp"],
+          "description": "LED-maske med blått og rødt lys for uren og akneutsatt hud. Enkel hjemmebehandling på 10 minutter, 3–5 ganger i uken — uten antibiotika eller sterke midler.",
+          "sku": "SKN-CLR-001",
+          "brand": { "@type": "Brand", "name": "Skinora" },
+          "offers": {
+            "@type": "Offer",
+            "url": "https://www.skinora.no/pages/skinora-clear",
+            "priceCurrency": "NOK",
+            "price": "4390.00",
+            "availability": "https://schema.org/InStock",
+            "itemCondition": "https://schema.org/NewCondition",
+            "shippingDetails": {
+              "@type": "OfferShippingDetails",
+              "shippingRate": { "@type": "MonetaryAmount", "value": "0", "currency": "NOK" },
+              "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "NO" }
+            },
+            "hasMerchantReturnPolicy": {
+              "@type": "MerchantReturnPolicy",
+              "applicableCountry": "NO",
+              "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+              "merchantReturnDays": 60,
+              "returnMethod": "https://schema.org/ReturnByMail",
+              "returnFees": "https://schema.org/FreeReturn"
+            }
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.7",
+            "reviewCount": "89",
+            "bestRating": "5"
+          },
+          "review": [
+            {
+              "@type": "Review",
+              "author": { "@type": "Person", "name": "Ida L." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+              "reviewBody": "Huden min har aldri vært så rolig. Bruker den hver kveld og merker stor forskjell på rødhet og nye utbrudd."
+            },
+            {
+              "@type": "Review",
+              "author": { "@type": "Person", "name": "Emilie K." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+              "reviewBody": "Endelig noe som fungerer uten å tørke ut huden. Etter 6 uker er huden mye jevnere."
+            },
+            {
+              "@type": "Review",
+              "author": { "@type": "Person", "name": "Nora T." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+              "reviewBody": "Enkel å bruke og gir synlig effekt. Porer og urenheter er tydelig redusert."
             }
           ]
         }

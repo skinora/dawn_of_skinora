@@ -28,6 +28,22 @@
   <meta property="og:image" content="https://www.skinora.no/cdn/shop/files/skinora-radiance-face-og.jpg">
   <meta property="og:url" content="https://www.skinora.no/pages/skinora-radiance-face">
   <meta property="og:locale" content="nb_NO">
+{%- elsif request.page_type == 'page' and page.handle == 'skinora-clear' -%}
+  <meta property="og:site_name" content="{{ shop.name }}">
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="Skinora® Clear – LED-maske for uren og akneutsatt hud">
+  <meta
+    property="og:description"
+    content="Klarere hud på 10 minutter om dagen. Skinora® Clear LED-maske er enkel hjemmebehandling for uren og akneutsatt hud – uten sterke midler."
+  >
+  <meta
+    property="og:image"
+    content="https://www.skinora.no/cdn/shop/files/Skinora_Clear_bruk_maske_som_en_del_av_hudpleie.webp"
+  >
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://www.skinora.no/pages/skinora-clear">
+  <meta property="og:locale" content="nb_NO">
 {%- else -%}
   <meta property="og:site_name" content="{{ shop.name }}">
   <meta property="og:url" content="{{ og_url }}">
