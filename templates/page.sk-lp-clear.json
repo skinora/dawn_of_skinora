@@ -350,7 +350,13 @@
             "text": "Jeg har aldri hatt akne, men de siste to årene har pannen min vært dekket av små røde kuler som bare ikke ville forsvinne. Tror det startet med mye trening i hjelm og stress fra studiene. Jeg prøvde alt – salicylsyre, retinol, dyre serum, hudterapeut – og fikk det ned i korte perioder, men aldri borte. Etter åtte uker med Skinora® Clear, 4 kvelder i uken, er pannen min nesten helt rolig. Jeg slipper å sjekke speilet hver morgen for å se hva som dukket opp i løpet av natten. Det er en lettelse jeg ikke visste jeg trengte.",
             "author": "Linnea S., 26, Stavanger",
             "concern_tag": "PANNE & T-SONE",
-            "usage_tag": ""
+            "usage_tag": "",
+            "image": "shopify://shop_images/panne_tsone_kviser_for.png",
+            "before_image": "shopify://shop_images/samme_person_kviser_er_borte_etter_bruk.png",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
           }
         },
         "review_ktegL7": {
@@ -359,7 +365,11 @@
             "text": "Etter to runder med Roaccutan var aknen borte, men huden var rød, ujevn og lett irritabel. Jeg hadde gitt opp å finne noe som faktisk roet det ned uten å være aggressivt. Skinora® Clear er det første jeg har brukt der jeg ser forskjell uten å bli tørr eller flassete. Etter seks uker er rødheten merkbart mindre, og de få nye utbruddene jeg får, går vekk etter et par dager i stedet for å verke i ukevis. Stille, men virker.",
             "author": "Sondre B., 29, Oslo",
             "concern_tag": "Voksenakne, post-akne-arr og rødhet",
-            "usage_tag": ""
+            "usage_tag": "",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
           }
         },
         "review_CC7jeb": {
@@ -368,7 +378,11 @@
             "text": "Jeg har slitt med smertefulle kuler langs kjeven og haken siden jeg var 24 — alltid verst rett før mensen, alltid på samme sted. Har prøvd antibiotika, p-piller, retinol, klinikkbehandlinger. Noe hjalp en stund, så kom det tilbake. Etter åtte uker med Skinora® Clear, 4 ganger i uken, er det stille på huden min. Jeg våkner ikke til en ny verkende kul. Det høres så enkelt ut, men det har endret hverdagen min.",
             "author": "Marte H., 34, Trondheim",
             "concern_tag": "Hormonell akne på hake og kjeve",
-            "usage_tag": ""
+            "usage_tag": "",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
           }
         },
         "rev_1": {
@@ -377,7 +391,11 @@
             "text": "Huden min har aldri vært så rolig. Bruker den hver kveld og merker stor forskjell på rødhet og nye utbrudd.",
             "author": "Ida L., 28, Bergen",
             "concern_tag": "Rødhet & utbrudd · 10 min, 5x/uke",
-            "usage_tag": ""
+            "usage_tag": "",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
           }
         },
         "rev_2": {
@@ -386,7 +404,11 @@
             "text": "Endelig noe som fungerer uten å tørke ut huden. Etter 6 uker er huden mye jevnere.",
             "author": "Emilie K., 34, Oslo",
             "concern_tag": "Tørr, uren hud · 10 min, 4x/uke",
-            "usage_tag": ""
+            "usage_tag": "",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
           }
         },
         "rev_3": {
@@ -395,7 +417,11 @@
             "text": "Enkel å bruke og gir synlig effekt. Porer og urenheter er tydelig redusert.",
             "author": "Nora T., 25, Drammen",
             "concern_tag": "Porer & ujevn hud · 10 min, 3x/uke",
-            "usage_tag": ""
+            "usage_tag": "",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
           }
         }
       },
