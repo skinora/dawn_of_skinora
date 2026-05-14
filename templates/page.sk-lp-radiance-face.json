@@ -383,7 +383,7 @@
           "type": "spec",
           "settings": {
             "label": "Antall LED-er",
-            "value": "[CONFIRM]"
+            "value": "342 LED-emittere fordelt på 3 bølgelengder – organisert i 114 LED-punkter for jevn dekning"
           }
         },
         "spec_3": {
