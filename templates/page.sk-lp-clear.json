@@ -130,31 +130,31 @@
         "p_1": {
           "type": "item",
           "settings": {
-            "text": "Du våkner med nye utbrudd – selv når du gjør alt riktig"
+            "text": "Du har prøvd alt. Likevel er huden ikke der du vil. Salisylsyre, retinol, antibiotika, klinikk-timer du knapt har råd til. Noe hjelper en stund. Så kommer det tilbake."
           }
         },
         "p_2": {
           "type": "item",
           "settings": {
-            "text": "Rødheten ligger der hele tiden, uansett hva du smører på"
+            "text": "Du våkner med nye utbrudd selv når du gjør alt riktig – og lurer på hva mer du kan gjøre."
           }
         },
         "p_3": {
           "type": "item",
           "settings": {
-            "text": "Du har brukt kremer og serumer som tørker ut huden uten å fikse årsaken"
+            "text": "Rødheten ligger der konstant, uansett hvilken serum du smører på."
           }
         },
         "p_4": {
           "type": "item",
           "settings": {
-            "text": "Du kjenner deg usikker uten foundation – og det irriterer deg"
+            "text": "Foundation irriterer deg – men uten føler du deg ikke klar til å vises."
           }
         },
         "p_5": {
           "type": "item",
           "settings": {
-            "text": "Huden føles ujevn og grov, spesielt rundt kjeve og panne"
+            "text": "Du drømmer om å åpne kameraet uten å fikse vinkel og lys først."
           }
         },
         "p_6": {
@@ -194,31 +194,35 @@
     },
     "sk_lp_mechanism_WhVKGN": {
       "type": "sk-lp-mechanism",
-      "name": "LP Mechanism",
       "blocks": {
         "bullet_1": {
           "type": "bullet",
           "settings": {
-            "dot_color": "#4F5BD5",
+            "dot_color": "#4f5bd5",
             "text": "<p><strong>415 nm</strong> når epidermis – der bakteriene lever</p>"
           }
         },
         "bullet_2": {
           "type": "bullet",
           "settings": {
-            "dot_color": "#E63946",
+            "dot_color": "#e63946",
             "text": "<p><strong>630 nm</strong> når dermis – der betennelsen sitter</p>"
           }
         },
         "bullet_3": {
           "type": "bullet",
           "settings": {
-            "dot_color": "#9B1B3A",
+            "dot_color": "#9b1b3a",
             "text": "<p><strong>830 nm</strong> når subcutis – der reparasjonen starter</p>"
           }
         }
       },
-      "block_order": ["bullet_1", "bullet_2", "bullet_3"],
+      "block_order": [
+        "bullet_1",
+        "bullet_2",
+        "bullet_3"
+      ],
+      "name": "LP Mechanism",
       "settings": {
         "eyebrow": "Tre bølgelengder. Ett mål.",
         "heading": "Hvordan Skinora® Clear virker",
@@ -231,19 +235,19 @@
         "card1_wavelength": "415 nm",
         "card1_title": "Reduserer bakteriene bak utbrudd",
         "card1_body": "<p>Blått lys virker i det øverste hudlaget og bryter ned forbindelsene som lar <em>Cutibacterium acnes</em> overleve i porene. Færre bakterier betyr færre nye kviser.</p>",
-        "card1_color_from": "#4F5BD5",
+        "card1_color_from": "#4f5bd5",
         "card1_color_to": "#7a83e6",
         "card2_label": "Rødt lys",
         "card2_wavelength": "630 nm",
         "card2_title": "Demper betennelse og rødhet",
         "card2_body": "<p>Rødt lys trenger inn i dermis, der akneinflammasjonen sitter. Det roer ned betennelsesreaksjonen og reduserer synlig rødhet, slik at huden ser jevnere ut.</p>",
-        "card2_color_from": "#E63946",
+        "card2_color_from": "#e63946",
         "card2_color_to": "#ff7a85",
         "card3_label": "NIR-lys",
         "card3_wavelength": "830 nm",
         "card3_title": "Styrker hudens egen reparasjon",
         "card3_body": "<p>830 nm når dypest – helt ned mot subcutis. Det stimulerer cellenes energiproduksjon og støtter hudens naturlige reparasjon, slik at arr og spor etter utbrudd leges raskere.</p>",
-        "card3_color_dark": "#9B1B3A",
+        "card3_color_dark": "#9b1b3a",
         "card3_color_light": "#d04a6e",
         "timeline_line": "Forskning viser at de fleste ser de første tegnene etter 2–4 uker med jevn bruk, og full effekt etter 6–8 uker.",
         "timeline_citation_marker": "¹",
