@@ -35,65 +35,37 @@
           <p class="lp-eyebrow">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
 
-        {%- comment -%} CHANGE 2 — Headline {%- endcomment -%}
-        <h1 class="lp-hero__title">{{ section.settings.title }}</h1>
-
-        {%- comment -%} CHANGE 3 — Split subtext (line 1 supports inline citation marker) {%- endcomment -%}
-        {%- if section.settings.text_line_1 != blank -%}
-          <p class="lp-hero__text">
-            {{ section.settings.text_line_1 }}
-            {%- if section.settings.show_authority_citation -%}
-              <sup
-                ><a
-                  href="#kilder"
-                  class="citation-link"
-                  aria-label="Se kilder"
-                  style="color:inherit;text-decoration:none;font-size:0.7em;margin-left:2px;"
-                >
-                  {{- section.settings.authority_citation_marker | default: '¹' -}}
-                </a></sup
-              >
-            {%- endif -%}
-          </p>
-        {%- endif -%}
-        {%- if section.settings.text_line_2 != blank -%}
-          <p class="lp-hero__text lp-hero__text--warm">{{ section.settings.text_line_2 }}</p>
-        {%- endif -%}
-
-        {%- comment -%} CHANGE 5 — Trust pills above CTA {%- endcomment -%}
-        {%- assign pills = section.blocks | where: 'type', 'pill' -%}
-        {%- if pills.size > 0 -%}
-          <div class="lp-hero__pills">
-            {%- for block in pills -%}
-              <span class="lp-hero__pill" {{ block.shopify_attributes }}>
-                <span class="lp-hero__pill-check">✓</span> {{ block.settings.text }}
-              </span>
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
-
-        {%- comment -%} CHANGE 4 — Star rating {%- endcomment -%}
+        {%- comment -%} Star rating — moved above headline for early social proof {%- endcomment -%}
         {%- if section.settings.rating_text != blank -%}
-          <div class="lp-hero__rating">
-            <span class="lp-hero__rating-stars">★★★★★</span>
-            <span class="lp-hero__rating-score">{{ section.settings.rating_score | default: '4.8' }}/5</span>
-            <span class="lp-hero__rating-count"
-              >– {{ section.settings.review_count | default: '102' }} anmeldelser</span
+          <div class="lp-hero__rating lp-hero__rating--top">
+            <span class="lp-hero__rating-stars" aria-hidden="true">★★★★★</span>
+            <span class="lp-hero__rating-score">{{ section.settings.rating_score | default: '4.7' }}/5</span>
+            <span class="lp-hero__rating-sep" aria-hidden="true">·</span>
+            <span class="lp-hero__rating-count">
+              {{- section.settings.review_count | default: '89' }} verifiserte kunder</span
             >
           </div>
         {%- endif -%}
 
+        {%- comment -%} CHANGE 2 — Headline (max 2 linjer) {%- endcomment -%}
+        <h1 class="lp-hero__title">{{ section.settings.title }}</h1>
+
+        {%- comment -%}
+          Subline removed from above-fold per hero hierarchy fix.
+          The single emotional quote below is the only supporting copy before the CTA.
+        {%- endcomment -%}
+
         {%- if section.settings.testimonial_quote != blank -%}
           <p
             class="lp-hero__testimonial-snippet"
-            style="font-family:sofia-pro,Assistant,sans-serif;font-size:13px;font-style:italic;color:#5f5f5f;margin:0 0 14px;max-width:420px;"
+            style="font-family:sofia-pro,Assistant,sans-serif;font-size:14px;font-style:italic;color:#5f5f5f;margin:0 0 18px;max-width:480px;line-height:1.45;"
           >
-            "{{ section.settings.testimonial_quote }}"
+            “{{ section.settings.testimonial_quote }}”
             <strong style="font-style:normal;color:#30273e;">— {{ section.settings.testimonial_author }}</strong>
           </p>
         {%- endif -%}
 
-        {%- comment -%} CHANGE 6 — CTA button {%- endcomment -%}
+        {%- comment -%} CHANGE 6 — CTA button (now directly after the emotional quote) {%- endcomment -%}
         <div class="lp-hero__actions">
           <form
             action="{{ routes.cart_add_url }}"
@@ -125,6 +97,18 @@
           <p class="lp-urgency-hero">
             {{ section.settings.urgency_text }}
           </p>
+        {%- endif -%}
+
+        {%- comment -%} Trust pills directly under the CTA — the only above-fold price reference lives here {%- endcomment -%}
+        {%- assign pills = section.blocks | where: 'type', 'pill' -%}
+        {%- if pills.size > 0 -%}
+          <div class="lp-hero__pills lp-hero__pills--under-cta">
+            {%- for block in pills -%}
+              <span class="lp-hero__pill" {{ block.shopify_attributes }}>
+                <span class="lp-hero__pill-check">✓</span> {{ block.settings.text }}
+              </span>
+            {%- endfor -%}
+          </div>
         {%- endif -%}
 
         {%- comment -%} ═══ BLOCK 1: PAYMENT CLARITY (Klarna-led, full price deferred) ═══ {%- endcomment -%}
@@ -166,57 +150,11 @@
 
         {%- comment -%} BLOCK 2 (clinic price comparison) extracted to sections/skinora-clinic-comparison.liquid {%- endcomment -%}
 
-        {%- comment -%} ═══ BLOCK 3b: PRICE REVEAL (after value justification) ═══ {%- endcomment -%}
-        <div
-          class="lp-price-reveal"
-          style="margin: 24px auto; padding: 24px 20px; background: #f6f2ed; border: 1px solid #e6dfd5; border-radius: 12px; text-align: center; max-width: 520px; width: 100%; display: flex; flex-direction: column; align-items: center;"
-        >
-          <p
-            class="lp-price-reveal__eyebrow"
-            style="margin: 0 0 8px; font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(48, 39, 62, 0.7);"
-          >
-            Engangsinvestering
-          </p>
-          <p
-            class="lp-price-reveal__price"
-            style="margin: 0 0 6px; font-family: 'freight-text-pro', 'freight-text-pro-fallback', Georgia, serif; font-size: clamp(34px, 6vw, 48px); font-weight: 400; line-height: 1.1; color: #30273e; letter-spacing: -0.01em;"
-            aria-label="Engangspris {{ sk_lp_product.price | money_without_trailing_zeros }}"
-          >
-            {{ sk_lp_product.price | money_without_trailing_zeros }}
-          </p>
-          <p
-            class="lp-price-reveal__klarna"
-            style="margin: 0 0 12px; font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif; font-size: 15px; color: #5f5f5f; line-height: 1.45;"
-          >
-            eller fra <strong style="color:#30273e;">{{ monthly_price }} kr/mnd</strong> med Klarna
-          </p>
-          <p
-            class="lp-price-reveal__support"
-            style="margin: 0 0 18px; font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif; font-size: 14px; font-style: italic; color: rgba(48, 39, 62, 0.75);"
-          >
-            Tilsvarer 6 klinikkbehandlinger – med ubegrenset bruk hjemme.
-          </p>
-          <form
-            action="{{ routes.cart_add_url }}"
-            method="post"
-            enctype="multipart/form-data"
-            class="lp-cta-form"
-            data-cta="price_reveal"
-            style="display: flex; justify-content: center; width: 100%; margin: 0;"
-          >
-            <input type="hidden" name="id" value="{{ sk_lp_variant.id }}">
-            <input type="hidden" name="quantity" value="1">
-            <button
-              type="submit"
-              class="lp-btn lp-btn--hero"
-              data-product-handle="{{ sk_lp_handle }}"
-              data-analytics="cta_price_reveal"
-              aria-label="{{ section.settings.cta_text | default: 'Prøv risikofritt i 60 dager' }}"
-            >
-              {{ section.settings.cta_text | default: 'Prøv risikofritt i 60 dager' }}
-            </button>
-          </form>
-        </div>
+        {%- comment -%}
+          BLOCK 3b (engangspris-boks på 4 390 kr) FJERNET fra above-fold per hierarki-fix.
+          Engangsprisen vises nå utelukkende i klinikk-sammenligningen lenger ned på siden,
+          der konteksten gjør den til en gevinst, ikke en barriere.
+        {%- endcomment -%}
 
         {%- comment -%} ═══ BLOCK 3: PREMIUM PROOF — relocated before Pain section ═══ {%- endcomment -%}
 
@@ -447,6 +385,20 @@
     font-size: 13px;
     font-weight: 300;
     color: #5f5f5f;
+  }
+  .lp-hero__rating-sep {
+    color: #b9b3c3;
+    font-weight: 600;
+    margin: 0 2px;
+  }
+  /* Top-of-hero rating placement (above the headline) */
+  .lp-hero__rating--top {
+    margin: 4px 0 12px;
+  }
+
+  /* Trust pills sitting directly under the hero CTA */
+  .lp-hero__pills--under-cta {
+    margin-top: 14px;
   }
 
   /* CHANGE 6 — hero CTA size bump */
