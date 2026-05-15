@@ -1,51 +1,97 @@
 {%- comment -%}
   sections/skinora-results.liquid
-  Typographic 3-step results timeline. No images, no card chrome —
-  large italic numerals + thin SVG connector between cards on desktop.
-  Connector hidden on mobile where cards stack vertically.
+  Final revision: typography matches LP, edge-to-edge images, no chrome,
+  hairline SVG connectors centred on the image (desktop), native scroll-snap
+  carousel + dots (mobile).
 {%- endcomment -%}
 
 {{ 'skinora-results.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'skinora-results.js' | asset_url }}" defer></script>
 
 <section class="skinora-results lp-results-timeline" aria-labelledby="skinora-results-heading-{{ section.id }}">
-  <div class="skinora-results__inner">
-    <header class="skinora-results__header">
+  <div class="skinora-results__inner lp-results-timeline__inner">
+    <header class="skinora-results__header lp-results-timeline__header">
       <h2 id="skinora-results-heading-{{ section.id }}" class="skinora-results__h2">
         {{ section.settings.headline | default: 'Hva kan du forvente?' }}
       </h2>
       {%- if section.settings.eyebrow != blank -%}
-        <p class="skinora-results__subhead">{{ section.settings.eyebrow }}</p>
+        <p class="skinora-results__subhead lp-results-timeline__eyebrow">{{ section.settings.eyebrow }}</p>
       {%- endif -%}
       {%- if section.settings.subtext != blank -%}
-        <div class="skinora-results__note">{{ section.settings.subtext }}</div>
+        <div class="skinora-results__note lp-results-timeline__note">{{ section.settings.subtext }}</div>
       {%- endif -%}
     </header>
 
-    <ol class="skinora-results__grid lp-results__grid">
+    <ol
+      class="skinora-results__grid lp-results__grid"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Forventede resultater"
+      tabindex="0"
+    >
       {%- for block in section.blocks -%}
         {%- if block.type != 'step' -%}{%- continue -%}{%- endif -%}
-        {%- assign main_text = block.settings.title | default: block.settings.body -%}
+        {%- assign img = block.settings.image -%}
+        {%- assign img_alt = block.settings.alt | default: img.alt | default: block.settings.label -%}
 
-        <li class="skinora-results__card lp-results__card" {{ block.shopify_attributes }}>
-          <span class="skinora-results__num lp-results__number">{{ forloop.index }}</span>
-          {%- if block.settings.label != blank -%}
-            <p class="skinora-results__label lp-results__eyebrow">{{ block.settings.label }}</p>
-          {%- endif -%}
-          {%- if main_text != blank -%}
-            <div class="skinora-results__body lp-results__body">{{ main_text }}</div>
-          {%- endif -%}
+        <li
+          class="skinora-results__card lp-results__card"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="Steg {{ forloop.index }} av {{ section.blocks.size }}"
+          {{ block.shopify_attributes }}
+        >
+          <figure class="skinora-results__media lp-results__media">
+            {%- if img != blank -%}
+              <img
+                src="{{ img | image_url: width: 800 }}"
+                srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 600 }} 600w, {{ img | image_url: width: 800 }} 800w, {{ img | image_url: width: 1200 }} 1200w"
+                sizes="(max-width: 768px) 86vw, 360px"
+                width="800"
+                height="1000"
+                alt="{{ img_alt | escape }}"
+                loading="lazy"
+                decoding="async"
+              >
+            {%- else -%}
+              <span class="skinora-results__media-placeholder">{{ block.settings.label }}</span>
+            {%- endif -%}
+          </figure>
+
+          <div class="skinora-results__caption lp-results__caption">
+            {%- if block.settings.label != blank -%}
+              <p class="skinora-results__label lp-results__eyebrow">{{ block.settings.label }}</p>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <div class="skinora-results__body lp-results__body">{{ block.settings.body }}</div>
+            {%- endif -%}
+          </div>
         </li>
 
         {%- unless forloop.last -%}
           <li class="skinora-results__connector lp-results__connector" aria-hidden="true">
-            <svg viewBox="0 0 80 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="0" y1="6" x2="68" y2="6" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
-              <polyline points="62,1 72,6 62,11" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" />
+            <svg viewBox="0 0 56 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="6" x2="46" y2="6" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+              <polyline points="40,2 48,6 40,10" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </li>
         {%- endunless -%}
       {%- endfor -%}
     </ol>
+
+    {%- if section.blocks.size > 1 -%}
+      <div class="skinora-results__dots lp-results__dots" role="tablist" aria-label="Naviger steg">
+        {%- for block in section.blocks -%}
+          {%- if block.type != 'step' -%}{%- continue -%}{%- endif -%}
+          <button
+            type="button"
+            class="skinora-results__dot lp-results__dot"
+            aria-label="Gå til steg {{ forloop.index }}"
+            data-index="{{ forloop.index0 }}"
+          ></button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -86,6 +132,17 @@
       "limit": 3,
       "settings": [
         {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Progress-bilde (4:5 anbefalt)"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Alt-tekst",
+          "info": "Beskriv hva bildet faktisk viser."
+        },
+        {
           "type": "text",
           "id": "label",
           "label": "Tidsmerkelapp",
@@ -93,7 +150,7 @@
         },
         {
           "type": "richtext",
-          "id": "title",
+          "id": "body",
           "label": "Brødtekst",
           "default": "<p>Færre nye utbrudd og roligere hud.</p>"
         }
@@ -109,21 +166,24 @@
           "type": "step",
           "settings": {
             "label": "ETTER 2–4 UKER",
-            "title": "<p>Færre nye utbrudd og roligere hud.</p>"
+            "body": "<p>Færre nye utbrudd og roligere hud.</p>",
+            "alt": "Nærbilde av kinn med få aktive utbrudd, etter 2–4 ukers bruk av Skinora Clear."
           }
         },
         {
           "type": "step",
           "settings": {
             "label": "ETTER 6–8 UKER",
-            "title": "<p>Jevnere hudtone og redusert rødhet.</p>"
+            "body": "<p>Jevnere hudtone og redusert rødhet.</p>",
+            "alt": "Nærbilde av kinn med jevnere hudtone og redusert rødhet, etter 6–8 ukers bruk."
           }
         },
         {
           "type": "step",
           "settings": {
             "label": "OVER TID",
-            "title": "<p>Klarere hud og bedre hudbalanse.</p>"
+            "body": "<p>Klarere hud og bedre hudbalanse.</p>",
+            "alt": "Nærbilde av kinn med klar, jevn hud over tid, vedlikeholdt med Skinora Clear."
           }
         }
       ]

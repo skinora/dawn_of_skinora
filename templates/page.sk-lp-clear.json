@@ -196,21 +196,24 @@
           "type": "step",
           "settings": {
             "label": "ETTER 2–4 UKER",
-            "title": "<p>Færre nye utbrudd og roligere hud.</p>"
+            "body": "<p>Færre nye utbrudd og roligere hud.</p>",
+            "alt": "Nærbilde av kinn med få aktive utbrudd, etter 2–4 ukers bruk av Skinora Clear."
           }
         },
         "r_2": {
           "type": "step",
           "settings": {
             "label": "ETTER 6–8 UKER",
-            "title": "<p>Jevnere hudtone og redusert rødhet.</p>"
+            "body": "<p>Jevnere hudtone og redusert rødhet.</p>",
+            "alt": "Nærbilde av kinn med jevnere hudtone og redusert rødhet, etter 6–8 ukers bruk."
           }
         },
         "r_3": {
           "type": "step",
           "settings": {
             "label": "OVER TID",
-            "title": "<p>Klarere hud og bedre hudbalanse.</p>"
+            "body": "<p>Klarere hud og bedre hudbalanse.</p>",
+            "alt": "Nærbilde av kinn med klar, jevn hud over tid, vedlikeholdt med Skinora Clear."
           }
         }
       },

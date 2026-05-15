@@ -1,22 +1,28 @@
-/* skinora-results.css — typographic, no card chrome, plum italic numerals.
-   Scoped to .skinora-results to avoid leaking. Mobile-first. */
+/* skinora-results.css
+   Final revision: typography matches the rest of the LP exactly.
+   Edge-to-edge images, no card chrome, transparent bg.
+   Desktop: 3-up with hairline SVG connectors centred on the image.
+   Mobile (≤768px): native scroll-snap carousel with pagination dots. */
 
 .skinora-results {
-  --sr-plum: #30273e;
-  --sr-plum-soft: rgba(48, 39, 62, 0.6);
-  --sr-plum-faint: rgba(48, 39, 62, 0.35);
-  --sr-plum-hairline: rgba(48, 39, 62, 0.06);
-  --sr-text-body: #4a4458;
-  --sr-font-serif:
-    'freight-text-pro', 'freight-text-pro-fallback', 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  /* Card width drives both desktop image height and connector offset.
+     Override at the section level via inline style if needed. */
+  --sr-card-w: 360px;
+
+  --sr-heading: #3a3448;
+  --sr-body: #4a4458;
+  --sr-eyebrow: rgba(58, 52, 72, 0.7);
+  --sr-italic: rgba(58, 52, 72, 0.6);
+  --sr-connector: rgba(58, 52, 72, 0.35);
+  --sr-dot: rgba(58, 52, 72, 0.25);
+  --sr-dot-active: #3a3448;
+
+  --sr-font-serif: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
   --sr-font-sans: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
 
   background: transparent;
-  /* Hairline divider so the section breathes against neighbours
-     without introducing a coloured band. */
-  border-top: 1px solid var(--sr-plum-hairline);
   padding: clamp(64px, 8vw, 120px) 24px;
-  color: var(--sr-text-body);
+  color: var(--sr-body);
   font-family: var(--sr-font-sans);
   -webkit-font-smoothing: antialiased;
 }
@@ -28,150 +34,220 @@
 }
 
 .skinora-results__inner {
-  max-width: 1120px;
+  max-width: 1240px;
   margin: 0 auto;
   position: relative;
 }
 
-/* ── Header ── */
+/* ── Header (matches other LP sections exactly) ── */
 .skinora-results__header {
-  max-width: 680px;
-  margin: 0 auto clamp(48px, 6vw, 72px);
   text-align: center;
+  margin: 0 auto clamp(40px, 5vw, 64px);
+  max-width: 680px;
 }
-
 .skinora-results__h2 {
   font-family: var(--sr-font-serif);
-  font-size: clamp(28px, 3.6vw, 36px);
+  font-size: 34px;
   font-weight: 400;
-  line-height: 1.2;
-  color: var(--sr-plum);
-  margin: 0 0 16px;
-  letter-spacing: 0.3px;
+  font-style: normal;
+  color: var(--sr-heading);
+  letter-spacing: 0.6px;
+  line-height: 1.3;
+  margin: 0 0 12px;
 }
-
 .skinora-results__subhead {
   font-family: var(--sr-font-sans);
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--sr-plum-soft);
+  color: var(--sr-eyebrow);
   margin: 0 0 16px;
 }
-
 .skinora-results__note {
-  font-family: var(--sr-font-serif);
+  font-family: var(--sr-font-sans);
+  font-size: 14px;
   font-style: italic;
-  font-size: 15px;
-  line-height: 1.6;
-  color: rgba(48, 39, 62, 0.55);
+  color: var(--sr-italic);
   max-width: 52ch;
-  margin: 0 auto;
+  margin: 16px auto 0;
 }
-
-/* ── Grid: cards + connectors in a flex row on desktop ── */
-.skinora-results__grid {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  gap: 24px;
-  list-style: none;
+.skinora-results__note :is(p, ul, ol) {
   margin: 0;
-  padding: 0;
 }
 
-/* ── Card (strip all chrome — typography only) ── */
+/* ── Grid: desktop 3-up ── */
+.skinora-results__grid {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  max-width: 1240px;
+}
+
+/* ── Card (no chrome, no padding around image) ── */
 .skinora-results__card {
   flex: 1 1 0;
-  max-width: 100%;
+  max-width: var(--sr-card-w);
   background: none;
   border: 0;
   border-radius: 0;
   box-shadow: none;
-  padding: 24px 16px;
+  padding: 0;
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
 }
 
-/* Italic, large, no fill, no circle */
-.skinora-results__num {
+/* ── Image: edge-to-edge, 4:5 ── */
+.skinora-results__media {
+  margin: 0;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 6px;
+  background: linear-gradient(160deg, #ede6dd 0%, #dcd2c5 100%);
+  position: relative;
+}
+.skinora-results__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  background: none;
-  border: 0;
-  border-radius: 0;
-  width: auto;
-  height: auto;
-  padding: 0;
-  margin: 0 0 12px;
-  font-family: var(--sr-font-serif);
-  font-size: 64px;
-  font-weight: 300;
-  font-style: italic;
-  font-feature-settings: 'lnum', 'pnum';
-  line-height: 1;
-  color: var(--sr-plum);
-  letter-spacing: -0.02em;
+}
+.skinora-results__media-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9c8f86;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
+/* ── Caption (only the text gets horizontal breathing) ── */
+.skinora-results__caption {
+  padding: 0;
+}
 .skinora-results__label {
   font-family: var(--sr-font-sans);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--sr-plum);
-  margin: 0 0 12px;
+  color: var(--sr-heading);
+  margin: 16px 16px 8px;
 }
-
 .skinora-results__body {
   font-family: var(--sr-font-sans);
   font-size: 16px;
   line-height: 1.55;
-  color: var(--sr-text-body);
-  max-width: 26ch;
-  margin: 0 auto;
+  color: var(--sr-body);
+  margin: 0 16px;
 }
-
 .skinora-results__body :is(p, ul, ol) {
   margin: 0;
 }
 
-/* ── Connector (hidden on mobile via flex-column above) ── */
+/* ── Connector (desktop only by default; hidden on mobile) ── */
 .skinora-results__connector {
   display: none;
 }
 
-/* ── Desktop ── */
+/* ── Dots (mobile carousel only; hidden on desktop) ── */
+.skinora-results__dots {
+  display: none;
+}
+
+/* ── Desktop ≥769px ── */
 @media (min-width: 769px) {
-  .skinora-results__grid {
-    flex-direction: row;
-    align-items: stretch;
-    gap: 0;
-  }
-  .skinora-results__card {
-    max-width: 320px;
-    padding: 32px 24px;
-  }
-  .skinora-results__num {
-    font-size: clamp(56px, 6vw, 88px);
-    margin-bottom: 20px;
-  }
   .skinora-results__connector {
-    flex: 0 0 80px;
+    flex: 0 0 56px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--sr-plum-faint);
-    align-self: center;
+    color: var(--sr-connector);
+    /* Vertical centre of the IMAGE (height = card-w * 5/4),
+       minus half the SVG height (6px). */
+    padding-top: calc(var(--sr-card-w) * 5 / 4 / 2 - 6px);
   }
   .skinora-results__connector svg {
-    width: 80px;
+    width: 56px;
     height: 12px;
     display: block;
+  }
+}
+
+/* ── Mobile ≤768px: scroll-snap carousel + dots ── */
+@media (max-width: 768px) {
+  .skinora-results__grid {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 16px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 16px 8px;
+    gap: 16px;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+  .skinora-results__grid::-webkit-scrollbar {
+    display: none;
+  }
+  .skinora-results__grid:focus {
+    outline: none;
+  }
+  .skinora-results__grid:focus-visible {
+    outline: 2px solid var(--sr-heading);
+    outline-offset: 4px;
+    border-radius: 8px;
+  }
+  .skinora-results__card {
+    flex: 0 0 86%;
+    max-width: 86%;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  .skinora-results__dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .skinora-results__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sr-dot);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease;
+  }
+  .skinora-results__dot[aria-current='true'] {
+    background: var(--sr-dot-active);
+    transform: scale(1.2);
+  }
+  .skinora-results__dot:focus-visible {
+    outline: 2px solid var(--sr-heading);
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skinora-results__grid {
+    scroll-behavior: auto;
+  }
+  .skinora-results__dot {
+    transition: none;
   }
 }
