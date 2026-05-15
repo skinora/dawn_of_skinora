@@ -113,13 +113,13 @@
           </p>
         {%- endif -%}
 
-        {%- comment -%} ═══ BLOCK 1: PAYMENT CLARITY ═══ {%- endcomment -%}
+        {%- comment -%} ═══ BLOCK 1: PAYMENT CLARITY (Klarna-led, full price deferred) ═══ {%- endcomment -%}
         <div class="lp-purchase-meta">
           <div class="lp-purchase-meta__price-row">
-            <span class="lp-purchase-meta__price">{{ sk_lp_product.price | money_without_trailing_zeros }}</span>
-            <span class="lp-purchase-meta__klarna"
-              >eller fra <strong>{{ monthly_price }} kr/mnd</strong> med Klarna</span
+            <span class="lp-purchase-meta__price"
+              >Fra <strong>{{ monthly_price }} kr/mnd</strong> med Klarna</span
             >
+            <span class="lp-purchase-meta__klarna">Delbetaling tilgjengelig ved kassen</span>
           </div>
           <div class="lp-purchase-meta__per-treatment">
             <p class="lp-purchase-meta__per-treatment-main">
@@ -196,6 +196,57 @@
               </tr>
             </tbody>
           </table>
+        </div>
+
+        {%- comment -%} ═══ BLOCK 3b: PRICE REVEAL (after value justification) ═══ {%- endcomment -%}
+        <div
+          class="lp-price-reveal"
+          style="margin: 24px 0; padding: 24px 20px; background: #f6f2ed; border: 1px solid #e6dfd5; border-radius: 12px; text-align: center;"
+        >
+          <p
+            class="lp-price-reveal__eyebrow"
+            style="margin: 0 0 8px; font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(48, 39, 62, 0.7);"
+          >
+            Engangsinvestering
+          </p>
+          <p
+            class="lp-price-reveal__price"
+            style="margin: 0 0 6px; font-family: 'freight-text-pro', 'freight-text-pro-fallback', Georgia, serif; font-size: clamp(34px, 6vw, 48px); font-weight: 400; line-height: 1.1; color: #30273e; letter-spacing: -0.01em;"
+            aria-label="Engangspris {{ sk_lp_product.price | money_without_trailing_zeros }}"
+          >
+            {{ sk_lp_product.price | money_without_trailing_zeros }}
+          </p>
+          <p
+            class="lp-price-reveal__klarna"
+            style="margin: 0 0 12px; font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif; font-size: 15px; color: #5f5f5f; line-height: 1.45;"
+          >
+            eller fra <strong style="color:#30273e;">{{ monthly_price }} kr/mnd</strong> med Klarna
+          </p>
+          <p
+            class="lp-price-reveal__support"
+            style="margin: 0 0 18px; font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif; font-size: 14px; font-style: italic; color: rgba(48, 39, 62, 0.75);"
+          >
+            Tilsvarer 6 klinikkbehandlinger – med ubegrenset bruk hjemme.
+          </p>
+          <form
+            action="{{ routes.cart_add_url }}"
+            method="post"
+            enctype="multipart/form-data"
+            class="lp-cta-form"
+            data-cta="price_reveal"
+          >
+            <input type="hidden" name="id" value="{{ sk_lp_variant.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button
+              type="submit"
+              class="lp-btn lp-btn--hero"
+              data-product-handle="{{ sk_lp_handle }}"
+              data-analytics="cta_price_reveal"
+              aria-label="{{ section.settings.cta_text | default: 'Prøv risikofritt i 60 dager' }}"
+            >
+              {{ section.settings.cta_text | default: 'Prøv risikofritt i 60 dager' }}
+            </button>
+          </form>
         </div>
 
         {%- comment -%} ═══ BLOCK 3: PREMIUM PROOF — relocated before Pain section ═══ {%- endcomment -%}

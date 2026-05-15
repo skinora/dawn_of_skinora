@@ -741,8 +741,8 @@
       "settings": {
         "enabled": true,
         "product": "skinora-clear",
-        "price": "4 390 kr",
-        "subprice": "eller fra 122 kr/mnd med Klarna",
+        "price": "Fra 122 kr/mnd med Klarna",
+        "subprice": "4 390 kr engangspris",
         "cta_label": "Prøv risikofritt →",
         "trigger_selector": ".lp-hero__actions",
         "hide_selector": ".lp-cta-final"
