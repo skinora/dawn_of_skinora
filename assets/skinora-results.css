@@ -269,3 +269,142 @@
     transition: none;
   }
 }
+
+/* ============================================================
+   MOBILE OVERRIDES — Hva kan du forvente? section
+   Forced with !important because earlier non-important rules
+   were being overridden by other theme styles. Tested at 390px.
+   ============================================================ */
+
+/* List reset for the <ol> grid */
+.skinora-results__grid,
+ol.skinora-results__grid {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+.skinora-results__grid > li,
+ol.skinora-results__grid > li {
+  list-style: none !important;
+  margin-left: 0 !important;
+}
+
+@media (max-width: 768px) {
+  /* Section + parents must allow horizontal scroll */
+  .skinora-results,
+  .skinora-results__inner {
+    overflow: visible !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .skinora-results {
+    padding-top: 56px !important;
+    padding-bottom: 64px !important;
+  }
+
+  /* ============== HEADER: stack and scale ============== */
+  .skinora-results__header {
+    display: block !important;
+    text-align: center !important;
+    margin: 0 auto 28px !important;
+    padding: 0 20px !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .skinora-results__h2,
+  .skinora-results__subhead,
+  .skinora-results__note {
+    display: block !important;
+    width: 100% !important;
+    float: none !important;
+    text-align: center !important;
+  }
+  .skinora-results__h2 {
+    font-size: 26px !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.4px !important;
+    margin: 0 0 10px !important;
+  }
+  .skinora-results__subhead {
+    font-size: 12px !important;
+    letter-spacing: 0.16em !important;
+    margin: 0 0 12px !important;
+  }
+  .skinora-results__note {
+    max-width: 100% !important;
+    font-size: 13px !important;
+    margin: 12px auto 0 !important;
+    padding: 0 8px !important;
+  }
+  .skinora-results__note p {
+    margin: 0 !important;
+  }
+
+  /* ============== CAROUSEL: 1 card per swipe ============== */
+  .skinora-results__grid,
+  ol.skinora-results__grid {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 16px !important;
+    list-style: none !important;
+    margin: 32px 0 0 !important;
+    padding: 0 16px 8px !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-padding-inline: 16px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .skinora-results__grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .skinora-results__card {
+    flex: 0 0 86% !important;
+    max-width: 86% !important;
+    min-width: 0 !important;
+    scroll-snap-align: center !important;
+    scroll-snap-stop: always !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ============== NUMERAL + CAPTION ============== */
+  .skinora-results__num {
+    left: 16px !important;
+    transform: translateY(50%) !important;
+    font-size: clamp(80px, 22vw, 110px) !important;
+  }
+  .skinora-results__caption {
+    padding: calc(0.55 * clamp(80px, 22vw, 110px) + 10px) 0 0 !important;
+    text-align: left !important;
+  }
+  .skinora-results__label {
+    font-size: 11px !important;
+    letter-spacing: 0.16em !important;
+    margin: 0 0 6px !important;
+    text-align: left !important;
+  }
+  .skinora-results__body {
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    text-align: left !important;
+  }
+
+  /* ============== DOTS ============== */
+  .skinora-results__dots {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin: 20px 0 0 !important;
+  }
+}
