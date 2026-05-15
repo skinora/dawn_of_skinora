@@ -107,7 +107,8 @@
   margin: 0;
   width: 100%;
   aspect-ratio: 4 / 5;
-  overflow: hidden;
+  /* overflow visible so the numeral can spill past the bottom edge */
+  overflow: visible;
   border-radius: 6px;
   background: linear-gradient(160deg, #ede6dd 0%, #dcd2c5 100%);
   position: relative;
@@ -117,6 +118,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 6px;
 }
 .skinora-results__media-placeholder {
   position: absolute;
@@ -130,9 +132,34 @@
   text-transform: uppercase;
 }
 
+/* ── Oversized italic numeral overlapping the seam ── */
+.skinora-results__num {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+  z-index: 2;
+  pointer-events: none;
+  display: block;
+  background: none;
+  border: 0;
+  padding: 0 12px;
+  margin: 0;
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(88px, 22vw, 128px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: var(--sr-heading);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.55);
+  font-feature-settings: 'lnum', 'pnum';
+}
+
 /* ── Caption (only the text gets horizontal breathing) ── */
 .skinora-results__caption {
-  padding: 0;
+  /* Top padding clears the numeral that overlaps from above. */
+  padding: calc(clamp(88px, 22vw, 128px) * 0.55 + 10px) 0 0;
 }
 .skinora-results__label {
   font-family: var(--sr-font-sans);
@@ -141,14 +168,16 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--sr-heading);
-  margin: 16px 16px 8px;
+  margin: 0 16px 10px;
 }
 .skinora-results__body {
   font-family: var(--sr-font-sans);
   font-size: 16px;
   line-height: 1.55;
   color: var(--sr-body);
-  margin: 0 16px;
+  max-width: 28ch;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 .skinora-results__body :is(p, ul, ol) {
   margin: 0;
@@ -166,6 +195,12 @@
 
 /* ── Desktop ≥769px ── */
 @media (min-width: 769px) {
+  .skinora-results__num {
+    font-size: clamp(96px, 11vw, 150px);
+  }
+  .skinora-results__caption {
+    padding-top: calc(clamp(96px, 11vw, 150px) * 0.55 + 12px);
+  }
   .skinora-results__connector {
     flex: 0 0 56px;
     display: flex;
@@ -174,6 +209,7 @@
     color: var(--sr-connector);
     /* Vertical centre of the IMAGE (height = card-w * 5/4),
        minus half the SVG height (6px). */
+    align-self: flex-start;
     padding-top: calc(var(--sr-card-w) * 5 / 4 / 2 - 6px);
   }
   .skinora-results__connector svg {
