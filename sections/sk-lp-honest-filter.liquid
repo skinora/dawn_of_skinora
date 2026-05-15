@@ -12,19 +12,19 @@
 >
   <div class="sk-honest-filter__inner">
     {%- if section.settings.eyebrow != blank -%}
-      <p class="sk-honest-filter__eyebrow">{{ section.settings.eyebrow }}</p>
+      <p class="lp-eyebrow sk-honest-filter__eyebrow">{{ section.settings.eyebrow }}</p>
     {%- endif -%}
 
     {%- if section.settings.heading != blank -%}
-      <h2 class="sk-honest-filter__heading">{{ section.settings.heading }}</h2>
+      <h2 class="lp-section-heading sk-honest-filter__heading">{{ section.settings.heading }}</h2>
     {%- endif -%}
 
     {%- if section.settings.subhead != blank -%}
-      <p class="sk-honest-filter__subhead">{{ section.settings.subhead }}</p>
+      <p class="lp-section-subhead sk-honest-filter__subhead">{{ section.settings.subhead }}</p>
     {%- endif -%}
 
     {%- if section.settings.intro != blank -%}
-      <div class="sk-honest-filter__intro">{{ section.settings.intro }}</div>
+      <div class="lp-section-intro sk-honest-filter__intro">{{ section.settings.intro }}</div>
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
@@ -35,7 +35,7 @@
               <span class="sk-honest-filter__icon" aria-hidden="true">✗</span>
               <div class="sk-honest-filter__body">
                 {%- if block.settings.lead != blank -%}
-                  <strong class="sk-honest-filter__lead">{{ block.settings.lead }}</strong>
+                  <strong class="lp-mech__card-title sk-honest-filter__lead">{{ block.settings.lead }}</strong>
                 {%- endif -%}
                 {%- if block.settings.explanation != blank -%}
                   <p class="sk-honest-filter__explanation">{{ block.settings.explanation }}</p>
@@ -56,7 +56,7 @@
     {%- if section.settings.cta_label != blank -%}
       <a
         href="{{ section.settings.cta_url | default: '#kjop' }}"
-        class="lp-btn lp-btn--hero sk-honest-filter__cta"
+        class="lp-btn lp-btn--hero"
       >
         {{ section.settings.cta_label }}
       </a>
@@ -76,55 +76,62 @@
     text-align: center;
   }
 
-  /* ───── Typography tokens (match other LP sections) ───── */
-  .sk-honest-filter__heading,
+  /* ───── Force theme typography on all section headings (richtext h3 included) ───── */
+  .sk-honest-filter h2,
+  .sk-honest-filter h3,
+  .sk-honest-filter h4,
   .sk-honest-filter__closing h3 {
-    font-family: var(--font-heading-family, 'freight-text-pro', 'freight-text-pro-fallback', Georgia, serif);
-    font-style: var(--font-heading-style, normal);
-    font-weight: var(--font-heading-weight, 400);
-    letter-spacing: calc(var(--font-heading-scale, 1) * 0.04rem);
-    color: rgb(var(--color-foreground, 58 52 72));
+    font-family: 'freight-text-pro', 'freight-text-pro-fallback', Georgia, serif !important;
+    font-weight: 400;
+    color: rgb(58, 52, 72);
+    letter-spacing: 0.4px;
+    line-height: 1.25;
   }
+
+  /* Body-font lockdown for all UI text */
   .sk-honest-filter__eyebrow,
   .sk-honest-filter__subhead,
   .sk-honest-filter__intro,
   .sk-honest-filter__lead,
   .sk-honest-filter__explanation,
   .sk-honest-filter__closing p {
-    font-family: var(--font-body-family, 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif);
-    font-style: var(--font-body-style, normal);
+    font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
   }
 
+  /* ───── Per-element exact computed values (from live inspection) ───── */
   .sk-honest-filter__eyebrow {
     display: block;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    line-height: 1.4;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    line-height: 20.8px;
     text-transform: uppercase;
-    color: rgba(58, 52, 72, 0.7);
-    margin: 0 0 0.75rem;
+    color: rgb(48, 39, 62);
+    margin: 0 0 16px;
   }
   .sk-honest-filter__heading {
-    font-size: clamp(1.875rem, 4vw, 2.5rem);
-    line-height: 1.2;
-    margin: 0 0 0.5rem;
+    font-size: 34px;
+    font-weight: 400;
+    letter-spacing: 0.6px;
+    line-height: 44.2px;
+    color: rgb(58, 52, 72);
+    margin: 8px 0 12px;
     word-break: normal;
     overflow-wrap: break-word;
     hyphens: none;
   }
   .sk-honest-filter__subhead {
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 400;
     line-height: 1.5;
-    color: #4a4458;
+    color: rgba(48, 39, 62, 0.7);
     margin: 0 0 28px;
   }
   .sk-honest-filter__intro {
-    font-size: 1.0625rem;
+    font-size: 17px;
     font-weight: 400;
     line-height: 1.6;
-    color: #4a4458;
+    color: rgba(48, 39, 62, 0.85);
     max-width: 560px;
     margin: 0 auto 40px;
   }
@@ -158,7 +165,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-body-family, 'sofia-pro', sofia-pro-fallback, sans-serif);
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
     font-size: 12px;
     color: rgba(0, 0, 0, 0.5);
     font-weight: 600;
@@ -171,17 +178,18 @@
   }
   .sk-honest-filter__lead {
     display: block;
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.45;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.18px;
+    line-height: 23.4px;
+    color: rgb(48, 39, 62);
     margin-bottom: 4px;
-    color: #3a3448;
   }
   .sk-honest-filter__explanation {
-    font-size: 0.9375rem;
+    font-size: 15px;
     font-weight: 400;
     line-height: 1.55;
-    color: #4a4458;
+    color: rgba(48, 39, 62, 0.75);
     margin: 0;
   }
 
@@ -196,29 +204,29 @@
     margin-bottom: 28px;
   }
   .sk-honest-filter__closing h3 {
-    font-size: clamp(1.375rem, 3vw, 1.75rem);
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
     line-height: 1.3;
     max-width: 540px;
     margin: 0 auto 12px;
   }
   .sk-honest-filter__closing p {
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 400;
     line-height: 1.55;
-    color: #4a4458;
+    color: rgba(48, 39, 62, 0.75);
     margin: 0 auto;
     max-width: 480px;
   }
 
-  /* CTA inherits all visuals from global .lp-btn / .lp-btn--hero (hero-CTA, sticky-bar, klinikksammenligning).
-     Local rule only adds top margin. */
-  .sk-honest-filter__cta {
-    margin-top: 4px;
-  }
+  /* CTA: all visuals provided by global .lp-btn / .lp-btn--hero. No local override needed. */
 
   @media (max-width: 749px) {
     .sk-honest-filter {
       padding-block: 56px;
+    }
+    .sk-honest-filter__heading {
+      font-size: 28px;
+      line-height: 1.2;
     }
     .sk-honest-filter__item {
       padding: 16px 0;
@@ -231,15 +239,6 @@
     }
     .sk-honest-filter__list {
       margin-bottom: 36px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .sk-honest-filter__cta {
-      transition: none;
-    }
-    .sk-honest-filter__cta:hover {
-      transform: none;
     }
   }
 {% endstylesheet %}
