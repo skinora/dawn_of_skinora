@@ -118,6 +118,80 @@
       transform: none;
     }
   }
+
+  /* ============================================================================
+     HYBRID MOBILE LAYOUT (≤768px) — show 2 hero reviews, ghost CTA reveals rest
+     ============================================================================ */
+  @media (max-width: 768px) {
+    .lp-reviews .lp-reviews__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .lp-reviews .lp-review-card--secondary {
+      display: none;
+    }
+    .lp-reviews.is-expanded .lp-review-card--secondary {
+      display: block;
+      animation: lpReviewFadeIn 0.35s ease both;
+    }
+    @keyframes lpReviewFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Shrink before/after to ~120px square thumbnails on mobile */
+    .lp-reviews .lp-review-card .sk-review__ba {
+      gap: 8px;
+    }
+    .lp-reviews .lp-review-card .sk-review__ba-item {
+      flex: 0 0 120px;
+      max-width: 120px;
+    }
+    .lp-reviews .lp-review-card .sk-review__ba-btn {
+      width: 120px;
+      height: 120px;
+      border-radius: 10px;
+      cursor: zoom-in;
+    }
+    .lp-reviews .lp-review-card .sk-review__ba-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .lp-reviews .lp-review-card__text {
+      font-size: 16px;
+      line-height: 1.55;
+    }
+  }
+
+  /* ============================================================================
+     DESKTOP (≥769px) — keep current grid; secondary cards always visible
+     ============================================================================ */
+  @media (min-width: 769px) {
+    .lp-reviews .lp-review-card--secondary {
+      display: block;
+    }
+  }
+
+  /* ============================================================================
+     EXPAND BUTTON wrapper (button itself styled by buttons.css .btn--ghost)
+     ============================================================================ */
+  .lp-reviews__more {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .lp-reviews__expand {
+    margin: 0 auto;
+  }
 </style>
 
 <!-- SECTION: Social Proof / Reviews -->
@@ -160,16 +234,26 @@
 
       {%- if section.blocks.size > 0 -%}
         {%- assign visible_count = section.settings.reviews_visible_count | default: 6 -%}
+        {%- assign mobile_hero_count = 2 -%}
+        {%- assign ranked_reviews = section.blocks | sort: 'settings.priority' -%}
         <div
           class="lp-reviews__grid"
           id="lp-reviews-grid-{{ section.id }}"
           data-reviews-grid
           data-visible-count="{{ visible_count }}"
+          data-mobile-hero-count="{{ mobile_hero_count }}"
         >
-          {%- for block in section.blocks -%}
+          {%- for block in ranked_reviews -%}
+            {%- assign is_secondary_mobile = false -%}
+            {%- if forloop.index > mobile_hero_count -%}{%- assign is_secondary_mobile = true -%}{%- endif -%}
+            {%- assign is_hidden_desktop = false -%}
+            {%- if forloop.index0 >= visible_count -%}{%- assign is_hidden_desktop = true -%}{%- endif -%}
             <div
-              class="lp-review-card"
-              {% if forloop.index0 >= visible_count %}
+              class="lp-review-card{% if is_secondary_mobile %} lp-review-card--secondary{% endif %}"
+              {% if is_secondary_mobile %}
+                data-review-secondary="true"
+              {% endif %}
+              {% if is_hidden_desktop %}
                 data-review-hidden="true" style="display:none;"
               {% endif %}
               {{ block.shopify_attributes }}
@@ -245,19 +329,26 @@
           {%- endfor -%}
         </div>
 
-        {%- if section.blocks.size > visible_count -%}
-          <div class="lp-reviews__more" style="text-align:center; margin-top:24px;">
+        {%- comment -%}
+          Toggle button: shown on mobile if there are more than mobile_hero_count reviews,
+          shown on desktop only when there are more than visible_count reviews.
+          CSS handles the responsive visibility.
+        {%- endcomment -%}
+        {%- if section.blocks.size > mobile_hero_count -%}
+          {%- assign collapsed_label = 'Les alle anmeldelser →' -%}
+          {%- assign expanded_label = section.settings.show_less_text | default: 'Vis færre anmeldelser ↑' -%}
+          <div class="lp-reviews__more">
             <button
               type="button"
-              class="lp-reviews__more-btn"
+              class="lp-reviews__more-btn lp-reviews__expand btn btn--ghost"
               data-reviews-toggle
-              data-show-more-text="{{ section.settings.show_more_text | default: 'Vis flere anmeldelser' | escape }}"
-              data-show-less-text="{{ section.settings.show_less_text | default: 'Vis færre' | escape }}"
+              data-show-more-text="{{ collapsed_label | escape }}"
+              data-show-less-text="{{ expanded_label | escape }}"
               aria-expanded="false"
               aria-controls="lp-reviews-grid-{{ section.id }}"
-              style="font-family:sofia-pro,sans-serif;font-size:14px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#30273e;background:transparent;border:1px solid rgba(48,39,62,0.25);border-radius:999px;padding:12px 24px;cursor:pointer;transition:background 0.2s ease, color 0.2s ease;"
             >
-              {{ section.settings.show_more_text | default: 'Vis flere anmeldelser' }}
+              <span class="lp-reviews__expand-label" data-label-collapsed>{{ collapsed_label }}</span>
+              <span class="lp-reviews__expand-label" data-label-expanded hidden>{{ expanded_label }}</span>
             </button>
           </div>
         {%- endif -%}
@@ -282,14 +373,46 @@
     var btn = sectionEl.querySelector('[data-reviews-toggle]');
     var grid = sectionEl.querySelector('[data-reviews-grid]');
     if (!btn || !grid) return;
-    btn.addEventListener('click', function () {
-      var expanded = btn.getAttribute('aria-expanded') === 'true';
+
+    var labelCollapsed = btn.querySelector('[data-label-collapsed]');
+    var labelExpanded = btn.querySelector('[data-label-expanded]');
+
+    function setExpanded(open) {
+      sectionEl.classList.toggle('is-expanded', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+      // Reveal/hide desktop-overflow cards (cards beyond visible_count) on all viewports.
       var hidden = grid.querySelectorAll('[data-review-hidden]');
       hidden.forEach(function (el) {
-        el.style.display = expanded ? 'none' : '';
+        el.style.display = open ? '' : 'none';
       });
-      btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-      btn.textContent = expanded ? btn.dataset.showMoreText : btn.dataset.showLessText;
+
+      // Mobile-secondary cards (cards 3+) are CSS-controlled via .is-expanded; nothing to toggle in JS.
+
+      if (labelCollapsed && labelExpanded) {
+        labelCollapsed.hidden = open;
+        labelExpanded.hidden = !open;
+      } else {
+        // Fallback for pre-update markup
+        btn.textContent = open ? btn.dataset.showLessText : btn.dataset.showMoreText;
+      }
+
+      if (open) {
+        var firstSecondary = grid.querySelector('[data-review-secondary], [data-review-hidden]');
+        if (firstSecondary) {
+          firstSecondary.setAttribute('tabindex', '-1');
+          try {
+            firstSecondary.focus({ preventScroll: false });
+          } catch (_) {
+            firstSecondary.focus();
+          }
+        }
+      }
+    }
+
+    btn.addEventListener('click', function () {
+      var isOpen = sectionEl.classList.contains('is-expanded');
+      setExpanded(!isOpen);
     });
   })();
 </script>
@@ -483,6 +606,16 @@
       "type": "review",
       "name": "Anmeldelse",
       "settings": [
+        {
+          "type": "range",
+          "id": "priority",
+          "label": "Vis-prioritet (1 = vises først på mobil)",
+          "info": "De to anmeldelsene med lavest tall vises som hero-par på mobil.",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "default": 10
+        },
         {
           "type": "textarea",
           "id": "text",
