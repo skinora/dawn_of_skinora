@@ -1,0 +1,343 @@
+/* =============================================================================
+   typography-lp.css
+   Unified typography system for /pages/skinora-clear and other LP templates.
+
+   Strategy:
+   - Tokens live on :root (color, type-scale, line-heights, letter-spacing,
+     font-weights, spacing). Available everywhere.
+   - Visual overrides target existing .lp-* classes from the LP design system,
+     plus the new .sk-* honest-filter classes. Prefixed with `body` for higher
+     specificity than section-scoped {% stylesheet %} blocks (which load AFTER
+     this file but use single-class selectors).
+   - Loaded globally from layout/theme.liquid; only LP pages with .lp-* /
+     .sk-* classes pick up visual changes.
+   ============================================================================= */
+
+:root {
+  /* ---------- Color palette (text only) ---------- */
+  --ink-900: #2d1b3d; /* Headings, primary text          */
+  --ink-700: #3a3448; /* Sub-headings, strong body       */
+  --ink-500: rgba(45, 27, 61, 0.72); /* Body text                       */
+  --ink-400: rgba(45, 27, 61, 0.58); /* Captions, subheads, meta        */
+  --ink-300: rgba(45, 27, 61, 0.42); /* Muted labels, footnotes         */
+  --accent: #e63946;
+  --accent-deep: #9b1b3a;
+  --paper: #ffffff;
+  --paper-warm: #faf7f2;
+  --paper-cool: #f5f4f8;
+
+  /* ---------- Type scale (modular 1.25, mobile-first clamp) ---------- */
+  --fs-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
+  --fs-sm: clamp(0.875rem, 0.84rem + 0.18vw, 0.9375rem);
+  --fs-base: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);
+  --fs-md: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);
+  --fs-lg: clamp(1.375rem, 1.25rem + 0.6vw, 1.625rem);
+  --fs-xl: clamp(1.75rem, 1.5rem + 1.2vw, 2.25rem);
+  --fs-2xl: clamp(2.25rem, 1.9rem + 1.8vw, 3rem);
+  --fs-3xl: clamp(2.5rem, 2rem + 2.5vw, 3.5rem);
+  --fs-4xl: clamp(3rem, 2.3rem + 3.5vw, 4.5rem);
+
+  /* ---------- Line heights ---------- */
+  --lh-tight: 1.1;
+  --lh-snug: 1.2;
+  --lh-base: 1.5;
+  --lh-relaxed: 1.65;
+
+  /* ---------- Letter-spacing ---------- */
+  --ls-tight: -0.02em;
+  --ls-snug: -0.01em;
+  --ls-base: 0;
+  --ls-wide: 0.04em;
+  --ls-wider: 0.14em;
+
+  /* ---------- Font weights ---------- */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* ---------- Spacing scale (4px grid) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 80px;
+  --space-10: 96px;
+  --space-11: 120px;
+
+  /* ---------- Font stacks (single source of truth) ---------- */
+  --font-serif: 'freight-text-pro', 'freight-text-pro-fallback', Georgia, serif;
+  --font-sans: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
+}
+
+/* ============================================================================
+   GLOBAL LP TYPOGRAPHY OVERRIDES
+   All selectors prefixed with `body` to win over section {% stylesheet %} CSS.
+   ============================================================================ */
+
+/* ---------- Hero H1 ---------- */
+body .lp-hero__title {
+  font-family: var(--font-serif);
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--ls-tight);
+  line-height: var(--lh-tight);
+  color: var(--ink-900);
+  margin: 0 0 var(--space-4);
+  text-wrap: balance;
+}
+
+/* ---------- Section H2 (consolidated) ---------- */
+body .lp-section-heading,
+body .lp-mech__title,
+body .lp-klinikk__title,
+body .lp-results__title,
+body .lp-howto__title,
+body .lp-why__title,
+body .lp-reviews__title,
+body .lp-faq__title,
+body .lp-cta__title,
+body .lp-cross-sell__title,
+body .lp-problem__title,
+body .lp-trust-full__title,
+body .lp-whats__title,
+body .skinora-clinic-comparison__title,
+body .sk-honest-filter__heading {
+  font-family: var(--font-serif);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--ls-tight);
+  line-height: var(--lh-snug);
+  color: var(--ink-900);
+  margin: 0 0 var(--space-3);
+  text-wrap: balance;
+}
+
+/* ---------- Card H3 ---------- */
+body .lp-mech__card-title,
+body .lp-why__card-title,
+body .lp-trust__title,
+body .lp-results__card-title,
+body .lp-howto__card-title,
+body .sk-honest-filter__lead {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-snug);
+  line-height: var(--lh-snug);
+  color: var(--ink-900);
+  margin: 0 0 var(--space-2);
+}
+
+/* ---------- H4 / wavelength / step-num ---------- */
+body .mechanism-card__wavelength,
+body .lp-howto__step-num {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-snug);
+  line-height: 1;
+  color: var(--beam-core, var(--ink-900));
+}
+
+/* ---------- Eyebrow (unified — kills per-section overrides) ---------- */
+body .lp-eyebrow,
+body [class*='__eyebrow'] {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  line-height: var(--lh-base);
+  text-transform: uppercase;
+  color: var(--ink-400);
+  margin: 0 0 var(--space-3);
+}
+
+/* ---------- Subhead / section intro ---------- */
+body .lp-section-subhead,
+body .lp-section-intro,
+body .lp-hero__sub,
+body .lp-mech__intro,
+body .sk-honest-filter__subhead,
+body .sk-honest-filter__intro {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--ls-base);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-500);
+  margin: 0 auto var(--space-6);
+  max-width: 56ch;
+  text-wrap: balance;
+}
+body .sk-honest-filter__subhead {
+  margin-bottom: var(--space-5);
+}
+
+/* ---------- Body paragraphs ---------- */
+body .lp-mech__card-body,
+body .lp-mech__card-text,
+body .lp-results__card-body,
+body .lp-why__card-body,
+body .lp-problem__bullet,
+body .lp-faq__answer p,
+body .lp-reviews__body,
+body .lp-section-content p,
+body .sk-honest-filter__explanation,
+body .sk-honest-filter__closing p {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--ls-base);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-500);
+  margin: 0 0 var(--space-3);
+}
+
+/* Kill thin-weight body text (Problem section was using 300) */
+body .lp-problem .lp-problem__bullet,
+body .lp-problem p {
+  font-weight: var(--fw-regular);
+  color: var(--ink-500);
+}
+
+/* ---------- Lead paragraph ---------- */
+body .lp-section-lead {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-700);
+  max-width: 60ch;
+  margin: 0 auto var(--space-5);
+}
+
+/* ---------- Closing H3 (richtext) — must beat section's !important ---------- */
+body .sk-honest-filter h2,
+body .sk-honest-filter h3,
+body .sk-honest-filter h4,
+body .sk-honest-filter__closing h3 {
+  font-family: var(--font-serif) !important;
+  font-weight: var(--fw-regular) !important;
+  color: var(--ink-900) !important;
+  letter-spacing: var(--ls-tight) !important;
+  line-height: var(--lh-snug) !important;
+}
+body .sk-honest-filter__closing h3 {
+  font-size: var(--fs-lg) !important;
+  margin: 0 auto var(--space-3) !important;
+  max-width: 540px;
+}
+
+/* ---------- Price displays ---------- */
+body .lp-price-reveal__price,
+body .lp-klinikk__price,
+body .skinora-clinic-comparison__price {
+  font-family: var(--font-serif);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--ls-tight);
+  line-height: var(--lh-tight);
+  color: var(--ink-900);
+}
+
+/* ---------- Buttons (typography only — colours preserved by .lp-btn rules) ---------- */
+body .lp-btn,
+body .lp-btn--hero,
+body .lp-btn--sticky,
+body .lp-btn--secondary {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* ---------- Klinikk table ---------- */
+body .lp-klinikk table th,
+body .skinora-clinic-comparison table th {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+body .lp-klinikk table td,
+body .skinora-clinic-comparison table td {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-regular);
+  color: var(--ink-700);
+}
+body .lp-klinikk table td strong,
+body .skinora-clinic-comparison table td strong {
+  font-weight: var(--fw-semibold);
+  color: var(--ink-900);
+}
+
+/* ---------- Reviews ---------- */
+body .lp-reviews__name,
+body .lp-reviews__author {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-700);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+}
+body .lp-reviews__verified,
+body .lp-reviews__meta {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  color: var(--ink-400);
+  font-weight: var(--fw-regular);
+}
+
+/* ---------- FAQ ---------- */
+body .lp-faq__question,
+body .lp-faq summary {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-900);
+  line-height: var(--lh-snug);
+}
+body .lp-faq__answer,
+body .lp-faq__answer p {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-regular);
+  color: var(--ink-500);
+  line-height: var(--lh-relaxed);
+}
+
+/* ---------- Citations / footnotes ---------- */
+body .lp-citations,
+body .lp-citations p,
+body .lp-citations li {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  color: var(--ink-300);
+  line-height: var(--lh-base);
+}
+
+/* ============================================================================
+   Mobile guard — never let body shrink below 16px
+   ============================================================================ */
+@media (max-width: 749px) {
+  body .lp-mech__card-text,
+  body .lp-results__card-body,
+  body .lp-why__card-body,
+  body .lp-faq__answer p,
+  body .sk-honest-filter__explanation {
+    font-size: 16px;
+  }
+}

@@ -883,6 +883,8 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'sk-base.css' | asset_url | stylesheet_tag }}
+    {%- comment -%} LP typography system — tokens + global overrides for /pages/skinora-clear and other LP templates {%- endcomment -%}
+    {{ 'typography-lp.css' | asset_url | stylesheet_tag }}
     {%- comment -%} Non-critical base CSS (grid, forms, buttons, modals, rte, spinners) — deferred {%- endcomment -%}
     <link rel="stylesheet" href="{{ 'base-deferred.css' | asset_url }}" media="print" onload="this.media='all'">
     <noscript>{{ 'base-deferred.css' | asset_url | stylesheet_tag }}</noscript>
