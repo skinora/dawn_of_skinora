@@ -195,25 +195,28 @@
         "r_1": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/uke0_uren_hud.png",
+            "alt": "Nærbilde av kinn med få aktive utbrudd, etter 2–4 ukers bruk av Skinora Clear.",
             "label": "ETTER 2–4 UKER",
-            "body": "<p>Færre nye utbrudd. Huden faller til ro – dag for dag.</p>",
-            "alt": "Nærbilde av kinn med få aktive utbrudd, etter 2–4 ukers bruk av Skinora Clear."
+            "body": "<p>Færre nye utbrudd. Huden faller til ro – dag for dag.</p>"
           }
         },
         "r_2": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/6_8_uker_bruk.png",
+            "alt": "Nærbilde av kinn med jevnere hudtone og redusert rødhet, etter 6–8 ukers bruk.",
             "label": "ETTER 6–8 UKER",
-            "body": "<p>Tonen jevner seg ut, rødheten slipper taket, og huden begynner å lyse innenfra.</p>",
-            "alt": "Nærbilde av kinn med jevnere hudtone og redusert rødhet, etter 6–8 ukers bruk."
+            "body": "<p>Tonen jevner seg ut, rødheten slipper taket, og huden begynner å lyse innenfra.</p>"
           }
         },
         "r_3": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/etter_bruk_ren_hud_skinora_clear.png",
+            "alt": "Nærbilde av kinn med klar, jevn hud over tid, vedlikeholdt med Skinora Clear.",
             "label": "OVER TID",
-            "body": "<p>Klar, balansert og levende hud – den du kjenner igjen i speilet.</p>",
-            "alt": "Nærbilde av kinn med klar, jevn hud over tid, vedlikeholdt med Skinora Clear."
+            "body": "<p>Klar, balansert og levende hud – den du kjenner igjen i speilet.</p>"
           }
         }
       },
