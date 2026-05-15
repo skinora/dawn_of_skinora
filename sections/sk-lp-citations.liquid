@@ -1,0 +1,184 @@
+{%- comment -%}
+  sk-lp-citations.liquid
+  "Kilder" — academic citations for LED phototherapy claims.
+  Anchored at #kilder for inline ¹ markers across the LP.
+{%- endcomment -%}
+
+<style>
+  .lp-citations {
+    background: transparent;
+    padding: clamp(40px, 6vw, 64px) 16px;
+    border-top: 1px solid rgba(48, 39, 62, 0.06);
+  }
+  .lp-citations__inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .lp-citations__heading {
+    font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(48, 39, 62, 0.7);
+    margin: 0 0 16px;
+  }
+  .lp-citations__intro {
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
+    font-size: 13px;
+    line-height: 1.55;
+    color: rgba(48, 39, 62, 0.75);
+    margin: 0 0 20px;
+  }
+  .lp-citations__intro p {
+    margin: 0 0 8px;
+  }
+  .lp-citations__list {
+    list-style: decimal;
+    padding-left: 22px;
+    margin: 0;
+  }
+  .lp-citations__item {
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: rgba(48, 39, 62, 0.75);
+    margin: 0 0 10px;
+  }
+  .lp-citations__item em {
+    font-style: italic;
+  }
+  .lp-citations__item a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: rgba(48, 39, 62, 0.3);
+    text-underline-offset: 2px;
+  }
+  .lp-citations__item a:hover,
+  .lp-citations__item a:focus-visible {
+    color: #30273e;
+    text-decoration-color: currentColor;
+  }
+  .lp-citations__item a:focus-visible {
+    outline: 2px solid #3a3448;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+</style>
+
+<section class="lp-citations sk-lp-section" id="kilder" aria-labelledby="lp-citations-heading-{{ section.id }}">
+  <div class="lp-citations__inner">
+    <h2 id="lp-citations-heading-{{ section.id }}" class="lp-citations__heading">
+      {{ section.settings.heading | default: 'Kilder' }}
+    </h2>
+
+    {%- if section.settings.citations_intro != blank -%}
+      <div class="lp-citations__intro">
+        {{ section.settings.citations_intro }}
+      </div>
+    {%- endif -%}
+
+    {%- assign citations = section.blocks | where: 'type', 'citation' -%}
+    {%- if citations.size > 0 -%}
+      <ol class="lp-citations__list">
+        {%- for block in citations -%}
+          <li class="lp-citations__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.authors != blank -%}{{ block.settings.authors }}{%- endif -%}
+            {%- if block.settings.year != blank -%}({{ block.settings.year }}).{%- endif -%}
+            {%- if block.settings.title != blank -%}
+              {%- if block.settings.doi_or_url != blank -%}
+                <a href="{{ block.settings.doi_or_url }}" target="_blank" rel="noopener noreferrer">
+                  {{- block.settings.title -}}
+                </a>
+              {%- else -%}
+                {{ block.settings.title }}
+              {%- endif -%}
+              .
+            {%- endif -%}
+            {%- if block.settings.journal != blank -%}
+              <em>{{ block.settings.journal }}</em>.
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP Citations",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Kilder"
+    },
+    {
+      "type": "richtext",
+      "id": "citations_intro",
+      "label": "Intro",
+      "default": "<p>Basert på fagfellevurderte studier av kombinert blått (415 nm) og rødt (633 nm) LED-lys for behandling av mild til moderat akne. Resultater kan variere fra person til person.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "citation",
+      "name": "Kilde",
+      "settings": [
+        { "type": "text", "id": "authors", "label": "Forfattere" },
+        { "type": "text", "id": "year", "label": "År" },
+        { "type": "text", "id": "title", "label": "Tittel" },
+        { "type": "text", "id": "journal", "label": "Tidsskrift (kursiv)" },
+        { "type": "url", "id": "doi_or_url", "label": "DOI eller URL" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Citations",
+      "blocks": [
+        {
+          "type": "citation",
+          "settings": {
+            "authors": "Goldberg DJ, Russell BA",
+            "year": "2006",
+            "title": "Combination blue (415 nm) and red (633 nm) LED phototherapy in the treatment of mild to severe acne vulgaris",
+            "journal": "Journal of Cosmetic and Laser Therapy, 8(2), 71–75"
+          }
+        },
+        {
+          "type": "citation",
+          "settings": {
+            "authors": "Lee SY, You CE, Park MY",
+            "year": "2007",
+            "title": "Blue and red light combination LED phototherapy for acne vulgaris in patients with skin phototype IV",
+            "journal": "Lasers in Surgery and Medicine, 39(2), 180–188"
+          }
+        },
+        {
+          "type": "citation",
+          "settings": {
+            "authors": "Sadick NS",
+            "year": "2008",
+            "title": "Handheld LED array device in the treatment of acne vulgaris",
+            "journal": "Journal of Drugs in Dermatology, 7(4), 347–350"
+          }
+        },
+        {
+          "type": "citation",
+          "settings": {
+            "authors": "Kwon HH, Lee JB, Yoon JY, et al.",
+            "year": "2013",
+            "title": "The clinical and histological effect of home-use, combination blue–red LED phototherapy for mild-to-moderate acne vulgaris: a randomised controlled trial",
+            "journal": "British Journal of Dermatology, 168(5), 1088–1094"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

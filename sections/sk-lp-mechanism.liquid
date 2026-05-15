@@ -90,6 +90,28 @@
     background: radial-gradient(circle at 30% 30%, #ff8a8a 0%, #d6336c 70%, #8b1d3f 100%);
     box-shadow: 0 6px 20px rgba(214, 51, 108, 0.35);
   }
+  .lp-mech__label-pill {
+    display: inline-block;
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+    color: #30273e;
+    background: rgba(48, 39, 62, 0.06);
+  }
+  .lp-mech__wavelength {
+    display: block;
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(48, 39, 62, 0.6);
+    letter-spacing: 0.06em;
+    margin: 0 0 6px;
+  }
   .lp-mech__card-title {
     font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
     font-size: 18px;
@@ -114,6 +136,25 @@
     width: 100%;
     height: auto;
     border-radius: 12px;
+  }
+  .lp-mech__timeline {
+    text-align: center;
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #4a4458;
+    margin: 4px 0 0;
+    padding: 0 8px;
+  }
+  .lp-mech__timeline .citation-link {
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.75em;
+    margin-left: 2px;
+  }
+  .lp-mech__timeline .citation-link:hover,
+  .lp-mech__timeline .citation-link:focus-visible {
+    text-decoration: underline;
   }
   .lp-mech__trust {
     text-align: center;
@@ -157,29 +198,80 @@
 
     <div class="lp-mech__grid">
       <article class="lp-mech__card">
-        <div class="lp-mech__icon lp-mech__icon--blue" aria-hidden="true">
-          {{ section.settings.blue_wavelength | default: '415 nm' }}
+        {%- if section.settings.card1_label != blank -%}
+          <span class="lp-mech__label-pill">{{ section.settings.card1_label }}</span>
+        {%- endif -%}
+        <div
+          class="lp-mech__icon lp-mech__icon--blue"
+          aria-hidden="true"
+          {% if section.settings.card1_color_from != blank and section.settings.card1_color_to != blank %}
+            style="background: radial-gradient(circle at 30% 30%, {{ section.settings.card1_color_to }} 0%, {{ section.settings.card1_color_from }} 70%, {{ section.settings.card1_color_from }} 100%);"
+          {% endif %}
+        >
+          {{ section.settings.card1_wavelength | default: '415 nm' }}
         </div>
-        <h3 class="lp-mech__card-title">{{ section.settings.blue_title | default: 'Blått lys (415 nm)' }}</h3>
-        <p class="lp-mech__card-text">
-          {{ section.settings.blue_text | default: 'Reduserer akne-bakterier (P. acnes) på overflaten.' }}
-        </p>
+        {%- if section.settings.card1_wavelength != blank -%}
+          <span class="lp-mech__wavelength">{{ section.settings.card1_wavelength }}</span>
+        {%- endif -%}
+        <h3 class="lp-mech__card-title">
+          {{
+            section.settings.card1_title
+            | default: section.settings.blue_title
+            | default: 'Reduserer bakteriene bak utbrudd'
+          }}
+        </h3>
+        <div class="lp-mech__card-text">
+          {{ section.settings.card1_body | default: section.settings.blue_text }}
+        </div>
       </article>
 
       <article class="lp-mech__card">
-        <div class="lp-mech__icon lp-mech__icon--red" aria-hidden="true">
-          {{ section.settings.red_wavelength | default: '633 nm' }}
+        {%- if section.settings.card2_label != blank -%}
+          <span class="lp-mech__label-pill">{{ section.settings.card2_label }}</span>
+        {%- endif -%}
+        <div
+          class="lp-mech__icon lp-mech__icon--red"
+          aria-hidden="true"
+          {% if section.settings.card2_color_from != blank and section.settings.card2_color_to != blank %}
+            style="background: radial-gradient(circle at 30% 30%, {{ section.settings.card2_color_to }} 0%, {{ section.settings.card2_color_from }} 70%, {{ section.settings.card2_color_from }} 100%);"
+          {% endif %}
+        >
+          {{ section.settings.card2_wavelength | default: '633 nm' }}
         </div>
-        <h3 class="lp-mech__card-title">{{ section.settings.red_title | default: 'Rødt lys (633 nm)' }}</h3>
-        <p class="lp-mech__card-text">
-          {{ section.settings.red_text | default: 'Demper betennelse og støtter hudens egen reparasjon.' }}
-        </p>
+        {%- if section.settings.card2_wavelength != blank -%}
+          <span class="lp-mech__wavelength">{{ section.settings.card2_wavelength }}</span>
+        {%- endif -%}
+        <h3 class="lp-mech__card-title">
+          {{
+            section.settings.card2_title
+            | default: section.settings.red_title
+            | default: 'Demper betennelse og støtter reparasjon'
+          }}
+        </h3>
+        <div class="lp-mech__card-text">
+          {{ section.settings.card2_body | default: section.settings.red_text }}
+        </div>
       </article>
     </div>
 
-    <p class="lp-mech__trust">
-      {{ section.settings.trust_line | default: 'Klinisk dokumentert teknologi – samme prinsipp som hos hudterapeut.' }}
-    </p>
+    {%- if section.settings.timeline_line != blank -%}
+      <p class="lp-mech__timeline">
+        {{ section.settings.timeline_line }}
+        {%- if section.settings.timeline_citation_marker != blank -%}
+          <sup
+            ><a href="#kilder" class="citation-link" aria-label="Se kilder">
+              {{- section.settings.timeline_citation_marker -}}
+            </a></sup
+          >
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.trust_line != blank -%}
+      <p class="lp-mech__trust" style="margin-top:16px;">
+        {{ section.settings.trust_line }}
+      </p>
+    {%- endif -%}
   </div>
 </section>
 
@@ -200,52 +292,106 @@
       "type": "text",
       "id": "heading",
       "label": "Overskrift",
-      "default": "Hvordan det fungerer"
+      "default": "Hvordan Skinora® Clear virker"
     },
     {
       "type": "textarea",
       "id": "intro",
       "label": "Intro-tekst",
-      "default": "Blått 415 nm mot bakterier. Rødt 633 nm mot rødhet."
+      "default": "To bølgelengder med lys, samme prinsipp som brukes på hudklinikk – tilpasset for trygg bruk hjemme."
     },
 
-    { "type": "header", "content": "Mechanism of action" },
+    { "type": "header", "content": "Kort 1 — Blått lys" },
     {
       "type": "text",
-      "id": "blue_wavelength",
-      "label": "Blå bølgelengde (badge)",
+      "id": "card1_label",
+      "label": "Etikett (pill)",
+      "default": "Blått lys"
+    },
+    {
+      "type": "text",
+      "id": "card1_wavelength",
+      "label": "Bølgelengde",
       "default": "415 nm"
     },
     {
       "type": "text",
-      "id": "blue_title",
-      "label": "Blå tittel",
-      "default": "Blått lys (415 nm)"
+      "id": "card1_title",
+      "label": "Tittel",
+      "default": "Reduserer bakteriene bak utbrudd"
     },
     {
-      "type": "textarea",
-      "id": "blue_text",
-      "label": "Blå beskrivelse",
-      "default": "Reduserer akne-bakterier (P. acnes) på overflaten."
+      "type": "richtext",
+      "id": "card1_body",
+      "label": "Brødtekst",
+      "default": "<p>Når blått lys treffer huden, bryter det ned forbindelsene som lar <em>Cutibacterium acnes</em> — bakterien bak de fleste utbrudd — overleve i porene. Færre bakterier betyr færre nye kviser.</p>"
+    },
+    {
+      "type": "color",
+      "id": "card1_color_from",
+      "label": "Blå gradient (mørk)",
+      "default": "#1e6dff"
+    },
+    {
+      "type": "color",
+      "id": "card1_color_to",
+      "label": "Blå gradient (lys)",
+      "default": "#6aa7ff"
+    },
+
+    { "type": "header", "content": "Kort 2 — Rødt lys" },
+    {
+      "type": "text",
+      "id": "card2_label",
+      "label": "Etikett (pill)",
+      "default": "Rødt lys"
     },
     {
       "type": "text",
-      "id": "red_wavelength",
-      "label": "Rød bølgelengde (badge)",
+      "id": "card2_wavelength",
+      "label": "Bølgelengde",
       "default": "633 nm"
     },
     {
       "type": "text",
-      "id": "red_title",
-      "label": "Rød tittel",
-      "default": "Rødt lys (633 nm)"
+      "id": "card2_title",
+      "label": "Tittel",
+      "default": "Demper betennelse og støtter reparasjon"
     },
     {
-      "type": "textarea",
-      "id": "red_text",
-      "label": "Rød beskrivelse",
-      "default": "Demper betennelse og støtter hudens egen reparasjon."
+      "type": "richtext",
+      "id": "card2_body",
+      "label": "Brødtekst",
+      "default": "<p>Rødt lys trenger dypere ned i huden og roer den inflammatoriske responsen, samtidig som det støtter hudens egen reparasjon. Resultatet: mindre rødhet, raskere tilheling.</p>"
     },
+    {
+      "type": "color",
+      "id": "card2_color_from",
+      "label": "Rød gradient (mørk)",
+      "default": "#d33333"
+    },
+    {
+      "type": "color",
+      "id": "card2_color_to",
+      "label": "Rød gradient (lys)",
+      "default": "#ff7a7a"
+    },
+
+    { "type": "header", "content": "Tidslinje + kilde" },
+    {
+      "type": "textarea",
+      "id": "timeline_line",
+      "label": "Tidslinje-tekst",
+      "default": "Forskning viser at de fleste ser de første tegnene etter 2–4 uker med jevn bruk, og full effekt etter 6–8 uker."
+    },
+    {
+      "type": "text",
+      "id": "timeline_citation_marker",
+      "label": "Kildemerke (lenker til #kilder)",
+      "default": "¹"
+    },
+
+    { "type": "header", "content": "Trust-linje (valgfritt)" },
     {
       "type": "text",
       "id": "trust_line",

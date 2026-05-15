@@ -262,6 +262,15 @@
           </div>
         {%- endif -%}
       {%- endif -%}
+
+      {%- if section.settings.before_after_disclaimer != blank -%}
+        <div
+          class="lp-reviews__disclaimer"
+          style="font-size:0.8rem;color:#6b6b6b;text-align:center;max-width:760px;margin:1.75rem auto 0;padding:0 16px;line-height:1.55;"
+        >
+          {{ section.settings.before_after_disclaimer }}
+        </div>
+      {%- endif -%}
     </div>
   </section>
 </div>
@@ -424,6 +433,12 @@
       "id": "show_less_text",
       "label": "\"Vis færre\" knappetekst",
       "default": "Vis færre"
+    },
+    {
+      "type": "richtext",
+      "id": "before_after_disclaimer",
+      "label": "Disclaimer for før/etter-bilder",
+      "default": "<p>Bilder fra ekte verifiserte kunder, brukt med tillatelse. Ikke retusjert. Resultater kan variere fra person til person og avhenger av jevn bruk over 6–8 uker.</p>"
     },
     {
       "type": "header",
