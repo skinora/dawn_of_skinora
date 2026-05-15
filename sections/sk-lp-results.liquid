@@ -4,6 +4,7 @@
 {%- endcomment -%}
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'lp-results.js' | asset_url }}" defer></script>
 
 <!-- SECTION: Results Timeline -->
 <div class="sk-lp">
@@ -83,8 +84,6 @@
     </div>
   </section>
 </div>
-
-<script src="{{ 'lp-results.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
