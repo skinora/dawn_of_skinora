@@ -122,9 +122,31 @@
 
 <!-- SECTION: Social Proof / Reviews -->
 <div class="sk-lp">
-  <section class="lp-reviews">
+  <section class="lp-reviews" id="reviews">
     <div class="lp-container">
       <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
+
+      {%- if section.settings.enable_trustpilot_embed and section.settings.trustpilot_business_unit_id != blank -%}
+        <div
+          class="lp-reviews__trustpilot"
+          style="margin: 0 auto 24px; max-width: 720px; text-align:center;"
+        >
+          <div
+            class="trustpilot-widget"
+            data-locale="nb-NO"
+            data-template-id="5419b6ffb0d04a076446a9af"
+            data-businessunit-id="{{ section.settings.trustpilot_business_unit_id }}"
+            data-style-height="24px"
+            data-style-width="100%"
+            data-theme="light"
+          ></div>
+          <script
+            type="text/javascript"
+            src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"
+            async
+          ></script>
+        </div>
+      {%- endif -%}
 
       {%- if section.settings.score != blank -%}
         <div class="lp-reviews__score-row">
@@ -137,9 +159,21 @@
       {%- endif -%}
 
       {%- if section.blocks.size > 0 -%}
-        <div class="lp-reviews__grid">
+        {%- assign visible_count = section.settings.reviews_visible_count | default: 6 -%}
+        <div
+          class="lp-reviews__grid"
+          id="lp-reviews-grid-{{ section.id }}"
+          data-reviews-grid
+          data-visible-count="{{ visible_count }}"
+        >
           {%- for block in section.blocks -%}
-            <div class="lp-review-card" {{ block.shopify_attributes }}>
+            <div
+              class="lp-review-card"
+              {% if forloop.index0 >= visible_count %}
+                data-review-hidden="true" style="display:none;"
+              {% endif %}
+              {{ block.shopify_attributes }}
+            >
               {%- if block.settings.image -%}
                 <div class="lp-review-card__avatar">
                   {{ block.settings.image | image_url: width: 96 | image_tag: loading: 'lazy', widths: '48,96' }}
@@ -210,10 +244,46 @@
             </div>
           {%- endfor -%}
         </div>
+
+        {%- if section.blocks.size > visible_count -%}
+          <div class="lp-reviews__more" style="text-align:center; margin-top:24px;">
+            <button
+              type="button"
+              class="lp-reviews__more-btn"
+              data-reviews-toggle
+              data-show-more-text="{{ section.settings.show_more_text | default: 'Vis flere anmeldelser' | escape }}"
+              data-show-less-text="{{ section.settings.show_less_text | default: 'Vis færre' | escape }}"
+              aria-expanded="false"
+              aria-controls="lp-reviews-grid-{{ section.id }}"
+              style="font-family:sofia-pro,sans-serif;font-size:14px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#30273e;background:transparent;border:1px solid rgba(48,39,62,0.25);border-radius:999px;padding:12px 24px;cursor:pointer;transition:background 0.2s ease, color 0.2s ease;"
+            >
+              {{ section.settings.show_more_text | default: 'Vis flere anmeldelser' }}
+            </button>
+          </div>
+        {%- endif -%}
       {%- endif -%}
     </div>
   </section>
 </div>
+
+<script>
+  (function () {
+    var sectionEl = document.getElementById('reviews');
+    if (!sectionEl) return;
+    var btn = sectionEl.querySelector('[data-reviews-toggle]');
+    var grid = sectionEl.querySelector('[data-reviews-grid]');
+    if (!btn || !grid) return;
+    btn.addEventListener('click', function () {
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      var hidden = grid.querySelectorAll('[data-review-hidden]');
+      hidden.forEach(function (el) {
+        el.style.display = expanded ? 'none' : '';
+      });
+      btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      btn.textContent = expanded ? btn.dataset.showMoreText : btn.dataset.showLessText;
+    });
+  })();
+</script>
 
 <!-- SECTION: Mid-Page CTA -->
 {%- assign reviews_handle = section.settings.product_url | split: '/products/' | last | split: '?' | first -%}
@@ -329,6 +399,46 @@
       "id": "review_count",
       "label": "Antall anmeldelser (tall)",
       "default": "102"
+    },
+    {
+      "type": "header",
+      "content": "Reviews"
+    },
+    {
+      "type": "range",
+      "id": "reviews_visible_count",
+      "label": "Antall anmeldelser synlige som standard",
+      "min": 3,
+      "max": 24,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "text",
+      "id": "show_more_text",
+      "label": "\"Vis flere\" knappetekst",
+      "default": "Vis flere anmeldelser"
+    },
+    {
+      "type": "text",
+      "id": "show_less_text",
+      "label": "\"Vis færre\" knappetekst",
+      "default": "Vis færre"
+    },
+    {
+      "type": "header",
+      "content": "Trustpilot embed"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_trustpilot_embed",
+      "label": "Vis Trustpilot-widget over anmeldelsene",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_business_unit_id",
+      "label": "Trustpilot Business Unit ID"
     },
     {
       "type": "header",

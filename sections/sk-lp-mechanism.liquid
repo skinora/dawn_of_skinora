@@ -1,0 +1,275 @@
+{%- comment -%}
+  sk-lp-mechanism.liquid
+  "Hvordan det fungerer" — wavelength mechanism explainer.
+  Two side-by-side cards (stacked on mobile) + trust line below.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .lp-mech {
+    background: transparent;
+    padding: clamp(56px, 8vw, 96px) 16px;
+  }
+  .lp-mech__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .lp-mech__head {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto clamp(32px, 5vw, 56px);
+  }
+  .lp-mech__eyebrow {
+    display: block;
+    font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(58, 52, 72, 0.7);
+    margin-bottom: 12px;
+  }
+  .lp-mech__title {
+    font-family: 'freight-text-pro', 'freight-text-pro-fallback', Georgia, serif;
+    font-size: clamp(26px, 4vw, 34px);
+    font-weight: 400;
+    color: #3a3448;
+    letter-spacing: 0.4px;
+    line-height: 1.25;
+    margin: 0 0 12px;
+  }
+  .lp-mech__intro {
+    font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #4a4458;
+    margin: 0;
+  }
+
+  .lp-mech__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  @media (min-width: 768px) {
+    .lp-mech__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+  }
+  .lp-mech__card {
+    background: #fff;
+    border: 1px solid rgba(48, 39, 62, 0.08);
+    border-radius: 14px;
+    padding: clamp(20px, 3vw, 28px);
+    text-align: left;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  }
+  .lp-mech__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #fff;
+    text-transform: uppercase;
+  }
+  .lp-mech__icon--blue {
+    background: radial-gradient(circle at 30% 30%, #6aa9ff 0%, #2563eb 70%, #1e3a8a 100%);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+  }
+  .lp-mech__icon--red {
+    background: radial-gradient(circle at 30% 30%, #ff8a8a 0%, #d6336c 70%, #8b1d3f 100%);
+    box-shadow: 0 6px 20px rgba(214, 51, 108, 0.35);
+  }
+  .lp-mech__card-title {
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #30273e;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .lp-mech__card-text {
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #4a4458;
+    margin: 0;
+  }
+  .lp-mech__diagram {
+    margin: 8px auto 24px;
+    max-width: 540px;
+    text-align: center;
+  }
+  .lp-mech__diagram img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+  .lp-mech__trust {
+    text-align: center;
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
+    font-size: 13px;
+    font-style: italic;
+    color: rgba(58, 52, 72, 0.7);
+    margin: 0;
+    padding: 0 8px;
+  }
+</style>
+
+<section class="sk-lp-section lp-mech" aria-labelledby="lp-mech-heading-{{ section.id }}">
+  <div class="lp-mech__inner">
+    <header class="lp-mech__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="lp-mech__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 id="lp-mech-heading-{{ section.id }}" class="lp-mech__title">
+        {{ section.settings.heading | default: 'Hvordan det fungerer' }}
+      </h2>
+      {%- if section.settings.intro != blank -%}
+        <p class="lp-mech__intro">{{ section.settings.intro }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if section.settings.diagram_image != blank -%}
+      <div class="lp-mech__diagram">
+        <img
+          src="{{ section.settings.diagram_image | image_url: width: 1080 }}"
+          srcset="{{ section.settings.diagram_image | image_url: width: 540 }} 540w, {{ section.settings.diagram_image | image_url: width: 1080 }} 1080w"
+          sizes="(max-width: 768px) 90vw, 540px"
+          width="1080"
+          height="608"
+          alt="{{ section.settings.diagram_alt | default: 'Diagram av blått og rødt LED-lys' | escape }}"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+    {%- endif -%}
+
+    <div class="lp-mech__grid">
+      <article class="lp-mech__card">
+        <div class="lp-mech__icon lp-mech__icon--blue" aria-hidden="true">
+          {{ section.settings.blue_wavelength | default: '415 nm' }}
+        </div>
+        <h3 class="lp-mech__card-title">{{ section.settings.blue_title | default: 'Blått lys (415 nm)' }}</h3>
+        <p class="lp-mech__card-text">
+          {{ section.settings.blue_text | default: 'Reduserer akne-bakterier (P. acnes) på overflaten.' }}
+        </p>
+      </article>
+
+      <article class="lp-mech__card">
+        <div class="lp-mech__icon lp-mech__icon--red" aria-hidden="true">
+          {{ section.settings.red_wavelength | default: '633 nm' }}
+        </div>
+        <h3 class="lp-mech__card-title">{{ section.settings.red_title | default: 'Rødt lys (633 nm)' }}</h3>
+        <p class="lp-mech__card-text">
+          {{ section.settings.red_text | default: 'Demper betennelse og støtter hudens egen reparasjon.' }}
+        </p>
+      </article>
+    </div>
+
+    <p class="lp-mech__trust">
+      {{ section.settings.trust_line | default: 'Klinisk dokumentert teknologi – samme prinsipp som hos hudterapeut.' }}
+    </p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP Mechanism",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    { "type": "header", "content": "Header" },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Tre bølgelengder. Ett mål."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Hvordan det fungerer"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro-tekst",
+      "default": "Blått 415 nm mot bakterier. Rødt 633 nm mot rødhet."
+    },
+
+    { "type": "header", "content": "Mechanism of action" },
+    {
+      "type": "text",
+      "id": "blue_wavelength",
+      "label": "Blå bølgelengde (badge)",
+      "default": "415 nm"
+    },
+    {
+      "type": "text",
+      "id": "blue_title",
+      "label": "Blå tittel",
+      "default": "Blått lys (415 nm)"
+    },
+    {
+      "type": "textarea",
+      "id": "blue_text",
+      "label": "Blå beskrivelse",
+      "default": "Reduserer akne-bakterier (P. acnes) på overflaten."
+    },
+    {
+      "type": "text",
+      "id": "red_wavelength",
+      "label": "Rød bølgelengde (badge)",
+      "default": "633 nm"
+    },
+    {
+      "type": "text",
+      "id": "red_title",
+      "label": "Rød tittel",
+      "default": "Rødt lys (633 nm)"
+    },
+    {
+      "type": "textarea",
+      "id": "red_text",
+      "label": "Rød beskrivelse",
+      "default": "Demper betennelse og støtter hudens egen reparasjon."
+    },
+    {
+      "type": "text",
+      "id": "trust_line",
+      "label": "Trust-linje under kortene",
+      "default": "Klinisk dokumentert teknologi – samme prinsipp som hos hudterapeut."
+    },
+
+    { "type": "header", "content": "Diagram (valgfritt)" },
+    {
+      "type": "image_picker",
+      "id": "diagram_image",
+      "label": "Diagrambilde"
+    },
+    {
+      "type": "text",
+      "id": "diagram_alt",
+      "label": "Bildebeskrivelse (alt)",
+      "default": "Diagram av blått og rødt LED-lys"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Mechanism"
+    }
+  ]
+}
+{% endschema %}
