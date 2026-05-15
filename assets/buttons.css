@@ -1,0 +1,305 @@
+/* =============================================================================
+   buttons.css
+   Unified CTA button system for the Skinora Clear LP and other LP templates.
+
+   Strategy:
+   - Tokens on :root (colors, geometry, type, motion).
+   - Override rules target BOTH new utility classes (.btn, .btn--primary…) AND
+     legacy classes (.lp-btn, .sk-sticky-bar__btn, .sk-clinic-compare__cta,
+     .lp-cta-final__btn, etc.). All legacy markup is preserved — no analytics
+     break.
+   - Legacy selectors prefixed with `body` for higher specificity than
+     section-scoped {% stylesheet %} blocks.
+   - Loaded once in layout/theme.liquid AFTER sk-base.css and typography-lp.css.
+   ============================================================================= */
+
+:root {
+  /* ---------- Brand ink ---------- */
+  --btn-primary-bg: #30273e;
+  --btn-primary-bg-hover: #1f1830;
+  --btn-primary-bg-active: #15101f;
+  --btn-primary-fg: #ffffff;
+
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-fg: #30273e;
+  --btn-secondary-border: #30273e;
+  --btn-secondary-bg-hover: #f4f1ec;
+
+  --btn-ghost-fg: #30273e;
+  --btn-ghost-fg-hover: #1f1830;
+
+  /* ---------- Geometry ---------- */
+  --btn-radius: 12px;
+  --btn-radius-pill: 999px;
+
+  /* ---------- Type ---------- */
+  --btn-font: 'sofia-pro', sofia-pro-fallback, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --btn-weight: 600;
+  --btn-tracking: 0.04em;
+  --btn-transform: uppercase;
+
+  /* ---------- Sizes (mobile-first; desktop bumps via clamp) ---------- */
+  --btn-fs-sm: 14px;
+  --btn-fs-md: clamp(15px, 1.6vw, 17px);
+  --btn-fs-lg: clamp(17px, 1.9vw, 19px);
+
+  --btn-py-sm: 12px;
+  --btn-px-sm: 22px;
+  --btn-py-md: 16px;
+  --btn-px-md: 36px;
+  --btn-py-lg: 20px;
+  --btn-px-lg: 44px;
+
+  --btn-min-h: 48px;
+  --btn-min-h-lg: 56px;
+
+  /* ---------- Motion ---------- */
+  --btn-transition:
+    background-color 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  --btn-shadow: 0 1px 2px rgba(20, 16, 28, 0.08);
+  --btn-shadow-hover: 0 6px 18px rgba(20, 16, 28, 0.18);
+  --btn-focus-ring: 0 0 0 3px rgba(48, 39, 62, 0.25);
+}
+
+/* =============================================================================
+   BASE BUTTON — typography, layout, transitions
+   Targets new utility classes + ALL legacy CTA classes.
+   ============================================================================= */
+.btn,
+body .lp-btn,
+body .sk-btn--primary,
+body .sk-clinic-compare__cta,
+body .sk-sticky-bar__btn,
+body .lp-cta-final__btn,
+.newsletter-form__button.footer_submit_btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  font-family: var(--btn-font);
+  font-weight: var(--btn-weight);
+  font-size: var(--btn-fs-md);
+  line-height: 1;
+  letter-spacing: var(--btn-tracking);
+  text-transform: var(--btn-transform);
+  text-decoration: none;
+  white-space: nowrap;
+
+  padding: var(--btn-py-md) var(--btn-px-md);
+  min-height: var(--btn-min-h);
+  border-radius: var(--btn-radius);
+  border: 1px solid transparent;
+
+  cursor: pointer;
+  user-select: none;
+  transition: var(--btn-transition);
+  will-change: transform;
+}
+
+.btn:focus-visible,
+body .lp-btn:focus-visible,
+body .sk-btn--primary:focus-visible,
+body .sk-clinic-compare__cta:focus-visible,
+body .sk-sticky-bar__btn:focus-visible,
+body .lp-cta-final__btn:focus-visible {
+  outline: none;
+  box-shadow: var(--btn-focus-ring);
+}
+
+.btn:active,
+body .lp-btn:active,
+body .sk-btn--primary:active,
+body .sk-clinic-compare__cta:active,
+body .sk-sticky-bar__btn:active,
+body .lp-cta-final__btn:active {
+  transform: translateY(1px);
+}
+
+/* =============================================================================
+   PRIMARY VARIANT
+   ============================================================================= */
+.btn--primary,
+body .lp-btn,
+body .lp-btn--hero,
+body .sk-btn--primary,
+body .sk-clinic-compare__cta,
+body .sk-sticky-bar__btn,
+body .lp-cta-final__btn {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-fg);
+  border-color: var(--btn-primary-bg);
+  box-shadow: var(--btn-shadow);
+}
+.btn--primary:hover,
+body .lp-btn:hover,
+body .lp-btn--hero:hover,
+body .sk-btn--primary:hover,
+body .sk-clinic-compare__cta:hover,
+body .sk-sticky-bar__btn:hover,
+body .lp-cta-final__btn:hover {
+  background: var(--btn-primary-bg-hover);
+  color: var(--btn-primary-fg);
+  border-color: var(--btn-primary-bg-hover);
+  box-shadow: var(--btn-shadow-hover);
+}
+
+/* =============================================================================
+   SECONDARY VARIANT
+   ============================================================================= */
+.btn--secondary {
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-fg);
+  border-color: var(--btn-secondary-border);
+}
+.btn--secondary:hover {
+  background: var(--btn-secondary-bg-hover);
+  color: var(--btn-secondary-fg);
+}
+
+/* =============================================================================
+   GHOST VARIANT (text-link with underline)
+   ============================================================================= */
+.btn--ghost,
+body .sk-xsell__section-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--btn-ghost-fg);
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  min-height: auto;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--btn-font);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  box-shadow: none;
+  transition:
+    color 0.18s ease,
+    text-decoration-thickness 0.18s ease;
+}
+.btn--ghost:hover,
+body .sk-xsell__section-cta:hover {
+  color: var(--btn-ghost-fg-hover);
+  text-decoration-thickness: 2px;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* =============================================================================
+   SIZES
+   ============================================================================= */
+.btn--sm {
+  font-size: var(--btn-fs-sm);
+  padding: var(--btn-py-sm) var(--btn-px-sm);
+  min-height: 40px;
+}
+.btn--lg,
+body .lp-cta-final__btn,
+body .lp-btn--hero {
+  font-size: var(--btn-fs-lg);
+  padding: var(--btn-py-lg) var(--btn-px-lg);
+  min-height: var(--btn-min-h-lg);
+}
+
+.btn--block,
+body .lp-btn--hero,
+body .lp-cta-final__btn,
+body .sk-clinic-compare__cta {
+  width: 100%;
+  max-width: 420px;
+}
+
+.btn--pill {
+  border-radius: var(--btn-radius-pill);
+}
+
+/* =============================================================================
+   STICKY BAR — full-width, slightly tighter padding inside the bar
+   ============================================================================= */
+body .sk-sticky-bar__btn {
+  width: 100%;
+  max-width: none;
+  font-size: var(--btn-fs-md);
+  padding: 14px 24px;
+  min-height: 52px;
+  border-radius: var(--btn-radius);
+}
+
+/* =============================================================================
+   NEWSLETTER SUBMIT (footer)
+   ============================================================================= */
+.newsletter-form__button.footer_submit_btn {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-fg);
+  font-family: var(--btn-font);
+  font-weight: var(--btn-weight);
+  font-size: var(--btn-fs-sm);
+  letter-spacing: var(--btn-tracking);
+  text-transform: var(--btn-transform);
+  border: 1px solid var(--btn-primary-bg);
+  border-radius: 0 var(--btn-radius) var(--btn-radius) 0;
+  min-height: 48px;
+  padding: 0 22px;
+}
+.newsletter-form__button.footer_submit_btn:hover {
+  background: var(--btn-primary-bg-hover);
+  border-color: var(--btn-primary-bg-hover);
+}
+
+/* =============================================================================
+   DISABLED STATE
+   ============================================================================= */
+.btn[disabled],
+body .lp-btn[disabled],
+body .sk-btn--primary[disabled],
+body .sk-sticky-bar__btn[disabled],
+body .sk-sticky-bar__btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* =============================================================================
+   MOBILE — full width on tiny screens
+   ============================================================================= */
+@media (max-width: 480px) {
+  .btn,
+  body .lp-btn,
+  body .sk-btn--primary,
+  body .sk-clinic-compare__cta {
+    width: 100%;
+  }
+  body .lp-cta-final__btn {
+    padding: 18px 28px;
+  }
+}
+
+/* =============================================================================
+   REDUCED MOTION
+   ============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  body .lp-btn,
+  body .sk-btn--primary,
+  body .sk-clinic-compare__cta,
+  body .sk-sticky-bar__btn,
+  body .lp-cta-final__btn {
+    transition: none;
+  }
+  .btn:active,
+  body .lp-btn:active,
+  body .sk-btn--primary:active,
+  body .sk-clinic-compare__cta:active,
+  body .sk-sticky-bar__btn:active,
+  body .lp-cta-final__btn:active {
+    transform: none;
+  }
+}
