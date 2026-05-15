@@ -237,9 +237,59 @@
         "diagram_alt": "Diagram av blått, rødt og nær-infrarødt LED-lys"
       }
     },
+    "sk_lp_honest_filter_zyBd4X": {
+      "type": "sk-lp-honest-filter",
+      "blocks": {
+        "filter_item_LWaD8q": {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du har alvorlig cystisk akne som krever resept-behandling.",
+            "explanation": "Hvis du står på Roaccutan eller isotretinoin — eller burde stå på det — er LED ikke nok. Snakk med fastlege først."
+          }
+        },
+        "filter_item_MrRwLU": {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du er gravid eller ammer.",
+            "explanation": "LED-lys er ikke farlig — men det finnes ikke nok kliniske data på akkurat denne gruppen. Vi velger føre-var."
+          }
+        },
+        "filter_item_4iMUbd": {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du forventer resultater på under 4 uker.",
+            "explanation": "Huden trenger to fulle sykluser før den viser tydelig forskjell. Hvis du vil ha umiddelbar effekt, er ikke LED riktig verktøy."
+          }
+        },
+        "filter_item_g9aafG": {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du har ikke tid til 10 minutter, 3–5 ganger i uken.",
+            "explanation": "Konsistens er hele forskjellen mellom suksess og frustrasjon. Bruker du den sporadisk, kaster du pengene dine."
+          }
+        }
+      },
+      "block_order": [
+        "filter_item_LWaD8q",
+        "filter_item_MrRwLU",
+        "filter_item_4iMUbd",
+        "filter_item_g9aafG"
+      ],
+      "name": "LP Honest Filter",
+      "settings": {
+        "eyebrow": "ÆRLIG SNAKK",
+        "heading": "Skinora® Clear er ikke for alle.",
+        "subhead": "Vær ærlig med deg selv før du bestiller.",
+        "intro": "<p>Vi har bygget Skinora Clear for én type kunde. Hvis du kjenner deg igjen i punktene under, er ikke dette riktig produkt for deg — og det er helt greit. Vi vil heller at du finner det som virker.</p>",
+        "closing": "<h3>Hvis du nikker nei til alle fire — er du nøyaktig den vi bygget dette for.</h3><p>Vi gir deg 60 dager på å bevise det for deg selv.</p>",
+        "cta_label": "PRØV RISIKOFRITT I 60 DAGER →",
+        "cta_url": "",
+        "accent": "#E63946",
+        "background": "#FAF7F2"
+      }
+    },
     "sk_lp_honest_filter": {
       "type": "sk-lp-honest-filter",
-      "name": "LP Honest Filter",
       "blocks": {
         "hf_1": {
           "type": "filter_item",
@@ -270,7 +320,13 @@
           }
         }
       },
-      "block_order": ["hf_1", "hf_2", "hf_3", "hf_4"],
+      "block_order": [
+        "hf_1",
+        "hf_2",
+        "hf_3",
+        "hf_4"
+      ],
+      "name": "LP Honest Filter",
       "settings": {
         "eyebrow": "ÆRLIG SNAKK",
         "heading": "Skinora® Clear er ikke for alle.",
@@ -279,8 +335,8 @@
         "closing": "<h3>Hvis du nikker nei til alle fire — er du nøyaktig den vi bygget dette for.</h3><p>Vi gir deg 60 dager på å bevise det for deg selv.</p>",
         "cta_label": "PRØV RISIKOFRITT I 60 DAGER →",
         "cta_url": "#kjop",
-        "accent": "#E63946",
-        "background": "#FAF7F2"
+        "accent": "#e63946",
+        "background": "#faf7f2"
       }
     },
     "skinora_clinic_comparison_9acj9k": {
@@ -946,6 +1002,7 @@
     "trustbar",
     "problem",
     "sk_lp_mechanism_WhVKGN",
+    "sk_lp_honest_filter_zyBd4X",
     "sk_lp_honest_filter",
     "skinora_clinic_comparison_9acj9k",
     "results",
