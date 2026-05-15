@@ -217,6 +217,30 @@
         "diagram_alt": "Diagram av blått og rødt LED-lys"
       }
     },
+    "skinora_clinic_comparison_9acj9k": {
+      "type": "skinora-clinic-comparison",
+      "name": "Klinikksammenligning",
+      "settings": {
+        "heading": "Et klinikkresultat – uten klinikkpris",
+        "intro_body": "<p>En LED-behandling i klinikk koster typisk 800–1.500 kr per økt. Skinora® Clear tilsvarer opptil 6 behandlinger – og kan brukes ubegrenset hjemme.</p>",
+        "highlight_line": "Investeringen betaler seg selv etter få uker.",
+        "background_style": "soft",
+        "col1_label": "Klinikk",
+        "col2_label": "Skinora",
+        "row1_label": "Kostnad",
+        "row1_col1": "800–1500 kr/økt",
+        "row1_col2": "4.390 kr én gang",
+        "row2_label": "Behandlinger",
+        "row2_col1": "Betaler hver gang",
+        "row2_col2": "Ubegrenset",
+        "row3_label": "Bekvemmelighet",
+        "row3_col1": "Tidsbestilling",
+        "row3_col2": "Hjemme, når du vil",
+        "show_cta": true,
+        "cta_label": "Prøv risikofritt i 60 dager",
+        "cta_link": ""
+      }
+    },
     "results": {
       "type": "skinora-results",
       "blocks": {
@@ -856,6 +880,7 @@
     "trustbar",
     "problem",
     "sk_lp_mechanism_WhVKGN",
+    "skinora_clinic_comparison_9acj9k",
     "results",
     "how_to_use",
     "why_choose",
