@@ -192,6 +192,31 @@
         "image": "shopify://shop_images/Photorealistic_editorial-docum_Nano_Banana_2_83728.png"
       }
     },
+    "sk_lp_mechanism_WhVKGN": {
+      "type": "sk-lp-mechanism",
+      "name": "LP Mechanism",
+      "settings": {
+        "eyebrow": "Tre bølgelengder. Ett mål.",
+        "heading": "Hvordan Skinora® Clear virker",
+        "intro": "To bølgelengder med lys, samme prinsipp som brukes på hudklinikk – tilpasset for trygg bruk hjemme.",
+        "card1_label": "Blått lys",
+        "card1_wavelength": "415 nm",
+        "card1_title": "Reduserer bakteriene bak utbrudd",
+        "card1_body": "<p>Når blått lys treffer huden, bryter det ned forbindelsene som lar <em>Cutibacterium acnes</em> — bakterien bak de fleste utbrudd — overleve i porene. Færre bakterier betyr færre nye kviser.</p>",
+        "card1_color_from": "#1e6dff",
+        "card1_color_to": "#6aa7ff",
+        "card2_label": "Rødt lys",
+        "card2_wavelength": "633 nm",
+        "card2_title": "Demper betennelse og støtter reparasjon",
+        "card2_body": "<p>Rødt lys trenger dypere ned i huden og roer den inflammatoriske responsen, samtidig som det støtter hudens egen reparasjon. Resultatet: mindre rødhet, raskere tilheling.</p>",
+        "card2_color_from": "#d33333",
+        "card2_color_to": "#ff7a7a",
+        "timeline_line": "Forskning viser at de fleste ser de første tegnene etter 2–4 uker med jevn bruk, og full effekt etter 6–8 uker.",
+        "timeline_citation_marker": "¹",
+        "trust_line": "Klinisk dokumentert teknologi – samme prinsipp som hos hudterapeut.",
+        "diagram_alt": "Diagram av blått og rødt LED-lys"
+      }
+    },
     "results": {
       "type": "skinora-results",
       "blocks": {
@@ -755,27 +780,60 @@
         "background_color": ""
       }
     },
-    "clinic_compare": {
-      "type": "skinora-clinic-comparison",
+    "sk_lp_citations_wCJfGi": {
+      "type": "sk-lp-citations",
+      "blocks": {
+        "citation_wV88tM": {
+          "type": "citation",
+          "settings": {
+            "authors": "Goldberg DJ, Russell BA",
+            "year": "2006",
+            "title": "Combination blue (415 nm) and red (633 nm) LED phototherapy in the treatment of mild to severe acne vulgaris",
+            "journal": "Journal of Cosmetic and Laser Therapy, 8(2), 71–75",
+            "doi_or_url": ""
+          }
+        },
+        "citation_PmyFH4": {
+          "type": "citation",
+          "settings": {
+            "authors": "Lee SY, You CE, Park MY",
+            "year": "2007",
+            "title": "Blue and red light combination LED phototherapy for acne vulgaris in patients with skin phototype IV",
+            "journal": "Lasers in Surgery and Medicine, 39(2), 180–188",
+            "doi_or_url": ""
+          }
+        },
+        "citation_Uw6jVC": {
+          "type": "citation",
+          "settings": {
+            "authors": "Sadick NS",
+            "year": "2008",
+            "title": "Handheld LED array device in the treatment of acne vulgaris",
+            "journal": "Journal of Drugs in Dermatology, 7(4), 347–350",
+            "doi_or_url": ""
+          }
+        },
+        "citation_LJHHpD": {
+          "type": "citation",
+          "settings": {
+            "authors": "Kwon HH, Lee JB, Yoon JY, et al.",
+            "year": "2013",
+            "title": "The clinical and histological effect of home-use, combination blue–red LED phototherapy for mild-to-moderate acne vulgaris: a randomised controlled trial",
+            "journal": "British Journal of Dermatology, 168(5), 1088–1094",
+            "doi_or_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "citation_wV88tM",
+        "citation_PmyFH4",
+        "citation_Uw6jVC",
+        "citation_LJHHpD"
+      ],
+      "name": "LP Citations",
       "settings": {
-        "heading": "Et klinikkresultat – uten klinikkpris",
-        "intro_body": "<p>En LED-behandling i klinikk koster typisk 800–1.500 kr per økt. Skinora® Clear tilsvarer opptil 6 behandlinger – og kan brukes ubegrenset hjemme.</p>",
-        "highlight_line": "Investeringen betaler seg selv etter få uker.",
-        "background_style": "soft",
-        "col1_label": "Klinikk",
-        "col2_label": "Skinora",
-        "row1_label": "Kostnad",
-        "row1_col1": "800–1500 kr/økt",
-        "row1_col2": "4.390 kr én gang",
-        "row2_label": "Behandlinger",
-        "row2_col1": "Betaler hver gang",
-        "row2_col2": "Ubegrenset",
-        "row3_label": "Bekvemmelighet",
-        "row3_col1": "Tidsbestilling",
-        "row3_col2": "Hjemme, når du vil",
-        "show_cta": true,
-        "cta_label": "Prøv risikofritt i 60 dager",
-        "cta_link": "/products/skinora-clear"
+        "heading": "Kilder",
+        "citations_intro": "<p>Basert på fagfellevurderte studier av kombinert blått (415 nm) og rødt (633 nm) LED-lys for behandling av mild til moderat akne. Resultater kan variere fra person til person.</p>"
       }
     },
     "sticky_buy_bar": {
@@ -797,7 +855,7 @@
     "hero",
     "trustbar",
     "problem",
-    "clinic_compare",
+    "sk_lp_mechanism_WhVKGN",
     "results",
     "how_to_use",
     "why_choose",
