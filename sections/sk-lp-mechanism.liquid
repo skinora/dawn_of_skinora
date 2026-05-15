@@ -95,88 +95,63 @@
   .lp-mech__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 24px;
     margin-bottom: 28px;
     align-items: stretch;
   }
   @media (min-width: 1024px) {
     .lp-mech__grid {
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 32px;
     }
   }
   .lp-mech__card {
     background: #fff;
     border: 1px solid rgba(48, 39, 62, 0.08);
     border-radius: 16px;
-    padding: clamp(1.25rem, 3vw, 1.75rem);
+    padding: 24px;
     text-align: left;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
   }
-  .lp-mech__badge {
-    width: 84px;
-    height: 84px;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    margin: 4px 0 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    color: #fff;
-    text-transform: uppercase;
-    flex-shrink: 0;
-  }
-  .sk-mechanism__badge--blue {
-    background: radial-gradient(circle at 30% 30%, #7a7eea 0%, #3b3fbf 100%);
-  }
-  .sk-mechanism__badge--red {
-    background: radial-gradient(circle at 30% 30%, #ff7a85 0%, #e63946 100%);
-  }
-  .sk-mechanism__badge--nir {
-    background: radial-gradient(circle at 30% 30%, #d04a6e 0%, #9b1b3a 100%);
+  @media (min-width: 1024px) {
+    .lp-mech__card {
+      padding: 28px;
+    }
   }
 
-  @keyframes sk-pulse-blue {
-    0%,
-    100% {
-      box-shadow: 0 0 0 0 rgba(59, 63, 191, 0.45);
-    }
-    50% {
-      box-shadow: 0 0 0 18px rgba(59, 63, 191, 0);
-    }
+  /* ===== Light beam (replaces circular badge) ===== */
+  .mechanism-card__head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 4px 0 14px;
   }
-  @keyframes sk-pulse-red {
-    0%,
-    100% {
-      box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.4);
-    }
-    50% {
-      box-shadow: 0 0 0 18px rgba(230, 57, 70, 0);
-    }
+  .mechanism-card__beam {
+    width: 8px;
+    height: 64px;
+    border-radius: 4px;
+    background: linear-gradient(180deg, var(--beam-core) 0%, transparent 100%);
+    box-shadow: 0 0 30px color-mix(in srgb, var(--beam-core) 35%, transparent);
+    flex-shrink: 0;
   }
-  @keyframes sk-pulse-nir {
-    0%,
-    100% {
-      box-shadow: 0 0 0 0 rgba(155, 27, 58, 0.4);
-    }
-    50% {
-      box-shadow: 0 0 0 18px rgba(155, 27, 58, 0);
-    }
+  .mechanism-card__wavelength {
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--beam-core);
+    letter-spacing: -0.01em;
+    line-height: 1;
+    margin: 0;
   }
-  .sk-mechanism__badge--blue {
-    animation: sk-pulse-blue 2.8s ease-out infinite;
+  .lp-mech__badge {
+    display: none;
   }
-  .sk-mechanism__badge--red {
-    animation: sk-pulse-red 2.8s ease-out infinite 0.5s;
-  }
+  .sk-mechanism__badge--blue,
+  .sk-mechanism__badge--red,
   .sk-mechanism__badge--nir {
-    animation: sk-pulse-nir 2.8s ease-out infinite 1s;
+    display: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -185,6 +160,10 @@
     .sk-mechanism__badge--nir {
       animation: none;
     }
+  }
+
+  .lp-mech__wavelength {
+    display: none;
   }
 
   .lp-mech__label-pill {
@@ -370,6 +349,27 @@
     margin: 0;
   }
 
+  /* Mobile: hide hero paragraph, keep bullets as compact legend */
+  @media (max-width: 749px) {
+    .lp-mech__hero-text {
+      display: none;
+    }
+    .lp-mech__hero {
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .lp-mech__bullets {
+      gap: 8px;
+    }
+    .lp-mech__bullet {
+      font-size: 14px;
+    }
+    .lp-mech__bullet-dot {
+      width: 10px;
+      height: 10px;
+    }
+  }
+
   /* Card hover lift */
   .lp-mech__card {
     transition: transform 220ms ease, box-shadow 220ms ease;
@@ -464,23 +464,14 @@
     {%- endif -%}
 
     <div class="lp-mech__grid">
-      <article class="lp-mech__card">
+      <article class="lp-mech__card" style="--beam-core: #4F5BD5;">
         {%- if section.settings.card1_label != blank -%}
           <span class="lp-mech__label-pill">{{ section.settings.card1_label }}</span>
         {%- endif -%}
-        <div
-          class="lp-mech__badge sk-mechanism__badge--blue"
-          role="img"
-          aria-label="Bølgelengde {{ section.settings.card1_wavelength | default: '415' | replace: ' nm', '' }} nanometer"
-          {% if section.settings.card1_color_from != blank and section.settings.card1_color_to != blank %}
-            style="background: radial-gradient(circle at 30% 30%, {{ section.settings.card1_color_to }} 0%, {{ section.settings.card1_color_from }} 100%);"
-          {% endif %}
-        >
-          {{ section.settings.card1_wavelength | default: '415 nm' }}
+        <div class="mechanism-card__head">
+          <div class="mechanism-card__beam" aria-hidden="true"></div>
+          <h4 class="mechanism-card__wavelength">{{ section.settings.card1_wavelength | default: '415 nm' }}</h4>
         </div>
-        {%- if section.settings.card1_wavelength != blank -%}
-          <span class="lp-mech__wavelength">{{ section.settings.card1_wavelength }}</span>
-        {%- endif -%}
         <h3 class="lp-mech__card-title">
           {{
             section.settings.card1_title
@@ -493,23 +484,14 @@
         </div>
       </article>
 
-      <article class="lp-mech__card">
+      <article class="lp-mech__card" style="--beam-core: #E63946;">
         {%- if section.settings.card2_label != blank -%}
           <span class="lp-mech__label-pill">{{ section.settings.card2_label }}</span>
         {%- endif -%}
-        <div
-          class="lp-mech__badge sk-mechanism__badge--red"
-          role="img"
-          aria-label="Bølgelengde {{ section.settings.card2_wavelength | default: '630' | replace: ' nm', '' }} nanometer"
-          {% if section.settings.card2_color_from != blank and section.settings.card2_color_to != blank %}
-            style="background: radial-gradient(circle at 30% 30%, {{ section.settings.card2_color_to }} 0%, {{ section.settings.card2_color_from }} 100%);"
-          {% endif %}
-        >
-          {{ section.settings.card2_wavelength | default: '630 nm' }}
+        <div class="mechanism-card__head">
+          <div class="mechanism-card__beam" aria-hidden="true"></div>
+          <h4 class="mechanism-card__wavelength">{{ section.settings.card2_wavelength | default: '630 nm' }}</h4>
         </div>
-        {%- if section.settings.card2_wavelength != blank -%}
-          <span class="lp-mech__wavelength">{{ section.settings.card2_wavelength }}</span>
-        {%- endif -%}
         <h3 class="lp-mech__card-title">
           {{
             section.settings.card2_title
@@ -522,23 +504,14 @@
         </div>
       </article>
 
-      <article class="lp-mech__card">
+      <article class="lp-mech__card" style="--beam-core: #9B1B3A;">
         {%- if section.settings.card3_label != blank -%}
           <span class="lp-mech__label-pill">{{ section.settings.card3_label }}</span>
         {%- endif -%}
-        <div
-          class="lp-mech__badge sk-mechanism__badge--nir"
-          role="img"
-          aria-label="Bølgelengde {{ section.settings.card3_wavelength | default: '830' | replace: ' nm', '' }} nanometer"
-          {% if section.settings.card3_color_dark != blank and section.settings.card3_color_light != blank %}
-            style="background: radial-gradient(circle at 30% 30%, {{ section.settings.card3_color_light }} 0%, {{ section.settings.card3_color_dark }} 100%);"
-          {% endif %}
-        >
-          {{ section.settings.card3_wavelength | default: '830 nm' }}
+        <div class="mechanism-card__head">
+          <div class="mechanism-card__beam" aria-hidden="true"></div>
+          <h4 class="mechanism-card__wavelength">{{ section.settings.card3_wavelength | default: '830 nm' }}</h4>
         </div>
-        {%- if section.settings.card3_wavelength != blank -%}
-          <span class="lp-mech__wavelength">{{ section.settings.card3_wavelength }}</span>
-        {%- endif -%}
         <h3 class="lp-mech__card-title">
           {{ section.settings.card3_title | default: 'Styrker hudens egen reparasjon' }}
         </h3>
@@ -610,7 +583,7 @@
       "type": "textarea",
       "id": "intro",
       "label": "Intro-tekst",
-      "default": "Tre kliniske bølgelengder – samme prinsipp som brukes på hudklinikk, tilpasset trygg bruk hjemme."
+      "default": "Tre kliniske bølgelengder – samme prinsipp som hos hudterapeut, tilpasset trygg hjemmebruk."
     },
 
     { "type": "header", "content": "Hero-rad (illustrasjon + tekst)" },
@@ -719,7 +692,7 @@
       "type": "text",
       "id": "card3_label",
       "label": "Etikett (pill)",
-      "default": "Nær-infrarødt lys"
+      "default": "NIR-lys"
     },
     {
       "type": "text",

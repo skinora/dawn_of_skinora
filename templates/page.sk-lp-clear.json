@@ -195,10 +195,34 @@
     "sk_lp_mechanism_WhVKGN": {
       "type": "sk-lp-mechanism",
       "name": "LP Mechanism",
+      "blocks": {
+        "bullet_1": {
+          "type": "bullet",
+          "settings": {
+            "dot_color": "#4F5BD5",
+            "text": "<p><strong>415 nm</strong> når epidermis – der bakteriene lever</p>"
+          }
+        },
+        "bullet_2": {
+          "type": "bullet",
+          "settings": {
+            "dot_color": "#E63946",
+            "text": "<p><strong>630 nm</strong> når dermis – der betennelsen sitter</p>"
+          }
+        },
+        "bullet_3": {
+          "type": "bullet",
+          "settings": {
+            "dot_color": "#9B1B3A",
+            "text": "<p><strong>830 nm</strong> når subcutis – der reparasjonen starter</p>"
+          }
+        }
+      },
+      "block_order": ["bullet_1", "bullet_2", "bullet_3"],
       "settings": {
         "eyebrow": "Tre bølgelengder. Ett mål.",
         "heading": "Hvordan Skinora® Clear virker",
-        "intro": "Tre bølgelengder med lys, samme prinsipp som brukes på hudklinikk – tilpasset for trygg bruk hjemme.",
+        "intro": "Tre kliniske bølgelengder – samme prinsipp som hos hudterapeut, tilpasset trygg hjemmebruk.",
         "hero_image": "shopify://shop_images/hvordan_skinora_led_lys_fungerer.png",
         "hero_image_alt": "Illustrasjon av hvordan 415nm, 630nm og 830nm lys trenger inn i hudens lag",
         "hero_image_caption": "Illustrasjon: omtrentlig inntrengningsdybde i huden.",
@@ -206,20 +230,20 @@
         "card1_label": "Blått lys",
         "card1_wavelength": "415 nm",
         "card1_title": "Reduserer bakteriene bak utbrudd",
-        "card1_body": "<p>Når blått lys treffer huden, bryter det ned forbindelsene som lar <em>Cutibacterium acnes</em> — bakterien bak de fleste utbrudd — overleve i porene. Færre bakterier betyr færre nye kviser.</p>",
-        "card1_color_from": "#1e6dff",
-        "card1_color_to": "#6aa7ff",
+        "card1_body": "<p>Blått lys virker i det øverste hudlaget og bryter ned forbindelsene som lar <em>Cutibacterium acnes</em> overleve i porene. Færre bakterier betyr færre nye kviser.</p>",
+        "card1_color_from": "#4F5BD5",
+        "card1_color_to": "#7a83e6",
         "card2_label": "Rødt lys",
-        "card2_wavelength": "633 nm",
-        "card2_title": "Demper betennelse og støtter reparasjon",
-        "card2_body": "<p>Rødt lys trenger dypere ned i huden og roer den inflammatoriske responsen, samtidig som det støtter hudens egen reparasjon. Resultatet: mindre rødhet, raskere tilheling.</p>",
-        "card2_color_from": "#d33333",
-        "card2_color_to": "#ff7a7a",
-        "card3_label": "Nær-infrarødt lys",
+        "card2_wavelength": "630 nm",
+        "card2_title": "Demper betennelse og rødhet",
+        "card2_body": "<p>Rødt lys trenger inn i dermis, der akneinflammasjonen sitter. Det roer ned betennelsesreaksjonen og reduserer synlig rødhet, slik at huden ser jevnere ut.</p>",
+        "card2_color_from": "#E63946",
+        "card2_color_to": "#ff7a85",
+        "card3_label": "NIR-lys",
         "card3_wavelength": "830 nm",
         "card3_title": "Styrker hudens egen reparasjon",
         "card3_body": "<p>830 nm når dypest – helt ned mot subcutis. Det stimulerer cellenes energiproduksjon og støtter hudens naturlige reparasjon, slik at arr og spor etter utbrudd leges raskere.</p>",
-        "card3_color_dark": "#9b1b3a",
+        "card3_color_dark": "#9B1B3A",
         "card3_color_light": "#d04a6e",
         "timeline_line": "Forskning viser at de fleste ser de første tegnene etter 2–4 uker med jevn bruk, og full effekt etter 6–8 uker.",
         "timeline_citation_marker": "¹",
@@ -227,7 +251,7 @@
         "show_depth_diagram": true,
         "depth_diagram_alt": "Diagram som viser at hver bølgelengde når en annen dybde i huden",
         "depth_caption": "<p>Hver bølgelengde når en annen dybde i huden.</p>",
-        "diagram_alt": "Diagram av blått og rødt LED-lys"
+        "diagram_alt": "Diagram av blått, rødt og nær-infrarødt LED-lys"
       }
     },
     "skinora_clinic_comparison_9acj9k": {
