@@ -156,24 +156,6 @@
           "settings": {
             "text": "Du drømmer om å åpne kameraet uten å fikse vinkel og lys først."
           }
-        },
-        "p_6": {
-          "type": "item",
-          "settings": {
-            "text": "Du vil ikke gå på antibiotika eller sterke medisiner for noe som burde være løsbart"
-          }
-        },
-        "p_7": {
-          "type": "item",
-          "settings": {
-            "text": "Du er lei av å kaste penger på produkter som lover mye, men leverer lite"
-          }
-        },
-        "p_8": {
-          "type": "item",
-          "settings": {
-            "text": "Du drømmer om å se i speilet uten å fokusere på det som er feil"
-          }
         }
       },
       "block_order": [
@@ -181,10 +163,7 @@
         "p_2",
         "p_3",
         "p_4",
-        "p_5",
-        "p_6",
-        "p_7",
-        "p_8"
+        "p_5"
       ],
       "settings": {
         "heading": "Kjenner du igjen dette?",
