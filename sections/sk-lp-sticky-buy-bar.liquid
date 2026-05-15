@@ -37,7 +37,13 @@
             class="sk-sticky-bar__btn"
             aria-label="Legg {{ sbb_product.title | default: 'Skinora Clear' }} i handlekurven – {{ section.settings.price }}"
           >
-            {{ section.settings.cta_label }}
+            {%- assign sbb_cta_clean = section.settings.cta_label
+              | default: 'Prøv risikofritt'
+              | replace: '→', ''
+              | strip
+            -%}
+            <span class="sk-sticky-bar__btn-label">{{ sbb_cta_clean }}</span>
+            <span class="sk-sticky-bar__btn-arrow" aria-hidden="true">→</span>
           </button>
         </form>
       </div>
@@ -224,6 +230,109 @@
         transition: none;
       }
     }
+
+    /* ============================================================
+       STICKY BUY BAR — mobile redesign (≤768px)
+       Forces a clean single-row layout with a dominant CTA and a
+       compact price block. !important is used because earlier
+       non-important rules were beaten by base styles + parent flex.
+       Added: 2026-05-15
+       ============================================================ */
+    @media (max-width: 768px) {
+      body .sk-sticky-bar {
+        padding: 10px 16px max(10px, env(safe-area-inset-bottom)) !important;
+        background: #ffffff !important;
+        border-top: 1px solid rgba(48, 39, 62, 0.08) !important;
+        box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.06) !important;
+      }
+
+      body .sk-sticky-bar__inner {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 12px !important;
+        max-width: 560px !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+      }
+
+      /* PRICE BLOCK — compact, never starves the CTA */
+      body .sk-sticky-bar__price-block {
+        flex: 0 0 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+        min-width: 0 !important;
+        max-width: 42% !important;
+        line-height: 1.15 !important;
+      }
+      body .sk-sticky-bar__price {
+        font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif !important;
+        font-size: 17px !important;
+        font-weight: 700 !important;
+        color: #30273e !important;
+        line-height: 1.15 !important;
+        white-space: nowrap !important;
+        letter-spacing: 0 !important;
+      }
+      body .sk-sticky-bar__subprice {
+        font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif !important;
+        font-size: 11px !important;
+        font-weight: 500 !important;
+        color: #6b6b6b !important;
+        line-height: 1.25 !important;
+        margin-top: 2px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 100% !important;
+      }
+
+      /* CTA — visually dominant, one-line label, comfortable target */
+      body .sk-sticky-bar__cta-block {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        display: flex !important;
+      }
+      body .sk-sticky-bar__form {
+        width: 100% !important;
+        display: flex !important;
+      }
+      body .sk-sticky-bar__btn {
+        width: 100% !important;
+        min-height: 52px !important;
+        padding: 0 18px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif !important;
+        font-size: clamp(13px, 3.6vw, 15px) !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.06em !important;
+        text-transform: uppercase !important;
+        line-height: 1 !important;
+        color: #ffffff !important;
+        background: var(--lp-cta-bg, #30273e) !important;
+        border: 0 !important;
+        border-radius: var(--lp-cta-radius, 14px) !important;
+        box-shadow: 0 6px 16px rgba(48, 39, 62, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: clip !important;
+        transition: transform 120ms ease-out, box-shadow 180ms ease !important;
+      }
+      body .sk-sticky-bar__btn:active {
+        transform: scale(0.98) !important;
+      }
+      body .sk-sticky-bar__btn .sk-sticky-bar__btn-arrow {
+        margin-left: 0 !important;
+        font-weight: 400 !important;
+        opacity: 0.9 !important;
+        transform: translateY(-0.5px);
+      }
+    }
   </style>
 
   <script>
@@ -300,9 +409,10 @@
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var btn = form.querySelector('button[type="submit"]');
-        var originalText = btn.textContent;
+        var labelEl = btn.querySelector('.sk-sticky-bar__btn-label') || btn;
+        var originalText = labelEl.textContent;
         btn.disabled = true;
-        btn.textContent = 'Legger til\u2026';
+        labelEl.textContent = 'Legger til\u2026';
         if (errorEl) { errorEl.style.display = 'none'; errorEl.textContent = ''; }
 
         fetch('/cart/add.js', {
@@ -312,7 +422,7 @@
         })
         .then(function (r) { if (!r.ok) throw new Error('ATC failed'); return r.json(); })
         .then(function () {
-          btn.textContent = 'Lagt til \u2713';
+          labelEl.textContent = 'Lagt til \u2713';
           /* Refresh and open cart drawer */
           var cartDrawer = document.querySelector('cart-drawer');
           if (cartDrawer) {
@@ -328,10 +438,10 @@
             window.location.href = '/cart';
             return;
           }
-          setTimeout(function () { btn.textContent = originalText; btn.disabled = false; }, 1500);
+          setTimeout(function () { labelEl.textContent = originalText; btn.disabled = false; }, 1500);
         })
         .catch(function () {
-          btn.textContent = originalText;
+          labelEl.textContent = originalText;
           btn.disabled = false;
           if (errorEl) {
             errorEl.textContent = 'Noe gikk galt. Pr\u00f8v igjen.';
@@ -372,13 +482,13 @@
       "type": "text",
       "id": "subprice",
       "label": "Underpris",
-      "default": "eller fra 163 kr/mnd med Klarna"
+      "default": "fra 122 kr/mnd · Klarna"
     },
     {
       "type": "text",
       "id": "cta_label",
       "label": "CTA-tekst",
-      "default": "Prøv risikofritt →"
+      "default": "Prøv risikofritt"
     },
     {
       "type": "text",
