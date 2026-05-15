@@ -16,8 +16,9 @@
     margin: 0 auto;
   }
   .lp-mech__head {
+    display: block;
     text-align: center;
-    max-width: 680px;
+    max-width: 720px;
     margin: 0 auto clamp(32px, 5vw, 56px);
   }
   .lp-mech__eyebrow {
@@ -25,71 +26,103 @@
     font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
     font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: rgba(58, 52, 72, 0.7);
-    margin-bottom: 12px;
+    margin: 0 0 0.75rem;
   }
   .lp-mech__title {
     font-family: 'freight-text-pro', 'freight-text-pro-fallback', Georgia, serif;
-    font-size: clamp(26px, 4vw, 34px);
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
     font-weight: 400;
     color: #3a3448;
     letter-spacing: 0.4px;
-    line-height: 1.25;
-    margin: 0 0 12px;
+    line-height: 1.15;
+    margin: 0 0 1rem;
+    word-break: normal;
+    overflow-wrap: break-word;
+    hyphens: none;
   }
   .lp-mech__intro {
     font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
+    line-height: 1.55;
     color: #4a4458;
-    margin: 0;
+    margin: 0 0 2.5rem;
   }
 
   .lp-mech__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 1rem;
     margin-bottom: 28px;
+    align-items: stretch;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .lp-mech__grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
     }
   }
   .lp-mech__card {
     background: #fff;
     border: 1px solid rgba(48, 39, 62, 0.08);
-    border-radius: 14px;
-    padding: clamp(20px, 3vw, 28px);
+    border-radius: 16px;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
     text-align: left;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
   }
-  .lp-mech__icon {
-    width: 56px;
-    height: 56px;
+  .lp-mech__badge {
+    width: 84px;
+    height: 84px;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
-    margin-bottom: 16px;
+    margin: 4px 0 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
     color: #fff;
     text-transform: uppercase;
+    flex-shrink: 0;
   }
-  .lp-mech__icon--blue {
-    background: radial-gradient(circle at 30% 30%, #6aa9ff 0%, #2563eb 70%, #1e3a8a 100%);
-    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+  .sk-mechanism__badge--blue {
+    background: radial-gradient(circle at 30% 30%, #6aa7ff 0%, #1e6dff 100%);
   }
-  .lp-mech__icon--red {
-    background: radial-gradient(circle at 30% 30%, #ff8a8a 0%, #d6336c 70%, #8b1d3f 100%);
-    box-shadow: 0 6px 20px rgba(214, 51, 108, 0.35);
+  .sk-mechanism__badge--red {
+    background: radial-gradient(circle at 30% 30%, #ff7a7a 0%, #d33333 100%);
   }
+  .sk-mechanism__badge--nir {
+    background: radial-gradient(circle at 30% 30%, #c95a5a 0%, #7a2e2e 100%);
+  }
+
+  @keyframes sk-pulse-blue {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(30, 109, 255, 0.45); }
+    50%      { box-shadow: 0 0 0 18px rgba(30, 109, 255, 0); }
+  }
+  @keyframes sk-pulse-red {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(211, 51, 51, 0.4); }
+    50%      { box-shadow: 0 0 0 18px rgba(211, 51, 51, 0); }
+  }
+  @keyframes sk-pulse-nir {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(160, 60, 60, 0.4); }
+    50%      { box-shadow: 0 0 0 18px rgba(160, 60, 60, 0); }
+  }
+  .sk-mechanism__badge--blue { animation: sk-pulse-blue 2.8s ease-out infinite; }
+  .sk-mechanism__badge--red  { animation: sk-pulse-red  2.8s ease-out infinite 0.5s; }
+  .sk-mechanism__badge--nir  { animation: sk-pulse-nir  2.8s ease-out infinite 1s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sk-mechanism__badge--blue,
+    .sk-mechanism__badge--red,
+    .sk-mechanism__badge--nir { animation: none; }
+  }
+
   .lp-mech__label-pill {
     display: inline-block;
     font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
@@ -99,9 +132,10 @@
     text-transform: uppercase;
     padding: 4px 10px;
     border-radius: 999px;
-    margin-bottom: 12px;
+    margin: 0 0 12px;
     color: #30273e;
     background: rgba(48, 39, 62, 0.06);
+    align-self: flex-start;
   }
   .lp-mech__wavelength {
     display: block;
@@ -127,11 +161,28 @@
     color: #4a4458;
     margin: 0;
   }
-  .lp-mech__diagram {
-    margin: 8px auto 24px;
-    max-width: 540px;
+  .lp-mech__diagram,
+  .lp-mech__depth {
+    margin: 24px auto;
+    max-width: 600px;
     text-align: center;
   }
+  .lp-mech__depth img {
+    width: 100%;
+    height: auto;
+    max-height: 160px;
+    object-fit: contain;
+    aspect-ratio: 600 / 120;
+    border-radius: 8px;
+  }
+  .lp-mech__depth-caption {
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
+    font-size: 12.5px;
+    font-style: italic;
+    color: rgba(58, 52, 72, 0.7);
+    margin: 8px 0 0;
+  }
+  .lp-mech__depth-caption p { margin: 0; }
   .lp-mech__diagram img {
     width: 100%;
     height: auto;
@@ -140,10 +191,11 @@
   .lp-mech__timeline {
     text-align: center;
     font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
-    font-size: 14px;
+    font-size: 13.5px;
     line-height: 1.55;
     color: #4a4458;
-    margin: 4px 0 0;
+    max-width: 720px;
+    margin: 2rem auto 0;
     padding: 0 8px;
   }
   .lp-mech__timeline .citation-link {
@@ -202,10 +254,11 @@
           <span class="lp-mech__label-pill">{{ section.settings.card1_label }}</span>
         {%- endif -%}
         <div
-          class="lp-mech__icon lp-mech__icon--blue"
-          aria-hidden="true"
+          class="lp-mech__badge sk-mechanism__badge--blue"
+          role="img"
+          aria-label="Bølgelengde {{ section.settings.card1_wavelength | default: '415' | replace: ' nm', '' }} nanometer"
           {% if section.settings.card1_color_from != blank and section.settings.card1_color_to != blank %}
-            style="background: radial-gradient(circle at 30% 30%, {{ section.settings.card1_color_to }} 0%, {{ section.settings.card1_color_from }} 70%, {{ section.settings.card1_color_from }} 100%);"
+            style="background: radial-gradient(circle at 30% 30%, {{ section.settings.card1_color_to }} 0%, {{ section.settings.card1_color_from }} 100%);"
           {% endif %}
         >
           {{ section.settings.card1_wavelength | default: '415 nm' }}
@@ -230,10 +283,11 @@
           <span class="lp-mech__label-pill">{{ section.settings.card2_label }}</span>
         {%- endif -%}
         <div
-          class="lp-mech__icon lp-mech__icon--red"
-          aria-hidden="true"
+          class="lp-mech__badge sk-mechanism__badge--red"
+          role="img"
+          aria-label="Bølgelengde {{ section.settings.card2_wavelength | default: '633' | replace: ' nm', '' }} nanometer"
           {% if section.settings.card2_color_from != blank and section.settings.card2_color_to != blank %}
-            style="background: radial-gradient(circle at 30% 30%, {{ section.settings.card2_color_to }} 0%, {{ section.settings.card2_color_from }} 70%, {{ section.settings.card2_color_from }} 100%);"
+            style="background: radial-gradient(circle at 30% 30%, {{ section.settings.card2_color_to }} 0%, {{ section.settings.card2_color_from }} 100%);"
           {% endif %}
         >
           {{ section.settings.card2_wavelength | default: '633 nm' }}
@@ -252,7 +306,50 @@
           {{ section.settings.card2_body | default: section.settings.red_text }}
         </div>
       </article>
+
+      <article class="lp-mech__card">
+        {%- if section.settings.card3_label != blank -%}
+          <span class="lp-mech__label-pill">{{ section.settings.card3_label }}</span>
+        {%- endif -%}
+        <div
+          class="lp-mech__badge sk-mechanism__badge--nir"
+          role="img"
+          aria-label="Bølgelengde {{ section.settings.card3_wavelength | default: '830' | replace: ' nm', '' }} nanometer"
+          {% if section.settings.card3_color_dark != blank and section.settings.card3_color_light != blank %}
+            style="background: radial-gradient(circle at 30% 30%, {{ section.settings.card3_color_light }} 0%, {{ section.settings.card3_color_dark }} 100%);"
+          {% endif %}
+        >
+          {{ section.settings.card3_wavelength | default: '830 nm' }}
+        </div>
+        {%- if section.settings.card3_wavelength != blank -%}
+          <span class="lp-mech__wavelength">{{ section.settings.card3_wavelength }}</span>
+        {%- endif -%}
+        <h3 class="lp-mech__card-title">
+          {{ section.settings.card3_title | default: 'Når dypest og støtter reparasjon' }}
+        </h3>
+        <div class="lp-mech__card-text">
+          {{ section.settings.card3_body }}
+        </div>
+      </article>
     </div>
+
+    {%- if section.settings.show_depth_diagram and section.settings.depth_diagram != blank -%}
+      <div class="lp-mech__depth">
+        <img
+          src="{{ section.settings.depth_diagram | image_url: width: 1200 }}"
+          srcset="{{ section.settings.depth_diagram | image_url: width: 600 }} 600w, {{ section.settings.depth_diagram | image_url: width: 1200 }} 1200w"
+          sizes="(max-width: 640px) 90vw, 600px"
+          alt="{{ section.settings.depth_diagram_alt | default: 'Diagram som viser at hver bølgelengde når en annen dybde i huden' | escape }}"
+          loading="lazy"
+          decoding="async"
+          width="600"
+          height="120"
+        >
+        {%- if section.settings.depth_caption != blank -%}
+          <div class="lp-mech__depth-caption">{{ section.settings.depth_caption }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
 
     {%- if section.settings.timeline_line != blank -%}
       <p class="lp-mech__timeline">
@@ -298,7 +395,7 @@
       "type": "textarea",
       "id": "intro",
       "label": "Intro-tekst",
-      "default": "To bølgelengder med lys, samme prinsipp som brukes på hudklinikk – tilpasset for trygg bruk hjemme."
+      "default": "Tre bølgelengder med lys, samme prinsipp som brukes på hudklinikk – tilpasset for trygg bruk hjemme."
     },
 
     { "type": "header", "content": "Kort 1 — Blått lys" },
@@ -377,6 +474,44 @@
       "default": "#ff7a7a"
     },
 
+    { "type": "header", "content": "Kort 3 — Nær-infrarødt lys (830 nm)" },
+    {
+      "type": "text",
+      "id": "card3_label",
+      "label": "Etikett (pill)",
+      "default": "Nær-infrarødt lys"
+    },
+    {
+      "type": "text",
+      "id": "card3_wavelength",
+      "label": "Bølgelengde",
+      "default": "830 nm"
+    },
+    {
+      "type": "text",
+      "id": "card3_title",
+      "label": "Tittel",
+      "default": "Når dypest og støtter reparasjon"
+    },
+    {
+      "type": "richtext",
+      "id": "card3_body",
+      "label": "Brødtekst",
+      "default": "<p>Nær-infrarødt lys trenger dypere ned enn rødt og blått lys, helt ned i dermis. Der støtter det vevsreparasjon, demper dyp betennelse, og kan bidra til å redusere risikoen for arr etter utbrudd.</p>"
+    },
+    {
+      "type": "color",
+      "id": "card3_color_dark",
+      "label": "Burgunder gradient (mørk)",
+      "default": "#7a2e2e"
+    },
+    {
+      "type": "color",
+      "id": "card3_color_light",
+      "label": "Burgunder gradient (lys)",
+      "default": "#c95a5a"
+    },
+
     { "type": "header", "content": "Tidslinje + kilde" },
     {
       "type": "textarea",
@@ -401,15 +536,38 @@
 
     { "type": "header", "content": "Diagram (valgfritt)" },
     {
+      "type": "checkbox",
+      "id": "show_depth_diagram",
+      "label": "Vis hud-dybde-diagram under kortene",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "depth_diagram",
+      "label": "Hud-dybde-diagram (SVG/PNG, ~600×120)"
+    },
+    {
+      "type": "text",
+      "id": "depth_diagram_alt",
+      "label": "Hud-dybde alt-tekst",
+      "default": "Diagram som viser at hver bølgelengde når en annen dybde i huden"
+    },
+    {
+      "type": "richtext",
+      "id": "depth_caption",
+      "label": "Bildetekst under diagram",
+      "default": "<p>Hver bølgelengde når en annen dybde i huden.</p>"
+    },
+    {
       "type": "image_picker",
       "id": "diagram_image",
-      "label": "Diagrambilde"
+      "label": "Stort diagrambilde (over kortene, valgfritt)"
     },
     {
       "type": "text",
       "id": "diagram_alt",
-      "label": "Bildebeskrivelse (alt)",
-      "default": "Diagram av blått og rødt LED-lys"
+      "label": "Bildebeskrivelse (alt) for stort diagram",
+      "default": "Diagram av blått, rødt og nær-infrarødt LED-lys"
     }
   ],
   "presets": [
