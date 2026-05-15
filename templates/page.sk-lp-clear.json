@@ -50,6 +50,9 @@
       ],
       "settings": {
         "image": "shopify://shop_images/Skinora_Clear_bruk_maske_som_en_del_av_hudpleie.webp",
+        "hero_video_url": "",
+        "show_authority_citation": true,
+        "authority_citation_marker": "¹",
         "eyebrow": "Skinora® Clear",
         "title": "Klarere hud uten sterke midler – hjemme, på 10 minutter",
         "text_line_1": "Klinisk dokumentert LED-teknologi – brukt av hudterapeuter verden over.",
@@ -449,6 +452,12 @@
         "score": "4.7 av 5 – basert på 89 anmeldelser",
         "rating_score": "4.7",
         "review_count": "89",
+        "reviews_visible_count": 6,
+        "show_more_text": "Vis flere anmeldelser",
+        "show_less_text": "Vis færre",
+        "before_after_disclaimer": "<p>Bilder fra ekte verifiserte kunder, brukt med tillatelse. Ikke retusjert. Resultater kan variere fra person til person og avhenger av jevn bruk over 6–8 uker.</p>",
+        "enable_trustpilot_embed": false,
+        "trustpilot_business_unit_id": "",
         "product_url": "/products/skinora-clear",
         "midpage_cta_text": "Få klarere hud nå",
         "midpage_klarna_text": "Fra 122 kr/mnd med Klarna"
@@ -461,35 +470,45 @@
           "type": "card",
           "settings": {
             "title": "60 dagers fornøydgaranti",
-            "text": "<p>Ikke fornøyd? Du får pengene tilbake – ingen spørsmål.</p>"
+            "text": "<p>Ikke fornøyd? Du får pengene tilbake – ingen spørsmål.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
           }
         },
         "tf_2": {
           "type": "card",
           "settings": {
             "title": "Gratis frakt",
-            "text": "<p>Sendes fra norsk lager. Levering 2–4 virkedager.</p>"
+            "text": "<p>Sendes fra norsk lager. Levering 2–4 virkedager.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
           }
         },
         "tf_3": {
           "type": "card",
           "settings": {
             "title": "Norsk kundeservice",
-            "text": "<p>Har du spørsmål? <a href=\"/pages/kundeservice\" title=\"Kundeservice\">Ta kontakt</a> — vi svarer raskt.</p>"
+            "text": "<p>Har du spørsmål? <a href=\"/pages/kundeservice\" title=\"Kundeservice\">Ta kontakt</a> — vi svarer raskt.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
           }
         },
         "tf_4": {
           "type": "card",
           "settings": {
             "title": "Sikker betaling",
-            "text": "<p>Vipps, Klarna, Visa og Mastercard.</p>"
+            "text": "<p>Vipps, Klarna, Visa og Mastercard.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
           }
         },
         "tf_5": {
           "type": "card",
           "settings": {
             "title": "2 års reklamasjonsrett",
-            "text": "<p>Full reklamasjonsrett i henhold til norsk lov.</p>"
+            "text": "<p>Full reklamasjonsrett i henhold til norsk lov.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
           }
         }
       },
@@ -736,6 +755,62 @@
         "background_color": ""
       }
     },
+    "sk_lp_citations_wCJfGi": {
+      "type": "sk-lp-citations",
+      "blocks": {
+        "citation_wV88tM": {
+          "type": "citation",
+          "settings": {
+            "authors": "Goldberg DJ, Russell BA",
+            "year": "2006",
+            "title": "Combination blue (415 nm) and red (633 nm) LED phototherapy in the treatment of mild to severe acne vulgaris",
+            "journal": "Journal of Cosmetic and Laser Therapy, 8(2), 71–75",
+            "doi_or_url": ""
+          }
+        },
+        "citation_PmyFH4": {
+          "type": "citation",
+          "settings": {
+            "authors": "Lee SY, You CE, Park MY",
+            "year": "2007",
+            "title": "Blue and red light combination LED phototherapy for acne vulgaris in patients with skin phototype IV",
+            "journal": "Lasers in Surgery and Medicine, 39(2), 180–188",
+            "doi_or_url": ""
+          }
+        },
+        "citation_Uw6jVC": {
+          "type": "citation",
+          "settings": {
+            "authors": "Sadick NS",
+            "year": "2008",
+            "title": "Handheld LED array device in the treatment of acne vulgaris",
+            "journal": "Journal of Drugs in Dermatology, 7(4), 347–350",
+            "doi_or_url": ""
+          }
+        },
+        "citation_LJHHpD": {
+          "type": "citation",
+          "settings": {
+            "authors": "Kwon HH, Lee JB, Yoon JY, et al.",
+            "year": "2013",
+            "title": "The clinical and histological effect of home-use, combination blue–red LED phototherapy for mild-to-moderate acne vulgaris: a randomised controlled trial",
+            "journal": "British Journal of Dermatology, 168(5), 1088–1094",
+            "doi_or_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "citation_wV88tM",
+        "citation_PmyFH4",
+        "citation_Uw6jVC",
+        "citation_LJHHpD"
+      ],
+      "name": "LP Citations",
+      "settings": {
+        "heading": "Kilder",
+        "citations_intro": "<p>Basert på fagfellevurderte studier av kombinert blått (415 nm) og rødt (633 nm) LED-lys for behandling av mild til moderat akne. Resultater kan variere fra person til person.</p>"
+      }
+    },
     "sticky_buy_bar": {
       "type": "sk-lp-sticky-buy-bar",
       "settings": {
@@ -764,6 +839,7 @@
     "faq",
     "cta",
     "cross_sell",
+    "sk_lp_citations_wCJfGi",
     "sticky_buy_bar"
   ]
 }
