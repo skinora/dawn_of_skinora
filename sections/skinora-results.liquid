@@ -1,125 +1,51 @@
 {%- comment -%}
   sections/skinora-results.liquid
-  "Hva kan du forvente?" — 3-step results timeline with progress imagery,
-  numbered circles, slim per-card progress bars, and a desktop horizontal
-  connector. Mobile uses vertical connectors between cards.
-
-  Why SVG for the connector (not a CSS pseudo-element):
-  - We need stroke-dasharray animation for the left-to-right "draw" effect.
-  - SVG lets us add the small arrow markers between cards in the same element.
+  Typographic 3-step results timeline. No images, no card chrome —
+  large italic numerals + thin SVG connector between cards on desktop.
+  Connector hidden on mobile where cards stack vertically.
 {%- endcomment -%}
 
 {{ 'skinora-results.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'skinora-results.js' | asset_url }}" defer></script>
 
-{%- liquid
-  assign bg_section = section.settings.bg_section | default: '#F4EFE9'
-  assign accent = section.settings.accent | default: '#3D2937'
-  assign max_width = section.settings.max_width | default: '1240'
-  assign show_bar = section.settings.show_progress_bar
-  assign show_h_connector = section.settings.show_h_connector
--%}
-
-<section
-  class="skinora-results"
-  aria-labelledby="skinora-results-heading-{{ section.id }}"
-  style="--sr-bg: {{ bg_section }}; --sr-accent: {{ accent }};"
->
-  <div class="skinora-results__inner" style="max-width: {{ max_width }}px;">
-    <div class="skinora-results__header">
-      {%- if section.settings.eyebrow != blank -%}
-        <p class="skinora-results__eyebrow">{{ section.settings.eyebrow }}</p>
-      {%- endif -%}
-      <h2 id="skinora-results-heading-{{ section.id }}" class="skinora-results__headline">
-        {{ section.settings.headline }}
+<section class="skinora-results lp-results-timeline" aria-labelledby="skinora-results-heading-{{ section.id }}">
+  <div class="skinora-results__inner">
+    <header class="skinora-results__header">
+      <h2 id="skinora-results-heading-{{ section.id }}" class="skinora-results__h2">
+        {{ section.settings.headline | default: 'Hva kan du forvente?' }}
       </h2>
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="skinora-results__subhead">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
       {%- if section.settings.subtext != blank -%}
-        <div class="skinora-results__sub">{{ section.settings.subtext }}</div>
+        <div class="skinora-results__note">{{ section.settings.subtext }}</div>
       {%- endif -%}
-    </div>
+    </header>
 
-    <div class="skinora-results__timeline">
-      {%- comment -%} Horizontal connector — desktop only via CSS. Aligned with circles via JS. {%- endcomment -%}
-      {%- if show_h_connector and section.blocks.size > 1 -%}
-        <div class="skinora-results__h-connector" aria-hidden="true">
-          <svg viewBox="0 0 1000 24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            {%- comment -%} Horizontal line spanning ~80% of width, centered. {%- endcomment -%}
-            <line class="sr-line" x1="100" y1="12" x2="900" y2="12" />
-            {%- comment -%} Two arrows at the 1/3 and 2/3 marks (between cards). {%- endcomment -%}
-            <polygon class="sr-arrow" points="333,7 343,12 333,17" />
-            <polygon class="sr-arrow" points="666,7 676,12 666,17" />
-          </svg>
-        </div>
-      {%- endif -%}
+    <ol class="skinora-results__grid lp-results__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type != 'step' -%}{%- continue -%}{%- endif -%}
+        {%- assign main_text = block.settings.title | default: block.settings.body -%}
 
-      <ol class="skinora-results__grid">
-        {%- for block in section.blocks -%}
-          {%- if block.type != 'step' -%}{%- continue -%}{%- endif -%}
-          {%- assign step_num = forloop.index -%}
-          {%- assign progress_pct = block.settings.progress | default: 33 -%}
-          {%- assign img = block.settings.image -%}
-          {%- assign img_alt = block.settings.alt | default: block.settings.title -%}
+        <li class="skinora-results__card lp-results__card" {{ block.shopify_attributes }}>
+          <span class="skinora-results__num lp-results__number">{{ forloop.index }}</span>
+          {%- if block.settings.label != blank -%}
+            <p class="skinora-results__label lp-results__eyebrow">{{ block.settings.label }}</p>
+          {%- endif -%}
+          {%- if main_text != blank -%}
+            <div class="skinora-results__body lp-results__body">{{ main_text }}</div>
+          {%- endif -%}
+        </li>
 
-          <li
-            class="skinora-results__card"
-            {{ block.shopify_attributes }}
-            style="--sr-bar-fill: {{ progress_pct }}%;"
-          >
-            <div class="skinora-results__media">
-              {%- if img != blank -%}
-                <img
-                  src="{{ img | image_url: width: 800 }}"
-                  srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 800 }} 800w, {{ img | image_url: width: 1200 }} 1200w"
-                  sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 92vw"
-                  width="800"
-                  height="1000"
-                  loading="lazy"
-                  decoding="async"
-                  alt="{{ img_alt | escape }}"
-                >
-              {%- else -%}
-                <span class="skinora-results__media-placeholder">{{ block.settings.label }}</span>
-              {%- endif -%}
-            </div>
-
-            <div class="skinora-results__panel">
-              <span class="skinora-results__num" aria-hidden="true">{{ step_num }}</span>
-              {%- if block.settings.label != blank -%}
-                <span class="skinora-results__label">{{ block.settings.label }}</span>
-              {%- endif -%}
-              {%- if block.settings.title != blank -%}
-                <h3 class="skinora-results__title">{{ block.settings.title }}</h3>
-              {%- endif -%}
-              {%- if block.settings.body != blank -%}
-                <div class="skinora-results__body">{{ block.settings.body }}</div>
-              {%- endif -%}
-              {%- if show_bar -%}
-                <div
-                  class="skinora-results__bar"
-                  role="progressbar"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                  aria-valuenow="{{ progress_pct }}"
-                  aria-label="Fremdrift, steg {{ step_num }}"
-                >
-                  <span class="skinora-results__bar-fill"></span>
-                </div>
-              {%- endif -%}
-            </div>
+        {%- unless forloop.last -%}
+          <li class="skinora-results__connector lp-results__connector" aria-hidden="true">
+            <svg viewBox="0 0 80 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="6" x2="68" y2="6" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+              <polyline points="62,1 72,6 62,11" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
           </li>
-
-          {%- comment -%} Vertical mobile connector between cards (last one omitted). {%- endcomment -%}
-          {%- unless forloop.last -%}
-            <li class="skinora-results__v-connector" aria-hidden="true">
-              <svg viewBox="0 0 14 32" xmlns="http://www.w3.org/2000/svg">
-                <line x1="7" y1="0" x2="7" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                <polygon points="2,20 7,30 12,20" fill="currentColor"/>
-              </svg>
-            </li>
-          {%- endunless -%}
-        {%- endfor -%}
-      </ol>
-    </div>
+        {%- endunless -%}
+      {%- endfor -%}
+    </ol>
   </div>
 </section>
 
@@ -136,64 +62,21 @@
     },
     {
       "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "HVA KAN DU FORVENTE?"
+      "id": "headline",
+      "label": "Overskrift",
+      "default": "Hva kan du forvente?"
     },
     {
       "type": "text",
-      "id": "headline",
-      "label": "Overskrift",
+      "id": "eyebrow",
+      "label": "Underoverskrift",
       "default": "Realistiske resultater fra ekte brukere"
     },
     {
       "type": "richtext",
       "id": "subtext",
-      "label": "Undertekst",
+      "label": "Mikrotekst",
       "default": "<p>Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.</p>"
-    },
-    {
-      "type": "header",
-      "content": "Layout"
-    },
-    {
-      "type": "select",
-      "id": "max_width",
-      "label": "Maks innholdsbredde (px)",
-      "options": [
-        { "value": "1200", "label": "1200" },
-        { "value": "1240", "label": "1240" },
-        { "value": "1320", "label": "1320" }
-      ],
-      "default": "1240"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_progress_bar",
-      "label": "Vis fremdriftslinje i hvert kort",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_h_connector",
-      "label": "Vis horisontal forbindelseslinje (desktop)",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Farger"
-    },
-    {
-      "type": "color",
-      "id": "bg_section",
-      "label": "Seksjonsbakgrunn",
-      "default": "#F4EFE9"
-    },
-    {
-      "type": "color",
-      "id": "accent",
-      "label": "Aksentfarge",
-      "default": "#3D2937"
     }
   ],
   "blocks": [
@@ -203,43 +86,16 @@
       "limit": 3,
       "settings": [
         {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Bilde (4:5 anbefalt)"
-        },
-        {
-          "type": "text",
-          "id": "alt",
-          "label": "Alt-tekst",
-          "info": "Beskriv hva bildet faktisk viser."
-        },
-        {
           "type": "text",
           "id": "label",
           "label": "Tidsmerkelapp",
           "default": "ETTER 2–4 UKER"
         },
         {
-          "type": "text",
-          "id": "title",
-          "label": "Tittel",
-          "default": "Færre nye utbrudd og roligere hud"
-        },
-        {
           "type": "richtext",
-          "id": "body",
-          "label": "Mikrotekst",
-          "default": "<p>De første tegnene på endring – betennelser roer seg, og du ser færre nye kviser.</p>"
-        },
-        {
-          "type": "range",
-          "id": "progress",
-          "label": "Fremdrift (%)",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "default": 33
+          "id": "title",
+          "label": "Brødtekst",
+          "default": "<p>Færre nye utbrudd og roligere hud.</p>"
         }
       ]
     }
@@ -253,30 +109,21 @@
           "type": "step",
           "settings": {
             "label": "ETTER 2–4 UKER",
-            "title": "Færre nye utbrudd og roligere hud",
-            "body": "<p>De første tegnene på endring – betennelser roer seg, og du ser færre nye kviser.</p>",
-            "alt": "Nærbilde av kinn med få aktive utbrudd, etter 2–4 ukers bruk av Skinora Clear.",
-            "progress": 33
+            "title": "<p>Færre nye utbrudd og roligere hud.</p>"
           }
         },
         {
           "type": "step",
           "settings": {
             "label": "ETTER 6–8 UKER",
-            "title": "Jevnere hudtone og redusert rødhet",
-            "body": "<p>Huden begynner å se mer balansert ut. Røde merker falmer, tonen evner seg.</p>",
-            "alt": "Nærbilde av kinn med jevnere hudtone og redusert rødhet, etter 6–8 ukers bruk.",
-            "progress": 66
+            "title": "<p>Jevnere hudtone og redusert rødhet.</p>"
           }
         },
         {
           "type": "step",
           "settings": {
             "label": "OVER TID",
-            "title": "Klarere hud og bedre hudbalanse",
-            "body": "<p>Vedlikehold gir vedvarende resultater. Huden blir mer motstandsdyktig dag for dag.</p>",
-            "alt": "Nærbilde av kinn med klar, jevn hud over tid, vedlikeholdt med Skinora Clear.",
-            "progress": 100
+            "title": "<p>Klarere hud og bedre hudbalanse.</p>"
           }
         }
       ]

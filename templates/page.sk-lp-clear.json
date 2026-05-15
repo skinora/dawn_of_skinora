@@ -196,30 +196,21 @@
           "type": "step",
           "settings": {
             "label": "ETTER 2–4 UKER",
-            "title": "Færre nye utbrudd og roligere hud",
-            "body": "<p>De første tegnene på endring – betennelser roer seg, og du ser færre nye kviser.</p>",
-            "alt": "Nærbilde av kinn med få aktive utbrudd, etter 2–4 ukers bruk av Skinora Clear.",
-            "progress": 33
+            "title": "<p>Færre nye utbrudd og roligere hud.</p>"
           }
         },
         "r_2": {
           "type": "step",
           "settings": {
             "label": "ETTER 6–8 UKER",
-            "title": "Jevnere hudtone og redusert rødhet",
-            "body": "<p>Huden begynner å se mer balansert ut. Røde merker falmer, tonen evner seg.</p>",
-            "alt": "Nærbilde av kinn med jevnere hudtone og redusert rødhet, etter 6–8 ukers bruk.",
-            "progress": 66
+            "title": "<p>Jevnere hudtone og redusert rødhet.</p>"
           }
         },
         "r_3": {
           "type": "step",
           "settings": {
             "label": "OVER TID",
-            "title": "Klarere hud og bedre hudbalanse",
-            "body": "<p>Vedlikehold gir vedvarende resultater. Huden blir mer motstandsdyktig dag for dag.</p>",
-            "alt": "Nærbilde av kinn med klar, jevn hud over tid, vedlikeholdt med Skinora Clear.",
-            "progress": 100
+            "title": "<p>Klarere hud og bedre hudbalanse.</p>"
           }
         }
       },
@@ -229,14 +220,9 @@
         "r_3"
       ],
       "settings": {
-        "eyebrow": "HVA KAN DU FORVENTE?",
-        "headline": "Realistiske resultater fra ekte brukere",
-        "subtext": "<p>Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.</p>",
-        "max_width": "1240",
-        "show_progress_bar": true,
-        "show_h_connector": true,
-        "bg_section": "#F4EFE9",
-        "accent": "#3D2937"
+        "headline": "Hva kan du forvente?",
+        "eyebrow": "Realistiske resultater fra ekte brukere",
+        "subtext": "<p>Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.</p>"
       }
     },
     "how_to_use": {
