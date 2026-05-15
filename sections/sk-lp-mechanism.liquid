@@ -16,10 +16,51 @@
     margin: 0 auto;
   }
   .lp-mech__head {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     max-width: 720px;
+    width: 100%;
     margin: 0 auto clamp(32px, 5vw, 56px);
+  }
+  .lp-mech__head > * {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Mobile: force vertical stack regardless of inherited section group layout */
+  @media (max-width: 768px) {
+    body .lp-mech .lp-mech__head {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 4px !important;
+      margin: 0 auto 28px !important;
+    }
+    body .lp-mech .lp-mech__head > * {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      float: none !important;
+      clear: both !important;
+      grid-column: 1 / -1 !important;
+      box-sizing: border-box !important;
+      text-align: center !important;
+    }
+    body .lp-mech .lp-mech__title {
+      font-size: clamp(1.5rem, 7vw, 2rem) !important;
+      line-height: 1.2 !important;
+      margin: 0 0 0.75rem !important;
+    }
+    body .lp-mech .lp-mech__intro {
+      font-size: 1rem !important;
+      line-height: 1.55 !important;
+      margin: 0 0 1.5rem !important;
+    }
   }
   .lp-mech__eyebrow {
     display: block;
@@ -92,35 +133,58 @@
     flex-shrink: 0;
   }
   .sk-mechanism__badge--blue {
-    background: radial-gradient(circle at 30% 30%, #6aa7ff 0%, #1e6dff 100%);
+    background: radial-gradient(circle at 30% 30%, #7a7eea 0%, #3b3fbf 100%);
   }
   .sk-mechanism__badge--red {
-    background: radial-gradient(circle at 30% 30%, #ff7a7a 0%, #d33333 100%);
+    background: radial-gradient(circle at 30% 30%, #ff7a85 0%, #e63946 100%);
   }
   .sk-mechanism__badge--nir {
-    background: radial-gradient(circle at 30% 30%, #c95a5a 0%, #7a2e2e 100%);
+    background: radial-gradient(circle at 30% 30%, #d04a6e 0%, #9b1b3a 100%);
   }
 
   @keyframes sk-pulse-blue {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(30, 109, 255, 0.45); }
-    50%      { box-shadow: 0 0 0 18px rgba(30, 109, 255, 0); }
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(59, 63, 191, 0.45);
+    }
+    50% {
+      box-shadow: 0 0 0 18px rgba(59, 63, 191, 0);
+    }
   }
   @keyframes sk-pulse-red {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(211, 51, 51, 0.4); }
-    50%      { box-shadow: 0 0 0 18px rgba(211, 51, 51, 0); }
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 0 18px rgba(230, 57, 70, 0);
+    }
   }
   @keyframes sk-pulse-nir {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(160, 60, 60, 0.4); }
-    50%      { box-shadow: 0 0 0 18px rgba(160, 60, 60, 0); }
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(155, 27, 58, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 0 18px rgba(155, 27, 58, 0);
+    }
   }
-  .sk-mechanism__badge--blue { animation: sk-pulse-blue 2.8s ease-out infinite; }
-  .sk-mechanism__badge--red  { animation: sk-pulse-red  2.8s ease-out infinite 0.5s; }
-  .sk-mechanism__badge--nir  { animation: sk-pulse-nir  2.8s ease-out infinite 1s; }
+  .sk-mechanism__badge--blue {
+    animation: sk-pulse-blue 2.8s ease-out infinite;
+  }
+  .sk-mechanism__badge--red {
+    animation: sk-pulse-red 2.8s ease-out infinite 0.5s;
+  }
+  .sk-mechanism__badge--nir {
+    animation: sk-pulse-nir 2.8s ease-out infinite 1s;
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .sk-mechanism__badge--blue,
     .sk-mechanism__badge--red,
-    .sk-mechanism__badge--nir { animation: none; }
+    .sk-mechanism__badge--nir {
+      animation: none;
+    }
   }
 
   .lp-mech__label-pill {
@@ -182,7 +246,9 @@
     color: rgba(58, 52, 72, 0.7);
     margin: 8px 0 0;
   }
-  .lp-mech__depth-caption p { margin: 0; }
+  .lp-mech__depth-caption p {
+    margin: 0;
+  }
   .lp-mech__diagram img {
     width: 100%;
     height: auto;
@@ -217,6 +283,111 @@
     margin: 0;
     padding: 0 8px;
   }
+
+  /* ===== Hero row (image + paragraph + bullets) ===== */
+  .lp-mech__hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(20px, 4vw, 40px);
+    align-items: center;
+    margin: 0 0 clamp(40px, 6vw, 64px);
+  }
+  @media (min-width: 990px) {
+    .lp-mech__hero {
+      grid-template-columns: 60% 40%;
+      gap: clamp(32px, 5vw, 56px);
+    }
+  }
+  .lp-mech__hero-image {
+    width: 100%;
+  }
+  .lp-mech__hero-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    display: block;
+  }
+  .lp-mech__hero-caption {
+    margin: 8px 0 0;
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
+    font-size: 12.5px;
+    font-style: italic;
+    color: rgba(58, 52, 72, 0.65);
+    text-align: center;
+  }
+  .lp-mech__hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .lp-mech__hero-text {
+    font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
+    font-size: clamp(0.95rem, 2vw, 1.0625rem);
+    line-height: 1.6;
+    color: #4a4458;
+  }
+  .lp-mech__hero-text p {
+    margin: 0 0 0.5em;
+  }
+  .lp-mech__hero-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .lp-mech__bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .lp-mech__bullet {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: #4a4458;
+  }
+  .lp-mech__bullet-dot {
+    flex: 0 0 auto;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: 0.4em;
+    background: #3b3fbf;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
+  }
+  .lp-mech__bullet-text {
+    flex: 1 1 auto;
+  }
+  .lp-mech__bullet-text strong {
+    color: #30273e;
+    font-weight: 700;
+  }
+  .lp-mech__bullet-text p {
+    margin: 0;
+  }
+
+  /* Card hover lift */
+  .lp-mech__card {
+    transition: transform 220ms ease, box-shadow 220ms ease;
+  }
+  @media (hover: hover) {
+    .lp-mech__card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lp-mech__card {
+      transition: none;
+    }
+    .lp-mech__card:hover {
+      transform: none;
+    }
+  }
 </style>
 
 <section class="sk-lp-section lp-mech" aria-labelledby="lp-mech-heading-{{ section.id }}">
@@ -245,6 +416,50 @@
           loading="lazy"
           decoding="async"
         >
+      </div>
+    {%- endif -%}
+
+    {%- assign hero_bullets = section.blocks | where: 'type', 'bullet' -%}
+    {%- if section.settings.hero_image != blank or section.settings.hero_paragraph != blank or hero_bullets.size > 0 -%}
+      <div class="lp-mech__hero">
+        {%- if section.settings.hero_image != blank -%}
+          <div class="lp-mech__hero-image">
+            <img
+              src="{{ section.settings.hero_image | image_url: width: 1200 }}"
+              srcset="{{ section.settings.hero_image | image_url: width: 600 }} 600w, {{ section.settings.hero_image | image_url: width: 900 }} 900w, {{ section.settings.hero_image | image_url: width: 1200 }} 1200w"
+              sizes="(max-width: 989px) 92vw, 60vw"
+              alt="{{ section.settings.hero_image_alt | default: 'Illustrasjon av hvordan 415nm, 630nm og 830nm lys trenger inn i hudens lag' | escape }}"
+              loading="lazy"
+              decoding="async"
+              width="{{ section.settings.hero_image.width }}"
+              height="{{ section.settings.hero_image.height }}"
+            >
+            {%- if section.settings.hero_image_caption != blank -%}
+              <p class="lp-mech__hero-caption">{{ section.settings.hero_image_caption }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        <div class="lp-mech__hero-content">
+          {%- if section.settings.hero_paragraph != blank -%}
+            <div class="lp-mech__hero-text">{{ section.settings.hero_paragraph }}</div>
+          {%- endif -%}
+          {%- if hero_bullets.size > 0 -%}
+            <ul class="lp-mech__bullets">
+              {%- for block in hero_bullets -%}
+                <li class="lp-mech__bullet" {{ block.shopify_attributes }}>
+                  <span
+                    class="lp-mech__bullet-dot"
+                    aria-hidden="true"
+                    {% if block.settings.dot_color != blank %}
+                      style="background: {{ block.settings.dot_color }};"
+                    {% endif %}
+                  ></span>
+                  <span class="lp-mech__bullet-text">{{ block.settings.text }}</span>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
       </div>
     {%- endif -%}
 
@@ -285,12 +500,12 @@
         <div
           class="lp-mech__badge sk-mechanism__badge--red"
           role="img"
-          aria-label="Bølgelengde {{ section.settings.card2_wavelength | default: '633' | replace: ' nm', '' }} nanometer"
+          aria-label="Bølgelengde {{ section.settings.card2_wavelength | default: '630' | replace: ' nm', '' }} nanometer"
           {% if section.settings.card2_color_from != blank and section.settings.card2_color_to != blank %}
             style="background: radial-gradient(circle at 30% 30%, {{ section.settings.card2_color_to }} 0%, {{ section.settings.card2_color_from }} 100%);"
           {% endif %}
         >
-          {{ section.settings.card2_wavelength | default: '633 nm' }}
+          {{ section.settings.card2_wavelength | default: '630 nm' }}
         </div>
         {%- if section.settings.card2_wavelength != blank -%}
           <span class="lp-mech__wavelength">{{ section.settings.card2_wavelength }}</span>
@@ -299,7 +514,7 @@
           {{
             section.settings.card2_title
             | default: section.settings.red_title
-            | default: 'Demper betennelse og støtter reparasjon'
+            | default: 'Demper betennelse og rødhet'
           }}
         </h3>
         <div class="lp-mech__card-text">
@@ -325,7 +540,7 @@
           <span class="lp-mech__wavelength">{{ section.settings.card3_wavelength }}</span>
         {%- endif -%}
         <h3 class="lp-mech__card-title">
-          {{ section.settings.card3_title | default: 'Når dypest og støtter reparasjon' }}
+          {{ section.settings.card3_title | default: 'Styrker hudens egen reparasjon' }}
         </h3>
         <div class="lp-mech__card-text">
           {{ section.settings.card3_body }}
@@ -395,7 +610,32 @@
       "type": "textarea",
       "id": "intro",
       "label": "Intro-tekst",
-      "default": "Tre bølgelengder med lys, samme prinsipp som brukes på hudklinikk – tilpasset for trygg bruk hjemme."
+      "default": "Tre kliniske bølgelengder – samme prinsipp som brukes på hudklinikk, tilpasset trygg bruk hjemme."
+    },
+
+    { "type": "header", "content": "Hero-rad (illustrasjon + tekst)" },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero-illustrasjon (60%-kolonne, venstre)"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_alt",
+      "label": "Alt-tekst for hero-illustrasjon",
+      "default": "Illustrasjon av hvordan 415nm, 630nm og 830nm lys trenger inn i hudens lag"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_caption",
+      "label": "Bildetekst under illustrasjon",
+      "default": "Illustrasjon: omtrentlig inntrengningsdybde i huden."
+    },
+    {
+      "type": "richtext",
+      "id": "hero_paragraph",
+      "label": "Hero-paragraf (40%-kolonne, høyre)",
+      "default": "<p>Skinora® Clear kombinerer tre bølgelengder lys som trenger ned i hver sitt lag av huden. Sammen angriper de aknen fra tre vinkler samtidig – bakteriene som starter utbruddet, betennelsen som gjør det synlig, og reparasjonen som får huden tilbake i balanse.</p>"
     },
 
     { "type": "header", "content": "Kort 1 — Blått lys" },
@@ -421,19 +661,19 @@
       "type": "richtext",
       "id": "card1_body",
       "label": "Brødtekst",
-      "default": "<p>Når blått lys treffer huden, bryter det ned forbindelsene som lar <em>Cutibacterium acnes</em> — bakterien bak de fleste utbrudd — overleve i porene. Færre bakterier betyr færre nye kviser.</p>"
+      "default": "<p>Blått lys virker i det øverste hudlaget og bryter ned forbindelsene som lar <em>Cutibacterium acnes</em> overleve i porene. Færre bakterier betyr færre nye kviser.</p>"
     },
     {
       "type": "color",
       "id": "card1_color_from",
       "label": "Blå gradient (mørk)",
-      "default": "#1e6dff"
+      "default": "#3B3FBF"
     },
     {
       "type": "color",
       "id": "card1_color_to",
       "label": "Blå gradient (lys)",
-      "default": "#6aa7ff"
+      "default": "#7a7eea"
     },
 
     { "type": "header", "content": "Kort 2 — Rødt lys" },
@@ -447,31 +687,31 @@
       "type": "text",
       "id": "card2_wavelength",
       "label": "Bølgelengde",
-      "default": "633 nm"
+      "default": "630 nm"
     },
     {
       "type": "text",
       "id": "card2_title",
       "label": "Tittel",
-      "default": "Demper betennelse og støtter reparasjon"
+      "default": "Demper betennelse og rødhet"
     },
     {
       "type": "richtext",
       "id": "card2_body",
       "label": "Brødtekst",
-      "default": "<p>Rødt lys trenger dypere ned i huden og roer den inflammatoriske responsen, samtidig som det støtter hudens egen reparasjon. Resultatet: mindre rødhet, raskere tilheling.</p>"
+      "default": "<p>Rødt lys trenger inn i dermis, der akneinflammasjonen sitter. Det roer ned betennelsesreaksjonen og reduserer synlig rødhet, slik at huden ser jevnere ut.</p>"
     },
     {
       "type": "color",
       "id": "card2_color_from",
       "label": "Rød gradient (mørk)",
-      "default": "#d33333"
+      "default": "#E63946"
     },
     {
       "type": "color",
       "id": "card2_color_to",
       "label": "Rød gradient (lys)",
-      "default": "#ff7a7a"
+      "default": "#ff7a85"
     },
 
     { "type": "header", "content": "Kort 3 — Nær-infrarødt lys (830 nm)" },
@@ -491,25 +731,25 @@
       "type": "text",
       "id": "card3_title",
       "label": "Tittel",
-      "default": "Når dypest og støtter reparasjon"
+      "default": "Styrker hudens egen reparasjon"
     },
     {
       "type": "richtext",
       "id": "card3_body",
       "label": "Brødtekst",
-      "default": "<p>Nær-infrarødt lys trenger dypere ned enn rødt og blått lys, helt ned i dermis. Der støtter det vevsreparasjon, demper dyp betennelse, og kan bidra til å redusere risikoen for arr etter utbrudd.</p>"
+      "default": "<p>830 nm når dypest – helt ned mot subcutis. Det stimulerer cellenes energiproduksjon og støtter hudens naturlige reparasjon, slik at arr og spor etter utbrudd leges raskere.</p>"
     },
     {
       "type": "color",
       "id": "card3_color_dark",
-      "label": "Burgunder gradient (mørk)",
-      "default": "#7a2e2e"
+      "label": "Magenta gradient (mørk)",
+      "default": "#9B1B3A"
     },
     {
       "type": "color",
       "id": "card3_color_light",
-      "label": "Burgunder gradient (lys)",
-      "default": "#c95a5a"
+      "label": "Magenta gradient (lys)",
+      "default": "#d04a6e"
     },
 
     { "type": "header", "content": "Tidslinje + kilde" },
@@ -570,9 +810,53 @@
       "default": "Diagram av blått, rødt og nær-infrarødt LED-lys"
     }
   ],
+  "blocks": [
+    {
+      "type": "bullet",
+      "name": "Punkt (hero-rad)",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "color",
+          "id": "dot_color",
+          "label": "Punkt-farge",
+          "default": "#3B3FBF"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Tekst",
+          "default": "<p><strong>415 nm</strong> når epidermis – der bakteriene lever</p>"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "LP Mechanism"
+      "name": "LP Mechanism",
+      "blocks": [
+        {
+          "type": "bullet",
+          "settings": {
+            "dot_color": "#3B3FBF",
+            "text": "<p><strong>415 nm</strong> når epidermis – der bakteriene lever</p>"
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "dot_color": "#E63946",
+            "text": "<p><strong>630 nm</strong> når dermis – der betennelsen sitter</p>"
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "dot_color": "#9B1B3A",
+            "text": "<p><strong>830 nm</strong> når subcutis – der reparasjonen starter</p>"
+          }
+        }
+      ]
     }
   ]
 }
