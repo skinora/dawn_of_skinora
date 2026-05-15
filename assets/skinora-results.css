@@ -1,0 +1,349 @@
+/* skinora-results.css
+   Scoped to .skinora-results to avoid leaking styles. Mobile-first. */
+
+.skinora-results {
+  --sr-bg: #f4efe9;
+  --sr-bg-card-panel: #faf7f2;
+  --sr-accent: #3d2937;
+  --sr-accent-soft: rgba(61, 41, 55, 0.12);
+  --sr-text-headline: #1a1a1a;
+  --sr-text-body: #5c5550;
+  --sr-text-label: #3d2937;
+  --sr-radius-card: 16px;
+  --sr-font-serif: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
+  --sr-font-sans: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
+
+  background: var(--sr-bg);
+  padding: 64px 0;
+  color: var(--sr-text-body);
+  font-family: var(--sr-font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.skinora-results *,
+.skinora-results *::before,
+.skinora-results *::after {
+  box-sizing: border-box;
+}
+
+.skinora-results__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+}
+
+/* ── Header ── */
+.skinora-results__header {
+  max-width: 680px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+.skinora-results__eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sr-text-label);
+  margin: 0 0 16px;
+}
+
+.skinora-results__headline {
+  font-family: var(--sr-font-serif);
+  font-size: clamp(26px, 3.4vw, 34px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--sr-text-headline);
+  margin: 0 0 16px;
+  letter-spacing: 0.3px;
+}
+
+.skinora-results__sub {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--sr-text-body);
+  margin: 0;
+}
+
+/* ── Grid + connector wrapper ── */
+.skinora-results__timeline {
+  position: relative;
+}
+
+/* Cards: single column on mobile */
+.skinora-results__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Card ── */
+.skinora-results__card {
+  position: relative;
+  background: transparent;
+  border-radius: var(--sr-radius-card);
+  overflow: visible;
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 600ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.skinora-results__card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skinora-results__media {
+  position: relative;
+  border-radius: var(--sr-radius-card) var(--sr-radius-card) 0 0;
+  overflow: hidden;
+  background: #e8e2da;
+  aspect-ratio: 4 / 5;
+}
+
+.skinora-results__media picture,
+.skinora-results__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms ease-out;
+}
+
+.skinora-results__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 26, 26, 0);
+  transition: background 600ms ease-out;
+  pointer-events: none;
+}
+
+.skinora-results__card:hover .skinora-results__media img {
+  transform: scale(1.02);
+}
+.skinora-results__card:hover .skinora-results__media::after {
+  background: rgba(26, 26, 26, 0.04);
+}
+
+.skinora-results__media-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9c8f86;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: linear-gradient(160deg, #ede6dd 0%, #dcd2c5 100%);
+}
+
+.skinora-results__panel {
+  position: relative;
+  background: var(--sr-bg-card-panel);
+  border-radius: 0 0 var(--sr-radius-card) var(--sr-radius-card);
+  padding: 28px 24px;
+}
+
+/* Numbered circle, overlapping the image/panel border */
+.skinora-results__num {
+  position: absolute;
+  top: -14px;
+  left: 24px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--sr-accent);
+  color: #fff;
+  font-family: var(--sr-font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0;
+  box-shadow: 0 2px 6px rgba(61, 41, 55, 0.18);
+  transition:
+    transform 280ms ease-out,
+    background 280ms ease-out;
+}
+
+.skinora-results__card:hover .skinora-results__num {
+  transform: scale(1.08);
+  background: #4a3243;
+}
+
+.skinora-results__label {
+  display: block;
+  margin: 12px 0 0;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sr-text-label);
+}
+
+.skinora-results__title {
+  font-family: var(--sr-font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--sr-text-headline);
+  margin: 8px 0 0;
+}
+
+.skinora-results__body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--sr-text-body);
+  margin: 12px 0 0;
+}
+
+.skinora-results__body :is(p, ul, ol) {
+  margin: 0;
+}
+
+/* Slim progress bar */
+.skinora-results__bar {
+  margin: 16px 0 0;
+  width: 60px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--sr-accent-soft);
+  overflow: hidden;
+}
+.skinora-results__bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--sr-accent);
+  border-radius: 2px;
+  width: 0;
+  transition: width 1000ms cubic-bezier(0.4, 0, 0.2, 1) 200ms;
+}
+.skinora-results__card.is-visible .skinora-results__bar-fill {
+  width: var(--sr-bar-fill, 33%);
+}
+
+/* ── Mobile vertical connector (between cards) ── */
+.skinora-results__v-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  margin: -4px 0;
+}
+.skinora-results__v-connector svg {
+  width: 14px;
+  height: 32px;
+  color: var(--sr-accent);
+  opacity: 0.7;
+}
+
+/* ── Horizontal connector (desktop only, hidden by default) ── */
+.skinora-results__h-connector {
+  display: none;
+}
+
+/* ── Tablet: keep single-column for cleaner reading (per brief) ── */
+
+/* ── Desktop ≥1024px ── */
+@media (min-width: 1024px) {
+  .skinora-results {
+    padding: 120px 0;
+  }
+  .skinora-results__header {
+    margin: 0 auto 72px;
+  }
+  .skinora-results__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .skinora-results__v-connector {
+    display: none;
+  }
+
+  .skinora-results__title {
+    font-size: 22px;
+  }
+
+  /* Horizontal SVG connector running through the upper third of cards.
+     Positioned so its centerline aligns with the numbered circles
+     (image area is 4/5 of card width; circles sit at the seam).
+     We use a CSS variable updated via JS for accurate vertical alignment;
+     fall back to ~38% which approximates 4:5 image height + small offset. */
+  .skinora-results__h-connector {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--sr-h-connector-top, 38%);
+    height: 24px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .skinora-results__h-connector svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    color: var(--sr-accent);
+  }
+  .skinora-results__h-connector .sr-line {
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    fill: none;
+    opacity: 0.45;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    transition: stroke-dashoffset 1200ms cubic-bezier(0.4, 0, 0.2, 1) 200ms;
+  }
+  .skinora-results__h-connector .sr-arrow {
+    fill: currentColor;
+    opacity: 0;
+    transition: opacity 400ms ease-out 1000ms;
+  }
+  .skinora-results.is-visible .skinora-results__h-connector .sr-line {
+    stroke-dashoffset: 0;
+  }
+  .skinora-results.is-visible .skinora-results__h-connector .sr-arrow {
+    opacity: 0.55;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .skinora-results__card,
+  .skinora-results__media img,
+  .skinora-results__media::after,
+  .skinora-results__num,
+  .skinora-results__bar-fill,
+  .skinora-results__h-connector .sr-line,
+  .skinora-results__h-connector .sr-arrow {
+    transition: none !important;
+  }
+  .skinora-results__card {
+    opacity: 1;
+    transform: none;
+  }
+  .skinora-results__card:hover .skinora-results__media img {
+    transform: none;
+  }
+  .skinora-results__h-connector .sr-line {
+    stroke-dashoffset: 0;
+  }
+  .skinora-results__h-connector .sr-arrow {
+    opacity: 0.55;
+  }
+  .skinora-results__card .skinora-results__bar-fill {
+    width: var(--sr-bar-fill, 33%);
+  }
+}
