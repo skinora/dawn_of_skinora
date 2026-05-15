@@ -84,7 +84,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: 0;
+  gap: 48px;
   max-width: 1240px;
 }
 
@@ -156,10 +156,11 @@
   font-feature-settings: 'lnum', 'pnum';
 }
 
-/* ── Caption (only the text gets horizontal breathing) ── */
+/* ── Caption (left-aligned, flush with left edge of image) ── */
 .skinora-results__caption {
   /* Top padding clears the numeral that overlaps from above. */
   padding: calc(clamp(88px, 22vw, 128px) * 0.55 + 10px) 0 0;
+  text-align: left;
 }
 .skinora-results__label {
   font-family: var(--sr-font-sans);
@@ -168,24 +169,21 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--sr-heading);
-  margin: 0 16px 10px;
+  text-align: left;
+  margin: 0 0 10px;
 }
 .skinora-results__body {
   font-family: var(--sr-font-sans);
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.55;
   color: var(--sr-body);
-  max-width: 28ch;
-  margin: 0 auto;
-  padding: 0 16px;
+  text-align: left;
+  max-width: 32ch;
+  margin: 0;
+  padding: 0;
 }
 .skinora-results__body :is(p, ul, ol) {
   margin: 0;
-}
-
-/* ── Connector (desktop only by default; hidden on mobile) ── */
-.skinora-results__connector {
-  display: none;
 }
 
 /* ── Dots (mobile carousel only; hidden on desktop) ── */
@@ -200,22 +198,6 @@
   }
   .skinora-results__caption {
     padding-top: calc(clamp(96px, 11vw, 150px) * 0.55 + 12px);
-  }
-  .skinora-results__connector {
-    flex: 0 0 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--sr-connector);
-    /* Vertical centre of the IMAGE (height = card-w * 5/4),
-       minus half the SVG height (6px). */
-    align-self: flex-start;
-    padding-top: calc(var(--sr-card-w) * 5 / 4 / 2 - 6px);
-  }
-  .skinora-results__connector svg {
-    width: 56px;
-    height: 12px;
-    display: block;
   }
 }
 
