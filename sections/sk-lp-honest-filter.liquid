@@ -1,0 +1,316 @@
+{%- comment -%}
+  sk-lp-honest-filter.liquid
+  LP Honest Filter — bygger tillit ved å være ærlig om hvem produktet IKKE passer for.
+  Plasseres mellom LP Mechanism og Klinikksammenligning.
+{%- endcomment -%}
+
+<section
+  class="sk-honest-filter"
+  style="--bg: {{ section.settings.background }}; --accent: {{ section.settings.accent }};"
+>
+  <div class="sk-honest-filter__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="sk-honest-filter__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="sk-honest-filter__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.subhead != blank -%}
+      <p class="sk-honest-filter__subhead">{{ section.settings.subhead }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.intro != blank -%}
+      <div class="sk-honest-filter__intro">{{ section.settings.intro }}</div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="sk-honest-filter__list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'filter_item' -%}
+            <li class="sk-honest-filter__item" {{ block.shopify_attributes }}>
+              <span class="sk-honest-filter__icon" aria-hidden="true">✗</span>
+              <div class="sk-honest-filter__body">
+                {%- if block.settings.lead != blank -%}
+                  <strong class="sk-honest-filter__lead">{{ block.settings.lead }}</strong>
+                {%- endif -%}
+                {%- if block.settings.explanation != blank -%}
+                  <p class="sk-honest-filter__explanation">{{ block.settings.explanation }}</p>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    <hr class="sk-honest-filter__separator" aria-hidden="true">
+
+    {%- if section.settings.closing != blank -%}
+      <div class="sk-honest-filter__closing">{{ section.settings.closing }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank -%}
+      <a
+        href="{{ section.settings.cta_url | default: '#kjop' }}"
+        class="sk-honest-filter__cta button button--primary"
+      >
+        {{ section.settings.cta_label }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .sk-honest-filter {
+    background: var(--bg, #faf7f2);
+    padding-block: var(--section-padding, 80px);
+  }
+  .sk-honest-filter__inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding-inline: 20px;
+    text-align: center;
+  }
+  .sk-honest-filter__eyebrow {
+    font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0 0 12px;
+  }
+  .sk-honest-filter__heading {
+    font-family: var(--font-heading-family, 'freight-text-pro', Georgia, serif);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    line-height: 1.15;
+    margin: 0 0 8px;
+    color: #30273e;
+  }
+  .sk-honest-filter__subhead {
+    font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
+    color: rgba(0, 0, 0, 0.65);
+    margin: 0 0 28px;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+  .sk-honest-filter__intro {
+    max-width: 560px;
+    margin: 0 auto 40px;
+    color: rgba(0, 0, 0, 0.78);
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  .sk-honest-filter__intro p {
+    margin: 0;
+  }
+
+  .sk-honest-filter__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 48px;
+    text-align: left;
+    max-width: 640px;
+  }
+  .sk-honest-filter__item {
+    display: flex;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .sk-honest-filter__item:last-child {
+    border-bottom: 0;
+  }
+
+  .sk-honest-filter__icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 600;
+    margin-top: 2px;
+    line-height: 1;
+  }
+
+  .sk-honest-filter__body {
+    min-width: 0;
+  }
+  .sk-honest-filter__lead {
+    display: block;
+    font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.45;
+    margin-bottom: 4px;
+    color: rgba(0, 0, 0, 0.9);
+  }
+  .sk-honest-filter__explanation {
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 0.94rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .sk-honest-filter__separator {
+    width: 32px;
+    height: 2px;
+    background: var(--accent, #e63946);
+    margin: 0 auto 24px;
+    border: 0;
+  }
+  .sk-honest-filter__closing {
+    margin-bottom: 28px;
+  }
+  .sk-honest-filter__closing h3 {
+    font-family: var(--font-heading-family, 'freight-text-pro', Georgia, serif);
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    line-height: 1.3;
+    max-width: 540px;
+    margin: 0 auto 12px;
+    color: #30273e;
+  }
+  .sk-honest-filter__closing p {
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0 auto;
+    max-width: 480px;
+    line-height: 1.55;
+  }
+
+  .sk-honest-filter__cta {
+    display: inline-block;
+    padding: 16px 28px;
+    background: var(--color-button, #2d1b3d);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .sk-honest-filter__cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    color: #fff;
+  }
+  .sk-honest-filter__cta:focus-visible {
+    outline: 2px solid var(--accent, #e63946);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 749px) {
+    .sk-honest-filter {
+      padding-block: 56px;
+    }
+    .sk-honest-filter__item {
+      padding: 16px 0;
+      gap: 12px;
+    }
+    .sk-honest-filter__icon {
+      width: 24px;
+      height: 24px;
+      font-size: 11px;
+    }
+    .sk-honest-filter__list {
+      margin-bottom: 36px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sk-honest-filter__cta {
+      transition: none;
+    }
+    .sk-honest-filter__cta:hover {
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "LP Honest Filter",
+  "tag": "section",
+  "class": "sk-honest-filter-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "ÆRLIG SNAKK" },
+    { "type": "text", "id": "heading", "label": "Overskrift", "default": "Skinora® Clear er ikke for alle." },
+    {
+      "type": "text",
+      "id": "subhead",
+      "label": "Underoverskrift",
+      "default": "Vær ærlig med deg selv før du bestiller."
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro-paragraf",
+      "default": "<p>Vi har bygget Skinora Clear for én type kunde. Hvis du kjenner deg igjen i punktene under, er ikke dette riktig produkt for deg — og det er helt greit. Vi vil heller at du finner det som virker.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "closing",
+      "label": "Avslutnings-tekst",
+      "default": "<h3>Hvis du nikker nei til alle fire — er du nøyaktig den vi bygget dette for.</h3><p>Vi gir deg 60 dager på å bevise det for deg selv.</p>"
+    },
+    { "type": "text", "id": "cta_label", "label": "CTA-tekst", "default": "PRØV RISIKOFRITT I 60 DAGER →" },
+    { "type": "url", "id": "cta_url", "label": "CTA-lenke" },
+    { "type": "color", "id": "accent", "label": "Aksentfarge", "default": "#E63946" },
+    { "type": "color", "id": "background", "label": "Bakgrunnsfarge", "default": "#FAF7F2" }
+  ],
+  "blocks": [
+    {
+      "type": "filter_item",
+      "name": "Filter-punkt",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "lead", "label": "Hovedlinje (bold)" },
+        { "type": "textarea", "id": "explanation", "label": "Forklaring" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "LP Honest Filter",
+      "blocks": [
+        {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du har alvorlig cystisk akne som krever resept-behandling.",
+            "explanation": "Hvis du står på Roaccutan eller isotretinoin — eller burde stå på det — er LED ikke nok. Snakk med fastlege først."
+          }
+        },
+        {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du er gravid eller ammer.",
+            "explanation": "LED-lys er ikke farlig — men det finnes ikke nok kliniske data på akkurat denne gruppen. Vi velger føre-var."
+          }
+        },
+        {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du forventer resultater på under 4 uker.",
+            "explanation": "Huden trenger to fulle sykluser før den viser tydelig forskjell. Hvis du vil ha umiddelbar effekt, er ikke LED riktig verktøy."
+          }
+        },
+        {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du har ikke tid til 10 minutter, 3–5 ganger i uken.",
+            "explanation": "Konsistens er hele forskjellen mellom suksess og frustrasjon. Bruker du den sporadisk, kaster du pengene dine."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
