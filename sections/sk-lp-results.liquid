@@ -25,24 +25,56 @@
       {%- endif -%}
 
       {%- if section.blocks.size > 0 -%}
-        <div class="lp-results__timeline">
+        <div
+          class="lp-results__timeline"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Forventede resultater"
+          tabindex="0"
+        >
           {%- for block in section.blocks -%}
-            <div class="lp-results__step" {{ block.shopify_attributes }}>
-              <span class="lp-results__badge">{{ forloop.index }}</span>
+            <article
+              class="lp-results__step"
+              role="group"
+              aria-roledescription="slide"
+              aria-label="Steg {{ forloop.index }} av {{ section.blocks.size }}"
+              {{ block.shopify_attributes }}
+            >
+              <figure class="lp-results__media">
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 800 }}"
+                    srcset="{{ block.settings.image | image_url: width: 400 }} 400w, {{ block.settings.image | image_url: width: 600 }} 600w, {{ block.settings.image | image_url: width: 800 }} 800w, {{ block.settings.image | image_url: width: 1200 }} 1200w"
+                    sizes="(max-width: 767px) 84vw, 360px"
+                    width="800"
+                    height="1000"
+                    alt="{{ block.settings.image.alt | default: block.settings.period | escape }}"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                {%- endif -%}
+                <span class="lp-results__numeral" aria-hidden="true">{{ forloop.index }}</span>
+              </figure>
               <div class="lp-results__card">
                 <p class="lp-results__period">{{ block.settings.period }}</p>
                 <p class="lp-results__text">{{ block.settings.text }}</p>
               </div>
-            </div>
-            {%- unless forloop.last -%}
-              <div class="lp-results__arrow" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 12h14M13 6l6 6-6 6" stroke="#30273e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            {%- endunless -%}
+            </article>
           {%- endfor -%}
         </div>
+
+        {%- if section.blocks.size > 1 -%}
+          <div class="lp-results__dots" role="tablist" aria-label="Bla mellom steg">
+            {%- for block in section.blocks -%}
+              <button
+                type="button"
+                class="lp-results__dot"
+                aria-label="Gå til steg {{ forloop.index }}"
+                data-index="{{ forloop.index0 }}"
+              ></button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
       {%- endif -%}
 
       {%- if section.settings.disclaimer != blank -%}
@@ -51,6 +83,8 @@
     </div>
   </section>
 </div>
+
+<script src="{{ 'lp-results.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
@@ -87,6 +121,11 @@
       "type": "card",
       "name": "Resultatkort",
       "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Progressbilde"
+        },
         {
           "type": "text",
           "id": "period",

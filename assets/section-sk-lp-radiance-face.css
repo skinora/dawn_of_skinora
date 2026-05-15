@@ -527,114 +527,184 @@
 }
 
 /* ---------- 6. RESULTS (timeline) ---------- */
+
+/* SECTION — mobile defaults */
 .lp-results {
-  background: #f8f8f8;
-  padding: 48px 20px 48px 20px;
+  background: transparent;
+  padding: 56px 0 64px;
   text-align: center;
 }
-
 .lp-results .lp-section-heading,
 .lp-results .lp-section-intro {
   text-align: center;
+  padding: 0 20px;
 }
 
-/* ---- Mobile: vertical timeline ---- */
+/* TIMELINE — horizontal swipe carousel on mobile */
 .lp-results__timeline {
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
   gap: 16px;
-  margin-bottom: 32px;
+  margin: 32px 0 0;
+  padding: 0 16px 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
-
-/* no global ::before line — each step draws its own segment */
+.lp-results__timeline::-webkit-scrollbar {
+  display: none;
+}
 .lp-results__timeline::before {
   display: none;
 }
-
-/* hide desktop arrows on mobile */
-.lp-results__arrow {
-  display: none;
+.lp-results__timeline:focus {
+  outline: none;
+}
+.lp-results__timeline:focus-visible {
+  outline: 2px solid #3a3448;
+  outline-offset: 4px;
+  border-radius: 8px;
 }
 
-/* step wrapper — flex row: badge | card */
+/* DELETE the old vertical connector bar on mobile */
+.lp-results__step::before,
+.lp-results__step:first-child::before,
+.lp-results__step:last-child::before {
+  display: none;
+  content: none;
+}
+
+/* DELETE the old circular badge entirely */
+.lp-results__badge {
+  display: none !important;
+}
+
+/* ARROWS — never appear */
+.lp-results__arrow {
+  display: none !important;
+}
+
+/* STEP CARD — single slide */
 .lp-results__step {
   position: relative;
+  flex: 0 0 84%;
+  max-width: 84%;
   display: flex;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  align-items: stretch;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  gap: 0;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
-/* vertical line segment per step */
-.lp-results__step::before {
-  content: '';
-  position: absolute;
-  left: 17px; /* half of 36px badge minus half of 2px line */
-  top: 0;
-  bottom: -16px; /* bridge the gap between steps */
-  width: 2px;
-  background: #d0cbd6;
-}
-
-/* first step: line starts at badge center */
-.lp-results__step:first-child::before {
-  top: 50%;
-}
-
-/* last step: line ends at badge center */
-.lp-results__step:last-child::before {
-  bottom: auto;
-  height: 50%;
-  top: 0;
-}
-
-/* numbered badge */
-.lp-results__badge {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  border-radius: 50%;
-  background: #30273e;
-  color: #fff;
-  font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  z-index: 1;
+/* IMAGE — edge to edge, 4:5 */
+.lp-results__media {
+  position: relative;
   margin: 0;
-  padding: 2px 0 0;
-  line-height: 1;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: visible;
+  border-radius: 6px;
+}
+.lp-results__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
 }
 
+/* OVERSIZED ITALIC NUMERAL — overlaps seam of image + caption */
+.lp-results__numeral {
+  position: absolute;
+  left: 16px;
+  bottom: 0;
+  transform: translateY(50%);
+  z-index: 2;
+  pointer-events: none;
+  display: block;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(88px, 24vw, 120px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: #3a3448;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.55);
+  font-feature-settings: 'lnum', 'pnum';
+}
+
+/* CAPTION — no card chrome, left aligned, smaller body, padded for numeral */
 .lp-results__card {
-  background: #f9f5f0;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  padding: 16px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: calc(clamp(88px, 24vw, 120px) * 0.55 + 12px) 0 0 0;
   text-align: left;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
   flex: 1;
-  margin-bottom: 0;
 }
-
 .lp-results__period {
   font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #80748e;
-  margin-bottom: 8px;
+  letter-spacing: 0.18em;
+  color: #3a3448;
+  margin: 0 0 8px 0;
+  text-align: left;
+}
+.lp-results__text {
+  font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #4a4458;
+  margin: 0;
+  text-align: left;
+  max-width: 38ch;
 }
 
-.lp-results__text {
-  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #30273e;
-  line-height: 1.5;
+/* PAGINATION DOTS */
+.lp-results__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0 0;
+}
+.lp-results__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(58, 52, 72, 0.25);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+.lp-results__dot[aria-current='true'] {
+  background: #3a3448;
+  transform: scale(1.2);
+}
+.lp-results__dot:focus-visible {
+  outline: 2px solid #3a3448;
+  outline-offset: 3px;
 }
 
 .lp-results__disclaimer {
@@ -644,70 +714,76 @@
   color: rgba(51, 51, 51, 0.6);
   line-height: 1.6;
   max-width: 560px;
-  margin: 0 auto;
+  margin: 24px auto 0;
+  padding: 0 20px;
 }
 
-/* ---- Desktop: horizontal timeline ---- */
+/* ---- Desktop ≥768px ---- */
 @media (min-width: 768px) {
   .lp-results {
     padding: 100px 0;
+    background: transparent;
   }
 
   .lp-results__timeline {
     flex-direction: row;
-    align-items: stretch;
-    gap: 0;
+    align-items: flex-start;
     justify-content: center;
-  }
-
-  /* hide mobile vertical line segments */
-  .lp-results__step::before {
-    display: none;
-  }
-
-  /* show desktop arrows */
-  .lp-results__arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 8px;
-    flex-shrink: 0;
-    align-self: center;
-    color: #30273e;
-  }
-
-  .lp-results__arrow svg {
-    width: 28px;
-    height: 28px;
+    gap: 48px;
+    overflow: visible;
+    scroll-snap-type: none;
+    padding: 0 24px;
+    max-width: 1240px;
+    margin: 32px auto 0;
   }
 
   .lp-results__step {
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    max-width: 280px;
-    gap: 0;
+    flex: 1 1 0;
+    max-width: 360px;
+    scroll-snap-align: none;
+    background: none;
+    border: none;
+    padding: 0;
   }
 
-  .lp-results__badge {
-    margin-bottom: 12px;
+  .lp-results__media {
+    aspect-ratio: 4 / 5;
+  }
+
+  .lp-results__numeral {
+    left: 0;
+    font-size: clamp(96px, 8vw, 140px);
   }
 
   .lp-results__card {
-    padding: 28px 24px;
-    margin-bottom: 0;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    padding: calc(clamp(96px, 8vw, 140px) * 0.55 + 12px) 0 0 0;
   }
 
   .lp-results__period {
     font-size: 12px;
-    margin-bottom: 12px;
   }
 
   .lp-results__text {
-    font-size: 18px;
+    font-size: 14px;
+  }
+
+  .lp-results__arrow {
+    display: none !important;
+  }
+  .lp-results__badge {
+    display: none !important;
+  }
+  .lp-results__dots {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-results__timeline {
+    scroll-behavior: auto;
+  }
+  .lp-results__dot {
+    transition: none;
   }
 }
 
