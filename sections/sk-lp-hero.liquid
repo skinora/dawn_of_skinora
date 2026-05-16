@@ -56,12 +56,9 @@
         {%- endcomment -%}
 
         {%- if section.settings.testimonial_quote != blank -%}
-          <p
-            class="lp-hero__testimonial-snippet"
-            style="font-family:sofia-pro,Assistant,sans-serif;font-size:14px;font-style:italic;color:#5f5f5f;margin:0 0 18px;max-width:480px;line-height:1.45;"
-          >
+          <p class="lp-hero__testimonial-snippet">
             “{{ section.settings.testimonial_quote }}”
-            <strong style="font-style:normal;color:#30273e;">— {{ section.settings.testimonial_author }}</strong>
+            <strong>— {{ section.settings.testimonial_author }}</strong>
           </p>
         {%- endif -%}
 
@@ -321,7 +318,7 @@
           {{ section.settings.sticky_cta_text | default: section.settings.cta_text }}
         </button>
       </form>
-      <p style="font-family:sofia-pro,Assistant,sans-serif;font-size:11px;color:#5f5f5f;margin:4px 0 0;text-align:center;">
+      <p class="lp-hero__sticky-cta-meta">
         Fra {{ monthly_price }} kr/mnd med Klarna · 60 dagers garanti
       </p>
     </div>
@@ -354,41 +351,39 @@
 
 {%- comment -%} ── Inline styles for new hero elements ── {%- endcomment -%}
 <style>
-  /* CHANGE 3 — warm subtext */
-  .lp-hero__text--warm {
-    color: #8a6a5a;
-    font-style: italic;
-  }
-
-  /* FIX 1 — Star rating */
+  /* ============================================================
+     PHASE 5 — Rating row (stars + score + count)
+     ============================================================ */
   .lp-hero__rating {
     display: flex;
-    align-items: center;
-    gap: 6px;
-    margin: 0 0 14px;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin: 0 0 var(--space-4);
     flex-wrap: wrap;
   }
   .lp-hero__rating-stars {
     font-size: 18px;
-    color: #d4a843;
-    letter-spacing: 2px;
     line-height: 1;
+    letter-spacing: 2px;
+    color: var(--accent-gold);
   }
   .lp-hero__rating-score {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    color: #30273e;
+    font-family: var(--ff-serif);
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-medium);
+    line-height: 1;
+    color: var(--ink-900);
+    letter-spacing: var(--tracking-tight);
   }
   .lp-hero__rating-count {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 13px;
-    font-weight: 300;
-    color: #5f5f5f;
+    font-family: var(--ff-sans);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-regular);
+    color: var(--ink-500);
   }
   .lp-hero__rating-sep {
-    color: #b9b3c3;
-    font-weight: 600;
+    color: var(--ink-300);
+    font-weight: var(--fw-semibold);
     margin: 0 2px;
   }
   /* Top-of-hero rating placement (above the headline) */
@@ -401,7 +396,7 @@
     margin-top: 14px;
   }
 
-  /* CHANGE 6 — hero CTA size bump */
+  /* CHANGE 6 — hero CTA size bump (button typography handled by buttons.css) */
   .lp-btn--hero {
     min-height: 60px;
     padding: 18px 44px;
@@ -409,40 +404,123 @@
     letter-spacing: 0.04em;
   }
 
-  /* ─── BLOCK 1: Payment Clarity ─── */
+  /* ============================================================
+     PHASE 6 — Testimonial snippet (editorial pull-quote)
+     ============================================================ */
+  .lp-hero__testimonial-snippet {
+    font-family: var(--ff-serif);
+    font-size: var(--fs-md);             /* 16 → 17 */
+    font-weight: var(--fw-regular);
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--ink-700);
+    margin: var(--space-4) 0;
+    padding-left: var(--space-3);
+    border-left: 2px solid var(--accent-clay);
+    max-width: 52ch;
+  }
+  .lp-hero__testimonial-snippet strong {
+    display: block;
+    margin-top: var(--space-2);
+    font-family: var(--ff-sans);
+    font-style: normal;
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--ink-700);
+  }
+
+  /* ============================================================
+     PHASE 7 — Urgency + purchase meta (Klarna + per-treatment)
+     ============================================================ */
+  .lp-urgency-hero {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: var(--accent-clay);
+    margin: var(--space-3) 0 0;
+    max-width: 480px;
+  }
+
+  /* Container box — layout only, type/colors handled by inner rules */
   .lp-purchase-meta {
     margin-top: 16px;
     padding: 16px 20px;
-    background: #f8f8f8;
+    background: var(--paper-50);
     border-radius: 6px;
     max-width: 480px;
   }
 
+  .lp-purchase-meta__price-row,
+  .lp-purchase-meta__per-treatment {
+    margin-top: var(--space-3);
+  }
   .lp-purchase-meta__price-row {
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 12px;
   }
 
   .lp-purchase-meta__price {
-    font-family: freight-text-pro, freight-text-pro-fallback, 'Playfair Display', Georgia, serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: #30273e;
+    font-family: var(--ff-serif);
+    font-size: var(--fs-xl);             /* 20 → 22 */
+    font-weight: var(--fw-medium);
+    line-height: 1.3;
+    color: var(--ink-900);
+    letter-spacing: var(--tracking-normal);
+  }
+  .lp-purchase-meta__price strong {
+    font-family: var(--ff-serif);
+    font-weight: var(--fw-semibold);     /* drop the 900 — it reads as a bug */
+    color: var(--ink-900);
   }
 
   .lp-purchase-meta__klarna {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 14px;
-    font-weight: 300;
-    color: #5f5f5f;
+    font-family: var(--ff-sans);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-regular);
+    color: var(--ink-500);
+    margin-top: var(--space-1);
+  }
+  .lp-purchase-meta__klarna strong {
+    font-weight: var(--fw-semibold);
+    color: var(--ink-700);
   }
 
-  .lp-purchase-meta__klarna strong {
-    font-weight: 600;
-    color: #30273e;
+  /* Per-treatment callout */
+  .lp-purchase-meta__per-treatment {
+    padding: 12px 16px;
+    background: var(--paper-100);
+    border-left: 4px solid var(--accent-clay);
+    border-radius: 0 4px 4px 0;
+  }
+  .lp-purchase-meta__per-treatment-main {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-regular);
+    line-height: 1.5;
+    color: var(--ink-500);
+    margin: 0;
+  }
+  /* The "28 kr" — single most persuasive number in the hero */
+  .lp-purchase-meta__per-treatment-value {
+    font-family: var(--ff-serif);
+    font-size: var(--fs-2xl);            /* 24 → 28 */
+    font-weight: var(--fw-semibold);
+    line-height: 1;
+    color: var(--accent-clay);
+    letter-spacing: var(--tracking-tight);
+  }
+  .lp-purchase-meta__per-treatment-sub {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-regular);
+    font-style: italic;
+    color: var(--ink-500);
+    margin: 4px 0 0;
+    line-height: 1.3;
   }
 
   .lp-purchase-meta__icons {
@@ -461,12 +539,11 @@
     flex-wrap: wrap;
     gap: 6px 16px;
   }
-
   .lp-purchase-meta__safety li {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    color: #30273e;
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-regular);
+    color: var(--ink-700);
   }
 
   /* BLOCK 2 (.lp-value-justify*) extracted to sections/skinora-clinic-comparison.liquid */
@@ -481,47 +558,42 @@
     flex-direction: column;
     gap: 6px;
   }
-
   .lp-proof-list__item {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    color: #333;
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-regular);
+    color: var(--ink-700);
     padding-left: 20px;
     position: relative;
   }
-
-  /* Checkmark accent color */
   .lp-proof-list__item::before {
     content: '✔';
     position: absolute;
     left: 0;
-    color: #a0522d;
-    font-weight: 700;
+    color: var(--accent-clay);
+    font-weight: var(--fw-semibold);
   }
 
   /* ─── BLOCK 4: Risk Reversal ─── */
   .lp-risk-reversal {
     margin-top: 20px;
     padding: 14px 20px;
-    background: #f0ede8;
+    background: var(--paper-100);
     border-radius: 4px;
     max-width: 480px;
   }
-
   .lp-risk-reversal__headline {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    color: #30273e;
+    font-family: var(--ff-sans);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--ink-700);
     margin: 0 0 4px;
   }
-
   .lp-risk-reversal__body {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 13px;
-    font-weight: 300;
-    color: #5f5f5f;
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-regular);
+    color: var(--ink-500);
     line-height: 1.5;
     margin: 0;
   }
@@ -536,64 +608,34 @@
     gap: 8px 20px;
     max-width: 480px;
   }
-
   .lp-trust-pills__item {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    color: #5f5f5f;
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-regular);
+    color: var(--ink-500);
   }
 
-  /* ─── Urgency indicator ─── */
-  .lp-urgency-hero {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: #a0522d;
-    margin: 8px 0 0;
-    max-width: 480px;
-  }
-
-  /* ─── Cost per treatment (highlighted callout) ─── */
-  .lp-purchase-meta__per-treatment {
-    margin: 4px 0 14px;
-    padding: 12px 16px;
-    background: #f0ede8;
-    /* Action accent on per-treatment callout border */
-    border-left: 4px solid #a0522d;
-    border-radius: 0 4px 4px 0;
-  }
-
-  .lp-purchase-meta__per-treatment-main {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    color: #30273e;
-    margin: 0;
-    line-height: 1.4;
-  }
-
-  /* Per-treatment price highlight — accent color */
-  .lp-purchase-meta__per-treatment-value {
-    font-family: freight-text-pro, freight-text-pro-fallback, 'Playfair Display', Georgia, serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: #a0522d;
-  }
-
-  .lp-purchase-meta__per-treatment-sub {
-    font-family: sofia-pro, sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    font-style: italic;
-    color: #5f5f5f;
-    margin: 4px 0 0;
-    line-height: 1.3;
-  }
+  /* ============================================================
+     PHASE 8 — Vertical rhythm inside hero
+     ============================================================ */
+  .lp-hero__grid > * + * { margin-top: var(--space-5); }
+  .lp-eyebrow + .lp-hero__title { margin-top: var(--space-2); }
+  .lp-hero__title + .lp-hero__text { margin-top: var(--space-5); }
+  .lp-hero__text + .lp-hero__text--warm { margin-top: var(--space-3); }
+  .lp-hero__rating + .lp-hero__testimonial-snippet { margin-top: var(--space-4); }
+  .lp-btn--hero + .lp-urgency-hero { margin-top: var(--space-3); }
 
   /* ─── Mobile sticky CTA (scroll-triggered) ─── */
   .lp-hero__sticky-cta {
     display: none;
+  }
+  .lp-hero__sticky-cta-meta {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-regular);
+    color: var(--ink-500);
+    margin: 4px 0 0;
+    text-align: center;
   }
 
   /* ─── P2: Defer off-screen content rendering on mobile ─── */
@@ -697,7 +739,7 @@
       "type": "textarea",
       "id": "title",
       "label": "Tittel",
-      "default": "Få klinikkresultater hjemme – på bare 10 minutter om dagen"
+      "default": "Få klinikkresultater <em>hjemme</em> – på bare 10 minutter om dagen"
     },
     {
       "type": "header",

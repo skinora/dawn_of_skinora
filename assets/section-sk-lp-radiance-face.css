@@ -274,53 +274,94 @@
   padding-bottom: 48px;
 }
 
-.lp-eyebrow {
-  font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
+/* .lp-eyebrow global rule lives in typography.css — hero-scoped tweak below */
+.lp-hero .lp-eyebrow {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #30273e;
-  margin-bottom: 24px;
+  color: var(--ink-500);
+  margin: 0 0 var(--space-3);
 }
 
 .lp-hero__title {
-  font-size: clamp(34px, 4vw, 52px);
-  font-weight: 500;
-  color: #3a3448;
-  letter-spacing: -0.5px;
-  line-height: 1.15;
-  margin-bottom: 28px;
+  font-family: var(--ff-serif);
+  font-size: var(--fs-5xl); /* 44 mobile → 64 desktop */
+  font-weight: var(--fw-regular);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+  margin: 0 0 var(--space-5);
+  max-width: 18ch; /* desktop comes out poetic, not wide */
+}
+@media (max-width: 768px) {
+  .lp-hero__title {
+    max-width: 14ch;
+  }
+}
+.lp-hero__title em {
+  font-style: italic;
+  font-family: var(--ff-serif);
+  color: var(--ink-900);
 }
 
 .lp-hero__text {
-  font-size: 18px;
-  font-weight: 300;
-  color: #333333;
-  line-height: 1.75;
-  margin-bottom: 24px;
-  max-width: 500px;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-lg); /* 18 → 19 */
+  font-weight: var(--fw-regular);
+  line-height: 1.55;
+  color: var(--ink-700);
+  margin: 0 0 var(--space-4);
+  max-width: 56ch;
+}
+
+.lp-hero__text--warm {
+  font-family: var(--ff-serif); /* SWITCH to serif */
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-regular);
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--ink-700);
+  margin: 0 0 var(--space-5);
+  max-width: 48ch;
+}
+
+.lp-hero__text sup,
+.lp-hero__text .citation-link {
+  font-size: 0.7em;
+  font-weight: var(--fw-semibold);
+  color: var(--ink-500);
+  text-decoration: none;
+  margin-left: 2px;
 }
 
 .lp-hero__pills {
   display: flex;
-  gap: 20px;
   flex-wrap: wrap;
-  margin-bottom: 28px;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-5);
 }
 
 .lp-hero__pill {
-  font-size: 14px;
-  font-weight: 300;
-  color: #333333;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm); /* 15 */
+  font-weight: var(--fw-medium); /* 500 — up from 300 */
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--ink-700);
 }
 
 .lp-hero__pill-check {
-  color: #30273e;
-  font-weight: 700;
+  font-family: var(--ff-sans);
+  font-weight: var(--fw-semibold);
+  color: var(--accent-clay); /* brand clay check */
+  font-size: var(--fs-md);
+  line-height: 1;
 }
 
 .lp-hero__actions {
@@ -331,16 +372,16 @@
 }
 
 .lp-hero__link {
-  color: rgba(18, 18, 18, 0.85);
+  color: var(--ink-500);
   text-decoration: underline;
-  font-size: 15px;
-  font-weight: 300;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
   cursor: pointer;
   transition: color 0.2s;
 }
 
 .lp-hero__link:hover {
-  color: #30273e;
+  color: var(--ink-900);
 }
 
 .lp-hero__image {
