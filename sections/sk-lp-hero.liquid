@@ -35,9 +35,22 @@
           <p class="lp-eyebrow">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
 
-        {%- comment -%} Star rating — moved above headline for early social proof {%- endcomment -%}
+        {%- comment -%} CHANGE 2 — Headline (max 2 linjer) {%- endcomment -%}
+        <h1 class="lp-hero__title">{{ section.settings.title }}</h1>
+
+        {%- comment -%} Trust line — clinical credibility {%- endcomment -%}
+        {%- if section.settings.text_line_1 != blank -%}
+          <p class="lp-hero__text">{{ section.settings.text_line_1 }}</p>
+        {%- endif -%}
+
+        {%- comment -%} Aspirational line — warm italic serif {%- endcomment -%}
+        {%- if section.settings.text_line_2 != blank -%}
+          <p class="lp-hero__text lp-hero__text--warm">{{ section.settings.text_line_2 }}</p>
+        {%- endif -%}
+
+        {%- comment -%} Star rating — between aspirational line and emotional quote {%- endcomment -%}
         {%- if section.settings.rating_text != blank -%}
-          <div class="lp-hero__rating lp-hero__rating--top">
+          <div class="lp-hero__rating">
             <span class="lp-hero__rating-stars" aria-hidden="true">★★★★★</span>
             <span class="lp-hero__rating-score">{{ section.settings.rating_score | default: '4.7' }}/5</span>
             <span class="lp-hero__rating-sep" aria-hidden="true">·</span>
@@ -46,14 +59,6 @@
             >
           </div>
         {%- endif -%}
-
-        {%- comment -%} CHANGE 2 — Headline (max 2 linjer) {%- endcomment -%}
-        <h1 class="lp-hero__title">{{ section.settings.title }}</h1>
-
-        {%- comment -%}
-          Subline removed from above-fold per hero hierarchy fix.
-          The single emotional quote below is the only supporting copy before the CTA.
-        {%- endcomment -%}
 
         {%- if section.settings.testimonial_quote != blank -%}
           <p class="lp-hero__testimonial-snippet">
