@@ -881,10 +881,10 @@
             }
     {% endstyle %}
 
+    {%- comment -%} Skinora typography + color system — single source of truth. MUST load before base.css, sk-base.css, section CSS, and vendor CSS. {%- endcomment -%}
+    {{ 'typography.css' | asset_url | stylesheet_tag }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'sk-base.css' | asset_url | stylesheet_tag }}
-    {%- comment -%} LP typography system — tokens + global overrides for /pages/skinora-clear and other LP templates {%- endcomment -%}
-    {{ 'typography-lp.css' | asset_url | stylesheet_tag }}
     {%- comment -%} Unified CTA button system — must load AFTER typography so button rules win on type tokens {%- endcomment -%}
     {{ 'buttons.css' | asset_url | stylesheet_tag }}
     {%- comment -%} Non-critical base CSS (grid, forms, buttons, modals, rte, spinners) — deferred {%- endcomment -%}

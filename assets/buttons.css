@@ -10,7 +10,7 @@
      break.
    - Legacy selectors prefixed with `body` for higher specificity than
      section-scoped {% stylesheet %} blocks.
-   - Loaded once in layout/theme.liquid AFTER sk-base.css and typography-lp.css.
+   - Loaded once in layout/theme.liquid AFTER sk-base.css and typography.css.
    ============================================================================= */
 
 :root {
