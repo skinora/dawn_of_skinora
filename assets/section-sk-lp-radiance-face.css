@@ -2008,22 +2008,4 @@
   line-height: 1.4;
 }
 
-/* Value bullets below box */
-.lp-hero__pills--value {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-}
-
-.lp-hero__pills--value .lp-hero__pill {
-  font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
-  font-size: 14px;
-  font-weight: 300;
-  color: #333;
-}
-
-.lp-hero__pills--value .lp-hero__pill-check {
-  font-weight: 700;
-  color: #30273e;
-}
+/* .lp-hero__pills--value variant removed — unused in markup, contained stale fw:300/#333 */
