@@ -357,13 +357,12 @@
 {%- comment -%} ── Inline styles for new hero elements ── {%- endcomment -%}
 <style>
   /* ============================================================
-     PHASE 5 — Rating row (stars + score + count)
+     PHASE 4 — Rating row (stars + score + count)
      ============================================================ */
   .lp-hero__rating {
     display: flex;
     align-items: baseline;
     gap: var(--space-3);
-    margin: 0 0 var(--space-4);
     flex-wrap: wrap;
   }
   .lp-hero__rating-stars {
@@ -391,22 +390,38 @@
     font-weight: var(--fw-semibold);
     margin: 0 2px;
   }
-  /* Top-of-hero rating placement (above the headline) */
-  .lp-hero__rating--top {
-    margin: 4px 0 12px;
-  }
 
-  /* Trust pills sitting directly under the hero CTA */
-  .lp-hero__pills--under-cta {
-    margin-top: 14px;
+  /* ============================================================
+     PHASE 4 — CTA full-width on mobile, pills inline-flex
+     ============================================================ */
+  .lp-hero__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    width: 100%;
   }
-
-  /* CHANGE 6 — hero CTA size bump (button typography handled by buttons.css) */
   .lp-btn--hero {
+    display: inline-flex;
+    width: 100%;
+    max-width: 420px;
     min-height: 60px;
     padding: 18px 44px;
     font-size: 18px;
     letter-spacing: 0.04em;
+  }
+
+  .lp-hero__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);                /* 16 between pills */
+    align-items: center;
+  }
+  .lp-hero__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;                            /* check → label */
+    /* No background, no border — clean inline marks */
   }
 
   /* ============================================================
@@ -414,15 +429,13 @@
      ============================================================ */
   .lp-hero__testimonial-snippet {
     font-family: var(--ff-serif);
-    font-size: var(--fs-md);             /* 16 → 17 */
+    font-size: var(--fs-md);
     font-weight: var(--fw-regular);
     font-style: italic;
     line-height: 1.55;
     color: var(--ink-700);
-    margin: var(--space-4) 0;
     padding-left: var(--space-3);
     border-left: 2px solid var(--accent-clay);
-    max-width: 52ch;
   }
   .lp-hero__testimonial-snippet strong {
     display: block;
@@ -435,7 +448,7 @@
   }
 
   /* ============================================================
-     PHASE 7 — Urgency + purchase meta (Klarna + per-treatment)
+     PHASE 7 — Urgency + purchase meta (flattened to match copy edge)
      ============================================================ */
   .lp-urgency-hero {
     font-family: var(--ff-sans);
@@ -444,23 +457,16 @@
     line-height: 1.4;
     letter-spacing: 0;
     color: var(--accent-clay);
-    margin: var(--space-3) 0 0;
-    max-width: 480px;
   }
 
-  /* Container box — layout only, type/colors handled by inner rules */
+  /* Container — stripped of box, sits flush on copy edge */
   .lp-purchase-meta {
-    margin-top: 16px;
-    padding: 16px 20px;
-    background: var(--paper-50);
-    border-radius: 6px;
-    max-width: 480px;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border-radius: 0;
   }
 
-  .lp-purchase-meta__price-row,
-  .lp-purchase-meta__per-treatment {
-    margin-top: var(--space-3);
-  }
   .lp-purchase-meta__price-row {
     display: flex;
     align-items: baseline;
@@ -470,7 +476,7 @@
 
   .lp-purchase-meta__price {
     font-family: var(--ff-serif);
-    font-size: var(--fs-xl);             /* 20 → 22 */
+    font-size: var(--fs-xl);
     font-weight: var(--fw-medium);
     line-height: 1.3;
     color: var(--ink-900);
@@ -478,7 +484,7 @@
   }
   .lp-purchase-meta__price strong {
     font-family: var(--ff-serif);
-    font-weight: var(--fw-semibold);     /* drop the 900 — it reads as a bug */
+    font-weight: var(--fw-semibold);
     color: var(--ink-900);
   }
 
@@ -487,19 +493,18 @@
     font-size: var(--fs-sm);
     font-weight: var(--fw-regular);
     color: var(--ink-500);
-    margin-top: var(--space-1);
   }
   .lp-purchase-meta__klarna strong {
     font-weight: var(--fw-semibold);
     color: var(--ink-700);
   }
 
-  /* Per-treatment callout */
+  /* Per-treatment callout — vertical padding only, no horizontal indent */
   .lp-purchase-meta__per-treatment {
-    padding: 12px 16px;
-    background: var(--paper-100);
-    border-left: 4px solid var(--accent-clay);
-    border-radius: 0 4px 4px 0;
+    padding: var(--space-3) 0;
+    background: none;
+    border-left: none;
+    border-radius: 0;
   }
   .lp-purchase-meta__per-treatment-main {
     font-family: var(--ff-sans);
@@ -509,10 +514,9 @@
     color: var(--ink-500);
     margin: 0;
   }
-  /* The "28 kr" — single most persuasive number in the hero */
   .lp-purchase-meta__per-treatment-value {
     font-family: var(--ff-serif);
-    font-size: var(--fs-2xl);            /* 24 → 28 */
+    font-size: var(--fs-2xl);
     font-weight: var(--fw-semibold);
     line-height: 1;
     color: var(--accent-clay);
@@ -533,12 +537,10 @@
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
-    margin-bottom: 12px;
   }
 
   .lp-purchase-meta__safety {
     list-style: none;
-    margin: 0;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
@@ -621,14 +623,45 @@
   }
 
   /* ============================================================
-     PHASE 8 — Vertical rhythm inside hero
+     PHASE 3 — Vertical rhythm (4 values only: 8, 16, 24, 48)
+     All elements use margin-bottom only. No top margins.
      ============================================================ */
-  .lp-hero__grid > * + * { margin-top: var(--space-5); }
-  .lp-eyebrow + .lp-hero__title { margin-top: var(--space-2); }
-  .lp-hero__title + .lp-hero__text { margin-top: var(--space-5); }
-  .lp-hero__text + .lp-hero__text--warm { margin-top: var(--space-3); }
-  .lp-hero__rating + .lp-hero__testimonial-snippet { margin-top: var(--space-4); }
-  .lp-btn--hero + .lp-urgency-hero { margin-top: var(--space-3); }
+  .lp-eyebrow                              { margin: 0 0 var(--space-2); }
+  .lp-hero__title                          { margin: 0 0 var(--space-5); }
+  .lp-hero__text                           { margin: 0 0 var(--space-3); }
+  .lp-hero__text--warm                     { margin: 0 0 var(--space-5); }
+  .lp-hero__rating                         { margin: 0 0 var(--space-4); }
+  .lp-hero__testimonial-snippet            { margin: 0 0 var(--space-6); }
+  .lp-hero__actions                        { margin: 0 0 var(--space-3); }
+  .lp-urgency-hero                         { margin: 0 0 var(--space-5); }
+  .lp-hero__pills                          { margin: 0 0 var(--space-6); }
+  .lp-purchase-meta__price-row             { margin: 0 0 var(--space-2); }
+  .lp-purchase-meta__klarna                { margin: 0 0 var(--space-5); }
+  .lp-purchase-meta__per-treatment         { margin: 0 0 var(--space-5); }
+  .lp-purchase-meta__icons                 { margin: 0 0 var(--space-3); }
+  .lp-purchase-meta__safety                { margin: 0; }
+
+  /* ============================================================
+     PHASE 5 — Image → copy transition on mobile
+     ============================================================ */
+  @media (max-width: 768px) {
+    .lp-hero__image,
+    .lp-hero__media-wrap {
+      margin: 0;
+      display: block;
+    }
+  }
+
+  /* ============================================================
+     PHASE 6 — Reading measures (ch-based)
+     Title measure handled by external CSS (14ch mobile / 22ch desktop via .lp-hero__title rule).
+     ============================================================ */
+  .lp-hero__text,
+  .lp-hero__text--warm                     { max-width: 52ch; }
+  .lp-hero__testimonial-snippet            { max-width: 48ch; }
+  .lp-urgency-hero,
+  .lp-purchase-meta__klarna,
+  .lp-purchase-meta__safety                { max-width: 52ch; }
 
   /* ─── Mobile sticky CTA (scroll-triggered) ─── */
   .lp-hero__sticky-cta {

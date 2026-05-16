@@ -247,31 +247,36 @@
 
 /* ---------- 3. HERO ---------- */
 .lp-hero {
-  background: #ffffff;
+  background: var(--paper-0);
   padding: 0;
 }
 
 .lp-hero__grid {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 64px 24px;                              /* mobile */
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 600px;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);                              /* 48 between image & copy on mobile */
+}
+@media (min-width: 769px) {
+  .lp-hero__grid {
+    grid-template-columns: 1.05fr 1fr;              /* copy slightly wider than image */
+    gap: var(--space-9);                            /* 96 */
+    align-items: center;
+    padding: 96px 32px;
+  }
 }
 
 .lp-hero__content {
-  background: #f8f8f8;
+  width: 100%;
+  max-width: 540px;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 60px clamp(32px, 4vw, 64px);
-  overflow: visible;
-  min-height: 0;
-}
-
-/* When content is taller than the image, don't vertically centre — just let it flow */
-.lp-hero__content:has(.lp-trust-pills) {
-  justify-content: flex-start;
-  padding-top: 48px;
-  padding-bottom: 48px;
+  /* every direct child sits on the same left edge — no nested padding */
 }
 
 /* .lp-eyebrow global rule lives in typography.css — hero-scoped tweak below */
@@ -294,7 +299,7 @@
   letter-spacing: var(--tracking-tight);
   color: var(--ink-900);
   margin: 0 0 var(--space-5);
-  max-width: 18ch; /* desktop comes out poetic, not wide */
+  max-width: 22ch;
 }
 @media (max-width: 768px) {
   .lp-hero__title {
@@ -313,8 +318,6 @@
   font-weight: var(--fw-regular);
   line-height: 1.55;
   color: var(--ink-700);
-  margin: 0 0 var(--space-4);
-  max-width: 56ch;
 }
 
 .lp-hero__text--warm {
@@ -324,8 +327,6 @@
   font-style: italic;
   line-height: 1.5;
   color: var(--ink-700);
-  margin: 0 0 var(--space-5);
-  max-width: 48ch;
 }
 
 .lp-hero__text sup,
@@ -341,7 +342,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
-  margin: 0 0 var(--space-5);
 }
 
 .lp-hero__pill {
@@ -1743,24 +1743,6 @@
 
 /* Tablet */
 @media (max-width: 991px) {
-  .lp-hero__grid {
-    grid-template-columns: 1fr;
-  }
-
-  .lp-hero__content {
-    padding: 48px clamp(24px, 4vw, 48px);
-    order: 2;
-  }
-
-  .lp-hero__image {
-    order: 1;
-    min-height: 360px;
-  }
-
-  .lp-hero__image-placeholder {
-    min-height: 360px;
-  }
-
   .lp-steps {
     grid-template-columns: 1fr;
     gap: 36px;
