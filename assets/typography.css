@@ -5,11 +5,12 @@
    ============================================================= */
 
 :root {
-  /* ---------- INK PALETTE (5 only) ---------- */
-  --ink-900: #1f1830; /* display, prices */
-  --ink-700: #30273e; /* H2, primary body, FAQ Q, buttons bg */
-  --ink-500: #5a5167; /* secondary body, captions, meta */
-  --ink-300: #9a93a4; /* hint, divider, disabled */
+  /* ---------- INK PALETTE (5 tints, purple-grey family) ---------- */
+  --ink-900: #2d1b3d; /* display, prices */
+  --ink-700: #3a3448; /* H2, primary body, FAQ Q, buttons bg */
+  --ink-500: rgba(45, 27, 61, 0.72); /* secondary body, captions, meta */
+  --ink-400: rgba(45, 27, 61, 0.58); /* low-emphasis body, sub-captions */
+  --ink-300: rgba(45, 27, 61, 0.42); /* hint, divider, disabled */
   --paper-0: #ffffff;
   --paper-50: #fafafa;
   --paper-100: #f6f2ed; /* warm cream band */
