@@ -293,7 +293,7 @@
 
 .lp-hero__title {
   font-family: var(--ff-serif);
-  font-size: var(--fs-5xl); /* 44 mobile → 64 desktop */
+  font-size: var(--fs-hero); /* 28 mobile → 52 desktop */
   font-weight: var(--fw-regular);
   line-height: 1.05;
   letter-spacing: var(--tracking-tight);
