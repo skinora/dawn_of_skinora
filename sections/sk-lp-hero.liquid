@@ -1,7 +1,8 @@
 {%- comment -%}
   sk-lp-hero.liquid
-  Hero section with image, title, copy, pills and CTA for landing pages.
-  Pills are dynamic blocks so each LP can customise them.
+  Canonical LP hero — used by both Clear and Radiance landing pages.
+  Above-the-fold content only: media + eyebrow + H1 + subline + rating + CTA + ≤3 pills.
+  Trust, pricing, risk-reversal, and sticky CTA live in dedicated sections below.
 {%- endcomment -%}
 
 {%- comment -%} LCP preload — browser discovers image before CSS blocks {%- endcomment -%}
@@ -22,8 +23,6 @@
 {%- assign sk_lp_handle = section.settings.cta_url | split: '/products/' | last | split: '?' | first -%}
 {%- assign sk_lp_product = all_products[sk_lp_handle] -%}
 {%- assign sk_lp_variant = sk_lp_product.selected_or_first_available_variant -%}
-{%- assign monthly_price = sk_lp_product.price | plus: 0.0 | divided_by: 100.0 | divided_by: 36.0 | round -%}
-{%- assign cost_per_treatment = sk_lp_product.price | plus: 0.0 | divided_by: 100.0 | divided_by: 156.0 | round -%}
 
 <script src="{{ 'sk-lp-cart-add.js' | asset_url }}" defer="defer"></script>
 
@@ -36,39 +35,23 @@
           <p class="lp-eyebrow">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
 
-        {%- comment -%} CHANGE 2 — Headline (max 2 linjer) {%- endcomment -%}
         <h1 class="lp-hero__title">{{ section.settings.title }}</h1>
 
-        {%- comment -%} Trust line — clinical credibility {%- endcomment -%}
         {%- if section.settings.text_line_1 != blank -%}
           <p class="lp-hero__text">{{ section.settings.text_line_1 }}</p>
         {%- endif -%}
 
-        {%- comment -%} Aspirational line — warm italic serif {%- endcomment -%}
-        {%- if section.settings.text_line_2 != blank -%}
-          <p class="lp-hero__text lp-hero__text--warm">{{ section.settings.text_line_2 }}</p>
-        {%- endif -%}
-
-        {%- comment -%} Star rating — between aspirational line and emotional quote {%- endcomment -%}
-        {%- if section.settings.rating_text != blank -%}
+        {%- if section.settings.rating_score != blank -%}
           <div class="lp-hero__rating">
             <span class="lp-hero__rating-stars" aria-hidden="true">★★★★★</span>
-            <span class="lp-hero__rating-score">{{ section.settings.rating_score | default: '4.7' }}/5</span>
+            <span class="lp-hero__rating-score">{{ section.settings.rating_score }}/5</span>
             <span class="lp-hero__rating-sep" aria-hidden="true">·</span>
             <span class="lp-hero__rating-count">
-              {{- section.settings.review_count | default: '89' }} verifiserte kunder</span
+              {{- section.settings.review_count | default: '0' }} verifiserte kunder</span
             >
           </div>
         {%- endif -%}
 
-        {%- if section.settings.testimonial_quote != blank -%}
-          <p class="lp-hero__testimonial-snippet">
-            “{{ section.settings.testimonial_quote }}”
-            <strong>— {{ section.settings.testimonial_author }}</strong>
-          </p>
-        {%- endif -%}
-
-        {%- comment -%} CHANGE 6 — CTA button (now directly after the emotional quote) {%- endcomment -%}
         <div class="lp-hero__actions">
           <form
             action="{{ routes.cart_add_url }}"
@@ -95,14 +78,7 @@
           {%- endif -%}
         </div>
 
-        {%- comment -%} Urgency indicator {%- endcomment -%}
-        {%- if section.settings.show_urgency and section.settings.urgency_text != blank -%}
-          <p class="lp-urgency-hero">
-            {{ section.settings.urgency_text }}
-          </p>
-        {%- endif -%}
-
-        {%- comment -%} Trust pills directly under the CTA — the only above-fold price reference lives here {%- endcomment -%}
+        {%- comment -%} Trust pills under the CTA — keep to 3 for one-row mobile fit {%- endcomment -%}
         {%- assign pills = section.blocks | where: 'type', 'pill' -%}
         {%- if pills.size > 0 -%}
           <div class="lp-hero__pills lp-hero__pills--under-cta">
@@ -114,95 +90,6 @@
           </div>
         {%- endif -%}
 
-        {%- comment -%} ═══ BLOCK 1: PAYMENT CLARITY (Klarna-led, full price deferred) ═══ {%- endcomment -%}
-        <div class="lp-purchase-meta">
-          <div class="lp-purchase-meta__price-row">
-            <span class="lp-purchase-meta__price"
-              >Fra <strong>{{ monthly_price }} kr/mnd</strong> med Klarna</span
-            >
-            <span class="lp-purchase-meta__klarna">Delbetaling tilgjengelig ved kassen</span>
-          </div>
-          <div class="lp-purchase-meta__per-treatment">
-            <p class="lp-purchase-meta__per-treatment-main">
-              Brukt 3x/uke i 1 år = kun
-              <span class="lp-purchase-meta__per-treatment-value">{{ cost_per_treatment }} kr</span> per behandling
-            </p>
-            <p class="lp-purchase-meta__per-treatment-sub">Én gang betalt – ubegrenset bruk</p>
-          </div>
-
-          <div class="lp-purchase-meta__icons">
-            {%- assign lp_allowed = 'visa,master,klarna' | split: ',' -%}
-            {%- for type in shop.enabled_payment_types -%}
-              {%- if lp_allowed contains type -%}
-                <li class="lp-payment-icons__item">{{ type | payment_type_svg_tag }}</li>
-              {%- endif -%}
-            {%- endfor -%}
-            {%- if settings.show_vipps_payment_icon -%}
-              <li class="lp-payment-icons__item">
-                <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="Vipps" height="22" width="55" fetchpriority="low">
-              </li>
-            {%- endif -%}
-          </div>
-
-          <ul class="lp-purchase-meta__safety">
-            <li>✔ 60 dagers fornøydgaranti</li>
-            <li>✔ Gratis frakt · 2–4 virkedager</li>
-            <li>✔ Norsk kundeservice</li>
-          </ul>
-        </div>
-
-        {%- comment -%} BLOCK 2 (clinic price comparison) extracted to sections/skinora-clinic-comparison.liquid {%- endcomment -%}
-
-        {%- comment -%}
-          BLOCK 3b (engangspris-boks på 4 390 kr) FJERNET fra above-fold per hierarki-fix.
-          Engangsprisen vises nå utelukkende i klinikk-sammenligningen lenger ned på siden,
-          der konteksten gjør den til en gevinst, ikke en barriere.
-        {%- endcomment -%}
-
-        {%- comment -%} ═══ BLOCK 3: PREMIUM PROOF — relocated before Pain section ═══ {%- endcomment -%}
-
-        {%- comment -%} ═══ BLOCK 4: RISK REVERSAL (guarantee) ═══ {%- endcomment -%}
-        <div class="lp-risk-reversal">
-          <p class="lp-risk-reversal__headline">Prøv hjemme i 60 dager – helt risikofritt</p>
-          <p class="lp-risk-reversal__body">
-            Bruk masken 3–5 ganger i uken. Ser du ikke forbedring, får du pengene tilbake. Ingen spørsmål. Ingen risiko.
-          </p>
-        </div>
-
-        {%- comment -%} ═══ BLOCK 5: TRUST PILLS ═══ {%- endcomment -%}
-        <ul class="lp-trust-pills">
-          <li class="lp-trust-pills__item">✔ Gratis frakt i Norge</li>
-          <li class="lp-trust-pills__item">✔ 2 års reklamasjonsrett</li>
-          <li class="lp-trust-pills__item">✔ Sikker betaling</li>
-          <li class="lp-trust-pills__item">✔ Norsk kundeservice</li>
-        </ul>
-
-        {%- comment -%} ═══ MERGED: Mini Trust Bar (formerly standalone section) ═══ {%- endcomment -%}
-        {%- assign trustbar_items = section.blocks | where: 'type', 'trustbar_item' -%}
-        {%- if trustbar_items.size > 0 -%}
-          <section class="lp-trustbar">
-            <div class="lp-container">
-              <div class="lp-trustbar__grid">
-                {%- for block in trustbar_items -%}
-                  <div class="lp-trustbar__item" {{ block.shopify_attributes }}>
-                    {%- if block.settings.icon != blank -%}
-                      <span class="lp-trustbar__icon"
-                        ><img
-                          src="{{ block.settings.icon | image_url: height: 96 }}"
-                          alt=""
-                          role="presentation"
-                          width="48"
-                          height="48"
-                          loading="lazy"
-                      ></span>
-                    {%- endif -%}
-                    <span class="lp-trustbar__text">{{ block.settings.text }}</span>
-                  </div>
-                {%- endfor -%}
-              </div>
-            </div>
-          </section>
-        {%- endif -%}
       </div>
 
       <div class="lp-hero__image">
@@ -303,55 +190,8 @@
         {%- endif -%}
       </div>
     </div>
-
-    {%- comment -%} Mobile sticky CTA — outside grid for proper fixed positioning {%- endcomment -%}
-    <div class="lp-hero__sticky-cta" id="lp-sticky-cta" aria-hidden="true">
-      <form
-        action="{{ routes.cart_add_url }}"
-        method="post"
-        enctype="multipart/form-data"
-        class="lp-cta-form"
-        data-cta="sticky"
-      >
-        <input type="hidden" name="id" value="{{ sk_lp_variant.id }}">
-        <input type="hidden" name="quantity" value="1">
-        <button
-          type="submit"
-          class="lp-btn lp-btn--sticky"
-          data-product-handle="{{ sk_lp_handle }}"
-          aria-label="{{ section.settings.sticky_cta_text | default: section.settings.cta_text }}"
-        >
-          {{ section.settings.sticky_cta_text | default: section.settings.cta_text }}
-        </button>
-      </form>
-      <p class="lp-hero__sticky-cta-meta">Fra {{ monthly_price }} kr/mnd med Klarna · 60 dagers garanti</p>
-    </div>
   </section>
 </div>
-
-<script>
-  (function initStickyCtaScroll() {
-    var sticky = document.getElementById('lp-sticky-cta');
-    if (!sticky) return;
-    var hero = document.querySelector('.lp-hero__actions');
-    if (!hero) return;
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            sticky.classList.remove('lp-hero__sticky-cta--visible');
-            sticky.setAttribute('aria-hidden', 'true');
-          } else {
-            sticky.classList.add('lp-hero__sticky-cta--visible');
-            sticky.setAttribute('aria-hidden', 'false');
-          }
-        });
-      },
-      { threshold: 0 }
-    );
-    observer.observe(hero);
-  })();
-</script>
 
 {% schema %}
 {
