@@ -323,9 +323,7 @@
           {{ section.settings.sticky_cta_text | default: section.settings.cta_text }}
         </button>
       </form>
-      <p class="lp-hero__sticky-cta-meta">
-        Fra {{ monthly_price }} kr/mnd med Klarna · 60 dagers garanti
-      </p>
+      <p class="lp-hero__sticky-cta-meta">Fra {{ monthly_price }} kr/mnd med Klarna · 60 dagers garanti</p>
     </div>
   </section>
 </div>
@@ -414,13 +412,13 @@
   .lp-hero__pills {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-4);                /* 16 between pills */
+    gap: var(--space-4); /* 16 between pills */
     align-items: center;
   }
   .lp-hero__pill {
     display: inline-flex;
     align-items: center;
-    gap: 6px;                            /* check → label */
+    gap: 6px; /* check → label */
     /* No background, no border — clean inline marks */
   }
 
@@ -626,20 +624,48 @@
      PHASE 3 — Vertical rhythm (4 values only: 8, 16, 24, 48)
      All elements use margin-bottom only. No top margins.
      ============================================================ */
-  .lp-eyebrow                              { margin: 0 0 var(--space-2); }
-  .lp-hero__title                          { margin: 0 0 var(--space-5); }
-  .lp-hero__text                           { margin: 0 0 var(--space-3); }
-  .lp-hero__text--warm                     { margin: 0 0 var(--space-5); }
-  .lp-hero__rating                         { margin: 0 0 var(--space-4); }
-  .lp-hero__testimonial-snippet            { margin: 0 0 var(--space-6); }
-  .lp-hero__actions                        { margin: 0 0 var(--space-3); }
-  .lp-urgency-hero                         { margin: 0 0 var(--space-5); }
-  .lp-hero__pills                          { margin: 0 0 var(--space-6); }
-  .lp-purchase-meta__price-row             { margin: 0 0 var(--space-2); }
-  .lp-purchase-meta__klarna                { margin: 0 0 var(--space-5); }
-  .lp-purchase-meta__per-treatment         { margin: 0 0 var(--space-5); }
-  .lp-purchase-meta__icons                 { margin: 0 0 var(--space-3); }
-  .lp-purchase-meta__safety                { margin: 0; }
+  .lp-eyebrow {
+    margin: 0 0 var(--space-2);
+  }
+  .lp-hero__title {
+    margin: 0 0 var(--space-5);
+  }
+  .lp-hero__text {
+    margin: 0 0 var(--space-3);
+  }
+  .lp-hero__text--warm {
+    margin: 0 0 var(--space-5);
+  }
+  .lp-hero__rating {
+    margin: 0 0 var(--space-4);
+  }
+  .lp-hero__testimonial-snippet {
+    margin: 0 0 var(--space-6);
+  }
+  .lp-hero__actions {
+    margin: 0 0 var(--space-3);
+  }
+  .lp-urgency-hero {
+    margin: 0 0 var(--space-5);
+  }
+  .lp-hero__pills {
+    margin: 0 0 var(--space-6);
+  }
+  .lp-purchase-meta__price-row {
+    margin: 0 0 var(--space-2);
+  }
+  .lp-purchase-meta__klarna {
+    margin: 0 0 var(--space-5);
+  }
+  .lp-purchase-meta__per-treatment {
+    margin: 0 0 var(--space-5);
+  }
+  .lp-purchase-meta__icons {
+    margin: 0 0 var(--space-3);
+  }
+  .lp-purchase-meta__safety {
+    margin: 0;
+  }
 
   /* ============================================================
      PHASE 5 — Image → copy transition on mobile
@@ -657,11 +683,17 @@
      Title measure handled by external CSS (14ch mobile / 22ch desktop via .lp-hero__title rule).
      ============================================================ */
   .lp-hero__text,
-  .lp-hero__text--warm                     { max-width: 52ch; }
-  .lp-hero__testimonial-snippet            { max-width: 48ch; }
+  .lp-hero__text--warm {
+    max-width: 52ch;
+  }
+  .lp-hero__testimonial-snippet {
+    max-width: 48ch;
+  }
   .lp-urgency-hero,
   .lp-purchase-meta__klarna,
-  .lp-purchase-meta__safety                { max-width: 52ch; }
+  .lp-purchase-meta__safety {
+    max-width: 52ch;
+  }
 
   /* ─── Mobile sticky CTA (scroll-triggered) ─── */
   .lp-hero__sticky-cta {

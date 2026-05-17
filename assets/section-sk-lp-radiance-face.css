@@ -255,15 +255,15 @@
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 64px 24px;                              /* mobile */
+  padding: 64px 24px; /* mobile */
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-7);                              /* 48 between image & copy on mobile */
+  gap: var(--space-7); /* 48 between image & copy on mobile */
 }
 @media (min-width: 769px) {
   .lp-hero__grid {
-    grid-template-columns: 1.05fr 1fr;              /* copy slightly wider than image */
-    gap: var(--space-9);                            /* 96 */
+    grid-template-columns: 1.05fr 1fr; /* copy slightly wider than image */
+    gap: var(--space-9); /* 96 */
     align-items: center;
     padding: 96px 32px;
   }
