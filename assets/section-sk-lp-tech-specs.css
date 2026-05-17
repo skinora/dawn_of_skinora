@@ -1,0 +1,62 @@
+/* =============================================================
+   sk-lp-tech-specs — technical specifications table
+   Used by Skinora Radiance Face (and reusable on Clear if needed).
+   Tokens from assets/typography.css (loaded globally).
+   ============================================================= */
+
+.sk-tech-specs {
+  padding-block: var(--space-section-md);
+}
+
+.sk-tech-specs__container {
+  width: 100%;
+  max-width: 800px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 32px);
+}
+
+.sk-tech-specs .lp-section-heading {
+  text-align: center;
+  margin: 0 0 var(--space-6);
+}
+
+/* ---------- Table ---------- */
+.sk-tech-specs__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+}
+
+.sk-tech-specs__table tr {
+  border-bottom: 1px solid color-mix(in srgb, var(--ink-700) 12%, transparent);
+}
+
+.sk-tech-specs__table td {
+  padding: var(--space-3);
+  vertical-align: top;
+  line-height: var(--lh-normal);
+}
+
+.sk-tech-specs__table td:first-child {
+  font-weight: var(--fw-semibold);
+  color: var(--ink-900);
+  width: 45%;
+}
+
+.sk-tech-specs__table td:last-child {
+  font-weight: var(--fw-regular);
+  color: var(--ink-500);
+}
+
+@media (min-width: 769px) {
+  .sk-tech-specs__table {
+    font-size: var(--fs-md);
+  }
+}
+
+@media (max-width: 599px) {
+  .sk-tech-specs__table td {
+    padding: var(--space-3) var(--space-2);
+  }
+}
