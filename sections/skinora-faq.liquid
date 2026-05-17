@@ -6,77 +6,13 @@
 {%- endcomment -%}
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
-
-<style>
-  .sk-faq {
-    padding: 64px 0;
-    background: #f8f8f8;
-  }
-  .sk-faq__container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-  .sk-faq__heading {
-    font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
-    font-size: 34px;
-    font-weight: 400;
-    color: #3a3448;
-    text-align: center;
-    margin: 0 0 40px;
-  }
-  .sk-faq__item {
-    border-bottom: 1px solid #e0dcd6;
-  }
-  .sk-faq__item summary {
-    font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: #30273e;
-    padding: 20px 0;
-    cursor: pointer;
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .sk-faq__item summary::-webkit-details-marker {
-    display: none;
-  }
-  .sk-faq__item summary::after {
-    content: '+';
-    font-size: 22px;
-    font-weight: var(--fw-regular);
-    color: #5f5f5f;
-    transition: transform 0.2s ease;
-  }
-  .sk-faq__item[open] summary::after {
-    content: '−';
-  }
-  .sk-faq__answer {
-    font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
-    font-size: 15px;
-    font-weight: var(--fw-regular);
-    color: #5f5f5f;
-    line-height: 1.7;
-    padding: 0 0 20px;
-  }
-  @media (max-width: 749px) {
-    .sk-faq {
-      padding: 48px 0;
-    }
-    .sk-faq__heading {
-      font-size: 28px;
-      margin-bottom: 28px;
-    }
-  }
-</style>
+{{ 'section-skinora-faq.css' | asset_url | stylesheet_tag }}
 
 <!-- SECTION: FAQ (details/summary) -->
 <div class="sk-lp">
   <section class="sk-faq">
     <div class="sk-faq__container">
-      <h2 class="sk-faq__heading">{{ section.settings.heading }}</h2>
+      <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
 
       {%- if section.blocks.size > 0 -%}
         <div class="sk-faq__list">

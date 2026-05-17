@@ -1,0 +1,77 @@
+/* =============================================================
+   sk-lp-faq — JS-toggled FAQ accordion (.lp-faq variant)
+   Used by both Clear and Radiance LPs.
+   Tokens from assets/typography.css (loaded globally).
+   ============================================================= */
+
+.lp-faq {
+  background: var(--paper-50);
+  padding-block: var(--space-section-md);
+  text-align: center;
+}
+
+.lp-faq__list {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.lp-faq__item {
+  border-bottom: 1px solid color-mix(in srgb, var(--ink-700) 16%, transparent);
+}
+
+.lp-faq__question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: var(--space-5) 0;
+  font-family: var(--ff-serif);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  color: var(--ink-700);
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.lp-faq__question:hover {
+  color: var(--ink-900);
+}
+
+.lp-faq__icon {
+  flex-shrink: 0;
+  font-size: var(--fs-xl);
+  font-style: normal;
+  font-weight: var(--fw-regular);
+  color: var(--ink-900);
+  transition: transform 0.3s ease;
+}
+
+.lp-faq__item.is-open .lp-faq__icon {
+  transform: rotate(45deg);
+}
+
+.lp-faq__answer {
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.35s ease,
+    padding 0.35s ease;
+}
+
+.lp-faq__answer-inner {
+  padding: 0 0 var(--space-5);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-loose);
+  color: var(--ink-700);
+}
+
+.lp-faq__item.is-open .lp-faq__answer {
+  max-height: 400px;
+}
