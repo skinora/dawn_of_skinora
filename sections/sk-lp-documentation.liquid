@@ -5,6 +5,7 @@
 {%- endcomment -%}
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+{{ 'section-sk-lp-documentation.css' | asset_url | stylesheet_tag }}
 
 <div class="sk-lp">
   <section class="lp-doc">
@@ -27,63 +28,6 @@
     </div>
   </section>
 </div>
-
-<style>
-  .lp-doc {
-    padding: 100px 0;
-    background: #f8f8f8;
-    text-align: center;
-  }
-
-  .lp-doc__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-  }
-
-  .lp-doc__card {
-    background: #ffffff;
-    border: 1px solid #eeeeee;
-    border-radius: 0;
-    padding: 32px;
-    text-align: left;
-  }
-
-  .lp-doc__card-title {
-    font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: #3a3448;
-    margin: 0 0 8px;
-  }
-
-  .lp-doc__card-text {
-    font-size: 15px;
-    font-weight: var(--fw-regular);
-    color: #333333;
-    line-height: 1.65;
-  }
-
-  .lp-doc__card-text p {
-    margin: 0;
-  }
-
-  .lp-doc__card-text a {
-    color: #30273e;
-    font-weight: 500;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-
-  @media (max-width: 749px) {
-    .lp-doc {
-      padding: 60px 0;
-    }
-    .lp-doc__grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
 
 {% schema %}
 {
