@@ -199,32 +199,6 @@
   color: var(--ink-700);
 }
 
-/* ─── Premium Proof list ─── */
-.lp-proof-list {
-  list-style: none;
-  margin: 20px 0 0;
-  padding: 0;
-  max-width: 480px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.lp-proof-list__item {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-regular);
-  color: var(--ink-700);
-  padding-left: 20px;
-  position: relative;
-}
-.lp-proof-list__item::before {
-  content: '✔';
-  position: absolute;
-  left: 0;
-  color: var(--accent-clay);
-  font-weight: var(--fw-semibold);
-}
-
 /* ─── Risk Reversal ─── */
 .lp-risk-reversal {
   margin-top: 20px;
@@ -356,7 +330,6 @@
 
 /* ─── Defer off-screen content rendering on mobile ─── */
 @media (max-width: 991px) {
-  .lp-proof-list,
   .lp-risk-reversal,
   .lp-trust-pills {
     content-visibility: auto;
