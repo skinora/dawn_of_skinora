@@ -1,0 +1,90 @@
+/* =============================================================
+   sk-lp-trust-full — guarantee / trust cards grid
+   Used by both Clear and Radiance LPs.
+   Tokens from assets/typography.css (loaded globally).
+   ============================================================= */
+
+.lp-trust-full {
+  background: var(--paper-50);
+  padding-block: var(--space-section-md);
+  text-align: center;
+}
+
+/* ---------- Grid ----------
+   Mobile: 1 col. Tablet: 2 cols. Desktop: 3 cols. */
+.lp-trust-full__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 600px) {
+  .lp-trust-full__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .lp-trust-full__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ---------- Card ---------- */
+.lp-trust-full__card {
+  background: var(--paper-0);
+  border: 1px solid color-mix(in srgb, var(--ink-700) 10%, transparent);
+  border-radius: 0;
+  padding: var(--space-6);
+  text-align: left;
+}
+
+.lp-trust-full__icon {
+  width: 28px;
+  height: 28px;
+  margin-bottom: var(--space-4);
+}
+
+.lp-trust-full__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.lp-trust-full__title {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--ink-700);
+  margin: 0 0 var(--space-2);
+}
+
+.lp-trust-full__text {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-700);
+}
+
+.lp-trust-full__text p {
+  margin: 0;
+  max-width: none;
+}
+
+.lp-trust-full__text a {
+  color: var(--ink-900);
+  font-weight: var(--fw-medium);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Optional free-return bullet under a card */
+.lp-trust-full__bullet {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-900);
+  margin: var(--space-2) 0 0;
+}

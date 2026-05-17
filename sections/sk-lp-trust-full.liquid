@@ -4,6 +4,7 @@
 {%- endcomment -%}
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+{{ 'section-sk-lp-trust-full.css' | asset_url | stylesheet_tag }}
 
 <!-- SECTION: Trust -->
 <div class="sk-lp">
@@ -31,10 +32,7 @@
               <h3 class="lp-trust-full__title">{{ block.settings.title }}</h3>
               <div class="lp-trust-full__text">{{ block.settings.text }}</div>
               {%- if block.settings.show_free_return_shipping -%}
-                <p
-                  class="lp-trust-full__bullet"
-                  style="margin: 8px 0 0; font-family: sofia-pro, sofia-pro-fallback, sans-serif; font-size: 13px; font-weight: 600; color: #30273e;"
-                >
+                <p class="lp-trust-full__bullet">
                   ✔ {{ block.settings.free_return_shipping_text | default: 'Vi betaler returfrakten' }}
                 </p>
               {%- endif -%}

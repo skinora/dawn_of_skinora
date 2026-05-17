@@ -807,64 +807,8 @@
    Migrated to assets/section-sk-lp-reviews.css.
    Type tokens for review elements live in assets/typography.css. */
 
-/* ---------- 10. TRUST FULL ---------- */
-.lp-trust-full {
-  background: #f8f8f8;
-  padding: 100px 0;
-  text-align: center;
-}
-
-.lp-trust-full__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.lp-trust-full__card {
-  background: #ffffff;
-  border: 1px solid #eeeeee;
-  border-radius: 0;
-  padding: 32px;
-  text-align: left;
-}
-
-.lp-trust-full__icon {
-  width: 28px;
-  height: 28px;
-  margin-bottom: 16px;
-}
-
-.lp-trust-full__icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.lp-trust-full__title {
-  font-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Playfair Display', Georgia, serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: #3a3448;
-  margin-bottom: 8px;
-}
-
-.lp-trust-full__text {
-  font-size: 15px;
-  font-weight: var(--fw-regular);
-  color: #333333;
-  line-height: 1.65;
-}
-
-.lp-trust-full__text p {
-  margin: 0;
-}
-
-.lp-trust-full__text a {
-  color: #30273e;
-  font-weight: 500;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
+/* ---------- 10. TRUST FULL ----------
+   Migrated to assets/section-sk-lp-trust-full.css. */
 
 /* ---------- 11. WHAT'S IN THE BOX ----------
    Migrated to assets/section-sk-lp-whats-in-box.css. */
@@ -1028,22 +972,11 @@
    RESPONSIVE
    ============================================================ */
 
-/* Tablet */
-@media (max-width: 991px) {
-  .lp-trust-full__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 /* Mobile */
 @media (max-width: 640px) {
   .lp-trustbar__grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-  }
-
-  .lp-trust-full__grid {
-    grid-template-columns: 1fr;
   }
 
   .lp-hero__pills {
@@ -1071,7 +1004,6 @@
 
   .lp-results,
   .lp-why-radiance,
-  .lp-trust-full,
   .lp-faq,
   .lp-cta-final {
     padding: 64px 0;
