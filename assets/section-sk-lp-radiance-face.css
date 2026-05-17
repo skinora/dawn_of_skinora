@@ -248,24 +248,22 @@
 /* ---------- 3. HERO ---------- */
 .lp-hero {
   background: var(--paper-0);
-  padding: 0;
+  padding-block: clamp(24px, 6vw, 64px);
 }
 
 .lp-hero__grid {
   width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 64px 24px; /* mobile */
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 32px);
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-7); /* 48 between image & copy on mobile */
+  gap: clamp(24px, 4vw, 48px);
 }
 @media (min-width: 769px) {
   .lp-hero__grid {
     grid-template-columns: 1.05fr 1fr; /* copy slightly wider than image */
-    gap: var(--space-9); /* 96 */
     align-items: center;
-    padding: 96px 32px;
   }
 }
 
