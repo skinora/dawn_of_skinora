@@ -155,22 +155,43 @@
       }
     },
     "lp_results_EBb64M": {
-      "type": "lp-results",
+      "type": "sk-lp-results-timeline",
       "name": "LP Results Timeline",
+      "blocks": {
+        "c_1": {
+          "type": "comparison",
+          "settings": {
+            "before_image": "shopify://shop_images/for_bruk_2.webp",
+            "after_image": "shopify://shop_images/etter_bruk.webp",
+            "before_label": "UKE 0",
+            "after_label": "UKE 8",
+            "before_alt": "Maria, 48 – før behandling med Skinora Radiance Face",
+            "after_alt": "Maria, 48 – etter 8 uker med Skinora Radiance Face",
+            "customer_name": "Maria, 48 – Oslo",
+            "concern_tag": "Fine linjer og trøtt hud",
+            "usage_tag": "10 min, 5x/uke · Etter 8 uker"
+          }
+        },
+        "c_2": {
+          "type": "comparison",
+          "settings": {
+            "before_image": "shopify://shop_images/morke_ringer_og_aldersflekker_for_bruk.png",
+            "after_image": "shopify://shop_images/reduserte_morke_ringer_og_aldersflekker_etter_bruk.png",
+            "before_label": "UKE 0",
+            "after_label": "UKE 8",
+            "before_alt": "Ingrid, 44 – før behandling med Skinora Radiance Face",
+            "after_alt": "Ingrid, 44 – etter 8 uker med Skinora Radiance Face",
+            "customer_name": "Ingrid, 44 – Bergen",
+            "concern_tag": "Aldersflekker, solskader og mørke ringer",
+            "usage_tag": "10 min, 4x/uke · Etter 8 uker"
+          }
+        }
+      },
+      "block_order": ["c_1", "c_2"],
       "settings": {
         "heading": "Hva kan du forvente?",
-        "intro_text": "Realistiske resultater fra ekte brukere",
-        "disclaimer": "Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.",
-        "before_label": "UKE 0",
-        "after_label": "UKE 8+",
-        "slider_a_before_image": "shopify://shop_images/for_bruk_2.webp",
-        "slider_a_after_image": "shopify://shop_images/etter_bruk.webp",
-        "slider_a_customer": "Maria, 48 – Oslo",
-        "slider_a_concern": "Fine linjer og trøtt hud",
-        "slider_b_before_image": "shopify://shop_images/morke_ringer_og_aldersflekker_for_bruk.png",
-        "slider_b_after_image": "shopify://shop_images/reduserte_morke_ringer_og_aldersflekker_etter_bruk.png",
-        "slider_b_customer": "Ingrid, 44 – Bergen",
-        "slider_b_concern": "Aldersflekker, solskader og mørke ringer"
+        "intro": "Realistiske resultater fra ekte brukere",
+        "disclaimer": "<p>Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.</p>"
       }
     },
     "reviews": {
