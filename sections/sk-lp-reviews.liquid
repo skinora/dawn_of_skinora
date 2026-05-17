@@ -4,195 +4,7 @@
 {%- endcomment -%}
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
-
-<style>
-  .sk-review__ba {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin: 16px 0 0;
-    max-width: 260px;
-  }
-  .sk-review__ba-item {
-    margin: 0;
-  }
-  .sk-review__ba-btn {
-    position: relative;
-    display: block;
-    width: 100%;
-    padding: 0;
-    border: 1px solid rgba(20, 30, 55, 0.08);
-    border-radius: 10px;
-    background: #fafafa;
-    overflow: hidden;
-    cursor: zoom-in;
-    transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 220ms;
-  }
-  .sk-review__ba-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(20, 30, 55, 0.1);
-  }
-  .sk-review__ba-btn:focus-visible {
-    outline: 2px solid #1a2543;
-    outline-offset: 3px;
-  }
-  .sk-review__ba-btn img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-  }
-  .sk-review__ba-label {
-    position: absolute;
-    left: 6px;
-    bottom: 6px;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: #fff;
-    background: rgba(20, 30, 55, 0.78);
-    padding: 3px 8px;
-    border-radius: 4px;
-    pointer-events: none;
-  }
-
-  .sk-ba-lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(10, 15, 30, 0.88);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    padding: 24px;
-  }
-  .sk-ba-lightbox[aria-hidden='false'] {
-    display: flex;
-  }
-  .sk-ba-lightbox__img {
-    max-width: min(92vw, 900px);
-    max-height: 88vh;
-    width: auto;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  }
-  .sk-ba-lightbox__close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 44px;
-    height: 44px;
-    border: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.95);
-    color: #1a2543;
-    font-size: 22px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .sk-ba-lightbox__close:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 3px;
-  }
-
-  @media (max-width: 640px) {
-    .sk-review__ba {
-      max-width: none;
-      gap: 6px;
-    }
-    .sk-review__ba-label {
-      font-size: 9px;
-      padding: 2px 6px;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .sk-review__ba-btn {
-      transition: none !important;
-    }
-    .sk-review__ba-btn:hover {
-      transform: none;
-    }
-  }
-
-  /* ============================================================================
-     HYBRID MOBILE LAYOUT (≤768px) — show 2 hero reviews, ghost CTA reveals rest
-     ============================================================================ */
-  @media (max-width: 768px) {
-    .lp-reviews .lp-reviews__grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .lp-reviews .lp-review-card--secondary {
-      display: none;
-    }
-    .lp-reviews.is-expanded .lp-review-card--secondary {
-      display: block;
-      animation: lpReviewFadeIn 0.35s ease both;
-    }
-    @keyframes lpReviewFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Shrink before/after to ~120px square thumbnails on mobile */
-    .lp-reviews .lp-review-card .sk-review__ba {
-      gap: 8px;
-    }
-    .lp-reviews .lp-review-card .sk-review__ba-item {
-      flex: 0 0 120px;
-      max-width: 120px;
-    }
-    .lp-reviews .lp-review-card .sk-review__ba-btn {
-      width: 120px;
-      height: 120px;
-      border-radius: 10px;
-      cursor: zoom-in;
-    }
-    .lp-reviews .lp-review-card .sk-review__ba-btn img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .lp-reviews .lp-review-card__text {
-      font-size: 16px;
-      line-height: 1.55;
-    }
-  }
-
-  /* ============================================================================
-     DESKTOP (≥769px) — keep current grid; secondary cards always visible
-     ============================================================================ */
-  @media (min-width: 769px) {
-    .lp-reviews .lp-review-card--secondary {
-      display: block;
-    }
-  }
-
-  /* ============================================================================
-     EXPAND BUTTON wrapper (button itself styled by buttons.css .btn--ghost)
-     ============================================================================ */
-  .lp-reviews__more {
-    text-align: center;
-    margin-top: 20px;
-  }
-  .lp-reviews__expand {
-    margin: 0 auto;
-  }
-</style>
+{{ 'section-sk-lp-reviews.css' | asset_url | stylesheet_tag }}
 
 <!-- SECTION: Social Proof / Reviews -->
 <div class="sk-lp">
@@ -201,10 +13,7 @@
       <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
 
       {%- if section.settings.enable_trustpilot_embed and section.settings.trustpilot_business_unit_id != blank -%}
-        <div
-          class="lp-reviews__trustpilot"
-          style="margin: 0 auto 24px; max-width: 720px; text-align:center;"
-        >
+        <div class="lp-reviews__trustpilot">
           <div
             class="trustpilot-widget"
             data-locale="nb-NO"
@@ -355,10 +164,7 @@
       {%- endif -%}
 
       {%- if section.settings.before_after_disclaimer != blank -%}
-        <div
-          class="lp-reviews__disclaimer"
-          style="font-size:0.8rem;color:#6b6b6b;text-align:center;max-width:760px;margin:1.75rem auto 0;padding:0 16px;line-height:1.55;"
-        >
+        <div class="lp-reviews__disclaimer">
           {{ section.settings.before_after_disclaimer }}
         </div>
       {%- endif -%}
@@ -421,7 +227,7 @@
 {%- assign reviews_handle = section.settings.product_url | split: '/products/' | last | split: '?' | first -%}
 {%- assign reviews_product = all_products[reviews_handle] -%}
 {%- assign reviews_variant = reviews_product.selected_or_first_available_variant -%}
-<div class="lp-midpage-cta" style="text-align:center;padding:32px 20px 8px;">
+<div class="lp-midpage-cta">
   <form
     action="{{ routes.cart_add_url }}"
     method="post"
@@ -440,7 +246,7 @@
       {{- section.settings.midpage_cta_text | default: 'Bestill nå' -}}
     </button>
   </form>
-  <p style="font-family:sofia-pro,Assistant,sans-serif;font-size:12px;color:#5f5f5f;margin:10px 0 0;">
+  <p class="lp-midpage-cta__guarantees">
     ✔ 60 dagers fornøydgaranti &nbsp;·&nbsp; ✔ Gratis frakt &nbsp;·&nbsp; ✔
     {{ section.settings.midpage_klarna_text | default: 'Fra 130 kr/mnd med Klarna' }}
   </p>
