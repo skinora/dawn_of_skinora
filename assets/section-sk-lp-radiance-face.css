@@ -245,7 +245,12 @@
   text-transform: uppercase;
 }
 
-/* ---------- 3. HERO ---------- */
+/* ---------- 3. HERO ----------
+   Mobile: hero fills one dynamic viewport (100dvh).
+     - image pinned to top, capped at 38dvh
+     - content fills the remainder, vertically centered
+   Desktop: 2-column grid, min-height 80vh so the hero feels intentional.
+   ---------------------------------------------------------------- */
 .lp-hero {
   background: var(--paper-0);
   padding-block: clamp(24px, 6vw, 64px);
@@ -261,18 +266,56 @@
   gap: clamp(24px, 4vw, 48px);
 }
 @media (min-width: 769px) {
+  .lp-hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding-block: var(--space-section-md);
+  }
   .lp-hero__grid {
     grid-template-columns: 1.05fr 1fr; /* copy slightly wider than image */
     align-items: center;
   }
 }
 
-@media (max-width: 749px) {
+@media (max-width: 768px) {
+  .lp-hero {
+    min-height: 100dvh;
+    padding-block: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .lp-hero__grid {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding-inline: 0; /* image edge-to-edge */
+    padding-block: 0 var(--space-6);
+  }
   .lp-hero__image {
     order: -1;
+    flex: 0 0 auto;
+    height: 38dvh;
+    margin: 0;
+    overflow: hidden;
+  }
+  .lp-hero__image > img,
+  .lp-hero__image > .lp-hero__media-wrap {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .lp-hero__content {
     order: 0;
+    flex: 1;
+    justify-content: center;
+    max-width: none;
+    padding-inline: clamp(16px, 5vw, 24px);
+  }
+  /* Trailing margin on last child throws off vertical centering — neutralize */
+  .lp-hero__content > *:last-child {
+    margin-bottom: 0;
   }
 }
 
@@ -309,7 +352,7 @@
   max-width: 18ch;
   text-wrap: balance;
 }
-@media (max-width: 749px) {
+@media (max-width: 768px) {
   .lp-hero__title {
     max-width: none;
   }

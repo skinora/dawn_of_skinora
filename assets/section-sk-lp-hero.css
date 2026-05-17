@@ -53,11 +53,11 @@
 .lp-btn--hero {
   display: inline-flex;
   width: 100%;
-  max-width: 420px;
-  min-height: 60px;
-  padding: 18px 44px;
-  font-size: 18px;
-  letter-spacing: 0.04em;
+  max-width: 360px;
+  min-height: var(--btn-min-h-lg); /* 56px — substantial without dominating */
+  padding: var(--btn-py-md) var(--btn-px-md);
+  font-size: var(--btn-fs-md); /* 15–17px clamp */
+  letter-spacing: var(--btn-tracking);
 }
 
 .lp-hero__pills {
