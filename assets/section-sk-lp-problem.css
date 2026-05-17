@@ -1,0 +1,158 @@
+/* =============================================================
+   sk-lp-problem — pain agitation section
+   Used by both Clear and Radiance LPs.
+   Tokens come from assets/typography.css (loaded globally).
+   ============================================================= */
+
+.lp-problem {
+  background: var(--paper-0);
+  padding-block: var(--space-section-md);
+}
+
+.lp-problem__grid {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 32px);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+/* Single-column variant (no image) — content centered */
+.lp-problem__grid--single {
+  max-width: 680px;
+  text-align: center;
+}
+
+@media (min-width: 769px) {
+  .lp-problem__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 5vw, 80px);
+  }
+  .lp-problem__grid--single {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile: image first, content underneath */
+@media (max-width: 768px) {
+  .lp-problem__image-col {
+    order: -1;
+  }
+}
+
+/* ---------- Image column ---------- */
+.lp-problem__image-col {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.lp-problem__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 600px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+@media (max-width: 768px) {
+  .lp-problem__image {
+    max-height: 400px;
+  }
+}
+
+/* ---------- Heading + intro ----------
+   Heading uses the global .lp-section-heading from typography.css;
+   only per-section spacing tweaks live here. */
+.lp-problem .lp-section-heading {
+  margin: 0 0 var(--space-3);
+}
+@media (min-width: 769px) {
+  .lp-problem .lp-section-heading {
+    margin-bottom: var(--space-4);
+  }
+}
+
+.lp-problem .lp-section-intro {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+  max-width: 52ch;
+  margin: 0 0 var(--space-6);
+}
+@media (min-width: 769px) {
+  .lp-problem .lp-section-intro {
+    font-size: var(--fs-md);
+    margin-bottom: var(--space-7);
+  }
+}
+
+/* Single-column variant: center heading + intro horizontally */
+.lp-problem__grid--single .lp-section-heading,
+.lp-problem__grid--single .lp-section-intro {
+  margin-inline: auto;
+}
+
+/* ---------- Checklist ---------- */
+.lp-problem__grid--single .lp-problem__list-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.lp-problem__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.lp-problem__grid--single .lp-problem__list {
+  display: inline-flex;
+}
+
+.lp-problem__item {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-700);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--ink-300);
+  text-align: left;
+}
+.lp-problem__item:first-child {
+  padding-top: 0;
+}
+.lp-problem__item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+@media (min-width: 769px) {
+  .lp-problem__item {
+    font-size: var(--fs-md);
+  }
+}
+
+/* Check icon — circular soft-tinted badge */
+.lp-problem__check {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--ink-700) 6%, transparent);
+  border-radius: 999px;
+  color: var(--ink-700);
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  margin-top: 2px;
+}
