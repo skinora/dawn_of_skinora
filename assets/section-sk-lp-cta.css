@@ -1,0 +1,130 @@
+/* =============================================================
+   sk-lp-cta — final closing CTA section
+   Used by both Clear and Radiance LPs.
+   Type tokens for .lp-cta-final h2 / p live in assets/typography.css;
+   this file owns layout, the price emphasis override, and the
+   urgency / trust / klarna meta lines.
+   ============================================================= */
+
+.lp-cta-final {
+  background: var(--paper-0);
+  padding-block: var(--space-section-lg);
+}
+
+.lp-cta-final .lp-container--narrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ---------- Heading + intro ----------
+   Type comes from typography.css (.lp-cta-final h2 / p).
+   Section file only sets margins + tracking. */
+.lp-cta-final__heading {
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--space-3);
+}
+
+.lp-cta-final__text {
+  margin: 0 0 var(--space-6);
+}
+
+/* ---------- Action stack ---------- */
+.lp-cta-final__action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.lp-cta-final__price {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-price);
+  font-weight: var(--fw-medium);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+  margin: 0;
+}
+
+.lp-cta-final__btn {
+  min-width: min(320px, 100%);
+  min-height: 64px;
+  padding: var(--space-5) var(--space-7);
+  font-size: var(--fs-lg);
+}
+
+.lp-cta-final__btn:focus-visible {
+  outline: 3px solid var(--lp-cta-focus, var(--accent-gold));
+  outline-offset: 3px;
+}
+
+/* ---------- Urgency + trust + Klarna meta lines ---------- */
+.lp-urgency {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--accent-clay);
+  text-align: center;
+  margin: 0 0 var(--space-3);
+}
+
+.lp-cta-trust {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  color: var(--ink-500);
+  text-align: center;
+  margin: var(--space-2) 0 0;
+}
+
+.lp-cta-klarna {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  color: var(--ink-500);
+  text-align: center;
+  margin: var(--space-3) 0 0;
+}
+
+.lp-cta-klarna strong {
+  color: var(--ink-900);
+  font-weight: var(--fw-semibold);
+}
+
+/* ---------- Guarantee badge row ---------- */
+.lp-cta-final__guarantees {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.lp-cta-final__guarantee {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  color: var(--ink-500);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.lp-cta-final__guarantee img {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* Mobile: stack guarantees vertically */
+@media (max-width: 640px) {
+  .lp-cta-final__guarantees {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+}

@@ -4,13 +4,7 @@
 {%- endcomment -%}
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
-
-<style>
-  :root {
-    --cta-bg: #30273e;
-    /* --cta-bg: #C8964A; */ /* A/B test: warm gold alternative */
-  }
-</style>
+{{ 'section-sk-lp-cta.css' | asset_url | stylesheet_tag }}
 
 {%- assign sk_lp_handle = section.settings.product_url | split: '/products/' | last | split: '?' | first -%}
 {%- assign sk_lp_product = all_products[sk_lp_handle] -%}
@@ -26,10 +20,7 @@
       <p class="lp-cta-final__text">{{ section.settings.text }}</p>
       <div class="lp-cta-final__action">
         <p class="lp-cta-final__price">{{ section.settings.price_text }}</p>
-        <p
-          class="lp-urgency"
-          style="font-family:sofia-pro,Assistant,sans-serif;font-size:13px;font-weight:600;color:#a0522d;text-align:center;margin:0 0 12px;"
-        >
+        <p class="lp-urgency">
           ⚡ Sendes innen 24 timer · Norsk lager
         </p>
         <form
@@ -50,10 +41,7 @@
             {{ section.settings.button_text }}
           </button>
         </form>
-        <p
-          class="lp-cta-trust"
-          style="font-family:sofia-pro,Assistant,sans-serif;font-size:11px;color:#5f5f5f;margin:6px 0 0;text-align:center;"
-        >
+        <p class="lp-cta-trust">
           ✔ Norsk merke &nbsp;·&nbsp; ✔ 60 dagers garanti &nbsp;·&nbsp; ✔ Trygg betaling
         </p>
       </div>
@@ -76,10 +64,10 @@
           {%- endfor -%}
         </div>
       {%- endif -%}
-      <p style="font-family:sofia-pro,Assistant,sans-serif;font-size:13px;color:#5f5f5f;text-align:center;margin:10px 0 0;">
+      <p class="lp-cta-klarna">
         {{
           section.settings.klarna_text
-          | default: 'Eller del opp betalingen – <strong style="color:#30273e;">fra 130 kr/mnd med Klarna</strong>'
+          | default: 'Eller del opp betalingen – <strong>fra 130 kr/mnd med Klarna</strong>'
         }}
       </p>
     </div>
@@ -131,7 +119,7 @@
       "type": "html",
       "id": "klarna_text",
       "label": "Klarna-tekst (HTML)",
-      "default": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra 130 kr\/mnd med Klarna<\/strong>"
+      "default": "Eller del opp betalingen – <strong>fra 130 kr\/mnd med Klarna<\/strong>"
     }
   ],
   "blocks": [
