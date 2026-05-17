@@ -267,6 +267,15 @@
   }
 }
 
+@media (max-width: 749px) {
+  .lp-hero__image {
+    order: -1;
+  }
+  .lp-hero__content {
+    order: 0;
+  }
+}
+
 .lp-hero__content {
   width: 100%;
   max-width: 540px;
