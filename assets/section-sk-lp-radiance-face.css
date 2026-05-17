@@ -306,11 +306,12 @@
   letter-spacing: var(--tracking-tight);
   color: var(--ink-900);
   margin: 0 0 var(--space-5);
-  max-width: 22ch;
+  max-width: 18ch;
+  text-wrap: balance;
 }
-@media (max-width: 768px) {
+@media (max-width: 749px) {
   .lp-hero__title {
-    max-width: 14ch;
+    max-width: none;
   }
 }
 .lp-hero__title em {
@@ -1785,10 +1786,6 @@
   .lp-hero__pills {
     flex-direction: column;
     gap: 10px;
-  }
-
-  .lp-hero__title {
-    font-size: 30px;
   }
 
   .lp-section-heading {
