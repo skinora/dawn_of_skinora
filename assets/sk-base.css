@@ -211,7 +211,7 @@ html {
 .sk-product-listing__subtitle {
   color: rgb(var(--sk-color-subheader-text));
   margin: 0 0 1rem;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
 }
 
 /* Heading size variables (used by .sk-section-heading modifiers)

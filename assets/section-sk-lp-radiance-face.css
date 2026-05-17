@@ -14,7 +14,7 @@
   --sk-surface-soft: #f2f2f2;
 
   font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   font-size: 16px;
   line-height: 1.6;
   color: var(--sk-text);
@@ -204,7 +204,7 @@
 
 .lp-section-intro {
   font-size: 18px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: var(--sk-muted);
   line-height: 1.75;
   margin-bottom: 48px;
@@ -215,7 +215,7 @@
   background: #30273e;
   color: #ffffff;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   text-align: center;
   padding: 10px 16px;
   letter-spacing: 0.5px;
@@ -432,7 +432,7 @@
   justify-content: center;
   font-size: 16px;
   color: #30273e;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   text-align: center;
   padding: 32px;
 }
@@ -473,7 +473,7 @@
 
 .lp-trustbar__text {
   font-size: 14px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: #333333;
 }
 
@@ -513,7 +513,7 @@
 
 .lp-problem__item {
   font-size: 15px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: var(--sk-text);
   display: flex;
   align-items: flex-start;
@@ -686,7 +686,7 @@
   margin: 0;
   font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
   font-style: italic;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   font-size: clamp(88px, 24vw, 120px);
   line-height: 0.9;
   letter-spacing: -0.03em;
@@ -758,7 +758,7 @@
 
 .lp-results__disclaimer {
   font-size: 13px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   font-style: italic;
   color: rgba(51, 51, 51, 0.6);
   line-height: 1.6;
@@ -962,7 +962,7 @@
 
 .lp-step__text {
   font-size: 14px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: #555;
   line-height: 1.55;
 }
@@ -984,7 +984,7 @@
   align-items: flex-start;
   gap: 10px;
   font-size: 15px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: #333;
   line-height: 1.5;
 }
@@ -1082,7 +1082,7 @@
 
 .lp-why-radiance__intro {
   font-size: 14px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: #5f5f5f;
   line-height: 1.55;
   text-align: center;
@@ -1171,7 +1171,7 @@
 
 .lp-why-radiance__text {
   font-size: 15px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: #333;
   line-height: 1.5;
   margin: 0;
@@ -1227,7 +1227,7 @@
 
 .lp-why-radiance__cta-note {
   font-size: 11px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: #5f5f5f;
   margin: 8px 0 0;
 }
@@ -1338,7 +1338,7 @@
 .lp-reviews__score-count {
   font-family: 'sofia-pro', 'sofia-pro-fallback', 'Assistant', sans-serif;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: #5f5f5f;
 }
 
@@ -1399,7 +1399,7 @@
 
 .lp-review-card__text {
   font-size: 16px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: #333333;
   line-height: 1.7;
   margin-bottom: 20px;
@@ -1418,7 +1418,7 @@
 /* Verified buyer label — accent color for trust signal */
 .lp-review-card__verified {
   font-size: 12px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: #a0522d;
   margin-bottom: 0;
 }
@@ -1508,7 +1508,7 @@
 
 .lp-trust-full__text {
   font-size: 15px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: #333333;
   line-height: 1.65;
 }
@@ -1552,7 +1552,7 @@
   justify-content: center;
   font-size: 16px;
   color: #30273e;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
 }
 
 .lp-whats-in-box__content {
@@ -1570,7 +1570,7 @@
 
 .lp-whats-in-box__item {
   font-size: 17px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: #333333;
   display: flex;
   align-items: flex-start;
@@ -1634,7 +1634,7 @@
   font-size: 22px;
   transition: transform 0.3s ease;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: #30273e;
 }
 
@@ -1653,7 +1653,7 @@
 .lp-faq__answer-inner {
   padding: 0 0 24px 0;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: #333333;
   line-height: 1.75;
 }
@@ -1685,7 +1685,7 @@
 
 .lp-cta-final__text {
   font-size: clamp(15px, 1.2vw, 17px);
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   color: var(--sk-muted, #5f5f5f);
   line-height: 1.7;
   margin-bottom: clamp(20px, 2.5vw, 32px);
@@ -1920,7 +1920,7 @@
 .lp-value-box__sub {
   font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   font-style: italic;
   color: #5f5f5f;
   line-height: 1.55;
@@ -1945,7 +1945,7 @@
 .lp-value-box__note {
   font-family: 'sofia-pro', 'sofia-pro-fallback', Assistant, sans-serif;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: var(--fw-regular);
   font-style: italic;
   color: #5f5f5f;
   line-height: 1.5;
