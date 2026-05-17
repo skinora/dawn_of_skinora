@@ -1,0 +1,228 @@
+/* =============================================================
+   sk-lp-results-timeline — before/after comparison sliders
+   Canonical results section for both Clear and Radiance LPs.
+   Tokens from assets/typography.css (loaded globally).
+   ============================================================= */
+
+.lp-results-timeline {
+  background: var(--paper-50);
+  padding-block: var(--space-section-md);
+}
+
+.lp-results-timeline__inner {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 32px);
+}
+
+/* ---------- Header ---------- */
+.lp-results-timeline__header {
+  text-align: center;
+  margin-bottom: var(--space-7);
+}
+
+.lp-results-timeline__header .lp-section-heading {
+  margin: 0 0 var(--space-3);
+}
+
+.lp-results-timeline__header .lp-section-intro {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+  max-width: 52ch;
+  margin: 0 auto;
+}
+@media (min-width: 769px) {
+  .lp-results-timeline__header .lp-section-intro {
+    font-size: var(--fs-md);
+  }
+}
+
+/* ---------- Grid ----------
+   Mobile: stack. Desktop: column count tracks number of comparisons,
+   capped at 2 for readability (3+ wraps to 2x2). */
+.lp-results-timeline__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+@media (min-width: 769px) {
+  .lp-results-timeline__grid--count-2,
+  .lp-results-timeline__grid--count-3,
+  .lp-results-timeline__grid--count-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(24px, 3vw, 48px);
+  }
+}
+
+/* ---------- Comparison card ---------- */
+.lp-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ---------- Slider ---------- */
+.lp-comparison__slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--ink-300);
+  user-select: none;
+  touch-action: pan-y pinch-zoom; /* don't swallow vertical scroll */
+  cursor: ew-resize;
+}
+
+.lp-comparison__after,
+.lp-comparison__before {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.lp-comparison__after img,
+.lp-comparison__before img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.lp-comparison__before {
+  /* Clipped from the right to reveal the after image. JS updates inset. */
+  clip-path: inset(0 50% 0 0);
+}
+
+.lp-comparison__divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: var(--paper-0);
+  transform: translateX(-50%);
+  pointer-events: none;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink-900) 12%, transparent);
+}
+
+/* Drag handle — pill on the divider with chevrons */
+.lp-comparison__handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--paper-0);
+  color: var(--ink-700);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--ink-900) 18%, transparent);
+  transform: translate(-50%, -50%);
+  cursor: ew-resize;
+  z-index: 2;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.lp-comparison__handle svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lp-comparison__handle:hover,
+.lp-comparison__handle:focus-visible {
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--ink-900) 26%, transparent);
+}
+.lp-comparison__handle:focus-visible {
+  outline: 2px solid var(--accent-clay);
+  outline-offset: 3px;
+}
+
+/* Pill labels in the corners */
+.lp-comparison__label {
+  position: absolute;
+  top: var(--space-3);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--paper-0);
+  background: color-mix(in srgb, var(--ink-900) 70%, transparent);
+  padding: 4px 10px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+.lp-comparison__label--before {
+  left: var(--space-3);
+}
+.lp-comparison__label--after {
+  right: var(--space-3);
+}
+
+/* ---------- Caption (customer / concern / usage) ---------- */
+.lp-comparison__caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.lp-comparison__customer {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-900);
+  margin: 0;
+}
+
+.lp-comparison__concern {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  color: var(--ink-700);
+  margin: 0;
+}
+
+.lp-comparison__usage {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  color: var(--ink-500);
+  margin: 0;
+}
+
+/* ---------- Disclaimer ---------- */
+.lp-results-timeline__disclaimer {
+  margin: var(--space-7) auto 0;
+  max-width: 56ch;
+  text-align: center;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-style: italic;
+  color: var(--ink-500);
+  line-height: var(--lh-normal);
+}
+.lp-results-timeline__disclaimer p {
+  margin: 0;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .lp-comparison__handle {
+    transition: none;
+  }
+}
