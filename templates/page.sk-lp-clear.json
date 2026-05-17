@@ -130,31 +130,31 @@
         "p_1": {
           "type": "item",
           "settings": {
-            "text": "Du har prøvd alt. Likevel er huden ikke der du vil. Salisylsyre, retinol, antibiotika, klinikk-timer du knapt har råd til. Noe hjelper en stund. Så kommer det tilbake."
+            "text": "Du har prøvd alt. Ingenting holder lenge nok."
           }
         },
         "p_2": {
           "type": "item",
           "settings": {
-            "text": "Du våkner med nye utbrudd selv når du gjør alt riktig – og lurer på hva mer du kan gjøre."
+            "text": "Nye utbrudd dukker opp selv når du gjør alt riktig."
           }
         },
         "p_3": {
           "type": "item",
           "settings": {
-            "text": "Rødheten ligger der konstant, uansett hvilken serum du smører på."
+            "text": "Rødheten gir seg ikke — uansett serum eller rutine."
           }
         },
         "p_4": {
           "type": "item",
           "settings": {
-            "text": "Foundation irriterer deg – men uten føler du deg ikke klar til å vises."
+            "text": "Foundation irriterer huden, men uten føler du deg ikke klar."
           }
         },
         "p_5": {
           "type": "item",
           "settings": {
-            "text": "Du drømmer om å åpne kameraet uten å fikse vinkel og lys først."
+            "text": "Du vil bli sett uten å fikse lys og vinkel først."
           }
         }
       },
