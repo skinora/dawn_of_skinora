@@ -1,0 +1,211 @@
+/* =============================================================
+   sk-lp-how-to-use — step-by-step usage guide
+   Used by both Clear and Radiance LPs.
+   Tokens from assets/typography.css (loaded globally).
+   ============================================================= */
+
+.lp-how-to-use {
+  background: var(--paper-150);
+  padding-block: var(--space-section-md);
+  text-align: center;
+}
+
+.lp-how-to-use .lp-section-heading {
+  margin: 0 0 var(--space-7);
+}
+
+/* ---------- Steps timeline (mobile: vertical) ---------- */
+.lp-steps {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-7);
+}
+
+/* dashed background track */
+.lp-steps::before {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 36px;
+  bottom: 36px;
+  width: 0;
+  border-left: 2px dashed color-mix(in srgb, var(--ink-700) 22%, transparent);
+  z-index: 0;
+}
+
+/* animated solid draw line over the dashed track */
+.lp-steps::after {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 36px;
+  bottom: 36px;
+  width: 2px;
+  background: var(--ink-900);
+  z-index: 0;
+  animation: sk-draw-line 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes sk-draw-line {
+  0%   { clip-path: inset(0 0 100% 0); opacity: 0.8; }
+  10%  { opacity: 1; }
+  50%  { clip-path: inset(0 0 0 0);    opacity: 1; }
+  65%  { clip-path: inset(0 0 0 0);    opacity: 0; }
+  66%  { clip-path: inset(0 0 100% 0); opacity: 0; }
+  100% { clip-path: inset(0 0 100% 0); opacity: 0; }
+}
+
+/* ---------- Step row ---------- */
+.lp-step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: left;
+}
+
+.lp-step__number {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  background: var(--ink-900);
+  color: var(--paper-0);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+  line-height: 1;
+}
+
+.lp-step__body {
+  flex: 1;
+}
+
+.lp-step__title {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-900);
+  line-height: var(--lh-snug);
+  margin: 0 0 var(--space-1);
+}
+
+.lp-step__text {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  color: var(--ink-500);
+  line-height: var(--lh-normal);
+  margin: 0;
+}
+
+/* ---------- Tips (mobile: vertical) ---------- */
+.lp-how-to-use__tips {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 400px;
+  text-align: left;
+}
+
+.lp-how-to-use__tip {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  color: var(--ink-700);
+  line-height: var(--lh-normal);
+}
+
+.lp-how-to-use__tip-icon {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--ink-900);
+}
+
+/* ---------- Tablet (768-991px): centered, capped width ---------- */
+@media (min-width: 768px) and (max-width: 991px) {
+  .lp-steps {
+    max-width: 480px;
+    margin-inline: auto;
+    gap: var(--space-6);
+  }
+}
+
+/* ---------- Desktop (≥768px): horizontal timeline ---------- */
+@media (min-width: 768px) {
+  .lp-steps {
+    flex-direction: row;
+    gap: 0;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  /* horizontal dashed line connecting badges */
+  .lp-steps::before {
+    top: 18px;
+    bottom: auto;
+    height: 0;
+    width: auto;
+    border-left: none;
+    border-top: 2px dashed color-mix(in srgb, var(--ink-700) 22%, transparent);
+    left: calc(100% / 3 / 2 + 18px);
+    right: calc(100% / 3 / 2 + 18px);
+  }
+
+  /* hide mobile animated line on desktop */
+  .lp-steps::after {
+    display: none;
+  }
+
+  .lp-step {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    max-width: 300px;
+    padding: 0 var(--space-4);
+    gap: 0;
+  }
+
+  .lp-step__number {
+    margin-bottom: var(--space-4);
+  }
+
+  .lp-step__title {
+    font-size: var(--fs-lg);
+    margin-bottom: var(--space-2);
+  }
+
+  .lp-how-to-use__tips {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--space-6);
+    max-width: none;
+    text-align: center;
+  }
+
+  .lp-how-to-use__tip {
+    align-items: center;
+    gap: var(--space-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-steps::after {
+    animation: none;
+    opacity: 0;
+  }
+}

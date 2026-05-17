@@ -4,6 +4,7 @@
 {%- endcomment -%}
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+{{ 'section-sk-lp-how-to-use.css' | asset_url | stylesheet_tag }}
 
 <!-- SECTION: How to Use -->
 <div class="sk-lp">
@@ -40,7 +41,7 @@
                 fill="none"
                 aria-hidden="true"
               >
-                <path d="M3 8.5l3.5 3.5L13 5" stroke="#30273e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3 8.5l3.5 3.5L13 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
               <span>{{ block.settings.text }}</span>
             </li>
