@@ -313,45 +313,60 @@
       }
     },
     "results": {
-      "type": "skinora-results",
+      "type": "sk-lp-results-timeline",
       "blocks": {
-        "r_1": {
-          "type": "step",
+        "c_1": {
+          "type": "comparison",
           "settings": {
-            "image": "shopify://shop_images/uke0_uren_hud.png",
-            "alt": "Nærbilde av kinn med få aktive utbrudd, etter 2–4 ukers bruk av Skinora Clear.",
-            "label": "ETTER 2–4 UKER",
-            "body": "<p>Færre nye utbrudd. Huden faller til ro – dag for dag.</p>"
+            "before_image": "shopify://shop_images/panne_tsone_kviser_for.png",
+            "after_image": "shopify://shop_images/etter_bruk_ren_hud.png",
+            "before_label": "UKE 0",
+            "after_label": "UKE 8",
+            "before_alt": "Linnea, 26 – panne og T-sone før behandling med Skinora Clear",
+            "after_alt": "Linnea, 26 – panne og T-sone etter 8 uker med Skinora Clear",
+            "customer_name": "Linnea, 26 – Stavanger",
+            "concern_tag": "Panne & T-sone",
+            "usage_tag": "10 min, 4x/uke · Etter 8 uker"
           }
         },
-        "r_2": {
-          "type": "step",
+        "c_2": {
+          "type": "comparison",
           "settings": {
-            "image": "shopify://shop_images/6_8_uker_bruk.png",
-            "alt": "Nærbilde av kinn med jevnere hudtone og redusert rødhet, etter 6–8 ukers bruk.",
-            "label": "ETTER 6–8 UKER",
-            "body": "<p>Tonen jevner seg ut, rødheten slipper taket, og huden begynner å lyse innenfra.</p>"
+            "before_image": "shopify://shop_images/kundebildet_for.png",
+            "after_image": "shopify://shop_images/kundebilde_etter.png",
+            "before_label": "UKE 0",
+            "after_label": "UKE 6",
+            "before_alt": "Sondre, 29 – voksenakne og rødhet før Skinora Clear",
+            "after_alt": "Sondre, 29 – voksenakne og rødhet etter 6 uker med Skinora Clear",
+            "customer_name": "Sondre, 29 – Oslo",
+            "concern_tag": "Voksenakne, post-akne-arr og rødhet",
+            "usage_tag": "10 min, 5x/uke · Etter 6 uker"
           }
         },
-        "r_3": {
-          "type": "step",
+        "c_3": {
+          "type": "comparison",
           "settings": {
-            "image": "shopify://shop_images/etter_bruk_ren_hud_skinora_clear.png",
-            "alt": "Nærbilde av kinn med klar, jevn hud over tid, vedlikeholdt med Skinora Clear.",
-            "label": "OVER TID",
-            "body": "<p>Klar, balansert og levende hud – den du kjenner igjen i speilet.</p>"
+            "before_image": "shopify://shop_images/for.png",
+            "after_image": "shopify://shop_images/etter.png",
+            "before_label": "UKE 0",
+            "after_label": "UKE 8",
+            "before_alt": "Marte, 34 – hormonell akne på hake og kjeve før Skinora Clear",
+            "after_alt": "Marte, 34 – hormonell akne på hake og kjeve etter 8 uker med Skinora Clear",
+            "customer_name": "Marte, 34 – Trondheim",
+            "concern_tag": "Hormonell akne på hake og kjeve",
+            "usage_tag": "10 min, 4x/uke · Etter 8 uker"
           }
         }
       },
       "block_order": [
-        "r_1",
-        "r_2",
-        "r_3"
+        "c_1",
+        "c_2",
+        "c_3"
       ],
       "settings": {
-        "headline": "Hva kan du forvente?",
-        "eyebrow": "Realistiske resultater fra ekte brukere",
-        "subtext": "<p>Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.</p>"
+        "heading": "Hva kan du forvente?",
+        "intro": "Realistiske resultater fra ekte brukere",
+        "disclaimer": "<p>Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.</p>"
       }
     },
     "how_to_use": {
