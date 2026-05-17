@@ -1,37 +1,40 @@
 {%- comment -%}
   sk-lp-why-choose.liquid
-  "Why choose us" feature cards for landing pages.
+  Feature-cards section ("why choose us"). Used by both Clear and Radiance LPs.
 {%- endcomment -%}
 
-{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+{{ 'section-sk-lp-why-choose.css' | asset_url | stylesheet_tag }}
 
-<!-- SECTION: Why Skinora is Different -->
 <div class="sk-lp">
-  <section class="lp-why-radiance">
-    <div class="lp-container">
-      <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
-      <p class="lp-section-intro">&nbsp;</p>
+  <section class="lp-why-choose">
+    <div class="lp-why-choose__inner">
+      <header class="lp-why-choose__header">
+        <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
+        {%- if section.settings.intro != blank -%}
+          <p class="lp-why-choose__intro">{{ section.settings.intro }}</p>
+        {%- endif -%}
+      </header>
 
       {%- if section.blocks.size > 0 -%}
-        <div class="lp-why-radiance__grid">
+        <div class="lp-why-choose__grid">
           {%- for block in section.blocks -%}
-            <div class="lp-why-radiance__card" {{ block.shopify_attributes }}>
-              <div class="lp-why-radiance__card-row">
+            <div class="lp-why-choose__card" {{ block.shopify_attributes }}>
+              <div class="lp-why-choose__card-row">
                 {%- if block.settings.icon != blank -%}
-                  <div class="lp-why-radiance__icon">
+                  <div class="lp-why-choose__icon">
                     <img
-                      src="{{ block.settings.icon | image_url: height: 96 }}"
+                      src="{{ block.settings.icon | image_url: height: 128 }}"
                       alt=""
                       role="presentation"
-                      width="32"
-                      height="32"
+                      width="64"
+                      height="64"
                       loading="lazy"
                     >
                   </div>
                 {%- endif -%}
-                <div class="lp-why-radiance__card-body">
-                  <h3 class="lp-why-radiance__title">{{ block.settings.title }}</h3>
-                  <div class="lp-why-radiance__text">{{ block.settings.text }}</div>
+                <div class="lp-why-choose__card-body">
+                  <h3 class="lp-why-choose__title">{{ block.settings.title }}</h3>
+                  <div class="lp-why-choose__text">{{ block.settings.text }}</div>
                 </div>
               </div>
             </div>
@@ -52,7 +55,13 @@
       "type": "text",
       "id": "heading",
       "label": "Overskrift",
-      "default": "Hvorfor Radiance er annerledes"
+      "default": "Hvorfor er dette annerledes?"
+    },
+    {
+      "type": "text",
+      "id": "intro",
+      "label": "Intro (valgfritt)",
+      "default": ""
     }
   ],
   "blocks": [
