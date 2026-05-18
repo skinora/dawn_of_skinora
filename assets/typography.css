@@ -85,6 +85,12 @@
   --lp-w-text: 800px;    /* tabular / form-style content */
   --lp-w-narrow: 760px;  /* tight reading: FAQ list, CTA inner, single-col problem */
   --lp-gutter: clamp(16px, 4vw, 32px);
+
+  /* ---------- CARD PADDING ----------
+     Single source for the inner padding on every card-style component
+     (reviews, trust-full, documentation, why-choose, mechanism). Scales
+     smoothly between 24px (mobile floor) and 32px (desktop ceiling). */
+  --card-padding: clamp(24px, 2vw + 16px, 32px);
 }
 
 @media (min-width: 769px) {

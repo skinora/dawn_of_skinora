@@ -211,7 +211,7 @@
   background: var(--paper-0);
   border: 1px solid color-mix(in srgb, var(--ink-700) 8%, transparent);
   border-radius: 16px;
-  padding: var(--space-5);
+  padding: var(--card-padding);
   text-align: left;
   box-shadow: 0 4px 18px color-mix(in srgb, var(--ink-900) 4%, transparent);
   display: flex;
@@ -219,12 +219,6 @@
   transition:
     transform 220ms ease,
     box-shadow 220ms ease;
-}
-
-@media (min-width: 1024px) {
-  .lp-mech__card {
-    padding: var(--space-6);
-  }
 }
 
 @media (hover: hover) {
