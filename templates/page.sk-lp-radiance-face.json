@@ -709,6 +709,45 @@
         "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra 130 kr/mnd med Klarna</strong>"
       }
     },
+    "sk_lp_cross_sell_N8N6MW": {
+      "type": "sk-lp-cross-sell",
+      "blocks": {
+        "product_card_NyhJMP": {
+          "type": "product_card",
+          "settings": {
+            "product": "skinora-radiance-neck",
+            "eyebrow_tag": "HALS",
+            "show_benefit": false,
+            "benefit": "",
+            "show_price": false
+          }
+        },
+        "product_card_Y8pRVL": {
+          "type": "product_card",
+          "settings": {
+            "product": "",
+            "eyebrow_tag": "ANSIKT",
+            "show_benefit": false,
+            "benefit": "",
+            "show_price": false
+          }
+        }
+      },
+      "block_order": [
+        "product_card_NyhJMP",
+        "product_card_Y8pRVL"
+      ],
+      "name": "LP Cross-sell",
+      "settings": {
+        "eyebrow": "OPPDAG MER",
+        "heading": "Andre Skinora-produkter",
+        "subheading": "Bygg ditt komplette LED-rituale – designet for ansikt, hals og kropp.",
+        "show_section_cta": true,
+        "section_cta_text": "Se alle Skinora-produkter",
+        "section_cta_url": "",
+        "background_color": ""
+      }
+    },
     "sticky_buy_bar": {
       "type": "sk-lp-sticky-buy-bar",
       "settings": {
@@ -736,6 +775,7 @@
     "documentation",
     "faq",
     "cta",
+    "sk_lp_cross_sell_N8N6MW",
     "sticky_buy_bar"
   ]
 }
