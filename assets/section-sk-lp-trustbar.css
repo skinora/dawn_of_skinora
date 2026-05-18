@@ -59,13 +59,16 @@
   display: block;
 }
 
-/* Text — uppercase tracking-wide label, paper-0 on dark band */
+/* Text — editorial sentence-case label in regular weight on dark band.
+   Refined away from the older uppercase + semibold + tracking-wide
+   "trust band" look that reads as 2010s e-com. Sentence case in
+   regular weight feels modern and luxury. Merchant types the label
+   in normal case in the section settings — no CSS transform. */
 .lp-trustbar__text {
   font-family: var(--ff-sans);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-semibold);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-normal);
   line-height: var(--lh-snug);
   color: var(--paper-0);
 }
