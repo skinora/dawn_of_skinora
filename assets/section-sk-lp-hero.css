@@ -1,13 +1,12 @@
 /* =============================================================
-   sk-lp-hero — hero section styles
-   Extracted from inline <style> in sections/sk-lp-hero.liquid.
-   Tokens come from assets/typography.css (loaded globally in
-   layout/theme.liquid head).
+   sk-lp-hero — slim sales hero
+   Renders: media + eyebrow + H1 + subline + rating + CTA + ≤3 pills.
+   Tokens from assets/typography.css (loaded globally).
+   Base hero layout (.lp-hero, .lp-hero__grid, .lp-hero__image, etc.)
+   lives in assets/section-sk-lp-radiance-face.css (shared base).
    ============================================================= */
 
-/* ============================================================
-   Rating row (stars + score + count)
-   ============================================================ */
+/* ---------- Rating row (stars + score + count) ---------- */
 .lp-hero__rating {
   display: flex;
   align-items: baseline;
@@ -25,8 +24,8 @@
   font-size: var(--fs-lg);
   font-weight: var(--fw-medium);
   line-height: 1;
-  color: var(--ink-900);
   letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
 }
 .lp-hero__rating-count {
   font-family: var(--ff-sans);
@@ -40,9 +39,7 @@
   margin: 0 2px;
 }
 
-/* ============================================================
-   CTA full-width on mobile, pills inline-flex
-   ============================================================ */
+/* ---------- CTA actions stack ---------- */
 .lp-hero__actions {
   display: flex;
   flex-direction: column;
@@ -50,16 +47,18 @@
   gap: var(--space-3);
   width: 100%;
 }
+
 .lp-btn--hero {
   display: inline-flex;
   width: 100%;
-  max-width: 360px;
-  min-height: var(--btn-min-h-lg); /* 56px — substantial without dominating */
+  max-width: 480px;
+  min-height: var(--btn-min-h-lg);
   padding: var(--btn-py-md) var(--btn-px-md);
-  font-size: var(--btn-fs-md); /* 15–17px clamp */
+  font-size: var(--btn-fs-md);
   letter-spacing: var(--btn-tracking);
 }
 
+/* ---------- Trust pills under CTA ---------- */
 .lp-hero__pills {
   display: flex;
   flex-wrap: wrap;
@@ -72,185 +71,7 @@
   gap: 6px;
 }
 
-/* ============================================================
-   Testimonial snippet (editorial pull-quote)
-   ============================================================ */
-.lp-hero__testimonial-snippet {
-  font-family: var(--ff-serif);
-  font-size: var(--fs-md);
-  font-weight: var(--fw-regular);
-  font-style: italic;
-  line-height: 1.55;
-  color: var(--ink-700);
-  padding-left: var(--space-3);
-  border-left: 2px solid var(--accent-clay);
-}
-.lp-hero__testimonial-snippet strong {
-  display: block;
-  margin-top: var(--space-2);
-  font-family: var(--ff-sans);
-  font-style: normal;
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-semibold);
-  color: var(--ink-700);
-}
-
-/* ============================================================
-   Urgency + purchase meta (flattened to match copy edge)
-   ============================================================ */
-.lp-urgency-hero {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-semibold);
-  line-height: 1.4;
-  letter-spacing: 0;
-  color: var(--accent-clay);
-}
-
-.lp-purchase-meta {
-  margin: 0;
-  padding: 0;
-  background: none;
-  border-radius: 0;
-}
-
-.lp-purchase-meta__price-row {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.lp-purchase-meta__price {
-  font-family: var(--ff-serif);
-  font-size: var(--fs-xl);
-  font-weight: var(--fw-medium);
-  line-height: 1.3;
-  color: var(--ink-900);
-  letter-spacing: var(--tracking-normal);
-}
-.lp-purchase-meta__price strong {
-  font-family: var(--ff-serif);
-  font-weight: var(--fw-semibold);
-  color: var(--ink-900);
-}
-
-.lp-purchase-meta__klarna {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-regular);
-  line-height: var(--lh-normal);
-  color: var(--ink-700);
-}
-.lp-purchase-meta__klarna strong {
-  font-weight: var(--fw-semibold);
-  color: var(--ink-900);
-}
-
-.lp-purchase-meta__per-treatment {
-  padding: var(--space-3) 0;
-  background: none;
-  border-left: none;
-  border-radius: 0;
-}
-.lp-purchase-meta__per-treatment-main {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-regular);
-  line-height: var(--lh-normal);
-  color: var(--ink-700);
-  margin: 0;
-}
-.lp-purchase-meta__per-treatment-value {
-  font-family: var(--ff-serif);
-  font-size: var(--fs-2xl);
-  font-weight: var(--fw-semibold);
-  line-height: 1;
-  color: var(--accent-clay);
-  letter-spacing: var(--tracking-tight);
-}
-.lp-purchase-meta__per-treatment-sub {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-regular);
-  font-style: italic;
-  line-height: var(--lh-normal);
-  color: var(--ink-500);
-  margin: var(--space-1) 0 0;
-}
-
-.lp-purchase-meta__icons {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.lp-purchase-meta__safety {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 16px;
-}
-.lp-purchase-meta__safety li {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-regular);
-  color: var(--ink-700);
-}
-
-/* ─── Risk Reversal ──────────────────────────────────────────
-   Editorial guarantee callout. Pairs with .lp-hero__testimonial-snippet
-   via the same clay left-border accent so the two hero callouts feel
-   like one visual family rather than disconnected tinted boxes. */
-.lp-risk-reversal {
-  margin-top: var(--space-5);
-  padding: var(--space-4) var(--space-5);
-  background: var(--paper-100);
-  border-left: 3px solid var(--accent-clay);
-  border-radius: 0;
-  max-width: 480px;
-}
-.lp-risk-reversal__headline {
-  font-family: var(--ff-serif);
-  font-size: var(--fs-lg);
-  font-weight: var(--fw-medium);
-  line-height: var(--lh-snug);
-  letter-spacing: var(--tracking-tight);
-  color: var(--ink-900);
-  margin: 0 0 var(--space-2);
-}
-.lp-risk-reversal__body {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-regular);
-  line-height: var(--lh-normal);
-  color: var(--ink-700);
-  margin: 0;
-  max-width: none;
-}
-
-/* ─── Trust Pills ─── */
-.lp-trust-pills {
-  list-style: none;
-  margin: 20px 0 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 20px;
-  max-width: 480px;
-}
-.lp-trust-pills__item {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-regular);
-  color: var(--ink-700);
-}
-
-/* ============================================================
-   Vertical rhythm — margin-bottom only, no top margins.
-   ============================================================ */
+/* ---------- Vertical rhythm — margin-bottom only, no top margins ---------- */
 .lp-eyebrow {
   margin: 0 0 var(--space-2);
 }
@@ -258,120 +79,30 @@
   margin: 0 0 var(--space-5);
 }
 .lp-hero__text {
-  margin: 0 0 var(--space-3);
-}
-.lp-hero__text--warm {
   margin: 0 0 var(--space-5);
 }
 .lp-hero__rating {
-  margin: 0 0 var(--space-4);
-}
-.lp-hero__testimonial-snippet {
-  margin: 0 0 var(--space-6);
+  margin: 0 0 var(--space-5);
 }
 .lp-hero__actions {
-  margin: 0 0 var(--space-3);
-}
-.lp-urgency-hero {
-  margin: 0 0 var(--space-5);
+  margin: 0 0 var(--space-4);
 }
 .lp-hero__pills {
-  margin: 0 0 var(--space-6);
-}
-.lp-purchase-meta__price-row {
-  margin: 0 0 var(--space-2);
-}
-.lp-purchase-meta__klarna {
-  margin: 0 0 var(--space-5);
-}
-.lp-purchase-meta__per-treatment {
-  margin: 0 0 var(--space-5);
-}
-.lp-purchase-meta__icons {
-  margin: 0 0 var(--space-3);
-}
-.lp-purchase-meta__safety {
   margin: 0;
 }
 
-/* ============================================================
-   Image → copy transition on mobile
-   ============================================================ */
+/* ---------- Reading measures (ch-based) ----------
+   Title measure handled by assets/section-sk-lp-radiance-face.css
+   (18ch desktop, none mobile via .lp-hero__title rule). */
+.lp-hero__text {
+  max-width: 52ch;
+}
+
+/* ---------- Image → copy transition on mobile ---------- */
 @media (max-width: 768px) {
   .lp-hero__image,
   .lp-hero__media-wrap {
     margin: 0;
     display: block;
-  }
-}
-
-/* ============================================================
-   Reading measures (ch-based).
-   Title measure handled by assets/section-sk-lp-radiance-face.css
-   (18ch desktop, none mobile via .lp-hero__title rule).
-   ============================================================ */
-.lp-hero__text,
-.lp-hero__text--warm {
-  max-width: 52ch;
-}
-.lp-hero__testimonial-snippet {
-  max-width: 48ch;
-}
-.lp-urgency-hero,
-.lp-purchase-meta__klarna,
-.lp-purchase-meta__safety {
-  max-width: 52ch;
-}
-
-/* ─── Mobile sticky CTA (scroll-triggered) ─── */
-.lp-hero__sticky-cta {
-  display: none;
-}
-.lp-hero__sticky-cta-meta {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-regular);
-  color: var(--ink-500);
-  margin: 4px 0 0;
-  text-align: center;
-}
-
-/* ─── Defer off-screen content rendering on mobile ─── */
-@media (max-width: 991px) {
-  .lp-risk-reversal,
-  .lp-trust-pills {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 120px;
-  }
-}
-
-@media (max-width: 768px) {
-  .lp-hero {
-    padding-bottom: 80px;
-  }
-  .lp-hero__sticky-cta {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
-    background: #fff;
-    padding: 12px 16px;
-    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.1);
-    flex-direction: column;
-    align-items: center;
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
-  }
-  .lp-hero__sticky-cta--visible {
-    display: flex;
-    transform: translateY(0);
-  }
-  .lp-btn--sticky {
-    width: 100%;
-    max-width: 480px;
-    padding: 16px;
-    font-size: 16px;
-    min-height: 52px;
   }
 }

@@ -236,6 +236,47 @@
   text-transform: uppercase;
 }
 
+/* ---------- RISK REVERSAL CALLOUT ----------
+   Editorial guarantee block — pairs visually with the hero testimonial
+   snippet (same clay left-border accent). Defined in this shared base
+   file so the styling applies wherever the markup is rendered on the LP
+   (hero, CTA block, custom_liquid, etc.), not just inside the hero. */
+.lp-risk-reversal {
+  margin-top: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  background: var(--paper-100);
+  border-left: 3px solid var(--accent-clay);
+  border-radius: 0;
+  max-width: 480px;
+}
+
+.lp-risk-reversal__headline {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+  margin: 0 0 var(--space-2);
+}
+
+.lp-risk-reversal__body {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-700);
+  margin: 0;
+  max-width: none;
+}
+
+@media (max-width: 991px) {
+  .lp-risk-reversal {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 120px;
+  }
+}
+
 /* ---------- 3. HERO ----------
    Mobile: hero fills one dynamic viewport (100dvh).
      - image pinned to top, capped at 38dvh
@@ -354,30 +395,14 @@
   color: var(--ink-900);
 }
 
+/* Editorial italic serif subline — single line under the H1 */
 .lp-hero__text {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-lg); /* 18 → 19 */
-  font-weight: var(--fw-regular);
-  line-height: 1.55;
-  color: var(--ink-700);
-}
-
-.lp-hero__text--warm {
-  font-family: var(--ff-serif); /* SWITCH to serif */
+  font-family: var(--ff-serif);
   font-size: var(--fs-lg);
   font-weight: var(--fw-regular);
   font-style: italic;
-  line-height: 1.5;
+  line-height: var(--lh-normal);
   color: var(--ink-700);
-}
-
-.lp-hero__text sup,
-.lp-hero__text .citation-link {
-  font-size: 0.7em;
-  font-weight: var(--fw-semibold);
-  color: var(--ink-500);
-  text-decoration: none;
-  margin-left: 2px;
 }
 
 .lp-hero__pills {
@@ -653,181 +678,10 @@
   }
 }
 
-/* ---------- PRICE + PAYMENT ICONS (LP) ---------- */
-.lp-hero__meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-3);
-  margin-top: var(--space-3);
-}
-
-.lp-hero__price {
-  font-family: var(--ff-serif);
-  font-size: var(--fs-xl);
-  font-weight: var(--fw-semibold);
-  letter-spacing: var(--tracking-normal);
-  color: var(--ink-900);
-}
-
-.lp-hero__divider {
-  font-size: var(--fs-2xl);
-  line-height: 1;
-  color: var(--ink-300);
-}
-
-.lp-hero__delivery {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-regular);
-  color: var(--ink-500);
-}
-
-.lp-payment-icons {
-  margin-top: var(--space-3);
-}
-
-.lp-payment-icons__list {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-  gap: var(--space-3);
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.lp-payment-icons__item {
-  display: flex;
-  align-items: center;
-  line-height: 0;
-}
-
-.lp-payment-icons__item svg,
-.lp-payment-icons__item img {
-  display: block;
-  width: auto;
-  max-width: 100%;
-  height: clamp(2rem, 5vw, 2.67rem);
-  overflow: visible;
-}
-
-/* ---------- VALUE BOX (inside hero) ---------- */
-.lp-value-box {
-  margin-top: var(--space-5);
-}
-
-.lp-value-box__inner {
-  width: 100%;
-  max-width: 480px;
-  border-left: 3px solid var(--ink-900);
-  border-radius: 0;
-  background: var(--paper-50);
-  padding: var(--space-4) var(--space-5);
-}
-
-.lp-value-box__title {
-  font-family: var(--ff-serif);
-  font-size: var(--fs-2xl);
-  font-weight: var(--fw-medium);
-  line-height: var(--lh-snug);
-  color: var(--ink-700);
-  margin: 0;
-}
-
-.lp-value-box__check {
-  font-weight: var(--fw-semibold);
-  color: var(--ink-900);
-  margin-right: var(--space-1);
-}
-
-.lp-value-box__tag {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-regular);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  line-height: 1.4;
-  color: var(--ink-900);
-  margin: var(--space-2) 0 0;
-}
-
-.lp-value-box__sub {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-regular);
-  font-style: italic;
-  line-height: var(--lh-normal);
-  color: var(--ink-500);
-  margin: var(--space-3) 0 0;
-}
-
-.lp-value-box__divider {
-  border: none;
-  border-top: 1px solid color-mix(in srgb, var(--ink-700) 12%, transparent);
-  margin: var(--space-3) 0;
-}
-
-.lp-value-box__roi {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-semibold);
-  line-height: var(--lh-normal);
-  color: var(--ink-900);
-  margin: 0;
-}
-
-.lp-value-box__note {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-regular);
-  font-style: italic;
-  line-height: var(--lh-normal);
-  color: var(--ink-500);
-  margin: var(--space-2) 0 0;
-}
-
-/* Hero bullet list (replaces body text + pills) */
-.lp-hero__bullets {
-  list-style: none;
-  padding: 0;
-  margin: var(--space-3) 0 var(--space-6);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.lp-hero__bullets li {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--space-2);
-  font-family: var(--ff-sans);
-  font-size: var(--fs-md);
-  font-weight: var(--fw-regular);
-  line-height: var(--lh-normal);
-  color: inherit;
-}
-
-.lp-hero__bullets .lp-hero__bullet--large {
-  font-size: var(--fs-3xl);
-  font-weight: var(--fw-regular);
-  line-height: var(--lh-snug);
-}
-
-.lp-hero__bullet-check {
-  font-weight: var(--fw-semibold);
-  color: var(--ink-900);
-  flex-shrink: 0;
-}
-
-.lp-hero__disclaimer {
-  width: 100%;
-  font-family: var(--ff-sans);
-  font-size: var(--fs-xs);
-  font-style: italic;
-  line-height: 1.4;
-  color: var(--ink-400);
-  margin: var(--space-1) 0 0 var(--space-4);
-}
+/* Legacy hero meta blocks (.lp-hero__meta, .lp-hero__price,
+   .lp-hero__divider, .lp-hero__delivery, .lp-payment-icons*,
+   .lp-value-box*, .lp-hero__bullets*, .lp-hero__bullet-check,
+   .lp-hero__disclaimer) were removed when the hero was simplified
+   to its slim sales form (commit 33906d01). No markup in either the
+   modular sk-lp-hero.liquid or the monolithic sk-lp-radiance-face.liquid
+   references them. */
