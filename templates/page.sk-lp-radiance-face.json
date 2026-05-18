@@ -35,79 +35,28 @@
           "settings": {
             "text": "Gratis frakt"
           }
-        },
-        "tb_1": {
-          "type": "trustbar_item",
-          "settings": {
-            "icon": "shopify://shop_images/no_1.svg",
-            "text": "Utviklet i Norge"
-          }
-        },
-        "tb_2": {
-          "type": "trustbar_item",
-          "settings": {
-            "icon": "shopify://shop_images/lager.svg",
-            "text": "Sendes fra norsk lager"
-          }
-        },
-        "tb_3": {
-          "type": "trustbar_item",
-          "settings": {
-            "icon": "shopify://shop_images/garanti.svg",
-            "text": "60 dagers fornøydgaranti - eller penger tilbake"
-          }
-        },
-        "tb_4": {
-          "type": "trustbar_item",
-          "settings": {
-            "icon": "shopify://shop_images/sikker_betaling.svg",
-            "text": "Vipps & Klarna"
-          }
         }
       },
       "block_order": [
         "pill_1",
         "pill_2",
-        "pill_3",
-        "tb_1",
-        "tb_2",
-        "tb_3",
-        "tb_4"
+        "pill_3"
       ],
       "settings": {
-        "image": "shopify://shop_images/skinora_radiance_face_hero.png",
+        "image": "shopify://shop_images/skinora-radiance-face-in-use.webp",
         "hero_video_url": "",
-        "show_authority_citation": true,
-        "authority_citation_marker": "¹",
         "eyebrow": "Skinora® Radiance Face",
         "title": "Profesjonell glød — hjemme på 10 minutter.",
         "text_line_1": "Klinisk dokumentert LED-teknologi. Resultater du kan se.",
-        "text_line_2": "Bare 10 minutter om dagen. Huden din fortjener det.",
-        "bullet_1": "Synlig glød allerede etter 2–4 uker med jevn bruk",
-        "bullet_2": "Profesjonell teknologi brukt av hudklinikker – nå hjemme hos deg",
-        "bullet_disclaimer": "",
-        "rating_text": "4.8/5 – basert på 102 anmeldelser",
         "rating_score": "4.8",
         "review_count": "102",
-        "testimonial_quote": "Etter 6 uker merker jeg virkelig forskjell på hudtonen – huden ser friskere ut.",
-        "testimonial_author": "Wenche S., 52, Oslo · Verifisert kjøper",
         "cta_text": "Prøv risikofritt i 60 dager",
-        "sticky_cta_text": "Prøv risikofritt →",
-        "show_urgency": true,
-        "urgency_text": "⚡ Sendes innen 24 timer · Norsk lager",
         "cta_url": "/products/skinora-radiance-face",
+        "price_display": "4 690 kr",
+        "klarna_text": "fra 130 kr/mnd med Klarna",
         "show_link": false,
         "link_text": "Se hvordan den brukes (60 sek) ↓",
-        "link_url": "#slik-bruker-du",
-        "value_title": "Skinora® Radiance Face — 4 690 kr",
-        "value_tag": "ENGANGSKJØP · INGEN ABONNEMENT",
-        "value_sub_text": "Profesjonell klinikkteknologi – hjemme, på dine premisser",
-        "value_roi_line": "✓ Tilsvarer ca. 9 klinikkøkter",
-        "value_roi_sub": "Etter det er behandlingen, praktisk talt gratis",
-        "show_value_icon": true,
-        "value_bullet_1": "Klinisk dokumentert LED-teknologi",
-        "value_bullet_2": "60 dagers fornøydgaranti",
-        "value_bullet_3": "Spar tusenvis over tid"
+        "link_url": "#slik-bruker-du"
       }
     },
     "problem": {
@@ -318,7 +267,6 @@
         "w_1": {
           "type": "card",
           "settings": {
-            "icon": "shopify://shop_images/2.svg",
             "title": "Teknologi som faktisk virker",
             "text": "<p>Samme lysbølger som brukes i klinikk – vekker hudens egne reparasjonsmekanismer innenfra</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Les mer om forskningen</a></p>"
           }
@@ -326,7 +274,6 @@
         "card_ttFjc6": {
           "type": "card",
           "settings": {
-            "icon": "shopify://shop_images/1.svg",
             "title": "Virker der det teller",
             "text": "<p>Lyset når dypt nok til å gjøre en reell forskjell – der ny, frisk hud faktisk dannes</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Les mer om forskningen</a></p>"
           }
@@ -334,7 +281,6 @@
         "card_xRCVi8": {
           "type": "card",
           "settings": {
-            "icon": "shopify://shop_images/4.svg",
             "title": "Trygt og risikofritt",
             "text": "<p>Norsk kundeservice, 60 dagers fornøydgaranti – du tar ingen risiko</p>"
           }
@@ -342,7 +288,6 @@
         "w_2": {
           "type": "card",
           "settings": {
-            "icon": "shopify://shop_images/9.svg",
             "title": "Ingen unødvendig støy",
             "text": "<p>Vi har valgt bort alt som ikke har dokumentert effekt – kun det som gir deg resultater</p>"
           }
@@ -350,7 +295,6 @@
         "w_3": {
           "type": "card",
           "settings": {
-            "icon": "shopify://shop_images/12.svg",
             "title": "10 minutter – og slapp av",
             "text": "<p>Ingen komplisert rutine. Sett på masken, trykk på – og se favorittserien din</p>"
           }
@@ -358,7 +302,6 @@
         "card_BxaxB7": {
           "type": "card",
           "settings": {
-            "icon": "shopify://shop_images/17.svg",
             "title": "Hele ansiktet behandles likt",
             "text": "<p>Designet for jevn dekning – ingen mørke flekker, konsekvent resultat hver gang</p>"
           }
@@ -373,7 +316,8 @@
         "card_BxaxB7"
       ],
       "settings": {
-        "heading": "Synlige resultater med LED-maske – forenklet"
+        "heading": "Synlige resultater med LED-maske – forenklet",
+        "intro": ""
       }
     },
     "how_to_use": {
