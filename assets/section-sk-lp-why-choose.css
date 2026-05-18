@@ -1,7 +1,13 @@
 /* =============================================================
-   sk-lp-why-choose — feature cards section
+   sk-lp-why-choose — editorial numbered manifesto list
    Used by both Clear and Radiance LPs.
-   Tokens from assets/typography.css (loaded globally).
+
+   Designed as a premium magazine-style list rather than a feature
+   card grid. Each "why" is an italicised serif counter (01, 02 ...)
+   paired with a serif title + sans body, separated by hairlines.
+   No card chrome, no icon badges — just typography and rhythm.
+
+   Tokens from assets/typography.css.
    ============================================================= */
 
 .lp-why-choose {
@@ -20,6 +26,8 @@
 .lp-why-choose__header {
   text-align: center;
   margin-bottom: var(--space-7);
+  max-width: 56ch;
+  margin-inline: auto;
 }
 
 .lp-why-choose__header .lp-section-heading {
@@ -28,137 +36,121 @@
 
 .lp-why-choose__intro {
   font-family: var(--ff-sans);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-md);
   font-weight: var(--fw-regular);
   line-height: var(--lh-normal);
   color: var(--ink-500);
-  max-width: 52ch;
-  margin: 0 auto;
+  margin: 0;
 }
+
 @media (min-width: 769px) {
+  .lp-why-choose__header {
+    margin-bottom: var(--space-8);
+  }
   .lp-why-choose__intro {
-    font-size: var(--fs-md);
+    font-size: var(--fs-lg);
   }
 }
 
-/* ---------- Grid ----------
-   Mobile: 1 column. Desktop: 2 columns. */
+/* ---------- Editorial list ----------
+   <ol>; CSS counter renders "01", "02" … as italic serif numerals.
+   border-top on the list + border-bottom on each card paints
+   uniform hairlines between every row.
+
+   Mobile: single column. Desktop: 2 columns. */
 .lp-why-choose__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: why-counter;
+  border-top: 1px solid color-mix(in srgb, var(--ink-700) 10%, transparent);
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-4);
 }
 
 @media (min-width: 769px) {
   .lp-why-choose__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-5);
+    grid-template-columns: 1fr 1fr;
+    column-gap: clamp(var(--space-6), 4vw, var(--space-8));
   }
 }
 
-/* ---------- Card ---------- */
+/* ---------- Each entry ---------- */
 .lp-why-choose__card {
-  background: var(--paper-50);
-  border: 1px solid color-mix(in srgb, var(--ink-700) 10%, transparent);
-  border-radius: 8px;
-  padding: var(--card-padding);
-  box-shadow: 0 1px 3px color-mix(in srgb, var(--ink-900) 6%, transparent);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  counter-increment: why-counter;
+  display: grid;
+  grid-template-columns: minmax(2.5em, auto) 1fr;
+  column-gap: var(--space-5);
+  align-items: baseline;
+  padding-block: var(--space-6);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink-700) 10%, transparent);
 }
 
-@media (hover: hover) {
-  .lp-why-choose__card:hover {
-    box-shadow: 0 4px 12px color-mix(in srgb, var(--ink-900) 10%, transparent);
-    transform: translateY(-2px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
+@media (min-width: 769px) {
   .lp-why-choose__card {
-    transition: none;
-  }
-  .lp-why-choose__card:hover {
-    transform: none;
+    padding-block: var(--space-7);
+    column-gap: var(--space-6);
   }
 }
 
-/* Icon + body row */
-.lp-why-choose__card-row {
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
-  column-gap: var(--space-3);
-  align-items: center;
+/* Italic serif counter — "01", "02"…
+   Sits to the left of each entry as a soft watermark numeral.
+   Light --ink-300 so it whispers rather than competes with the title. */
+.lp-why-choose__card::before {
+  content: counter(why-counter, decimal-leading-zero);
+  font-family: var(--ff-serif);
+  font-size: var(--fs-4xl);
+  font-style: italic;
+  font-weight: var(--fw-regular);
+  line-height: 0.9;
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-300);
+  align-self: start;
+  /* Visually nudge upward so italic numeral baselines align with
+     the serif title cap height instead of sitting too low. */
+  transform: translateY(-0.05em);
 }
 
-@media (min-width: 769px) {
-  .lp-why-choose__card-row {
-    grid-template-columns: 64px minmax(0, 1fr);
-    column-gap: var(--space-4);
-  }
-}
-
-/* ---------- Icon badge ---------- */
-.lp-why-choose__icon {
-  width: 56px;
-  height: 56px;
-  display: grid;
-  place-items: center;
-  background: color-mix(in srgb, var(--ink-700) 6%, transparent);
-  border-radius: 999px;
-  flex-shrink: 0;
-}
-
-@media (min-width: 769px) {
-  .lp-why-choose__icon {
-    width: 64px;
-    height: 64px;
-  }
-}
-
-.lp-why-choose__icon img,
-.lp-why-choose__icon svg {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-/* ---------- Card body ---------- */
+/* ---------- Card body (title + text) ---------- */
 .lp-why-choose__card-body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
   min-width: 0;
 }
 
 .lp-why-choose__title {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-md);
-  font-weight: var(--fw-semibold);
+  font-family: var(--ff-serif);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-medium);
   line-height: var(--lh-snug);
-  letter-spacing: var(--tracking-tight);
+  letter-spacing: var(--tracking-normal);
   color: var(--ink-900);
-  margin: 0;
+  margin: 0 0 var(--space-2);
 }
 
 .lp-why-choose__text {
   font-family: var(--ff-sans);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-md);
   font-weight: var(--fw-regular);
   line-height: var(--lh-normal);
-  color: var(--ink-700);
+  color: var(--ink-500);
   margin: 0;
+  max-width: 48ch;
 }
 
 .lp-why-choose__text p {
   margin: 0;
+  max-width: none;
+}
+
+.lp-why-choose__text p + p {
+  margin-top: var(--space-3);
 }
 
 .lp-why-choose__text a {
   color: var(--ink-900);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--fw-medium);
   text-decoration: underline;
   text-underline-offset: 0.2em;
+  transition: color 0.15s ease;
 }
 
 .lp-why-choose__text a:hover {

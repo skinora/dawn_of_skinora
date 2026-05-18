@@ -1,6 +1,7 @@
 {%- comment -%}
   sk-lp-why-choose.liquid
-  Feature-cards section ("why choose us"). Used by both Clear and Radiance LPs.
+  Editorial numbered manifesto list ("why choose us"). Used by both
+  Clear and Radiance LPs.
 {%- endcomment -%}
 
 {{ 'section-sk-lp-why-choose.css' | asset_url | stylesheet_tag }}
@@ -16,30 +17,16 @@
       </header>
 
       {%- if section.blocks.size > 0 -%}
-        <div class="lp-why-choose__grid">
+        <ol class="lp-why-choose__grid">
           {%- for block in section.blocks -%}
-            <div class="lp-why-choose__card" {{ block.shopify_attributes }}>
-              <div class="lp-why-choose__card-row">
-                {%- if block.settings.icon != blank -%}
-                  <div class="lp-why-choose__icon">
-                    <img
-                      src="{{ block.settings.icon | image_url: height: 128 }}"
-                      alt=""
-                      role="presentation"
-                      width="64"
-                      height="64"
-                      loading="lazy"
-                    >
-                  </div>
-                {%- endif -%}
-                <div class="lp-why-choose__card-body">
-                  <h3 class="lp-why-choose__title">{{ block.settings.title }}</h3>
-                  <div class="lp-why-choose__text">{{ block.settings.text }}</div>
-                </div>
+            <li class="lp-why-choose__card" {{ block.shopify_attributes }}>
+              <div class="lp-why-choose__card-body">
+                <h3 class="lp-why-choose__title">{{ block.settings.title }}</h3>
+                <div class="lp-why-choose__text">{{ block.settings.text }}</div>
               </div>
-            </div>
+            </li>
           {%- endfor -%}
-        </div>
+        </ol>
       {%- endif -%}
     </div>
   </section>
@@ -69,7 +56,6 @@
       "type": "card",
       "name": "Kort",
       "settings": [
-        { "type": "image_picker", "id": "icon", "label": "Ikon" },
         { "type": "text", "id": "title", "label": "Tittel", "default": "Klinisk dokumentert teknologi" },
         {
           "type": "richtext",
