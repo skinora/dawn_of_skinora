@@ -29,11 +29,14 @@
   --fw-medium: 500;
   --fw-semibold: 600;
 
-  /* ---------- TYPE SCALE (mobile → desktop) ---------- */
-  --fs-xs: 13px;
-  --fs-sm: 15px;
-  --fs-md: clamp(16px, 1.1vw + 14px, 17px);
-  --fs-lg: clamp(18px, 1.2vw + 16px, 19px);
+  /* ---------- TYPE SCALE (mobile → desktop) ----------
+     Body + caption sizes now scale meaningfully (~2px each) so that
+     27" desktops aren't reading iPhone-sized type. Display sizes
+     keep their existing wide clamps. */
+  --fs-xs: clamp(13px, 0.4vw + 11.5px, 14px);
+  --fs-sm: clamp(15px, 0.5vw + 13px, 16px);
+  --fs-md: clamp(16px, 0.8vw + 14px, 18px);
+  --fs-lg: clamp(18px, 0.8vw + 16px, 20px);
   --fs-xl: clamp(20px, 1.4vw + 17px, 22px);
   --fs-2xl: clamp(24px, 2vw + 18px, 28px);
   --fs-3xl: clamp(30px, 2.4vw + 22px, 36px);
