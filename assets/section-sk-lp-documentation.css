@@ -5,7 +5,7 @@
    ============================================================= */
 
 .lp-doc {
-  background: var(--paper-50);
+  background: var(--paper-0);
   padding-block: var(--space-section-md);
   text-align: center;
 }
@@ -24,9 +24,11 @@
   }
 }
 
-/* ---------- Card ---------- */
+/* ---------- Card ----------
+   Section bg is paper-0, so cards use paper-50 to stand out as
+   distinct units. */
 .lp-doc__card {
-  background: var(--paper-0);
+  background: var(--paper-50);
   border: 1px solid color-mix(in srgb, var(--ink-700) 10%, transparent);
   border-radius: 0;
   padding: var(--card-padding);
