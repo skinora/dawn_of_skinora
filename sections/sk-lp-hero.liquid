@@ -1,8 +1,10 @@
 {%- comment -%}
   sk-lp-hero.liquid
-  Canonical LP hero — used by both Clear and Radiance landing pages.
-  Above-the-fold content only: media + eyebrow + H1 + subline + rating + CTA + ≤3 pills.
-  Trust, pricing, risk-reversal, and sticky CTA live in dedicated sections below.
+  Full-bleed hero — image (or video) as background, content overlaid on
+  a soft dark gradient. One unified visual band, mobile 100dvh.
+
+  Renders: media-bg + overlay + (eyebrow + H1 + subline + rating + CTA
+  cluster + ≤3 trust pills).
 {%- endcomment -%}
 
 {%- comment -%} LCP preload — browser discovers image before CSS blocks {%- endcomment -%}
@@ -10,9 +12,9 @@
   <link
     rel="preload"
     as="image"
-    href="{{ section.settings.image | image_url: width: 800 }}"
-    imagesrcset="{{ section.settings.image | image_url: width: 400 }} 400w, {{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1000 }} 1000w, {{ section.settings.image | image_url: width: 1200 }} 1200w, {{ section.settings.image | image_url: width: 1600 }} 1600w"
-    imagesizes="(max-width: 991px) 100vw, 50vw"
+    href="{{ section.settings.image | image_url: width: 1600 }}"
+    imagesrcset="{{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1200 }} 1200w, {{ section.settings.image | image_url: width: 1600 }} 1600w, {{ section.settings.image | image_url: width: 2000 }} 2000w"
+    imagesizes="100vw"
     fetchpriority="high"
   >
 {%- endif -%}
@@ -26,10 +28,94 @@
 
 <script src="{{ 'sk-lp-cart-add.js' | asset_url }}" defer="defer"></script>
 
-<!-- SECTION: Hero -->
+<!-- SECTION: Hero — full-bleed image with overlaid content -->
 <div class="sk-lp">
-  <section class="lp-hero">
-    <div class="lp-hero__grid">
+  <section class="lp-hero lp-hero--overlay">
+
+    {%- comment -%} Hero media: full-bleed background — video > video URL > image > placeholder {%- endcomment -%}
+    {%- assign hero_video = section.settings.hero_video_file -%}
+    {%- assign hero_video_url = section.settings.hero_video_url -%}
+    {%- assign hero_poster = section.settings.hero_video_poster | default: section.settings.image -%}
+
+    <div class="lp-hero__media" aria-hidden="true">
+      {%- if hero_video != blank -%}
+        {%- assign hero_mp4 = hero_video.sources | where: 'format', 'mp4' | first -%}
+        <video
+          class="lp-hero__video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          {% if hero_poster != blank %}poster="{{ hero_poster | image_url: width: 1600 }}"{% endif %}
+          data-hero-video
+        >
+          {%- if hero_mp4 -%}
+            <source src="{{ hero_mp4.url }}" type="video/mp4">
+          {%- else -%}
+            {%- for source in hero_video.sources -%}
+              <source src="{{ source.url }}" type="video/{{ source.format }}">
+            {%- endfor -%}
+          {%- endif -%}
+        </video>
+        <script>
+          (function () {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+              document.querySelectorAll('[data-hero-video]').forEach(function (v) {
+                v.removeAttribute('autoplay');
+                try { v.pause(); } catch (e) {}
+              });
+            }
+          })();
+        </script>
+      {%- elsif hero_video_url != blank -%}
+        {%- assign yt_id = '' -%}
+        {%- assign vimeo_id = '' -%}
+        {%- if hero_video_url contains 'youtube' or hero_video_url contains 'youtu.be' -%}
+          {%- assign yt_id = hero_video_url | split: 'v=' | last | split: '&' | first | split: '/' | last -%}
+        {%- elsif hero_video_url contains 'vimeo' -%}
+          {%- assign vimeo_id = hero_video_url | split: 'vimeo.com/' | last | split: '?' | first -%}
+        {%- endif -%}
+        {%- if yt_id != '' -%}
+          <iframe
+            class="lp-hero__iframe"
+            src="https://www.youtube.com/embed/{{ yt_id }}?autoplay=1&mute=1&loop=1&playlist={{ yt_id }}&controls=0&modestbranding=1&playsinline=1"
+            title="Skinora hero video"
+            frameborder="0"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        {%- elsif vimeo_id != '' -%}
+          <iframe
+            class="lp-hero__iframe"
+            src="https://player.vimeo.com/video/{{ vimeo_id }}?autoplay=1&muted=1&loop=1&background=1&playsinline=1"
+            title="Skinora hero video"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        {%- endif -%}
+      {%- elsif section.settings.image != blank -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 1600 }}"
+          srcset="{{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1200 }} 1200w, {{ section.settings.image | image_url: width: 1600 }} 1600w, {{ section.settings.image | image_url: width: 2000 }} 2000w"
+          sizes="100vw"
+          alt="{{ section.settings.image.alt | default: section.settings.title }}"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          fetchpriority="high"
+          decoding="async"
+        >
+      {%- else -%}
+        <div class="lp-hero__placeholder">[ Produktbilde ]</div>
+      {%- endif -%}
+    </div>
+
+    <div class="lp-hero__overlay" aria-hidden="true"></div>
+
+    <div class="lp-hero__inner">
       <div class="lp-hero__content">
         {%- if section.settings.eyebrow != blank -%}
           <p class="lp-eyebrow">{{ section.settings.eyebrow }}</p>
@@ -93,10 +179,9 @@
           {%- endif -%}
         </div>
 
-        {%- comment -%} Trust pills under the CTA — keep to 3 for one-row mobile fit {%- endcomment -%}
         {%- assign pills = section.blocks | where: 'type', 'pill' -%}
         {%- if pills.size > 0 -%}
-          <div class="lp-hero__pills lp-hero__pills--under-cta">
+          <div class="lp-hero__pills">
             {%- for block in pills -%}
               <span class="lp-hero__pill" {{ block.shopify_attributes }}>
                 <span class="lp-hero__pill-check">✓</span> {{ block.settings.text }}
@@ -104,107 +189,9 @@
             {%- endfor -%}
           </div>
         {%- endif -%}
-
-      </div>
-
-      <div class="lp-hero__image">
-        {%- comment -%} Hero media: video file > video URL > image fallback {%- endcomment -%}
-        {%- assign hero_video = section.settings.hero_video_file -%}
-        {%- assign hero_video_url = section.settings.hero_video_url -%}
-        {%- assign hero_poster = section.settings.hero_video_poster | default: section.settings.image -%}
-        {%- if hero_video != blank -%}
-          {%- assign hero_mp4 = hero_video.sources | where: 'format', 'mp4' | first -%}
-          <div
-            class="lp-hero__media-wrap"
-            style="position:relative;width:100%;aspect-ratio:{% if section.settings.image %}{{ section.settings.image.width }} / {{ section.settings.image.height }}{% else %}4 / 5{% endif %};overflow:hidden;border-radius:6px;"
-          >
-            <video
-              class="lp-hero__video"
-              autoplay
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              aria-label="Skinora Clear LED-maske i bruk"
-              {% if hero_poster != blank %}
-                poster="{{ hero_poster | image_url: width: 1200 }}"
-              {% endif %}
-              style="width:100%;height:100%;object-fit:cover;display:block;"
-              data-hero-video
-            >
-              {%- if hero_mp4 -%}
-                <source src="{{ hero_mp4.url }}" type="video/mp4">
-              {%- else -%}
-                {%- for source in hero_video.sources -%}
-                  <source src="{{ source.url }}" type="video/{{ source.format }}">
-                {%- endfor -%}
-              {%- endif -%}
-            </video>
-          </div>
-          <script>
-            (function () {
-              if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.querySelectorAll('[data-hero-video]').forEach(function (v) {
-                  v.removeAttribute('autoplay');
-                  try {
-                    v.pause();
-                  } catch (e) {}
-                });
-              }
-            })();
-          </script>
-        {%- elsif hero_video_url != blank -%}
-          {%- assign yt_id = '' -%}
-          {%- assign vimeo_id = '' -%}
-          {%- if hero_video_url contains 'youtube' or hero_video_url contains 'youtu.be' -%}
-            {%- assign yt_id = hero_video_url | split: 'v=' | last | split: '&' | first | split: '/' | last -%}
-          {%- elsif hero_video_url contains 'vimeo' -%}
-            {%- assign vimeo_id = hero_video_url | split: 'vimeo.com/' | last | split: '?' | first -%}
-          {%- endif -%}
-          <div
-            class="lp-hero__media-wrap"
-            style="position:relative;width:100%;aspect-ratio:16 / 9;overflow:hidden;border-radius:6px;"
-          >
-            {%- if yt_id != '' -%}
-              <iframe
-                src="https://www.youtube.com/embed/{{ yt_id }}?autoplay=1&mute=1&loop=1&playlist={{ yt_id }}&controls=0&modestbranding=1&playsinline=1"
-                title="Skinora Clear LED-maske i bruk"
-                aria-label="Skinora Clear LED-maske i bruk"
-                frameborder="0"
-                allow="autoplay; encrypted-media; picture-in-picture"
-                allowfullscreen
-                loading="lazy"
-                style="position:absolute;inset:0;width:100%;height:100%;border:0;"
-              ></iframe>
-            {%- elsif vimeo_id != '' -%}
-              <iframe
-                src="https://player.vimeo.com/video/{{ vimeo_id }}?autoplay=1&muted=1&loop=1&background=1&playsinline=1"
-                title="Skinora Clear LED-maske i bruk"
-                aria-label="Skinora Clear LED-maske i bruk"
-                frameborder="0"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowfullscreen
-                loading="lazy"
-                style="position:absolute;inset:0;width:100%;height:100%;border:0;"
-              ></iframe>
-            {%- endif -%}
-          </div>
-        {%- elsif section.settings.image != blank -%}
-          <img
-            src="{{ section.settings.image | image_url: width: 800 }}"
-            srcset="{{ section.settings.image | image_url: width: 400 }} 400w, {{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1000 }} 1000w, {{ section.settings.image | image_url: width: 1200 }} 1200w, {{ section.settings.image | image_url: width: 1600 }} 1600w"
-            sizes="(max-width: 991px) 100vw, 50vw"
-            alt="{{ section.settings.image.alt | default: section.settings.title }}"
-            width="{{ section.settings.image.width }}"
-            height="{{ section.settings.image.height }}"
-            fetchpriority="high"
-            decoding="async"
-          >
-        {%- else -%}
-          <div class="lp-hero__image-placeholder">[ Produktbilde ]</div>
-        {%- endif -%}
       </div>
     </div>
+
   </section>
 </div>
 
