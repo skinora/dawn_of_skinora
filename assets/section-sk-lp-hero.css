@@ -58,6 +58,35 @@
   letter-spacing: var(--btn-tracking);
 }
 
+/* ---------- Price + Klarna line under CTA ----------
+   Serif price ties to the editorial brand language; sans Klarna
+   text sits beside it as a quiet caption. */
+.lp-hero__cta-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+}
+.lp-hero__cta-price {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+}
+.lp-hero__cta-meta-sep {
+  color: var(--ink-300);
+  font-weight: var(--fw-semibold);
+}
+.lp-hero__cta-klarna {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+}
+
 /* ---------- Trust pills under CTA ---------- */
 .lp-hero__pills {
   display: flex;

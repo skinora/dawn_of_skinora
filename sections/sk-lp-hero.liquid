@@ -71,6 +71,21 @@
               {{ section.settings.cta_text }}
             </button>
           </form>
+
+          {%- if section.settings.price_display != blank or section.settings.klarna_text != blank -%}
+            <p class="lp-hero__cta-meta">
+              {%- if section.settings.price_display != blank -%}
+                <span class="lp-hero__cta-price">{{ section.settings.price_display }}</span>
+              {%- endif -%}
+              {%- if section.settings.price_display != blank and section.settings.klarna_text != blank -%}
+                <span class="lp-hero__cta-meta-sep" aria-hidden="true">·</span>
+              {%- endif -%}
+              {%- if section.settings.klarna_text != blank -%}
+                <span class="lp-hero__cta-klarna">{{ section.settings.klarna_text }}</span>
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+
           {%- if section.settings.show_link and section.settings.link_text != blank -%}
             <a href="{{ section.settings.link_url | default: '#' }}" class="lp-hero__link">
               {{- section.settings.link_text -}}
@@ -280,6 +295,28 @@
       "type": "url",
       "id": "cta_url",
       "label": "CTA-lenke"
+    },
+    {
+      "type": "header",
+      "content": "Pris under CTA"
+    },
+    {
+      "type": "text",
+      "id": "price_display",
+      "label": "Pris (vises som serif under CTA)",
+      "info": "La stå tom for å skjule pris-linjen.",
+      "default": "4 690 kr"
+    },
+    {
+      "type": "text",
+      "id": "klarna_text",
+      "label": "Klarna-tekst (vises etter pris)",
+      "info": "Vises ved siden av prisen. La stå tom for å skjule.",
+      "default": "fra 130 kr/mnd med Klarna"
+    },
+    {
+      "type": "header",
+      "content": "Sekundærlenke"
     },
     {
       "type": "checkbox",
