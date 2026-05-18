@@ -6,7 +6,7 @@
 
 .lp-problem {
   background: var(--paper-0);
-  padding-block: var(--space-section-md);
+  padding-block: var(--space-section-sm);
 }
 
 .lp-problem__grid {

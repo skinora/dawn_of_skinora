@@ -5,7 +5,7 @@
    ============================================================= */
 
 .sk-tech-specs {
-  padding-block: var(--space-section-md);
+  padding-block: var(--space-section-sm);
 }
 
 .sk-tech-specs__container {
