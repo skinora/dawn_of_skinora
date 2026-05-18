@@ -7,14 +7,41 @@
   cluster + ≤3 trust pills).
 {%- endcomment -%}
 
-{%- comment -%} LCP preload — browser discovers image before CSS blocks {%- endcomment -%}
+{%- comment -%}
+  LCP preload — browser discovers image before CSS blocks.
+  Two preload links with media attributes so each viewport only
+  fetches the image it needs (no double-download).
+{%- endcomment -%}
 {%- if section.settings.image != blank -%}
   <link
     rel="preload"
     as="image"
     href="{{ section.settings.image | image_url: width: 1600 }}"
-    imagesrcset="{{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1200 }} 1200w, {{ section.settings.image | image_url: width: 1600 }} 1600w, {{ section.settings.image | image_url: width: 2000 }} 2000w"
+    imagesrcset="{{ section.settings.image | image_url: width: 1200 }} 1200w, {{ section.settings.image | image_url: width: 1600 }} 1600w, {{ section.settings.image | image_url: width: 2000 }} 2000w"
     imagesizes="100vw"
+    media="(min-width: 769px)"
+    fetchpriority="high"
+  >
+{%- endif -%}
+{%- if section.settings.image_mobile != blank -%}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ section.settings.image_mobile | image_url: width: 1200 }}"
+    imagesrcset="{{ section.settings.image_mobile | image_url: width: 600 }} 600w, {{ section.settings.image_mobile | image_url: width: 900 }} 900w, {{ section.settings.image_mobile | image_url: width: 1200 }} 1200w"
+    imagesizes="100vw"
+    media="(max-width: 768px)"
+    fetchpriority="high"
+  >
+{%- elsif section.settings.image != blank -%}
+  {%- comment -%} Fall back to desktop image on mobile if no mobile-specific image is set {%- endcomment -%}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ section.settings.image | image_url: width: 1200 }}"
+    imagesrcset="{{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1200 }} 1200w"
+    imagesizes="100vw"
+    media="(max-width: 768px)"
     fetchpriority="high"
   >
 {%- endif -%}
@@ -32,14 +59,25 @@
 <div class="sk-lp">
   <section class="lp-hero lp-hero--overlay">
 
-    {%- comment -%} Hero media: full-bleed background — video > video URL > image > placeholder {%- endcomment -%}
-    {%- assign hero_video = section.settings.hero_video_file -%}
+    {%- comment -%}
+      Hero media: full-bleed background.
+      Resolution order:
+        1. Video file(s) — desktop and/or mobile MP4 from Shopify
+        2. Video URL — single YouTube/Vimeo embed shared across viewports
+        3. Image(s) — desktop and/or mobile, picked via <picture> + media queries
+        4. Placeholder
+    {%- endcomment -%}
+    {%- assign desktop_video = section.settings.hero_video_file -%}
+    {%- assign mobile_video = section.settings.hero_video_file_mobile -%}
     {%- assign hero_video_url = section.settings.hero_video_url -%}
-    {%- assign hero_poster = section.settings.hero_video_poster | default: section.settings.image -%}
+    {%- assign desktop_image = section.settings.image -%}
+    {%- assign mobile_image = section.settings.image_mobile -%}
+    {%- assign hero_poster = section.settings.hero_video_poster | default: desktop_image | default: mobile_image -%}
 
     <div class="lp-hero__media" aria-hidden="true">
-      {%- if hero_video != blank -%}
-        {%- assign hero_mp4 = hero_video.sources | where: 'format', 'mp4' | first -%}
+      {%- if desktop_video != blank or mobile_video != blank -%}
+        {%- assign desktop_mp4 = desktop_video.sources | where: 'format', 'mp4' | first -%}
+        {%- assign mobile_mp4 = mobile_video.sources | where: 'format', 'mp4' | first -%}
         <video
           class="lp-hero__video"
           autoplay
@@ -50,12 +88,20 @@
           {% if hero_poster != blank %}poster="{{ hero_poster | image_url: width: 1600 }}"{% endif %}
           data-hero-video
         >
-          {%- if hero_mp4 -%}
-            <source src="{{ hero_mp4.url }}" type="video/mp4">
-          {%- else -%}
-            {%- for source in hero_video.sources -%}
-              <source src="{{ source.url }}" type="video/{{ source.format }}">
-            {%- endfor -%}
+          {%- if mobile_mp4 -%}
+            <source src="{{ mobile_mp4.url }}" type="video/mp4" media="(max-width: 768px)">
+          {%- endif -%}
+          {%- if desktop_mp4 -%}
+            <source src="{{ desktop_mp4.url }}" type="video/mp4" media="(min-width: 769px)">
+          {%- endif -%}
+          {%- comment -%}
+            Fallback source for browsers that ignore the media attribute on <source>
+            (some older mobile WebKit builds). Prefer desktop, fall back to mobile.
+          {%- endcomment -%}
+          {%- if desktop_mp4 -%}
+            <source src="{{ desktop_mp4.url }}" type="video/mp4">
+          {%- elsif mobile_mp4 -%}
+            <source src="{{ mobile_mp4.url }}" type="video/mp4">
           {%- endif -%}
         </video>
         <script>
@@ -97,17 +143,38 @@
             loading="lazy"
           ></iframe>
         {%- endif -%}
-      {%- elsif section.settings.image != blank -%}
-        <img
-          src="{{ section.settings.image | image_url: width: 1600 }}"
-          srcset="{{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1200 }} 1200w, {{ section.settings.image | image_url: width: 1600 }} 1600w, {{ section.settings.image | image_url: width: 2000 }} 2000w"
-          sizes="100vw"
-          alt="{{ section.settings.image.alt | default: section.settings.title }}"
-          width="{{ section.settings.image.width }}"
-          height="{{ section.settings.image.height }}"
-          fetchpriority="high"
-          decoding="async"
-        >
+      {%- elsif desktop_image != blank or mobile_image != blank -%}
+        {%- comment -%}
+          <picture> lets the browser pick exactly one source — no double-fetch.
+          Each <source> uses its viewport's srcset for responsive resolution.
+          The <img> is the final fallback for browsers that don't understand
+          <picture> (essentially none in 2026, but kept for safety).
+        {%- endcomment -%}
+        {%- assign fallback_image = desktop_image | default: mobile_image -%}
+        <picture>
+          {%- if mobile_image != blank -%}
+            <source
+              media="(max-width: 768px)"
+              srcset="{{ mobile_image | image_url: width: 600 }} 600w, {{ mobile_image | image_url: width: 900 }} 900w, {{ mobile_image | image_url: width: 1200 }} 1200w"
+              sizes="100vw"
+            >
+          {%- endif -%}
+          {%- if desktop_image != blank -%}
+            <source
+              media="(min-width: 769px)"
+              srcset="{{ desktop_image | image_url: width: 1200 }} 1200w, {{ desktop_image | image_url: width: 1600 }} 1600w, {{ desktop_image | image_url: width: 2000 }} 2000w"
+              sizes="100vw"
+            >
+          {%- endif -%}
+          <img
+            src="{{ fallback_image | image_url: width: 1600 }}"
+            alt="{{ fallback_image.alt | default: section.settings.title }}"
+            width="{{ fallback_image.width }}"
+            height="{{ fallback_image.height }}"
+            fetchpriority="high"
+            decoding="async"
+          >
+        </picture>
       {%- else -%}
         <div class="lp-hero__placeholder">[ Produktbilde ]</div>
       {%- endif -%}
@@ -202,31 +269,53 @@
   "class": "sk-lp-section",
   "settings": [
     {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Hero-bilde"
+      "type": "header",
+      "content": "Hero-medier — Desktop"
     },
     {
-      "type": "header",
-      "content": "Hero video"
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero-bilde (desktop)",
+      "info": "Vises på skjermer ≥769px. Anbefalt 1600×860 eller bredere (21:9 cinematic landscape)."
     },
     {
       "type": "video",
       "id": "hero_video_file",
-      "label": "Hero-video (fil)",
-      "info": "Hvis satt, vises som autoplay/muted/loop i stedet for hero-bildet."
+      "label": "Hero-video (desktop)",
+      "info": "Hvis satt, vises som autoplay/muted/loop i stedet for desktop-bildet."
+    },
+    {
+      "type": "header",
+      "content": "Hero-medier — Mobil"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Hero-bilde (mobil)",
+      "info": "Vises på skjermer ≤768px. Anbefalt 1080×1920 (9:16 vertikal portrett). Hvis tom, brukes desktop-bildet på mobil."
+    },
+    {
+      "type": "video",
+      "id": "hero_video_file_mobile",
+      "label": "Hero-video (mobil)",
+      "info": "Hvis satt, vises som autoplay/muted/loop i stedet for mobil-bildet. Hvis tom, brukes desktop-videoen på mobil."
+    },
+    {
+      "type": "header",
+      "content": "Hero-video (URL)"
     },
     {
       "type": "video_url",
       "id": "hero_video_url",
       "label": "Hero-video (URL — YouTube/Vimeo)",
       "accept": ["youtube", "vimeo"],
-      "info": "Brukes hvis ingen videofil er satt."
+      "info": "Brukes hvis ingen video-fil er satt. Samme video på desktop og mobil."
     },
     {
       "type": "image_picker",
       "id": "hero_video_poster",
-      "label": "Video-poster (fallback hero-bilde)"
+      "label": "Video-poster (fallback)",
+      "info": "Vises før videoen laster, eller ved redusert bevegelse-preferanse."
     },
     {
       "type": "header",
