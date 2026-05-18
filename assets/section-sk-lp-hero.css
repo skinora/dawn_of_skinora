@@ -63,22 +63,39 @@
   );
 }
 
-/* ---------- Overlay — soft dark gradient for legibility ----------
-   Gentle wash darkens image enough for white text without flattening
-   the imagery. Slightly darker at the bottom (where content sits on
-   mobile) and through the middle (where content sits on desktop). */
+/* ---------- Overlay — dark gradient for legibility ----------
+   Two flavours: a soft top-down wash for desktop (content lives in
+   the vertical centre and only needs gentle darkening) and a steeper
+   bottom-up gradient for mobile (content is anchored to the bottom
+   third and needs strong contrast against potentially bright product
+   imagery).
+
+   Mobile multi-stop curve avoids visible banding between zones.
+   Top stays at ~12–18% so the face/product still reads as the image. */
 .lp-hero__overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--ink-900) 18%, transparent) 0%,
-      color-mix(in srgb, var(--ink-900) 38%, transparent) 45%,
-      color-mix(in srgb, var(--ink-900) 60%, transparent) 100%
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ink-900) 15%, transparent) 0%,
+    color-mix(in srgb, var(--ink-900) 35%, transparent) 50%,
+    color-mix(in srgb, var(--ink-900) 55%, transparent) 100%
+  );
+}
+
+@media (max-width: 768px) {
+  .lp-hero__overlay {
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--ink-900) 88%, transparent) 0%,
+      color-mix(in srgb, var(--ink-900) 72%, transparent) 25%,
+      color-mix(in srgb, var(--ink-900) 42%, transparent) 55%,
+      color-mix(in srgb, var(--ink-900) 18%, transparent) 85%,
+      color-mix(in srgb, var(--ink-900) 12%, transparent) 100%
     );
+  }
 }
 
 /* ---------- Content positioning wrapper ---------- */
