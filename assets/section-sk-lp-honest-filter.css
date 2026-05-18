@@ -1,0 +1,157 @@
+/* =============================================================
+   sk-lp-honest-filter — anti-funnel "this is not for you" list
+   Used by Clear LP. Tokens from assets/typography.css.
+
+   Two merchant-configurable accents, fallback to constitutional tokens:
+     --bg     → background (default --paper-100, warm cream)
+     --accent → X icon + separator hairline (default --accent-clay)
+   ============================================================= */
+
+.sk-honest-filter {
+  background: var(--bg, var(--paper-100));
+  padding-block: var(--space-section-md);
+}
+
+.sk-honest-filter__inner {
+  width: 100%;
+  max-width: var(--lp-w-narrow);
+  margin-inline: auto;
+  padding-inline: var(--lp-gutter);
+  text-align: center;
+}
+
+/* ---------- Header ----------
+   Eyebrow + heading pull canonical type from typography.css
+   (.lp-eyebrow, .lp-section-heading). Section file only sets
+   per-instance margins so the eyebrow/heading/intro stack flows
+   tighter than the default rhythm. */
+.sk-honest-filter__eyebrow {
+  margin: 0 0 var(--space-3);
+}
+
+.sk-honest-filter__heading {
+  margin: 0 0 var(--space-4);
+}
+
+.sk-honest-filter__intro {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+  max-width: 560px;
+  margin: 0 auto var(--space-7);
+}
+
+.sk-honest-filter__intro p {
+  margin: 0;
+  max-width: none;
+}
+
+/* ---------- Disqualification list ---------- */
+.sk-honest-filter__list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto var(--space-7);
+  text-align: left;
+  max-width: 640px;
+}
+
+.sk-honest-filter__item {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--ink-700) 10%, transparent);
+}
+
+.sk-honest-filter__item:last-child {
+  border-bottom: 0;
+}
+
+/* X icon — accent-colored glyph (no background circle).
+   The accent comes from the merchant inline --accent setting,
+   with --accent-clay as the constitutional fallback. */
+.sk-honest-filter__icon {
+  flex-shrink: 0;
+  width: 24px;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  color: var(--accent, var(--accent-clay));
+  text-align: center;
+  margin-top: 2px;
+}
+
+.sk-honest-filter__body {
+  min-width: 0;
+  flex: 1;
+}
+
+.sk-honest-filter__lead {
+  display: block;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--ink-900);
+  margin: 0 0 var(--space-1);
+}
+
+.sk-honest-filter__explanation {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+  margin: 0;
+  max-width: none;
+}
+
+/* ---------- Separator + closing ---------- */
+.sk-honest-filter__separator {
+  width: 32px;
+  height: 2px;
+  background: var(--accent, var(--accent-clay));
+  margin: 0 auto var(--space-5);
+  border: 0;
+}
+
+.sk-honest-filter__closing {
+  margin-bottom: var(--space-6);
+}
+
+.sk-honest-filter__closing h3 {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  color: var(--ink-700);
+  max-width: 540px;
+  margin: 0 auto var(--space-3);
+}
+
+.sk-honest-filter__closing p {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+  margin: 0 auto;
+  max-width: 480px;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 749px) {
+  .sk-honest-filter__item {
+    padding: var(--space-4) 0;
+    gap: var(--space-3);
+  }
+  .sk-honest-filter__icon {
+    font-size: var(--fs-lg);
+    width: 20px;
+  }
+  .sk-honest-filter__list {
+    margin-bottom: var(--space-6);
+  }
+}
