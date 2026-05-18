@@ -299,14 +299,22 @@
 }
 @media (min-width: 769px) {
   .lp-hero {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
     padding-block: var(--space-section-md);
   }
   .lp-hero__grid {
     grid-template-columns: 1.05fr 1fr; /* copy slightly wider than image */
     align-items: center;
+    gap: clamp(var(--space-6), 4vw, var(--space-8));
+  }
+  .lp-hero__image {
+    max-height: 560px;
+    overflow: hidden;
+  }
+  .lp-hero__image > img,
+  .lp-hero__image > .lp-hero__media-wrap {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 
