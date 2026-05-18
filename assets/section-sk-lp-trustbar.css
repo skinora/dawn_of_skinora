@@ -40,11 +40,9 @@
   flex: 0 1 auto;
 }
 
-/* Icon — refined 24px, recolored via CSS filter to --accent-clay
-   so dark merchant-uploaded SVGs read clearly against ink-900.
-   The filter chain approximates #A0522D from any source SVG color.
-   If a future need calls for white icons, swap to:
-     filter: brightness(0) invert(1); */
+/* Icon — refined 24px. SVG sources in assets/ are now natively
+   coloured in --accent-clay (#A0522D), so no CSS filter is needed.
+   See assets/no_1.svg, lager.svg, garanti.svg, sikker_betaling.svg. */
 .lp-trustbar__icon {
   width: 24px;
   height: 24px;
@@ -59,7 +57,6 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  filter: brightness(0) saturate(100%) invert(34%) sepia(54%) saturate(640%) hue-rotate(343deg) brightness(91%) contrast(91%);
 }
 
 /* Text — uppercase tracking-wide label, paper-0 on dark band */
