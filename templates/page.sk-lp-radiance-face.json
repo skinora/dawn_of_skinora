@@ -76,6 +76,9 @@
       ],
       "settings": {
         "image": "shopify://shop_images/skinora_radiance_face_hero.png",
+        "hero_video_url": "",
+        "show_authority_citation": true,
+        "authority_citation_marker": "¹",
         "eyebrow": "Skinora® Radiance Face",
         "title": "Profesjonell glød — hjemme på 10 minutter.",
         "text_line_1": "Klinisk dokumentert LED-teknologi. Resultater du kan se.",
@@ -156,7 +159,6 @@
     },
     "lp_results_EBb64M": {
       "type": "sk-lp-results-timeline",
-      "name": "LP Results Timeline",
       "blocks": {
         "c_1": {
           "type": "comparison",
@@ -187,7 +189,11 @@
           }
         }
       },
-      "block_order": ["c_1", "c_2"],
+      "block_order": [
+        "c_1",
+        "c_2"
+      ],
+      "name": "LP Results Timeline",
       "settings": {
         "heading": "Hva kan du forvente?",
         "intro": "Realistiske resultater fra ekte brukere",
@@ -200,55 +206,85 @@
         "rev_1": {
           "type": "review",
           "settings": {
+            "priority": 10,
             "text": "Etter 6 uker merker jeg virkelig forskjell på hudtonen. Huden ser friskere ut og pigmentflekkene er blitt mindre synlige. Veldig fornøyd!",
             "author": "Wenche S., 52, Oslo",
             "concern_tag": "Pigmentflekker · Moden hud",
-            "usage_tag": "Bruker: 10 min, 4x/uke"
+            "usage_tag": "Bruker: 10 min, 4x/uke",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
           }
         },
         "rev_2": {
           "type": "review",
           "settings": {
+            "priority": 10,
             "text": "Bruker den foran TV hver kveld. Enkelt, behagelig og huden kjennes mykere. Gir ikke opp denne rutinen!",
             "author": "Kari M., 47, Stavanger",
             "concern_tag": "Glød · Tørr hud",
-            "usage_tag": "Bruker: 10 min, 5x/uke"
+            "usage_tag": "Bruker: 10 min, 5x/uke",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
           }
         },
         "rev_3": {
           "type": "review",
           "settings": {
+            "priority": 10,
             "text": "Var skeptisk, men etter 4 uker ser jeg tydelig mer glød. Huden føles tettere og fine linjene er blitt mindre synlige.",
             "author": "Tone H., 61, Trondheim",
             "concern_tag": "Fine linjer · Fasthet",
-            "usage_tag": "Bruker: 10 min, 3x/uke"
+            "usage_tag": "Bruker: 10 min, 3x/uke",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
           }
         },
         "rev_4": {
           "type": "review",
           "settings": {
+            "priority": 10,
             "text": "Jeg var litt skeptisk i starten, men etter fem uker ser jeg tydelig at de fine linjene rundt øynene har blitt mykere. Huden kjennes fastere og mer levende. Bruker den mens jeg leser om kvelden.",
             "author": "Sissel R., 58, Bergen",
             "concern_tag": "Fine linjer · Fasthet",
-            "usage_tag": "Bruker: 10 min, 4x/uke"
+            "usage_tag": "Bruker: 10 min, 4x/uke",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
           }
         },
         "rev_5": {
           "type": "review",
           "settings": {
+            "priority": 10,
             "text": "Har slitt med mørke ringer under øynene i årevis. Etter en måned er de ikke borte, men merkbart lysere. Og huden generelt ser mye ferskere ut. Mannen min la merke til det uten at jeg sa noe.",
             "author": "Anette L., 44, Drammen",
             "concern_tag": "Mørke ringer · Trøtt hud",
-            "usage_tag": "Bruker: 10 min, 5x/uke"
+            "usage_tag": "Bruker: 10 min, 5x/uke",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
           }
         },
         "rev_6": {
           "type": "review",
           "settings": {
+            "priority": 10,
             "text": "Huden min har alltid vært litt ujevn og rød, spesielt på kinnene. Etter seks uker er rødheten blitt mye roligere og hudtonen ser jevnere ut. Enkelt å bruke og jeg syns den er behagelig å ha på.",
             "author": "Marte K., 49, Stavanger",
             "concern_tag": "Ujevn hudtone · Rødhet",
-            "usage_tag": "Bruker: 10 min, 3x/uke"
+            "usage_tag": "Bruker: 10 min, 3x/uke",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
           }
         }
       },
@@ -265,6 +301,12 @@
         "score": "4.8 av 5 – basert på 102 anmeldelser",
         "rating_score": "4.8",
         "review_count": "102",
+        "reviews_visible_count": 6,
+        "show_more_text": "Vis flere anmeldelser",
+        "show_less_text": "Vis færre",
+        "before_after_disclaimer": "<p>Bilder fra ekte verifiserte kunder, brukt med tillatelse. Ikke retusjert. Resultater kan variere fra person til person og avhenger av jevn bruk over 6–8 uker.</p>",
+        "enable_trustpilot_embed": false,
+        "trustpilot_business_unit_id": "",
         "product_url": "/products/skinora-radiance-face",
         "midpage_cta_text": "Få din Radiance Face nå",
         "midpage_klarna_text": "Fra 130 kr/mnd med Klarna"
@@ -519,21 +561,27 @@
           "type": "card",
           "settings": {
             "title": "Norsk kundeservice",
-            "text": "<p>Har du spørsmål? <a href=\"/pages/kundeservice\" title=\"Kundeservice\">Ta kontakt</a> — vi svarer raskt.</p>"
+            "text": "<p>Har du spørsmål? <a href=\"/pages/kundeservice\" title=\"Kundeservice\">Ta kontakt</a> — vi svarer raskt.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
           }
         },
         "tf_4": {
           "type": "card",
           "settings": {
             "title": "Sikker betaling",
-            "text": "<p>Vipps, Klarna, Visa og Mastercard.</p>"
+            "text": "<p>Vipps, Klarna, Visa og Mastercard.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
           }
         },
         "tf_5": {
           "type": "card",
           "settings": {
             "title": "2 års reklamasjonsrett",
-            "text": "<p>Full reklamasjonsrett i henhold til norsk lov.</p>"
+            "text": "<p>Full reklamasjonsrett i henhold til norsk lov.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
           }
         }
       },
@@ -679,96 +727,6 @@
         "heading": "Ofte stilte spørsmål"
       }
     },
-    "skinora_faq": {
-      "type": "skinora-faq",
-      "blocks": {
-        "sfaq_1": {
-          "type": "faq",
-          "settings": {
-            "question": "Hvor raskt ser jeg resultater?",
-            "answer": "De fleste merker forskjell etter 3–4 uker med jevn bruk 3–5 ganger i uken. Tydelige resultater på fine linjer og hudtone kommer typisk mellom uke 6 og 12."
-          }
-        },
-        "sfaq_2": {
-          "type": "faq",
-          "settings": {
-            "question": "Hvor ofte bør jeg bruke masken?",
-            "answer": "Vi anbefaler 10 minutter, 3–5 ganger i uken. Daglig bruk er trygt, men ikke nødvendig."
-          }
-        },
-        "sfaq_3": {
-          "type": "faq",
-          "settings": {
-            "question": "Er LED-lys trygt for huden?",
-            "answer": "Ja. Rødt og nær-infrarødt LED-lys er ikke-invasivt, inneholder ingen UV-stråler, og brukes daglig av hudklinikker over hele verden."
-          }
-        },
-        "sfaq_4": {
-          "type": "faq",
-          "settings": {
-            "question": "Kan jeg bruke masken sammen med retinol eller syrer?",
-            "answer": "Ja, men vi anbefaler å bruke LED-masken på ren, tørr hud før du legger på aktive serum eller krem."
-          }
-        },
-        "sfaq_5": {
-          "type": "faq",
-          "settings": {
-            "question": "Fungerer den på rosacea og rødhet?",
-            "answer": "Mange opplever at rødt LED-lys kan dempe rødhet over tid. Start forsiktig og lytt til huden."
-          }
-        },
-        "sfaq_6": {
-          "type": "faq",
-          "settings": {
-            "question": "Når bør jeg IKKE bruke masken?",
-            "answer": "Hvis du er gravid, bruker lysømfintlige medisiner, har epilepsi, eller nylig har gjort laser/peeling – snakk med lege først."
-          }
-        },
-        "sfaq_7": {
-          "type": "faq",
-          "settings": {
-            "question": "Hva er forskjellen på Skinora og dyrere merker som CurrentBody og Omnilux?",
-            "answer": "Samme bølgelengder og medisinsk grade LED, til en mer tilgjengelig pris – med norsk kundeservice og 60 dagers fornøydgaranti."
-          }
-        },
-        "sfaq_8": {
-          "type": "faq",
-          "settings": {
-            "question": "Hvor lang er leveringstiden?",
-            "answer": "2–4 virkedager i Norge. Gratis frakt på alle ordrer."
-          }
-        },
-        "sfaq_9": {
-          "type": "faq",
-          "settings": {
-            "question": "Hva er fornøydgarantien?",
-            "answer": "60 dager. Hvis du ikke er fornøyd, sender du masken tilbake og får pengene tilbake. Ingen spørsmål."
-          }
-        },
-        "sfaq_10": {
-          "type": "faq",
-          "settings": {
-            "question": "Hvor mange behandlinger holder batteriet?",
-            "answer": "Cirka 20 fulle behandlinger per lading via USB-C."
-          }
-        }
-      },
-      "block_order": [
-        "sfaq_1",
-        "sfaq_2",
-        "sfaq_3",
-        "sfaq_4",
-        "sfaq_5",
-        "sfaq_6",
-        "sfaq_7",
-        "sfaq_8",
-        "sfaq_9",
-        "sfaq_10"
-      ],
-      "settings": {
-        "heading": "Ofte stilte spørsmål"
-      }
-    },
     "cta": {
       "type": "sk-lp-cta",
       "blocks": {
@@ -832,7 +790,6 @@
     "trust_full",
     "documentation",
     "faq",
-    "skinora_faq",
     "cta",
     "sticky_buy_bar"
   ]
