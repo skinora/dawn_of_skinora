@@ -4,28 +4,27 @@
 {%- endcomment -%}
 
 {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+{{ 'section-sk-lp-trustbar.css' | asset_url | stylesheet_tag }}
 
 <div class="sk-lp">
   <section class="lp-trustbar">
-    <div class="lp-container">
-      <div class="lp-trustbar__grid">
-        {%- for block in section.blocks -%}
-          <div class="lp-trustbar__item" {{ block.shopify_attributes }}>
-            {%- if block.settings.icon != blank -%}
-              <span class="lp-trustbar__icon"
-                ><img
-                  src="{{ block.settings.icon | image_url: height: 96 }}"
-                  alt=""
-                  role="presentation"
-                  width="48"
-                  height="48"
-                  loading="lazy"
-              ></span>
-            {%- endif -%}
-            <span class="lp-trustbar__text">{{ block.settings.text }}</span>
-          </div>
-        {%- endfor -%}
-      </div>
+    <div class="lp-trustbar__grid">
+      {%- for block in section.blocks -%}
+        <div class="lp-trustbar__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <span class="lp-trustbar__icon"
+              ><img
+                src="{{ block.settings.icon | image_url: height: 48 }}"
+                alt=""
+                role="presentation"
+                width="48"
+                height="48"
+                loading="lazy"
+            ></span>
+          {%- endif -%}
+          <span class="lp-trustbar__text">{{ block.settings.text }}</span>
+        </div>
+      {%- endfor -%}
     </div>
   </section>
 </div>

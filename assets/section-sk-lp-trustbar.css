@@ -1,0 +1,69 @@
+/* =============================================================
+   sk-lp-trustbar — dark cinematic trust band
+   Sits directly below the hero. Single dark band with ALL-CAPS
+   tracking-wide trust signals on ink-900 background, creating
+   visual continuity with the dark moody hero overlay.
+
+   Layout: flex-wrap so 2-6 items distribute evenly without grid
+   column orphans. Items are inline (icon + text), aligned to a
+   centered row on desktop, wrapping to 2 rows on mobile.
+
+   Icons render at their native colors from merchant SVG uploads
+   (no CSS color filter) — refined down from 48px to 24px so they
+   read as accents rather than feature illustrations.
+
+   Tokens from assets/typography.css.
+   ============================================================= */
+
+.lp-trustbar {
+  background: var(--ink-900);
+  padding-block: var(--space-5);
+  /* No top/bottom borders — band reads as continuous dark mass. */
+}
+
+.lp-trustbar__grid {
+  width: 100%;
+  max-width: var(--lp-w-wide);
+  margin-inline: auto;
+  padding-inline: var(--lp-gutter);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: var(--space-5) clamp(var(--space-4), 3vw, var(--space-7));
+}
+
+.lp-trustbar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 0 1 auto;
+}
+
+/* Icon — refined 24px, native merchant colors preserved (no filter) */
+.lp-trustbar__icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lp-trustbar__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Text — uppercase tracking-wide label, paper-0 on dark band */
+.lp-trustbar__text {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  line-height: var(--lh-snug);
+  color: var(--paper-0);
+}
