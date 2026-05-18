@@ -11,7 +11,7 @@
 }
 
 .lp-faq__list {
-  max-width: 760px;
+  max-width: var(--lp-w-narrow);
   margin: 0 auto;
   text-align: left;
 }

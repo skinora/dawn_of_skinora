@@ -76,6 +76,15 @@
   --measure-narrow: 38ch;
   --measure-body: 62ch;
   --measure-wide: 72ch;
+
+  /* ---------- LP CONTAINER SYSTEM ----------
+     Three standard widths every LP section snaps to, plus one
+     horizontal gutter. Component-internal widths (cards, badges,
+     thumbnails) keep their own custom sizes. */
+  --lp-w-wide: 1200px;   /* grids, hero, most sections */
+  --lp-w-text: 800px;    /* tabular / form-style content */
+  --lp-w-narrow: 760px;  /* tight reading: FAQ list, CTA inner, single-col problem */
+  --lp-gutter: clamp(16px, 4vw, 32px);
 }
 
 @media (min-width: 769px) {
