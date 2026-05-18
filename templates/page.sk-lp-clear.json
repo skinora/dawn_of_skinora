@@ -49,39 +49,21 @@
         "pill_3"
       ],
       "settings": {
-        "image": "shopify://shop_images/Skinora_Clear_bruk_maske_som_en_del_av_hudpleie.webp",
+        "image": "shopify://shop_images/skinora-clear-i-bruk_1.webp",
+        "image_mobile": "shopify://shop_images/skinora-clear-i-bruk_2.webp",
         "hero_video_url": "",
-        "show_authority_citation": true,
-        "authority_citation_marker": "¹",
         "eyebrow": "Skinora® Clear",
         "title": "Klarere hud — uten sterke midler.",
         "text_line_1": "Klinisk dokumentert LED. 10 minutter, hjemme.",
-        "text_line_2": "10 minutter, 3–5 ganger i uken. Resultater du kan se.",
-        "bullet_1": "<strong>Rødt + dNIR (1072 nm)</strong> · 10 minutter, 3-5x/uke. Resultater du kan se.",
-        "bullet_2": "Ny generasjon <strong>dNIR:</strong> 1072 nm",
-        "bullet_disclaimer": "Teknisk spesifikasjon. Resultater varierer.",
-        "rating_text": "<strong>4.8/5</strong> – basert på 102 anmeldelser",
         "rating_score": "4.7",
         "review_count": "89",
-        "testimonial_quote": "Huden min har aldri vært så rolig. Bruker den hver kveld og merker stor forskjell på rødhet og nye utbrudd.",
-        "testimonial_author": "Ida L., 28, Bergen · Verifisert kjøper",
         "cta_text": "Prøv risikofritt i 60 dager",
-        "sticky_cta_text": "Prøv risikofritt →",
-        "show_urgency": true,
-        "urgency_text": "⚡ Sendes innen 24 timer · Norsk lager",
         "cta_url": "/products/skinora-clear",
+        "price_display": "4 690 kr",
+        "klarna_text": "fra 130 kr/mnd med Klarna",
         "show_link": false,
         "link_text": "Se hvordan den brukes (60 sek) ↓",
-        "link_url": "#slik-bruker-du",
-        "value_title": "Skinora® Clear — 4 390 kr",
-        "value_tag": "ENGANGSKJØP · INGEN ABONNEMENT",
-        "value_sub_text": "Profesjonell klinikkteknologi – hjemme, på dine premisser",
-        "value_roi_line": "✓ Tilsvarer ca. 8 klinikkøkter",
-        "value_roi_sub": "Etter det er behandlingen, praktisk talt gratis",
-        "show_value_icon": true,
-        "value_bullet_1": "Klinisk dokumentert LED-teknologi",
-        "value_bullet_2": "60 dagers fornøydgaranti",
-        "value_bullet_3": "Spar tusenvis over tid"
+        "link_url": "#slik-bruker-du"
       }
     },
     "trustbar": {
@@ -279,7 +261,6 @@
       "settings": {
         "eyebrow": "ÆRLIG SNAKK",
         "heading": "Skinora® Clear er ikke for alle.",
-        "subhead": "Vær ærlig med deg selv før du bestiller.",
         "intro": "<p>Vi har bygget Skinora Clear for én type kunde. Hvis du kjenner deg igjen i punktene under, er ikke dette riktig produkt for deg — og det er helt greit. Vi vil heller at du finner det som virker.</p>",
         "closing": "<h3>Hvis du nikker nei til alle fire — er du nøyaktig den vi bygget dette for.</h3><p>Vi gir deg 60 dager på å bevise det for deg selv.</p>",
         "cta_label": "PRØV RISIKOFRITT I 60 DAGER →",
@@ -431,7 +412,6 @@
         "w_1": {
           "type": "card",
           "settings": {
-            "icon": "shopify://shop_images/10.svg",
             "title": "Blått lys mot bakterier",
             "text": "<p>Dreper akne-bakterier uten antibiotika eller sterke kjemikalier.</p><p><a href=\"/pages/dokumentasjon-og-forskning\" title=\"Dokumentasjon og forskning\">Se dokumentasjon</a></p>"
           }
@@ -439,7 +419,6 @@
         "card_G34QkN": {
           "type": "card",
           "settings": {
-            "icon": "shopify://shop_images/2.svg",
             "title": "Fokus på det som faktisk fungerer",
             "text": "<p>Vi har bevisst valgt bort unødvendige lysfarger. Skinora® Clear bruker kun utvalgte bølgelengder som er mest brukt i LED-lysbehandling — for et mer målrettet og konsistent lysbilde</p>"
           }
@@ -447,7 +426,6 @@
         "w_2": {
           "type": "card",
           "settings": {
-            "icon": "shopify://shop_images/11.svg",
             "title": "Rødt lys mot betennelse",
             "text": "<p>Reduserer rødhet og hjelper huden å reparere seg selv raskere.</p>"
           }
@@ -455,7 +433,6 @@
         "w_3": {
           "type": "card",
           "settings": {
-            "icon": "shopify://shop_images/6.svg",
             "title": "Målrettet behandling",
             "text": "<p>Kompakt design for presis behandling der du trenger det.</p>"
           }
@@ -463,7 +440,6 @@
         "w_4": {
           "type": "card",
           "settings": {
-            "icon": "shopify://shop_images/18.svg",
             "title": "Skånsom og trygg",
             "text": "<p>Ingen UV-stråler. Egnet for sensitiv og uren hud.</p>"
           }
@@ -477,7 +453,8 @@
         "w_4"
       ],
       "settings": {
-        "heading": "Hvorfor Skinora® Clear er annerledes"
+        "heading": "Hvorfor Skinora® Clear er annerledes",
+        "intro": ""
       }
     },
     "reviews": {
@@ -486,6 +463,7 @@
         "review_wxnFyr": {
           "type": "review",
           "settings": {
+            "priority": 10,
             "text": "Jeg har aldri hatt akne, men de siste to årene har pannen min vært dekket av små røde kuler som bare ikke ville forsvinne. Tror det startet med mye trening i hjelm og stress fra studiene. Jeg prøvde alt – salicylsyre, retinol, dyre serum, hudterapeut – og fikk det ned i korte perioder, men aldri borte. Etter åtte uker med Skinora® Clear, 4 kvelder i uken, er pannen min nesten helt rolig. Jeg slipper å sjekke speilet hver morgen for å se hva som dukket opp i løpet av natten. Det er en lettelse jeg ikke visste jeg trengte.",
             "author": "Linnea S., 26, Stavanger",
             "concern_tag": "PANNE & T-SONE",
@@ -501,6 +479,7 @@
         "review_ktegL7": {
           "type": "review",
           "settings": {
+            "priority": 10,
             "text": "Etter to runder med Roaccutan var aknen borte, men huden var rød, ujevn og lett irritabel. Jeg hadde gitt opp å finne noe som faktisk roet det ned uten å være aggressivt. Skinora® Clear er det første jeg har brukt der jeg ser forskjell uten å bli tørr eller flassete. Etter seks uker er rødheten merkbart mindre, og de få nye utbruddene jeg får, går vekk etter et par dager i stedet for å verke i ukevis. Stille, men virker.",
             "author": "Sondre B., 29, Oslo",
             "concern_tag": "Voksenakne, post-akne-arr og rødhet",
@@ -516,6 +495,7 @@
         "review_CC7jeb": {
           "type": "review",
           "settings": {
+            "priority": 10,
             "text": "Jeg har slitt med smertefulle kuler langs kjeven og haken siden jeg var 24 — alltid verst rett før mensen, alltid på samme sted. Har prøvd antibiotika, p-piller, retinol, klinikkbehandlinger. Noe hjalp en stund, så kom det tilbake. Etter åtte uker med Skinora® Clear, 4 ganger i uken, er det stille på huden min. Jeg våkner ikke til en ny verkende kul. Det høres så enkelt ut, men det har endret hverdagen min.",
             "author": "Marte H., 34, Trondheim",
             "concern_tag": "Hormonell akne på hake og kjeve",
@@ -531,6 +511,7 @@
         "rev_1": {
           "type": "review",
           "settings": {
+            "priority": 10,
             "text": "Hver eneste måned, en uke før mensen, kom de samme betente kvisene langs kjeven og haken. Jeg avlyste dater, droppet trening og la et tykt lag foundation før jeg gikk ut for å hente posten. Etter 5 uker med Skinora er utbruddene færre, mindre røde, og de gror på dager i stedet for uker. I går gikk jeg på jobb uten sminke. Bare det er verdt hver krone.",
             "author": "Ida L., 28, Bergen",
             "concern_tag": "Rødhet & utbrudd · 10 min, 5x/uke",
@@ -546,6 +527,7 @@
         "rev_2": {
           "type": "review",
           "settings": {
+            "priority": 10,
             "text": "To runder med antibiotika, retinol som svidde, syrer som gjorde huden tynn og rød – jeg hadde brukt over 30 000 kr på huden min uten å bli bedre. Skinora var ærlig talt et siste forsøk før jeg booket ny time hos hudlege. Etter 6 uker er huden roligere enn den har vært siden 20-årene. Jeg ser meg selv i speilet uten å lete etter feil for første gang på årevis.",
             "author": "Emilie K., 34, Oslo",
             "concern_tag": "Tørr, uren hud · 10 min, 4x/uke",
@@ -561,6 +543,7 @@
         "rev_3": {
           "type": "review",
           "settings": {
+            "priority": 10,
             "text": "Pannen og nesen min har alltid vært full av små underhudskviser man knapt ser på bilder – men som lyser opp i sterk belysning og kjennes med en gang noen kommer nært. Jeg snudde meg vekk for kyss, unngikk selfies forfra, og hatet kontorlysene på jobb. Etter 4 uker er huden så mye jevnere at sminken legger seg flatt, og kjæresten min faktisk spurte hva jeg hadde gjort før jeg rakk å si det selv.",
             "author": "Nora T., 25, Drammen",
             "concern_tag": "T-sone, nærkontakt-skam · 10 min, 3x/uke",
