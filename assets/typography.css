@@ -459,26 +459,24 @@ a:hover {
 
 /* =============================================================
    6 — VERTICAL RHYTHM (section padding system)
-   Apply via class on the section element.
+   --------------------------------------------------------------
+   ARCHITECTURE
+   Each landing-page section owns its OWN padding-block in its
+   dedicated assets/section-*.css file, using one of three tokens:
+
+     --space-section-sm  (48 → 72px)   compact: trustbar, banners,
+                                       problem, tech-specs
+     --space-section-md  (72 → 96px)   standard: every content section
+     --space-section-lg  (96 → 128px)  feature: hero, final CTA
+
+   Background colour also lives on the SAME inner element so the
+   colored band fills the entire section padding cleanly.
+
+   The .sk-lp-section / .lp-section schema classes are intentionally
+   left as no-op markers — they're applied to the Shopify-generated
+   outer wrapper but no longer add padding, since doing so doubled
+   the spacing with the inner section's own padding-block.
    ============================================================= */
-
-.sk-lp-section,
-.lp-section {
-  padding-top: var(--space-section-md);
-  padding-bottom: var(--space-section-md);
-}
-
-.sk-lp-section--sm,
-.lp-section--sm {
-  padding-top: var(--space-section-sm);
-  padding-bottom: var(--space-section-sm);
-}
-
-.sk-lp-section--lg,
-.lp-section--lg {
-  padding-top: var(--space-section-lg);
-  padding-bottom: var(--space-section-lg);
-}
 
 /* Heading → body breathing room */
 h1 + p,
