@@ -8,7 +8,7 @@
 
 .lp-cta-final {
   background: var(--paper-0);
-  padding-block: var(--space-section-lg);
+  padding-block: var(--space-section-md);
 }
 
 .lp-cta-final .lp-container--narrow {
