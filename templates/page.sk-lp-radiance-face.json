@@ -60,6 +60,43 @@
         "link_url": "#slik-bruker-du"
       }
     },
+    "sk_lp_trustbar_pnMnN8": {
+      "type": "sk-lp-trustbar",
+      "blocks": {
+        "item_6PwMQM": {
+          "type": "item",
+          "settings": {
+            "text": "Norskutviklet"
+          }
+        },
+        "item_dbVLXY": {
+          "type": "item",
+          "settings": {
+            "text": "Sendes fra norsk lager"
+          }
+        },
+        "item_6CbefW": {
+          "type": "item",
+          "settings": {
+            "text": "60 dagers garanti"
+          }
+        },
+        "item_37aFrz": {
+          "type": "item",
+          "settings": {
+            "text": "Vipps & Klarna"
+          }
+        }
+      },
+      "block_order": [
+        "item_6PwMQM",
+        "item_dbVLXY",
+        "item_6CbefW",
+        "item_37aFrz"
+      ],
+      "name": "LP Trust Bar",
+      "settings": {}
+    },
     "problem": {
       "type": "sk-lp-problem",
       "blocks": {
@@ -764,6 +801,7 @@
   "order": [
     "announcement",
     "hero",
+    "sk_lp_trustbar_pnMnN8",
     "problem",
     "lp_results_EBb64M",
     "reviews",
