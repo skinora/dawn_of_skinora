@@ -298,6 +298,32 @@ body .lp-hero--overlay .lp-btn--hero:focus-visible {
 }
 
 /* ============================================================
+   Mobile ≤768px — tighten rhythm so the longer audit-driven copy
+   (3-line H1 + 3-line subline + visible demo link) fits inside the
+   100dvh band without clipping the top of the content.
+   Savings vs base: ~70px of vertical space on iPhone-class viewports.
+   ============================================================ */
+@media (max-width: 768px) {
+  .lp-hero__inner {
+    /* Was section-md (72px) top + bottom; clamp gives 32–56px so the
+       hero feels intentional without crowding small viewports. */
+    padding-block: clamp(32px, 8vw, 56px);
+  }
+  .lp-hero__title {
+    margin-bottom: var(--space-3);
+  }
+  .lp-hero__text {
+    margin-bottom: var(--space-4);
+  }
+  .lp-hero__rating {
+    margin-bottom: var(--space-4);
+  }
+  .lp-hero__actions {
+    margin-bottom: var(--space-4);
+  }
+}
+
+/* ============================================================
    Desktop ≥769px — content vertically centered, slightly less tall
    ============================================================ */
 @media (min-width: 769px) {
