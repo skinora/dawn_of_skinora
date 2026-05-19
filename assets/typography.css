@@ -132,6 +132,65 @@ p:last-child {
 }
 
 /* =============================================================
+   2.5 — LP SCOPED BASE (.sk-lp)
+   Loaded ONCE here so all .sk-lp/.sk-lp-* sections inherit a
+   consistent reset and so section-specific rules can override
+   safely via natural source order. Previously these lived in
+   section-sk-lp-radiance-face.css, which is loaded by ~18
+   sections — every reload re-injected `.sk-lp img { height: auto }`
+   and `.sk-lp p { margin: 0 }` AFTER section-specific rules,
+   walking over hero img `height: 100%` and section intro margins.
+   ============================================================= */
+.sk-lp {
+  /* Legacy --sk-* aliases — kept so other sections (sk-radiance,
+     sk-radiance-product, sk-product-specifications, sk-radiance-sticky-bar)
+     that still reference them resolve to constitutional palette tokens. */
+  --sk-brand: var(--ink-900);
+  --sk-text: var(--ink-700);
+  --sk-muted: var(--ink-500);
+  --sk-hairline: color-mix(in srgb, var(--ink-700) 12%, transparent);
+  --sk-surface: var(--paper-0);
+  --sk-surface-soft: var(--paper-50);
+
+  font-family: var(--ff-sans);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--ink-700);
+  background: var(--paper-0);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.sk-lp *,
+.sk-lp *::before,
+.sk-lp *::after {
+  box-sizing: border-box;
+}
+
+.sk-lp img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.sk-lp a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.sk-lp ul,
+.sk-lp ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sk-lp p {
+  margin: 0;
+}
+
+/* =============================================================
    3 — SEMANTIC ELEMENT DEFAULTS
    These set sane defaults so every <h1>/<h2>/<p> looks right
    even if the developer forgets a utility class.

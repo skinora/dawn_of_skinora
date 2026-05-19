@@ -7,55 +7,14 @@
    All design tokens come from assets/typography.css (loaded globally).
    ============================================================ */
 
-/* ---------- SCOPED BASE ---------- */
-.sk-lp {
-  /* Legacy --sk-* aliases — kept so other sections (sk-radiance,
-     sk-radiance-product, sk-product-specifications, sk-radiance-sticky-bar)
-     that still reference them resolve to constitutional palette tokens. */
-  --sk-brand: var(--ink-900);
-  --sk-text: var(--ink-700);
-  --sk-muted: var(--ink-500);
-  --sk-hairline: color-mix(in srgb, var(--ink-700) 12%, transparent);
-  --sk-surface: var(--paper-0);
-  --sk-surface-soft: var(--paper-50);
-
-  font-family: var(--ff-sans);
-  font-weight: var(--fw-regular);
-  font-size: var(--fs-md);
-  line-height: var(--lh-normal);
-  color: var(--ink-700);
-  background: var(--paper-0);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-.sk-lp *,
-.sk-lp *::before,
-.sk-lp *::after {
-  box-sizing: border-box;
-}
-
-.sk-lp img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-.sk-lp a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.sk-lp ul,
-.sk-lp ol {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.sk-lp p {
-  margin: 0;
-}
+/* ---------- SCOPED BASE ----------
+   Moved to assets/typography.css (loaded once globally in
+   theme.liquid). Previously living here caused every section
+   that loaded this file (~18) to re-inject the .sk-lp resets
+   AFTER section-specific rules, breaking the cascade —
+   `.sk-lp img { height: auto }` was beating
+   `.lp-hero__media img { height: 100% }` even with same
+   specificity, because radiance-face.css re-emitted last. */
 
 /* ---------- UTILITY ---------- */
 .lp-container {
