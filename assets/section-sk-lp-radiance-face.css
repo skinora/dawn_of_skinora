@@ -624,10 +624,13 @@
 
 /* Mobile */
 @media (max-width: 640px) {
-  .lp-hero__pills {
-    flex-direction: column;
-    gap: var(--space-3);
-  }
+  /* Legacy `.lp-hero__pills { flex-direction: column }` rule removed —
+     the modular sk-lp-hero (overlay) hero anchors content to the
+     bottom of a 100dvh band with `overflow: hidden`. Stacking three
+     pills vertically pushes the content past the viewport and the
+     last pill ("Gratis frakt") gets clipped. The pills now wrap
+     inline via the `flex-wrap: wrap` rule in section-sk-lp-hero.css,
+     fitting compactly across 1–2 rows. */
 
   .lp-btn {
     width: 100%;
