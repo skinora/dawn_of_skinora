@@ -333,7 +333,7 @@
       "type": "sk-radiance",
       "name": "Image with Content",
       "settings": {
-        "image": "shopify://shop_images/kvinne_under_skinora_radiance_face_behandling.webp",
+        "image": "shopify://shop_images/skinora-radiance-face.webp",
         "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 36,
