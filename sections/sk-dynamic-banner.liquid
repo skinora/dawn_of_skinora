@@ -199,14 +199,14 @@
       font-size: clamp(1.1rem, 3.9vw, 1.5rem);
       line-height: 1.4;
       max-width: 100%;
+      /* Push description (and the CTA after it) to the bottom of the
+         content column so the description sits next to the button.
+         Title remains anchored at the top of the bottom-aligned content. */
+      margin-top: auto;
     }
     .sk-dynamic-banner__button .sk-btn {
       width: min(280px, 90vw);
       justify-content: center;
-    }
-
-    .sk-dynamic-banner__cta {
-      margin-top: auto;
     }
 
     .sk-dynamic-banner--cta-top {
