@@ -307,7 +307,14 @@
   font-weight: var(--fw-regular);
   line-height: var(--lh-normal);
   color: var(--ink-500);
-  margin: var(--space-3) 0 0;
+  /* Override the global `p { max-width: var(--measure-body) }` reading-
+     measure cap from typography.css — this is a horizontal trust strip,
+     not prose, so the 62ch cap was forcing the (narrower) block to sit
+     left-anchored inside the centered parent. Auto inline margin centers
+     the block itself; max-width: none lets the strip stay one line. */
+  max-width: none;
+  margin: var(--space-3) auto 0;
+  text-align: center;
 }
 
 /* ---------- Reduced motion ---------- */
