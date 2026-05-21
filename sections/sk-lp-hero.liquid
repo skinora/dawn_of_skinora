@@ -200,7 +200,8 @@
             <span class="lp-hero__rating-score">{{ section.settings.rating_score }}/5</span>
             <span class="lp-hero__rating-sep" aria-hidden="true">·</span>
             <span class="lp-hero__rating-count">
-              fra {{ section.settings.review_count | default: '0' }} kvinner over 40</span
+              fra {{ section.settings.review_count | default: '0' }}
+              {{ section.settings.audience_label | default: 'verifiserte kunder' }}</span
             >
           </div>
         {%- endif -%}
@@ -356,6 +357,13 @@
       "id": "review_count",
       "label": "Antall anmeldelser (tall)",
       "default": "102"
+    },
+    {
+      "type": "text",
+      "id": "audience_label",
+      "label": "Målgruppe-etikett (vises etter antall)",
+      "info": "F.eks. «kvinner over 40» eller «kunder med uren hud». Speiler målgruppen for siden — bruk noe konkret som kjøperen kjenner seg igjen i.",
+      "default": "verifiserte kunder"
     },
     {
       "type": "header",
