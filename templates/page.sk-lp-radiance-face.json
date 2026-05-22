@@ -722,13 +722,13 @@
         "g_2": {
           "type": "badge",
           "settings": {
-            "text": "Gratis frakt"
+            "text": "Sendes innen 24 t"
           }
         },
         "g_3": {
           "type": "badge",
           "settings": {
-            "text": "Sikker betaling"
+            "text": "Trygg betaling"
           }
         }
       },
@@ -740,8 +740,8 @@
       "settings": {
         "heading": "Klar for synlige resultater?",
         "text": "Gi huden din den behandlingen den fortjener – hjemme, på dine premisser, med teknologi som faktisk virker.",
-        "price_text": "",
-        "button_text": "Bestill nå – risikofritt",
+        "price_text": "4 690 kr",
+        "button_text": "Bestill nå",
         "product_url": "/products/skinora-radiance-face",
         "anchor_id": "kjop",
         "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra 130 kr/mnd med Klarna</strong>"

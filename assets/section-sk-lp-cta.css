@@ -1,14 +1,22 @@
 /* =============================================================
    sk-lp-cta — final closing CTA section
    Used by both Clear and Radiance LPs.
-   Type tokens for .lp-cta-final h2 / p live in assets/typography.css;
-   this file owns layout, the price emphasis override, and the
-   urgency / trust / klarna meta lines.
+
+   Layout: a calm "purchase card". Eyebrow + H2 + intro breathe on a
+   plain white band (the LP's default section colour); price, button
+   and trust row are contained in one soft off-white card with a
+   hairline border and a gentle lift — so the close reads as an
+   action, not a paragraph.
+
+   Type tokens for .lp-cta-final h2 / p live in assets/typography.css.
+   The CTA button is owned end-to-end by assets/buttons.css
+   (primary · lg · block) — this file only lets it fill the card and
+   adds the arrow affordance. No button geometry overrides here.
    ============================================================= */
 
 .lp-cta-final {
   background: var(--paper-0);
-  padding-block: var(--space-section-md);
+  padding-block: var(--space-section-lg);
 }
 
 .lp-cta-final .lp-container--narrow {
@@ -18,113 +26,155 @@
   text-align: center;
 }
 
-/* ---------- Heading + intro ----------
-   Type comes from typography.css (.lp-cta-final h2 / p).
-   Section file only sets margins + tracking. */
-.lp-cta-final__heading {
-  letter-spacing: var(--tracking-tight);
+/* ---------- Eyebrow + heading + intro ---------- */
+.lp-cta-final__eyebrow {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--accent-clay);
   margin: 0 0 var(--space-3);
 }
 
-.lp-cta-final__text {
-  margin: 0 0 var(--space-6);
+.lp-cta-final__heading {
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--space-4);
 }
 
-/* ---------- Action stack ---------- */
-.lp-cta-final__action {
+/* Intro: scoped past the typography.css `.lp-cta-final p` + `h2 + p`
+   mappings so spacing is owned here. Size/colour still come from
+   typography.css (.lp-cta-final p). */
+.lp-cta-final .lp-cta-final__text {
+  margin: 0;
+  max-width: var(--measure-narrow);
+}
+
+/* ---------- Purchase card ---------- */
+.lp-cta-final__card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-6);
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 480px;
+  margin-top: var(--space-6);
+  padding: var(--space-6) var(--card-padding);
+  background: var(--paper-50);
+  border: 1px solid color-mix(in srgb, var(--ink-700) 10%, transparent);
+  border-radius: 20px;
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--ink-900) 5%, transparent),
+    0 16px 36px color-mix(in srgb, var(--ink-900) 8%, transparent);
 }
 
-.lp-cta-final__price {
+/* ---------- Price block ---------- */
+.lp-cta-final__price-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Scoped under __card so it out-specifies typography.css `.lp-cta-final p`. */
+.lp-cta-final__card .lp-cta-final__price {
   font-family: var(--ff-serif);
   font-size: var(--fs-price);
   font-weight: var(--fw-medium);
-  line-height: 1.2;
+  line-height: 1.1;
   letter-spacing: var(--tracking-tight);
   color: var(--ink-900);
   margin: 0;
 }
 
-.lp-cta-final__btn {
-  min-width: min(320px, 100%);
-  min-height: 64px;
-  padding: var(--space-5) var(--space-7);
-  font-size: var(--fs-lg);
-}
-
-.lp-cta-final__btn:focus-visible {
-  outline: 3px solid var(--lp-cta-focus, var(--accent-gold));
-  outline-offset: 3px;
-}
-
-/* ---------- Urgency + trust + Klarna meta lines ---------- */
-.lp-urgency {
+.lp-cta-final__card .lp-cta-final__permonth {
   font-family: var(--ff-sans);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-semibold);
-  color: var(--accent-clay);
-  text-align: center;
-  margin: 0 0 var(--space-3);
-}
-
-.lp-cta-trust {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-xs);
+  font-size: var(--fs-sm);
   font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
   color: var(--ink-500);
-  text-align: center;
-  margin: var(--space-2) 0 0;
+  margin: 0;
 }
 
-.lp-cta-klarna {
-  font-family: var(--ff-sans);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-regular);
-  color: var(--ink-500);
-  text-align: center;
-  margin: var(--space-3) 0 0;
+/* ---------- Button — geometry owned by buttons.css ---------- */
+.lp-cta-final__card .lp-cta-form {
+  width: 100%;
 }
 
-.lp-cta-klarna strong {
-  color: var(--ink-900);
-  font-weight: var(--fw-semibold);
+/* Fill the card width (buttons.css caps block buttons at 420px). And
+   let a long label wrap gracefully instead of overflowing the narrow
+   mobile card — buttons.css base sets `white-space: nowrap`. */
+.lp-cta-final__card .lp-cta-final__btn {
+  max-width: 100%;
+  white-space: normal;
+  line-height: 1.2;
 }
 
-/* ---------- Guarantee badge row ---------- */
+.lp-cta-final__btn-arrow {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform 0.18s ease;
+}
+
+.lp-cta-final__btn:hover .lp-cta-final__btn-arrow,
+.lp-cta-final__btn:focus-visible .lp-cta-final__btn-arrow {
+  transform: translateX(3px);
+}
+
+/* ---------- Trust row ---------- */
 .lp-cta-final__guarantees {
   display: flex;
-  justify-content: center;
-  gap: var(--space-5);
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+  padding-top: var(--space-4);
+  border-top: 1px solid color-mix(in srgb, var(--ink-700) 8%, transparent);
 }
 
 .lp-cta-final__guarantee {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   font-family: var(--ff-sans);
   font-size: var(--fs-xs);
   font-weight: var(--fw-regular);
+  line-height: 1.4;
   color: var(--ink-500);
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
+}
+
+.lp-cta-final__guarantee-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--accent-clay);
 }
 
 .lp-cta-final__guarantee img {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   object-fit: contain;
   flex-shrink: 0;
-  opacity: 0.7;
 }
 
-/* Mobile: stack guarantees vertically */
-@media (max-width: 640px) {
-  .lp-cta-final__guarantees {
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-3);
+/* ---------- Mobile — tighten the card so the button keeps a
+   comfortable, one-line label on small phones ---------- */
+@media (max-width: 480px) {
+  .lp-cta-final__card {
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-4);
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .lp-cta-final__btn-arrow {
+    transition: none;
+  }
+  .lp-cta-final__btn:hover .lp-cta-final__btn-arrow,
+  .lp-cta-final__btn:focus-visible .lp-cta-final__btn-arrow {
+    transform: none;
   }
 }

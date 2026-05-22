@@ -278,7 +278,10 @@ body .sk-sticky-bar__btn:disabled {
     width: 100%;
   }
   body .lp-cta-final__btn {
-    padding: 18px 28px;
+    /* Tighter side padding: the final CTA button is full-width inside
+       a narrow card on mobile, so it needs the horizontal room for the
+       label rather than wide gutters. */
+    padding: 18px 20px;
   }
 }
 

@@ -16,13 +16,20 @@
 <div class="sk-lp">
   <section id="{{ section.settings.anchor_id | default: 'kjop' }}" class="lp-cta-final">
     <div class="lp-container--narrow">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="lp-cta-final__eyebrow">{{ section.settings.eyebrow }}</div>
+      {%- endif -%}
       <h2 class="lp-cta-final__heading">{{ section.settings.heading }}</h2>
       <p class="lp-cta-final__text">{{ section.settings.text }}</p>
-      <div class="lp-cta-final__action">
-        <p class="lp-cta-final__price">{{ section.settings.price_text }}</p>
-        <p class="lp-urgency">
-          ⚡ Sendes innen 24 timer · Norsk lager
-        </p>
+
+      <div class="lp-cta-final__card">
+        <div class="lp-cta-final__price-block">
+          <p class="lp-cta-final__price">{{ section.settings.price_text }}</p>
+          {%- if section.settings.klarna_text != blank -%}
+            <p class="lp-cta-final__permonth">{{ section.settings.klarna_text }}</p>
+          {%- endif -%}
+        </div>
+
         <form
           action="{{ routes.cart_add_url }}"
           method="post"
@@ -36,40 +43,38 @@
             type="submit"
             class="lp-btn lp-cta-final__btn"
             data-product-handle="{{ sk_lp_handle }}"
-            aria-label="{{ section.settings.button_text }}"
           >
-            {{ section.settings.button_text }}
+            <span class="lp-cta-final__btn-label">{{ section.settings.button_text }}</span>
+            <svg class="lp-cta-final__btn-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+              <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </button>
         </form>
-        <p class="lp-cta-trust">
-          ✔ Norsk merke &nbsp;·&nbsp; ✔ 60 dagers garanti &nbsp;·&nbsp; ✔ Trygg betaling
-        </p>
-      </div>
 
-      {%- if section.blocks.size > 0 -%}
-        <div class="lp-cta-final__guarantees">
-          {%- for block in section.blocks -%}
-            <span class="lp-cta-final__guarantee" {{ block.shopify_attributes }}>
-              {%- if block.settings.icon != blank -%}
-                <img
-                  src="{{ block.settings.icon | image_url: height: 32 }}"
-                  alt=""
-                  width="16"
-                  height="16"
-                  loading="lazy"
-                >
-              {%- endif -%}
-              {{ block.settings.text }}
-            </span>
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
-      <p class="lp-cta-klarna">
-        {{
-          section.settings.klarna_text
-          | default: 'Eller del opp betalingen – <strong>fra 130 kr/mnd med Klarna</strong>'
-        }}
-      </p>
+        {%- if section.blocks.size > 0 -%}
+          <ul class="lp-cta-final__guarantees">
+            {%- for block in section.blocks -%}
+              <li class="lp-cta-final__guarantee" {{ block.shopify_attributes }}>
+                {%- if block.settings.icon != blank -%}
+                  <img
+                    src="{{ block.settings.icon | image_url: height: 32 }}"
+                    alt=""
+                    width="16"
+                    height="16"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <svg class="lp-cta-final__guarantee-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+                    <circle cx="10" cy="10" r="8.2" stroke="currentColor" stroke-width="1.4"/>
+                    <path d="M6.4 10.4l2.4 2.4 4.8-5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {%- endif -%}
+                <span class="lp-cta-final__guarantee-text">{{ block.settings.text }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
     </div>
   </section>
 </div>
@@ -80,6 +85,12 @@
   "tag": "section",
   "class": "sk-lp-section",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow (liten label over overskrift)",
+      "default": "Kom i gang"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -96,7 +107,7 @@
       "type": "text",
       "id": "price_text",
       "label": "Pris (visning)",
-      "default": "4 690 kr"
+      "default": "4 390 kr"
     },
     {
       "type": "text",
@@ -118,8 +129,8 @@
     {
       "type": "html",
       "id": "klarna_text",
-      "label": "Klarna-tekst (HTML)",
-      "default": "Eller del opp betalingen – <strong>fra 130 kr\/mnd med Klarna<\/strong>"
+      "label": "Pris pr. måned (HTML, vises under prisen)",
+      "default": "Eller <strong>122 kr\/mnd<\/strong> med Klarna"
     }
   ],
   "blocks": [
@@ -146,8 +157,8 @@
       "name": "LP CTA",
       "blocks": [
         { "type": "badge", "settings": { "text": "60 dagers garanti" } },
-        { "type": "badge", "settings": { "text": "Gratis frakt" } },
-        { "type": "badge", "settings": { "text": "Sikker betaling" } }
+        { "type": "badge", "settings": { "text": "Sendes innen 24 t" } },
+        { "type": "badge", "settings": { "text": "Trygg betaling" } }
       ]
     }
   ]
