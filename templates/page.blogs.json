@@ -11,82 +11,11 @@
   "sections": {
     "blog_grid": {
       "type": "sk-blog-grid",
-      "blocks": {
-        "blog_post_cekjge": {
-          "type": "blog_post",
-          "settings": {
-            "post_title": "Well-aging: Hva det betyr – og hvorfor “anti-aging” ofte gjør huden verre",
-            "post_subtitle": "How it Helps Fight Acne",
-            "post_link": ""
-          }
-        },
-        "post_1": {
-          "type": "blog_post",
-          "settings": {
-            "post_image": "shopify://shop_images/ChatGPT_Image_Sep_29_2025_09_56_58_AM.webp",
-            "post_title": "Hva Er Well-Aging?",
-            "post_subtitle": "En positiv tilnærming til hudpleie – lær hvordan well-aging styrker huden og fremhever naturlig glød",
-            "post_link": "shopify://blogs/nyheter/how-led-light-therapy-transforms-your-skin"
-          }
-        },
-        "post_2": {
-          "type": "blog_post",
-          "settings": {
-            "post_image": "shopify://shop_images/ChatGPT_Image_Sep_29_2025_10_57_16_AM.webp",
-            "post_title": "Hvordan Virker LED-Masker?",
-            "post_subtitle": "LED-masker har blitt en av de mest populære verktøyene innen well-aging. Men hva gjør egentlig lyset med huden, og hvorfor har disse maskene fått så mye oppmerksomhet de siste årene?",
-            "post_link": ""
-          }
-        },
-        "post_3": {
-          "type": "blog_post",
-          "settings": {
-            "post_image": "shopify://shop_images/ChatGPT_Image_Sep_29_2025_10_14_47_AM.webp",
-            "post_title": "Hudens viktigste behov etter 35",
-            "post_subtitle": "En enkel guide til hudens viktigste behov når alderstegn begynner å vise seg.",
-            "post_link": ""
-          }
-        },
-        "post_4": {
-          "type": "blog_post",
-          "settings": {
-            "post_image": "shopify://shop_images/ChatGPT_Image_Sep_29_2025_11_15_12_AM.webp",
-            "post_title": "Slik Bygger Du En Enkel Well-Aging Rutine Hjemme",
-            "post_subtitle": "Lær hvordan små daglige vaner og riktig teknologi kan støtte hudens styrke og naturlige glød over tid.",
-            "post_link": ""
-          }
-        },
-        "post_5": {
-          "type": "blog_post",
-          "settings": {
-            "post_image": "shopify://shop_images/before_after_left_fit.webp",
-            "post_title": "Klar Hud med LED – Slik Hjelper Lysbehandling mot Akne",
-            "post_subtitle": "Blått og rødt lys jobber sammen for å redusere utbrudd, roe ned inflammasjon og støtte hudens naturlige balanse.",
-            "post_link": ""
-          }
-        },
-        "post_6": {
-          "type": "blog_post",
-          "settings": {
-            "post_image": "shopify://shop_images/enecta-cannabis-extracts-80wCkpt-IKE-unsplash.webp",
-            "post_title": "Kombinasjon av LED-Maske og Hudpleieprodukter – Slik Får Du Maksimal Effekt",
-            "post_subtitle": "Praktiske tips til hvordan LED kan kombineres med serum, fuktighetskrem eller masker",
-            "post_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "blog_post_cekjge",
-        "post_1",
-        "post_2",
-        "post_3",
-        "post_4",
-        "post_5",
-        "post_6"
-      ],
       "settings": {
         "heading": "Våre Hudinnsikter – For Well-Aging, Hudhelse og Problemfri Hud",
         "description": "<p>Hos Skinora tror vi på hudpleie som gir deg både trygghet og resultater. Med kunnskap, teknologi og gode rutiner hjelper vi deg å møte aldringstegn, akne og andre hudutfordringer – på en naturlig måte.</p>",
+        "blog": "nyheter",
+        "posts_per_page": 12,
         "color_scheme": "accent-1",
         "padding_top": 80,
         "padding_bottom": 80

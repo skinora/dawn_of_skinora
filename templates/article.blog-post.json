@@ -46,8 +46,8 @@
       ],
       "disabled": true,
       "settings": {
-        "heading": "Latest Blogs",
-        "description": "Explore effective techniques and tips to elevate your skincare routine and enhance your skin's natural radiance and health.",
+        "heading": "Siste artikler",
+        "description": "Utforsk tips og teknikker som løfter hudpleierutinen din og fremhever hudens naturlige glød og helse.",
         "color_scheme": "background-1",
         "padding_top": 80,
         "padding_bottom": 80
@@ -57,7 +57,7 @@
       "type": "sk-explore-blogs-button",
       "settings": {
         "heading": "",
-        "button_label": "Explore More Blogs",
+        "button_label": "Se flere artikler",
         "button_link": "/pages/blogs",
         "color_scheme": "background-1",
         "padding_top": 40,
