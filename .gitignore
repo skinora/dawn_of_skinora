@@ -16,3 +16,9 @@ scan_sections.js
 .github/copilot-instructions.md
 
 *.bak
+
+# Microsoft Office lock/temp files (created while a workbook is open)
+~$*
+
+# Claude Code agent worktrees & local session data
+.claude/
