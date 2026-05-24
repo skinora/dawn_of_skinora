@@ -45,6 +45,26 @@
       gap: 2.4rem;
     }
   }
+
+  /* Centered product grid for small catalogs.
+     Dawn's CSS Grid uses repeat(N, 1fr) for the columns_desktop setting,
+     so when there are fewer products than columns the items cling to
+     the left with an empty cell on the right. Switching this section's
+     product grid to centered flex keeps 2–3 cards in the middle while
+     still respecting the configured max columns. Scoped to this section
+     instance — no global impact. */
+  @media (min-width: 990px) {
+    .section-{{ section.id }}-padding .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .section-{{ section.id }}-padding .product-grid > .grid__item {
+      flex: 0 1 calc((100% - 2.4rem * ({{ section.settings.columns_desktop }} - 1)) / {{ section.settings.columns_desktop }});
+      min-width: 240px;
+      max-width: 360px;
+    }
+  }
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">

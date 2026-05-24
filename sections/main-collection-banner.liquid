@@ -1,15 +1,23 @@
 {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
 {{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%}
+  Local restyling — uses Skinora typography tokens so the banner matches
+  the LP design language. Scoped to this section instance via
+  `.section-{{ section.id }}`, so nothing leaks globally. The full webshop
+  redesign will replace this; until then, this keeps the collection
+  header clean, modern, and brand-aligned.
+{%- endcomment -%}
 {%- style -%}
   .collection-hero.section-{{ section.id }} {
     --sk-collection-header-max: {{ section.settings.header_max_width }}px;
     --sk-collection-text-align: {{ section.settings.header_align }};
+    background: var(--paper-0);
   }
 
   .collection-hero.section-{{ section.id }} .collection-hero__inner {
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-top: var(--space-section-md);
+    padding-bottom: var(--space-6);
   }
 
   .collection-hero.section-{{ section.id }} .collection-hero__text-wrapper {
@@ -19,43 +27,103 @@
     padding: 0;
   }
 
+  /* H1 — match the LP serif display treatment */
   .collection-hero.section-{{ section.id }} .collection-hero__title {
+    font-family: var(--ff-serif);
+    font-size: var(--fs-4xl);
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--ink-900);
     margin: 0;
   }
 
   .collection-hero.section-{{ section.id }} .sk-collection-hero__subheading {
-    margin: 12px 0 0;
-    font-size: 18px;
-    line-height: 28px;
+    font-family: var(--ff-sans);
+    font-size: var(--fs-lg);
     font-weight: var(--fw-regular);
-    color: rgba(var(--color-foreground), 0.72);
+    line-height: var(--lh-normal);
+    color: var(--ink-500);
+    max-width: 52ch;
+    margin: var(--space-3) auto 0;
   }
 
+  /* Kill the 2008-style horizontal rule — whitespace handles separation */
   .collection-hero.section-{{ section.id }} .sk-collection-hero__divider {
-    height: 1px;
-    background: var(--color-border-light);
-    margin-top: 32px;
-    width: 100%;
-    display: block;
-    align-self: stretch;
+    display: none;
   }
 
   .collection-hero.section-{{ section.id }} .sk-collection-hero__description {
-    margin-top: 24px;
+    margin-top: var(--space-6);
   }
 
-  .collection-hero.section-{{ section.id }} .sk-collection-hero__divider + .sk-collection-hero__description {
-    margin-top: 20px;
+  /* Description body — brand-tuned typography */
+  .collection-hero.section-{{ section.id }} .collection-hero__description.rte {
+    max-width: var(--measure-body);
+    margin-inline: auto;
+    text-align: left;
+    font-family: var(--ff-sans);
+    font-size: var(--fs-md);
+    line-height: var(--lh-normal);
+    color: var(--ink-700);
+  }
+
+  .collection-hero.section-{{ section.id }} .collection-hero__description.rte p {
+    margin: 0 0 var(--space-4);
+  }
+
+  .collection-hero.section-{{ section.id }} .collection-hero__description.rte p:last-child {
+    margin-bottom: 0;
+  }
+
+  .collection-hero.section-{{ section.id }} .collection-hero__description.rte strong {
+    color: var(--ink-900);
+    font-weight: var(--fw-semibold);
+  }
+
+  .collection-hero.section-{{ section.id }} .collection-hero__description.rte a {
+    color: var(--ink-900);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .collection-hero.section-{{ section.id }} .collection-hero__description.rte a:hover {
+    color: var(--accent-clay);
+  }
+
+  /* Bullet list — drop default disc markers, use a small clay dot */
+  .collection-hero.section-{{ section.id }} .collection-hero__description.rte ul {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-3) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .collection-hero.section-{{ section.id }} .collection-hero__description.rte li {
+    position: relative;
+    padding-left: 1.25em;
+  }
+
+  .collection-hero.section-{{ section.id }} .collection-hero__description.rte li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-clay);
   }
 
   @media screen and (max-width: 749px) {
     .collection-hero.section-{{ section.id }} .collection-hero__inner {
-      padding-top: 28px;
-      padding-bottom: 28px;
+      padding-top: var(--space-section-sm);
+      padding-bottom: var(--space-5);
     }
-
     .collection-hero.section-{{ section.id }} .sk-collection-hero__description {
-      margin-top: 20px;
+      margin-top: var(--space-5);
     }
   }
 {%- endstyle -%}
