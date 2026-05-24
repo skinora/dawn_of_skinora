@@ -12,8 +12,8 @@
     "banner": {
       "type": "main-collection-banner",
       "settings": {
-        "heading_override": "Bestselgere",
-        "subheading": "For målrettet hjemmebruk: glød, jevnhet og en mer balansert hudfølelse",
+        "heading_override": "",
+        "subheading": "",
         "show_divider": true,
         "header_max_width": 720,
         "header_align": "center",
