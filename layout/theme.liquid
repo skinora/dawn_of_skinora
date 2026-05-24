@@ -15,6 +15,16 @@
       </script>
       <meta name="robots" content="noindex">
     {%- endif -%}
+    {%- comment -%}
+      Product landing pages (/pages/skinora-clear, /pages/skinora-radiance-face)
+      duplicate /products/<handle>. Tell Google to skip them — LPs live for
+      paid / email / direct traffic; the product pages own organic SEO. The
+      `follow` part lets internal link equity (to cart, blog, related products)
+      still flow.
+    {%- endcomment -%}
+    {%- if template.name == 'page' and template.suffix contains 'sk-lp' -%}
+      <meta name="robots" content="noindex, follow">
+    {%- endif -%}
     <link rel="canonical" href="{{ canonical_url }}">
 
     {%- comment -%}
