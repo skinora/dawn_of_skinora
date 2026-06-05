@@ -28,6 +28,26 @@
     <link rel="canonical" href="{{ canonical_url }}">
 
     {%- comment -%}
+      Open Graph article tags — gives Google + social platforms an explicit
+      modified_time signal. Shopify's default OG injection covers title/image/url
+      but not published/modified timestamps. Only emit on blog article pages.
+    {%- endcomment -%}
+    {%- if request.page_type == 'article' -%}
+      <meta property="article:published_time" content="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}">
+      <meta property="article:modified_time" content="{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' }}">
+      {%- comment -%}
+        article:author er bevisst utelatt — Skinora er brand-blog, ikke personlig byline.
+        BlogPosting JSON-LD i sk-blog-article.liquid bruker Organization (Skinora) som
+        author, som er det Google leser for E-E-A-T og rich results.
+      {%- endcomment -%}
+      {%- if article.tags.size > 0 -%}
+        {%- for tag in article.tags -%}
+          <meta property="article:tag" content="{{ tag | escape }}">
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%}
       Preload base.css early — it's the main render-blocking stylesheet declared
       much later (after content_for_header). Early preload lets the browser start
       fetching in parallel with fonts and app scripts.

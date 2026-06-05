@@ -25,21 +25,36 @@
 
       <div class="sk-blog-article__content">
         <header class="sk-blog-article__header">
+          <h1 class="sk-header__section sk-blog-article__title sk-section-heading sk-section-heading--hxl">
+            {{ article.title | escape }}
+          </h1>
+          {%- comment -%}
+            Datoer vises direkte under tittelen. Forfatter er bevisst utelatt fra
+            synlig visning — Skinora er et brand-blog, ikke personlige byline-poster.
+            Forfatter beholdes i JSON-LD nedenfor som Organization (Skinora) for å
+            oppfylle Googles krav til BlogPosting-schema uten å vise navnet på siden.
+          {%- endcomment -%}
           <div class="sk-blog-article__meta">
-            {%- if article.author != blank -%}
-              <span class="sk-blog-article__author">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
-                  <path d="M9.08416 7.25C6.34097 7.25 5.78508 3.81 5.78508 3.81C5.4588 2.02 6.44973 0 9.0479 0C11.6582 0 12.6491 2.02 12.3228 3.81C12.3228 3.81 11.8273 7.25 9.08416 7.25ZM9.08416 9.82L12.3712 8C15.2594 8 17.8334 10.33 17.8334 12.53V15.02C17.8334 15.02 13.4225 16.15 9.08416 16.15C4.67331 16.15 0.334961 15.02 0.334961 15.02V12.53C0.334961 10.28 2.67936 8.05 5.73674 8.05L9.08416 9.82Z" fill="#9F9F9F"/>
-                </svg>
-                {{ article.author | escape }}
-              </span>
-            {%- endif -%}
             <time class="sk-blog-article__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="18" viewBox="0 0 22 18" fill="none">
                 <path d="M0.985352 14.8333C0.985352 16.25 2.29451 17.3333 4.00648 17.3333H18.1051C19.8171 17.3333 21.1262 16.25 21.1262 14.8333V8.16663H0.985352V14.8333ZM18.1051 2.33329H16.091V1.49996C16.091 0.999959 15.6882 0.666626 15.084 0.666626C14.4797 0.666626 14.0769 0.999959 14.0769 1.49996V2.33329H8.03466V1.49996C8.03466 0.999959 7.63184 0.666626 7.02762 0.666626C6.42339 0.666626 6.02057 0.999959 6.02057 1.49996V2.33329H4.00648C2.29451 2.33329 0.985352 3.41663 0.985352 4.83329V6.49996H21.1262V4.83329C21.1262 3.41663 19.8171 2.33329 18.1051 2.33329Z" fill="#9F9F9F"/>
               </svg>
-              {{ article.published_at | date: '%B %d, %Y' }}
+              Publisert {{ article.published_at | date: '%d.%m.%Y' }}
             </time>
+            {%- comment -%}
+              "Sist oppdatert" vises kun når oppdateringsdatoen faller på en annen
+              DAG enn publiseringsdatoen — Shopify setter updated_at noen sekunder
+              etter publisering, så en eksakt sammenligning ville vist stempelet på
+              nesten hver artikkel. Dagsnivå er den naturlige enheten for en synlig
+              dato. JSON-LD og OG-tags reflekterer alltid faktisk updated_at uansett.
+            {%- endcomment -%}
+            {%- assign published_day = article.published_at | date: '%Y-%m-%d' -%}
+            {%- assign updated_day = article.updated_at | date: '%Y-%m-%d' -%}
+            {%- if updated_day != published_day -%}
+              <time class="sk-blog-article__updated" datetime="{{ article.updated_at | date: '%Y-%m-%d' }}">
+                Sist oppdatert {{ article.updated_at | date: '%d.%m.%Y' }}
+              </time>
+            {%- endif -%}
             {%- if article.tags.size > 0 -%}
               <div class="sk-blog-article__tags">
                 {%- for tag in article.tags -%}
@@ -53,9 +68,6 @@
               </div>
             {%- endif -%}
           </div>
-          <h1 class="sk-header__section sk-blog-article__title sk-section-heading sk-section-heading--hxl">
-            {{ article.title | escape }}
-          </h1>
         </header>
 
         <div class="sk-blog-article__body">
@@ -157,6 +169,43 @@
     </div>
   </div>
 </div>
+
+{%- comment -%}
+  BlogPosting JSON-LD — gives Google explicit datePublished + dateModified.
+  Shopify also auto-injects {{ article | structured_data }} on some templates,
+  but this section is custom (sk-blog-article) and was missing structured data.
+  Keep this in sync with the visible content above.
+{%- endcomment -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ article.title | json }},
+    "image": {%- if article.image -%}{{ article.image | image_url: width: 1200 | prepend: 'https:' | json }}{%- else -%}null{%- endif -%},
+    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+    "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+    "author": {
+      "@type": "Organization",
+      "name": "Skinora",
+      "url": "{{ shop.url }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Skinora",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ 'logo.png' | asset_url | prepend: 'https:' }}"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ request.origin }}{{ article.url }}"
+    },
+    "description": {{ article.excerpt_or_content | strip_html | truncate: 160 | json }},
+    "articleSection": {{ blog.title | json }},
+    "keywords": {{ article.tags | join: ', ' | json }}
+  }
+</script>
 
 {% schema %}
 {
