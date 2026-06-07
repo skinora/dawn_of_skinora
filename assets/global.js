@@ -1392,6 +1392,29 @@ class CartPerformance {
     }
   }
 
+  // Klaviyo renders its popup markup at the end of <body> and autofocuses the
+  // email input. The browser then scroll-jumps to bring that input into view —
+  // i.e. all the way to the bottom of the page. The visible popup is a fixed
+  // overlay, so scroll position is irrelevant to it; pin the page in place for
+  // a short window after opening to absorb the autofocus jump.
+  function openKlaviyoFormKeepingScroll() {
+    const targetX = window.scrollX;
+    const targetY = window.scrollY;
+    let frames = 0;
+
+    function pin() {
+      if (window.scrollX !== targetX || window.scrollY !== targetY) {
+        window.scrollTo(targetX, targetY);
+      }
+      if (++frames < 72) {
+        window.requestAnimationFrame(pin);
+      }
+    }
+
+    window.requestAnimationFrame(pin);
+    openKlaviyoForm();
+  }
+
   function isAcceptNode(node) {
     if (!node || node.nodeType !== 1) return false;
     if (node.id === acceptButtonId) return true;
@@ -1433,9 +1456,12 @@ class CartPerformance {
     'click',
     (event) => {
       if (!didClickAccept(event)) return;
+      // Wait a few seconds after the consent click so the signup popup doesn't
+      // stack directly on top of the cookie-banner interaction — give the user
+      // a moment to re-orient before the form appears.
       window.setTimeout(() => {
-        openKlaviyoForm();
-      }, 200);
+        openKlaviyoFormKeepingScroll();
+      }, 3000);
     },
     true,
   );

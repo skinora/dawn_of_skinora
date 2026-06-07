@@ -153,11 +153,9 @@
   height: auto;
   display: block;
 }
-[id^='klaviyo-'],
-.klaviyo-form,
-.needsclick[class*='kl-'] {
-  contain: layout style;
-}
+/* NB: do NOT add `contain: layout` to Klaviyo wrappers — it makes them a
+   containing block for the popup's position:fixed overlay, which then renders
+   at the bottom of the document instead of centred over the viewport. */
 
 #shopify-pc__banner__btn-accept {
   display: block;
