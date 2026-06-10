@@ -40,7 +40,8 @@
       ikke aktuelt: det finnes ingen norsk motpart-URL å peke til. Fjern denne
       når artikkelen foreligger på norsk (eller slett/oversett artikkelen).
     {%- endcomment -%}
-    {%- if request.page_type == 'article' and article.handle == 'how-led-light-therapy-transforms-your-skin' -%}
+    {%- comment -%} article.handle inkluderer blogg-handle: "nyheter/<artikkel-handle>" {%- endcomment -%}
+    {%- if request.page_type == 'article' and article.handle == 'nyheter/how-led-light-therapy-transforms-your-skin' -%}
       <meta name="robots" content="noindex, follow">
     {%- endif -%}
     <link rel="canonical" href="{{ canonical_url }}">
