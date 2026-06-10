@@ -11,34 +11,46 @@
 </style>
 
 {%- comment -%}
-  Preload LCP background images via image_tag preload:true.
-  Shopify injects the <link rel="preload"> into <head> via content_for_header,
-  so the browser discovers them earlier than manual preload links in <body>.
-  The rendered <img> tags are visually hidden — preload is the only purpose.
+  Preload the LCP background image — media-scoped so each device fetches
+  ONLY the variant its CSS breakpoint will actually paint. The previous
+  approach (hidden <img> + image_tag preload:true) downloaded all three
+  variants on every device because neither the rendered <img> tags nor
+  Shopify's injected preload links carry a media condition.
+  Media ranges mirror the CSS breakpoints below (700px / 1000px).
 {%- endcomment -%}
-<div style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
-  {%- if section.settings.sk_banner_img_mobile != blank -%}
-    {{
-      section.settings.sk_banner_img_mobile
-      | image_url: width: 750
-      | image_tag: preload: true, loading: 'eager', fetchpriority: 'high', alt: ''
-    }}
-  {%- endif -%}
+{%- if section.settings.sk_banner_img_mobile != blank -%}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ section.settings.sk_banner_img_mobile | image_url: width: 750 }}"
+    media="(max-width: 700px)"
+    fetchpriority="high"
+  >
+{%- endif -%}
+{%- if section.settings.sk_banner_img_tablet != blank -%}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ section.settings.sk_banner_img_tablet | image_url: width: 1200 }}"
+    media="(min-width: 700.02px) and (max-width: 1000px)"
+    fetchpriority="high"
+  >
+{%- endif -%}
+{%- if section.settings.sk_banner_img_desktop != blank -%}
+  {%- comment -%} No tablet image → desktop bg paints from 700px up; widen the preload range to match. {%- endcomment -%}
   {%- if section.settings.sk_banner_img_tablet != blank -%}
-    {{
-      section.settings.sk_banner_img_tablet
-      | image_url: width: 1200
-      | image_tag: preload: true, loading: 'eager', alt: ''
-    }}
+    {%- assign desktop_preload_media = '(min-width: 1000.02px)' -%}
+  {%- else -%}
+    {%- assign desktop_preload_media = '(min-width: 700.02px)' -%}
   {%- endif -%}
-  {%- if section.settings.sk_banner_img_desktop != blank -%}
-    {{
-      section.settings.sk_banner_img_desktop
-      | image_url: width: 1600
-      | image_tag: preload: true, loading: 'eager', alt: ''
-    }}
-  {%- endif -%}
-</div>
+  <link
+    rel="preload"
+    as="image"
+    href="{{ section.settings.sk_banner_img_desktop | image_url: width: 1600 }}"
+    media="{{ desktop_preload_media }}"
+    fetchpriority="high"
+  >
+{%- endif -%}
 
 <style>
   .sk-dynamic-banner {
@@ -130,7 +142,9 @@
   /* TABLET */
   @media (max-width: 1000px) {
     .sk-dynamic-banner {
+      {%- if section.settings.sk_banner_img_tablet != blank %}
       background-image: url('{{ section.settings.sk_banner_img_tablet | image_url: width: 1200 }}');
+      {%- endif %}
       height: 100vh;
     }
 
@@ -153,7 +167,9 @@
   /* MOBILE */
   @media (max-width: 700px) {
     .sk-dynamic-banner {
+      {%- if section.settings.sk_banner_img_mobile != blank %}
       background-image: url('{{ section.settings.sk_banner_img_mobile | image_url: width: 750 }}');
+      {%- endif %}
       height: 100vh;
       align-items: flex-end;
     }
