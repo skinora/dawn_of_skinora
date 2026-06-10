@@ -1,0 +1,73 @@
+/* Relaterte artikler — intern lenking nederst i artikkel-templaten. */
+
+.sk-related-articles__heading {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--ink-700);
+  margin: 0 0 var(--space-5);
+}
+
+.sk-related-articles__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+.sk-related-articles__link {
+  display: block;
+  text-decoration: none;
+  /* Hele kortet er klikkflate — godt over 48px touch target. */
+  min-height: 48px;
+}
+
+.sk-related-articles__image-wrapper {
+  overflow: hidden;
+  background-color: var(--paper-100);
+  margin-bottom: var(--space-3);
+}
+
+.sk-related-articles__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  height: auto;
+  object-fit: cover;
+}
+
+.sk-related-articles__title {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--ink-700);
+  margin: 0 0 var(--space-2);
+}
+
+.sk-related-articles__link:hover .sk-related-articles__title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sk-related-articles__excerpt {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .sk-related-articles__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .sk-related-articles__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}

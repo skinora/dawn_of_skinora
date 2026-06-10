@@ -18,39 +18,13 @@
         "padding_bottom": 60
       }
     },
-    "latest_blogs": {
-      "type": "sk-latest-blogs",
-      "blocks": {
-        "post_1": {
-          "type": "blog_post",
-          "settings": {
-            "post_image": "shopify://shop_images/Rectangle_2_4a3aaad1-fc98-4266-87cc-efd129fd31a0.png",
-            "post_title": "How to concept great ideas for content",
-            "post_excerpt": "Ut laborum incididunt consequat ut qui nostrud eiusmod. Quis exercitation sit enim consectetur eiusmod.",
-            "post_link": ""
-          }
-        },
-        "post_2": {
-          "type": "blog_post",
-          "settings": {
-            "post_image": "shopify://shop_images/Rectangle_2_4a3aaad1-fc98-4266-87cc-efd129fd31a0.png",
-            "post_title": "How to concept great ideas for content",
-            "post_excerpt": "Ut laborum incididunt consequat ut qui nostrud eiusmod. Quis exercitation sit enim consectetur eiusmod.",
-            "post_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "post_1",
-        "post_2"
-      ],
-      "disabled": true,
+    "related_articles": {
+      "type": "sk-related-articles",
       "settings": {
-        "heading": "Siste artikler",
-        "description": "Utforsk tips og teknikker som løfter hudpleierutinen din og fremhever hudens naturlige glød og helse.",
+        "heading": "Relaterte artikler",
         "color_scheme": "background-1",
-        "padding_top": 80,
-        "padding_bottom": 80
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     },
     "explore_button": {
@@ -67,7 +41,7 @@
   },
   "order": [
     "main",
-    "latest_blogs",
+    "related_articles",
     "explore_button"
   ]
 }

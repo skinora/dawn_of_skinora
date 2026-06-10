@@ -1,0 +1,33 @@
+{%- comment -%}
+  Ett artikkelkort for sk-related-articles-seksjonen.
+  Forventer: related (article-objekt).
+  Ankertekst = artikkelens tittel (beskrivende intern lenke).
+{%- endcomment -%}
+<article class="sk-related-articles__card">
+  <a href="{{ related.url }}" class="sk-related-articles__link">
+    {%- if related.image -%}
+      <div class="sk-related-articles__image-wrapper">
+        <img
+          srcset="
+            {%- if related.image.width >= 300 -%}{{ related.image | image_url: width: 300 }} 300w,{%- endif -%}
+            {%- if related.image.width >= 400 -%}{{ related.image | image_url: width: 400 }} 400w,{%- endif -%}
+            {%- if related.image.width >= 600 -%}{{ related.image | image_url: width: 600 }} 600w,{%- endif -%}
+            {{ related.image | image_url }} {{ related.image.width }}w
+          "
+          src="{{ related.image | image_url: width: 400 }}"
+          sizes="(max-width: 700px) 100vw, (max-width: 1024px) 50vw, 380px"
+          alt="{{ related.image.alt | default: related.title | escape }}"
+          class="sk-related-articles__image"
+          width="{{ related.image.width }}"
+          height="{{ related.image.height }}"
+          loading="lazy"
+        >
+      </div>
+    {%- endif -%}
+    <h3 class="sk-related-articles__title">{{ related.title | escape }}</h3>
+    {%- assign card_excerpt = related.excerpt | default: related.content -%}
+    {%- if card_excerpt != blank -%}
+      <p class="sk-related-articles__excerpt">{{ card_excerpt | strip_html | truncate: 120 }}</p>
+    {%- endif -%}
+  </a>
+</article>
