@@ -25,6 +25,24 @@
     {%- if template.name == 'page' and template.suffix contains 'sk-lp' -%}
       <meta name="robots" content="noindex, follow">
     {%- endif -%}
+    {%- comment -%}
+      Én kanonisk blogg-listeside: /pages/blogs (designet indeks i nav, med
+      H1 + title). Den native blogg-forsiden /blogs/nyheter dupliserer den og
+      kan ikke 301-redirectes (Shopify redirecter kun 404-stier), så den settes
+      noindex. `follow` beholder lenkeflyt til artiklene. Artikkelsidene selv
+      (page_type == 'article') berøres ikke.
+    {%- endcomment -%}
+    {%- if request.page_type == 'blog' -%}
+      <meta name="robots" content="noindex, follow">
+    {%- endif -%}
+    {%- comment -%}
+      Engelsk artikkel på nb-domene — noindex til den er oversatt. hreflang er
+      ikke aktuelt: det finnes ingen norsk motpart-URL å peke til. Fjern denne
+      når artikkelen foreligger på norsk (eller slett/oversett artikkelen).
+    {%- endcomment -%}
+    {%- if request.page_type == 'article' and article.handle == 'how-led-light-therapy-transforms-your-skin' -%}
+      <meta name="robots" content="noindex, follow">
+    {%- endif -%}
     <link rel="canonical" href="{{ canonical_url }}">
 
     {%- comment -%}
