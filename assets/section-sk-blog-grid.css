@@ -120,6 +120,12 @@
 
 .sk-blog-grid__pagination a,
 .sk-blog-grid__pagination span {
+  /* 48x48px touch target (WCAG / PageSpeed "tap targets") */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  min-height: 48px;
   padding: 8px 14px;
   font-size: var(--sk-font-size-medium);
   color: var(--color-brand, #30273e);
