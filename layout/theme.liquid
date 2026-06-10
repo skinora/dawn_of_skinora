@@ -213,6 +213,12 @@
         name="description"
         content="Få klinikkresultat hjemme på 10 min/dag. Norsk LED-maske, 4,8★ av 102 anmeldelser. 30 dagers fornøydgaranti, gratis frakt. Test risikofritt."
       >
+    {%- elsif request.page_type == 'page' and page.handle == 'blogs' -%}
+      <title>LED-lysterapi & hudpleie – Skinoras blogg</title>
+      <meta
+        name="description"
+        content="Guider og innsikt om LED-lysterapi, well-aging og hudhelse fra Skinora. Lær hvordan rødt og blått lys kan styrke huden din – les artiklene våre her."
+      >
     {%- elsif request.page_type == 'page' and page.handle == 'skinora-clear' -%}
       <title>Skinora® Clear – LED-maske for uren og akneutsatt hud</title>
       <meta

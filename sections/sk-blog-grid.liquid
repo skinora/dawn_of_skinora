@@ -20,10 +20,15 @@
   <div class="page-width">
     <div class="sk-blog-grid__header">
       <div class="sk-blog-grid__heading-section">
+        {%- comment -%}
+          H1, ikke H2 — seksjonen brukes kun som hovedinnhold på /pages/blogs,
+          der den native sidetittelen (main-page) er skjult via custom_css.
+          Denne overskriften er sidens eneste synlige H1.
+        {%- endcomment -%}
         {%- if section.settings.heading != blank -%}
-          <h2 class="sk-header__section sk-blog-grid__heading sk-section-heading sk-section-heading--h1{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          <h1 class="sk-header__section sk-blog-grid__heading sk-section-heading sk-section-heading--h1{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
             {{ section.settings.heading | escape }}
-          </h2>
+          </h1>
         {%- endif -%}
       </div>
 
