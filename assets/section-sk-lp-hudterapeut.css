@@ -144,29 +144,12 @@
   max-width: var(--measure-body);
 }
 
-/* Eyebrow: tracked label with a short clay rule (no filled pill). */
+/* Eyebrow: inherits the shared .lp-eyebrow utility (ff-sans · fs-xs ·
+   semibold · tracking-wide · uppercase) for cross-section consistency.
+   Only the spacing down to the quote is tuned here, the same way the
+   other LP sections set their eyebrow rhythm per instance. */
 .lp-therapist__eyebrow {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin: 0 0 var(--space-5);
-  font-family: var(--ff-sans);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-semibold);
-  line-height: 1.4;
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  color: var(--accent-clay);
-}
-.lp-therapist__eyebrow::before {
-  content: "";
-  flex: none;
-  width: 26px;
-  height: 1px;
-  background: currentColor;
-}
-.lp-therapist--no-media .lp-therapist__eyebrow {
-  justify-content: center;
+  margin: 0 0 var(--space-4);
 }
 
 /* Quote: high-contrast serif, the editorial centrepiece. */
