@@ -1,0 +1,315 @@
+{%- comment -%}
+  sk-lp-hudterapeut.liquid
+  "Møt hudterapeuten" — trust/authority moment built around one real
+  skin therapist: a click-to-play portrait video (Shopify-hosted or
+  YouTube/Vimeo), an editorial serif quote, and a three-tier credential
+  block (name · role+clinic · specialty), with a single CTA to the masks.
+
+  Reusable across forside, landing pages and product pages — quote, CTA
+  target, background and media side are all schema-driven so the message
+  adapts per placement.
+
+  Layout: left/right split on desktop, stacked on mobile. The diffuse
+  light treatment lives in the poster/video asset, never in CSS.
+{%- endcomment -%}
+
+{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+{{ 'section-sk-lp-hudterapeut.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign mp4 = s.video.sources | where: 'format', 'mp4' | first
+
+  assign embed_url = ''
+  if s.video == blank and s.video_url != blank
+    if s.video_url.type == 'youtube'
+      assign embed_url = 'https://www.youtube.com/embed/' | append: s.video_url.id | append: '?autoplay=1&playsinline=1&rel=0&modestbranding=1'
+    elsif s.video_url.type == 'vimeo'
+      assign embed_url = 'https://player.vimeo.com/video/' | append: s.video_url.id | append: '?autoplay=1&playsinline=1'
+    endif
+  endif
+
+  assign has_video = false
+  if mp4 != blank or embed_url != blank
+    assign has_video = true
+  endif
+
+  assign has_media = false
+  if s.poster != blank or has_video
+    assign has_media = true
+  endif
+
+  assign play_label = 'Spill av video'
+  if s.name != blank
+    assign play_label = 'Spill av video med ' | append: s.name
+  endif
+-%}
+
+<div class="sk-lp">
+  <section
+    class="lp-therapist lp-therapist--{{ s.background }} lp-therapist--media-{{ s.media_position }}{% unless has_media %} lp-therapist--no-media{% endunless %}"
+    {% if s.anchor_id != blank %}id="{{ s.anchor_id }}"{% endif %}
+  >
+    <div class="lp-container">
+      <div class="lp-therapist__grid">
+        {%- if has_media -%}
+          <div class="lp-therapist__media lp-therapist__media--{{ s.media_ratio }}">
+            {%- if s.poster != blank -%}
+              <img
+                class="lp-therapist__poster"
+                src="{{ s.poster | image_url: width: 1200 }}"
+                srcset="{{ s.poster | image_url: width: 600 }} 600w, {{ s.poster | image_url: width: 1200 }} 1200w"
+                sizes="(min-width: 769px) 360px, 100vw"
+                width="{{ s.poster.width }}"
+                height="{{ s.poster.height }}"
+                alt="{{ s.name | escape }}"
+                loading="lazy"
+              >
+            {%- endif -%}
+
+            {%- if has_video -%}
+              <button
+                type="button"
+                class="lp-therapist__play"
+                aria-label="{{ play_label | escape }}"
+                data-therapist-video
+                {% if mp4 != blank %}data-mp4="{{ mp4.url }}"{% endif %}
+                {% if embed_url != blank %}data-embed="{{ embed_url }}"{% endif %}
+              >
+                <span class="lp-therapist__play-icon" aria-hidden="true"></span>
+              </button>
+
+              {%- if s.video_duration != blank -%}
+                <span class="lp-therapist__duration" aria-hidden="true">{{ s.video_duration }}</span>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <div class="lp-therapist__body">
+          {%- if s.eyebrow != blank -%}
+            <p class="lp-therapist__eyebrow">{{ s.eyebrow }}</p>
+          {%- endif -%}
+
+          {%- if s.quote != blank -%}
+            <blockquote class="lp-therapist__quote">{{ s.quote }}</blockquote>
+          {%- endif -%}
+
+          {%- if s.name != blank or s.role != blank or s.specialty != blank -%}
+            <div class="lp-therapist__credit">
+              {%- if s.name != blank -%}
+                <p class="lp-therapist__name">{{ s.name }}</p>
+              {%- endif -%}
+              {%- if s.role != blank or s.clinic != blank -%}
+                <p class="lp-therapist__role">
+                  {{- s.role -}}
+                  {%- if s.role != blank and s.clinic != blank %} &middot; {% endif -%}
+                  {{- s.clinic -}}
+                </p>
+              {%- endif -%}
+              {%- if s.specialty != blank -%}
+                <p class="lp-therapist__specialty">{{ s.specialty }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if s.cta_text != blank and s.cta_url != blank -%}
+            <div class="lp-therapist__cta-wrap">
+              <a href="{{ s.cta_url }}" class="lp-btn lp-therapist__cta">
+                <span>{{ s.cta_text }}</span>
+                <svg class="lp-therapist__cta-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+                  <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+{%- if has_video -%}
+  <script>
+    (function () {
+      document.querySelectorAll('[data-therapist-video]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var media = btn.closest('.lp-therapist__media');
+          if (!media) return;
+          var mp4 = btn.getAttribute('data-mp4');
+          var embed = btn.getAttribute('data-embed');
+          var node;
+          if (mp4) {
+            node = document.createElement('video');
+            node.className = 'lp-therapist__video';
+            node.src = mp4;
+            node.controls = true;
+            node.autoplay = true;
+            node.playsInline = true;
+            node.setAttribute('playsinline', '');
+          } else if (embed) {
+            node = document.createElement('iframe');
+            node.className = 'lp-therapist__iframe';
+            node.src = embed;
+            node.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
+            node.setAttribute('allowfullscreen', '');
+            node.setAttribute('title', btn.getAttribute('aria-label') || 'Video');
+          }
+          if (!node) return;
+          media.appendChild(node);
+          media.setAttribute('data-playing', '');
+          var duration = media.querySelector('.lp-therapist__duration');
+          if (duration) duration.remove();
+          btn.remove();
+          if (node.focus) { try { node.focus(); } catch (e) {} }
+        });
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "LP Hudterapeut",
+  "tag": "section",
+  "class": "sk-lp-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Innhold"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow (liten label)",
+      "default": "Møt hudterapeuten"
+    },
+    {
+      "type": "richtext",
+      "id": "quote",
+      "label": "Sitat",
+      "info": "Hold det kort. Bruk kursiv (em) på én setning for redaksjonell rytme.",
+      "default": "<p>Huden din vet hva den gjør. <em>Jeg gir den bare det riktige lyset</em> — og litt tålmodighet.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Hudterapeut"
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Navn",
+      "default": "Marte Lindahl"
+    },
+    {
+      "type": "text",
+      "id": "role",
+      "label": "Rolle / tittel",
+      "default": "Kosmetisk hudterapeut"
+    },
+    {
+      "type": "text",
+      "id": "clinic",
+      "label": "Klinikknavn",
+      "info": "Vises etter rollen, adskilt med ·"
+    },
+    {
+      "type": "text",
+      "id": "specialty",
+      "label": "Spesialfelt (kursiv)",
+      "default": "Spesialist på ujevnheter, slapp hud og linjer"
+    },
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video (Shopify-hostet)",
+      "info": "Anbefalt. Spilles av ved klikk på play-knappen — ikke autoplay."
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "Video-URL (YouTube/Vimeo)",
+      "accept": ["youtube", "vimeo"],
+      "info": "Brukes kun hvis ingen Shopify-video er satt."
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Poster / portrett",
+      "info": "Vises før videoen spilles. Legg lys-/glød-behandlingen i selve bildet. Anbefalt minst 1200px."
+    },
+    {
+      "type": "text",
+      "id": "video_duration",
+      "label": "Varighet (vises i hjørnet)",
+      "info": "Valgfritt, f.eks. 0:48"
+    },
+    {
+      "type": "select",
+      "id": "media_ratio",
+      "label": "Bildeformat",
+      "options": [
+        { "value": "portrait", "label": "Stående (4:5)" },
+        { "value": "square", "label": "Kvadrat (1:1)" },
+        { "value": "landscape", "label": "Liggende (16:9)" }
+      ],
+      "default": "portrait"
+    },
+    {
+      "type": "header",
+      "content": "Handling (CTA)"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Knapptekst",
+      "default": "Se maskene"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Knapplenke",
+      "info": "Forside → samling. LP/produkt → det aktuelle produktet."
+    },
+    {
+      "type": "header",
+      "content": "Oppsett"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Bakgrunn",
+      "options": [
+        { "value": "paper-0", "label": "Hvit" },
+        { "value": "paper-100", "label": "Varm krem" },
+        { "value": "paper-150", "label": "Kjølig grå-blå" }
+      ],
+      "default": "paper-100"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Media-plassering (desktop)",
+      "options": [
+        { "value": "left", "label": "Venstre" },
+        { "value": "right", "label": "Høyre" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anker-ID (valgfritt)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Hudterapeut"
+    }
+  ]
+}
+{% endschema %}

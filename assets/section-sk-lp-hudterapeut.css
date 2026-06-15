@@ -1,0 +1,265 @@
+/* =============================================================
+   sk-lp-hudterapeut — "Møt hudterapeuten"
+   A trust/authority moment: click-to-play portrait video + an
+   editorial serif quote + a three-tier credential block + one CTA.
+
+   Reusable on forside / LP / produktside. Left/right split on
+   desktop, stacked on mobile. All colour, type, spacing and width
+   come from tokens in assets/typography.css — no hard-coded values.
+   The diffuse light treatment lives in the poster/video asset, not
+   here, so this file stays GPU-light.
+
+   Type for the quote/name/role is set locally (not via the global
+   h2/p mappings) so this section owns its own editorial rhythm.
+   ============================================================= */
+
+.lp-therapist {
+  padding-block: var(--space-section-md);
+}
+
+/* ---------- Background bands ---------- */
+.lp-therapist--paper-0 {
+  background: var(--paper-0);
+}
+.lp-therapist--paper-100 {
+  background: var(--paper-100);
+}
+.lp-therapist--paper-150 {
+  background: var(--paper-150);
+}
+
+/* ---------- Grid: stacked (mobile) → split (desktop) ---------- */
+.lp-therapist__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: center;
+}
+
+@media (min-width: 769px) {
+  .lp-therapist__grid {
+    grid-template-columns: 340px minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 56px);
+  }
+
+  /* Media on the right: swap track order, keep media first in DOM. */
+  .lp-therapist--media-right .lp-therapist__grid {
+    grid-template-columns: minmax(0, 1fr) 340px;
+  }
+  .lp-therapist--media-right .lp-therapist__media {
+    order: 2;
+  }
+
+  /* No media: let the body breathe centred in a readable column. */
+  .lp-therapist--no-media .lp-therapist__grid {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    text-align: center;
+  }
+}
+
+/* ---------- Media frame (sharp corners — brand language) ---------- */
+.lp-therapist__media {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper-50);
+  box-shadow: 0 30px 60px color-mix(in srgb, var(--ink-900) 18%, transparent);
+}
+
+.lp-therapist__media--portrait {
+  aspect-ratio: 4 / 5;
+}
+.lp-therapist__media--square {
+  aspect-ratio: 1 / 1;
+}
+.lp-therapist__media--landscape {
+  aspect-ratio: 16 / 9;
+}
+
+.lp-therapist__poster,
+.lp-therapist__video,
+.lp-therapist__iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+}
+
+/* Once playing, the injected video/iframe sits above the poster. */
+.lp-therapist__media[data-playing] .lp-therapist__poster {
+  visibility: hidden;
+}
+
+/* ---------- Play affordance (glassy, centred) ---------- */
+.lp-therapist__play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--paper-0) 84%, transparent);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--ink-900) 28%, transparent);
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+.lp-therapist__play:hover {
+  background: var(--paper-0);
+  transform: scale(1.05);
+}
+.lp-therapist__play:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ink-900) 30%, transparent);
+}
+
+.lp-therapist__play-icon {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 9px 0 9px 15px;
+  border-color: transparent transparent transparent var(--ink-900);
+  margin-left: 3px;
+}
+
+.lp-therapist__duration {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  color: var(--paper-0);
+  text-shadow: 0 1px 3px color-mix(in srgb, var(--ink-900) 55%, transparent);
+}
+
+/* ---------- Body column ---------- */
+.lp-therapist__body {
+  max-width: var(--measure-body);
+}
+
+/* Eyebrow: tracked label with a short clay rule (no filled pill). */
+.lp-therapist__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-5);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--accent-clay);
+}
+.lp-therapist__eyebrow::before {
+  content: "";
+  flex: none;
+  width: 26px;
+  height: 1px;
+  background: currentColor;
+}
+.lp-therapist--no-media .lp-therapist__eyebrow {
+  justify-content: center;
+}
+
+/* Quote: high-contrast serif, the editorial centrepiece. */
+.lp-therapist__quote {
+  margin: 0;
+}
+.lp-therapist__quote p {
+  margin: 0;
+  font-family: var(--ff-serif);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+}
+.lp-therapist__quote p + p {
+  margin-top: var(--space-4);
+}
+.lp-therapist__quote em {
+  font-weight: var(--fw-regular);
+}
+
+/* Credential: serif name → tracked role+clinic → italic specialty. */
+.lp-therapist__credit {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid color-mix(in srgb, var(--ink-700) 12%, transparent);
+}
+.lp-therapist--no-media .lp-therapist__credit {
+  display: inline-block;
+  text-align: left;
+}
+
+.lp-therapist__name {
+  margin: 0;
+  font-family: var(--ff-serif);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--ink-900);
+}
+.lp-therapist__role {
+  margin: var(--space-2) 0 0;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-500);
+}
+.lp-therapist__specialty {
+  margin: var(--space-1) 0 0;
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  color: var(--ink-400);
+}
+
+/* CTA: brand primary button (geometry owned by buttons.css) + arrow. */
+.lp-therapist__cta-wrap {
+  margin-top: var(--space-6);
+}
+.lp-therapist__cta-arrow {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform 0.18s ease;
+}
+.lp-therapist__cta:hover .lp-therapist__cta-arrow,
+.lp-therapist__cta:focus-visible .lp-therapist__cta-arrow {
+  transform: translateX(3px);
+}
+
+/* ---------- Mobile polish ---------- */
+@media (max-width: 768px) {
+  .lp-therapist__body {
+    max-width: none;
+  }
+  .lp-therapist__play {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .lp-therapist__play,
+  .lp-therapist__cta-arrow {
+    transition: none;
+  }
+  .lp-therapist__play:hover {
+    transform: none;
+  }
+}
