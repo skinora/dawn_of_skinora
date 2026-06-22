@@ -510,7 +510,7 @@
            with font-display:optional. Kit CSS re-declares @font-face with
            font-display:auto — triggers FOIT and CLS (the 0.851 offender). Block it. */
         var blockCSS = /use\.typekit\.net\/[a-z0-9]+\.css/;
-        var delayJS = /connect\.facebook\.net|static\.klaviyo\.com|googletagmanager\.com/;
+        var delayJS = /connect\.facebook\.net|static\.klaviyo\.com/;
         var saved = [];
         var done = false;
 
