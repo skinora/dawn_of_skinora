@@ -1,0 +1,296 @@
+{% comment %}
+  SECTION: Skinora – Product Differentiator ("spec-statement")
+
+  Premium, restrained alternative to a "us vs them" comparison table.
+  Direction A: states the product's substance as editorial figures, NO
+  checkmarks / grid. Per-product content via metaobject (so Clear / Radiance
+  each show their own), exactly like why_choose / product_specification.
+
+  Data source:
+    product.metafields.custom.differentiator_reference  -> product_differentiator
+      eyebrow      (text)
+      heading      (text)
+      subheading   (text)
+      note         (multi-line text)
+      rows (list -> differentiator_row)
+        figure         (text)            e.g. "1072 nm" / "+12 LED"
+        label          (text)            one line: why it matters
+        standard_value (text, optional)  blank = pure statement;
+                                         filled = quiet contrast
+        highlight      (boolean)         emphasise the row (dose / 1072nm)
+{% endcomment %}
+
+<style>
+  .sk-diff--{{ section.id }} {
+    background: transparent;
+    padding: clamp(3rem, 4vw, 5rem) 0;
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-inline: var(--sk-page-gutter);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 3vw, 3.2rem);
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__header {
+    max-width: 70ch;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sk-section-header-gap);
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__eyebrow {
+    margin: 0;
+    font-family: var(--font-body-family);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: rgba(var(--color-foreground), 0.55);
+  }
+
+  /* Sentence case (not uppercase) — calmer, premium "statement" tone */
+  .sk-diff--{{ section.id }} .sk-diff__title {
+    margin: 0;
+    font-size: var(--section-heading-h2);
+    line-height: var(--section-heading-h2-line);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: rgb(var(--sk-color-heading-text));
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__lead {
+    margin: 0;
+    max-width: 60ch;
+    font-size: clamp(1.6rem, 1.2vw, 2rem);
+    line-height: 1.6;
+    color: rgba(var(--sk-color-body-text), 0.8);
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__row {
+    display: grid;
+    grid-template-columns: clamp(110px, 24%, 200px) minmax(0, 1fr);
+    column-gap: clamp(1.6rem, 3vw, 2.6rem);
+    align-items: start;
+    padding-block: clamp(1.6rem, 2.2vw, 2.2rem);
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__row + .sk-diff__row {
+    border-top: 1px solid rgba(var(--color-foreground), 0.1);
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__figure {
+    margin: 0;
+    font-family: var(--font-heading-family);
+    font-size: clamp(2.6rem, 3vw, 3.6rem);
+    line-height: 1.05;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: rgb(var(--sk-color-heading-text));
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__label {
+    margin: 0;
+    max-width: 60ch;
+    font-size: clamp(1.6rem, 1.1vw, 1.9rem);
+    line-height: 1.55;
+    font-weight: 500;
+    color: rgb(var(--color-foreground));
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__standard {
+    margin: 0;
+    font-size: clamp(1.3rem, 0.9vw, 1.5rem);
+    line-height: 1.5;
+    color: rgba(var(--color-foreground), 0.5);
+  }
+
+  /* Highlight row — quiet aubergine accent, never a loud badge */
+  .sk-diff--{{ section.id }} .sk-diff__row--highlight {
+    padding-left: clamp(1.2rem, 2vw, 1.8rem);
+    border-left: 2px solid rgba(var(--color-brand-rgb), 0.55);
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__row--highlight .sk-diff__figure {
+    color: rgb(var(--color-brand-rgb));
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__note {
+    margin: 0;
+    max-width: 70ch;
+    font-size: clamp(1.3rem, 0.9vw, 1.5rem);
+    line-height: 1.6;
+    color: rgba(var(--color-foreground), 0.5);
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .sk-diff--{{ section.id }} .sk-diff__row {
+      grid-template-columns: clamp(96px, 22%, 170px) minmax(0, 1fr);
+      column-gap: clamp(1.2rem, 2.5vw, 2rem);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .sk-diff--{{ section.id }} {
+      padding: clamp(2.8rem, 6vw, 3.6rem) 0;
+    }
+
+    .sk-diff--{{ section.id }} .sk-diff__inner {
+      padding-inline: clamp(1.6rem, 5vw, 2.6rem);
+    }
+
+    .sk-diff--{{ section.id }} .sk-diff__title {
+      font-size: var(--sk-mobile-heading-size);
+      line-height: var(--sk-mobile-heading-line);
+    }
+
+    .sk-diff--{{ section.id }} .sk-diff__lead {
+      font-size: var(--sk-mobile-body-size);
+      line-height: var(--sk-mobile-body-line);
+    }
+
+    .sk-diff--{{ section.id }} .sk-diff__row {
+      grid-template-columns: 1fr;
+      row-gap: 0.6rem;
+      padding-block: 1.8rem;
+    }
+
+    .sk-diff--{{ section.id }} .sk-diff__figure {
+      font-size: clamp(2.4rem, 9vw, 3rem);
+    }
+  }
+</style>
+
+{%- assign diff_ref = product.metafields.custom.differentiator_reference -%}
+{%- assign eyebrow = '' -%}
+{%- assign heading = '' -%}
+{%- assign subheading = '' -%}
+{%- assign note = '' -%}
+{%- assign rows = blank -%}
+{%- assign show_section = false -%}
+
+{%- if diff_ref != blank and diff_ref.value != blank -%}
+  {%- assign entry = diff_ref.value -%}
+  {%- assign eyebrow = entry.eyebrow.value | default: '' -%}
+  {%- assign heading = entry.heading.value | default: '' -%}
+  {%- assign subheading = entry.subheading.value | default: '' -%}
+  {%- assign note = entry.note.value | default: '' -%}
+
+  {%- if entry.rows != blank and entry.rows.value != blank -%}
+    {%- assign rows = entry.rows.value -%}
+  {%- endif -%}
+
+  {%- if heading != blank or rows != blank -%}
+    {%- assign show_section = true -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if show_section -%}
+  <section
+    class="sk-product-differentiator sk-diff sk-diff--{{ section.id }}"
+    {%- if heading != blank %} aria-labelledby="sk-diff-title-{{ section.id }}"{% endif -%}
+  >
+    <div class="sk-diff__inner">
+      {% if eyebrow != blank or heading != blank or subheading != blank %}
+        <header class="sk-diff__header">
+          {% if eyebrow != blank %}
+            <p class="sk-diff__eyebrow">{{ eyebrow | escape }}</p>
+          {% endif %}
+          {% if heading != blank %}
+            <h2 class="sk-diff__title" id="sk-diff-title-{{ section.id }}">{{ heading | escape }}</h2>
+          {% endif %}
+          {% if subheading != blank %}
+            <p class="sk-diff__lead">{{ subheading | escape }}</p>
+          {% endif %}
+        </header>
+      {% endif %}
+
+      {% if rows != blank %}
+        <div class="sk-diff__rows" role="list">
+          {% for row in rows %}
+            {% assign figure = row.figure.value | default: '' %}
+            {% assign label = row.label.value | default: '' %}
+            {% assign standard_value = row.standard_value.value | default: '' %}
+            {% assign is_highlight = row.highlight.value | default: false %}
+
+            {% if figure != blank or label != blank %}
+              <div
+                class="sk-diff__row{% if is_highlight %} sk-diff__row--highlight{% endif %}"
+                role="listitem"
+              >
+                {% if figure != blank %}
+                  <p class="sk-diff__figure">{{ figure | escape }}</p>
+                {% endif %}
+                <div class="sk-diff__content">
+                  {% if label != blank %}
+                    <p class="sk-diff__label">{{ label | escape }}</p>
+                  {% endif %}
+                  {% if standard_value != blank %}
+                    {%- assign std_label = section.settings.standard_label | strip -%}
+                    <p class="sk-diff__standard">
+                      {%- if std_label != blank %}{{ std_label | escape }}: {% endif -%}
+                      {{ standard_value | escape }}
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if note != blank %}
+        <p class="sk-diff__note">{{ note | escape | newline_to_br }}</p>
+      {% endif %}
+    </div>
+  </section>
+{%- elsif request.design_mode -%}
+  <section class="sk-product-differentiator sk-diff sk-diff--{{ section.id }}">
+    <div class="sk-diff__inner">
+      <p class="sk-diff__note">
+        Tom: legg til en oppføring på
+        <code>product.metafields.custom.differentiator_reference</code>
+        (metaobjekt <code>product_differentiator</code>) for å fylle denne seksjonen.
+      </p>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SK – Differentiator",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "standard_label",
+      "label": "Etikett for standard-/billigverdi",
+      "default": "Typisk rimelig maske",
+      "info": "Prefiks foran 'standard_value' når en rad har den utfylt (stille kontrast). Rader uten standard_value vises som rene utsagn."
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK – Differentiator"
+    }
+  ]
+}
+{% endschema %}
