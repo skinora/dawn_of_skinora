@@ -1,43 +1,53 @@
 {% comment %}
-  SECTION: Skinora – Product Differentiator ("spec-statement")
+  SECTION: Skinora – Product Differentiator ("spec-ledger")
 
-  Premium, restrained alternative to a "us vs them" comparison table.
-  Direction A: states the product's substance as editorial figures, NO
-  checkmarks / grid. Per-product content via metaobject (so Clear / Radiance
-  each show their own), exactly like why_choose / product_specification.
+  Editorial spec-statement. NO cards, NO divider lines. Whitespace separates.
+  Dramatic scale: the highlighted row is a large hero stat (big numeral +
+  small italic-accent unit); the rest is a quiet register. Optional image is
+  rendered NON-boxy (soft radial fade + accent glow), never a hard rectangle.
 
-  Data source:
-    product.metafields.custom.differentiator_reference  -> product_differentiator
-      eyebrow      (text)
-      heading      (text)
-      subheading   (text)
-      note         (multi-line text)
+  Per-product content via metaobject:
+    product.metafields.custom.differentiator_reference -> product_differentiator
+      eyebrow / heading / subheading / note
+      image (optional)                  <- falls back to section image setting
       rows (list -> differentiator_row)
-        figure         (text)            e.g. "1072 nm" / "+12 LED"
-        label          (text)            one line: why it matters
-        standard_value (text, optional)  blank = pure statement;
-                                         filled = quiet contrast
-        highlight      (boolean)         emphasise the row (dose / 1072nm)
+        figure / label / standard_value (optional) / highlight (boolean)
+
+  Accent colour + image are theme-editor settings (brand stays monochrome by
+  default; merchant can dial a warm/IR accent).
 {% endcomment %}
 
 <style>
-  /* Subtle aubergine band — lifts the section off the white page */
   .sk-diff--{{ section.id }} {
-    background: rgba(var(--color-brand-rgb), 0.022);
-    padding: clamp(3rem, 4vw, 5rem) 0;
+    background: transparent;
+    padding: clamp(3.5rem, 5vw, 6rem) 0;
   }
 
   .sk-diff--{{ section.id }} .sk-diff__inner {
-    max-width: 1100px;
+    max-width: 1080px;
     margin: 0 auto;
     padding-inline: var(--sk-page-gutter);
     display: flex;
     flex-direction: column;
-    gap: clamp(2rem, 3vw, 3.2rem);
+    gap: clamp(2.4rem, 3.5vw, 3.6rem);
+  }
+
+  /* With image: content + media side by side */
+  .sk-diff--{{ section.id }} .sk-diff__inner--media {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    gap: clamp(2rem, 4.5vw, 4.5rem);
+    align-items: center;
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__body {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2.4rem, 3.5vw, 3.6rem);
   }
 
   .sk-diff--{{ section.id }} .sk-diff__header {
-    max-width: 70ch;
+    max-width: 56ch;
     display: flex;
     flex-direction: column;
     gap: var(--sk-section-header-gap);
@@ -47,13 +57,12 @@
     margin: 0;
     font-family: var(--font-body-family);
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     font-size: 1.3rem;
     font-weight: 600;
-    color: rgba(var(--color-foreground), 0.55);
+    color: rgba(var(--color-foreground), 0.5);
   }
 
-  /* Sentence case (not uppercase) — calmer, premium "statement" tone */
   .sk-diff--{{ section.id }} .sk-diff__title {
     margin: 0;
     font-size: var(--section-heading-h2);
@@ -65,7 +74,7 @@
 
   .sk-diff--{{ section.id }} .sk-diff__lead {
     margin: 0;
-    max-width: 60ch;
+    max-width: 52ch;
     font-size: clamp(1.6rem, 1.2vw, 2rem);
     line-height: 1.6;
     color: rgba(var(--sk-color-body-text), 0.8);
@@ -77,25 +86,73 @@
     list-style: none;
     display: flex;
     flex-direction: column;
+    gap: clamp(2rem, 2.8vw, 2.8rem);
   }
 
+  /* ── HERO STAT (highlight) ── */
+  .sk-diff--{{ section.id }} .sk-diff__hero {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: clamp(1.8rem, 3.5vw, 3.4rem);
+    align-items: end;
+    padding-bottom: clamp(0.6rem, 1.2vw, 1.4rem);
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__hero-figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-heading-family);
+    color: rgb(var(--color-brand-rgb));
+    line-height: 0.9;
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__hero-num {
+    font-size: clamp(4.4rem, 8vw, 7rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* Font accent: italic + accent colour on the unit */
+  .sk-diff--{{ section.id }} .sk-diff__hero-unit {
+    margin-top: 0.4rem;
+    font-size: clamp(1.6rem, 1.8vw, 2.1rem);
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: 0.01em;
+    color: var(--sk-diff-accent, var(--color-brand));
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 0.6rem;
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__hero-label {
+    margin: 0;
+    max-width: 38ch;
+    font-size: clamp(1.8rem, 1.5vw, 2.3rem);
+    line-height: 1.4;
+    font-weight: 500;
+    color: rgb(var(--color-foreground));
+  }
+
+  /* ── REGISTER (quiet supporting specs) ── */
   .sk-diff--{{ section.id }} .sk-diff__row {
     display: grid;
-    grid-template-columns: clamp(110px, 24%, 200px) minmax(0, 1fr);
-    column-gap: clamp(1.6rem, 3vw, 2.6rem);
-    align-items: start;
-    padding-block: clamp(1.6rem, 2.2vw, 2.2rem);
-  }
-
-  .sk-diff--{{ section.id }} .sk-diff__row + .sk-diff__row {
-    border-top: 1px solid rgba(var(--color-foreground), 0.1);
+    grid-template-columns: clamp(92px, 20%, 150px) minmax(0, 1fr);
+    column-gap: clamp(1.4rem, 2.5vw, 2.2rem);
+    align-items: baseline;
   }
 
   .sk-diff--{{ section.id }} .sk-diff__figure {
     margin: 0;
     font-family: var(--font-heading-family);
-    font-size: clamp(2.6rem, 3vw, 3.6rem);
-    line-height: 1.05;
+    font-size: clamp(1.7rem, 1.4vw, 2.1rem);
+    line-height: 1.15;
     font-weight: 600;
     letter-spacing: -0.01em;
     color: rgb(var(--color-brand-rgb));
@@ -105,61 +162,92 @@
   .sk-diff--{{ section.id }} .sk-diff__content {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
   .sk-diff--{{ section.id }} .sk-diff__label {
     margin: 0;
-    max-width: 60ch;
-    font-size: clamp(1.6rem, 1.1vw, 1.9rem);
-    line-height: 1.55;
-    font-weight: 500;
-    color: rgb(var(--color-foreground));
+    max-width: 62ch;
+    font-size: clamp(1.5rem, 1vw, 1.7rem);
+    line-height: 1.5;
+    color: rgba(var(--color-foreground), 0.82);
   }
 
   .sk-diff--{{ section.id }} .sk-diff__standard {
     margin: 0;
-    font-size: clamp(1.3rem, 0.9vw, 1.5rem);
+    font-size: clamp(1.3rem, 0.9vw, 1.45rem);
     line-height: 1.5;
-    color: rgba(var(--color-foreground), 0.5);
-  }
-
-  /* Highlight row — soft aubergine card; the centrepiece (e.g. 1072nm) */
-  .sk-diff--{{ section.id }} .sk-diff__row--highlight {
-    background: rgba(var(--color-brand-rgb), 0.06);
-    border-left: 3px solid rgb(var(--color-brand-rgb));
-    border-radius: 14px;
-    padding-inline: clamp(1.4rem, 2.4vw, 2.2rem);
-  }
-
-  /* No hairline directly above or below the highlight card */
-  .sk-diff--{{ section.id }} .sk-diff__row + .sk-diff__row--highlight,
-  .sk-diff--{{ section.id }} .sk-diff__row--highlight + .sk-diff__row {
-    border-top: none;
+    letter-spacing: 0.01em;
+    color: rgba(var(--color-foreground), 0.46);
   }
 
   .sk-diff--{{ section.id }} .sk-diff__note {
     margin: 0;
     max-width: 70ch;
-    font-size: clamp(1.3rem, 0.9vw, 1.5rem);
+    font-size: clamp(1.3rem, 0.9vw, 1.45rem);
     line-height: 1.6;
-    color: rgba(var(--color-foreground), 0.5);
+    color: rgba(var(--color-foreground), 0.46);
+  }
+
+  /* ── MEDIA — non-boxy: soft radial fade + accent glow, no hard frame ── */
+  .sk-diff--{{ section.id }} .sk-diff__media {
+    position: relative;
+    align-self: stretch;
+    min-height: clamp(300px, 34vw, 460px);
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__media::before {
+    content: "";
+    position: absolute;
+    inset: -14%;
+    z-index: 0;
+    background: radial-gradient(
+      60% 55% at 58% 42%,
+      color-mix(in srgb, var(--sk-diff-accent, var(--color-brand)) 26%, transparent),
+      transparent 72%
+    );
+    filter: blur(8px);
+  }
+
+  .sk-diff--{{ section.id }} .sk-diff__media img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Dissolve every edge — never reads as a framed rectangle */
+    -webkit-mask-image: radial-gradient(135% 120% at 66% 40%, #000 50%, transparent 100%);
+    mask-image: radial-gradient(135% 120% at 66% 40%, #000 50%, transparent 100%);
   }
 
   @media screen and (min-width: 750px) and (max-width: 989px) {
+    .sk-diff--{{ section.id }} .sk-diff__inner--media {
+      gap: clamp(1.6rem, 3vw, 2.6rem);
+    }
+
     .sk-diff--{{ section.id }} .sk-diff__row {
-      grid-template-columns: clamp(96px, 22%, 170px) minmax(0, 1fr);
-      column-gap: clamp(1.2rem, 2.5vw, 2rem);
+      grid-template-columns: clamp(84px, 22%, 130px) minmax(0, 1fr);
     }
   }
 
   @media screen and (max-width: 749px) {
     .sk-diff--{{ section.id }} {
-      padding: clamp(2.8rem, 6vw, 3.6rem) 0;
+      padding: clamp(3rem, 8vw, 4rem) 0;
     }
 
     .sk-diff--{{ section.id }} .sk-diff__inner {
       padding-inline: clamp(1.6rem, 5vw, 2.6rem);
+    }
+
+    /* Stack: image becomes a faded banner on top */
+    .sk-diff--{{ section.id }} .sk-diff__inner--media {
+      grid-template-columns: 1fr;
+      gap: clamp(2rem, 6vw, 2.8rem);
+    }
+
+    .sk-diff--{{ section.id }} .sk-diff__media {
+      order: -1;
+      min-height: clamp(220px, 56vw, 320px);
     }
 
     .sk-diff--{{ section.id }} .sk-diff__title {
@@ -172,14 +260,23 @@
       line-height: var(--sk-mobile-body-line);
     }
 
-    .sk-diff--{{ section.id }} .sk-diff__row {
+    .sk-diff--{{ section.id }} .sk-diff__hero {
       grid-template-columns: 1fr;
-      row-gap: 0.6rem;
-      padding-block: 1.8rem;
+      row-gap: 1rem;
+      align-items: start;
     }
 
-    .sk-diff--{{ section.id }} .sk-diff__figure {
-      font-size: clamp(2.4rem, 9vw, 3rem);
+    .sk-diff--{{ section.id }} .sk-diff__hero-num {
+      font-size: clamp(3.4rem, 15vw, 4.6rem);
+    }
+
+    .sk-diff--{{ section.id }} .sk-diff__hero-content {
+      padding-bottom: 0;
+    }
+
+    .sk-diff--{{ section.id }} .sk-diff__row {
+      grid-template-columns: 1fr;
+      row-gap: 0.4rem;
     }
   }
 </style>
@@ -190,6 +287,7 @@
 {%- assign subheading = '' -%}
 {%- assign note = '' -%}
 {%- assign rows = blank -%}
+{%- assign media_image = section.settings.image -%}
 {%- assign show_section = false -%}
 
 {%- if diff_ref != blank and diff_ref.value != blank -%}
@@ -198,6 +296,7 @@
   {%- assign heading = entry.heading.value | default: '' -%}
   {%- assign subheading = entry.subheading.value | default: '' -%}
   {%- assign note = entry.note.value | default: '' -%}
+  {%- assign media_image = entry.image.value | default: section.settings.image -%}
 
   {%- if entry.rows != blank and entry.rows.value != blank -%}
     {%- assign rows = entry.rows.value -%}
@@ -211,59 +310,97 @@
 {%- if show_section -%}
   <section
     class="sk-product-differentiator sk-diff sk-diff--{{ section.id }}"
+    style="--sk-diff-accent: {{ section.settings.accent | default: '#30273e' }};"
     {%- if heading != blank %} aria-labelledby="sk-diff-title-{{ section.id }}"{% endif -%}
   >
-    <div class="sk-diff__inner">
-      {% if eyebrow != blank or heading != blank or subheading != blank %}
-        <header class="sk-diff__header">
-          {% if eyebrow != blank %}
-            <p class="sk-diff__eyebrow">{{ eyebrow | escape }}</p>
-          {% endif %}
-          {% if heading != blank %}
-            <h2 class="sk-diff__title" id="sk-diff-title-{{ section.id }}">{{ heading | escape }}</h2>
-          {% endif %}
-          {% if subheading != blank %}
-            <p class="sk-diff__lead">{{ subheading | escape }}</p>
-          {% endif %}
-        </header>
-      {% endif %}
-
-      {% if rows != blank %}
-        <div class="sk-diff__rows" role="list">
-          {% for row in rows %}
-            {% assign figure = row.figure.value | default: '' %}
-            {% assign label = row.label.value | default: '' %}
-            {% assign standard_value = row.standard_value.value | default: '' %}
-            {% assign is_highlight = row.highlight.value | default: false %}
-
-            {% if figure != blank or label != blank %}
-              <div
-                class="sk-diff__row{% if is_highlight %} sk-diff__row--highlight{% endif %}"
-                role="listitem"
-              >
-                {% if figure != blank %}
-                  <p class="sk-diff__figure">{{ figure | escape }}</p>
-                {% endif %}
-                <div class="sk-diff__content">
-                  {% if label != blank %}
-                    <p class="sk-diff__label">{{ label | escape }}</p>
-                  {% endif %}
-                  {% if standard_value != blank %}
-                    {%- assign std_label = section.settings.standard_label | strip -%}
-                    <p class="sk-diff__standard">
-                      {%- if std_label != blank %}{{ std_label | escape }}: {% endif -%}
-                      {{ standard_value | escape }}
-                    </p>
-                  {% endif %}
-                </div>
-              </div>
+    <div class="sk-diff__inner{% if media_image != blank %} sk-diff__inner--media{% endif %}">
+      <div class="sk-diff__body">
+        {% if eyebrow != blank or heading != blank or subheading != blank %}
+          <header class="sk-diff__header">
+            {% if eyebrow != blank %}
+              <p class="sk-diff__eyebrow">{{ eyebrow | escape }}</p>
             {% endif %}
-          {% endfor %}
-        </div>
-      {% endif %}
+            {% if heading != blank %}
+              <h2 class="sk-diff__title" id="sk-diff-title-{{ section.id }}">{{ heading | escape }}</h2>
+            {% endif %}
+            {% if subheading != blank %}
+              <p class="sk-diff__lead">{{ subheading | escape }}</p>
+            {% endif %}
+          </header>
+        {% endif %}
 
-      {% if note != blank %}
-        <p class="sk-diff__note">{{ note | escape | newline_to_br }}</p>
+        {% if rows != blank %}
+          <div class="sk-diff__rows" role="list">
+            {% for row in rows %}
+              {% assign figure = row.figure.value | default: '' %}
+              {% assign label = row.label.value | default: '' %}
+              {% assign standard_value = row.standard_value.value | default: '' %}
+              {% assign is_highlight = row.highlight.value | default: false %}
+              {% assign std_label = section.settings.standard_label | strip %}
+
+              {% if figure != blank or label != blank %}
+                {% if is_highlight %}
+                  {%- assign fig_num = figure | split: ' ' | first -%}
+                  {%- assign fig_unit = figure | remove_first: fig_num | strip -%}
+                  <div class="sk-diff__hero" role="listitem">
+                    <p class="sk-diff__hero-figure">
+                      <span class="sk-diff__hero-num">{{ fig_num | escape }}</span>
+                      {% if fig_unit != blank %}
+                        <span class="sk-diff__hero-unit">{{ fig_unit | escape }}</span>
+                      {% endif %}
+                    </p>
+                    <div class="sk-diff__hero-content">
+                      {% if label != blank %}
+                        <p class="sk-diff__hero-label">{{ label | escape }}</p>
+                      {% endif %}
+                      {% if standard_value != blank %}
+                        <p class="sk-diff__standard">
+                          {%- if std_label != blank %}{{ std_label | escape }}: {% endif -%}
+                          {{ standard_value | escape }}
+                        </p>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% else %}
+                  <div class="sk-diff__row" role="listitem">
+                    {% if figure != blank %}
+                      <p class="sk-diff__figure">{{ figure | escape }}</p>
+                    {% endif %}
+                    <div class="sk-diff__content">
+                      {% if label != blank %}
+                        <p class="sk-diff__label">{{ label | escape }}</p>
+                      {% endif %}
+                      {% if standard_value != blank %}
+                        <p class="sk-diff__standard">
+                          {%- if std_label != blank %}{{ std_label | escape }}: {% endif -%}
+                          {{ standard_value | escape }}
+                        </p>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if note != blank %}
+          <p class="sk-diff__note">{{ note | escape | newline_to_br }}</p>
+        {% endif %}
+      </div>
+
+      {% if media_image != blank %}
+        <div class="sk-diff__media">
+          {{
+            media_image
+            | image_url: width: 1200
+            | image_tag:
+              widths: '420, 600, 840, 1000, 1200',
+              sizes: '(min-width: 990px) 40vw, 100vw',
+              loading: 'lazy',
+              alt: media_image.alt | default: heading
+          }}
+        </div>
       {% endif %}
     </div>
   </section>
@@ -286,11 +423,24 @@
   "class": "section",
   "settings": [
     {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Bilde (valgfritt)",
+      "info": "Rendres mykt utfadet (ikke firkantet). Per-produkt-bilde kan settes via metaobjektets image-felt og vinner over dette."
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Aksentfarge",
+      "default": "#30273e",
+      "info": "Brukes på enhet (kursiv) og bilde-glød. Standard er aubergine; dra mot varm/IR for mer farge."
+    },
+    {
       "type": "text",
       "id": "standard_label",
       "label": "Etikett for standard-/billigverdi",
       "default": "Typisk rimelig maske",
-      "info": "Prefiks foran 'standard_value' når en rad har den utfylt (stille kontrast). Rader uten standard_value vises som rene utsagn."
+      "info": "Prefiks foran 'standard_value' når en rad har den utfylt."
     }
   ],
   "presets": [
