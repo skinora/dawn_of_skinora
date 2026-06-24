@@ -726,6 +726,99 @@
       min-width: 0;
     }
 
+    /* ÆRLIG PRIS — sirkulært "365 dager"-seal-design.
+       Tokens: --ink-900 hovedtekst, --ink-500 sekundær, --ff-serif freight-text-pro.
+       Fallbacks følger paletten i CLAUDE.md. */
+    .sk-price-honesty {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin: 0;
+      padding: 2rem 2.4rem;
+      background: var(--paper, #ffffff);
+      border: 1px solid rgba(45, 27, 61, 0.12);
+      border-radius: 14px;
+    }
+
+    .sk-price-honesty__seal {
+      flex: 0 0 auto;
+      width: 11rem;
+      height: 11rem;
+      border-radius: 50%;
+      border: 1.5px solid var(--ink-900, #2d1b3d);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem;
+      text-align: center;
+      font-family: var(--ff-serif, 'freight-text-pro', Georgia, serif);
+    }
+
+    .sk-price-honesty__seal-eyebrow,
+    .sk-price-honesty__seal-caption {
+      font-size: 1rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-500, rgba(45, 27, 61, 0.72));
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .sk-price-honesty__seal-number {
+      font-size: 2.8rem;
+      color: var(--ink-900, #2d1b3d);
+      font-weight: 400;
+      line-height: 1;
+      margin: 0.4rem 0;
+    }
+
+    .sk-price-honesty__text {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .sk-price-honesty__title {
+      margin: 0 0 0.8rem;
+      font-family: var(--ff-serif, 'freight-text-pro', Georgia, serif);
+      font-size: 2.2rem;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--ink-900, #2d1b3d);
+      letter-spacing: -0.005em;
+    }
+
+    .sk-price-honesty__body,
+    .sk-price-honesty__body p {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--ink-500, rgba(45, 27, 61, 0.72));
+    }
+
+    @media (max-width: 600px) {
+      .sk-price-honesty {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.4rem;
+        padding: 1.8rem;
+      }
+
+      .sk-price-honesty__seal {
+        width: 9rem;
+        height: 9rem;
+      }
+
+      .sk-price-honesty__seal-number {
+        font-size: 2.4rem;
+      }
+
+      .sk-price-honesty__title {
+        font-size: 1.9rem;
+      }
+    }
+
     .sk-trust-inline {
       display: flex;
       flex-wrap: wrap;
@@ -1515,6 +1608,25 @@
             {% render 'sk-radiance-price', product: product, section: section, show_badges: false %}
           </div>
 
+          <!-- ÆRLIG PRIS — sirkulært "365 dager"-seal som visuell tillitsmark -->
+          {%- if section.settings.honesty_show -%}
+            <div class="sk-price-honesty">
+              <div class="sk-price-honesty__seal" aria-hidden="true">
+                <span class="sk-price-honesty__seal-eyebrow">Ærlig pris</span>
+                <span class="sk-price-honesty__seal-number">365</span>
+                <span class="sk-price-honesty__seal-caption">dager</span>
+              </div>
+              <div class="sk-price-honesty__text">
+                {%- if section.settings.honesty_heading != blank -%}
+                  <p class="sk-price-honesty__title">{{ section.settings.honesty_heading }}</p>
+                {%- endif -%}
+                {%- if section.settings.honesty_body != blank -%}
+                  <div class="sk-price-honesty__body">{{ section.settings.honesty_body }}</div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+
           <!-- PURCHASE -->
           <div class="sk-purchase">
             <!-- Buy buttons wrapper (we toggle this) -->
@@ -2142,6 +2254,29 @@
       "type": "@app"
     }
   ],
-  "settings": []
+  "settings": [
+    {
+      "type": "header",
+      "content": "Ærlig pris-boks"
+    },
+    {
+      "type": "checkbox",
+      "id": "honesty_show",
+      "label": "Vis ærlig pris-boks",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "honesty_heading",
+      "label": "Overskrift",
+      "default": "Ærlig pris – hele året"
+    },
+    {
+      "type": "richtext",
+      "id": "honesty_body",
+      "label": "Tekst (sett pris per produkt/mal)",
+      "default": "<p>Vi kjører aldri salg eller falske «før»-priser. Du betaler aldri for mye – og slipper å vente på et tilbud som aldri kommer.</p>"
+    }
+  ]
 }
 {% endschema %}
