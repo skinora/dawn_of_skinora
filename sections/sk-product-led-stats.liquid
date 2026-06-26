@@ -71,6 +71,30 @@
     style="--sk-led-bg: {{ accent }};"
     {%- if heading != blank %} aria-labelledby="sk-led-stats-title-{{ section.id }}"{% endif -%}
   >
+    {%- comment -%}
+      Bildet er bakgrunn for HELE seksjonen — et absolutt-posisjonert <img> bak
+      alt innhold (ikke CSS background-image, så srcset/responsiv lasting beholdes
+      og bildet forblir dynamisk per produkt via metaobjektet). alt="" + aria-hidden
+      fordi det er dekorativt; chip/grid bærer det semantiske innholdet.
+    {%- endcomment -%}
+    {%- if hero_image != blank -%}
+      <img
+        class="sk-led-stats__bg"
+        src="{{ hero_image | image_url: width: 1600 }}"
+        srcset="
+          {{ hero_image | image_url: width: 600 }} 600w,
+          {{ hero_image | image_url: width: 1000 }} 1000w,
+          {{ hero_image | image_url: width: 1400 }} 1400w,
+          {{ hero_image | image_url: width: 1920 }} 1920w,
+          {{ hero_image | image_url: width: 2400 }} 2400w
+        "
+        sizes="100vw"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+      >
+    {%- endif -%}
+
     <div class="sk-led-stats__inner">
 
       {%- if eyebrow != blank or heading != blank or source.intro != blank -%}
@@ -88,24 +112,9 @@
           {%- endif -%}
         </header>
       {%- endif -%}
-    </div>{%- comment -%} /__inner — hero lever utenfor for ekte bleed {%- endcomment -%}
 
-    {%- if hero_image != blank or hero_figure != blank or stat_cards != blank -%}
-      <div class="sk-led-stats__hero">
-          {%- if hero_image != blank -%}
-            {{
-              hero_image
-              | image_url: width: 1600
-              | image_tag:
-                widths: '420, 600, 840, 1000, 1200, 1400, 1600, 1920',
-                sizes: '100vw',
-                loading: 'lazy',
-                alt: hero_image.alt | default: heading,
-                class: 'sk-led-stats__hero-image'
-            }}
-          {%- endif -%}
-
-          <div class="sk-led-stats__hero-content">
+      {%- if hero_figure != blank or stat_cards != blank -%}
+        <div class="sk-led-stats__hero-content">
             {%- if hero_figure != blank -%}
               <div class="sk-led-stats__hero-chip">
                 <p class="sk-led-stats__hero-figure">
@@ -150,9 +159,9 @@
                 {%- endfor -%}
               </div>
             {%- endif -%}
-          </div>
-        </div>
+        </div>{%- comment -%} /__hero-content {%- endcomment -%}
       {%- endif -%}
+    </div>{%- comment -%} /__inner {%- endcomment -%}
   </section>
 {%- elsif request.design_mode -%}
   <section class="sk-led-stats">

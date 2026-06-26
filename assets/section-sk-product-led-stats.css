@@ -5,21 +5,46 @@
    Glass-effekt via backdrop-filter med fallback. No !important. */
 
 .sk-led-stats {
+  position: relative;
+  overflow: hidden;
   padding: clamp(48px, 8vw, 96px) 0;
-  background: var(--paper, #ffffff);
+  min-height: clamp(480px, 50vw, 680px);
+  /* Fallback bak bildet: accent-fargen (per produkt). Bildet legger seg over. */
+  background: var(--sk-led-bg, #f5e8ec);
 }
 
 .sk-led-stats__inner {
+  position: relative;
+  z-index: 1;
   max-width: 1080px;
   margin: 0 auto;
   padding-inline: clamp(16px, 4vw, 32px);
 }
 
-/* ── HEADER ── */
+/* ── HEADER ──
+   Eksplisitt flex-kolonne så barna alltid stacker top-down og sentreres,
+   uansett om en global tema-regel skulle gi <header> en row-layout.
+   Lyst glass-panel (motsats til de mørke chips-ene) så mørk ink-tekst
+   leser trygt oppå LED-bildet. */
 .sk-led-stats__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   max-width: 56ch;
   margin: 0 auto clamp(24px, 4vw, 40px);
+  padding: clamp(20px, 3vw, 32px) clamp(24px, 4vw, 40px);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .sk-led-stats__header {
+    background: rgba(255, 255, 255, 0.92);
+  }
 }
 
 .sk-led-stats__eyebrow {
@@ -27,6 +52,9 @@
   font-size: var(--fs-xs, 13px);
   font-weight: 400;
   letter-spacing: 0.16em;
+  /* Kompenser for at letter-spacing legger tracking ETTER siste tegn,
+     som ellers dytter sporet uppercase-tekst optisk mot venstre. */
+  text-indent: 0.16em;
   text-transform: uppercase;
   color: var(--ink-500, rgba(45, 27, 61, 0.72));
   margin: 0 0 var(--space-3, 12px);
@@ -54,21 +82,12 @@
   margin: 0;
 }
 
-/* ── HERO: full-bredde bleed (sibling av __inner = ingen padding-bagasje).
-   Høyde drives av innholdet (chip + grid + padding), ikke aspect-ratio.
-   Min-height skalerer med viewport så det føles luftig på desktop. ── */
-.sk-led-stats__hero {
-  position: relative;
-  width: 100%;
-  min-height: clamp(480px, 50vw, 680px);
-  overflow: hidden;
-  background: var(--sk-led-bg, #f5e8ec);
-}
-
-.sk-led-stats__hero > .sk-led-stats__hero-image {
+/* ── BAKGRUNNSBILDE — dekker HELE seksjonen, bak alt innhold (z-index 0).
+   Absolutt <img> i stedet for CSS background-image: beholder srcset/responsiv
+   lasting og forblir dynamisk per produkt via metaobjektet. ── */
+.sk-led-stats__bg {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   max-width: none;
@@ -78,13 +97,8 @@
   display: block;
 }
 
-/* Container-constraint INSIDE the bleed — chip + grid stays max 1080px wide */
+/* Chip + grid: sentrert kolonne over bildet (inni __inner som bærer z-index). */
 .sk-led-stats__hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: clamp(40px, 6vw, 64px) clamp(16px, 4vw, 32px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -242,7 +256,7 @@
 
 /* ── TABLET (750-989px) ── */
 @media (min-width: 750px) and (max-width: 989px) {
-  .sk-led-stats__hero {
+  .sk-led-stats {
     min-height: clamp(440px, 60vw, 600px);
   }
 
@@ -255,14 +269,10 @@
 @media (max-width: 749px) {
   .sk-led-stats {
     padding: clamp(40px, 10vw, 56px) 0;
-  }
-
-  .sk-led-stats__hero {
-    min-height: 620px;
+    min-height: 0;
   }
 
   .sk-led-stats__hero-content {
-    padding: 28px 16px;
     gap: 16px;
   }
 
