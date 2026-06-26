@@ -1,0 +1,204 @@
+{% comment %}
+  SECTION: SK – LED Stats
+
+  Produktspesifikk seksjon som viser LED-spesifikasjoner som tall-kort med
+  glass-effekt over et bilde av huden bestrålt av LED-lyset. Innholdet er
+  per-produkt via metaobjekt-referanse.
+
+  Per-product content via:
+    product.metafields.custom.led_stats_reference -> product_led_stats
+      eyebrow / heading / intro / image / accent
+      hero_figure / hero_unit / hero_label / hero_explanation
+      stat_cards (list -> led_stat_card)
+        figure / unit / label / explanation
+      comparison_note / note
+
+  Layout:
+    Desktop/tablet: hero-bilde med chip overlay + grid av stat-kort under
+    Mobile: kompakt hero + 2-kolonne grid
+
+  Bilde og accent-farge styres per produkt (rødt for Radiance, pink for Clear).
+{% endcomment %}
+
+{{ 'section-sk-product-led-stats.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign source = product.metafields.custom.led_stats_reference.value
+  assign show_section = false
+  assign eyebrow = ''
+  assign heading = ''
+  assign intro = ''
+  assign hero_image = blank
+  assign accent = '#f5e8ec'
+  assign hero_figure = ''
+  assign hero_unit = ''
+  assign hero_label = ''
+  assign hero_explanation = ''
+  assign stat_cards = blank
+  assign comparison_note = ''
+  assign note = ''
+
+  if source != blank
+    comment
+      Rich_text-felter (intro, hero_explanation, comparison_note, note, card.explanation)
+      tildeles UTEN .value — da rendres de som HTML når de printes. Bruk av .value
+      returnerer JSON-AST (rå tekst), ikke HTML. Empty-check fungerer på feltobjektet.
+      Tekst-felter (eyebrow, heading, figure, unit, label) beholder .value siden de
+      er rene strenger som skal escapes ved utskrift.
+    endcomment
+    assign eyebrow = source.eyebrow.value | default: ''
+    assign heading = source.heading.value | default: ''
+    assign intro = source.intro
+    assign hero_image = source.image.value
+    assign accent = source.accent.value | default: '#f5e8ec'
+    assign hero_figure = source.hero_figure.value | default: ''
+    assign hero_unit = source.hero_unit.value | default: ''
+    assign hero_label = source.hero_label.value | default: ''
+    assign hero_explanation = source.hero_explanation
+    assign comparison_note = source.comparison_note
+    assign note = source.note
+    assign stat_cards = source.stat_cards.value
+
+    comment
+      Vis seksjonen så snart metaobjekt-referansen er satt. Hvert individuelt
+      felt er allerede wrappet i {%- if X != blank -%} i render-grenen, så
+      tomme felter renders rett og slett ikke. Dette er mer robust enn å
+      kreve at spesifikke felt er fylt ut for å trigge seksjonen.
+    endcomment
+    assign show_section = true
+  endif
+-%}
+
+{%- if show_section -%}
+  <section
+    class="sk-led-stats"
+    style="--sk-led-bg: {{ accent }};"
+    {%- if heading != blank %} aria-labelledby="sk-led-stats-title-{{ section.id }}"{% endif -%}
+  >
+    <div class="sk-led-stats__inner">
+
+      {%- if eyebrow != blank or heading != blank or intro != blank -%}
+        <header class="sk-led-stats__header">
+          {%- if eyebrow != blank -%}
+            <p class="sk-led-stats__eyebrow">{{ eyebrow | escape }}</p>
+          {%- endif -%}
+          {%- if heading != blank -%}
+            <h2 class="sk-led-stats__heading" id="sk-led-stats-title-{{ section.id }}">
+              {{ heading | escape }}
+            </h2>
+          {%- endif -%}
+          {%- if intro != blank -%}
+            <div class="sk-led-stats__intro">{{ intro }}</div>
+          {%- endif -%}
+        </header>
+      {%- endif -%}
+
+      {%- if hero_image != blank or hero_figure != blank -%}
+        <div class="sk-led-stats__hero">
+          {%- if hero_image != blank -%}
+            {{
+              hero_image
+              | image_url: width: 1600
+              | image_tag:
+                widths: '420, 600, 840, 1000, 1200, 1400, 1600',
+                sizes: '(min-width: 1080px) 1080px, 100vw',
+                loading: 'lazy',
+                alt: hero_image.alt | default: heading,
+                class: 'sk-led-stats__hero-image'
+            }}
+          {%- endif -%}
+
+          {%- if hero_figure != blank -%}
+            <div class="sk-led-stats__hero-chip">
+              <p class="sk-led-stats__hero-figure">
+                <span>{{ hero_figure | escape }}</span>
+                {%- if hero_unit != blank -%}
+                  <span class="sk-led-stats__hero-unit">{{ hero_unit | escape }}</span>
+                {%- endif -%}
+              </p>
+              {%- if hero_label != blank -%}
+                <p class="sk-led-stats__hero-label">{{ hero_label | escape }}</p>
+              {%- endif -%}
+              {%- if hero_explanation != blank -%}
+                <div class="sk-led-stats__hero-explanation">{{ hero_explanation }}</div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if stat_cards != blank -%}
+        <div class="sk-led-stats__grid">
+          {%- for card in stat_cards -%}
+            {%- assign card_figure = card.figure.value | default: '' -%}
+            {%- assign card_unit = card.unit.value | default: '' -%}
+            {%- assign card_label = card.label.value | default: '' -%}
+            {%- comment -%} card.explanation er rich_text — ingen .value, da rendres HTML. {%- endcomment -%}
+            {%- assign card_explanation = card.explanation -%}
+            {%- if card_figure != blank or card_label != blank -%}
+              <div class="sk-led-stats__card">
+                {%- if card_figure != blank -%}
+                  <p class="sk-led-stats__figure">
+                    <span>{{ card_figure | escape }}</span>
+                    {%- if card_unit != blank -%}
+                      <span class="sk-led-stats__unit">{{ card_unit | escape }}</span>
+                    {%- endif -%}
+                  </p>
+                {%- endif -%}
+                {%- if card_label != blank -%}
+                  <p class="sk-led-stats__label">{{ card_label | escape }}</p>
+                {%- endif -%}
+                {%- if card_explanation != blank -%}
+                  <div class="sk-led-stats__explanation">{{ card_explanation }}</div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if comparison_note != blank -%}
+        <div class="sk-led-stats__comparison">{{ comparison_note }}</div>
+      {%- endif -%}
+
+      {%- if note != blank -%}
+        <div class="sk-led-stats__note">{{ note }}</div>
+      {%- endif -%}
+
+    </div>
+  </section>
+{%- elsif request.design_mode -%}
+  <section class="sk-led-stats">
+    <div class="sk-led-stats__inner">
+      <div class="sk-led-stats__note" style="padding: 4rem 2rem; text-align: center;">
+        <strong>Tom seksjon:</strong> legg til en oppføring på
+        <code>product.metafields.custom.led_stats_reference</code>
+        (metaobjekt <code>product_led_stats</code>) for å fylle denne seksjonen.
+        Se prompt i sk-product-led-stats.liquid for oppsett.
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SK – LED Stats",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Innhold styres per produkt"
+    },
+    {
+      "type": "paragraph",
+      "content": "Denne seksjonen henter ALT innhold fra metaobjekt-referansen 'product.metafields.custom.led_stats_reference' (type 'product_led_stats'). Sett opp metaobjektene én gang, koble til hvert produkt. Da blir bilde, farge, tall og tekst forskjellig per produkt (rødt for Radiance, pink for Clear)."
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK – LED Stats"
+    }
+  ]
+}
+{% endschema %}

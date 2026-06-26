@@ -1621,7 +1621,14 @@
                   <p class="sk-price-honesty__title">{{ section.settings.honesty_heading }}</p>
                 {%- endif -%}
                 {%- if section.settings.honesty_body != blank -%}
-                  <div class="sk-price-honesty__body">{{ section.settings.honesty_body }}</div>
+                  {%- comment -%}
+                    [pris]-token i body-teksten erstattes dynamisk med produktets aktuelle pris.
+                    Slik følger teksten produktet (Clear: 4 390 kr, Radiance: 4 690 kr) uten
+                    manuell oppdatering, og du slipper troverdighetsbrudd hvis pris endres.
+                  {%- endcomment -%}
+                  {%- assign sk_formatted_price = product.price | money_without_trailing_zeros -%}
+                  {%- assign sk_honesty_body = section.settings.honesty_body | replace: '[pris]', sk_formatted_price -%}
+                  <div class="sk-price-honesty__body">{{ sk_honesty_body }}</div>
                 {%- endif -%}
               </div>
             </div>
@@ -2269,13 +2276,14 @@
       "type": "text",
       "id": "honesty_heading",
       "label": "Overskrift",
-      "default": "Ærlig pris – hele året"
+      "default": "Samme pris hele året — også på Black Friday."
     },
     {
       "type": "richtext",
       "id": "honesty_body",
-      "label": "Tekst (sett pris per produkt/mal)",
-      "default": "<p>Vi kjører aldri salg eller falske «før»-priser. Du betaler aldri for mye – og slipper å vente på et tilbud som aldri kommer.</p>"
+      "label": "Tekst",
+      "info": "Bruk [pris] som plassholder der prisen skal vises. Den erstattes automatisk med produktets aktuelle pris (f.eks. 4 690 kr). Ikke skriv prisen manuelt — da blir den utdatert hvis du justerer pris senere.",
+      "default": "<p>Vi kjører aldri salg eller falske «før»-priser. [pris] i dag, [pris] på Black Friday, [pris] i januar. Du slipper å vente på et tilbud som aldri kommer.</p>"
     }
   ]
 }
