@@ -39,33 +39,25 @@
   assign note = ''
 
   if source != blank
-    comment
-      Rich_text-felter (intro, hero_explanation, comparison_note, note, card.explanation)
-      tildeles UTEN .value — da rendres de som HTML når de printes. Bruk av .value
-      returnerer JSON-AST (rå tekst), ikke HTML. Empty-check fungerer på feltobjektet.
-      Tekst-felter (eyebrow, heading, figure, unit, label) beholder .value siden de
-      er rene strenger som skal escapes ved utskrift.
-    endcomment
     assign eyebrow = source.eyebrow.value | default: ''
     assign heading = source.heading.value | default: ''
-    assign intro = source.intro
+    assign intro = source.intro.value | default: ''
     assign hero_image = source.image.value
-    assign accent = source.accent.value | default: '#f5e8ec'
+    assign accent = source.accent | default: '#f5e8ec'
     assign hero_figure = source.hero_figure.value | default: ''
     assign hero_unit = source.hero_unit.value | default: ''
     assign hero_label = source.hero_label.value | default: ''
-    assign hero_explanation = source.hero_explanation
-    assign comparison_note = source.comparison_note
-    assign note = source.note
-    assign stat_cards = source.stat_cards.value
+    assign hero_explanation = source.hero_explanation.value | default: ''
+    assign comparison_note = source.comparison_note.value | default: ''
+    assign note = source.note.value | default: ''
 
-    comment
-      Vis seksjonen så snart metaobjekt-referansen er satt. Hvert individuelt
-      felt er allerede wrappet i {%- if X != blank -%} i render-grenen, så
-      tomme felter renders rett og slett ikke. Dette er mer robust enn å
-      kreve at spesifikke felt er fylt ut for å trigge seksjonen.
-    endcomment
-    assign show_section = true
+    if source.stat_cards != blank and source.stat_cards.value != blank
+      assign stat_cards = source.stat_cards.value
+    endif
+
+    if heading != blank or hero_figure != blank or stat_cards != blank
+      assign show_section = true
+    endif
   endif
 -%}
 
@@ -133,8 +125,7 @@
             {%- assign card_figure = card.figure.value | default: '' -%}
             {%- assign card_unit = card.unit.value | default: '' -%}
             {%- assign card_label = card.label.value | default: '' -%}
-            {%- comment -%} card.explanation er rich_text — ingen .value, da rendres HTML. {%- endcomment -%}
-            {%- assign card_explanation = card.explanation -%}
+            {%- assign card_explanation = card.explanation.value | default: '' -%}
             {%- if card_figure != blank or card_label != blank -%}
               <div class="sk-led-stats__card">
                 {%- if card_figure != blank -%}

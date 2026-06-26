@@ -70,8 +70,14 @@
       "type": "sk-product-differentiator",
       "name": "SK – Differentiator",
       "settings": {
+        "accent": "#30273e",
         "standard_label": "Typisk rimelig maske"
       }
+    },
+    "sk_product_led_stats_bTNfhX": {
+      "type": "sk-product-led-stats",
+      "name": "SK – LED Stats",
+      "settings": {}
     },
     "sk_clinic_comparison_kP7m2x": {
       "type": "skinora-clinic-comparison",
@@ -91,18 +97,27 @@
         "row3_label": "Bekvemmelighet",
         "row3_col1": "Tidsbestilling",
         "row3_col2": "Når du vil, hjemme",
-        "show_cta": false
+        "show_cta": false,
+        "cta_label": "Prøv risikofritt i 30 dager",
+        "cta_link": ""
       }
     },
     "sk_product_how_to_use_dbAJA9": {
       "type": "sk-product-how-to-use",
       "name": "SK Product How to Use",
-      "settings": {}
+      "settings": {
+        "image_position_desktop": "left",
+        "subtitle": "__"
+      }
     },
     "sk_product_why_choose_pwJz83": {
       "type": "sk-product-why-choose",
       "name": "SK Product Why Choose",
       "settings": {
+        "cta_label": "__",
+        "cta_link": "",
+        "link_label": "__",
+        "link_url": "",
         "layout_image_width": 45,
         "layout_text_width": 45,
         "layout_gap": 10
@@ -151,6 +166,7 @@
     "sk_product_what_can_you_expect_6nxR6T",
     "sk_led_light_work_mDz86m",
     "sk_product_differentiator_dF7r2Q",
+    "sk_product_led_stats_bTNfhX",
     "sk_clinic_comparison_kP7m2x",
     "sk_product_how_to_use_dbAJA9",
     "sk_product_why_choose_pwJz83",
