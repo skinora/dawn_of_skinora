@@ -88,72 +88,71 @@
           {%- endif -%}
         </header>
       {%- endif -%}
+    </div>{%- comment -%} /__inner — hero lever utenfor for ekte bleed {%- endcomment -%}
 
-      {%- if hero_image != blank or hero_figure != blank -%}
-        <div class="sk-led-stats__hero">
+    {%- if hero_image != blank or hero_figure != blank or stat_cards != blank -%}
+      <div class="sk-led-stats__hero">
           {%- if hero_image != blank -%}
             {{
               hero_image
               | image_url: width: 1600
               | image_tag:
-                widths: '420, 600, 840, 1000, 1200, 1400, 1600',
-                sizes: '(min-width: 1080px) 1080px, 100vw',
+                widths: '420, 600, 840, 1000, 1200, 1400, 1600, 1920',
+                sizes: '100vw',
                 loading: 'lazy',
                 alt: hero_image.alt | default: heading,
                 class: 'sk-led-stats__hero-image'
             }}
           {%- endif -%}
 
-          {%- if hero_figure != blank -%}
-            <div class="sk-led-stats__hero-chip">
-              <p class="sk-led-stats__hero-figure">
-                <span>{{ hero_figure | escape }}</span>
-                {%- if hero_unit != blank -%}
-                  <span class="sk-led-stats__hero-unit">{{ hero_unit | escape }}</span>
+          <div class="sk-led-stats__hero-content">
+            {%- if hero_figure != blank -%}
+              <div class="sk-led-stats__hero-chip">
+                <p class="sk-led-stats__hero-figure">
+                  <span>{{ hero_figure | escape }}</span>
+                  {%- if hero_unit != blank -%}
+                    <span class="sk-led-stats__hero-unit">{{ hero_unit | escape }}</span>
+                  {%- endif -%}
+                </p>
+                {%- if hero_label != blank -%}
+                  <p class="sk-led-stats__hero-label">{{ hero_label | escape }}</p>
                 {%- endif -%}
-              </p>
-              {%- if hero_label != blank -%}
-                <p class="sk-led-stats__hero-label">{{ hero_label | escape }}</p>
-              {%- endif -%}
-              {%- if source.hero_explanation != blank -%}
-                <div class="sk-led-stats__hero-explanation">{{ source.hero_explanation | metafield_tag }}</div>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-
-      {%- if stat_cards != blank -%}
-        <div class="sk-led-stats__grid">
-          {%- for card in stat_cards -%}
-            {%- assign card_figure = card.figure.value | default: '' -%}
-            {%- assign card_unit = card.unit.value | default: '' -%}
-            {%- assign card_label = card.label.value | default: '' -%}
-            {%- comment -%} card.explanation er rich_text — drop .value for HTML-rendering. {%- endcomment -%}
-            {%- assign card_explanation = card.explanation -%}
-            {%- if card_figure != blank or card_label != blank -%}
-              <div class="sk-led-stats__card">
-                {%- if card_figure != blank -%}
-                  <p class="sk-led-stats__figure">
-                    <span>{{ card_figure | escape }}</span>
-                    {%- if card_unit != blank -%}
-                      <span class="sk-led-stats__unit">{{ card_unit | escape }}</span>
-                    {%- endif -%}
-                  </p>
-                {%- endif -%}
-                {%- if card_label != blank -%}
-                  <p class="sk-led-stats__label">{{ card_label | escape }}</p>
-                {%- endif -%}
-                {%- if card.explanation != blank -%}
-                  <div class="sk-led-stats__explanation">{{ card.explanation | metafield_tag }}</div>
+                {%- if source.hero_explanation != blank -%}
+                  <div class="sk-led-stats__hero-explanation">{{ source.hero_explanation | metafield_tag }}</div>
                 {%- endif -%}
               </div>
             {%- endif -%}
-          {%- endfor -%}
+
+            {%- if stat_cards != blank -%}
+              <div class="sk-led-stats__grid">
+                {%- for card in stat_cards -%}
+                  {%- assign card_figure = card.figure.value | default: '' -%}
+                  {%- assign card_unit = card.unit.value | default: '' -%}
+                  {%- assign card_label = card.label.value | default: '' -%}
+                  {%- if card_figure != blank or card_label != blank -%}
+                    <div class="sk-led-stats__card">
+                      {%- if card_figure != blank -%}
+                        <p class="sk-led-stats__figure">
+                          <span>{{ card_figure | escape }}</span>
+                          {%- if card_unit != blank -%}
+                            <span class="sk-led-stats__unit">{{ card_unit | escape }}</span>
+                          {%- endif -%}
+                        </p>
+                      {%- endif -%}
+                      {%- if card_label != blank -%}
+                        <p class="sk-led-stats__label">{{ card_label | escape }}</p>
+                      {%- endif -%}
+                      {%- if card.explanation != blank -%}
+                        <div class="sk-led-stats__explanation">{{ card.explanation | metafield_tag }}</div>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
         </div>
       {%- endif -%}
-
-    </div>
   </section>
 {%- elsif request.design_mode -%}
   <section class="sk-led-stats">

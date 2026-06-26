@@ -1,4 +1,6 @@
-/* sk-product-led-stats — produktspesifikk LED-spesifikasjon med glass-chips.
+/* sk-product-led-stats — produktspesifikk LED-spesifikasjon.
+   Layout: Header i container, bleed-bilde edge-to-edge, alle stat-cards
+   (hero + 4 støtte-cards) som glass-chips overlaid på bildet.
    Bruker brand-tokens: --ink-*, --paper, --ff-serif, --fs-*, --space-*.
    Glass-effekt via backdrop-filter med fallback. No !important. */
 
@@ -52,32 +54,46 @@
   margin: 0;
 }
 
-/* ── HERO CARD: image + chip overlaid ── */
+/* ── HERO: full-bredde bleed (sibling av __inner = ingen padding-bagasje).
+   Høyde drives av innholdet (chip + grid + padding), ikke aspect-ratio.
+   Min-height skalerer med viewport så det føles luftig på desktop. ── */
 .sk-led-stats__hero {
   position: relative;
-  border-radius: 16px;
+  width: 100%;
+  min-height: clamp(480px, 50vw, 680px);
   overflow: hidden;
-  min-height: clamp(280px, 38vw, 440px);
-  margin-bottom: var(--space-5, 24px);
   background: var(--sk-led-bg, #f5e8ec);
 }
 
-.sk-led-stats__hero-image {
+.sk-led-stats__hero > .sk-led-stats__hero-image {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  max-width: none;
   object-fit: cover;
+  object-position: center;
   z-index: 0;
+  display: block;
 }
 
-.sk-led-stats__hero-chip {
-  position: absolute;
+/* Container-constraint INSIDE the bleed — chip + grid stays max 1080px wide */
+.sk-led-stats__hero-content {
+  position: relative;
   z-index: 2;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: clamp(16px, 2.5vw, 24px) clamp(20px, 3vw, 32px);
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 64px) clamp(16px, 4vw, 32px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(20px, 3vw, 32px);
+}
+
+/* ── HERO CHIP (the big stat) ── */
+.sk-led-stats__hero-chip {
+  padding: clamp(20px, 2.8vw, 28px) clamp(24px, 3.2vw, 36px);
   border-radius: 16px;
   background: rgba(45, 27, 61, 0.78);
   backdrop-filter: blur(16px) saturate(160%);
@@ -85,7 +101,6 @@
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: #ffffff;
   text-align: center;
-  min-width: clamp(180px, 30vw, 280px);
   max-width: 90%;
 }
 
@@ -117,9 +132,9 @@
 .sk-led-stats__hero-label {
   font-size: var(--fs-sm, 14px);
   font-weight: 400;
-  letter-spacing: 0.04em;
-  margin: 10px 0 0;
-  opacity: 0.9;
+  letter-spacing: 0.06em;
+  margin: 12px 0 0;
+  opacity: 0.92;
 }
 
 .sk-led-stats__hero-explanation {
@@ -127,38 +142,48 @@
   line-height: 1.5;
   margin: 8px auto 0;
   opacity: 0.72;
-  max-width: 32ch;
+  max-width: 36ch;
 }
 
 .sk-led-stats__hero-explanation p {
   margin: 0;
 }
 
-/* ── STAT GRID (cards below hero) ── */
+/* ── STAT GRID (cards on image, glass styling) ── */
 .sk-led-stats__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--space-4, 16px);
-  margin-bottom: var(--space-5, 24px);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3, 12px);
+  width: 100%;
+  max-width: 880px;
 }
 
 .sk-led-stats__card {
-  padding: clamp(18px, 2.5vw, 24px);
-  border-radius: 14px;
-  background: rgba(45, 27, 61, 0.035);
-  border: 1px solid rgba(45, 27, 61, 0.08);
+  padding: clamp(14px, 1.8vw, 18px) clamp(16px, 2vw, 20px);
+  border-radius: 12px;
+  background: rgba(45, 27, 61, 0.7);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
   display: flex;
   flex-direction: column;
   gap: var(--space-2, 8px);
 }
 
+@supports not (backdrop-filter: blur(1px)) {
+  .sk-led-stats__card {
+    background: rgba(45, 27, 61, 0.88);
+  }
+}
+
 .sk-led-stats__figure {
   font-family: var(--ff-serif, 'freight-text-pro', Georgia, serif);
-  font-size: clamp(32px, 4vw, 44px);
+  font-size: clamp(28px, 3.2vw, 36px);
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.02em;
-  color: var(--ink-900, #2d1b3d);
+  color: #ffffff;
   display: inline-flex;
   align-items: baseline;
   gap: 4px;
@@ -172,18 +197,18 @@
 }
 
 .sk-led-stats__label {
-  font-size: var(--fs-xs, 12px);
+  font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ink-500, rgba(45, 27, 61, 0.72));
-  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 4px 0 0;
 }
 
 .sk-led-stats__explanation {
-  font-size: var(--fs-sm, 14px);
+  font-size: var(--fs-xs, 12px);
   line-height: var(--lh-normal, 1.55);
-  color: var(--ink-500, rgba(45, 27, 61, 0.72));
+  color: rgba(255, 255, 255, 0.78);
   margin: 0;
 }
 
@@ -197,49 +222,28 @@
 
 .sk-led-stats__explanation em {
   font-style: italic;
-  color: var(--ink-700, #3a3448);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .sk-led-stats__explanation strong {
   font-weight: 500;
-  color: var(--ink-900, #2d1b3d);
+  color: #ffffff;
 }
 
-/* ── COMPARISON + DISCLAIMER ── */
-.sk-led-stats__comparison {
-  font-family: var(--ff-serif, 'freight-text-pro', Georgia, serif);
-  font-size: var(--fs-md, 16px);
-  line-height: var(--lh-normal, 1.55);
-  color: var(--ink-700, #3a3448);
-  text-align: center;
-  margin: 0 0 var(--space-3, 12px);
-  font-style: italic;
-  max-width: 60ch;
-  margin-inline: auto;
-}
-
-.sk-led-stats__comparison p {
-  margin: 0;
-}
-
+/* ── EMPTY STATE NOTE (only used in design_mode, not on storefront) ── */
 .sk-led-stats__note {
   font-size: var(--fs-xs, 12px);
   line-height: var(--lh-normal, 1.55);
   color: var(--ink-400, rgba(45, 27, 61, 0.58));
   text-align: center;
-  margin: 0;
+  margin: 0 auto;
   max-width: 56ch;
-  margin-inline: auto;
-}
-
-.sk-led-stats__note p {
-  margin: 0;
 }
 
 /* ── TABLET (750-989px) ── */
 @media (min-width: 750px) and (max-width: 989px) {
   .sk-led-stats__hero {
-    min-height: clamp(300px, 42vw, 400px);
+    min-height: clamp(440px, 60vw, 600px);
   }
 
   .sk-led-stats__grid {
@@ -254,28 +258,31 @@
   }
 
   .sk-led-stats__hero {
-    min-height: 240px;
-    border-radius: 12px;
+    min-height: 620px;
+  }
+
+  .sk-led-stats__hero-content {
+    padding: 28px 16px;
+    gap: 16px;
   }
 
   .sk-led-stats__hero-chip {
-    padding: 16px 20px;
-    border-radius: 12px;
-    min-width: 0;
+    padding: 18px 22px;
+    border-radius: 14px;
   }
 
   .sk-led-stats__hero-figure {
-    font-size: clamp(40px, 11vw, 56px);
+    font-size: clamp(40px, 11vw, 50px);
   }
 
   .sk-led-stats__hero-label {
     font-size: 12px;
-    margin-top: 6px;
+    margin-top: 8px;
   }
 
   .sk-led-stats__hero-explanation {
     font-size: 11px;
-    max-width: 26ch;
+    max-width: 28ch;
   }
 
   .sk-led-stats__grid {
@@ -284,20 +291,20 @@
   }
 
   .sk-led-stats__card {
-    padding: 14px 16px;
+    padding: 12px 14px;
     border-radius: 12px;
   }
 
   .sk-led-stats__figure {
-    font-size: clamp(26px, 7vw, 34px);
+    font-size: clamp(24px, 7vw, 28px);
   }
 
   .sk-led-stats__label {
-    font-size: 10px;
+    font-size: 9px;
     letter-spacing: 0.12em;
   }
 
   .sk-led-stats__explanation {
-    font-size: 12px;
+    font-size: 11px;
   }
 }
