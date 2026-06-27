@@ -73,6 +73,7 @@
     },
     "sk_clinic_comparison_kP7m2x": {
       "type": "skinora-clinic-comparison",
+      "disabled": true,
       "settings": {
         "heading": "Et klinikkresultat – uten klinikkpris",
         "intro_body": "<p>En LED-behandling i klinikk koster typisk 800–1 500 kr per økt. Med Skinora gjør du det samme hjemme – så ofte du vil, til én fast engangspris.</p>",
