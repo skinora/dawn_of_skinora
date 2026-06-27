@@ -66,14 +66,6 @@
         "sk_led_light_work_subheading": "Oppdag hver bølgelengdes rolige effekt, steg for steg"
       }
     },
-    "sk_product_differentiator_dF7r2Q": {
-      "type": "sk-product-differentiator",
-      "name": "SK – Differentiator",
-      "settings": {
-        "accent": "#30273e",
-        "standard_label": "Typisk rimelig maske"
-      }
-    },
     "sk_product_led_stats_bTNfhX": {
       "type": "sk-product-led-stats",
       "name": "SK – LED Stats",
@@ -165,7 +157,6 @@
     "sk_before_after_per_product_TjgxQQ",
     "sk_product_what_can_you_expect_6nxR6T",
     "sk_led_light_work_mDz86m",
-    "sk_product_differentiator_dF7r2Q",
     "sk_product_led_stats_bTNfhX",
     "sk_clinic_comparison_kP7m2x",
     "sk_product_how_to_use_dbAJA9",
