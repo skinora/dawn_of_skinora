@@ -467,16 +467,19 @@
     }
 
     .sk-offer-card__price .sk-price__badge {
-      display: inline-block;
+      display: block;
+      width: auto;
+      margin: 0.75rem calc(var(--sk-card-pad-x, 0.75rem) * -1) calc(var(--sk-card-pad-b, 0.9rem) * -1);
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--sk-brand, #30273e);
       background: color-mix(in srgb, var(--color-lilac, #cdb7ed) 30%, #fff);
-      border: 1.5px solid var(--sk-brand, #30273e);
-      padding: 0.25em 0.6em;
-      border-radius: 5px;
+      border: none;
+      padding: 0.55em 0.6em;
+      border-radius: 0;
       line-height: 1.3;
       letter-spacing: 0.01em;
+      text-align: center;
       white-space: nowrap;
     }
 
@@ -517,8 +520,10 @@
       }
 
       .sk-offer-card__content {
+        --sk-card-pad-x: 1.25rem;
+        --sk-card-pad-b: 1.25rem;
         gap: 0.75rem;
-        padding: 0 1.25rem 1.25rem;
+        padding: 0 var(--sk-card-pad-x) var(--sk-card-pad-b);
       }
 
       .sk-offer-card__price {
@@ -558,7 +563,7 @@
     }
 
     .sk-offer-card__footer {
-      height: 1px;
+      display: none;
     }
 
     .sk-offer-card.is-unavailable {
@@ -589,10 +594,12 @@
     }
 
     .sk-offer-card__content {
+      --sk-card-pad-x: 0.75rem;
+      --sk-card-pad-b: 0.9rem;
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
-      padding: 0 0.75rem 0.9rem;
+      padding: 0 var(--sk-card-pad-x) var(--sk-card-pad-b);
     }
 
     .sk-offer-card {
@@ -1127,6 +1134,15 @@
         font-size: 2.5rem;
         color: var(--color-neutral-4, #49494a);
         font-weight: 600;
+      }
+
+      .sk-offer-card__price .sk-price__badge {
+        display: inline-block;
+        width: auto;
+        margin: 0.25rem 0 0;
+        padding: 0.25em 0.6em;
+        border-radius: 5px;
+        text-align: start;
       }
 
       .sk-offer-card__footer {
