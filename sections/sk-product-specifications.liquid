@@ -471,11 +471,20 @@
           <script>
             (function () {
               var wrap = document.querySelector('.sk-specs-{{ section.id }} .sk-specs__media');
+              if (!wrap) return;
+
+              var modelViewer = wrap.querySelector('model-viewer');
+              if (modelViewer) {
+                /* media_tag hard-coder background-color:#000000 inline på model-viewer;
+                   nulles ut her (kan ikke overstyres i CSS uten !important) slik at
+                   .sk-specs__media sin lyse bakgrunn vises. --poster-color røres ikke. */
+                modelViewer.style.backgroundColor = 'transparent';
+              }
+
               var hint = document.getElementById('sk-hint-{{ section.id }}');
-              if (!wrap || !hint) return;
+              if (!hint) return;
 
               var mq = window.matchMedia && window.matchMedia('(max-width: 990px)');
-              var modelViewer = wrap.querySelector('model-viewer');
 
               var hidden = false;
               var hide = function () {
