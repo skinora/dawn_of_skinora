@@ -252,6 +252,7 @@
     },
     "sk_lp_hudterapeut_BRKq6y": {
       "type": "sk-lp-hudterapeut",
+      "disabled": true,
       "name": "LP Hudterapeut",
       "settings": {
         "eyebrow": "Møt hudterapeuten",
@@ -260,6 +261,7 @@
         "role": "Kosmetisk hudterapeut",
         "clinic": "",
         "specialty": "Spesialist på ujevnheter, slapp hud og linjer",
+        "video_url": "",
         "video_duration": "",
         "media_ratio": "portrait",
         "cta_text": "Se maskene",
