@@ -1416,8 +1416,15 @@
                     <div class="swiper-slide">
                       <img
                         src="{{ image | image_url: width: 900 }}"
-                        srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w, {{ image | image_url: width: 1200 }} 1200w"
-                        sizes="(max-width: 768px) 100vw, (max-width: 991px) calc(100vw - 3rem), 450px"
+                        srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w, {{ image | image_url: width: 1200 }} 1200w, {{ image | image_url: width: 1600 }} 1600w"
+                        {%- comment -%}
+                          sizes matcher faktisk rendret bredde av .sk-hero-media-main, utledet fra
+                          .page-width (max-width 1600px, padding 40px/side ved >=889px viewport) og
+                          .sk-hero-grid sin 45/55-kolonnedeling med 6rem (60px) gap ved >=990px:
+                          kolonnebredde = 45vw - 63px, med tak 693px når 100vw-80px når 1600px (vw=1680).
+                          769-989px er énkolonne (60vw), <=768px er full-bleed (100vw).
+                        {%- endcomment -%}
+                        sizes="(max-width: 768px) 100vw, (max-width: 989px) 60vw, (min-width: 1680px) 693px, calc(45vw - 63px)"
                         alt="{{ image.alt | default: product.title | append: ' LED light therapy device' }}"
                         width="900"
                         height="900"
