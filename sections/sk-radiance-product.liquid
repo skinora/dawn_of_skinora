@@ -1028,7 +1028,13 @@
       }
 
       .sk-hero-media {
-        width: 100%;
+        /* Full-bleed på mobil: bryt ut av .page-width + .sk-product-hero
+           sidepadding så hero-bildet dekker hele skjermbredden edge-to-edge.
+           calc(50% - 50vw) = negativ margin lik den symmetriske sidepaddingen. */
+        width: 100vw;
+        max-inline-size: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
         align-items: center;
         padding: 0;
       }
@@ -1039,7 +1045,7 @@
         max-width: 100%;
         margin: 0;
         border-radius: 0;
-        max-height: min(95vw, 80vh);
+        max-height: min(100vw, 88vh);
       }
 
       .sk-hero-media-swiper {
@@ -1410,8 +1416,8 @@
                     <div class="swiper-slide">
                       <img
                         src="{{ image | image_url: width: 900 }}"
-                        srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w"
-                        sizes="(max-width: 991px) calc(100vw - 3rem), 450px"
+                        srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w, {{ image | image_url: width: 1200 }} 1200w"
+                        sizes="(max-width: 768px) 100vw, (max-width: 991px) calc(100vw - 3rem), 450px"
                         alt="{{ image.alt | default: product.title | append: ' LED light therapy device' }}"
                         width="900"
                         height="900"
