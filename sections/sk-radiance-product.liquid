@@ -617,12 +617,6 @@
         max-width: 120px;
       }
 
-      .sk-trust-inline span + span::before {
-        display: inline-flex;
-        align-self: center;
-        margin: 0 0.35rem;
-      }
-
       .sk-pill {
         font-size: 1.2rem;
       }
@@ -777,55 +771,49 @@
       }
     }
 
+    /* Tre like kolonner med strekikon + UPPERCASE-tekst.
+       Hårfin linje kun over — hvit luft ned mot badge-raden under. */
     .sk-trust-inline {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.75rem;
-      font-size: clamp(1.8rem, 2.5vw, 2.2rem);
-      font-weight: 500;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.6rem;
+      font-size: 1.3rem;
+      font-weight: 400;
       line-height: 1.5;
-      color: var(--color-neutral-3, #57575f);
+      color: var(--color-neutral-1, #6c6c6c);
       letter-spacing: 0.02em;
-      text-transform: none;
+      text-transform: uppercase;
       margin: 0;
-      padding: 1rem 0;
+      padding: 1.6rem 0;
       border-top: 1px solid var(--color-neutral-5, #d5d5d9);
-      border-bottom: 1px solid var(--color-neutral-5, #d5d5d9);
-      text-align: center;
     }
 
-    .sk-trust-inline span {
+    .sk-trust-inline__item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
       white-space: normal;
     }
 
-    .sk-trust-inline span + span::before {
-      content: '';
-      display: inline-block;
-      width: 4px;
-      height: 4px;
-      margin: 0 8px;
-      border-radius: 50%;
-      background: var(--color-neutral-4, #9a9aa0);
-      vertical-align: middle;
+    .sk-trust-inline__icon {
+      flex: 0 0 auto;
+      width: 1.7rem;
+      height: 1.7rem;
+    }
+
+    @media (max-width: 480px) {
+      .sk-trust-inline {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+
+      .sk-trust-inline__item {
+        justify-content: flex-start;
+      }
     }
 
     @media (max-width: 768px) {
-      .sk-trust-inline span:first-child::before {
-        content: '';
-        display: inline-block;
-        width: 4px;
-        height: 4px;
-        margin: 0 8px 0 0;
-        border-radius: 50%;
-        background: var(--color-neutral-4, #9a9aa0);
-        vertical-align: middle;
-      }
-
-      .sk-trust-inline span + span::before {
-        display: inline-block;
-      }
-
       .sk-trust-icons {
         gap: 0.15rem;
       }
@@ -875,19 +863,9 @@
       padding-bottom: 0.5rem;
     }
 
-    .sk-trust-inline {
-      font-size: clamp(1.8rem, 2.5vw, 2.2rem);
-      line-height: 1.45;
-      padding: 1rem 0;
-      margin-top: 0.25rem;
-      border-top: 1px solid var(--color-neutral-5, #d5d5d9);
-      border-bottom: 0;
-    }
-
     .sk-trust-icons {
       margin-top: 0.75rem;
       padding-top: 0.75rem;
-      border-top: 1px solid var(--color-neutral-5, #d5d5d9);
     }
 
     /* =============================
@@ -1767,9 +1745,18 @@
             </div>
 
             <div class="sk-trust-inline">
-              <span>Gratis frakt i Norge</span>
-              <span>Prøv hjemme i 30 dager</span>
-              <span>Trygg betaling</span>
+              <span class="sk-trust-inline__item">
+                <svg class="sk-trust-inline__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                <span>Gratis frakt i Norge</span>
+              </span>
+              <span class="sk-trust-inline__item">
+                <svg class="sk-trust-inline__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+                <span>Prøv hjemme i 30 dager</span>
+              </span>
+              <span class="sk-trust-inline__item">
+                <svg class="sk-trust-inline__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span>Trygg betaling</span>
+              </span>
             </div>
 
             {% assign trust_badges_source = product_info.trust_badges | default: blank %}
