@@ -850,6 +850,32 @@
       display: block;
     }
 
+    /* Mobil: 2-kolonners grid i stedet for 5 klemte sirkler på én rad,
+       større sirkler så teksten inni er lesbar. Desktop uendret. */
+    @media (max-width: 480px) {
+      .sk-trust-icons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem 1.6rem;
+        justify-items: center;
+      }
+
+      .sk-trust-icon {
+        max-width: none;
+      }
+
+      .sk-trust-icon img {
+        width: 100%;
+        max-width: 132px;
+        max-height: none;
+      }
+
+      /* Siste (femte) badge alene på nederste rad — sentrert over begge kolonner */
+      .sk-trust-icon:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+      }
+    }
+
     /* =============================
        PURCHASE STACK REFINEMENT
     ============================= */
