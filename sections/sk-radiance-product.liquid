@@ -850,29 +850,32 @@
       display: block;
     }
 
-    /* Mobil: 2-kolonners grid i stedet for 5 klemte sirkler på én rad,
-       større sirkler så teksten inni er lesbar. Desktop uendret. */
+    /* Mobil: 3 badges per rad (3+2 = maks 2 rader), moderat sirkelstørrelse.
+       6-spors grid der hver badge spenner 2 spor, slik at de to siste kan
+       sentreres på nederste rad. Desktop uendret. */
     @media (max-width: 480px) {
       .sk-trust-icons {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.2rem 1.6rem;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 1rem 1.2rem;
         justify-items: center;
       }
 
       .sk-trust-icon {
+        grid-column: span 2;
         max-width: none;
       }
 
       .sk-trust-icon img {
         width: 100%;
-        max-width: 132px;
+        max-width: 115px;
         max-height: none;
       }
 
-      /* Siste (femte) badge alene på nederste rad — sentrert over begge kolonner */
-      .sk-trust-icon:last-child:nth-child(odd) {
-        grid-column: 1 / -1;
+      /* Ved 5 badges: fjerde badge forskyves ett spor slik at nederste
+         rad (badge 4 og 5) står sentrert under de tre første */
+      .sk-trust-icon:nth-child(4):nth-last-child(2) {
+        grid-column: 2 / span 2;
       }
     }
 
