@@ -1,12 +1,46 @@
-User-agent: * Disallow: /admin Disallow: /account Disallow: /cart Disallow: /carts Disallow: /orders Disallow: /checkout
-Disallow: /checkouts/ Disallow: /search Disallow: /*preview_theme_id* Disallow: /*preview_script_id* Disallow:
-/*?*oseid=*
+{%- comment -%}
+  Custom robots.txt for skinora.no
 
-# Block tracking / campaign parameters (duplicate URL prevention) Disallow: /*?*fbclid* Disallow: /*?*gclid* Disallow:
-/*?*utm_* Disallow: /*?*mc_cid* Disallow: /*?*mc_eid*
+  Base = Shopify's maintained `robots.default_groups`. This keeps Shopify's own,
+  always-current protections (/admin, /cart, /carts, /checkout, /checkouts,
+  /account, /orders, /search, preview params, /*?*oseid=*, etc.) so we never have
+  to hand-maintain them.
 
-# Prevent faceted/sorted URL bloat Disallow: /collections/*sort_by* Disallow: /*/collections/*sort_by* Disallow:
-/collections/*filter*&*filter* Disallow: /collections/*+* Disallow: /collections/*%2B* Disallow: /collections/*%2b*
-Disallow: /*/collections/*+* Disallow: /*/collections/*%2B* Disallow: /*/collections/*%2b*
+  We then APPEND our own rules to the wildcard (*) user-agent group:
+    - tracking / campaign params (utm_, fbclid, gclid, mc_cid, mc_eid) so
+      parameterised duplicate URLs don't waste crawl budget or get indexed;
+    - faceted / sorted collection URLs to prevent crawl bloat.
 
-Sitemap: https://www.skinora.no/sitemap.xml
+  IMPORTANT: robots.txt is parsed ONE DIRECTIVE PER LINE. The previous version
+  crammed many `Disallow:` directives onto single physical lines, so every rule
+  after the first on each line was silently ignored — the file was effectively
+  ruleless. Keep every directive on its own line.
+{%- endcomment -%}
+{% for group in robots.default_groups %}
+  {{- group.user_agent }}
+
+  {% for rule in group.rules -%}
+    {{ rule }}
+  {% endfor -%}
+
+  {%- if group.user_agent.value == '*' -%}
+    {{ 'Disallow: /*?*fbclid*' }}
+    {{ 'Disallow: /*?*gclid*' }}
+    {{ 'Disallow: /*?*utm_*' }}
+    {{ 'Disallow: /*?*mc_cid*' }}
+    {{ 'Disallow: /*?*mc_eid*' }}
+    {{ 'Disallow: /collections/*sort_by*' }}
+    {{ 'Disallow: /*/collections/*sort_by*' }}
+    {{ 'Disallow: /collections/*filter*&*filter*' }}
+    {{ 'Disallow: /collections/*+*' }}
+    {{ 'Disallow: /collections/*%2B*' }}
+    {{ 'Disallow: /collections/*%2b*' }}
+    {{ 'Disallow: /*/collections/*+*' }}
+    {{ 'Disallow: /*/collections/*%2B*' }}
+    {{ 'Disallow: /*/collections/*%2b*' }}
+  {%- endif -%}
+
+  {%- if group.sitemap != blank -%}
+    {{ group.sitemap }}
+  {% endif -%}
+{% endfor %}
