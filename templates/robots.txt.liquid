@@ -1,46 +1,72 @@
 {%- comment -%}
   Custom robots.txt for skinora.no
 
-  Base = Shopify's maintained `robots.default_groups`. This keeps Shopify's own,
-  always-current protections (/admin, /cart, /carts, /checkout, /checkouts,
-  /account, /orders, /search, preview params, /*?*oseid=*, etc.) so we never have
-  to hand-maintain them.
+  Goal: keep Google Merchant Center able to crawl product landing pages and
+  product images, while retaining Shopify's own maintained protections.
 
-  We then APPEND our own rules to the wildcard (*) user-agent group:
-    - tracking / campaign params (utm_, fbclid, gclid, mc_cid, mc_eid) so
-      parameterised duplicate URLs don't waste crawl budget or get indexed;
-    - faceted / sorted collection URLs to prevent crawl bloat.
+  Design:
+    - Base = Shopify's `robots.default_groups` (always-current /admin, /cart,
+      /checkout, /account, /search, preview params, etc.). We never hand-maintain
+      those.
+    - To the wildcard (*) group we APPEND tracking-parameter blocks (fbclid,
+      gclid, utm_, mc_cid, mc_eid) so parameterised duplicate URLs don't waste
+      crawl budget. (The faceted/sorted-collection blocks are already part of
+      Shopify's defaults, so we no longer duplicate them here.)
+    - We then emit EXPLICIT `Googlebot` and `Googlebot-image` groups, as Google's
+      Merchant Center guidance asks. They reuse Shopify's default (*) rules — so
+      /cart, /checkout, /admin stay blocked — but DELIBERATELY omit the
+      tracking-parameter blocks, so a Merchant feed / ad landing URL that carries
+      ?utm_/?gclid is still crawlable. `Allow: /` + `Allow: /products/` make the
+      intent explicit.
 
-  IMPORTANT: robots.txt is parsed ONE DIRECTIVE PER LINE. The previous version
-  crammed many `Disallow:` directives onto single physical lines, so every rule
-  after the first on each line was silently ignored — the file was effectively
-  ruleless. Keep every directive on its own line.
+  Rendering: the ENTIRE body is assembled into `out` and printed once. Every
+  newline is an explicit leading separator (nl), and every Liquid tag is
+  whitespace-trimmed ({%- ... -%}). Result: NO leading whitespace, one directive
+  per line, exactly one blank line between groups. Do not reintroduce indented
+  `{{ ... }}` output tags — that silently corrupted earlier versions.
 {%- endcomment -%}
-{% for group in robots.default_groups %}
-  {{- group.user_agent }}
-
-  {% for rule in group.rules -%}
-    {{ rule }}
-  {% endfor -%}
-
+{%- capture nl %}
+{% endcapture -%}
+{%- assign out = '' -%}
+{%- for group in robots.default_groups -%}
+  {%- if group.user_agent.value == '*' -%}{%- assign star_group = group -%}{%- endif -%}
+  {%- unless forloop.first -%}{%- assign out = out | append: nl -%}{%- endunless -%}
+  {%- capture ua_line -%}{{ group.user_agent }}{%- endcapture -%}
+  {%- assign out = out | append: nl | append: ua_line -%}
+  {%- for rule in group.rules -%}
+    {%- capture rule_line -%}{{ rule }}{%- endcapture -%}
+    {%- assign out = out | append: nl | append: rule_line -%}
+  {%- endfor -%}
   {%- if group.user_agent.value == '*' -%}
-    {{ 'Disallow: /*?*fbclid*' }}
-    {{ 'Disallow: /*?*gclid*' }}
-    {{ 'Disallow: /*?*utm_*' }}
-    {{ 'Disallow: /*?*mc_cid*' }}
-    {{ 'Disallow: /*?*mc_eid*' }}
-    {{ 'Disallow: /collections/*sort_by*' }}
-    {{ 'Disallow: /*/collections/*sort_by*' }}
-    {{ 'Disallow: /collections/*filter*&*filter*' }}
-    {{ 'Disallow: /collections/*+*' }}
-    {{ 'Disallow: /collections/*%2B*' }}
-    {{ 'Disallow: /collections/*%2b*' }}
-    {{ 'Disallow: /*/collections/*+*' }}
-    {{ 'Disallow: /*/collections/*%2B*' }}
-    {{ 'Disallow: /*/collections/*%2b*' }}
+    {%- assign out = out | append: nl | append: 'Disallow: /*?*fbclid*' -%}
+    {%- assign out = out | append: nl | append: 'Disallow: /*?*gclid*' -%}
+    {%- assign out = out | append: nl | append: 'Disallow: /*?*utm_*' -%}
+    {%- assign out = out | append: nl | append: 'Disallow: /*?*mc_cid*' -%}
+    {%- assign out = out | append: nl | append: 'Disallow: /*?*mc_eid*' -%}
   {%- endif -%}
-
   {%- if group.sitemap != blank -%}
-    {{ group.sitemap }}
-  {% endif -%}
-{% endfor %}
+    {%- capture sitemap_line -%}{{ group.sitemap }}{%- endcapture -%}
+    {%- assign out = out | append: nl | append: sitemap_line -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign google_agents = 'Googlebot,Googlebot-image' | split: ',' -%}
+{%- for ua in google_agents -%}
+  {%- assign out = out | append: nl -%}
+  {%- assign out = out | append: nl | append: 'User-agent: ' | append: ua -%}
+  {%- assign out = out | append: nl | append: 'Allow: /' -%}
+  {%- assign out = out | append: nl | append: 'Allow: /products/' -%}
+  {%- for rule in star_group.rules -%}
+    {%- capture rule_line -%}{{ rule }}{%- endcapture -%}
+    {%- assign out = out | append: nl | append: rule_line -%}
+  {%- endfor -%}
+  {%- if star_group.sitemap != blank -%}
+    {%- capture sitemap_line -%}{{ star_group.sitemap }}{%- endcapture -%}
+    {%- assign out = out | append: nl | append: sitemap_line -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- comment -%} Normalise: collapse any run of 3+ newlines to a single blank line, strip the leading separator, end with one trailing newline. {%- endcomment -%}
+{%- assign nlx3 = nl | append: nl | append: nl -%}
+{%- assign nlx2 = nl | append: nl -%}
+{%- assign out = out | replace: nlx3, nlx2 | replace: nlx3, nlx2 | replace: nlx3, nlx2 -%}
+{%- assign out = out | remove_first: nl | append: nl -%}
+{{- out -}}
