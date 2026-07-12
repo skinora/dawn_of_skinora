@@ -22,10 +22,12 @@
   align-items: stretch;
 }
 
-/* ---- media (venstre, full-bleed) ---- */
+/* ---- media (venstre, full-bleed) ----
+   Desktop: min-height gulv + align-items:stretch fyller kolonnehøyden uten at
+   aspect-ratio henter bredde fra strukket høyde (som blåste ut kolonnen). */
 .sk-results__media {
   position: relative;
-  aspect-ratio: 5 / 6;
+  min-height: 620px;
   background: var(--paper-100);
   overflow: hidden;
 }
@@ -165,7 +167,7 @@
 /* ---- responsiv: kollaps til én kolonne (bilde øverst) ---- */
 @media (max-width: 820px) {
   .sk-results__inner { grid-template-columns: 1fr; }
-  .sk-results__media { aspect-ratio: 13 / 14; }
+  .sk-results__media { min-height: 0; aspect-ratio: 13 / 14; }
   .sk-results__content { padding: 28px 24px 36px; }
   .sk-results__title { font-size: 27px; }
   .sk-results__intro { font-size: 15px; margin: 16px 0 24px; }
