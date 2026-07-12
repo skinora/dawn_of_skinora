@@ -1434,7 +1434,10 @@
   {%- assign bundle_title = bundle_product_ref.title -%}
 {%- endif -%}
 {%- assign base_variant = product.selected_or_first_available_variant -%}
-{%- assign bundle_variant = bundle_product_ref.selected_or_first_available_variant -%}
+{%- assign bundle_variant = bundle_product_ref.first_available_variant -%}
+{%- if bundle_variant == blank -%}
+  {%- assign bundle_variant = bundle_product_ref.variants.first -%}
+{%- endif -%}
 {%- assign single_image_alt = product.featured_image.alt | default: product.title -%}
 {%- assign bundle_image_obj = bundle_product_ref.featured_image -%}
 {%- if bundle_image_obj == blank -%}
