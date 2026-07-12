@@ -13,7 +13,7 @@
       "type": "sk-lp-announcement",
       "disabled": true,
       "settings": {
-        "text": "GRATIS FRAKT I NORGE  |  30 DAGERS FORNØYDGARANTI"
+        "text": "GRATIS FRAKT I NORGE  |  60 DAGERS FORNØYDGARANTI"
       }
     },
     "header": {
@@ -33,7 +33,7 @@
         "pill_2": {
           "type": "pill",
           "settings": {
-            "text": "30 dager fornøydgaranti"
+            "text": "60 dager fornøydgaranti"
           }
         },
         "pill_3": {
@@ -58,7 +58,7 @@
         "rating_score": "4.7",
         "review_count": "89",
         "audience_label": "kunder med problemhud",
-        "cta_text": "Prøv risikofritt i 30 dager",
+        "cta_text": "Prøv risikofritt i 60 dager",
         "cta_url": "/products/skinora-clear",
         "price_display": "4 390 kr",
         "klarna_text": "fra 122 kr/mnd med Klarna",
@@ -88,7 +88,7 @@
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/garanti.svg",
-            "text": "30 dagers garanti"
+            "text": "60 dagers garanti"
           }
         },
         "tb_4": {
@@ -263,8 +263,8 @@
         "eyebrow": "ÆRLIG SNAKK",
         "heading": "Skinora® Clear er ikke for alle.",
         "intro": "<p>Vi har bygget Skinora Clear for én type kunde. Hvis du kjenner deg igjen i punktene under, er ikke dette riktig produkt for deg — og det er helt greit. Vi vil heller at du finner det som virker.</p>",
-        "closing": "<h3>Hvis du nikker nei til alle fire — er du nøyaktig den vi bygget dette for.</h3><p>Vi gir deg 30 dager på å bevise det for deg selv.</p>",
-        "cta_label": "PRØV RISIKOFRITT I 30 DAGER →",
+        "closing": "<h3>Hvis du nikker nei til alle fire — er du nøyaktig den vi bygget dette for.</h3><p>Vi gir deg 60 dager på å bevise det for deg selv.</p>",
+        "cta_label": "PRØV RISIKOFRITT I 60 DAGER →",
         "cta_url": "#kjop",
         "accent": "#e63946",
         "background": "#faf7f2"
@@ -290,7 +290,7 @@
         "row3_col1": "Tidsbestilling",
         "row3_col2": "Hjemme, når du vil",
         "show_cta": true,
-        "cta_label": "Prøv risikofritt i 30 dager",
+        "cta_label": "Prøv risikofritt i 60 dager",
         "cta_link": ""
       }
     },
@@ -588,7 +588,7 @@
         "tf_1": {
           "type": "card",
           "settings": {
-            "title": "30 dagers fornøydgaranti",
+            "title": "60 dagers fornøydgaranti",
             "text": "<p>Ikke fornøyd? Du får pengene tilbake – ingen spørsmål.</p>",
             "show_free_return_shipping": false,
             "free_return_shipping_text": "Vi betaler returfrakten"
@@ -740,7 +740,7 @@
           "type": "faq",
           "settings": {
             "question": "Hva om jeg ikke er fornøyd?",
-            "answer": "Du har 30 dagers fornøydgaranti. Hvis du ikke er fornøyd, sender du den tilbake og får full refusjon – ingen spørsmål stilt. Kontakt oss på hello@skinora.no."
+            "answer": "Du har 60 dagers fornøydgaranti. Hvis du ikke er fornøyd, sender du den tilbake og får full refusjon – ingen spørsmål stilt. Kontakt oss på hello@skinora.no."
           }
         },
         "faq_6": {
@@ -761,7 +761,7 @@
           "type": "faq",
           "settings": {
             "question": "Hva om jeg ikke ser noen forskjell?",
-            "answer": "Da vil vi at du skal sende den tilbake – og du får pengene tilbake, uten spørsmål. Det er hele poenget med vår 30 dagers fornøydgaranti. Vi er trygge på at jevn bruk gir resultater, men vi vet at hud er individuell. Har du ikke sett endring innen 30 dager, kontakter du oss på hello@skinora.no – og vi ordner resten."
+            "answer": "Da vil vi at du skal sende den tilbake – og du får pengene tilbake, uten spørsmål. Det er hele poenget med vår 60 dagers fornøydgaranti. Vi er trygge på at jevn bruk gir resultater, men vi vet at hud er individuell. Har du ikke sett endring innen 60 dager, kontakter du oss på hello@skinora.no – og vi ordner resten."
           }
         },
         "faq_price": {
@@ -794,7 +794,7 @@
         "g_1": {
           "type": "badge",
           "settings": {
-            "text": "30 dagers garanti"
+            "text": "60 dagers garanti"
           }
         },
         "g_2": {
