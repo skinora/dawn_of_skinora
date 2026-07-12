@@ -10,8 +10,8 @@
 }
 
 .sk-results__card {
-  background: var(--paper-50);
-  box-shadow: 0 30px 70px -42px rgba(45, 27, 61, 0.38);
+  background: var(--paper-0);
+  box-shadow: 0 30px 70px -42px rgba(45, 27, 61, 0.22);
   border-radius: 4px;
   overflow: hidden;
 }
@@ -28,7 +28,7 @@
 .sk-results__media {
   position: relative;
   min-height: 620px;
-  background: var(--paper-100);
+  background: var(--paper-0);
   overflow: hidden;
 }
 .sk-results__media .before-after,
