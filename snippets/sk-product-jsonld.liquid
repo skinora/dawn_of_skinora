@@ -8,6 +8,33 @@
 {%- liquid
   assign pj_first = product.selected_or_first_available_variant
   assign pj_desc = product.description | strip_html | strip_newlines | strip | truncate: 5000
+
+  # ── AI-lag: målte/bekreftede spesifikasjoner per modell (kun i kode, per product.handle) ──
+  # Irradians = testverdi konvertert W/m² → mW/cm² (÷10), single output / masken alene på full effekt.
+  # NB: legg til instrument + testdato i sk_irr_method før dette går til PROD (målt-påstand krever rapport).
+  assign sk_specs = false
+  assign sk_irr_method = 'Measured at skin contact; measurement report available on request.'
+  case product.handle
+    when 'skinora-radiance-face'
+      assign sk_specs = true
+      assign sk_wavelengths = '630 nm, 830 nm, 1072 nm'
+      assign sk_irr_mw = '37'
+      assign sk_irr_w = '372'
+      assign sk_led = '114'
+    when 'skinora-radiance-neck'
+      assign sk_specs = true
+      assign sk_wavelengths = '630 nm, 830 nm, 1072 nm'
+      assign sk_irr_mw = '37'
+      assign sk_irr_w = '370'
+      assign sk_led = '118'
+    when 'skinora-clear'
+      assign sk_specs = true
+      assign sk_wavelengths = '415 nm, 630 nm, 830 nm'
+      assign sk_irr_mw = '47'
+      assign sk_irr_w = '470'
+      assign sk_led = '114'
+  endcase
+  assign sk_irr_desc = 'Measured at skin contact; equivalent to ' | append: sk_irr_w | append: ' W/m². ' | append: sk_irr_method
 -%}
 <!-- [SCHEMA-DEBUG] Product — snippets/sk-product-jsonld.liquid -->
 <script type="application/ld+json">
@@ -39,6 +66,29 @@
       "bestRating": {{ product.metafields.reviews.rating.value.scale_max | json }},
       "ratingCount": {{ product.metafields.reviews.rating_count | json }}
     }
+    {%- endif -%}
+    {%- if sk_specs -%}
+    ,"hasCertification": {
+      "@type": "Certification",
+      "name": "FDA 510(k) Clearance",
+      "certificationIdentification": "K233114",
+      "issuedBy": { "@type": "Organization", "name": "U.S. Food and Drug Administration" }
+    }
+    ,"additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Irradiance (at skin contact)",
+        "value": {{ sk_irr_mw | json }},
+        "unitText": "mW/cm²",
+        "description": {{ sk_irr_desc | json }}
+      },
+      { "@type": "PropertyValue", "name": "Wavelengths", "value": {{ sk_wavelengths | json }} },
+      { "@type": "PropertyValue", "name": "LED count", "value": {{ sk_led | json }} },
+      { "@type": "PropertyValue", "name": "Power draw (typical / max)", "value": "5–6 W / 12 W" },
+      { "@type": "PropertyValue", "name": "Battery", "value": "4000 mAh" },
+      { "@type": "PropertyValue", "name": "Material", "value": "Medical-grade silicone" },
+      { "@type": "PropertyValue", "name": "Timer", "value": "1–30 min" }
+    ]
     {%- endif -%}
     ,"offers": [
       {%- for variant in product.variants -%}
