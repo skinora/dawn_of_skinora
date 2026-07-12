@@ -80,10 +80,11 @@
 
 .sk-results__title {
   font-family: var(--ff-serif);
-  font-weight: var(--fw-regular);
+  font-weight: var(--fw-semibold);
   font-size: clamp(27px, 2.2vw + 16px, 40px);
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  line-height: 1.12;
+  letter-spacing: 0;
+  text-transform: uppercase;
   color: var(--ink-900);
   margin: 0;
 }
