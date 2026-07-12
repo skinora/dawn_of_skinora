@@ -1,243 +1,4 @@
-<style>
-  .sk-results {
-    --brand: #30273e;
-    --accent: #9c8ab4;
-    --muted: #5f5f5f;
-    --slider-line: rgba(255, 255, 255, 0.98);
-    --slider-line-outline: rgba(0, 0, 0, 0.55);
-    --padding: clamp(48px, 7vw, 96px);
-    --gap: clamp(16px, 3vw, 32px);
-    padding: 0 0 var(--padding);
-    margin-top: 0;
-  }
-
-  .sk-results__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 0.45fr) minmax(320px, 0.55fr);
-    gap: var(--gap);
-    align-items: start;
-  }
-
-  .sk-results__copy {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    max-width: 62ch;
-    padding-top: 6px;
-  }
-
-  .sk-section-header {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .sk-section-header__eyebrow {
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    opacity: 0.6;
-    font-weight: 500;
-  }
-
-  .sk-section-header__title {
-    line-height: 1.15;
-    letter-spacing: 0.005em;
-    margin: 0;
-  }
-
-  .sk-section-header__subtitle {
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--muted);
-    margin: 0;
-  }
-
-  .sk-results__intro {
-    font-size: 17px;
-    line-height: 1.65;
-    color: var(--brand);
-  }
-
-  .sk-results__intro p {
-    margin: 0;
-  }
-
-  .sk-results__intro p + p {
-    margin-top: 10px;
-  }
-
-  .sk-results__list ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .sk-results__list li {
-    display: flex;
-    gap: 12px;
-    font-size: 17px;
-    line-height: 1.55;
-    color: var(--brand);
-    position: relative;
-  }
-
-  .sk-results__list p {
-    margin: 0;
-  }
-
-  .sk-results__list li::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    margin-top: 0.44em;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--brand) 65%, white);
-    flex-shrink: 0;
-  }
-
-  /* Rich text field list styling */
-  .sk-results__list ul ul,
-  .sk-results__list ol {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .sk-results__list ul ul,
-  .sk-results__list ul ol,
-  .sk-results__list ol ul,
-  .sk-results__list ol ol {
-    margin: 0;
-    padding: 0;
-  }
-
-  .sk-results__list ul li,
-  .sk-results__list ol li {
-    display: flex;
-    gap: 12px;
-    font-size: 17px;
-    line-height: 1.55;
-    color: var(--brand);
-  }
-
-  .sk-results__list ul li::before,
-  .sk-results__list ol li::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    margin-top: 0.44em;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--brand) 65%, white);
-    flex-shrink: 0;
-  }
-
-  .sk-results__note {
-    font-size: 13px;
-    color: var(--muted);
-    opacity: 0.7;
-  }
-
-  .sk-results__panel {
-    background: color-mix(in srgb, var(--brand) 4%, white);
-    border: 1px solid color-mix(in srgb, var(--brand) 10%, white);
-    border-radius: 16px;
-    padding: 18px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .sk-results__media {
-    display: flex;
-    justify-content: center;
-  }
-
-  /* ===== IMAGE / BEFORE-AFTER ===== */
-
-  .sk-results__visual {
-    position: relative;
-    width: 100%;
-    max-width: none;
-    aspect-ratio: 1 / 1;
-    border-radius: 0;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(48, 39, 62, 0.12);
-  }
-  .sk-results__visual img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  @media (max-width: 820px) {
-    .sk-results__inner {
-      grid-template-columns: 1fr;
-    }
-
-    .sk-results__copy {
-      gap: 14px;
-      padding-top: 0;
-    }
-
-    .sk-section-header__subtitle {
-      font-size: 15px;
-    }
-
-    .sk-results__intro {
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    .sk-results__list li,
-    .sk-results__list ul li,
-    .sk-results__list ol li {
-      font-size: 16px;
-    }
-
-    .sk-results__panel {
-      padding: 14px 16px;
-    }
-  }
-
-  @media (max-width: 749px) {
-    .sk-section-header__eyebrow {
-      font-size: 11px;
-      letter-spacing: 0.07em;
-    }
-
-    .sk-section-header__title {
-      line-height: 1.18;
-    }
-
-    .sk-results__note {
-      font-size: 12px;
-    }
-  }
-
-  .sk-results__intro {
-    margin-bottom: 10px;
-  }
-
-  .sk-results__list ul {
-    gap: 9px;
-  }
-
-  .sk-results__list li {
-    font-size: 15px;
-    line-height: 1.55;
-  }
-
-  @media (max-width: 820px) {
-    .sk-results__list li {
-      font-size: 14px;
-    }
-  }
-</style>
-
+{{ 'section-sk-product-what-can-you-expect.css' | asset_url | stylesheet_tag }}
 {{ 'component-before-after.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'component-before-after.js' | asset_url }}" defer="defer"></script>
 
@@ -252,14 +13,11 @@
     assign result_eyebrow = sk_result_entry.eyebrow
   endif
 
+  assign result_kicker2 = section.settings.kicker_secondary
+
   assign result_heading = section.settings.heading
   if sk_result_entry and sk_result_entry.heading != blank
     assign result_heading = sk_result_entry.heading
-  endif
-
-  assign result_subheading = section.settings.subheading
-  if sk_result_entry and sk_result_entry.subheading != blank
-    assign result_subheading = sk_result_entry.subheading
   endif
 
   assign result_intro = section.settings.bullet_intro_text
@@ -317,54 +75,24 @@
   if sk_result_entry and sk_result_entry.after_image != blank
     assign result_after_image = sk_result_entry.after_image
   endif
+
+  # CTA — tom tekst => "Handle {produktnavn}", tom URL => produktsiden
+  assign result_cta_text = section.settings.cta_text
+  if result_cta_text == blank and product
+    assign result_cta_text = 'Handle ' | append: product.title
+  endif
+  assign result_cta_url = section.settings.cta_url
+  if result_cta_url == blank and product
+    assign result_cta_url = product.url
+  endif
 %}
 
 <section class="sk-results section" id="sk-results-{{ section.id }}">
   <div class="page-width">
-    <div class="sk-results__inner">
-      <div class="sk-results__copy">
-        {% assign has_header = false %}
-        {% if result_eyebrow != blank %}
-          {% assign has_header = true %}
-        {% endif %}
-        {% if result_heading != blank %}
-          {% assign has_header = true %}
-        {% endif %}
-        {% if result_subheading != blank %}
-          {% assign has_header = true %}
-        {% endif %}
+    <div class="sk-results__card">
+      <div class="sk-results__inner">
 
-        {% if has_header %}
-          <div class="sk-section-header">
-            {% if result_eyebrow != blank %}
-              <p class="sk-section-header__eyebrow sk-copy-eyebrow">{{ result_eyebrow }}</p>
-            {% endif %}
-            {% if result_heading != blank %}
-              <h2 class="sk-section-header__title">{{ result_heading }}</h2>
-            {% endif %}
-            {% if result_subheading != blank %}
-              <p class="sk-section-header__subtitle">{{ result_subheading }}</p>
-            {% endif %}
-          </div>
-        {% endif %}
-
-        <div class="sk-results__panel">
-          {% if result_intro_markup != blank %}
-            <div class="sk-results__intro">{{ result_intro_markup }}</div>
-          {% endif %}
-          {% if result_bullets_markup != blank %}
-            <div class="sk-results__list">
-              {{ result_bullets_markup }}
-            </div>
-          {% endif %}
-          {% if result_note != blank %}
-            <p class="sk-results__note">{{ result_note }}</p>
-          {% endif %}
-        </div>
-      </div>
-
-      <div class="sk-results__media">
-        <div class="sk-results__visual">
+        <div class="sk-results__media">
           {% if result_before_image != blank and result_after_image != blank %}
             <div
               class="before-after"
@@ -378,7 +106,7 @@
                   alt="{{ result_before_image.alt | escape | default: 'Før' }}"
                   loading="lazy"
                   width="{{ result_before_image.width | default: 1200 }}"
-                  height="{{ result_before_image.height | default: 1600 }}"
+                  height="{{ result_before_image.height | default: 1440 }}"
                 >
                 <span class="visually-hidden">Før-bilde</span>
               </div>
@@ -388,7 +116,7 @@
                   alt="{{ result_after_image.alt | escape | default: 'Etter' }}"
                   loading="lazy"
                   width="{{ result_after_image.width | default: 1200 }}"
-                  height="{{ result_after_image.height | default: 1600 }}"
+                  height="{{ result_after_image.height | default: 1440 }}"
                 >
                 <span class="visually-hidden">Etter-bilde</span>
               </div>
@@ -407,15 +135,54 @@
               </div>
             </div>
           {% elsif result_image != blank %}
-            <img
-              src="{{ result_image | image_url: width: 1200 }}"
-              alt="{{ result_image_alt | escape }}"
-              loading="lazy"
-              width="{{ result_image.width | default: 1200 }}"
-              height="{{ result_image.height | default: 1600 }}"
-            >
+            <div class="sk-results__single">
+              <img
+                src="{{ result_image | image_url: width: 1200 }}"
+                alt="{{ result_image_alt | escape }}"
+                loading="lazy"
+                width="{{ result_image.width | default: 1200 }}"
+                height="{{ result_image.height | default: 1440 }}"
+              >
+            </div>
           {% endif %}
         </div>
+
+        <div class="sk-results__content">
+          {% if result_eyebrow != blank or result_kicker2 != blank %}
+            <div class="sk-results__kickers">
+              {% if result_eyebrow != blank %}
+                <span class="sk-results__pill">{{ result_eyebrow }}</span>
+              {% endif %}
+              {% if result_kicker2 != blank %}
+                <span class="sk-results__kicker2">{{ result_kicker2 }}</span>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if result_heading != blank %}
+            <h2 class="sk-results__title">{{ result_heading }}</h2>
+          {% endif %}
+
+          {% if result_intro_markup != blank %}
+            <div class="sk-results__intro">{{ result_intro_markup }}</div>
+          {% endif %}
+
+          {% if result_bullets_markup != blank %}
+            <div class="sk-results__grid">{{ result_bullets_markup }}</div>
+          {% endif %}
+
+          {% if result_cta_text != blank %}
+            <a class="sk-results__cta" href="{{ result_cta_url }}">
+              {{ result_cta_text }}
+              <span class="sk-results__cta-arrow" aria-hidden="true">→</span>
+            </a>
+          {% endif %}
+
+          {% if result_note != blank %}
+            <p class="sk-results__note">{{ result_note }}</p>
+          {% endif %}
+        </div>
+
       </div>
     </div>
   </div>
@@ -428,49 +195,62 @@
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow text",
-      "default": "RESULTATER"
+      "label": "Kicker (pill)",
+      "default": "Resultater"
+    },
+    {
+      "type": "text",
+      "id": "kicker_secondary",
+      "label": "Kicker 2 (dempet)",
+      "default": "Klinisk utviklet"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
-      "default": "Hva kan jeg forvente?"
-    },
-    {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "Fire klare forbedringer du merker gradvis."
+      "label": "Overskrift",
+      "default": "Hva kan du forvente?"
     },
     {
       "type": "richtext",
       "id": "bullet_intro_text",
-      "label": "Intro text before list",
+      "label": "Introtekst",
       "default": "<p>Del en kort introduksjon her.</p>"
     },
     {
       "type": "richtext",
       "id": "rich_bullet_content",
-      "label": "Tilpasset punktliste",
-      "default": "<ul><li>Jevnere hudtone</li><li>Fastere hud</li><li>Mer glød</li><li>Mindre sliten hud</li></ul>"
+      "label": "Resultater (4 punkter → 2×2-rutenett)",
+      "info": "Bruk en punktliste med 4 korte punkter for best layout.",
+      "default": "<ul><li>Fastere hud på hals og kjevelinje</li><li>Jevnere hudstruktur</li><li>Mer spenst og fylde</li><li>Et mer definert uttrykk</li></ul>"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA-tekst",
+      "info": "Tom = «Handle [produktnavn]»."
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA-lenke",
+      "info": "Tom = produktsiden."
     },
     {
       "type": "textarea",
       "id": "note_text",
-      "label": "Diskret note",
-      "default": "Resultater bygges gradvis og påvirkes av hudtype og kontinuitet."
+      "label": "Ansvarsfraskrivelse",
+      "default": "* Resultater varierer fra person til person og påvirkes av hudtype og regelmessig bruk."
     },
     {
       "type": "image_picker",
       "id": "result_image",
-      "label": "Støttebilde"
+      "label": "Støttebilde (brukes hvis før/etter mangler)"
     },
     {
       "type": "text",
       "id": "result_image_alt",
       "label": "Alternativ tekst",
-      "default": "Rolig portrett"
+      "default": "Resultatbilde"
     }
   ],
   "presets": [
