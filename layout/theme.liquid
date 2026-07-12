@@ -285,6 +285,15 @@
             "certificationIdentification": "K233114",
             "issuedBy": { "@type": "Organization", "name": "U.S. Food and Drug Administration" }
           },
+          "additionalProperty": [
+            { "@type": "PropertyValue", "name": "Irradiance (at skin contact)", "value": "37", "unitText": "mW/cm²", "description": "Measured at skin contact; equivalent to 372 W/m². Method: UPRtek MK350 spectroradiometer, January 2026. Report available on request." },
+            { "@type": "PropertyValue", "name": "Wavelengths", "value": "630 nm, 830 nm, 1072 nm" },
+            { "@type": "PropertyValue", "name": "LED count", "value": "114" },
+            { "@type": "PropertyValue", "name": "Power draw (typical / max)", "value": "5–6 W / 12 W" },
+            { "@type": "PropertyValue", "name": "Battery", "value": "4000 mAh" },
+            { "@type": "PropertyValue", "name": "Material", "value": "Medical-grade silicone" },
+            { "@type": "PropertyValue", "name": "Timer", "value": "1–30 min" }
+          ],
           "offers": {
             "@type": "Offer",
             "url": "https://www.skinora.no/pages/skinora-radiance-face",
@@ -370,6 +379,15 @@
             "certificationIdentification": "K233114",
             "issuedBy": { "@type": "Organization", "name": "U.S. Food and Drug Administration" }
           },
+          "additionalProperty": [
+            { "@type": "PropertyValue", "name": "Irradiance (at skin contact)", "value": "47", "unitText": "mW/cm²", "description": "Measured at skin contact; equivalent to 470 W/m². Method: UPRtek MK350 spectroradiometer, January 2026. Report available on request." },
+            { "@type": "PropertyValue", "name": "Wavelengths", "value": "415 nm, 630 nm, 830 nm" },
+            { "@type": "PropertyValue", "name": "LED count", "value": "114" },
+            { "@type": "PropertyValue", "name": "Power draw (typical / max)", "value": "5–6 W / 12 W" },
+            { "@type": "PropertyValue", "name": "Battery", "value": "4000 mAh" },
+            { "@type": "PropertyValue", "name": "Material", "value": "Medical-grade silicone" },
+            { "@type": "PropertyValue", "name": "Timer", "value": "1–30 min" }
+          ],
           "offers": {
             "@type": "Offer",
             "url": "https://www.skinora.no/pages/skinora-clear",
@@ -426,7 +444,6 @@
       ONE Organization + ONE WebSite — no other files should output these types.
       Removed the duplicate Organization block that was in sections/footer.liquid.
     {%- endcomment -%}
-    <!-- [SCHEMA-DEBUG] Organization + WebSite — layout/theme.liquid -->
     {%- assign search_url_template = request.origin | append: '/search?q={search_term_string}' -%}
     {%- assign sk_logo_url = 'Skinora_dark.png' | asset_url | prepend: 'https:' -%}
     <script type="application/ld+json">
