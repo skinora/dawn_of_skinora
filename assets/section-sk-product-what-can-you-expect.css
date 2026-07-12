@@ -81,8 +81,8 @@
 .sk-results__title {
   font-family: var(--ff-serif);
   font-weight: var(--fw-semibold);
-  font-size: clamp(27px, 2.2vw + 16px, 40px);
-  line-height: 1.12;
+  font-size: clamp(22px, 1.3vw + 15px, 31px);
+  line-height: 1.15;
   letter-spacing: 0;
   text-transform: uppercase;
   color: var(--ink-900);
@@ -157,7 +157,7 @@
   .sk-results__inner { grid-template-columns: 1fr; }
   .sk-results__media { min-height: 0; aspect-ratio: 13 / 14; }
   .sk-results__content { padding: 28px 24px 36px; }
-  .sk-results__title { font-size: 27px; }
+  .sk-results__title { font-size: 22px; }
   .sk-results__intro { font-size: 15px; margin: 16px 0 24px; }
   .sk-results__kickers { margin-bottom: 18px; }
   .sk-results__grid li { padding: 16px; font-size: 14px; }
