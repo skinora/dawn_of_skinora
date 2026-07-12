@@ -154,13 +154,14 @@
 
 /* ---- responsiv: kollaps til én kolonne (bilde øverst) ---- */
 @media (max-width: 820px) {
-  .sk-results__inner { grid-template-columns: 1fr; }
-  .sk-results__media { min-height: 0; aspect-ratio: 13 / 14; }
-  .sk-results__content { padding: 28px 24px 36px; }
+  .sk-results__inner { grid-template-columns: minmax(0, 1fr); }
+  .sk-results__media { min-width: 0; min-height: 0; aspect-ratio: 13 / 14; }
+  .sk-results__content { min-width: 0; padding: 28px 24px 36px; }
   .sk-results__title { font-size: 22px; }
   .sk-results__intro { font-size: 15px; margin: 16px 0 24px; }
   .sk-results__kickers { margin-bottom: 18px; }
-  .sk-results__grid li { padding: 16px; font-size: 14px; }
+  .sk-results__grid ul { min-width: 0; }
+  .sk-results__grid li { min-width: 0; overflow-wrap: anywhere; padding: 16px; font-size: 14px; }
   .sk-results__cta-form,
   .sk-results__cta { align-self: stretch; margin-top: 24px; }
   .sk-results__cta-form .sk-btn--primary { width: 100%; }
