@@ -11,7 +11,6 @@
 
 .sk-results__card {
   background: var(--paper-0);
-  box-shadow: 0 30px 70px -42px rgba(45, 27, 61, 0.22);
   border-radius: 4px;
   overflow: hidden;
 }
