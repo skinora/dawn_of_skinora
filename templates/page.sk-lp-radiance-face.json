@@ -12,7 +12,7 @@
     "announcement": {
       "type": "sk-lp-announcement",
       "settings": {
-        "text": "GRATIS FRAKT I NORGE  |  30 DAGERS FORNØYDGARANTI"
+        "text": "GRATIS FRAKT I NORGE  |  60 DAGERS FORNØYDGARANTI"
       }
     },
     "hero": {
@@ -27,7 +27,7 @@
         "pill_2": {
           "type": "pill",
           "settings": {
-            "text": "30 dagers fornøydgaranti"
+            "text": "60 dagers fornøydgaranti"
           }
         },
         "pill_3": {
@@ -52,7 +52,7 @@
         "rating_score": "4.8",
         "review_count": "102",
         "audience_label": "kvinner over 40",
-        "cta_text": "Prøv risikofritt i 30 dager",
+        "cta_text": "Prøv risikofritt i 60 dager",
         "cta_url": "/products/skinora-radiance-face",
         "price_display": "4 690 kr",
         "klarna_text": "fra 130 kr/mnd med Klarna",
@@ -79,7 +79,7 @@
         "item_6CbefW": {
           "type": "item",
           "settings": {
-            "text": "30 dagers garanti"
+            "text": "60 dagers garanti"
           }
         },
         "item_37aFrz": {
@@ -321,7 +321,7 @@
           "type": "card",
           "settings": {
             "title": "Trygt og risikofritt",
-            "text": "<p>Norsk kundeservice, 30 dagers fornøydgaranti – du tar ingen risiko</p>"
+            "text": "<p>Norsk kundeservice, 60 dagers fornøydgaranti – du tar ingen risiko</p>"
           }
         },
         "w_2": {
@@ -669,7 +669,7 @@
           "type": "faq",
           "settings": {
             "question": "Hva om jeg ikke er fornøyd?",
-            "answer": "Du har 30 dagers fornøydgaranti. Hvis du ikke er fornøyd, sender du den tilbake og får full refusjon – ingen spørsmål stilt. Kontakt oss på hello@skinora.no."
+            "answer": "Du har 60 dagers fornøydgaranti. Hvis du ikke er fornøyd, sender du den tilbake og får full refusjon – ingen spørsmål stilt. Kontakt oss på hello@skinora.no."
           }
         },
         "faq_6": {
@@ -690,7 +690,7 @@
           "type": "faq",
           "settings": {
             "question": "Hva om jeg ikke ser noen forskjell?",
-            "answer": "Da vil vi at du skal sende den tilbake – og du får pengene tilbake, uten spørsmål. Det er hele poenget med vår 30 dagers fornøydgaranti. Vi er trygge på at jevn bruk gir resultater, men vi vet at hud er individuell. Har du ikke sett endring innen 30 dager, kontakter du oss på hello@skinora.no – og vi ordner resten."
+            "answer": "Da vil vi at du skal sende den tilbake – og du får pengene tilbake, uten spørsmål. Det er hele poenget med vår 60 dagers fornøydgaranti. Vi er trygge på at jevn bruk gir resultater, men vi vet at hud er individuell. Har du ikke sett endring innen 60 dager, kontakter du oss på hello@skinora.no – og vi ordner resten."
           }
         }
       },
@@ -716,7 +716,7 @@
         "g_1": {
           "type": "badge",
           "settings": {
-            "text": "30 dagers fornøydgaranti"
+            "text": "60 dagers fornøydgaranti"
           }
         },
         "g_2": {
