@@ -450,7 +450,7 @@
           "type": "spec",
           "settings": {
             "label": "Sertifisering",
-            "value": "CE, RoHS, FDA"
+            "value": "CE, RoHS, FDA (510(k))"
           }
         },
         "spec_6": {
