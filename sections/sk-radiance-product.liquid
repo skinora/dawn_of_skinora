@@ -1434,6 +1434,7 @@
   {%- assign bundle_title = bundle_product_ref.title -%}
 {%- endif -%}
 {%- assign base_variant = product.selected_or_first_available_variant -%}
+{%- assign bundle_variant = bundle_product_ref.selected_or_first_available_variant -%}
 {%- assign single_image_alt = product.featured_image.alt | default: product.title -%}
 {%- assign bundle_image_obj = bundle_product_ref.featured_image -%}
 {%- if bundle_image_obj == blank -%}
@@ -1706,8 +1707,26 @@
                   </div>
                   <div class="sk-offer-card__price" data-sk-card-price="bundle">
                     <div class="sk-price">
-                      <span class="sk-price__value"></span>
-                      <span class="sk-price__current">—</span>
+                      <span class="sk-price__value">
+                        {%- if bundle_variant.compare_at_price and bundle_variant.compare_at_price > bundle_variant.price -%}
+                          {{ bundle_variant.compare_at_price | money_without_trailing_zeros }}
+                        {%- endif -%}
+                      </span>
+                      <span class="sk-price__current">
+                        {%- if bundle_variant and bundle_variant.price -%}
+                          {{ bundle_variant.price | money_without_trailing_zeros }}
+                        {%- else -%}
+                          —
+                        {%- endif -%}
+                      </span>
+                      {%- if bundle_variant.compare_at_price and bundle_variant.compare_at_price > bundle_variant.price -%}
+                        {%- assign bundle_savings_pct = bundle_variant.compare_at_price
+                          | minus: bundle_variant.price
+                          | times: 100
+                          | divided_by: bundle_variant.compare_at_price
+                        -%}
+                        <span class="sk-price__badge">Spar {{ bundle_savings_pct }}%</span>
+                      {%- endif -%}
                     </div>
                   </div>
                 </div>
@@ -1718,7 +1737,7 @@
                   class="sk-offer-card__notify"
                   data-sk-card-notify-button
                   data-klaviyo-backinstock
-                  data-variant-id=""
+                  data-variant-id="{{ bundle_variant.id }}"
                   aria-label="Gi beskjed når tilgjengelig"
                 >
                   Gi beskjed når tilgjengelig
@@ -2422,8 +2441,8 @@
         setAvailabilityUI(!!activeVariant.available);
         setSubmitAvailabilityUI(!!activeVariant.available);
 
-        setCardUnavailable(singleCard, offerType === 'single' && !activeVariant.available, activeVariant.id);
-        setCardUnavailable(bundleCardWrap, offerType === 'bundle' && !activeVariant.available, activeVariant.id);
+        setCardUnavailable(singleCard, offerType === 'single' && !activeVariant.available, baseVariant.id);
+        setCardUnavailable(bundleCardWrap, offerType === 'bundle' && !activeVariant.available, (bundleData && bundleData.variant) ? bundleData.variant.id : null);
 
         const offerTitle = offerType === 'bundle'
           ? (bundleData && bundleData.product && bundleData.product.title) || bundleTitleFallback || baseTitle
