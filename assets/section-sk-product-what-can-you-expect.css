@@ -131,26 +131,13 @@
   color: var(--ink-400);
 }
 
-/* ---- CTA ---- */
+/* ---- CTA ----
+   Bruker den delte .sk-btn.sk-btn--primary (samme som kjøpsknappene overalt).
+   Her settes kun plassering. */
 .sk-results__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   align-self: flex-start;
   margin-top: 32px;
-  font-family: var(--ff-sans);
-  font-size: 15px;
-  font-weight: var(--fw-medium);
-  color: var(--paper-0);
-  background: var(--ink-700);
-  padding: 14px 26px;
-  border-radius: 2px;
-  text-decoration: none;
-  transition: background 0.2s ease;
 }
-.sk-results__cta:hover { background: var(--ink-900); }
-.sk-results__cta:focus-visible { outline: 2px solid var(--ink-900); outline-offset: 3px; }
-.sk-results__cta-arrow { line-height: 1; }
 
 /* ---- ansvarsfraskrivelse ---- */
 .sk-results__note {
@@ -172,5 +159,5 @@
   .sk-results__intro { font-size: 15px; margin: 16px 0 24px; }
   .sk-results__kickers { margin-bottom: 18px; }
   .sk-results__grid li { padding: 16px; font-size: 14px; }
-  .sk-results__cta { align-self: stretch; justify-content: center; margin-top: 24px; }
+  .sk-results__cta { align-self: stretch; margin-top: 24px; }
 }
