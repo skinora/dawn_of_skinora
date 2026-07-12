@@ -132,8 +132,9 @@
 }
 
 /* ---- CTA ----
-   Bruker den delte .sk-btn.sk-btn--primary (samme som kjøpsknappene overalt).
-   Her settes kun plassering. */
+   Bruker den delte .sk-btn.sk-btn--primary + lp-cta-form/sk-lp-cart-add.js
+   (samme add-to-cart som kjøpsknappene overalt). Her settes kun plassering. */
+.sk-results__cta-form,
 .sk-results__cta {
   align-self: flex-start;
   margin-top: 32px;
@@ -159,5 +160,7 @@
   .sk-results__intro { font-size: 15px; margin: 16px 0 24px; }
   .sk-results__kickers { margin-bottom: 18px; }
   .sk-results__grid li { padding: 16px; font-size: 14px; }
+  .sk-results__cta-form,
   .sk-results__cta { align-self: stretch; margin-top: 24px; }
+  .sk-results__cta-form .sk-btn--primary { width: 100%; }
 }

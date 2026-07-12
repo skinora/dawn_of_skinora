@@ -1,6 +1,7 @@
 {{ 'section-sk-product-what-can-you-expect.css' | asset_url | stylesheet_tag }}
 {{ 'component-before-after.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'component-before-after.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'sk-lp-cart-add.js' | asset_url }}" defer="defer"></script>
 
 {% liquid
   assign sk_result_entry = null
@@ -84,6 +85,11 @@
   assign result_cta_url = section.settings.cta_url
   if result_cta_url == blank and product
     assign result_cta_url = product.url
+  endif
+
+  assign result_variant = null
+  if product
+    assign result_variant = product.selected_or_first_available_variant
   endif
 %}
 
@@ -172,10 +178,30 @@
           {% endif %}
 
           {% if result_cta_text != blank %}
-            <a class="sk-btn sk-btn--primary sk-results__cta" href="{{ result_cta_url }}">
-              {{ result_cta_text }}
-              <span class="sk-btn__icon" aria-hidden="true">→</span>
-            </a>
+            {% if product and result_variant %}
+              <form
+                action="{{ routes.cart_add_url }}"
+                method="post"
+                enctype="multipart/form-data"
+                class="lp-cta-form sk-results__cta-form"
+              >
+                <input type="hidden" name="id" value="{{ result_variant.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <button
+                  type="submit"
+                  class="sk-btn sk-btn--primary"
+                  data-product-handle="{{ product.handle }}"
+                >
+                  {{ result_cta_text }}
+                  <span class="sk-btn__icon" aria-hidden="true">→</span>
+                </button>
+              </form>
+            {% else %}
+              <a class="sk-btn sk-btn--primary sk-results__cta" href="{{ result_cta_url }}">
+                {{ result_cta_text }}
+                <span class="sk-btn__icon" aria-hidden="true">→</span>
+              </a>
+            {% endif %}
           {% endif %}
 
           {% if result_note != blank %}
