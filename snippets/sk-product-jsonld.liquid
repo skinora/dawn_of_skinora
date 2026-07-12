@@ -13,7 +13,7 @@
   # Irradians = testverdi konvertert W/m² → mW/cm² (÷10), single output / masken alene på full effekt.
   # NB: legg til instrument + testdato i sk_irr_method før dette går til PROD (målt-påstand krever rapport).
   assign sk_specs = false
-  assign sk_irr_method = 'Measured at skin contact; measurement report available on request.'
+  assign sk_irr_method = 'Measurement report available on request.'
   case product.handle
     when 'skinora-radiance-face'
       assign sk_specs = true
