@@ -194,13 +194,30 @@
           <p class="lp-hero__text">{{ section.settings.text_line_1 }}</p>
         {%- endif -%}
 
-        {%- if section.settings.rating_score != blank -%}
+        {%- comment -%}
+          Rating + count hentes dynamisk fra reviews-metafeltet (samme kilde som
+          product-JSON-LD), med fallback til seksjons-settingen. Slik matcher det
+          alltid strukturert data og overlever admin-re-lagring av templaten.
+        {%- endcomment -%}
+        {%- assign sk_lp_meta_rating = sk_lp_product.metafields.reviews.rating.value.rating -%}
+        {%- assign sk_lp_meta_count = sk_lp_product.metafields.reviews.rating_count -%}
+        {%- if sk_lp_meta_rating != blank -%}
+          {%- assign sk_lp_rating_display = sk_lp_meta_rating | round: 1 -%}
+        {%- else -%}
+          {%- assign sk_lp_rating_display = section.settings.rating_score -%}
+        {%- endif -%}
+        {%- if sk_lp_meta_count != blank -%}
+          {%- assign sk_lp_count_display = sk_lp_meta_count -%}
+        {%- else -%}
+          {%- assign sk_lp_count_display = section.settings.review_count | default: '0' -%}
+        {%- endif -%}
+        {%- if sk_lp_rating_display != blank -%}
           <div class="lp-hero__rating">
             <span class="lp-hero__rating-stars" aria-hidden="true">★★★★★</span>
-            <span class="lp-hero__rating-score">{{ section.settings.rating_score }}/5</span>
+            <span class="lp-hero__rating-score">{{ sk_lp_rating_display }}/5</span>
             <span class="lp-hero__rating-sep" aria-hidden="true">·</span>
             <span class="lp-hero__rating-count">
-              fra {{ section.settings.review_count | default: '0' }}
+              fra {{ sk_lp_count_display }}
               {{ section.settings.audience_label | default: 'verifiserte kunder' }}</span
             >
           </div>
