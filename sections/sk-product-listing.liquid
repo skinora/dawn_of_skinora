@@ -33,6 +33,7 @@
   }
 
   .sk-product-card {
+    position: relative;
     text-align: center;
     width: 100%;
     display: flex;
@@ -42,6 +43,20 @@
     max-width: none;
     margin: 0;
     min-height: 0;
+  }
+
+  /* Stretched link: the title anchor covers the whole card so the
+     entire card is clickable, while the add-to-cart form stays above it. */
+  .sk-product-card__title-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .sk-product-card product-form {
+    position: relative;
+    z-index: 2;
   }
 
   .sk-product-card__image {
@@ -308,7 +323,6 @@
             {% if card_product != blank %}
               {% assign hover_image = card_product.images[1] %}
               <div class="sk-product-card" {{ block.shopify_attributes }}>
-                <a href="{{ card_product.url }}">
                   <div class="sk-product-card__image">
                     {% if card_product.featured_media %}
                       <img
@@ -355,11 +369,10 @@
                       </span>
                     {% endif %}
                   </div>
-                </a>
 
                 <div class="sk-product-card__content">
                   <div class="sk-product-card__content-body">
-                    <a href="{{ card_product.url }}">
+                    <a class="sk-product-card__title-link" href="{{ card_product.url }}">
                       <h3 class="sk-product-card__title">{{ card_product.title | escape }}</h3>
                     </a>
                     {%- comment -%} Okendo star rating widget for product cards {%- endcomment -%}
