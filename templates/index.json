@@ -210,7 +210,7 @@
           "settings": {
             "before_image": "shopify://shop_images/kundebildet2.webp",
             "testimonial_title": "Synlig roligere hud",
-            "author_name": "Maria A. | Testpanel bruker",
+            "author_name": "Maria A. | Verifisert kunde",
             "show_verified": true,
             "testimonial_text": "Huden føles mindre irritert, og utbruddene har roet seg"
           }
@@ -220,7 +220,7 @@
           "settings": {
             "before_image": "shopify://shop_images/kunde_panne.webp",
             "testimonial_title": "Fine linjer ble mindre synlig",
-            "author_name": "Anne Grete H. | Testpanel bruker",
+            "author_name": "Anne H. | Verifisert kunde",
             "show_verified": true,
             "testimonial_text": "Huden føles friskere, og fine linjer fremstår mindre synlige"
           }
