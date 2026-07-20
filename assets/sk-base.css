@@ -1090,17 +1090,17 @@ footer .footer__column.footer__column--menu a:hover {
   align-items: center;
 }
 
-/* Star colors - use brand color */
+/* Star colors - star-gold (--accent-gold token), ikke merkefarge lilla */
 .okeReviews--reviewsSummary-starRating .oke-starRating-star svg,
 .okeReviews--reviewsSummary-starRating .oke-stars svg,
 .okeReviews .oke-stars-full svg {
-  fill: var(--color-brand) !important;
+  fill: var(--accent-gold) !important;
 }
 
-/* Empty stars - lighter brand color */
+/* Empty stars - faint gold */
 .okeReviews--reviewsSummary-starRating .oke-starRating-star-empty svg,
 .okeReviews .oke-stars-empty svg {
-  fill: rgba(var(--color-brand-rgb), 0.25) !important;
+  fill: color-mix(in srgb, var(--accent-gold) 25%, transparent) !important;
 }
 
 @media screen and (min-width: 990px) {
