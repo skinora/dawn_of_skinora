@@ -13,11 +13,13 @@
   "sections": {
     "sk_announcment_bar_tWPjQL": {
       "type": "sk-announcment-bar",
-      "disabled": true,
+      "disabled": false,
       "name": "SK Announcement Bar",
       "settings": {
-        "text": "Gratis frakt i Norge   |   30 DAGERS fornøydgaranti",
-        "link": ""
+        "message_1": "✦ 10 % på din første maske – meld deg på nyhetsbrevet",
+        "message_1_anchor": "#newsletter",
+        "message_2": "✦ Gratis frakt i hele Norge – sendes fra norsk lager",
+        "message_3": "✦ 30 dagers fornøydgaranti – pengene tilbake"
       }
     },
     "header": {

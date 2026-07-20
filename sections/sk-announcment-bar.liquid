@@ -5,17 +5,24 @@
     font-family: var(--font-body-family, 'Inter', 'system-ui', sans-serif);
   }
 
+  /* Meldingene legges i samme grid-celle (grid-row/column 1) og veksler med
+     ren CSS-animasjon – én synlig om gangen. Grid-stacking gjør at baren får
+     høyden til den enkelte meldingen, ikke summen av alle tre (ingen layout-
+     shift, siden cellen alltid er like høy som den høyeste meldingen). */
   .sk-announcement__inner {
     min-height: 48px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
     align-items: center;
-    justify-content: center;
+    justify-items: center;
     text-align: center;
     padding: 0.75rem var(--sk-page-gutter, 1rem);
   }
 
   .sk-announcement__text,
   .sk-announcement__link {
+    grid-row: 1;
+    grid-column: 1;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     font-size: clamp(1.1rem, 1.4vw, 1.35rem);
@@ -23,23 +30,91 @@
     margin: 0;
     color: inherit;
     text-decoration: none;
+    opacity: 0;
+    animation: sk-announcement-rotate 15s infinite;
   }
+
+  /* Fallback hvis animasjon ikke kjører: vis i det minste tilbudet. */
+  .sk-announcement__inner > :first-child {
+    opacity: 1;
+  }
+
+  .sk-announcement__inner > :nth-child(1) { animation-delay: 0s; }
+  .sk-announcement__inner > :nth-child(2) { animation-delay: 5s; }
+  .sk-announcement__inner > :nth-child(3) { animation-delay: 10s; }
 
   .sk-announcement__link:focus-visible,
   .sk-announcement__link:hover {
-    opacity: 0.85;
     text-decoration: underline;
     text-underline-offset: 0.2em;
+  }
+
+  /* Hver melding synlig ~5s av 15s-syklusen. pointer-events følger synlighet,
+     så bare den viste meldingen (tilbudslenken) er klikkbar. */
+  @keyframes sk-announcement-rotate {
+    0% {
+      opacity: 0;
+      pointer-events: none;
+    }
+    2% {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    30% {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    33% {
+      opacity: 0;
+      pointer-events: none;
+    }
+    100% {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  /* Respekter «redusert bevegelse»: ingen rotasjon – vis kun tilbudet statisk. */
+  @media (prefers-reduced-motion: reduce) {
+    .sk-announcement__text,
+    .sk-announcement__link {
+      animation: none;
+      opacity: 0;
+    }
+
+    .sk-announcement__inner > :first-child {
+      opacity: 1;
+    }
+
+    .sk-announcement__inner > :not(:first-child) {
+      display: none;
+    }
   }
 </style>
 
 <div class="sk-announcement">
   <div class="page-width sk-announcement__inner">
-    {%- assign text = section.settings.text | default: 'Legg til annonsetekst' -%}
-    {%- if section.settings.link != blank -%}
-      <a class="sk-announcement__link" href="{{ section.settings.link }}">{{ text }}</a>
-    {%- else -%}
-      <p class="sk-announcement__text">{{ text }}</p>
+    {%- comment -%}
+      Melding 1 = velkomsttilbudet. Klikkbar: scroller til nyhetsbrev-skjemaet
+      i footeren via ankeret (#newsletter på .footer-top_section). Meldingene
+      vises statisk (temaets eksisterende mekanisme — ingen rotasjon/script).
+    {%- endcomment -%}
+    {%- if section.settings.message_1 != blank -%}
+      {%- if section.settings.message_1_anchor != blank -%}
+        <a class="sk-announcement__link" href="{{ section.settings.message_1_anchor }}">
+          {{- section.settings.message_1 -}}
+        </a>
+      {%- else -%}
+        <p class="sk-announcement__text">{{ section.settings.message_1 }}</p>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if section.settings.message_2 != blank -%}
+      <p class="sk-announcement__text">{{ section.settings.message_2 }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.message_3 != blank -%}
+      <p class="sk-announcement__text">{{ section.settings.message_3 }}</p>
     {%- endif -%}
   </div>
 </div>
@@ -53,14 +128,28 @@
   "settings": [
     {
       "type": "text",
-      "id": "text",
-      "label": "Announcement text",
-      "default": "Gratis frakt i Norge – Handle trygt hos Skinora"
+      "id": "message_1",
+      "label": "Melding 1 (tilbud – klikkbar)",
+      "default": "✦ 10 % på din første maske – meld deg på nyhetsbrevet"
     },
     {
-      "type": "url",
-      "id": "link",
-      "label": "Optional link"
+      "type": "text",
+      "id": "message_1_anchor",
+      "label": "Melding 1 – anker/lenke",
+      "info": "F.eks. #newsletter for å scrolle til nyhetsbrev-skjemaet i footeren. La stå tom for å vise meldingen uten lenke.",
+      "default": "#newsletter"
+    },
+    {
+      "type": "text",
+      "id": "message_2",
+      "label": "Melding 2",
+      "default": "✦ Gratis frakt i hele Norge – sendes fra norsk lager"
+    },
+    {
+      "type": "text",
+      "id": "message_3",
+      "label": "Melding 3",
+      "default": "✦ 30 dagers fornøydgaranti – pengene tilbake"
     }
   ],
   "blocks": [

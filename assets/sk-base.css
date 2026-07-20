@@ -1103,6 +1103,19 @@ footer .footer__column.footer__column--menu a:hover {
   fill: color-mix(in srgb, var(--accent-gold) 25%, transparent) !important;
 }
 
+/* Okendo's current widget (oke-sr) paints the filled stars from this CSS
+   variable, which Okendo sets to the brand purple (#30273E) from its admin.
+   The .oke-stars-full rules above only cover Okendo's older markup, so we
+   also override the variable here. NB: the authoritative place to change
+   this is Okendo's admin (Styling → star colour); this is the theme-side
+   override. */
+[data-oke-container],
+.okeReviews,
+.oke-sr,
+.oke-stars-foreground {
+  --oke-stars-foregroundColor: var(--accent-gold) !important;
+}
+
 @media screen and (min-width: 990px) {
   .header.sk-header {
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
