@@ -94,7 +94,10 @@
   position: relative;
   overflow: visible;
   padding-block: clamp(0.4rem, 1vw, 0.8rem);
-  min-height: clamp(50px, 6vw, 90px);
+  /* Header-høyde ~80%: grid-gulvet er den faktiske høyde-driveren på
+     desktop (logo/ikoner er lavere). Ned fra 50/6vw/90. Verifisert live:
+     desktop 117→~92px. */
+  min-height: clamp(40px, 4.4vw, 66px);
   box-sizing: border-box;
 }
 

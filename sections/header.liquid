@@ -73,8 +73,8 @@
   }
 
   .header__icons .header__icon .svg-wrapper svg {
-    width: 23px;
-    height: 23px;
+    width: 26px;
+    height: 26px;
   }
 
   /* Inline menu spacing */
@@ -236,42 +236,54 @@
   /* Responsive logo scaling - Tablet */
   @media (min-width: 750px) and (max-width: 1199px) {
     .header__heading-logo-wrapper {
-      --header-logo-width: 153px !important;
-      width: 153px !important;
-      max-width: 153px !important;
+      --header-logo-width: 170px !important;
+      width: 170px !important;
+      max-width: 170px !important;
     }
     .header__heading-logo-wrapper img,
     .header__heading-logo-wrapper svg {
-      width: 153px !important;
-      max-width: 153px !important;
+      width: 170px !important;
+      max-width: 170px !important;
     }
   }
 
   /* Responsive logo scaling - Laptop */
   @media (min-width: 1200px) and (max-width: 1599px) {
     .header__heading-logo-wrapper {
-      --header-logo-width: 180px !important;
-      width: 180px !important;
-      max-width: 180px !important;
+      --header-logo-width: 200px !important;
+      width: 200px !important;
+      max-width: 200px !important;
     }
     .header__heading-logo-wrapper img,
     .header__heading-logo-wrapper svg {
-      width: 180px !important;
-      max-width: 180px !important;
+      width: 200px !important;
+      max-width: 200px !important;
     }
   }
 
   /* Responsive logo scaling - Wide Desktop */
   @media (min-width: 1600px) {
     .header__heading-logo-wrapper {
-      --header-logo-width: 207px !important;
-      width: 207px !important;
-      max-width: 207px !important;
+      --header-logo-width: 230px !important;
+      width: 230px !important;
+      max-width: 230px !important;
     }
     .header__heading-logo-wrapper img,
     .header__heading-logo-wrapper svg {
-      width: 207px !important;
-      max-width: 207px !important;
+      width: 230px !important;
+      max-width: 230px !important;
+    }
+  }
+
+  /* Desktop logo-høyde-cap (~80% header): hindrer at logoen driver
+     header-høyden på 990–1199px og gjør logoen litt mindre på desktop.
+     Høy spesifisitet for å slå de eksisterende !important-bredde-reglene. */
+  @media (min-width: 990px) {
+    html body .header .header__heading-logo-wrapper svg,
+    html body .header .header__heading-logo-wrapper img {
+      max-height: 52px !important;
+      height: auto !important;
+      width: auto !important;
     }
   }
 
@@ -286,24 +298,24 @@
   /* Responsive icon scaling - Tablet */
   @media (min-width: 750px) and (max-width: 1199px) {
     .header__icons .header__icon .svg-wrapper svg {
-      width: 17px !important;
-      height: 17px !important;
+      width: 19px !important;
+      height: 19px !important;
     }
   }
 
   /* Responsive icon scaling - Laptop */
   @media (min-width: 1200px) and (max-width: 1599px) {
     .header__icons .header__icon .svg-wrapper svg {
-      width: 19px !important;
-      height: 19px !important;
+      width: 21px !important;
+      height: 21px !important;
     }
   }
 
   /* Responsive icon scaling - Wide Desktop */
   @media (min-width: 1600px) {
     .header__icons .header__icon .svg-wrapper svg {
-      width: 22px !important;
-      height: 22px !important;
+      width: 24px !important;
+      height: 24px !important;
     }
   }
 
@@ -346,8 +358,8 @@
   @media (max-width: 749px) {
     /* Give header a bit more vertical room */
     .header.sk-header {
-      padding-top: 16px !important;
-      padding-bottom: 16px !important;
+      padding-top: 11px !important;
+      padding-bottom: 11px !important;
       min-height: auto !important;
       height: auto !important;
       overflow: visible !important;
@@ -359,6 +371,7 @@
       height: auto !important;
       align-items: center !important;
       overflow: visible !important;
+      padding-block: 1px !important; /* kompakt mobil-header (~64px) */
     }
 
     /* Logo brand container must not clip */
@@ -368,19 +381,23 @@
       overflow: visible !important;
     }
 
-    /* Make the logo link a proper flex box so it centers and doesn't clip */
+    /* Make the logo link a proper flex box so it centers and doesn't clip.
+       padding/line-height nullstilles: linken hadde ~15px «luft» over/under
+       logoen som gjorde headeren unødvendig høy på mobil. */
     .sk-header__brand .header__heading-link {
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
       min-height: auto !important;
       height: auto !important;
+      padding: 0 !important;
+      line-height: 0 !important;
       overflow: visible !important;
     }
 
     /* The wrapper must NOT cap height */
     .header__heading-logo-wrapper {
-      width: clamp(153px, 47vw, 216px) !important;
+      width: clamp(170px, 52vw, 240px) !important;
       max-width: 100% !important;
       height: auto !important;
       min-height: auto !important;
@@ -392,13 +409,16 @@
       justify-content: center !important;
     }
 
-    /* Inline SVG must behave like an image */
+    /* Inline SVG must behave like an image.
+       Logo-høyden er den faktiske header-høyde-driveren på mobil
+       (grid-gulvet er lavere), så vi capper den til 46px (~−10% fra 53px)
+       for å få hele baren ned til ~90%. width:auto beholder proporsjonene. */
     .header__heading-logo-wrapper svg {
       display: block !important;
-      width: 100% !important;
+      width: auto !important;
       height: auto !important;
       min-height: auto !important;
-      max-height: none !important;
+      max-height: 40px !important;
       overflow: visible !important;
     }
   }
@@ -422,8 +442,8 @@
 
   @media screen and (min-width: 990px) {
     .header {
-      padding-top: {{ section.settings.padding_top | times: 0.9 | round }}px;
-      padding-bottom: {{ section.settings.padding_bottom | times: 0.9 | round }}px;
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round }}px;
     }
   }
 {%- endstyle -%}
