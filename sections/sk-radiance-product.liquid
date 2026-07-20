@@ -1672,16 +1672,25 @@
                 </div>
                 <div class="sk-offer-card__footer" aria-hidden="true"></div>
                 <span class="sk-offer-card__check" aria-hidden="true"></span>
-                <a
-                  href="#"
-                  class="sk-offer-card__notify"
-                  data-sk-card-notify-button
-                  data-klaviyo-backinstock
-                  data-variant-id="{{ base_variant.id }}"
-                  aria-label="Gi beskjed når tilgjengelig"
-                >
-                  Gi beskjed når tilgjengelig
-                </a>
+                {%- comment -%}
+                  Render notify-lenken KUN når varianten faktisk er utsolgt.
+                  Ellers ligger «Gi beskjed når tilgjengelig» i rå-HTML (bare
+                  CSS-skjult) og får AI/bots til å tro produktet er utsolgt —
+                  i strid med JSON-LD (InStock). is-visible gjør den synlig
+                  uten å vente på JS.
+                {%- endcomment -%}
+                {%- if base_variant.available == false -%}
+                  <a
+                    href="#"
+                    class="sk-offer-card__notify is-visible"
+                    data-sk-card-notify-button
+                    data-klaviyo-backinstock
+                    data-variant-id="{{ base_variant.id }}"
+                    aria-label="Gi beskjed når tilgjengelig"
+                  >
+                    Gi beskjed når tilgjengelig
+                  </a>
+                {%- endif -%}
               </div>
             </label>
 
@@ -1738,16 +1747,19 @@
                 </div>
                 <div class="sk-offer-card__footer" aria-hidden="true"></div>
                 <span class="sk-offer-card__check" aria-hidden="true"></span>
-                <a
-                  href="#"
-                  class="sk-offer-card__notify"
-                  data-sk-card-notify-button
-                  data-klaviyo-backinstock
-                  data-variant-id="{{ bundle_variant.id }}"
-                  aria-label="Gi beskjed når tilgjengelig"
-                >
-                  Gi beskjed når tilgjengelig
-                </a>
+                {%- comment -%} Se kommentar over: kun ved faktisk utsolgt bundle. {%- endcomment -%}
+                {%- if bundle_variant.available == false -%}
+                  <a
+                    href="#"
+                    class="sk-offer-card__notify is-visible"
+                    data-sk-card-notify-button
+                    data-klaviyo-backinstock
+                    data-variant-id="{{ bundle_variant.id }}"
+                    aria-label="Gi beskjed når tilgjengelig"
+                  >
+                    Gi beskjed når tilgjengelig
+                  </a>
+                {%- endif -%}
               </div>
             </label>
           </div>
