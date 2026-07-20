@@ -236,42 +236,42 @@
   /* Responsive logo scaling - Tablet */
   @media (min-width: 750px) and (max-width: 1199px) {
     .header__heading-logo-wrapper {
-      --header-logo-width: 170px !important;
-      width: 170px !important;
-      max-width: 170px !important;
+      --header-logo-width: 153px !important;
+      width: 153px !important;
+      max-width: 153px !important;
     }
     .header__heading-logo-wrapper img,
     .header__heading-logo-wrapper svg {
-      width: 170px !important;
-      max-width: 170px !important;
+      width: 153px !important;
+      max-width: 153px !important;
     }
   }
 
   /* Responsive logo scaling - Laptop */
   @media (min-width: 1200px) and (max-width: 1599px) {
     .header__heading-logo-wrapper {
-      --header-logo-width: 200px !important;
-      width: 200px !important;
-      max-width: 200px !important;
+      --header-logo-width: 180px !important;
+      width: 180px !important;
+      max-width: 180px !important;
     }
     .header__heading-logo-wrapper img,
     .header__heading-logo-wrapper svg {
-      width: 200px !important;
-      max-width: 200px !important;
+      width: 180px !important;
+      max-width: 180px !important;
     }
   }
 
   /* Responsive logo scaling - Wide Desktop */
   @media (min-width: 1600px) {
     .header__heading-logo-wrapper {
-      --header-logo-width: 230px !important;
-      width: 230px !important;
-      max-width: 230px !important;
+      --header-logo-width: 207px !important;
+      width: 207px !important;
+      max-width: 207px !important;
     }
     .header__heading-logo-wrapper img,
     .header__heading-logo-wrapper svg {
-      width: 230px !important;
-      max-width: 230px !important;
+      width: 207px !important;
+      max-width: 207px !important;
     }
   }
 
@@ -346,8 +346,8 @@
   @media (max-width: 749px) {
     /* Give header a bit more vertical room */
     .header.sk-header {
-      padding-top: 18px !important;
-      padding-bottom: 18px !important;
+      padding-top: 16px !important;
+      padding-bottom: 16px !important;
       min-height: auto !important;
       height: auto !important;
       overflow: visible !important;
@@ -380,7 +380,7 @@
 
     /* The wrapper must NOT cap height */
     .header__heading-logo-wrapper {
-      width: clamp(170px, 52vw, 240px) !important;
+      width: clamp(153px, 47vw, 216px) !important;
       max-width: 100% !important;
       height: auto !important;
       min-height: auto !important;
@@ -406,7 +406,7 @@
 
 {%- style -%}
   .header {
-    padding: 10px 5px;
+    padding: 9px 5px;
   }
 
   .section-header {
@@ -422,8 +422,8 @@
 
   @media screen and (min-width: 990px) {
     .header {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
+      padding-top: {{ section.settings.padding_top | times: 0.9 | round }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.9 | round }}px;
     }
   }
 {%- endstyle -%}
