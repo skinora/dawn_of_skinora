@@ -115,6 +115,17 @@
   font-weight: 600;
 }
 
+/* Antall-felt på cart-SIDEN (lys bakgrunn).
+   .quantity er stylet hvit for handlekurv-SKUFFEN (mørk brand-bakgrunn):
+   .quantity { color: var(--color-white) } + .quantity__input { color: currentColor }
+   + .quantity__button { color: var(--color-white) }. På den hvite cart-siden ble
+   både tallet og +/- ikonene hvitt-på-hvitt = usynlig (så feltet så tomt/skjevt ut).
+   Scopet til #main-cart-items så skuffen ikke påvirkes. */
+#main-cart-items .quantity,
+#main-cart-items .quantity__button {
+  color: rgb(var(--color-foreground));
+}
+
 /* Quantity rules info */
 .quantity__rules {
   font-family: var(--font-body-family);
