@@ -157,12 +157,62 @@
    containing block for the popup's position:fixed overlay, which then renders
    at the bottom of the document instead of centred over the viewport. */
 
-#shopify-pc__banner__btn-accept {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+/* Cookie-banner: hold brødtekst og OK-knapp på samme rad.
+   #shopify-pc__banner ER selve .shopify-pc__banner__dialog (en <section>
+   med inline display:block), så layouten styres via __wrapper. Shopify
+   injiserer sin banner-CSS etter temaet, derfor `html body` for å
+   overstyre uten !important. */
+html body #shopify-pc__banner .shopify-pc__banner__wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+
+html body #shopify-pc__banner .shopify-pc__banner__body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+html body #shopify-pc__banner .shopify-pc__banner__btns {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+html body #shopify-pc__banner__btn-accept {
+  flex: 0 0 auto;
   align-self: center;
   font-size: 1.6rem;
+  white-space: nowrap;
+}
+
+/* Minste skjermer: krymp banneret maksimalt. Tekst og OK holdes på
+   samme rad (får plass ned mot ~320px). */
+@media screen and (max-width: 749px) {
+  html body #shopify-pc__banner .shopify-pc__banner__wrapper {
+    gap: 8px;
+  }
+
+  html body #shopify-pc__banner__body-title {
+    font-size: 1.3rem;
+    line-height: 1.2;
+    margin-bottom: 2px;
+  }
+
+  html body #shopify-pc__banner .shopify-pc__banner__body > p {
+    font-size: 1.15rem;
+    line-height: 1.3;
+  }
+
+  html body #shopify-pc__banner__btn-accept {
+    font-size: 1.3rem;
+    padding: 8px 14px;
+    white-space: nowrap;
+  }
 }
 
 #shopify-pc__banner {
