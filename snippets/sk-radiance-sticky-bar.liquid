@@ -34,6 +34,13 @@
     transition: transform 0.28s ease;
   }
 
+  /* Skjul sticky-baren når handlekurv-skuffen er åpen. Baren ligger på
+     z-index 2147483000 (over skuffens 1000), så den dekket ellers «gå til
+     kasse»-knappen nederst i skuffen. cart-drawer.active = åpen skuff. */
+  body:has(cart-drawer.active) .sk-radiance-sticky-bottom-bar--portal {
+    display: none;
+  }
+
   /* Tablet + desktop: make sticky bar ~33% taller */
   @media (min-width: 750px) {
     .sk-radiance-sticky-bottom-bar--portal {
