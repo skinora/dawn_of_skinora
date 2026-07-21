@@ -144,7 +144,7 @@
             <div class="sk-results__single">
               <img
                 src="{{ result_image | image_url: width: 1200 }}"
-                alt="{{ result_image_alt | escape }}"
+                alt="{{ result_image_alt | default: product.title | escape }}"
                 loading="lazy"
                 width="{{ result_image.width | default: 1200 }}"
                 height="{{ result_image.height | default: 1440 }}"
