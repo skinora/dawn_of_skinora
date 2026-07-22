@@ -556,7 +556,11 @@
            with font-display:optional. Kit CSS re-declares @font-face with
            font-display:auto — triggers FOIT and CLS (the 0.851 offender). Block it. */
         var blockCSS = /use\.typekit\.net\/[a-z0-9]+\.css/;
-        var delayJS = /connect\.facebook\.net|static\.klaviyo\.com/;
+        /* googletagmanager.com added: GTM/gtag was named in the comment above but
+           was missing from the regex, so it ran during initial load. Only catches
+           copies injected into the MAIN document — scripts loaded inside Shopify's
+           sandboxed Web Pixel iframe are outside this MutationObserver's reach. */
+        var delayJS = /connect\.facebook\.net|static\.klaviyo\.com|googletagmanager\.com/;
         var saved = [];
         var done = false;
 
