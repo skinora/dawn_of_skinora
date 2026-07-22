@@ -143,6 +143,31 @@
   margin-bottom: 8px;
 }
 
+/* Lenker i rik-tekst (bl.a. produktlenker) — brand-farge + understrek, så de
+   aldri leses som vanlig brødtekst (brødteksten er grå --color-neutral-4).
+   Understrek er påkrevd for tilgjengelighet: farge alene kan ikke være
+   eneste indikator på at noe er en lenke (WCAG 1.4.1). */
+.sk-blog-article__body a,
+.sk-blog-article__block-content a,
+.sk-blog-article__right-content a {
+  color: var(--color-brand, #30273e);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+  transition: text-decoration-thickness 0.15s ease, opacity 0.15s ease;
+}
+
+.sk-blog-article__body a:hover,
+.sk-blog-article__block-content a:hover,
+.sk-blog-article__right-content a:hover,
+.sk-blog-article__body a:focus-visible,
+.sk-blog-article__block-content a:focus-visible,
+.sk-blog-article__right-content a:focus-visible {
+  text-decoration-thickness: 2px;
+  opacity: 0.8;
+}
+
 .sk-blog-article__custom-content {
   margin-top: 40px;
 }
