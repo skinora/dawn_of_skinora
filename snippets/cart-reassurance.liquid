@@ -1,0 +1,78 @@
+{%- comment -%}
+  cart-reassurance
+  ----------------
+  Trygghet i handlekurv (drawer + /cart). Ingen hardkodet tekst — alt via
+  locales/nb.json (sections.cart.reassure_*). Ingen app-avhengighet:
+  review-tallene kommer fra tema-innstillinger (settings.cart_review_*),
+  redigerbare uten kodeendring. Gjenbruker ikonstilen fra produktsidens
+  .sk-trust-inline + betalingsikonene (payment_type_svg_tag).
+
+  Parametre:
+    context : 'drawer' | 'cart'   (styrer bredde/kolonner via CSS-modifier)
+    part    : 'reassurance' (default) | 'payments'
+
+  'reassurance' → sosialt bevis + 4 trygghetspunkter + leveringslinje (over CTA)
+  'payments'    → betalingsikoner (under CTA)
+{%- endcomment -%}
+
+{%- assign cr_context = context | default: 'cart' -%}
+{%- assign cr_part = part | default: 'reassurance' -%}
+
+{%- if cr_part == 'payments' -%}
+  <div class="cart-reassure-payments">
+    <ul class="cart-reassure-payments__list" role="list">
+      {%- for type in shop.enabled_payment_types -%}
+        <li class="cart-reassure-payments__item">{{ type | payment_type_svg_tag }}</li>
+      {%- endfor -%}
+      {%- if settings.show_vipps_payment_icon -%}
+        <li class="cart-reassure-payments__item">
+          <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="Vipps" height="22" width="55" loading="lazy">
+        </li>
+      {%- endif -%}
+    </ul>
+  </div>
+{%- else -%}
+  <div class="cart-reassure cart-reassure--{{ cr_context }}">
+    {%- comment -%} Sosialt bevis — kun hvis tallene er satt i tema-innstillinger {%- endcomment -%}
+    {%- if settings.cart_review_rating != blank and settings.cart_review_count != blank -%}
+      <div class="cart-reassure__reviews">
+        <span class="cart-reassure__stars" aria-hidden="true">★★★★★</span>
+        <span class="cart-reassure__rating">
+          {{- 'sections.cart.reassure_reviews' | t: rating: settings.cart_review_rating, count: settings.cart_review_count -}}
+        </span>
+        {%- if settings.cart_review_quote != blank -%}
+          <p class="cart-reassure__quote">
+            «{{ settings.cart_review_quote }}»
+            {%- if settings.cart_review_name != blank -%}
+              <cite>— {{ settings.cart_review_name }}</cite>
+            {%- endif -%}
+          </p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <ul class="cart-reassure__grid" role="list">
+      <li class="cart-reassure__item">
+        <svg class="cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+        <span>{{ 'sections.cart.reassure_free_shipping' | t }}</span>
+      </li>
+      <li class="cart-reassure__item">
+        <svg class="cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+        <span>{{ 'sections.cart.reassure_try_home' | t }}</span>
+      </li>
+      <li class="cart-reassure__item">
+        <svg class="cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>{{ 'sections.cart.reassure_secure_payment' | t }}</span>
+      </li>
+      <li class="cart-reassure__item">
+        <svg class="cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+        <span>{{ 'sections.cart.reassure_norwegian_warehouse' | t }}</span>
+      </li>
+    </ul>
+
+    <p class="cart-reassure__delivery">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span>{{ 'sections.cart.reassure_delivery_line' | t }}</span>
+    </p>
+  </div>
+{%- endif -%}

@@ -1,0 +1,232 @@
+/* =============================================================
+   cart-reassurance — trygghet i handlekurv + drawer
+   Rendres av snippets/cart-reassurance.liquid. Fungerer i drawer
+   (smal, én kolonne på mobil) og på /cart. Gjenbruker ikonstilen
+   fra produktsidens .sk-trust-inline. Ingen CLS: faste min-høyder.
+   Farger via eksisterende Dawn-tokens (--color-foreground) så det
+   følger fargeskjemaet i både drawer og cart.
+   ============================================================= */
+
+.cart-reassure {
+  --cr-fg: rgb(var(--color-foreground));
+  --cr-muted: rgba(var(--color-foreground), 0.62);
+  --cr-line: rgba(var(--color-foreground), 0.12);
+  color: var(--cr-fg);
+  margin: 0 0 1.4rem;
+}
+
+/* ---------- Sosialt bevis (rating + sitat) ---------- */
+.cart-reassure__reviews {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.9rem;
+  min-height: 2.2rem; /* CLS-reserve */
+  margin: 0 0 1.2rem;
+}
+
+.cart-reassure__stars {
+  color: var(--accent-gold, #d4a843);
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.cart-reassure__rating {
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.cart-reassure__quote {
+  flex-basis: 100%;
+  font-style: italic;
+  color: var(--cr-muted);
+  font-size: 1.3rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.cart-reassure__quote cite {
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* ---------- Trygghetsrad (4 punkter) ---------- */
+.cart-reassure__grid {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 1.2rem 0;
+  border-top: 1px solid var(--cr-line);
+  border-bottom: 1px solid var(--cr-line);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.4rem;
+  min-height: 8.4rem; /* CLS-reserve: 2 rader */
+}
+
+.cart-reassure__item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.cart-reassure__icon {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  color: var(--cr-fg);
+}
+
+/* ---------- Leveringslinje ---------- */
+.cart-reassure__delivery {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.3rem;
+  color: var(--cr-muted);
+  margin: 0;
+  min-height: 1.8rem; /* CLS-reserve */
+}
+
+.cart-reassure__delivery svg {
+  flex: 0 0 auto;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+/* ---------- Betalingsikoner (under CTA) ---------- */
+.cart-reassure-payments {
+  margin: 1.2rem 0 0;
+  min-height: 3rem; /* CLS-reserve */
+}
+
+.cart-reassure-payments__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem 0.8rem;
+}
+
+.cart-reassure-payments__item {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.cart-reassure-payments__item svg,
+.cart-reassure-payments__item img {
+  display: block;
+  width: auto;
+  height: 2.2rem;
+  max-width: 100%;
+}
+
+/* ---------- Drawer: kompakt så CTA aldri skyves under fold ----------
+   Drawer-en er smal og høyden er knapp. Vi bruker 2×2 (ikke 1 kolonne)
+   og skjuler sitatet der, slik at footer + CTA holder seg synlig uten
+   scroll på mobil. På /cart er det god plass til full visning. */
+.cart-reassure--drawer .cart-reassure__grid {
+  grid-template-columns: 1fr 1fr;
+  min-height: 8.4rem; /* 2 rader */
+}
+
+.cart-reassure--drawer .cart-reassure__quote {
+  display: none;
+}
+
+/* Smal mobil på /cart → én kolonne (god plass, ikke i drawer) */
+@media screen and (max-width: 480px) {
+  .cart-reassure--cart .cart-reassure__grid {
+    grid-template-columns: 1fr;
+    min-height: 15.6rem; /* 4 rader */
+  }
+}
+
+/* ---------- Sticky drawer-footer <750px: CTA alltid synlig ----------
+   .drawer__inner er en flex-kolonne; footeren pinnes nederst slik at
+   kjøpsknappen alltid er synlig mens varelisten scroller over. */
+@media screen and (max-width: 749px) {
+  .drawer__footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    background: rgb(var(--color-background));
+  }
+}
+
+/* På /cart: gi litt mer luft og la raden bli 4-kolonners på store skjermer */
+@media screen and (min-width: 990px) {
+  .cart-reassure--cart .cart-reassure__grid {
+    grid-template-columns: repeat(4, 1fr);
+    min-height: 4.4rem; /* 1 rad */
+  }
+}
+
+/* =============================================================
+   sk-cart-reassurance — rolig blokk under kurven på /cart
+   (erstatter Featured collection). Sentrert, to kolonner.
+   ============================================================= */
+.sk-cart-reassure-block__inner {
+  max-width: 64rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.sk-cart-reassure-block__reviews {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0 0 2rem;
+}
+
+.sk-cart-reassure-block__cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem 2.4rem;
+}
+
+.sk-cart-reassure-block__col {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
+  justify-content: center;
+}
+
+.sk-cart-reassure-block__col svg {
+  flex: 0 0 auto;
+  width: 2.4rem;
+  height: 2.4rem;
+  color: rgb(var(--color-foreground));
+}
+
+.sk-cart-reassure-block__title {
+  display: block;
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1.3;
+}
+
+.sk-cart-reassure-block__link {
+  font-size: 1.3rem;
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media screen and (max-width: 749px) {
+  .sk-cart-reassure-block__cols {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+  .sk-cart-reassure-block__col {
+    justify-content: flex-start;
+  }
+}

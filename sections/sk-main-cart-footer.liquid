@@ -3,6 +3,7 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
 {{ 'sk-cart.css' | asset_url | stylesheet_tag }}
+{{ 'cart-reassurance.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -59,6 +60,22 @@
                   {%- endif -%}
                 </div>
 
+                {%- comment -%}
+                  Frakt-rad over totalen. «Gratis» kun når cart.total_price er
+                  ≥ fri-frakt-terskelen (settings, default 0 = alltid gratis);
+                  ellers «Beregnes i kassen» så teksten aldri lyver.
+                {%- endcomment -%}
+                {%- assign cr_free_ship_min = settings.cart_free_shipping_threshold | default: 0 | times: 100 -%}
+                <div class="totals totals--shipping">
+                  <span class="totals__subtotal">{{ 'sections.cart.shipping_row_label' | t }}</span>
+                  <span class="totals__subtotal-value">
+                    {%- if cart.total_price >= cr_free_ship_min -%}
+                      {{ 'sections.cart.shipping_free' | t }}
+                    {%- else -%}
+                      {{ 'sections.cart.shipping_calculated' | t }}
+                    {%- endif -%}
+                  </span>
+                </div>
                 <div class="totals">
                   <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
                   <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
@@ -105,6 +122,9 @@
                 </small>
               </div>
             {%- else -%}
+              {%- unless cart == empty -%}
+                {% render 'cart-reassurance', context: 'cart', part: 'reassurance' %}
+              {%- endunless -%}
               <div class="cart__ctas" {{ block.shopify_attributes }}>
                 <button
                   type="submit"
@@ -125,6 +145,10 @@
                   {{ content_for_additional_checkout_buttons }}
                 </div>
               {%- endif -%}
+
+              {%- unless cart == empty -%}
+                {% render 'cart-reassurance', context: 'cart', part: 'payments' %}
+              {%- endunless -%}
           {%- endcase -%}
         {% endfor %}
 
