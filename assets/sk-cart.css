@@ -153,3 +153,10 @@
     justify-content: flex-end;
   }
 }
+
+/* Cart-side: skjul kolonneoverskriftene (PRODUKT / ANTALL / TOTALT) — unødvendig
+   støy på en side med bare noen få rader. Scopet til /cart (#main-cart-items),
+   påvirker ikke drawer-en. Tbody definerer kolonnene, så layouten holder. */
+#main-cart-items .cart-items thead {
+  display: none;
+}
