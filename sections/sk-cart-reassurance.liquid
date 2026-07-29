@@ -1,0 +1,105 @@
+{%- comment -%}
+  sk-cart-reassurance
+  -------------------
+  Rolig trygghetsblokk under handlekurven på /cart (erstatter «Featured
+  collection» — ingen produktgrid som leder kunden bort fra kjøpet).
+  Viser: 30 dagers åpent kjøp (lenke), support-løfte (lenke) og de samme
+  review-tallene som drawer/cart-footer (settings.cart_review_*).
+  Alle strenger via locales/nb.json. Bruker cart-reassurance.css (lastes
+  allerede av sk-main-cart-footer på denne siden).
+{%- endcomment -%}
+
+<div class="sk-cart-reassure-block color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    <div
+      class="sk-cart-reassure-block__inner"
+      style="padding-top:{{ section.settings.padding_top }}px;padding-bottom:{{ section.settings.padding_bottom }}px;"
+    >
+      {%- if settings.cart_review_rating != blank and settings.cart_review_count != blank -%}
+        <p class="sk-cart-reassure-block__reviews">
+          <span class="cart-reassure__stars" aria-hidden="true">★★★★★</span>
+          <span class="cart-reassure__rating">
+            {{- 'sections.cart.reassure_reviews' | t: rating: settings.cart_review_rating, count: settings.cart_review_count -}}
+          </span>
+        </p>
+      {%- endif -%}
+
+      <div class="sk-cart-reassure-block__cols">
+        <div class="sk-cart-reassure-block__col">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+          <div>
+            <span class="sk-cart-reassure-block__title">{{ 'sections.cart.reassure_returns_title' | t }}</span>
+            <a href="{{ section.settings.returns_url }}" class="sk-cart-reassure-block__link">
+              {{- 'sections.cart.reassure_returns_link' | t -}}
+            </a>
+          </div>
+        </div>
+
+        <div class="sk-cart-reassure-block__col">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          <div>
+            <span class="sk-cart-reassure-block__title">{{ 'sections.cart.reassure_support_title' | t }}</span>
+            <a href="{{ section.settings.support_url }}" class="sk-cart-reassure-block__link">
+              {{- 'sections.cart.reassure_support_link' | t -}}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart reassurance",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "url",
+      "id": "returns_url",
+      "label": "Returns page link",
+      "default": "/pages/retur-og-angrerett"
+    },
+    {
+      "type": "url",
+      "id": "support_url",
+      "label": "Contact page link",
+      "default": "/pages/kontakt"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart reassurance"
+    }
+  ]
+}
+{% endschema %}

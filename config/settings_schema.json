@@ -1463,5 +1463,45 @@
         "info": "Display Vipps payment icon alongside other payment methods"
       }
     ]
+  },
+  {
+    "name": "Cart reassurance",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Social proof shown above the checkout button in the cart drawer and on /cart. Leave rating or count empty to hide the review line."
+      },
+      {
+        "type": "text",
+        "id": "cart_review_rating",
+        "label": "Review rating",
+        "default": "4,8"
+      },
+      {
+        "type": "text",
+        "id": "cart_review_count",
+        "label": "Review count",
+        "default": "79"
+      },
+      {
+        "type": "text",
+        "id": "cart_review_quote",
+        "label": "Short review quote",
+        "default": "Huden min føles roligere etter noen uker."
+      },
+      {
+        "type": "text",
+        "id": "cart_review_name",
+        "label": "Reviewer first name",
+        "default": "Ingrid"
+      },
+      {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "Free shipping threshold (kr)",
+        "default": 0,
+        "info": "Cart total (kr) at or above which the cart shows «Frakt: Gratis». 0 = always free. Below it, the row falls back to «Beregnes i kassen» so the copy never lies if a shipping charge is introduced."
+      }
+    ]
   }
 ]
