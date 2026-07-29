@@ -35,16 +35,28 @@
   </div>
 
 {%- elsif cr_part == 'shipping_line' -%}
-  {%- comment -%} Fri frakt vist som en inkludert «vare» til 0 kr i listen. {%- endcomment -%}
-  <div class="cart-reassure-shipline" role="note">
-    <span class="cart-reassure-shipline__icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
-    </span>
-    <span class="cart-reassure-shipline__text">
-      <strong>{{ 'sections.cart.reassure_free_shipping' | t }}</strong>
-      <small>{{ 'sections.cart.reassure_delivery_line' | t }}</small>
-    </span>
-    <span class="cart-reassure-shipline__price">{{ 'sections.cart.shipping_free' | t }}</span>
+  {%- comment -%} Inkluderte goder som 0-kr «varer» i listen: fri frakt + 30 dagers åpent kjøp. {%- endcomment -%}
+  <div class="cart-reassure-included">
+    <div class="cart-reassure-shipline" role="note">
+      <span class="cart-reassure-shipline__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+      </span>
+      <span class="cart-reassure-shipline__text">
+        <strong>{{ 'sections.cart.reassure_free_shipping' | t }}</strong>
+        <small>{{ 'sections.cart.reassure_delivery_line' | t }}</small>
+      </span>
+      <span class="cart-reassure-shipline__price">{{ 'sections.cart.shipping_free' | t }}</span>
+    </div>
+    <div class="cart-reassure-shipline" role="note">
+      <span class="cart-reassure-shipline__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+      </span>
+      <span class="cart-reassure-shipline__text">
+        <strong>{{ 'sections.cart.reassure_returns_title' | t }}</strong>
+        <small>{{ 'sections.cart.reassure_returns_sub' | t }}</small>
+      </span>
+      <span class="cart-reassure-shipline__price">{{ 'sections.cart.reassure_included' | t }}</span>
+    </div>
   </div>
 
 {%- else -%}
