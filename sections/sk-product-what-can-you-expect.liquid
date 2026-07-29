@@ -77,10 +77,10 @@
     assign result_after_image = sk_result_entry.after_image
   endif
 
-  # CTA — tom tekst => "Handle {produktnavn}", tom URL => produktsiden
+  # CTA — tom tekst => kort «Kjøp nå» (ikke produktnavnet, blir for langt), tom URL => produktsiden
   assign result_cta_text = section.settings.cta_text
-  if result_cta_text == blank and product
-    assign result_cta_text = 'Handle ' | append: product.title
+  if result_cta_text == blank
+    assign result_cta_text = 'Kjøp nå'
   endif
   assign result_cta_url = section.settings.cta_url
   if result_cta_url == blank and product
