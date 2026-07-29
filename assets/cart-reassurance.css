@@ -279,3 +279,11 @@
     justify-content: flex-start;
   }
 }
+
+/* Skjul kolonneoverskriftene (PRODUKT / ANTALL / TOTALT) i handlekurv-DRAWEREN.
+   /cart-siden dekkes av #main-cart-items-regelen i sk-cart.css; drawer-en har
+   en annen container (#CartDrawer-CartItems). Tbody definerer kolonnene, så
+   layouten holder. */
+#CartDrawer-CartItems .cart-items thead {
+  display: none;
+}
