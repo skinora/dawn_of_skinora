@@ -477,6 +477,7 @@
                     {%- endfor -%}
                   </tbody>
                 </table>
+                {% render 'cart-reassurance', context: 'drawer', part: 'shipping_line' %}
               </div>
             {%- endif -%}
             <p id="CartDrawer-LiveRegionText" class="visually-hidden" role="status"></p>
@@ -524,18 +525,6 @@
                 {%- endfor -%}
               </ul>
             {%- endif -%}
-          </div>
-
-          {%- assign cr_free_ship_min = settings.cart_free_shipping_threshold | default: 0 | times: 100 -%}
-          <div class="totals totals--shipping">
-            <span class="totals__subtotal">{{ 'sections.cart.shipping_row_label' | t }}</span>
-            <span class="totals__subtotal-value">
-              {%- if cart.total_price >= cr_free_ship_min -%}
-                {{ 'sections.cart.shipping_free' | t }}
-              {%- else -%}
-                {{ 'sections.cart.shipping_calculated' | t }}
-              {%- endif -%}
-            </span>
           </div>
 
           <div class="totals" role="status">

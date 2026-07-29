@@ -5,6 +5,7 @@
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 {{ 'sk-cart.css' | asset_url | stylesheet_tag }}
+{{ 'cart-reassurance.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -425,6 +426,7 @@
                 {%- endfor -%}
               </tbody>
             </table>
+            {% render 'cart-reassurance', context: 'cart', part: 'shipping_line' %}
           {%- endif -%}
         </div>
       </div>

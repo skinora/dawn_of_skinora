@@ -127,17 +127,66 @@
   max-width: 100%;
 }
 
-/* ---------- Drawer: kompakt så CTA aldri skyves under fold ----------
-   Drawer-en er smal og høyden er knapp. Vi bruker 2×2 (ikke 1 kolonne)
-   og skjuler sitatet der, slik at footer + CTA holder seg synlig uten
-   scroll på mobil. På /cart er det god plass til full visning. */
-.cart-reassure--drawer .cart-reassure__grid {
-  grid-template-columns: 1fr 1fr;
-  min-height: 8.4rem; /* 2 rader */
+/* ---------- Drawer: hold footeren lav så CTA aldri skyves under fold ----------
+   I drawer vises KUN review-linjen (rutenettet er droppet der; fri frakt står
+   som egen 0-kr rad i varelisten). Sitatet skjules for å spare høyde. */
+.cart-reassure--drawer {
+  margin-bottom: 1rem;
+}
+
+.cart-reassure--drawer .cart-reassure__reviews {
+  margin-bottom: 0;
 }
 
 .cart-reassure--drawer .cart-reassure__quote {
   display: none;
+}
+
+/* ---------- Fri frakt som «vare» til 0 kr i varelisten ---------- */
+.cart-reassure-shipline {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 0.4rem;
+  border-top: 1px solid rgba(var(--color-foreground), 0.12);
+  min-height: 4.4rem; /* CLS-reserve */
+}
+
+.cart-reassure-shipline__icon {
+  flex: 0 0 auto;
+  line-height: 0;
+  color: rgb(var(--color-foreground));
+}
+
+.cart-reassure-shipline__icon svg {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.cart-reassure-shipline__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.cart-reassure-shipline__text strong {
+  font-weight: 600;
+  font-size: 1.35rem;
+}
+
+.cart-reassure-shipline__text small {
+  color: rgba(var(--color-foreground), 0.62);
+  font-size: 1.15rem;
+}
+
+.cart-reassure-shipline__price {
+  flex: 0 0 auto;
+  font-weight: 600;
+  font-size: 1.35rem;
+  white-space: nowrap;
+  color: rgb(var(--color-foreground));
 }
 
 /* Smal mobil på /cart → én kolonne (god plass, ikke i drawer) */
