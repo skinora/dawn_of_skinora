@@ -117,11 +117,28 @@
   }
 </style>
 
+{%- liquid
+  # Prisen er IKKE hardkodet: tom «number»-innstilling => hent produktets pris.
+  # Samme format som kjøpsboksen (money_without_trailing_zeros = «4 690 kr»),
+  # men vi stripper valutaen siden enheten står i sin egen span.
+  assign clinic_number = section.settings.number
+  if clinic_number == blank and product
+    assign clinic_number = product.price | money_without_trailing_zeros | remove: 'kr' | remove: 'NOK' | remove: ',-' | strip
+  endif
+
+  # CTA-lenke: tom => dette produktets side. Gjør seksjonen gjenbrukbar
+  # på et hvilket som helst produkt uten å sette lenken manuelt.
+  assign clinic_cta_link = section.settings.cta_link
+  if clinic_cta_link == blank and product
+    assign clinic_cta_link = product.url
+  endif
+-%}
+
 <section class="sk-clinic-{{ section.id }} sk-clinic section" aria-labelledby="sk-clinic-heading-{{ section.id }}">
   <div class="page-width sk-clinic__inner">
     <div class="sk-clinic__figure-wrap">
       <p class="sk-clinic__figure">
-        <span class="sk-clinic__num">{{ section.settings.number }}</span>
+        <span class="sk-clinic__num">{{ clinic_number }}</span>
         <span class="sk-clinic__unit">{{ section.settings.unit }}</span>
       </p>
       {%- if section.settings.once_label != blank -%}
@@ -140,7 +157,7 @@
       {%- if section.settings.show_cta and section.settings.cta_label != blank -%}
         <div>
           <a
-            href="{{ section.settings.cta_link | default: '#' }}"
+            href="{{ clinic_cta_link | default: '#' }}"
             class="sk-btn sk-btn--primary sk-clinic__cta"
             data-analytics="cta_clinic_compare"
           >
@@ -174,7 +191,8 @@
     },
 
     { "type": "header", "content": "Tallet" },
-    { "type": "text", "id": "number", "label": "Tall", "default": "4 690" },
+    { "type": "paragraph", "content": "La «Tall» stå tomt for å hente produktets pris automatisk (anbefalt). Fyll bare inn hvis du vil overstyre." },
+    { "type": "text", "id": "number", "label": "Tall (tom = produktets pris)" },
     { "type": "text", "id": "unit", "label": "Enhet", "default": "kr" },
     { "type": "text", "id": "once_label", "label": "Under tallet", "default": "Én gang" },
 

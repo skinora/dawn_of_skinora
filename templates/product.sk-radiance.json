@@ -76,14 +76,14 @@
       "disabled": false,
       "settings": {
         "background_style": "lavender",
-        "number": "4 690",
+        "number": "",
         "unit": "kr",
         "once_label": "Én gang",
         "lead": "I klinikken betaler du 800–1 500 kr for hver behandling.",
         "kicker": "Skinora koster som noen få økter – så er masken din. Bruk den hjemme, så ofte du vil.",
         "show_cta": true,
         "cta_label": "Prøv risikofritt i 30 dager",
-        "cta_link": "/products/skinora-radiance-face",
+        "cta_link": "",
         "guarantee_line": "30 dagers åpent kjøp – full refusjon hvis du ikke er fornøyd."
       }
     },
