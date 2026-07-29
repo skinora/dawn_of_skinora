@@ -1,333 +1,373 @@
 {%- comment -%}
   skinora-clinic-comparison.liquid
-  Standalone clinic price comparison.
-  Extracted from sk-lp-hero.liquid (BLOCK 2: VALUE JUSTIFICATION / ROI anchor).
+  --------------------------------
+  ROI-/verdi-anker: klinikk vs. hjemme. Token-basert (CLAUDE.md), egen
+  layout for desktop (tabell m/ fremhevet vinner-kolonne) og mobil
+  (vinner-først kort). Alle tall er section settings — dokumenterbare,
+  settes per template (Radiance 4 690 / Clear 4 390).
 {%- endcomment -%}
 
 <style>
-  .sk-clinic-compare {
-    padding: clamp(2.5rem, 6vw, 4.5rem) 1rem;
-    background: transparent;
-  }
-  .sk-clinic-compare.sk-bg-soft {
-    background: #f6f2ed;
-  }
-  .sk-clinic-compare.sk-bg-accent {
-    background: #f0ede8;
-    border-top: 1px solid #e6dfd5;
-    border-bottom: 1px solid #e6dfd5;
-  }
-  .sk-clinic-compare__container {
-    max-width: 760px;
-    margin: 0 auto;
-  }
-  .sk-clinic-compare__heading {
-    font-family: 'freight-text-pro', 'freight-text-pro-fallback', Georgia, serif;
-    font-size: clamp(26px, 4vw, 34px);
-    font-weight: 400;
-    color: #3a3448;
-    letter-spacing: 0.4px;
-    line-height: 1.25;
-    margin: 0 0 14px;
-    text-align: center;
-  }
-  .sk-clinic-compare__intro {
-    font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 15px;
-    line-height: 1.6;
-    color: #4a4458;
-    margin: 0 0 12px;
-    text-align: center;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .sk-clinic-compare__intro p {
-    margin: 0 0 6px;
-  }
-  .sk-clinic-compare__highlight {
-    font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: #a0522d;
-    text-align: center;
-    margin: 0 0 24px;
-  }
-  .sk-clinic-compare__table-wrap {
-    margin: 0 auto 24px;
-    max-width: 640px;
+  .sk-clinic-{{ section.id }} {
+    --clin-win-bg: color-mix(in srgb, var(--accent-clay) 7%, var(--paper-0));
+    --clin-win-line: color-mix(in srgb, var(--accent-clay) 30%, var(--paper-0));
+    --clin-line: var(--ink-300);
+    background: {% if section.settings.background_style == 'accent' %}var(--paper-150){% elsif section.settings.background_style == 'soft' %}var(--paper-100){% else %}var(--paper-0){% endif %};
+    padding-block: clamp(var(--space-7, 48px), 7vw, var(--space-9, 96px));
   }
 
-  /* Desktop / tablet table */
-  .sk-clinic-compare__table {
+  .sk-clinic-{{ section.id }} .sk-clinic__inner {
+    max-width: 72rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .sk-clinic-{{ section.id }} .sk-clinic__eyebrow {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--accent-clay);
+    margin: 0 0 var(--space-3, 12px);
+  }
+
+  .sk-clinic-{{ section.id }} .sk-clinic__heading {
+    font-family: var(--ff-serif);
+    font-size: var(--fs-3xl);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--tracking-tight);
+    color: var(--ink-900);
+    margin: 0 0 var(--space-4, 16px);
+    text-wrap: balance;
+  }
+
+  .sk-clinic-{{ section.id }} .sk-clinic__intro {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-md);
+    line-height: var(--lh-normal);
+    color: var(--ink-500);
+    max-width: 52ch;
+    margin: 0 auto var(--space-6, 32px);
+  }
+
+  /* ---------- Hero savings-stat ---------- */
+  .sk-clinic-{{ section.id }} .sk-clinic__stat {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1, 4px);
+    padding: var(--space-4, 16px) var(--space-6, 32px);
+    margin: 0 auto var(--space-7, 48px);
+    border-radius: 16px;
+    background: var(--clin-win-bg);
+    border: 1px solid var(--clin-win-line);
+  }
+  .sk-clinic-{{ section.id }} .sk-clinic__stat-num {
+    font-family: var(--ff-serif);
+    font-size: var(--fs-price);
+    font-weight: var(--fw-semibold);
+    line-height: 1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--accent-clay);
+  }
+  .sk-clinic-{{ section.id }} .sk-clinic__stat-label {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+    color: var(--ink-700);
+  }
+
+  /* ================= DESKTOP: tabell m/ fremhevet vinner ================= */
+  .sk-clinic-{{ section.id }} .sk-clinic__table-wrap {
+    max-width: 62rem;
+    margin: 0 auto var(--space-6, 32px);
+  }
+  .sk-clinic-{{ section.id }} .sk-clinic__table {
     width: 100%;
-    border-collapse: collapse;
-    font-family: 'sofia-pro', sofia-pro-fallback, Assistant, sans-serif;
-    font-size: 14px;
-    background: #fff;
-    border: 1px solid #e6dfd5;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .sk-clinic-compare__table th,
-  .sk-clinic-compare__table td {
-    padding: 12px 14px;
-    text-align: center;
-    border-bottom: 1px solid #ece6dc;
-  }
-  .sk-clinic-compare__table tr:last-child th,
-  .sk-clinic-compare__table tr:last-child td {
-    border-bottom: 0;
-  }
-  .sk-clinic-compare__table thead th {
-    background: #f8f5ef;
-    color: #30273e;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-  }
-  .sk-clinic-compare__table th[scope='row'] {
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: var(--ff-sans);
     text-align: left;
-    color: #4a4458;
-    font-weight: 500;
   }
-  .sk-clinic-compare__table .sk-cell--brand {
-    background: rgba(160, 82, 45, 0.06);
-    color: #30273e;
-    font-weight: 600;
+  .sk-clinic-{{ section.id }} .sk-clinic__table th,
+  .sk-clinic-{{ section.id }} .sk-clinic__table td {
+    padding: var(--space-4, 16px) var(--space-4, 16px);
+    border-bottom: 1px solid var(--clin-line);
+    vertical-align: middle;
   }
-  .sk-clinic-compare__table .sk-cell--clinic {
-    color: #6b6b6b;
+  .sk-clinic-{{ section.id }} .sk-clinic__table thead th {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--ink-500);
+    border-bottom: 1px solid var(--clin-line);
+  }
+  .sk-clinic-{{ section.id }} .sk-clinic__table th[scope='row'] {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+    color: var(--ink-500);
+    width: 34%;
+  }
+  .sk-clinic-{{ section.id }} .sk-cell--clinic {
+    font-size: var(--fs-md);
+    color: var(--ink-400);
+  }
+  /* Vinner-kolonnen: løftet «kort» med aksent */
+  .sk-clinic-{{ section.id }} .sk-col--brand {
+    background: var(--clin-win-bg);
+    text-align: left;
+  }
+  .sk-clinic-{{ section.id }} thead .sk-col--brand {
+    position: relative;
+    color: var(--accent-clay);
+    border-top: 2px solid var(--accent-clay);
+    border-radius: 14px 14px 0 0;
+  }
+  .sk-clinic-{{ section.id }} tbody tr:last-child .sk-col--brand {
+    border-radius: 0 0 14px 14px;
+  }
+  .sk-clinic-{{ section.id }} .sk-cell--brand {
+    font-size: var(--fs-md);
+    font-weight: var(--fw-semibold);
+    color: var(--ink-900);
+  }
+  .sk-clinic-{{ section.id }} .sk-cell--brand .sk-check {
+    color: var(--accent-clay);
+    margin-right: var(--space-2, 8px);
+    font-weight: var(--fw-semibold);
+  }
+  .sk-clinic-{{ section.id }} .sk-clinic__tag {
+    display: inline-block;
+    font-size: 1.1rem;
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--paper-0);
+    background: var(--accent-clay);
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    margin-left: var(--space-3, 12px);
+    vertical-align: middle;
   }
 
-  /* Mobile cards */
-  .sk-clinic-compare__cards {
+  /* ================= MOBIL: egen vinner-først layout ================= */
+  .sk-clinic-{{ section.id }} .sk-clinic__mobile {
     display: none;
   }
-  .sk-clinic-compare__card {
-    background: #fff;
-    border: 1px solid #e6dfd5;
+  .sk-clinic-{{ section.id }} .sk-clinic__mcard {
+    background: var(--paper-0);
+    border: 1px solid var(--ink-300);
+    border-radius: 14px;
+    padding: var(--space-4, 16px);
+    margin: 0 0 var(--space-3, 12px);
+    text-align: left;
+  }
+  .sk-clinic-{{ section.id }} .sk-clinic__mlabel {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--ink-400);
+    margin: 0 0 var(--space-3, 12px);
+  }
+  /* Vinner-rad (Skinora) – stor, mørk, ✓ */
+  .sk-clinic-{{ section.id }} .sk-clinic__mwin {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2, 8px);
+    padding: var(--space-2, 8px) var(--space-3, 12px);
     border-radius: 10px;
-    padding: 14px 16px;
-    margin: 0 0 12px;
+    background: var(--clin-win-bg);
   }
-  .sk-clinic-compare__card-label {
-    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: #4a4458;
-    margin: 0 0 10px;
-    letter-spacing: 0.02em;
+  .sk-clinic-{{ section.id }} .sk-clinic__mwin .sk-check {
+    color: var(--accent-clay);
+    font-weight: var(--fw-semibold);
   }
-  .sk-clinic-compare__card-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+  .sk-clinic-{{ section.id }} .sk-clinic__mwin b {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-semibold);
+    color: var(--ink-900);
   }
-  .sk-clinic-compare__card-cell {
+  .sk-clinic-{{ section.id }} .sk-clinic__mwin em {
+    font-style: normal;
+    font-size: var(--fs-xs);
+    color: var(--accent-clay);
+    font-weight: var(--fw-semibold);
+    margin-left: auto;
+  }
+  /* Taper-rad (klinikk) – liten, dempet */
+  .sk-clinic-{{ section.id }} .sk-clinic__mlose {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2, 8px);
+    padding: var(--space-2, 8px) var(--space-3, 12px);
+    font-size: var(--fs-sm);
+    color: var(--ink-400);
+  }
+
+  /* ---------- Payback ---------- */
+  .sk-clinic-{{ section.id }} .sk-clinic__payback {
+    font-family: var(--ff-serif);
+    font-style: italic;
+    font-size: var(--fs-lg);
+    line-height: var(--lh-snug);
+    color: var(--ink-700);
+    max-width: 46ch;
+    margin: 0 auto var(--space-6, 32px);
+  }
+
+  /* ---------- CTA + garanti + pris ---------- */
+  .sk-clinic-{{ section.id }} .sk-clinic__cta-wrap {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    align-items: center;
+    gap: var(--space-3, 12px);
   }
-  .sk-clinic-compare__card-col {
-    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: rgba(48, 39, 62, 0.55);
+  .sk-clinic-{{ section.id }} .sk-clinic__cta.sk-btn--primary {
+    max-width: 42rem;
+    width: 100%;
   }
-  .sk-clinic-compare__card-val {
-    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
-    font-size: 14px;
-    line-height: 1.4;
-    color: #6b6b6b;
+  .sk-clinic-{{ section.id }} .sk-clinic__guarantee {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-sm);
+    color: var(--ink-500);
+    margin: 0;
   }
-  .sk-clinic-compare__card-cell--brand .sk-clinic-compare__card-val {
-    color: #30273e;
-    font-weight: 600;
+  .sk-clinic-{{ section.id }} .sk-clinic__price {
+    font-family: var(--ff-serif);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-medium);
+    color: var(--ink-900);
+    margin: 0;
   }
 
-  @media (max-width: 640px) {
-    .sk-clinic-compare__table-wrap .sk-clinic-compare__table {
+  @media (max-width: 749px) {
+    .sk-clinic-{{ section.id }} .sk-clinic__table-wrap .sk-clinic__table {
       display: none;
     }
-    .sk-clinic-compare__cards {
+    .sk-clinic-{{ section.id }} .sk-clinic__mobile {
       display: block;
+      text-align: left;
+      max-width: 42rem;
+      margin-inline: auto;
     }
-  }
-
-  .sk-clinic-compare__cta-wrap {
-    text-align: center;
-    margin-top: 8px;
-  }
-  .sk-clinic-compare__cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    min-height: 52px;
-    padding: 14px 30px;
-    font-family: 'sofia-pro', sofia-pro-fallback, sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    line-height: 1;
-    color: #fff;
-    background: #30273e;
-    border: 1px solid #30273e;
-    border-radius: 4px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: transform 180ms ease, background-color 180ms ease;
-  }
-  .sk-clinic-compare__cta:hover {
-    background: #3a3448;
-    transform: translateY(-2px);
-  }
-  .sk-clinic-compare__cta:focus-visible {
-    outline: 2px solid #a0522d;
-    outline-offset: 3px;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .sk-clinic-compare__cta {
-      transition: none;
+    .sk-clinic-{{ section.id }} .sk-clinic__stat {
+      display: flex;
     }
-    .sk-clinic-compare__cta:hover {
-      transform: none;
-    }
-  }
-
-  .sk-clinic-compare .visually-hidden {
-    position: absolute !important;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
   }
 </style>
 
+{%- assign col1 = section.settings.col1_label | default: 'Klinikk' -%}
+{%- assign col2 = section.settings.col2_label | default: 'Skinora' -%}
+
 <section
-  class="sk-clinic-compare sk-bg-{{ section.settings.background_style | default: 'soft' }}"
-  aria-labelledby="sk-clinic-compare-heading-{{ section.id }}"
+  class="sk-clinic-{{ section.id }} sk-clinic"
+  aria-labelledby="sk-clinic-heading-{{ section.id }}"
 >
-  <div class="sk-clinic-compare__container sk-container">
+  <div class="page-width sk-clinic__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="sk-clinic__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
     {%- if section.settings.heading != blank -%}
-      <h2 id="sk-clinic-compare-heading-{{ section.id }}" class="sk-clinic-compare__heading">
-        {{ section.settings.heading }}
-      </h2>
+      <h2 id="sk-clinic-heading-{{ section.id }}" class="sk-clinic__heading">{{ section.settings.heading }}</h2>
     {%- endif -%}
 
     {%- if section.settings.intro_body != blank -%}
-      <div class="sk-clinic-compare__intro">{{ section.settings.intro_body }}</div>
+      <div class="sk-clinic__intro">{{ section.settings.intro_body }}</div>
     {%- endif -%}
 
-    {%- if section.settings.highlight_line != blank -%}
-      <p class="sk-clinic-compare__highlight">→ {{ section.settings.highlight_line }}</p>
+    {%- if section.settings.stat_value != blank -%}
+      <div class="sk-clinic__stat">
+        <span class="sk-clinic__stat-num">{{ section.settings.stat_value }}</span>
+        <span class="sk-clinic__stat-label">{{ section.settings.stat_label }}</span>
+      </div>
     {%- endif -%}
 
-    {%- assign col1 = section.settings.col1_label | default: 'Klinikk' -%}
-    {%- assign col2 = section.settings.col2_label | default: 'Skinora' -%}
+    {%- comment -%} Rader som en liste så desktop-tabell og mobil-kort deler data {%- endcomment -%}
+    {%- assign r_labels = '' -%}
 
-    <div class="sk-clinic-compare__table-wrap">
-      <table class="sk-clinic-compare__table">
-        <caption class="visually-hidden">
-          Sammenligning: klinikkbehandling vs. Skinora® Clear
-        </caption>
+    <!-- DESKTOP: tabell -->
+    <div class="sk-clinic__table-wrap">
+      <table class="sk-clinic__table">
+        <caption class="visually-hidden">{{ col1 }} vs. {{ col2 }}</caption>
         <thead>
           <tr>
             <th scope="col"><span class="visually-hidden">Kategori</span></th>
             <th scope="col">{{ col1 }}</th>
-            <th scope="col">{{ col2 }}</th>
+            <th scope="col" class="sk-col--brand">
+              {{ col2 }}
+              {%- if section.settings.winner_tag != blank -%}
+                <span class="sk-clinic__tag">{{ section.settings.winner_tag }}</span>
+              {%- endif -%}
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">{{ section.settings.row1_label | default: 'Kostnad' }}</th>
-            <td class="sk-cell--clinic">{{ section.settings.row1_col1 | default: '800–1500 kr/økt' }}</td>
-            <td class="sk-cell--brand">{{ section.settings.row1_col2 | default: '4.390 kr én gang' }}</td>
-          </tr>
-          <tr>
-            <th scope="row">{{ section.settings.row2_label | default: 'Behandlinger' }}</th>
-            <td class="sk-cell--clinic">{{ section.settings.row2_col1 | default: 'Betaler hver gang' }}</td>
-            <td class="sk-cell--brand">{{ section.settings.row2_col2 | default: 'Ubegrenset' }}</td>
-          </tr>
-          <tr>
-            <th scope="row">{{ section.settings.row3_label | default: 'Bekvemmelighet' }}</th>
-            <td class="sk-cell--clinic">{{ section.settings.row3_col1 | default: 'Tidsbestilling' }}</td>
-            <td class="sk-cell--brand">{{ section.settings.row3_col2 | default: 'Hjemme, når du vil' }}</td>
-          </tr>
+          {%- for i in (1..4) -%}
+            {%- assign lbl = 'row' | append: i | append: '_label' -%}
+            {%- assign c1 = 'row' | append: i | append: '_col1' -%}
+            {%- assign c2 = 'row' | append: i | append: '_col2' -%}
+            {%- if section.settings[lbl] != blank -%}
+              <tr>
+                <th scope="row">{{ section.settings[lbl] }}</th>
+                <td class="sk-cell--clinic">{{ section.settings[c1] }}</td>
+                <td class="sk-col--brand sk-cell--brand"><span class="sk-check" aria-hidden="true">✓</span>{{ section.settings[c2] }}</td>
+              </tr>
+            {%- endif -%}
+          {%- endfor -%}
         </tbody>
       </table>
-
-      {%- comment -%} Mobile card variant — same data, semantic dl-style markup {%- endcomment -%}
-      <div class="sk-clinic-compare__cards" role="presentation">
-        <div class="sk-clinic-compare__card">
-          <p class="sk-clinic-compare__card-label">{{ section.settings.row1_label | default: 'Kostnad' }}</p>
-          <div class="sk-clinic-compare__card-grid">
-            <div class="sk-clinic-compare__card-cell">
-              <span class="sk-clinic-compare__card-col">{{ col1 }}</span>
-              <span class="sk-clinic-compare__card-val">
-                {{- section.settings.row1_col1 | default: '800–1500 kr/økt' -}}
-              </span>
-            </div>
-            <div class="sk-clinic-compare__card-cell sk-clinic-compare__card-cell--brand">
-              <span class="sk-clinic-compare__card-col">{{ col2 }}</span>
-              <span class="sk-clinic-compare__card-val">
-                {{- section.settings.row1_col2 | default: '4.390 kr én gang' -}}
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="sk-clinic-compare__card">
-          <p class="sk-clinic-compare__card-label">{{ section.settings.row2_label | default: 'Behandlinger' }}</p>
-          <div class="sk-clinic-compare__card-grid">
-            <div class="sk-clinic-compare__card-cell">
-              <span class="sk-clinic-compare__card-col">{{ col1 }}</span>
-              <span class="sk-clinic-compare__card-val">
-                {{- section.settings.row2_col1 | default: 'Betaler hver gang' -}}
-              </span>
-            </div>
-            <div class="sk-clinic-compare__card-cell sk-clinic-compare__card-cell--brand">
-              <span class="sk-clinic-compare__card-col">{{ col2 }}</span>
-              <span class="sk-clinic-compare__card-val">{{ section.settings.row2_col2 | default: 'Ubegrenset' }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="sk-clinic-compare__card">
-          <p class="sk-clinic-compare__card-label">{{ section.settings.row3_label | default: 'Bekvemmelighet' }}</p>
-          <div class="sk-clinic-compare__card-grid">
-            <div class="sk-clinic-compare__card-cell">
-              <span class="sk-clinic-compare__card-col">{{ col1 }}</span>
-              <span class="sk-clinic-compare__card-val">
-                {{- section.settings.row3_col1 | default: 'Tidsbestilling' -}}
-              </span>
-            </div>
-            <div class="sk-clinic-compare__card-cell sk-clinic-compare__card-cell--brand">
-              <span class="sk-clinic-compare__card-col">{{ col2 }}</span>
-              <span class="sk-clinic-compare__card-val">
-                {{- section.settings.row3_col2 | default: 'Hjemme, når du vil' -}}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
+    <!-- MOBIL: egen vinner-først layout -->
+    <div class="sk-clinic__mobile">
+      {%- for i in (1..4) -%}
+        {%- assign lbl = 'row' | append: i | append: '_label' -%}
+        {%- assign c1 = 'row' | append: i | append: '_col1' -%}
+        {%- assign c2 = 'row' | append: i | append: '_col2' -%}
+        {%- if section.settings[lbl] != blank -%}
+          <div class="sk-clinic__mcard">
+            <p class="sk-clinic__mlabel">{{ section.settings[lbl] }}</p>
+            <div class="sk-clinic__mwin">
+              <span class="sk-check" aria-hidden="true">✓</span>
+              <b>{{ section.settings[c2] }}</b>
+              <em>{{ col2 }}</em>
+            </div>
+            <div class="sk-clinic__mlose">
+              <span>{{ section.settings[c1] }}</span>
+              <span>{{ col1 }}</span>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.payback_line != blank -%}
+      <p class="sk-clinic__payback">{{ section.settings.payback_line }}</p>
+    {%- endif -%}
+
     {%- if section.settings.show_cta and section.settings.cta_label != blank -%}
-      <div class="sk-clinic-compare__cta-wrap">
+      <div class="sk-clinic__cta-wrap">
         <a
-          href="{{ section.settings.cta_link | default: '/products/skinora-clear' }}"
-          class="sk-clinic-compare__cta"
+          href="{{ section.settings.cta_link | default: '#' }}"
+          class="sk-btn sk-btn--primary sk-clinic__cta"
           data-analytics="cta_clinic_compare"
-          aria-label="{{ section.settings.cta_label | escape }}"
         >
           {{ section.settings.cta_label }} →
         </a>
+        {%- if section.settings.guarantee_line != blank -%}
+          <p class="sk-clinic__guarantee">{{ section.settings.guarantee_line }}</p>
+        {%- endif -%}
+        {%- if section.settings.price_display != blank -%}
+          <p class="sk-clinic__price">{{ section.settings.price_display }}</p>
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>
@@ -339,65 +379,67 @@
   "tag": "section",
   "class": "sk-clinic-compare-wrap",
   "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Overskrift",
-      "default": "Et klinikkresultat – uten klinikkpris"
-    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Klinikk vs. hjemme" },
+    { "type": "text", "id": "heading", "label": "Overskrift", "default": "Klinikkens LED-teknologi. Én gang – ikke hver gang." },
     {
       "type": "richtext",
       "id": "intro_body",
-      "label": "Intro-tekst",
-      "default": "<p>En LED-behandling i klinikk koster typisk 800–1.500 kr per økt. Skinora® Clear tilsvarer opptil 6 behandlinger – og kan brukes ubegrenset hjemme.</p>"
-    },
-    {
-      "type": "text",
-      "id": "highlight_line",
-      "label": "Highlight-linje (etter pil →)",
-      "default": "Investeringen betaler seg selv etter få uker."
+      "label": "Intro",
+      "default": "<p>En LED-økt i klinikk koster typisk 800–1 500 kr. Skinora® Radiance Face gir deg samme type behandling – ubegrenset, hjemme, til én fast pris.</p>"
     },
     {
       "type": "select",
       "id": "background_style",
       "label": "Bakgrunn",
       "options": [
-        { "value": "default", "label": "Default (transparent)" },
-        { "value": "soft", "label": "Soft" },
-        { "value": "accent", "label": "Accent" }
+        { "value": "default", "label": "Hvit" },
+        { "value": "soft", "label": "Varm creme" },
+        { "value": "accent", "label": "Kjølig lavendel" }
       ],
       "default": "soft"
     },
 
+    { "type": "header", "content": "Spar-stat (hero-tall)" },
+    { "type": "text", "id": "stat_value", "label": "Tall", "default": "800–1 500 kr" },
+    { "type": "text", "id": "stat_label", "label": "Under tallet", "default": "spart – hver eneste behandling" },
+
     { "type": "header", "content": "Kolonner" },
-    { "type": "text", "id": "col1_label", "label": "Kolonne 1 – etikett", "default": "Klinikk" },
-    { "type": "text", "id": "col2_label", "label": "Kolonne 2 – etikett", "default": "Skinora" },
+    { "type": "text", "id": "col1_label", "label": "Kolonne 1", "default": "Klinikk" },
+    { "type": "text", "id": "col2_label", "label": "Kolonne 2 (vinner)", "default": "Skinora" },
+    { "type": "text", "id": "winner_tag", "label": "Vinner-merke", "default": "Best verdi" },
 
     { "type": "header", "content": "Rad 1 – Kostnad" },
     { "type": "text", "id": "row1_label", "label": "Etikett", "default": "Kostnad" },
-    { "type": "text", "id": "row1_col1", "label": "Klinikk-verdi", "default": "800–1500 kr/økt" },
-    { "type": "text", "id": "row1_col2", "label": "Skinora-verdi", "default": "4.390 kr én gang" },
+    { "type": "text", "id": "row1_col1", "label": "Klinikk", "default": "800–1 500 kr per økt" },
+    { "type": "text", "id": "row1_col2", "label": "Skinora", "default": "4 690 kr – én gang" },
 
     { "type": "header", "content": "Rad 2 – Behandlinger" },
     { "type": "text", "id": "row2_label", "label": "Etikett", "default": "Behandlinger" },
-    { "type": "text", "id": "row2_col1", "label": "Klinikk-verdi", "default": "Betaler hver gang" },
-    { "type": "text", "id": "row2_col2", "label": "Skinora-verdi", "default": "Ubegrenset" },
+    { "type": "text", "id": "row2_col1", "label": "Klinikk", "default": "Betaler hver gang" },
+    { "type": "text", "id": "row2_col2", "label": "Skinora", "default": "Ubegrenset" },
 
-    { "type": "header", "content": "Rad 3 – Bekvemmelighet" },
-    { "type": "text", "id": "row3_label", "label": "Etikett", "default": "Bekvemmelighet" },
-    { "type": "text", "id": "row3_col1", "label": "Klinikk-verdi", "default": "Tidsbestilling" },
-    { "type": "text", "id": "row3_col2", "label": "Skinora-verdi", "default": "Hjemme, når du vil" },
+    { "type": "header", "content": "Rad 3 – Per behandling over tid" },
+    { "type": "text", "id": "row3_label", "label": "Etikett", "default": "Per behandling over tid" },
+    { "type": "text", "id": "row3_col1", "label": "Klinikk", "default": "~1 000 kr – hver gang" },
+    { "type": "text", "id": "row3_col2", "label": "Skinora", "default": "Synker mot 0 kr" },
+
+    { "type": "header", "content": "Rad 4 – Bekvemmelighet" },
+    { "type": "text", "id": "row4_label", "label": "Etikett", "default": "Bekvemmelighet" },
+    { "type": "text", "id": "row4_col1", "label": "Klinikk", "default": "Tidsbestilling og reise" },
+    { "type": "text", "id": "row4_col2", "label": "Skinora", "default": "Hjemme, når du vil" },
+
+    { "type": "header", "content": "Payback-linje" },
+    { "type": "text", "id": "payback_line", "label": "Payback", "default": "Regnestykket: 4–5 klinikkøkter koster mer enn hele masken. Alt etter det er gratis." },
 
     { "type": "header", "content": "CTA" },
-    { "type": "checkbox", "id": "show_cta", "label": "Vis CTA-knapp", "default": true },
+    { "type": "checkbox", "id": "show_cta", "label": "Vis CTA", "default": true },
     { "type": "text", "id": "cta_label", "label": "Knappetekst", "default": "Prøv risikofritt i 30 dager" },
-    { "type": "url", "id": "cta_link", "label": "Knappelenke (URL)" }
+    { "type": "url", "id": "cta_link", "label": "Knappelenke" },
+    { "type": "text", "id": "guarantee_line", "label": "Garanti-linje", "default": "30 dagers åpent kjøp – full refusjon hvis du ikke er fornøyd." },
+    { "type": "text", "id": "price_display", "label": "Pris", "default": "4 690 kr – én gang, ubegrenset" }
   ],
   "presets": [
-    {
-      "name": "Klinikksammenligning",
-      "category": "Skinora landing"
-    }
+    { "name": "Klinikksammenligning", "category": "Skinora landing" }
   ]
 }
 {% endschema %}
