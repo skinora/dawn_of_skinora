@@ -1,4 +1,37 @@
 {
+  "sk_quiz": {
+    "trigger_default": "Finn din maske",
+    "next": "Neste",
+    "back": "Tilbake",
+    "see_result": "Se anbefaling",
+    "close": "Lukk",
+    "step_of": "Steg {n} av {total}",
+    "progress_label": "Fremdrift i veiviseren",
+    "loading": "Finner din anbefaling …",
+    "result_eyebrow": "Vår anbefaling",
+    "result_fallback_title": "Anbefalt maske",
+    "add_to_cart": "Legg i handlekurv",
+    "adding": "Legger til …",
+    "added": "Lagt til ✓",
+    "view_product": "Se produktet",
+    "clear_link_label": "Usikker? Ta Clear-selvtesten",
+    "email_heading": "Vil du ha rådene på e-post?",
+    "email_placeholder": "din@epost.no",
+    "consent": "Ja, send meg hudråd på e-post. Kan avmeldes når som helst.",
+    "email_send": "Send",
+    "email_thanks": "Takk! Vi sender deg noen gode råd.",
+    "email_need_consent": "Kryss av for samtykke og fyll inn e-post.",
+    "resume_title": "Du har en påbegynt veiviser.",
+    "resume_continue": "Fortsett der du slapp",
+    "resume_restart": "Start på nytt",
+    "restart": "Start på nytt",
+    "noscript": "Slå på JavaScript for å bruke veiviseren, eller se produktene våre nedenfor."
+  },
+  "sk_clear": {
+    "yes": "Ja",
+    "no": "Nei",
+    "disclaimer_default": "Dette er veiledning, ikke medisinsk råd. Siden stiller ingen diagnose. Ved alvorlig eller vedvarende akne bør du kontakte lege."
+  },
   "general": {
     "password_page": {
       "login_form_heading": "Gå inn i butikken ved hjelp av passord:",

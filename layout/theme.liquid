@@ -1128,5 +1128,9 @@
     {%- endif -%}
 
     {% comment %}theme-check-enable RemoteAsset{% endcomment %}
+
+    {%- comment -%} Produktveiviser: config + modal-loader (én gang) + fast fane {%- endcomment -%}
+    {% render 'sk-quiz-trigger', part: 'boot' %}
+    {% render 'sk-quiz-trigger', part: 'tab' %}
   </body>
 </html>

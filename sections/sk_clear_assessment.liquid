@@ -1,0 +1,189 @@
+{%- comment -%}
+  sk_clear_assessment — «Passer Clear for deg?»
+  ---------------------------------------------
+  Helt ulåst tillitsside (ingen JS, ingen e-post, ingen modal, indekserbar).
+  Tabell med tre kolonner; rader er blocks slik at tekst kan endres i editoren.
+  Mobil: tabellen brytes til stablede kort (ingen sidelengs rulling).
+  Ja/Nei vises med både ikon OG ord. Tydelig forbehold: veiledning, ikke diagnose.
+
+  Bilder: la bildefeltene stå tomme til rettigheter er avklart.
+{%- endcomment -%}
+
+<style>
+  #shopify-section-{{ section.id }} .sk-clear {
+    --clr-fg: rgb(var(--color-foreground));
+    --clr-muted: rgba(var(--color-foreground), 0.66);
+    --clr-line: rgba(var(--color-foreground), 0.14);
+    --clr-yes: #2f7d5b;
+    --clr-no: #a23b3b;
+    max-width: 82rem;
+    margin-inline: auto;
+  }
+  #shopify-section-{{ section.id }} .sk-clear__intro { color: var(--clr-muted); max-width: 62ch; margin: 0 auto 2.4rem; text-align: center; }
+  #shopify-section-{{ section.id }} .sk-clear__intro p { margin: 0 0 1rem; }
+
+  #shopify-section-{{ section.id }} .sk-clear__table { width: 100%; border-collapse: collapse; }
+  #shopify-section-{{ section.id }} .sk-clear__table th,
+  #shopify-section-{{ section.id }} .sk-clear__table td {
+    text-align: left; padding: 1.6rem; border-bottom: 1px solid var(--clr-line); vertical-align: top;
+    font-size: var(--sk-font-size-xs, 1.5rem); line-height: 1.5;
+  }
+  #shopify-section-{{ section.id }} .sk-clear__table thead th {
+    font-family: var(--font-heading-family); font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.06em; font-size: var(--sk-font-size-xxs, 1.3rem); border-bottom: 2px solid var(--clr-line);
+  }
+  #shopify-section-{{ section.id }} .sk-clear__rowtitle { font-family: var(--font-heading-family); font-weight: 600; }
+
+  #shopify-section-{{ section.id }} .sk-clear__verdict { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 600; }
+  #shopify-section-{{ section.id }} .sk-clear__verdict--yes { color: var(--clr-yes); }
+  #shopify-section-{{ section.id }} .sk-clear__verdict--no { color: var(--clr-no); }
+  #shopify-section-{{ section.id }} .sk-clear__verdict svg { width: 2rem; height: 2rem; flex: 0 0 auto; }
+  #shopify-section-{{ section.id }} .sk-clear__note { display: block; color: var(--clr-muted); font-weight: 400; font-size: var(--sk-font-size-xxs, 1.3rem); margin-top: 0.3rem; }
+  #shopify-section-{{ section.id }} .sk-clear__rowimg { max-width: 8rem; height: auto; border-radius: 8px; margin-top: 0.8rem; }
+
+  #shopify-section-{{ section.id }} .sk-clear__disclaimer {
+    margin-top: 2.4rem; padding: 1.6rem 2rem; border: 1px solid var(--clr-line);
+    border-radius: 12px; color: var(--clr-muted); font-size: var(--sk-font-size-xxs, 1.3rem);
+  }
+  #shopify-section-{{ section.id }} .sk-clear__disclaimer p { margin: 0 0 0.6rem; }
+  #shopify-section-{{ section.id }} .sk-clear__disclaimer p:last-child { margin: 0; }
+
+  /* Mobil: bryt tabellen til stablede kort (ingen sidelengs rulling) */
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .sk-clear__table,
+    #shopify-section-{{ section.id }} .sk-clear__table tbody,
+    #shopify-section-{{ section.id }} .sk-clear__table tr,
+    #shopify-section-{{ section.id }} .sk-clear__table th,
+    #shopify-section-{{ section.id }} .sk-clear__table td { display: block; width: 100%; }
+    #shopify-section-{{ section.id }} .sk-clear__table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    #shopify-section-{{ section.id }} .sk-clear__table tr {
+      border: 1px solid var(--clr-line); border-radius: 12px; padding: 1.2rem; margin-bottom: 1.4rem;
+    }
+    #shopify-section-{{ section.id }} .sk-clear__table td,
+    #shopify-section-{{ section.id }} .sk-clear__table th { border: 0; padding: 0.6rem 0; }
+    #shopify-section-{{ section.id }} .sk-clear__table td[data-label]::before,
+    #shopify-section-{{ section.id }} .sk-clear__table th[data-label]::before {
+      content: attr(data-label); display: block; font-size: 1.15rem; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--clr-muted); margin-bottom: 0.2rem;
+    }
+  }
+</style>
+
+{%- liquid
+  assign col_skintype = section.settings.col_skintype | default: 'Hudtype'
+  assign col_look = section.settings.col_look | default: 'Hvordan det ser ut'
+  assign col_fits = section.settings.col_fits | default: 'Passer Skinora Clear'
+-%}
+
+<section class="section" aria-labelledby="sk-clear-h-{{ section.id }}">
+  <div class="page-width sk-clear">
+    <div class="sk-section-header sk-section-header--center">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="sk-section-header__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="sk-section-header__title" id="sk-clear-h-{{ section.id }}">{{ section.settings.heading | escape }}</h1>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.intro != blank -%}
+      <div class="sk-clear__intro rte">{{ section.settings.intro }}</div>
+    {%- endif -%}
+
+    <table class="sk-clear__table">
+      <thead>
+        <tr>
+          <th scope="col">{{ col_skintype | escape }}</th>
+          <th scope="col">{{ col_look | escape }}</th>
+          <th scope="col">{{ col_fits | escape }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for block in section.blocks -%}
+          {%- assign is_yes = false -%}
+          {%- if block.settings.verdict == 'ja' -%}{%- assign is_yes = true -%}{%- endif -%}
+          <tr {{ block.shopify_attributes }}>
+            <th scope="row" class="sk-clear__rowtitle" data-label="{{ col_skintype | escape }}">
+              {{ block.settings.title | escape }}
+              {%- if block.settings.image != blank -%}
+                <img class="sk-clear__rowimg" src="{{ block.settings.image | image_url: width: 200 }}" alt="{{ block.settings.image.alt | escape }}" loading="lazy" width="80">
+              {%- endif -%}
+            </th>
+            <td data-label="{{ col_look | escape }}">{{ block.settings.description | escape }}</td>
+            <td data-label="{{ col_fits | escape }}">
+              {%- if is_yes -%}
+                <span class="sk-clear__verdict sk-clear__verdict--yes">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  {{ 'sk_clear.yes' | t }}
+                </span>
+              {%- else -%}
+                <span class="sk-clear__verdict sk-clear__verdict--no">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                  {{ 'sk_clear.no' | t }}
+                </span>
+              {%- endif -%}
+              {%- if block.settings.verdict_note != blank -%}
+                <span class="sk-clear__note">{{ block.settings.verdict_note | escape }}</span>
+              {%- endif -%}
+            </td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+
+    <div class="sk-clear__disclaimer" role="note">
+      {%- if section.settings.disclaimer != blank -%}
+        {{ section.settings.disclaimer }}
+      {%- else -%}
+        <p>{{ 'sk_clear.disclaimer_default' | t }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SK Clear-selvtest",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Selvtest" },
+    { "type": "text", "id": "heading", "label": "Overskrift", "default": "Passer Skinora Clear for deg?" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Slik ser akne typisk ut – og når Skinora Clear er riktig for deg.</p>" },
+    { "type": "header", "content": "Kolonneoverskrifter" },
+    { "type": "text", "id": "col_skintype", "label": "Kolonne 1", "default": "Hudtype" },
+    { "type": "text", "id": "col_look", "label": "Kolonne 2", "default": "Hvordan det ser ut" },
+    { "type": "text", "id": "col_fits", "label": "Kolonne 3", "default": "Passer Skinora Clear" },
+    { "type": "header", "content": "Forbehold" },
+    { "type": "richtext", "id": "disclaimer", "label": "Forbehold (medisinsk)" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Rad",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Hudtype", "default": "Mild akne" },
+        { "type": "textarea", "id": "description", "label": "Hvordan det ser ut", "default": "Noen kviser og små urenheter fra tid til annen." },
+        {
+          "type": "select", "id": "verdict", "label": "Passer Clear?",
+          "options": [ { "value": "ja", "label": "Ja" }, { "value": "nei", "label": "Nei" } ],
+          "default": "ja"
+        },
+        { "type": "text", "id": "verdict_note", "label": "Tilleggsnotat", "info": "F.eks. «kontakt lege» eller «ikke forebyggende»." },
+        { "type": "image_picker", "id": "image", "label": "Bilde (valgfritt)", "info": "La stå tomt til rettigheter er avklart." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Clear-selvtest",
+      "blocks": [
+        { "type": "row", "settings": { "title": "Ren hud", "description": "Ingen aktiv akne.", "verdict": "nei", "verdict_note": "Clear skal ikke brukes forebyggende." } },
+        { "type": "row", "settings": { "title": "Mild akne", "description": "Noen kviser og små urenheter.", "verdict": "ja" } },
+        { "type": "row", "settings": { "title": "Moderat akne", "description": "Flere kviser, tetting og noe betennelse.", "verdict": "ja" } },
+        { "type": "row", "settings": { "title": "Alvorlig akne", "description": "Dype, betente utbrudd over større områder.", "verdict": "nei", "verdict_note": "Kontakt lege." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
