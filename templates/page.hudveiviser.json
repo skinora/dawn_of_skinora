@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "quiz": {
+      "type": "sk_quiz",
+      "settings": {
+        "background_style": "none",
+        "eyebrow": "Veiviser",
+        "heading": "Finn din maske",
+        "intro": "Svar på noen få spørsmål, så anbefaler vi masken som passer huden din."
+      }
+    }
+  },
+  "order": ["quiz"]
+}
