@@ -29,6 +29,10 @@
       "cartAddUrl": "/cart/add.js",
       "productBase": "/products/",
       "clearAssessmentUrl": {{ pages['passer-clear-for-deg'].url | default: '/pages/passer-clear-for-deg' | json }},
+      "klaviyo": {
+        "companyId": {{ settings.klaviyo_public_key | default: '' | json }},
+        "listId": {{ settings.klaviyo_quiz_list_id | default: '' | json }}
+      },
       "labels": {
         "next": {{ 'sk_quiz.next' | t | json }},
         "back": {{ 'sk_quiz.back' | t | json }},

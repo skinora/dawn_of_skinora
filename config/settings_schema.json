@@ -1503,5 +1503,26 @@
         "info": "Cart total (kr) at or above which the cart shows «Frakt: Gratis». 0 = always free. Below it, the row falls back to «Beregnes i kassen» so the copy never lies if a shipping charge is introduced."
       }
     ]
+  },
+  {
+    "name": "Veiviser (Klaviyo)",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Kobler e-postpåmelding i produktveiviseren mot Klaviyo (Client-Side Subscribe API – ingen backend). La feltene stå tomme for å slå av innmeldingen (da sendes bare et JS-event). Public key finnes i Klaviyo: Settings → API keys → Public API key. Liste-ID: Lists & Segments → velg listen → Settings."
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_public_key",
+        "label": "Klaviyo Public API key (company_id)",
+        "info": "6-tegns offentlig nøkkel. Trygg å eksponere i frontend."
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_quiz_list_id",
+        "label": "Klaviyo liste-ID for veiviser-påmelding",
+        "info": "Listen som utløser protokoll-flowen. Skru på dobbel/enkel opt-in på listen i Klaviyo."
+      }
+    ]
   }
 ]

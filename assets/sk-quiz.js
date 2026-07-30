@@ -299,6 +299,42 @@ class SkQuiz extends HTMLElement {
     window.location.href = '/cart';
   }
 
+  /* Klaviyo Client-Side Subscribe API – ingen backend, kun public company_id.
+     Melder profilen inn i «Veiviser»-listen med protokoll-koden som egenskap,
+     slik at flowen kan branche clear/radiance. Consent kommer fra listens
+     opt-in-innstilling i Klaviyo (brukeren krysset av manuelt før dette kalles).
+     Guardet: gjør ingenting hvis nøklene mangler. Verifiser gjerne revision-
+     datoen mot gjeldende Klaviyo-dokumentasjon. */
+  _klaviyoSubscribe(email, ctx) {
+    const k = this.cfg.klaviyo || {};
+    if (!k.companyId || !k.listId) return;
+    const body = {
+      data: {
+        type: 'subscription',
+        attributes: {
+          custom_source: 'Veiviser',
+          profile: {
+            data: {
+              type: 'profile',
+              attributes: {
+                email: email,
+                properties: { sk_quiz_protocol: ctx.protocol, sk_quiz_product: ctx.handle }
+              }
+            }
+          }
+        },
+        relationships: { list: { data: { type: 'list', id: k.listId } } }
+      }
+    };
+    return fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + encodeURIComponent(k.companyId), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', revision: '2024-10-15' },
+      body: JSON.stringify(body),
+      mode: 'cors',
+      keepalive: true
+    }).catch(function () { /* stille – event er allerede sendt som fallback */ });
+  }
+
   _emailForm(ctx) {
     ctx = ctx || {};
     // {product}-token i overskrift/undertekst fylles med anbefalt produkt.
@@ -327,8 +363,8 @@ class SkQuiz extends HTMLElement {
       e.preventDefault();
       if (!consent.checked || !email.value) { msg.textContent = this.L.email_need_consent || 'MIDL: Kryss av for samtykke og fyll inn e-post.'; return; }
       dl('sk_quiz_email_submit', { quiz_protocol: ctx.protocol }); // kun kort kode, ingen e-post/fritekst
-      // Faktisk Klaviyo-innmelding wires i eget prompt: bruk detail.protocol + detail.handle
-      // til å velge/branche riktig protokoll-flow (bruker allerede installert Klaviyo).
+      // Meld inn i Klaviyo (hvis konfigurert) + send event for evt. egen wiring.
+      this._klaviyoSubscribe(email.value, ctx);
       document.dispatchEvent(new CustomEvent('sk-quiz:email', { detail: { email: email.value, handle: ctx.handle, protocol: ctx.protocol } }));
       form.innerHTML = '';
       form.appendChild(el('p', { class: 'sk-quiz__email-msg', text: this.L.email_thanks || 'MIDL: Takk! Vi sender deg noen gode råd.' }));
