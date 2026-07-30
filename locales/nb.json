@@ -1,6 +1,7 @@
 {
   "sk_quiz": {
     "trigger_default": "Finn din maske",
+    "product_link": "Usikker på om du trenger Face, Neck eller Clear?",
     "next": "Neste",
     "back": "Tilbake",
     "see_result": "Se anbefaling",

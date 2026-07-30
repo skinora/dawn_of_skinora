@@ -1,6 +1,7 @@
 {
   "sk_quiz": {
     "trigger_default": "Find your mask",
+    "product_link": "Not sure if you need Face, Neck or Clear?",
     "next": "Next",
     "back": "Back",
     "see_result": "See recommendation",
