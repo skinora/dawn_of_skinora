@@ -93,14 +93,15 @@
        til selvtest-siden i resultatet.
 
        protocol = kort kode som følger med e-postinnmeldingen, slik at Klaviyo
-       kan sende en LED-protokoll TILPASSET resultatet. Vil du at flere resultater
-       skal dele samme protokoll, gi dem samme kode her. */
+       kan sende en LED-protokoll TILPASSET resultatet. TO protokoller:
+         'clear'    = akne / blått lys  (Clear + Duo)
+         'radiance' = foryngelse / rødt lys  (Face, Neck, Face+Neck) */
     products: {
-      'skinora-radiance-face': { badge: 'MIDL: Mest populær', protocol: 'radiance-face' },
-      'skinora-radiance-neck': { badge: '', protocol: 'radiance-neck' },
+      'skinora-radiance-face': { badge: 'MIDL: Mest populær', protocol: 'radiance' },
+      'skinora-radiance-neck': { badge: '', protocol: 'radiance' },
       'skinora-clear': { badge: '', clearAssessment: true, protocol: 'clear' },
-      'skinora-radiance-face-neck': { badge: 'MIDL: Best verdi', protocol: 'radiance-face-neck' },
-      'skinora-duo-clear-radiance-neck': { badge: 'MIDL: Komplett', clearAssessment: true, protocol: 'duo' }
+      'skinora-radiance-face-neck': { badge: 'MIDL: Best verdi', protocol: 'radiance' },
+      'skinora-duo-clear-radiance-neck': { badge: 'MIDL: Komplett', clearAssessment: true, protocol: 'clear' }
     }
   };
 })();
