@@ -1,0 +1,80 @@
+{%- comment -%}
+  sk_quiz — produktveiviseren som seksjon (egen side).
+  ---------------------------------------------------
+  Rendrer <sk-quiz>. All spørsmålstekst kommer fra sk-quiz-data.js; chrome-tekst
+  fra config-JSON (lagt av 'sk-quiz-trigger' part:'boot' i theme.liquid) + locale.
+  Overskrift/intro/bakgrunn styres i seksjonsinnstillinger.
+
+  Modalen bruker samme <sk-quiz>-komponent, men bygges av JS ved klikk.
+{%- endcomment -%}
+
+{{ 'sk-quiz.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="sk_quiz section"
+  style="background: {% if section.settings.background_style == 'lavender' %}var(--paper-150){% elsif section.settings.background_style == 'gray' %}var(--paper-50){% else %}transparent{% endif %};"
+>
+  <div class="page-width sk_quiz__inner">
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.intro != blank -%}
+      <div class="sk-section-header sk-section-header--center sk_quiz__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="sk-section-header__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h1 class="sk-section-header__title sk_quiz__title">{{ section.settings.heading | escape }}</h1>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <p class="sk-section-header__subtitle sk_quiz__intro">{{ section.settings.intro | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <sk-quiz mode="page" config="sk-quiz-config"></sk-quiz>
+
+    <noscript>
+      <p class="sk_quiz__noscript">{{ 'sk_quiz.noscript' | t }}</p>
+    </noscript>
+  </div>
+</section>
+
+{%- comment -%} Garanter datarekkefølge: last data → modul → init. {%- endcomment -%}
+<script type="module">
+  (async function () {
+    if (!window.SK_QUIZ_DATA) {
+      await new Promise(function (r, j) {
+        var s = document.createElement('script');
+        s.src = {{ 'sk-quiz-data.js' | asset_url | json }};
+        s.onload = r; s.onerror = j; document.head.appendChild(s);
+      });
+    }
+    var m = await import({{ 'sk-quiz.js' | asset_url | json }});
+    m.initInline();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SK Veiviser",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "background_style",
+      "label": "Bakgrunn",
+      "options": [
+        { "value": "none", "label": "Ingen" },
+        { "value": "lavender", "label": "Lavendel" },
+        { "value": "gray", "label": "Lys grå" }
+      ],
+      "default": "none"
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Veiviser" },
+    { "type": "text", "id": "heading", "label": "Overskrift", "default": "Finn din maske" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Svar på noen få spørsmål, så anbefaler vi masken som passer huden din." }
+  ],
+  "presets": [
+    { "name": "SK Veiviser", "category": "Skinora" }
+  ]
+}
+{% endschema %}

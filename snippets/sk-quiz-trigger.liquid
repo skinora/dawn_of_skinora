@@ -1,0 +1,119 @@
+{%- comment -%}
+  sk-quiz-trigger — gjenbrukbar utløser for produktveiviseren.
+  ---------------------------------------------------------------
+  Knappen er ALLTID en ekte lenke til /pages/hudveiviser (SEO + funker uten JS).
+  JS fanger klikket og åpner modalen i stedet.
+
+  Parametre:
+    part      : 'button' (standard) | 'tab' | 'boot'
+    label     : knappetekst (standard fra locale)
+    style     : 'pill' | 'link' | 'nav'  (kun for 'button')
+    classes   : ekstra klasser
+    placement : kort kode for måling/plassering (header, home, product, footer, tab)
+
+  'boot' legges ÉN gang (i theme.liquid): skriver config-JSON + laster modal-
+  loaderen ved første klikk med dynamisk import. Ingen svar i URL – kun ?modal=quiz.
+{%- endcomment -%}
+
+{%- assign _part = part | default: 'button' -%}
+{%- assign _quiz_url = pages.hudveiviser.url | default: '/pages/hudveiviser' -%}
+
+{%- if _part == 'boot' -%}
+  {{ 'sk-quiz.css' | asset_url | stylesheet_tag }}
+  <script type="application/json" id="sk-quiz-config">
+    {
+      "jsUrl": {{ 'sk-quiz.js' | asset_url | json }},
+      "dataUrl": {{ 'sk-quiz-data.js' | asset_url | json }},
+      "configId": "sk-quiz-config",
+      "pageUrl": {{ _quiz_url | json }},
+      "cartAddUrl": "/cart/add.js",
+      "productBase": "/products/",
+      "clearAssessmentUrl": {{ pages['passer-clear-for-deg'].url | default: '/pages/passer-clear-for-deg' | json }},
+      "labels": {
+        "next": {{ 'sk_quiz.next' | t | json }},
+        "back": {{ 'sk_quiz.back' | t | json }},
+        "see_result": {{ 'sk_quiz.see_result' | t | json }},
+        "close": {{ 'sk_quiz.close' | t | json }},
+        "step_of": {{ 'sk_quiz.step_of' | t | json }},
+        "progress_label": {{ 'sk_quiz.progress_label' | t | json }},
+        "loading": {{ 'sk_quiz.loading' | t | json }},
+        "result_eyebrow": {{ 'sk_quiz.result_eyebrow' | t | json }},
+        "result_fallback_title": {{ 'sk_quiz.result_fallback_title' | t | json }},
+        "add_to_cart": {{ 'sk_quiz.add_to_cart' | t | json }},
+        "adding": {{ 'sk_quiz.adding' | t | json }},
+        "added": {{ 'sk_quiz.added' | t | json }},
+        "view_product": {{ 'sk_quiz.view_product' | t | json }},
+        "clear_link_label": {{ 'sk_quiz.clear_link_label' | t | json }},
+        "email_heading": {{ 'sk_quiz.email_heading' | t | json }},
+        "email_placeholder": {{ 'sk_quiz.email_placeholder' | t | json }},
+        "consent": {{ 'sk_quiz.consent' | t | json }},
+        "email_send": {{ 'sk_quiz.email_send' | t | json }},
+        "email_thanks": {{ 'sk_quiz.email_thanks' | t | json }},
+        "email_need_consent": {{ 'sk_quiz.email_need_consent' | t | json }},
+        "resume_title": {{ 'sk_quiz.resume_title' | t | json }},
+        "resume_continue": {{ 'sk_quiz.resume_continue' | t | json }},
+        "resume_restart": {{ 'sk_quiz.resume_restart' | t | json }},
+        "restart": {{ 'sk_quiz.restart' | t | json }}
+      }
+    }
+  </script>
+  <script>
+    (function () {
+      if (window.__skQuizBoot) return; window.__skQuizBoot = true;
+      var cfg;
+      try { cfg = JSON.parse(document.getElementById('sk-quiz-config').textContent); } catch (e) { return; }
+      var pending;
+      function ensure() {
+        if (pending) return pending;
+        pending = (window.SK_QUIZ_DATA ? Promise.resolve() : new Promise(function (res, rej) {
+          var s = document.createElement('script'); s.src = cfg.dataUrl; s.onload = res; s.onerror = rej; document.head.appendChild(s);
+        })).then(function () { return import(cfg.jsUrl); });
+        return pending;
+      }
+      function open() { ensure().then(function (m) { m.openQuizModal(cfg); }).catch(function () { /* la lenken funke som fallback */ }); }
+      document.addEventListener('click', function (e) {
+        var t = e.target.closest('[data-sk-quiz-trigger]');
+        if (!t) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return; // behold «åpne i ny fane»
+        e.preventDefault(); open();
+      });
+      if (new URLSearchParams(location.search).get('modal') === 'quiz') open();
+    })();
+  </script>
+
+{%- elsif _part == 'tab' -%}
+  {%- comment -%} Fast fane i venstre skjermkant (desktop). Skjult < 750 px via CSS.
+      Lukkes og huskes i sessionStorage i 24 t. {%- endcomment -%}
+  <div class="sk-quiz-tab" data-sk-quiz-tab hidden>
+    <a href="{{ _quiz_url }}" class="sk-quiz-tab__link" data-sk-quiz-trigger data-placement="tab">
+      {%- if label != blank -%}{{ label }}{%- else -%}{{ 'sk_quiz.trigger_default' | t }}{%- endif -%}
+    </a>
+    <button type="button" class="sk-quiz-tab__close" data-sk-quiz-tab-close aria-label="{{ 'sk_quiz.close' | t }}">&times;</button>
+  </div>
+  <script>
+    (function () {
+      var KEY = 'sk_quiz_tab_closed';
+      var tab = document.querySelector('[data-sk-quiz-tab]');
+      if (!tab) return;
+      var raw = null; try { raw = sessionStorage.getItem(KEY); } catch (e) {}
+      var closed = raw && (Date.now() - parseInt(raw, 10) < 24 * 60 * 60 * 1000);
+      if (!closed) tab.hidden = false;
+      var btn = tab.querySelector('[data-sk-quiz-tab-close]');
+      if (btn) btn.addEventListener('click', function () {
+        tab.hidden = true;
+        try { sessionStorage.setItem(KEY, String(Date.now())); } catch (e) {}
+      });
+    })();
+  </script>
+
+{%- else -%}
+  {%- assign _style = style | default: 'pill' -%}
+  <a
+    href="{{ _quiz_url }}"
+    class="sk-quiz-trigger sk-quiz-trigger--{{ _style }} {{ classes }}"
+    data-sk-quiz-trigger
+    data-placement="{{ placement | default: 'generic' }}"
+  >
+    {%- if label != blank -%}{{ label }}{%- else -%}{{ 'sk_quiz.trigger_default' | t }}{%- endif -%}
+  </a>
+{%- endif -%}

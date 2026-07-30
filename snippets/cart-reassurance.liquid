@@ -60,13 +60,44 @@
   </div>
 
 {%- else -%}
+  {%- liquid
+    # Ekte review-tall, ikke hardkodet: summér antall fra produktene i kurven og
+    # regn vektet snitt av rating. Okendo synker aggregatet til standard-metafeltet
+    # reviews.rating / reviews.rating_count (samme som produktsidens JSON-LD bruker).
+    # Faller tilbake til tema-innstillingene hvis kurven er tom / metafelt mangler,
+    # så linja aldri blir blank eller viser 0.
+    assign cr_count = 0
+    assign cr_weighted = 0.0
+    assign cr_seen = ''
+    for cr_item in cart.items
+      assign cr_prod = cr_item.product
+      unless cr_seen contains cr_prod.id
+        assign cr_seen = cr_seen | append: cr_prod.id | append: ','
+        assign cr_rc = cr_prod.metafields.reviews.rating_count | plus: 0
+        if cr_rc > 0 and cr_prod.metafields.reviews.rating.value != blank
+          assign cr_r = cr_prod.metafields.reviews.rating.value.rating | times: 1.0
+          assign cr_count = cr_count | plus: cr_rc
+          assign cr_add = cr_r | times: cr_rc
+          assign cr_weighted = cr_weighted | plus: cr_add
+        endif
+      endunless
+    endfor
+
+    assign cr_rating = settings.cart_review_rating
+    assign cr_show_count = settings.cart_review_count
+    if cr_count > 0
+      assign cr_avg = cr_weighted | divided_by: cr_count | round: 1
+      assign cr_rating = cr_avg | replace: '.', ','
+      assign cr_show_count = cr_count
+    endif
+  -%}
   <div class="cart-reassure cart-reassure--{{ cr_context }}">
-    {%- comment -%} Sosialt bevis — kun hvis tallene er satt i tema-innstillinger {%- endcomment -%}
-    {%- if settings.cart_review_rating != blank and settings.cart_review_count != blank -%}
+    {%- comment -%} Sosialt bevis — ekte tall fra kurvens produkter, ellers tema-innstillinger {%- endcomment -%}
+    {%- if cr_rating != blank and cr_show_count != blank -%}
       <div class="cart-reassure__reviews">
         <span class="cart-reassure__stars" aria-hidden="true">★★★★★</span>
         <span class="cart-reassure__rating">
-          {{- 'sections.cart.reassure_reviews' | t: rating: settings.cart_review_rating, count: settings.cart_review_count -}}
+          {{- 'sections.cart.reassure_reviews' | t: rating: cr_rating, count: cr_show_count -}}
         </span>
         {%- if settings.cart_review_quote != blank -%}
           <p class="cart-reassure__quote">

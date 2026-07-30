@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "assessment": {
+      "type": "sk_clear_assessment",
+      "settings": {
+        "eyebrow": "Selvtest",
+        "heading": "Passer Skinora Clear for deg?",
+        "intro": "<p>Slik ser akne typisk ut – og når Skinora Clear er riktig for deg. Dette er veiledning, ikke medisinsk diagnose.</p>",
+        "col_skintype": "Hudtype",
+        "col_look": "Hvordan det ser ut",
+        "col_fits": "Passer Skinora Clear"
+      },
+      "blocks": {
+        "row-1": { "type": "row", "settings": { "title": "Ren hud", "description": "Ingen aktiv akne.", "verdict": "nei", "verdict_note": "Clear skal ikke brukes forebyggende." } },
+        "row-2": { "type": "row", "settings": { "title": "Mild akne", "description": "Noen kviser og små urenheter fra tid til annen.", "verdict": "ja" } },
+        "row-3": { "type": "row", "settings": { "title": "Moderat akne", "description": "Flere kviser, tetting og noe betennelse.", "verdict": "ja" } },
+        "row-4": { "type": "row", "settings": { "title": "Alvorlig akne", "description": "Dype, betente utbrudd over større områder.", "verdict": "nei", "verdict_note": "Kontakt lege." } }
+      },
+      "block_order": ["row-1", "row-2", "row-3", "row-4"]
+    }
+  },
+  "order": ["assessment"]
+}

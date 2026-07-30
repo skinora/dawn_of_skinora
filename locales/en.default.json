@@ -1,4 +1,37 @@
 {
+  "sk_quiz": {
+    "trigger_default": "Find your mask",
+    "next": "Next",
+    "back": "Back",
+    "see_result": "See recommendation",
+    "close": "Close",
+    "step_of": "Step {n} of {total}",
+    "progress_label": "Quiz progress",
+    "loading": "Finding your recommendation …",
+    "result_eyebrow": "Our recommendation",
+    "result_fallback_title": "Recommended mask",
+    "add_to_cart": "Add to cart",
+    "adding": "Adding …",
+    "added": "Added ✓",
+    "view_product": "View product",
+    "clear_link_label": "Unsure? Take the Clear self-test",
+    "email_heading": "Want the advice by email?",
+    "email_placeholder": "you@email.com",
+    "consent": "Yes, send me skincare advice by email. Unsubscribe anytime.",
+    "email_send": "Send",
+    "email_thanks": "Thanks! We'll send you some good tips.",
+    "email_need_consent": "Please tick consent and enter your email.",
+    "resume_title": "You have an unfinished quiz.",
+    "resume_continue": "Continue where you left off",
+    "resume_restart": "Start over",
+    "restart": "Start over",
+    "noscript": "Enable JavaScript to use the quiz, or browse our products below."
+  },
+  "sk_clear": {
+    "yes": "Yes",
+    "no": "No",
+    "disclaimer_default": "This is guidance, not medical advice. This page does not provide a diagnosis. For severe or persistent acne, please consult a doctor."
+  },
   "general": {
     "password_page": {
       "login_form_heading": "Enter store using password:",
