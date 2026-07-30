@@ -119,7 +119,8 @@ sk-quiz {
 
 /* ---------- E-post (valgfri, aldri mur) ---------- */
 .sk-quiz__email { width: 100%; max-width: 34rem; margin-top: 1.6rem; padding-top: 1.6rem; border-top: 1px solid var(--skq-line); display: grid; gap: 0.8rem; }
-.sk-quiz__email-heading { font-size: var(--sk-font-size-xs, 1.5rem); margin: 0; }
+.sk-quiz__email-heading { font-size: var(--sk-font-size-xs, 1.5rem); font-weight: 600; margin: 0; }
+.sk-quiz__email-sub { font-size: var(--sk-font-size-xxs, 1.3rem); color: var(--skq-muted); margin: 0; }
 .sk-quiz__email-row { display: flex; gap: 0.6rem; }
 .sk-quiz__email-input {
   flex: 1 1 auto; min-width: 0;

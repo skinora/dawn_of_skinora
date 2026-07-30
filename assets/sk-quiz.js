@@ -319,11 +319,12 @@ class SkQuiz extends HTMLElement {
       form.appendChild(el('p', { class: 'sk-quiz__email-msg', text: this.L.email_thanks || 'MIDL: Takk! Vi sender deg noen gode råd.' }));
     });
 
-    form.append(
-      el('p', { class: 'sk-quiz__email-heading', text: this.L.email_heading || 'MIDL: Vil du ha rådene på e-post?' }),
-      el('div', { class: 'sk-quiz__email-row' }, [email, send]),
-      consentLabel, msg
-    );
+    const parts = [
+      el('p', { class: 'sk-quiz__email-heading', text: this.L.email_heading || 'MIDL: Få din gratis LED-protokoll' })
+    ];
+    if (this.L.email_sub) parts.push(el('p', { class: 'sk-quiz__email-sub', text: this.L.email_sub }));
+    parts.push(el('div', { class: 'sk-quiz__email-row' }, [email, send]), consentLabel, msg);
+    parts.forEach((p) => form.appendChild(p));
     return form;
   }
 }
