@@ -28,6 +28,10 @@
         </button>
         <div class="menu-drawer__navigation-container">
           <nav class="menu-drawer__navigation">
+            {%- comment -%} Produktveiviser øverst i menyskuffen (mobil) {%- endcomment -%}
+            <div class="menu-drawer__quiz">
+              {% render 'sk-quiz-trigger', style: 'pill', placement: 'drawer', classes: 'sk-quiz-trigger--drawer', label: 'Finn din maske' %}
+            </div>
             <div class="menu-drawer__search">
               {%- if settings.predictive_search_enabled -%}
                 <predictive-search

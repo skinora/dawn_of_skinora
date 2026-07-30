@@ -202,6 +202,10 @@ sk-quiz {
   gap: 0.5rem;
 }
 
+/* Full bredde øverst i menyskuffen (mobil) */
+.menu-drawer__quiz { padding: 1.2rem 0 0.4rem; }
+.sk-quiz-trigger--drawer { display: flex; width: 100%; }
+
 /* Fast fane i venstre skjermkant (kun desktop) */
 .sk-quiz-tab {
   position: fixed; left: 0; top: 50%; transform: translateY(-50%);

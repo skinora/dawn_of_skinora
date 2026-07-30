@@ -1,0 +1,68 @@
+{%- comment -%}
+  sk_quiz_cta — liten forside-CTA for veiviseren (kort tekst + knapp).
+  Åpner samme modal som alle andre triggere. Tekst i seksjonsinnstillinger.
+{%- endcomment -%}
+
+<style>
+  #shopify-section-{{ section.id }} .sk-quiz-cta {
+    text-align: center;
+    max-width: 62rem;
+    margin-inline: auto;
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+  }
+  #shopify-section-{{ section.id }} .sk-quiz-cta__title {
+    font-family: var(--font-heading-family);
+    font-size: var(--sk-font-size-large, 2.2rem);
+    font-weight: 600; margin: 0 0 0.8rem;
+  }
+  #shopify-section-{{ section.id }} .sk-quiz-cta__text {
+    color: rgba(var(--color-foreground), 0.72);
+    margin: 0 0 1.6rem;
+    font-size: var(--sk-font-size-xs, 1.6rem);
+  }
+</style>
+
+<section
+  class="section"
+  style="background: {% if section.settings.background_style == 'lavender' %}var(--paper-150){% elsif section.settings.background_style == 'gray' %}var(--paper-50){% else %}transparent{% endif %};"
+>
+  <div class="page-width">
+    <div class="sk-quiz-cta">
+      {%- if section.settings.title != blank -%}
+        <p class="sk-quiz-cta__title">{{ section.settings.title | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="sk-quiz-cta__text">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+      {%- capture _cta_label -%}{{ section.settings.button_label | escape }}{%- endcapture -%}
+      {% render 'sk-quiz-trigger', style: 'pill', placement: 'home', label: _cta_label %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SK Veiviser-CTA",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "background_style",
+      "label": "Bakgrunn",
+      "options": [
+        { "value": "none", "label": "Ingen" },
+        { "value": "lavender", "label": "Lavendel" },
+        { "value": "gray", "label": "Lys grå" }
+      ],
+      "default": "lavender"
+    },
+    { "type": "text", "id": "title", "label": "Overskrift", "default": "Ikke sikker på hvilken maske?" },
+    { "type": "text", "id": "text", "label": "Tekst", "default": "Ta vår korte veiviser, så finner vi masken som passer huden din." },
+    { "type": "text", "id": "button_label", "label": "Knappetekst", "default": "Finn din maske" }
+  ],
+  "presets": [
+    { "name": "SK Veiviser-CTA", "category": "Skinora" }
+  ]
+}
+{% endschema %}

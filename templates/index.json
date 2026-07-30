@@ -9,6 +9,15 @@
  */
 {
   "sections": {
+    "sk_quiz_cta_home": {
+      "type": "sk_quiz_cta",
+      "settings": {
+        "background_style": "lavender",
+        "title": "Ikke sikker på hvilken maske?",
+        "text": "Ta vår korte veiviser, så finner vi masken som passer huden din.",
+        "button_label": "Finn din maske"
+      }
+    },
     "sk_dynamic_banner_AEb7NJ": {
       "type": "sk-dynamic-banner",
       "name": "SK Dynamic Banner",
@@ -476,6 +485,7 @@
   "order": [
     "sk_dynamic_banner_AEb7NJ",
     "sk_promotion_logos_giWdMT",
+    "sk_quiz_cta_home",
     "sk_product_listing_dYMpyE",
     "sk_before_after_HqFkek",
     "sk_lp_hudterapeut_BRKq6y",
