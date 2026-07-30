@@ -181,6 +181,14 @@ sk-quiz {
 }
 .sk-quiz-trigger--pill:hover { opacity: 0.9; }
 
+/* Kompakt variant for header */
+.sk-quiz-trigger--header {
+  padding: 0.7rem 1.4rem;
+  font-size: var(--sk-font-size-xxs, 1.2rem);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  align-self: center; white-space: nowrap;
+}
+
 .sk-quiz-trigger--link {
   color: rgb(var(--color-foreground));
   text-decoration: underline; text-underline-offset: 0.2em;
