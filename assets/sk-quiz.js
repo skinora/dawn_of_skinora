@@ -271,32 +271,48 @@ class SkQuiz extends HTMLElement {
   }
 
   async _addToCart(id, btn) {
-    const original = btn.textContent;
     btn.textContent = this.L.adding || 'MIDL: Legger til …';
+    // Be Shopify rendre skuff-seksjonene med i svaret, så temaets egen
+    // renderContents() kan oppdatere OG åpne skuffen (Dawn-mønsteret).
+    const drawer = document.querySelector('cart-drawer');
+    const sectionIds = drawer && typeof drawer.getSectionsToRender === 'function'
+      ? drawer.getSectionsToRender().map((s) => s.id)
+      : null;
     try {
       const r = await fetch(this.cfg.cartAddUrl || '/cart/add.js', {
-        method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ items: [{ id, quantity: 1 }] })
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(sectionIds
+          ? { items: [{ id: id, quantity: 1 }], sections: sectionIds, sections_url: window.location.pathname }
+          : { items: [{ id: id, quantity: 1 }] })
       });
       if (!r.ok) throw new Error('add failed');
+      const data = await r.json();
       dl('sk_quiz_add_to_cart', { quiz_result: resolveHandle(this.data, this.answers) });
       btn.textContent = this.L.added || 'MIDL: Lagt til ✓';
-      this._openCartDrawer();
+      this._closeModal();                 // 1) lukk quiz-modalen (hvis åpen)
+      this._openCartDrawer(drawer, data); // 2) åpne temaets skuff med oppdatert innhold
     } catch (e) {
       // JS feilet → send brukeren til produktsiden (btn.href)
       window.location.href = btn.getAttribute('href');
     }
   }
 
-  _openCartDrawer() {
-    // Åpne temaets egen skuff. Best-effort mot vanlige Dawn/SK-mønstre;
-    // ellers oppdater ikon og la brukeren gå til /cart via lenken.
-    document.dispatchEvent(new CustomEvent('sk-quiz:added'));
-    const drawer = document.querySelector('cart-drawer, sk-cart-drawer, #CartDrawer');
+  // Lukk quiz-modalen hvis vi står i den. På egen side finnes ingen dialog → no-op.
+  _closeModal() {
+    const dialog = typeof this.closest === 'function' ? this.closest('dialog.sk-quiz-modal') : null;
+    if (dialog && dialog.open) dialog.close(); // 'close'-handler rydder scroll-lås + historikk
+  }
+
+  _openCartDrawer(drawer, data) {
+    drawer = drawer || document.querySelector('cart-drawer');
+    // Temaets egen måte: oppdater innhold og åpne (renderContents kaller open()).
+    if (drawer && typeof drawer.renderContents === 'function' && data && data.sections) {
+      drawer.renderContents(data);
+      return;
+    }
     if (drawer && typeof drawer.open === 'function') { drawer.open(); return; }
-    if (drawer && drawer.classList) { drawer.classList.add('active', 'is-open', 'animate'); return; }
-    // Fallback: naviger til handlekurven
-    window.location.href = '/cart';
+    window.location.href = '/cart'; // fallback hvis ingen skuff finnes
   }
 
   /* Klaviyo Client-Side Subscribe API – ingen backend, kun public company_id.
