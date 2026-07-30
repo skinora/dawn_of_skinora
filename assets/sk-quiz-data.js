@@ -90,13 +90,17 @@
        Kun handle + valgfrie innholdsnøkler. INGEN pris her: pris, tittel, bilde
        og varant-id hentes live fra /products/{handle}.js i sk-quiz.js, slik at
        ingenting kan bli feil eller utdatert. clearAssessment: true => vis lenke
-       til selvtest-siden i resultatet. */
+       til selvtest-siden i resultatet.
+
+       protocol = kort kode som følger med e-postinnmeldingen, slik at Klaviyo
+       kan sende en LED-protokoll TILPASSET resultatet. Vil du at flere resultater
+       skal dele samme protokoll, gi dem samme kode her. */
     products: {
-      'skinora-radiance-face': { badge: 'MIDL: Mest populær' },
-      'skinora-radiance-neck': { badge: '' },
-      'skinora-clear': { badge: '', clearAssessment: true },
-      'skinora-radiance-face-neck': { badge: 'MIDL: Best verdi' },
-      'skinora-duo-clear-radiance-neck': { badge: 'MIDL: Komplett', clearAssessment: true }
+      'skinora-radiance-face': { badge: 'MIDL: Mest populær', protocol: 'radiance-face' },
+      'skinora-radiance-neck': { badge: '', protocol: 'radiance-neck' },
+      'skinora-clear': { badge: '', clearAssessment: true, protocol: 'clear' },
+      'skinora-radiance-face-neck': { badge: 'MIDL: Best verdi', protocol: 'radiance-face-neck' },
+      'skinora-duo-clear-radiance-neck': { badge: 'MIDL: Komplett', clearAssessment: true, protocol: 'duo' }
     }
   };
 })();

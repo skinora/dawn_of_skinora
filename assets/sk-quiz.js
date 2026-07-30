@@ -254,7 +254,12 @@ class SkQuiz extends HTMLElement {
     }
 
     // Valgfri e-post (ALDRI en mur). Samtykke ikke forhåndskrysset.
-    box.appendChild(this._emailForm());
+    // Protokoll-koden følger med, så Klaviyo kan sende en TILPASSET protokoll.
+    box.appendChild(this._emailForm({
+      handle: handle,
+      protocol: meta.protocol || handle,
+      productTitle: p ? p.title : ''
+    }));
 
     box.appendChild(el('button', {
       class: 'sk-quiz__btn sk-quiz__btn--ghost sk-quiz__restart', type: 'button',
@@ -294,7 +299,16 @@ class SkQuiz extends HTMLElement {
     window.location.href = '/cart';
   }
 
-  _emailForm() {
+  _emailForm(ctx) {
+    ctx = ctx || {};
+    // {product}-token i overskrift/undertekst fylles med anbefalt produkt.
+    // Uten produktnavn (fetch feilet) fjernes «for {product}» pent.
+    const fill = (s) => {
+      if (!s) return s;
+      return ctx.productTitle
+        ? s.replace('{product}', ctx.productTitle)
+        : s.replace(/\s*for\s+\{product\}/i, '').replace('{product}', '').trim();
+    };
     const form = el('form', { class: 'sk-quiz__email', novalidate: 'novalidate' });
     const cbId = 'sk-quiz-consent';
     const email = el('input', {
@@ -312,17 +326,18 @@ class SkQuiz extends HTMLElement {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       if (!consent.checked || !email.value) { msg.textContent = this.L.email_need_consent || 'MIDL: Kryss av for samtykke og fyll inn e-post.'; return; }
-      dl('sk_quiz_email_submit'); // ingen e-post/fritekst i dataLayer
-      // Faktisk Klaviyo-innmelding wires i eget prompt (bruker allerede installert Klaviyo).
-      document.dispatchEvent(new CustomEvent('sk-quiz:email', { detail: { email: email.value } }));
+      dl('sk_quiz_email_submit', { quiz_protocol: ctx.protocol }); // kun kort kode, ingen e-post/fritekst
+      // Faktisk Klaviyo-innmelding wires i eget prompt: bruk detail.protocol + detail.handle
+      // til å velge/branche riktig protokoll-flow (bruker allerede installert Klaviyo).
+      document.dispatchEvent(new CustomEvent('sk-quiz:email', { detail: { email: email.value, handle: ctx.handle, protocol: ctx.protocol } }));
       form.innerHTML = '';
       form.appendChild(el('p', { class: 'sk-quiz__email-msg', text: this.L.email_thanks || 'MIDL: Takk! Vi sender deg noen gode råd.' }));
     });
 
     const parts = [
-      el('p', { class: 'sk-quiz__email-heading', text: this.L.email_heading || 'MIDL: Få din gratis LED-protokoll' })
+      el('p', { class: 'sk-quiz__email-heading', text: fill(this.L.email_heading || 'MIDL: Få din gratis LED-protokoll') })
     ];
-    if (this.L.email_sub) parts.push(el('p', { class: 'sk-quiz__email-sub', text: this.L.email_sub }));
+    if (this.L.email_sub) parts.push(el('p', { class: 'sk-quiz__email-sub', text: fill(this.L.email_sub) }));
     parts.push(el('div', { class: 'sk-quiz__email-row' }, [email, send]), consentLabel, msg);
     parts.forEach((p) => form.appendChild(p));
     return form;
