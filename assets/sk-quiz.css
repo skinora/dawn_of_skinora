@@ -198,19 +198,9 @@ sk-quiz {
 .sk-quiz__protocol-dl::before { content: "↓"; margin-right: 0.6rem; }
 
 /* ---------- E-post: planen + påminnelser (valgfri) ---------- */
-/* Protokoll-blokk: forklarer hva det er + selger. Delelinja ligger her (over hele blokka). */
-.sk-quiz__protocol-title {
-  width: 100%; max-width: 34rem; margin: 2.2rem auto 0.4rem; padding-top: 2.2rem;
-  border-top: 1px solid var(--skq-line);
-  font-family: var(--skq-serif); font-size: var(--sk-font-size-small, 1.9rem); color: var(--skq-brand);
-  text-align: center;
-}
-.sk-quiz__protocol-sub {
-  max-width: 34ch; margin: 0; text-align: center; line-height: 1.5;
-  font-size: var(--sk-font-size-xxs, 1.35rem); color: var(--skq-muted);
-}
 .sk-quiz__email {
-  width: 100%; max-width: 34rem; margin-top: 1.4rem;
+  width: 100%; max-width: 34rem; margin-top: 2.2rem; padding-top: 2.2rem;
+  border-top: 1px solid var(--skq-line);
   display: grid; gap: 0.9rem;
 }
 .sk-quiz__email-heading { font-family: var(--skq-serif); font-size: var(--sk-font-size-small, 1.9rem); color: var(--skq-brand); margin: 0; }

@@ -273,8 +273,6 @@ class SkQuiz extends HTMLElement {
 
     // Protokoll-nedlasting: gratis, ingen mur. Vises hvis PDF er satt for koden.
     const protocolCode = meta.protocol || handle;
-    box.appendChild(el('p', { class: 'sk-quiz__protocol-title', text: this.L.protocol_title || 'Din personlige LED-protokoll' }));
-    box.appendChild(el('p', { class: 'sk-quiz__protocol-sub', text: this.L.protocol_sub || 'En uke-for-uke plan tilpasset huden din.' }));
     const pdfUrl = (this.cfg.protocolPdf || {})[protocolCode];
     if (pdfUrl) {
       const dlLink = el('a', {
