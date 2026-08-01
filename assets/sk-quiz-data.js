@@ -29,12 +29,12 @@
         id: 'q1',
         key: 'concern',
         routing: true,
-        legend: 'Hva plager huden din mest akkurat nå?',
+        legend: 'Hva ønsker du mest å forbedre?',
         options: [
-          { value: 'akne', label: 'Utbrudd og problemhud' },
           { value: 'rynker', label: 'Fine linjer og rynker' },
           { value: 'fasthet', label: 'Mindre fasthet og spenst' },
-          { value: 'hudtone', label: 'Ujevn tone og lite glød' }
+          { value: 'hudtone', label: 'Ujevn tone og lite glød' },
+          { value: 'akne', label: 'Utbrudd og problemhud' }
         ]
       },
       {
