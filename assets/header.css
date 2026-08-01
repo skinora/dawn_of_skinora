@@ -1150,3 +1150,36 @@ details-disclosure > details {
     max-height: 1.6rem;
   }
 }
+
+/* ============================================================
+   Veiviser-header: logo til venstre + FINN DIN MASKE i header.
+   Additivt (sist i fila → vinner på kildeorden). Reverser ved å
+   slette hele denne blokka. Grid-en ligger på .sk-header__grid;
+   brand ble tvunget til midten med position:absolute – vi opphever det.
+   ============================================================ */
+@media screen and (min-width: 990px) {
+  .sk-header__grid > .sk-header__brand {
+    position: static;
+    transform: none;
+    left: auto;
+    pointer-events: auto;
+    justify-self: start;
+  }
+  .sk-header__grid {
+    grid-template-columns: max-content 1fr max-content;
+    grid-template-areas: 'brand nav icons';
+  }
+  .sk-header__grid > .header__menu {
+    grid-area: nav;
+    justify-self: start;
+  }
+}
+
+/* FINN DIN MASKE synlig også på mobil (kompakt så den får plass) */
+@media screen and (max-width: 749px) {
+  .sk-quiz-trigger--header {
+    padding: 0.5rem 0.9rem;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+  }
+}
