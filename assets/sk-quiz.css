@@ -313,6 +313,7 @@ sk-quiz {
 
 /* Kompakt variant for header */
 .sk-quiz-trigger--header {
+  flex: 0 0 auto; /* ikke krymp i ikon-raden – ellers klipper overflow:hidden teksten */
   padding: 0.7rem 1.4rem;
   font-size: var(--sk-font-size-xxs, 1.2rem);
   text-transform: uppercase; letter-spacing: 0.08em;
