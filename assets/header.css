@@ -1175,11 +1175,11 @@ details-disclosure > details {
   }
 }
 
-/* FINN DIN MASKE synlig også på mobil (kompakt så den får plass) */
+/* «Quiz»-knappen synlig også på mobil – liten så den ikke kolliderer med logoen */
 @media screen and (max-width: 749px) {
   .sk-quiz-trigger--header {
-    padding: 0.5rem 0.9rem;
-    font-size: 1rem;
-    letter-spacing: 0.05em;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
   }
 }

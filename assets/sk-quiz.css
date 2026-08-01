@@ -310,6 +310,13 @@ sk-quiz {
   align-self: center; white-space: nowrap;
 }
 
+/* Kort mobil-etikett («Quiz») vs full desktop-etikett («Finn din maske») */
+.sk-quiz-trigger__short { display: none; }
+@media (max-width: 989px) {
+  .sk-quiz-trigger__full { display: none; }
+  .sk-quiz-trigger__short { display: inline; }
+}
+
 .sk-quiz-trigger--link,
 .sk-quiz-trigger--link:link,
 .sk-quiz-trigger--link:visited,

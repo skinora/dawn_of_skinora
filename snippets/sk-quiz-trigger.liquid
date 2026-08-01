@@ -116,12 +116,19 @@
 
 {%- else -%}
   {%- assign _style = style | default: 'pill' -%}
+  {%- assign _lbl = label -%}
+  {%- if _lbl == blank -%}{%- assign _lbl = 'sk_quiz.trigger_default' | t -%}{%- endif -%}
   <a
     href="{{ _quiz_url }}"
     class="sk-quiz-trigger sk-quiz-trigger--{{ _style }} {{ classes }}"
     data-sk-quiz-trigger
     data-placement="{{ placement | default: 'generic' }}"
   >
-    {%- if label != blank -%}{{ label }}{%- else -%}{{ 'sk_quiz.trigger_default' | t }}{%- endif -%}
+    {%- if label_short != blank -%}
+      <span class="sk-quiz-trigger__full">{{ _lbl }}</span>
+      <span class="sk-quiz-trigger__short">{{ label_short }}</span>
+    {%- else -%}
+      {{ _lbl }}
+    {%- endif -%}
   </a>
 {%- endif -%}
