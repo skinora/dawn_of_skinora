@@ -119,7 +119,7 @@ sk-quiz {
   cursor: pointer;
   border: 1px solid transparent;
   text-align: center; text-decoration: none;
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .sk-quiz__btn:disabled { opacity: 0.35; cursor: not-allowed; }
 .sk-quiz__btn--primary {
@@ -153,6 +153,9 @@ sk-quiz {
 }
 .sk-quiz__btn--ghost { background: transparent; color: var(--skq-brand); border-color: var(--skq-line); }
 .sk-quiz__btn--ghost:hover { border-color: var(--skq-brand); }
+/* Lås tekstfarge i alle tilstander – temaets a:hover skal aldri gjøre teksten blå */
+.sk-quiz__btn--primary:link, .sk-quiz__btn--primary:visited, .sk-quiz__btn--primary:hover, .sk-quiz__btn--primary:focus, .sk-quiz__btn--primary:active { color: #fff; }
+.sk-quiz__btn--ghost:link, .sk-quiz__btn--ghost:visited, .sk-quiz__btn--ghost:hover, .sk-quiz__btn--ghost:focus, .sk-quiz__btn--ghost:active { color: var(--skq-brand); }
 .sk-quiz__btn:focus-visible { outline: 2px solid var(--skq-brand); outline-offset: 3px; }
 
 /* ---------- Resume ---------- */
@@ -173,8 +176,13 @@ sk-quiz {
 .sk-quiz__result-price { font-family: var(--skq-serif); font-size: clamp(2.2rem, 3.5vw, 2.8rem); color: var(--skq-brand); margin: 0.4rem 0 0; }
 .sk-quiz__result-img { width: 19rem; height: auto; border-radius: 18px; margin: 1rem 0 0.4rem; box-shadow: 0 20px 50px rgba(45, 27, 61, 0.16); }
 .sk-quiz__result-cta { min-width: 24rem; margin-top: 0.8rem; }
+.sk-quiz__result-link, .sk-quiz__result-assess,
+.sk-quiz__result-link:link, .sk-quiz__result-link:visited, .sk-quiz__result-link:hover, .sk-quiz__result-link:focus,
+.sk-quiz__result-assess:link, .sk-quiz__result-assess:visited, .sk-quiz__result-assess:hover, .sk-quiz__result-assess:focus {
+  color: var(--skq-brand);
+}
 .sk-quiz__result-link, .sk-quiz__result-assess {
-  font-size: var(--sk-font-size-xxs, 1.4rem); color: var(--skq-brand);
+  font-size: var(--sk-font-size-xxs, 1.4rem);
   text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 1px;
 }
 .sk-quiz__loading { color: var(--skq-muted); }
@@ -252,19 +260,24 @@ sk-quiz {
   display: inline-flex; align-items: center; justify-content: center;
   font-family: var(--font-body-family);
   text-decoration: none; cursor: pointer;
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition: box-shadow 0.4s ease, background-color 0.4s ease;
 }
 .sk-quiz-trigger:focus-visible { outline: 2px solid var(--color-brand, currentColor); outline-offset: 2px; }
 
 .sk-quiz-trigger--pill {
   background: var(--color-brand, rgb(var(--color-foreground)));
-  color: rgb(var(--color-background));
   border-radius: 999px;
   padding: 1.15rem 2.4rem;
   font-size: var(--sk-font-size-xs, 1.5rem);
   letter-spacing: 0.02em;
 }
-.sk-quiz-trigger--pill:hover { transform: translateY(-1px); }
+/* Alltid hvit tekst – aldri temaets blå lenkefarge på hover/visited/focus */
+.sk-quiz-trigger--pill:link,
+.sk-quiz-trigger--pill:visited,
+.sk-quiz-trigger--pill:hover,
+.sk-quiz-trigger--pill:focus,
+.sk-quiz-trigger--pill:active { color: rgb(var(--color-background)); }
+.sk-quiz-trigger--pill:hover { box-shadow: 0 10px 28px rgba(45, 27, 61, 0.26); }
 
 /* Kompakt variant for header */
 .sk-quiz-trigger--header {
@@ -274,8 +287,15 @@ sk-quiz {
   align-self: center; white-space: nowrap;
 }
 
-.sk-quiz-trigger--link {
+.sk-quiz-trigger--link,
+.sk-quiz-trigger--link:link,
+.sk-quiz-trigger--link:visited,
+.sk-quiz-trigger--link:hover,
+.sk-quiz-trigger--link:focus,
+.sk-quiz-trigger--link:active {
   color: rgb(var(--color-foreground));
+}
+.sk-quiz-trigger--link {
   text-decoration: underline; text-underline-offset: 0.2em;
   font-size: var(--sk-font-size-xs, 1.4rem);
 }
@@ -301,9 +321,15 @@ sk-quiz {
   box-shadow: 0 4px 18px rgba(45, 27, 61, 0.22);
 }
 .sk-quiz-tab[hidden] { display: none; }
+.sk-quiz-tab__link,
+.sk-quiz-tab__link:link,
+.sk-quiz-tab__link:visited,
+.sk-quiz-tab__link:hover,
+.sk-quiz-tab__link:focus,
+.sk-quiz-tab__link:active { color: inherit; }
 .sk-quiz-tab__link {
   writing-mode: vertical-rl; transform: rotate(180deg);
-  padding: 1.8rem 1rem; color: inherit; text-decoration: none;
+  padding: 1.8rem 1rem; text-decoration: none;
   font-size: var(--sk-font-size-xxs, 1.3rem); letter-spacing: 0.1em; text-transform: uppercase;
 }
 .sk-quiz-tab__close {
