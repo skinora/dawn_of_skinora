@@ -122,8 +122,35 @@ sk-quiz {
   transition: opacity 0.18s ease, transform 0.18s ease;
 }
 .sk-quiz__btn:disabled { opacity: 0.35; cursor: not-allowed; }
-.sk-quiz__btn--primary { background: var(--skq-brand); color: #fff; }
-.sk-quiz__btn--primary:not(:disabled):hover { transform: translateY(-1px); }
+.sk-quiz__btn--primary {
+  position: relative;
+  overflow: hidden;
+  background: var(--skq-brand);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(45, 27, 61, 0.18);
+}
+/* Default: rolig «pust» i skyggen når knappen er aktiv – fanger blikket lavmælt */
+.sk-quiz__btn--primary:not(:disabled) { animation: skqBreathe 3.2s ease-in-out infinite; }
+/* Lys-sveip som ligger klar til venstre og passerer over på hover */
+.sk-quiz__btn--primary::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 32%, rgba(255, 255, 255, 0.28) 50%, transparent 68%);
+  transform: translateX(-125%);
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+.sk-quiz__btn--primary:not(:disabled):hover {
+  transform: scale(1.02);
+  animation: none;
+  box-shadow: 0 12px 32px rgba(45, 27, 61, 0.36);
+}
+.sk-quiz__btn--primary:not(:disabled):hover::after { transform: translateX(125%); }
+.sk-quiz__btn--primary:not(:disabled):active { transform: scale(0.99); }
+@keyframes skqBreathe {
+  0%, 100% { box-shadow: 0 6px 18px rgba(45, 27, 61, 0.18); }
+  50% { box-shadow: 0 10px 30px rgba(45, 27, 61, 0.36); }
+}
 .sk-quiz__btn--ghost { background: transparent; color: var(--skq-brand); border-color: var(--skq-line); }
 .sk-quiz__btn--ghost:hover { border-color: var(--skq-brand); }
 .sk-quiz__btn:focus-visible { outline: 2px solid var(--skq-brand); outline-offset: 3px; }
@@ -297,4 +324,5 @@ sk-quiz {
   .sk-quiz__question,
   .sk-quiz-modal__close,
   .sk-quiz-trigger { transition: none; animation: none; }
+  .sk-quiz__btn--primary::after { display: none; }
 }
