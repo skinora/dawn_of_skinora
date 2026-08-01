@@ -85,6 +85,11 @@
         if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return; // behold «åpne i ny fane»
         e.preventDefault(); open();
       });
+      // Forhåndslast ved intensjon (hover/touch på en trigger) → modalen åpner umiddelbart ved klikk.
+      // ensure() er idempotent, så gjentatte hover koster ingenting.
+      function warm(e) { if (e.target.closest && e.target.closest('[data-sk-quiz-trigger]')) ensure(); }
+      document.addEventListener('pointerover', warm, { passive: true });
+      document.addEventListener('touchstart', warm, { passive: true });
       if (new URLSearchParams(location.search).get('modal') === 'quiz') open();
     })();
   </script>
