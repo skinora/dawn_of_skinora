@@ -108,7 +108,8 @@ sk-quiz {
 }
 .sk-quiz__result-eyebrow { font-size: var(--sk-font-size-xxs, 1.3rem); color: var(--skq-muted); margin: 0; text-transform: uppercase; letter-spacing: 0.14em; }
 .sk-quiz__result-title { font-family: var(--font-heading-family); font-size: var(--sk-font-size-xl, 2.9rem); font-weight: 600; margin: 0; outline: none; }
-.sk-quiz__result-price { font-size: var(--sk-font-size-large, 2rem); color: var(--skq-accent); margin: 0; }
+.sk-quiz__result-reason { font-size: var(--sk-font-size-xs, 1.5rem); line-height: 1.5; color: var(--skq-muted); margin: 0; max-width: 34ch; }
+.sk-quiz__result-price { font-size: var(--sk-font-size-large, 2rem); color: var(--skq-accent); margin: 0.2rem 0 0; }
 .sk-quiz__result-img { width: 20rem; height: auto; border-radius: var(--skq-radius); margin: 0.6rem 0; }
 .sk-quiz__result-cta { min-width: 22rem; margin-top: 0.6rem; }
 .sk-quiz__result-link, .sk-quiz__result-assess {

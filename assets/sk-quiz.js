@@ -105,16 +105,16 @@ class SkQuiz extends HTMLElement {
   _renderResume(saved) {
     this.innerHTML = '';
     this.appendChild(el('div', { class: 'sk-quiz__resume', role: 'group' }, [
-      el('p', { class: 'sk-quiz__resume-title', text: this.L.resume_title || 'MIDL: Du har en påbegynt veiviser.' }),
+      el('p', { class: 'sk-quiz__resume-title', text: this.L.resume_title || 'Du har en påbegynt veiviser.' }),
       el('div', { class: 'sk-quiz__resume-actions' }, [
         el('button', {
           class: 'sk-quiz__btn sk-quiz__btn--primary', type: 'button',
-          text: this.L.resume_continue || 'MIDL: Fortsett der du slapp',
+          text: this.L.resume_continue || 'Fortsett der du slapp',
           onclick: () => { this.answers = saved.answers; this.stepIndex = Math.min(saved.stepIndex || 0, this.data.steps.length); this._renderStep(); }
         }),
         el('button', {
           class: 'sk-quiz__btn sk-quiz__btn--ghost', type: 'button',
-          text: this.L.resume_restart || 'MIDL: Start på nytt',
+          text: this.L.resume_restart || 'Start på nytt',
           onclick: () => { this._clear(); this.answers = {}; this.stepIndex = 0; this._renderStep(); }
         })
       ])
@@ -129,11 +129,11 @@ class SkQuiz extends HTMLElement {
     const bar = el('div', {
       class: 'sk-quiz__progress', role: 'progressbar',
       'aria-valuemin': '1', 'aria-valuemax': String(total), 'aria-valuenow': String(cur),
-      'aria-label': this.L.progress_label || 'MIDL: Fremdrift'
+      'aria-label': this.L.progress_label || 'Fremdrift'
     }, [el('span', { class: 'sk-quiz__progress-fill', style: `width:${(cur / total) * 100}%` })]);
     const text = el('p', {
       class: 'sk-quiz__progress-text',
-      text: (this.L.step_of || 'MIDL: Steg {n} av {total}').replace('{n}', cur).replace('{total}', total)
+      text: (this.L.step_of || 'Steg {n} av {total}').replace('{n}', cur).replace('{total}', total)
     });
     wrap.append(bar, text);
     return wrap;
@@ -176,12 +176,12 @@ class SkQuiz extends HTMLElement {
     // Navigasjon
     const back = el('button', {
       class: 'sk-quiz__btn sk-quiz__btn--ghost', type: 'button',
-      text: this.L.back || 'MIDL: Tilbake', disabled: this.stepIndex === 0,
+      text: this.L.back || 'Tilbake', disabled: this.stepIndex === 0,
       onclick: () => { if (this.stepIndex > 0) { this.stepIndex--; this._save(); this._renderStep(); } }
     });
     const next = el('button', {
       class: 'sk-quiz__btn sk-quiz__btn--primary', type: 'button',
-      text: this.stepIndex === this.data.steps.length - 1 ? (this.L.see_result || 'MIDL: Se anbefaling') : (this.L.next || 'MIDL: Neste'),
+      text: this.stepIndex === this.data.steps.length - 1 ? (this.L.see_result || 'Se anbefaling') : (this.L.next || 'Neste'),
       disabled: !this.answers[step.key],
       onclick: () => { this.stepIndex++; this._save(); dl('sk_quiz_step', { quiz_step: this.stepIndex + 1 }); this.stepIndex >= this.data.steps.length ? this._renderResult() : this._renderStep(); }
     });
@@ -214,7 +214,7 @@ class SkQuiz extends HTMLElement {
     this.innerHTML = '';
 
     const box = el('div', { class: 'sk-quiz__result', role: 'group', 'aria-labelledby': 'sk-quiz-result-h' });
-    box.appendChild(el('p', { class: 'sk-quiz__loading', text: this.L.loading || 'MIDL: Finner din anbefaling …', 'aria-live': 'polite' }));
+    box.appendChild(el('p', { class: 'sk-quiz__loading', text: this.L.loading || 'Finner din anbefaling …', 'aria-live': 'polite' }));
     this.appendChild(box);
 
     let p = null;
@@ -228,8 +228,9 @@ class SkQuiz extends HTMLElement {
     const variantId = p && (p.first_available_variant || p.variants.find((v) => v.available) || p.variants[0]);
 
     if (meta.badge) box.appendChild(el('p', { class: 'sk-quiz__result-badge', text: meta.badge }));
-    box.appendChild(el('p', { class: 'sk-quiz__result-eyebrow', text: this.L.result_eyebrow || 'MIDL: Vår anbefaling' }));
-    box.appendChild(el('h2', { class: 'sk-quiz__result-title', id: 'sk-quiz-result-h', tabindex: '-1', text: p ? p.title : (this.L.result_fallback_title || 'MIDL: Anbefalt maske') }));
+    box.appendChild(el('p', { class: 'sk-quiz__result-eyebrow', text: this.L.result_eyebrow || 'Vår anbefaling' }));
+    box.appendChild(el('h2', { class: 'sk-quiz__result-title', id: 'sk-quiz-result-h', tabindex: '-1', text: p ? p.title : (this.L.result_fallback_title || 'Anbefalt maske') }));
+    if (meta.reason) box.appendChild(el('p', { class: 'sk-quiz__result-reason', text: meta.reason }));
     if (p) box.appendChild(el('p', { class: 'sk-quiz__result-price', text: money(p.price) }));
     if (p && p.featured_image) {
       box.appendChild(el('img', { class: 'sk-quiz__result-img', src: p.featured_image, alt: p.title, loading: 'lazy', width: '320', height: '320' }));
@@ -238,7 +239,7 @@ class SkQuiz extends HTMLElement {
     // Legg i handlekurv – med produktside som ekte fallback-lenke
     const addBtn = el('a', {
       class: 'sk-quiz__btn sk-quiz__btn--primary sk-quiz__result-cta', href: productUrl,
-      text: this.L.add_to_cart || 'MIDL: Legg i handlekurv'
+      text: this.L.add_to_cart || 'Legg i handlekurv'
     });
     addBtn.addEventListener('click', (e) => {
       if (!variantId) return; // ingen JS-add mulig → følg lenken til produktsiden
@@ -246,11 +247,11 @@ class SkQuiz extends HTMLElement {
       this._addToCart(variantId.id, addBtn);
     });
     box.appendChild(addBtn);
-    box.appendChild(el('a', { class: 'sk-quiz__result-link', href: productUrl, text: this.L.view_product || 'MIDL: Se produktet' }));
+    box.appendChild(el('a', { class: 'sk-quiz__result-link', href: productUrl, text: this.L.view_product || 'Se produktet' }));
 
     // Clear-selvtest hvis relevant
     if (meta.clearAssessment && this.cfg.clearAssessmentUrl) {
-      box.appendChild(el('a', { class: 'sk-quiz__result-assess', href: this.cfg.clearAssessmentUrl, text: this.L.clear_link_label || 'MIDL: Passer Clear for deg?' }));
+      box.appendChild(el('a', { class: 'sk-quiz__result-assess', href: this.cfg.clearAssessmentUrl, text: this.L.clear_link_label || 'Passer Clear for deg?' }));
     }
 
     // Valgfri e-post (ALDRI en mur). Samtykke ikke forhåndskrysset.
@@ -263,7 +264,7 @@ class SkQuiz extends HTMLElement {
 
     box.appendChild(el('button', {
       class: 'sk-quiz__btn sk-quiz__btn--ghost sk-quiz__restart', type: 'button',
-      text: this.L.restart || 'MIDL: Start på nytt',
+      text: this.L.restart || 'Start på nytt',
       onclick: () => { this._clear(); this.answers = {}; this.stepIndex = 0; this._navigated = false; this._renderStep(); }
     }));
 
@@ -271,7 +272,7 @@ class SkQuiz extends HTMLElement {
   }
 
   async _addToCart(id, btn) {
-    btn.textContent = this.L.adding || 'MIDL: Legger til …';
+    btn.textContent = this.L.adding || 'Legger til …';
     // Be Shopify rendre skuff-seksjonene med i svaret, så temaets egen
     // renderContents() kan oppdatere OG åpne skuffen (Dawn-mønsteret).
     const drawer = document.querySelector('cart-drawer');
@@ -289,7 +290,7 @@ class SkQuiz extends HTMLElement {
       if (!r.ok) throw new Error('add failed');
       const data = await r.json();
       dl('sk_quiz_add_to_cart', { quiz_result: resolveHandle(this.data, this.answers) });
-      btn.textContent = this.L.added || 'MIDL: Lagt til ✓';
+      btn.textContent = this.L.added || 'Lagt til ✓';
       this._closeModal();                 // 1) lukk quiz-modalen (hvis åpen)
       this._openCartDrawer(drawer, data); // 2) åpne temaets skuff med oppdatert innhold
     } catch (e) {
@@ -365,29 +366,29 @@ class SkQuiz extends HTMLElement {
     const cbId = 'sk-quiz-consent';
     const email = el('input', {
       type: 'email', class: 'sk-quiz__email-input', name: 'email',
-      placeholder: this.L.email_placeholder || 'MIDL: din@epost.no',
-      autocomplete: 'email', 'aria-label': this.L.email_placeholder || 'MIDL: E-post'
+      placeholder: this.L.email_placeholder || 'din@epost.no',
+      autocomplete: 'email', 'aria-label': this.L.email_placeholder || 'E-post'
     });
     const consent = el('input', { type: 'checkbox', id: cbId, class: 'sk-quiz__consent-box' }); // IKKE forhåndskrysset
     const consentLabel = el('label', { class: 'sk-quiz__consent', for: cbId }, [
-      consent, el('span', { text: this.L.consent || 'MIDL: Ja, send meg råd på e-post. Kan avmeldes når som helst.' })
+      consent, el('span', { text: this.L.consent || 'Ja, send meg råd på e-post. Kan avmeldes når som helst.' })
     ]);
-    const send = el('button', { type: 'submit', class: 'sk-quiz__btn sk-quiz__btn--ghost', text: this.L.email_send || 'MIDL: Send' });
+    const send = el('button', { type: 'submit', class: 'sk-quiz__btn sk-quiz__btn--ghost', text: this.L.email_send || 'Send' });
     const msg = el('p', { class: 'sk-quiz__email-msg', 'aria-live': 'polite' });
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      if (!consent.checked || !email.value) { msg.textContent = this.L.email_need_consent || 'MIDL: Kryss av for samtykke og fyll inn e-post.'; return; }
+      if (!consent.checked || !email.value) { msg.textContent = this.L.email_need_consent || 'Kryss av for samtykke og fyll inn e-post.'; return; }
       dl('sk_quiz_email_submit', { quiz_protocol: ctx.protocol }); // kun kort kode, ingen e-post/fritekst
       // Meld inn i Klaviyo (hvis konfigurert) + send event for evt. egen wiring.
       this._klaviyoSubscribe(email.value, ctx);
       document.dispatchEvent(new CustomEvent('sk-quiz:email', { detail: { email: email.value, handle: ctx.handle, protocol: ctx.protocol } }));
       form.innerHTML = '';
-      form.appendChild(el('p', { class: 'sk-quiz__email-msg', text: this.L.email_thanks || 'MIDL: Takk! Vi sender deg noen gode råd.' }));
+      form.appendChild(el('p', { class: 'sk-quiz__email-msg', text: this.L.email_thanks || 'Takk! Vi sender deg noen gode råd.' }));
     });
 
     const parts = [
-      el('p', { class: 'sk-quiz__email-heading', text: fill(this.L.email_heading || 'MIDL: Få din gratis LED-protokoll') })
+      el('p', { class: 'sk-quiz__email-heading', text: fill(this.L.email_heading || 'Få din gratis LED-protokoll') })
     ];
     if (this.L.email_sub) parts.push(el('p', { class: 'sk-quiz__email-sub', text: fill(this.L.email_sub) }));
     parts.push(el('div', { class: 'sk-quiz__email-row' }, [email, send]), consentLabel, msg);
