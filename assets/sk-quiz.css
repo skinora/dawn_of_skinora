@@ -265,11 +265,26 @@ sk-quiz {
 .sk-quiz-trigger:focus-visible { outline: 2px solid var(--color-brand, currentColor); outline-offset: 2px; }
 
 .sk-quiz-trigger--pill {
+  position: relative;
+  overflow: hidden;
   background: var(--color-brand, rgb(var(--color-foreground)));
   border-radius: 999px;
   padding: 1.15rem 2.4rem;
   font-size: var(--sk-font-size-xs, 1.5rem);
   letter-spacing: 0.02em;
+}
+/* «Nøktern blincky»: et rolig lys-glimt som glir over med jevne mellomrom */
+.sk-quiz-trigger--pill::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.32) 50%, transparent 62%);
+  transform: translateX(-130%);
+  pointer-events: none;
+  animation: skqGlint 6s ease-in-out 1.5s infinite;
+}
+@keyframes skqGlint {
+  0% { transform: translateX(-130%); }
+  11%, 100% { transform: translateX(130%); }
 }
 /* Alltid hvit tekst – aldri temaets blå lenkefarge på hover/visited/focus */
 .sk-quiz-trigger--pill:link,
@@ -350,5 +365,6 @@ sk-quiz {
   .sk-quiz__question,
   .sk-quiz-modal__close,
   .sk-quiz-trigger { transition: none; animation: none; }
-  .sk-quiz__btn--primary::after { display: none; }
+  .sk-quiz__btn--primary::after,
+  .sk-quiz-trigger--pill::after { display: none; }
 }
