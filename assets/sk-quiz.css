@@ -163,7 +163,8 @@ sk-quiz {
 }
 .sk-quiz__email-heading { font-family: var(--skq-serif); font-size: var(--sk-font-size-small, 1.9rem); color: var(--skq-brand); margin: 0; }
 .sk-quiz__email-sub { font-size: var(--sk-font-size-xxs, 1.35rem); color: var(--skq-muted); margin: 0; line-height: 1.5; }
-.sk-quiz__email-row { display: flex; gap: 0.6rem; margin-top: 0.4rem; }
+.sk-quiz__email-row { display: grid; gap: 0.8rem; margin-top: 0.4rem; }
+.sk-quiz__email-row .sk-quiz__btn { width: 100%; }
 .sk-quiz__email-input {
   flex: 1 1 auto; min-width: 0;
   padding: 1.15rem 1.3rem; border: 1px solid var(--skq-line);
