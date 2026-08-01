@@ -317,6 +317,15 @@ sk-quiz {
   .sk-quiz-trigger__short { display: inline; }
 }
 
+/* Mobil «3. linje»: quizen alene på egen full-bredde rad under headeren.
+   Header-knappen (i ikon-raden) brukes kun på desktop. */
+.sk-quiz-bar { display: none; }
+.sk-quiz-trigger--bar { display: flex; width: 100%; }
+@media (max-width: 989px) {
+  .sk-quiz-bar { display: block; padding: 0.6rem clamp(1.2rem, 4vw, 2rem) 0.9rem; }
+  .sk-quiz-trigger--header { display: none; }
+}
+
 .sk-quiz-trigger--link,
 .sk-quiz-trigger--link:link,
 .sk-quiz-trigger--link:visited,

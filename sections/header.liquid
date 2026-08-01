@@ -533,6 +533,8 @@
       </div>
     </div>
   </header>
+  {%- comment -%} Mobil «3. linje»: quizen på egen full-bredde rad under headeren (kun mobil) {%- endcomment -%}
+  {% render 'sk-quiz-trigger', part: 'bar', label: 'Finn maske som passer deg' %}
 </{{ header_tag }}>
 
 {% schema %}

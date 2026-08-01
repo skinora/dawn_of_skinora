@@ -114,6 +114,21 @@
     })();
   </script>
 
+{%- elsif _part == 'bar' -%}
+  {%- comment -%} Mobil CTA-rad: quizen alene på egen full-bredde linje under headeren. {%- endcomment -%}
+  {%- assign _bar_lbl = label -%}
+  {%- if _bar_lbl == blank -%}{%- assign _bar_lbl = 'sk_quiz.trigger_default' | t -%}{%- endif -%}
+  <div class="sk-quiz-bar">
+    <a
+      href="{{ _quiz_url }}"
+      class="sk-quiz-trigger sk-quiz-trigger--pill sk-quiz-trigger--bar"
+      data-sk-quiz-trigger
+      data-placement="headerbar"
+    >
+      {{ _bar_lbl }} →
+    </a>
+  </div>
+
 {%- else -%}
   {%- assign _style = style | default: 'pill' -%}
   {%- assign _lbl = label -%}
