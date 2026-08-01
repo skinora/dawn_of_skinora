@@ -233,7 +233,22 @@ class SkQuiz extends HTMLElement {
     box.appendChild(el('p', { class: 'sk-quiz__result-eyebrow', text: this.L.result_eyebrow || 'Vår anbefaling' }));
     box.appendChild(el('h2', { class: 'sk-quiz__result-title', id: 'sk-quiz-result-h', tabindex: '-1', text: p ? p.title : (this.L.result_fallback_title || 'Anbefalt maske') }));
     if (meta.reason) box.appendChild(el('p', { class: 'sk-quiz__result-reason', text: meta.reason }));
-    if (p) box.appendChild(el('p', { class: 'sk-quiz__result-price', text: money(p.price) }));
+    if (p) {
+      const priceEl = el('p', { class: 'sk-quiz__result-price' });
+      // Ekte pakkebesparelse: før-pris strøket + spar-beløp (kun når satt, dvs. pakker).
+      if (p.compare_at_price && p.compare_at_price > p.price) {
+        priceEl.appendChild(el('span', { class: 'sk-quiz__result-was', text: money(p.compare_at_price) }));
+        priceEl.appendChild(el('span', { class: 'sk-quiz__result-now', text: money(p.price) }));
+        box.appendChild(priceEl);
+        box.appendChild(el('p', {
+          class: 'sk-quiz__result-save',
+          text: (this.L.save_label || 'Spar {amount}').replace('{amount}', money(p.compare_at_price - p.price))
+        }));
+      } else {
+        priceEl.textContent = money(p.price);
+        box.appendChild(priceEl);
+      }
+    }
     if (p && p.featured_image) {
       box.appendChild(el('img', { class: 'sk-quiz__result-img', src: p.featured_image, alt: p.title, loading: 'lazy', width: '320', height: '320' }));
     }
@@ -258,6 +273,8 @@ class SkQuiz extends HTMLElement {
 
     // Protokoll-nedlasting: gratis, ingen mur. Vises hvis PDF er satt for koden.
     const protocolCode = meta.protocol || handle;
+    box.appendChild(el('p', { class: 'sk-quiz__protocol-title', text: this.L.protocol_title || 'Din personlige LED-protokoll' }));
+    box.appendChild(el('p', { class: 'sk-quiz__protocol-sub', text: this.L.protocol_sub || 'En uke-for-uke plan tilpasset huden din.' }));
     const pdfUrl = (this.cfg.protocolPdf || {})[protocolCode];
     if (pdfUrl) {
       const dlLink = el('a', {
