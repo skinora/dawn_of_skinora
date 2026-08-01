@@ -254,11 +254,25 @@ class SkQuiz extends HTMLElement {
       box.appendChild(el('a', { class: 'sk-quiz__result-assess', href: this.cfg.clearAssessmentUrl, text: this.L.clear_link_label || 'Passer Clear for deg?' }));
     }
 
-    // Valgfri e-post (ALDRI en mur). Samtykke ikke forhåndskrysset.
-    // Protokoll-koden følger med, så Klaviyo kan sende en TILPASSET protokoll.
+    // Protokoll-nedlasting: gratis, ingen mur. Vises hvis PDF er satt for koden.
+    const protocolCode = meta.protocol || handle;
+    const pdfUrl = (this.cfg.protocolPdf || {})[protocolCode];
+    if (pdfUrl) {
+      const dlLink = el('a', {
+        class: 'sk-quiz__btn sk-quiz__btn--ghost sk-quiz__protocol-dl',
+        href: pdfUrl, target: '_blank', rel: 'noopener',
+        text: this.L.download_protocol || 'Last ned din LED-protokoll (PDF)'
+      });
+      dlLink.setAttribute('download', '');
+      dlLink.addEventListener('click', function () { dl('sk_quiz_download', { quiz_protocol: protocolCode }); });
+      box.appendChild(dlLink);
+    }
+
+    // Valgfri e-post (ALDRI en mur): planen tilsendt + ukentlige påminnelser.
+    // Protokoll-koden følger med, så Klaviyo kan sende en TILPASSET serie.
     box.appendChild(this._emailForm({
       handle: handle,
-      protocol: meta.protocol || handle,
+      protocol: protocolCode,
       productTitle: p ? p.title : ''
     }));
 

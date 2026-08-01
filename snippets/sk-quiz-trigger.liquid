@@ -33,6 +33,10 @@
         "companyId": {{ settings.klaviyo_public_key | default: '' | json }},
         "listId": {{ settings.klaviyo_quiz_list_id | default: '' | json }}
       },
+      "protocolPdf": {
+        "clear": {{ settings.sk_quiz_pdf_clear | default: '' | json }},
+        "radiance": {{ settings.sk_quiz_pdf_radiance | default: '' | json }}
+      },
       "labels": {
         "next": {{ 'sk_quiz.next' | t | json }},
         "back": {{ 'sk_quiz.back' | t | json }},

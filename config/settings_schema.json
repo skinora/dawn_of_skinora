@@ -1522,6 +1522,24 @@
         "id": "klaviyo_quiz_list_id",
         "label": "Klaviyo liste-ID for veiviser-påmelding",
         "info": "Listen som utløser protokoll-flowen. Skru på dobbel/enkel opt-in på listen i Klaviyo."
+      },
+      {
+        "type": "header",
+        "content": "Protokoll-PDF (nedlasting i resultatet)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Last opp de to PDF-ene i Shopify → Innhold → Filer, kopier URL-en og lim inn her. Tomt felt = ingen nedlastingsknapp (da leveres protokollen kun på e-post)."
+      },
+      {
+        "type": "text",
+        "id": "sk_quiz_pdf_clear",
+        "label": "PDF-URL – protokoll «clear» (akne/blått lys)"
+      },
+      {
+        "type": "text",
+        "id": "sk_quiz_pdf_radiance",
+        "label": "PDF-URL – protokoll «radiance» (foryngelse/rødt lys)"
       }
     ]
   }

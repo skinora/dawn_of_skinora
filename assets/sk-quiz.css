@@ -117,6 +117,8 @@ sk-quiz {
   text-decoration: underline; text-underline-offset: 0.2em;
 }
 .sk-quiz__loading { color: var(--skq-muted); }
+.sk-quiz__protocol-dl { margin-top: 1.4rem; min-width: 22rem; }
+.sk-quiz__protocol-dl::before { content: "↓ "; }
 
 /* ---------- E-post (valgfri, aldri mur) ---------- */
 .sk-quiz__email { width: 100%; max-width: 34rem; margin-top: 1.6rem; padding-top: 1.6rem; border-top: 1px solid var(--skq-line); display: grid; gap: 0.8rem; }
