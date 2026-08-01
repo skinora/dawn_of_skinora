@@ -164,24 +164,24 @@ sk-quiz {
 .sk-quiz__resume-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
 /* ---------- Resultat: redaksjonelt ---------- */
-.sk-quiz__result { text-align: center; display: grid; gap: 0.9rem; justify-items: center; }
+.sk-quiz__result { text-align: center; display: grid; gap: 0.55rem; justify-items: center; }
 .sk-quiz__result-badge {
   font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.2em;
   color: #fff; background: var(--skq-brand);
   padding: 0.5rem 1.2rem; border-radius: 999px; margin: 0;
 }
 .sk-quiz__result-eyebrow { font-size: 1.2rem; color: var(--skq-muted); margin: 0.4rem 0 0; text-transform: uppercase; letter-spacing: 0.2em; }
-.sk-quiz__result-title { font-family: var(--skq-serif); font-weight: 500; font-size: clamp(2.8rem, 5vw, 3.6rem); line-height: 1.05; color: var(--skq-brand); margin: 0; outline: none; }
+.sk-quiz__result-title { font-family: var(--skq-serif); font-weight: 500; font-size: clamp(2.3rem, 4.4vw, 2.9rem); line-height: 1.05; color: var(--skq-brand); margin: 0; outline: none; }
 .sk-quiz__result-reason { font-size: var(--sk-font-size-xs, 1.5rem); line-height: 1.55; color: var(--skq-muted); margin: 0; max-width: 32ch; }
-.sk-quiz__result-price { font-family: var(--skq-serif); font-size: clamp(2.2rem, 3.5vw, 2.8rem); color: var(--skq-brand); margin: 0.4rem 0 0; }
+.sk-quiz__result-price { font-family: var(--skq-serif); font-size: clamp(1.9rem, 3vw, 2.3rem); color: var(--skq-brand); margin: 0.2rem 0 0; }
 .sk-quiz__result-was { text-decoration: line-through; color: var(--skq-muted); font-size: 0.62em; margin-right: 0.6rem; }
 .sk-quiz__result-now { color: var(--skq-brand); }
 .sk-quiz__result-save {
   font-size: var(--sk-font-size-xxs, 1.25rem); letter-spacing: 0.08em; text-transform: uppercase;
   color: #fff; background: var(--skq-brand); padding: 0.4rem 1.1rem; border-radius: 999px; margin: 0.4rem 0 0;
 }
-.sk-quiz__result-img { width: 19rem; height: auto; border-radius: 18px; margin: 1rem 0 0.4rem; box-shadow: 0 20px 50px rgba(45, 27, 61, 0.16); }
-.sk-quiz__result-cta { min-width: 24rem; margin-top: 0.8rem; }
+.sk-quiz__result-img { width: clamp(9rem, 30vw, 12rem); height: auto; border-radius: 16px; margin: 0.4rem 0 0.2rem; box-shadow: 0 14px 34px rgba(45, 27, 61, 0.15); }
+.sk-quiz__result-cta { min-width: 22rem; margin-top: 0.6rem; }
 .sk-quiz__result-link, .sk-quiz__result-assess,
 .sk-quiz__result-link:link, .sk-quiz__result-link:visited, .sk-quiz__result-link:hover, .sk-quiz__result-link:focus,
 .sk-quiz__result-assess:link, .sk-quiz__result-assess:visited, .sk-quiz__result-assess:hover, .sk-quiz__result-assess:focus {
@@ -199,9 +199,9 @@ sk-quiz {
 
 /* ---------- E-post: planen + påminnelser (valgfri) ---------- */
 .sk-quiz__email {
-  width: 100%; max-width: 34rem; margin-top: 2.2rem; padding-top: 2.2rem;
+  width: 100%; max-width: 34rem; margin-top: 1.5rem; padding-top: 1.5rem;
   border-top: 1px solid var(--skq-line);
-  display: grid; gap: 0.9rem;
+  display: grid; gap: 0.8rem;
 }
 .sk-quiz__email-heading { font-family: var(--skq-serif); font-size: var(--sk-font-size-small, 1.9rem); color: var(--skq-brand); margin: 0; }
 .sk-quiz__email-sub { font-size: var(--sk-font-size-xxs, 1.35rem); color: var(--skq-muted); margin: 0; line-height: 1.5; }
@@ -256,7 +256,7 @@ sk-quiz {
 .sk-quiz-modal__close:focus-visible { outline: 2px solid var(--color-brand, currentColor); outline-offset: 3px; }
 @media (max-width: 749px) {
   .sk-quiz-modal { width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; border-radius: 0; }
-  .sk-quiz-modal__body { max-height: 100dvh; }
+  .sk-quiz-modal__body { max-height: 100dvh; padding: 1.8rem 1.5rem 2.4rem; }
   .sk-quiz-modal__close { top: 0.8rem; right: 0.8rem; box-shadow: none; }
 }
 
