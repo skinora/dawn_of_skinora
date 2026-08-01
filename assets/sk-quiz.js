@@ -285,13 +285,10 @@ class SkQuiz extends HTMLElement {
       box.appendChild(dlLink);
     }
 
-    // Valgfri e-post (ALDRI en mur): planen tilsendt + ukentlige påminnelser.
-    // Protokoll-koden følger med, så Klaviyo kan sende en TILPASSET serie.
-    box.appendChild(this._emailForm({
-      handle: handle,
-      protocol: protocolCode,
-      productTitle: p ? p.title : ''
-    }));
+    // E-postinnsamling er HOLDT TILBAKE inntil vi ser om quizen konverterer.
+    // _emailForm() og _klaviyoSubscribe() ligger klare i koden. Re-aktiver ved å
+    // fjerne kommentaren under:
+    // box.appendChild(this._emailForm({ handle: handle, protocol: protocolCode, productTitle: p ? p.title : '' }));
 
     box.appendChild(el('button', {
       class: 'sk-quiz__btn sk-quiz__btn--ghost sk-quiz__restart', type: 'button',
