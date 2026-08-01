@@ -115,13 +115,15 @@
       'skinora-radiance-face-neck': {
         badge: 'Best verdi',
         reason: 'Full dekning: ansikt og hals behandles samlet for et helhetlig resultat.',
-        protocol: 'radiance'
+        protocol: 'radiance',
+        linkHandle: 'skinora-radiance-face'
       },
       'skinora-duo-clear-radiance-neck': {
         badge: 'Komplett',
         reason: 'Blått lys mot utbrudd og rødt lys for halsen – hele rutinen i ett.',
         clearAssessment: true,
-        protocol: 'clear'
+        protocol: 'clear',
+        linkHandle: 'skinora-clear'
       }
     }
   };

@@ -225,6 +225,8 @@ class SkQuiz extends HTMLElement {
 
     box.innerHTML = '';
     const productUrl = p ? p.url : `${this.cfg.productBase || '/products/'}${handle}`;
+    // Pakker (Face+Neck, Duo) lenker til base-produktet der innhold/pakkeoppsett bor.
+    const linkUrl = meta.linkHandle ? `${this.cfg.productBase || '/products/'}${meta.linkHandle}` : productUrl;
     const variantId = p && (p.first_available_variant || p.variants.find((v) => v.available) || p.variants[0]);
 
     if (meta.badge) box.appendChild(el('p', { class: 'sk-quiz__result-badge', text: meta.badge }));
@@ -238,7 +240,7 @@ class SkQuiz extends HTMLElement {
 
     // Legg i handlekurv – med produktside som ekte fallback-lenke
     const addBtn = el('a', {
-      class: 'sk-quiz__btn sk-quiz__btn--primary sk-quiz__result-cta', href: productUrl,
+      class: 'sk-quiz__btn sk-quiz__btn--primary sk-quiz__result-cta', href: linkUrl,
       text: this.L.add_to_cart || 'Legg i handlekurv'
     });
     addBtn.addEventListener('click', (e) => {
@@ -247,7 +249,7 @@ class SkQuiz extends HTMLElement {
       this._addToCart(variantId.id, addBtn);
     });
     box.appendChild(addBtn);
-    box.appendChild(el('a', { class: 'sk-quiz__result-link', href: productUrl, text: this.L.view_product || 'Se produktet' }));
+    box.appendChild(el('a', { class: 'sk-quiz__result-link', href: linkUrl, text: this.L.view_product || 'Se produktet' }));
 
     // Clear-selvtest hvis relevant
     if (meta.clearAssessment && this.cfg.clearAssessmentUrl) {
