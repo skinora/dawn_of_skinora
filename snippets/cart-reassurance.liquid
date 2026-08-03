@@ -91,30 +91,32 @@
       assign cr_show_count = cr_count
     endif
 
-    # Kontekstuelt sitat (alle er EKTE, verifiserte Okendo-anmeldelser):
-    #   Clear i kurven → Clear-sitatet.
-    #   Ellers         → veksler mellom de to Radiance-sitatene, bestemt av
-    #                    antall varer (stabilt per kurv, ingen JS/tilfeldighet).
-    assign cr_has_clear = false
-    for cr_i in cart.items
-      if cr_i.product.handle contains 'clear'
-        assign cr_has_clear = true
-        break
-      endif
-    endfor
+    # Sitat-rotasjon (alle er EKTE, verifiserte Okendo-anmeldelser).
+    # Veksler mellom alle tre – bestemt av antall varer i kurven, så det er
+    # stabilt per kurv (ingen hopping ved AJAX-re-render) og krever ingen JS.
+    assign cr_q_raw = ''
+    assign cr_n_raw = ''
+    if settings.cart_review_quote != blank
+      assign cr_q_raw = cr_q_raw | append: settings.cart_review_quote | append: '||'
+      assign cr_n_raw = cr_n_raw | append: settings.cart_review_name | append: '||'
+    endif
+    if settings.cart_review_quote_2 != blank
+      assign cr_q_raw = cr_q_raw | append: settings.cart_review_quote_2 | append: '||'
+      assign cr_n_raw = cr_n_raw | append: settings.cart_review_name_2 | append: '||'
+    endif
+    if settings.cart_review_quote_clear != blank
+      assign cr_q_raw = cr_q_raw | append: settings.cart_review_quote_clear | append: '||'
+      assign cr_n_raw = cr_n_raw | append: settings.cart_review_name_clear | append: '||'
+    endif
 
-    if cr_has_clear and settings.cart_review_quote_clear != blank
-      assign cr_quote = settings.cart_review_quote_clear
-      assign cr_name = settings.cart_review_name_clear
-    else
-      assign cr_pick = cart.item_count | modulo: 2
-      if cr_pick == 1 and settings.cart_review_quote_2 != blank
-        assign cr_quote = settings.cart_review_quote_2
-        assign cr_name = settings.cart_review_name_2
-      else
-        assign cr_quote = settings.cart_review_quote
-        assign cr_name = settings.cart_review_name
-      endif
+    assign cr_quotes = cr_q_raw | split: '||'
+    assign cr_names = cr_n_raw | split: '||'
+    assign cr_quote = ''
+    assign cr_name = ''
+    if cr_quotes.size > 0
+      assign cr_idx = cart.item_count | modulo: cr_quotes.size
+      assign cr_quote = cr_quotes[cr_idx]
+      assign cr_name = cr_names[cr_idx]
     endif
   -%}
   <div class="cart-reassure cart-reassure--{{ cr_context }}">

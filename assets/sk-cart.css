@@ -182,6 +182,9 @@
   }
 
   #main-cart-footer .cart__blocks {
+    /* Kortet er ofte eneste barn (ingen cart-note) og ville ellers landet i
+       kolonne 1. Lås det til høyre kolonne så bredden faktisk blir 360–420px. */
+    grid-column: 2;
     position: sticky;
     top: calc(clamp(50px, 6vw, 90px) + 24px); /* header-høyde + luft */
   }
