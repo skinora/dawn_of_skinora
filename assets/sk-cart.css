@@ -161,6 +161,15 @@
   display: none;
 }
 
+/* Produktbildet i kurven: Dawn setter max-width 100px (10rem/font-body-scale).
+   På smale skjermer er grid-cellen smalere enn det, og bildet la seg OVER
+   produkttittelen — tydeligst i første paint, før bildet er lastet og layouten
+   har satt seg. min(100%, …) gjør at det aldri kan overstige cellen. */
+#main-cart-items .cart-item__image {
+  max-width: min(100%, calc(10rem / var(--font-body-scale, 1)));
+  height: auto;
+}
+
 /* =============================================================
    ORDREOPPSUMMERING — kort på /cart
    Alt scopet til #main-cart-footer så handlekurv-DRAWEREN er urørt.
