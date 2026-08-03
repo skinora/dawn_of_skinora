@@ -1533,6 +1533,39 @@
     ]
   },
   {
+    "name": "Kampanje",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Sentral bryter for tidsavgrenset priskampanje. Slå AV etter kampanjeperioden – da går hero og annonseringsbar tilbake til ordinær tekst. Priser settes fortsatt i Shopify på selve produktet; feltene her er kun tekst som vises i hero."
+      },
+      {
+        "type": "checkbox",
+        "id": "kampanje_aktiv",
+        "label": "Kampanje aktiv",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "kampanje_sluttdato",
+        "label": "Sluttdato (vises i etiketten)",
+        "default": "17. august"
+      },
+      {
+        "type": "text",
+        "id": "kampanje_pris",
+        "label": "Kampanjepris",
+        "default": "3 490 kr"
+      },
+      {
+        "type": "text",
+        "id": "kampanje_ordinaerpris",
+        "label": "Ordinær pris",
+        "default": "4 690 kr"
+      }
+    ]
+  },
+  {
     "name": "Veiviser (Klaviyo)",
     "settings": [
       {

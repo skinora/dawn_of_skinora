@@ -124,6 +124,25 @@
     hyphens: manual;
   }
 
+  /* Kampanjeetikett – samme uppercase/letter-spacing som annonseringsbaren,
+     mindre enn h2, i temaets aksentfarge. Ingen rødt, ingen animasjon. */
+  .sk-dynamic-banner__eyebrow {
+    margin: 0;
+    font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-brand, rgb(var(--sk-color-heading-text)));
+  }
+
+  /* Tillitslinje under knappen */
+  .sk-dynamic-banner__trust {
+    margin: 0;
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    line-height: 1.45;
+    color: rgba(var(--color-foreground), 0.72);
+  }
+
   .sk-dynamic-banner__button .sk-btn {
     font-size: clamp(1rem, 2vw, 1.3rem);
     padding: clamp(0.65rem, 1.8vw, 0.95rem) clamp(1.6rem, 3vw, 2.6rem);
@@ -316,32 +335,156 @@
       width: 25rem;
     }
   }
+
+  /* =====================================================================
+     MOBIL OVER FOLDEN (Oppgave 7)
+     Etikett + overskrift + pris + knapp + tillitslinje skal alle være
+     synlige uten scroll ved 390px. Komprimert i den rekkefølgen som ble
+     bedt om: hero-høyde → linjeavstand i h2 → brødtekstens størrelse.
+     Tillitslinje og brødtekst beholdes.
+     ===================================================================== */
+  @media (max-width: 700px) {
+    /* Gradient bak tekstkolonnen for lesbar kontrast (bildet er urørt) */
+    .sk-dynamic-banner::after {
+      content: '';
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 62%;
+      background: linear-gradient(to top, rgba(255, 255, 255, 0.92) 42%, rgba(255, 255, 255, 0) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .sk-dynamic-banner .page-width {
+      position: relative;
+      z-index: 1;
+    }
+
+    .sk-dynamic-banner__content {
+      gap: 1rem;
+    }
+
+    .sk-dynamic-banner__title {
+      line-height: 1.08;
+    }
+
+    .sk-dynamic-banner__eyebrow {
+      font-size: 1.15rem;
+    }
+
+    /* Minst 48px trykkhøyde på mobil */
+    .sk-dynamic-banner__button.sk-btn {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sk-dynamic-banner__trust {
+      font-size: 1.2rem;
+      line-height: 1.4;
+      text-wrap: balance;
+    }
+  }
+
+  @media (max-width: 435px) {
+    .sk-dynamic-banner {
+      height: 80vh; /* var 84vh – frigjør plass til etikett + tillitslinje */
+    }
+
+    .sk-dynamic-banner__content {
+      gap: 0.85rem;
+    }
+
+    .sk-dynamic-banner__title {
+      line-height: 1.05;
+    }
+
+    .sk-dynamic-banner__description {
+      font-size: 1.15rem;
+      line-height: 1.35;
+    }
+
+    .sk-dynamic-banner__trust {
+      font-size: 1.1rem;
+    }
+  }
 </style>
 
-<section class="sk-dynamic-banner sk-dynamic-banner--cta-{{ section.settings.sk_banner_cta_position_mobile }}">
+{%- liquid
+  # ---- Kampanjebryter (settings.kampanje_aktiv). Alt kampanje-innhold er
+  #      betinget; er bryteren av, faller alt tilbake til seksjonens egne
+  #      innstillinger og siden er identisk med før. Ingen priser eller
+  #      datoer er hardkodet – de kommer fra tema-innstillingene.
+  assign kampanje = settings.kampanje_aktiv
+
+  assign hero_title = section.settings.sk_banner_title
+  assign hero_desc = section.settings.sk_banner_description
+  assign hero_btn = 'SE RADIANCE FACE'
+  if kampanje
+    assign hero_title = 'Profesjonell LED-terapi hjemme — nå ' | append: settings.kampanje_pris
+    assign hero_desc = 'Radiance Face med rødt og nær-infrarødt lys, 1072 nm. Ordinær pris ' | append: settings.kampanje_ordinaerpris | append: '. Gratis frakt fra norsk lager.'
+    assign hero_btn = 'KJØP RADIANCE FACE – ' | append: settings.kampanje_pris
+  endif
+
+  # Knappen peker på produktet uansett kampanjestatus (samleside → produktside).
+  assign hero_link = section.settings.sk_banner_button_link
+  if hero_link == blank
+    assign hero_link = '/products/skinora-radiance-face'
+  endif
+
+  # Tillitslinje: anmeldelsestall fra samme kilde som produktsiden
+  # (reviews-metafeltet Okendo synker til), med tema-innstilling som fallback.
+  assign hero_product = all_products['skinora-radiance-face']
+  assign hero_rc = hero_product.metafields.reviews.rating_count | plus: 0
+  if hero_rc > 0
+    assign hero_count = hero_rc
+  else
+    assign hero_count = settings.cart_review_count
+  endif
+  assign hero_rating = settings.cart_review_rating
+  if hero_product.metafields.reviews.rating.value != blank
+    assign hero_rating = hero_product.metafields.reviews.rating.value.rating | round: 1 | replace: '.', ','
+  endif
+-%}
+
+<section class="sk-dynamic-banner sk-dynamic-banner--cta-{{ section.settings.sk_banner_cta_position_mobile }}{% if kampanje %} sk-dynamic-banner--kampanje{% endif %}">
   <h1 class="visually-hidden">Skinora® Norge – LED-ansiktsmasker for well-aging, glød og uren hud</h1>
   <div class="page-width">
     <div class="sk-dynamic-banner__container">
       <div class="sk-dynamic-banner__content">
+        {%- if kampanje and settings.kampanje_sluttdato != blank -%}
+          <p class="sk-dynamic-banner__eyebrow">Kampanje — til {{ settings.kampanje_sluttdato }}</p>
+        {%- endif -%}
+
         <h2 lang="no" class="sk-header__section sk-dynamic-banner__title">
-          {{ section.settings.sk_banner_title }}
+          {{ hero_title }}
         </h2>
 
         <p class="sk-section-body sk-dynamic-banner__description">
-          {{ section.settings.sk_banner_description }}
+          {{ hero_desc }}
         </p>
 
         <div class="sk-dynamic-banner__cta">
           <a
-            href="{{ section.settings.sk_banner_button_link }}"
+            href="{{ hero_link }}"
             class="sk-dynamic-banner__button sk-btn sk-btn--primary"
           >
-            {{ section.settings.sk_banner_button_text }}
+            {{ hero_btn }}
             <span class="svg-wrapper sk-btn__icon">
               {{- 'arrow-right.svg' | inline_asset_content -}}
             </span>
           </a>
         </div>
+
+        {%- comment -%} Tillitslinje – vises uansett kampanjestatus. {%- endcomment -%}
+        <p class="sk-dynamic-banner__trust">
+          Vipps og Apple Pay
+          {%- if hero_count != blank and hero_rating != blank -%}
+            &nbsp;· {{ hero_rating }} ★ av {{ hero_count }} anmeldelser
+          {%- endif -%}
+          &nbsp;· Gratis frakt fra norsk lager
+        </p>
       </div>
     </div>
   </div>
