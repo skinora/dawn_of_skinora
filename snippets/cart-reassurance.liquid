@@ -19,7 +19,11 @@
 {%- assign cr_part = part | default: 'reassurance' -%}
 
 {%- if cr_part == 'payments' -%}
-  {%- comment -%} Kun Klarna, Vipps, Mastercard — bevisst kort sett. {%- endcomment -%}
+  {%- comment -%}
+    Klarna, Vipps, Visa, Mastercard — bevisst kort sett.
+    Visa kommer fra Shopifys egne betalings-ikoner (payment_type_svg_tag),
+    siden det ikke finnes en visa-logo.svg i assets.
+  {%- endcomment -%}
   <div class="cart-reassure-payments">
     <ul class="cart-reassure-payments__list" role="list">
       <li class="cart-reassure-payments__item">
@@ -27,6 +31,9 @@
       </li>
       <li class="cart-reassure-payments__item">
         <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="Vipps" height="22" width="55" loading="lazy">
+      </li>
+      <li class="cart-reassure-payments__item" aria-label="Visa">
+        {{ 'visa' | payment_type_svg_tag }}
       </li>
       <li class="cart-reassure-payments__item">
         <img src="{{ 'mastercard-logo.svg' | asset_url }}" alt="Mastercard" height="22" loading="lazy">

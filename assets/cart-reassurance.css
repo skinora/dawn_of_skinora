@@ -118,8 +118,11 @@
   gap: 1rem;
 }
 
-#main-cart-footer .cart-reassure-payments__item img {
+/* Både lokale <img>-logoer og Shopifys <svg> (Visa) settes til samme høyde */
+#main-cart-footer .cart-reassure-payments__item img,
+#main-cart-footer .cart-reassure-payments__item svg {
   height: 26px;
+  width: auto;
 }
 
 /* ---------- Leveringslinje ---------- */
