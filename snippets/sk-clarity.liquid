@@ -103,8 +103,59 @@
     return 'referral';
   }
 
-  // Eksponer for Oppgave 3 (tags) i samme snippet, og for egen verifisering.
   window.__SK_ATTR = attr;
   window.__SK_CLARITY_DEBUG = DEBUG;
+
+  /* =========================================================================
+     OPPGAVE 3 — Clarity custom tags (clarity("set", key, value))
+     Segmenterer økten. Verdier fra Oppgave 2 (attr) + Shopify (Liquid).
+     Personvern: ingen rå gclid/gbraid, ingen ordrenr/navn/e-post,
+     kurvverdi KUN som bøtte (aldri eksakt kr).
+     ========================================================================= */
+  var SK = {
+    template: {{ request.page_type | json }},
+    product_handle: {% if request.page_type == 'product' %}{{ product.handle | json }}{% else %}""{% endif %},
+    cart_items: {{ cart.item_count | default: 0 | json }},
+    cart_cents: {{ cart.total_price | default: 0 | json }},
+    currency: {{ cart.currency.iso_code | default: shop.currency | default: '' | json }},
+    country: {{ localization.country.iso_code | default: '' | json }}
+  };
+
+  function skTemplate(pt) {
+    return ['product', 'collection', 'cart', 'index', 'search'].indexOf(pt) >= 0 ? pt : 'other';
+  }
+  function cartBucket(cents) {
+    var kr = (cents || 0) / 100;
+    if (kr <= 0) return '0';
+    if (kr < 500) return '1-499';
+    if (kr < 1000) return '500-999';
+    return '1000+';
+  }
+
+  var tags = {
+    channel: attr.channel,
+    utm_source: attr.utm_source,
+    utm_medium: attr.utm_medium,
+    utm_campaign: attr.utm_campaign,
+    utm_content: attr.utm_content,
+    has_gclid: attr.has_gclid,
+    has_gbraid: attr.has_gbraid,
+    has_srsltid: attr.has_srsltid,
+    template: skTemplate(SK.template),
+    cart_items: String(SK.cart_items),
+    cart_value_bucket: cartBucket(SK.cart_cents),
+    currency: SK.currency,
+    country: SK.country
+  };
+  if (SK.product_handle) tags.product_handle = SK.product_handle; // kun på produktsider
+
+  // Defensiv: gjør ingenting hvis window.clarity mangler. Hopp over tomme verdier
+  // (f.eks. utm_* på organisk trafikk) så vi ikke lager støy-tags.
+  function claritySet(k, v) {
+    if (v === '' || v == null) return;
+    try { if (typeof window.clarity === 'function') window.clarity('set', k, String(v)); } catch (e) {}
+    log('set', k, '=', v);
+  }
+  Object.keys(tags).forEach(function (k) { claritySet(k, tags[k]); });
 })();
 </script>
