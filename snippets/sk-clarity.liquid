@@ -1,0 +1,110 @@
+{%- comment -%}
+  sk-clarity.liquid — Clarity-segmentering for skinora.no
+  =======================================================
+  ÉN samlet snippet (kvalitetskrav). Inkluderes ÉN gang fra theme.liquid,
+  rett etter Clarity-snippeten i <head>.
+
+  Innhold:
+    • Oppgave 2 — UTM-normalisering + ærlig `channel` (implementert nå)
+    • Oppgave 3 — clarity("set", …) tags            (kommer)
+    • Oppgave 4 — clarity("event", …) events        (kommer)
+
+  Prinsipper:
+    - Defensiv: rører aldri window.clarity uten guard.
+    - Ingen personopplysninger: lagrer has_gclid-bool, ALDRI rå gclid/gbraid.
+    - Near-zero CWV: liten inline-parse, ingen nettverk.
+    - Debug: ?clarity_debug=1 logger til console (huskes i økten).
+{%- endcomment -%}
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Debug ---------- */
+  var DEBUG = false;
+  try {
+    if (/[?&]clarity_debug=1(&|$)/.test(location.search)) sessionStorage.setItem('sk_clarity_debug', '1');
+    DEBUG = sessionStorage.getItem('sk_clarity_debug') === '1';
+  } catch (e) {}
+  function log() {
+    if (DEBUG && window.console) console.log.apply(console, ['%c[sk-clarity]', 'color:#7a5cff'].concat([].slice.call(arguments)));
+  }
+
+  /* =========================================================================
+     OPPGAVE 2 — UTM-normalisering + ærlig kanal
+     Leses ÉN gang ved landing, lagres i sessionStorage, gjenbrukes resten
+     av økten (first-touch). Løser UTM-kollisjonen: Shopify-feeden legger på
+     product_sync/sag_organic, og Google Ads-suffikset legges PÅ TOPPEN i
+     samme URL → dupliserte nøkler. Vi tar SISTE (ikke-tomme) verdi per nøkkel
+     (Ads-suffikset står sist), og utleder en kanal som ikke kan lyve.
+     ========================================================================= */
+  var SS_KEY = 'sk_attr_v1';
+
+  var attr = null;
+  try { attr = JSON.parse(sessionStorage.getItem(SS_KEY) || 'null'); } catch (e) {}
+
+  if (!attr) {
+    var qs;
+    try { qs = new URLSearchParams(location.search); } catch (e) { qs = null; }
+
+    // Siste ikke-tomme verdi per nøkkel (getAll, ikke get).
+    function last(key) {
+      if (!qs) return '';
+      var all = qs.getAll(key);
+      for (var i = all.length - 1; i >= 0; i--) { if (all[i] !== '') return all[i]; }
+      return '';
+    }
+
+    var gclid   = last('gclid');
+    var gbraid  = last('gbraid');           // (wbraid finnes også for app-kampanjer – kan legges til ved behov)
+    var srsltid = last('srsltid');          // Google gratis-oppføring / Merchant surface-signal
+
+    var utm_source   = last('utm_source');
+    var utm_medium   = last('utm_medium');
+    var utm_campaign = last('utm_campaign');
+    var utm_content  = last('utm_content');
+
+    // Kanal som ikke kan lyve (rekkefølge = prioritet):
+    var channel;
+    if (gclid || gbraid)                 channel = 'paid_shopping';   // betalt Google Ads-klikk
+    else if (srsltid)                    channel = 'free_listing';    // gratis Shopping/surface uten Ads-klikk
+    else if (utm_medium === 'product_sync') channel = 'free_listing'; // feed-UTM uten klikk-id = gratis
+    else                                 channel = referrerChannel(); // ellers: utled fra referrer
+
+    attr = {
+      channel: channel,
+      utm_source: utm_source,
+      utm_medium: utm_medium,
+      utm_campaign: utm_campaign,
+      utm_content: utm_content,
+      has_gclid: gclid ? 'true' : 'false',
+      has_gbraid: gbraid ? 'true' : 'false',
+      has_srsltid: srsltid ? 'true' : 'false'
+      /* MERK: ingen rå gclid/gbraid lagres – kun boolene over. */
+    };
+
+    try { sessionStorage.setItem(SS_KEY, JSON.stringify(attr)); } catch (e) {}
+    log('attribusjon fanget (first-touch):', attr);
+  } else {
+    log('attribusjon gjenbrukt fra økt:', attr);
+  }
+
+  // Utled kanal fra referrer når det ikke finnes klikk-id eller feed-UTM.
+  function referrerChannel() {
+    var r = document.referrer || '';
+    if (!r) return 'direct';
+    var host;
+    try { host = new URL(r).hostname.replace(/^www\./, ''); } catch (e) { return 'referral'; }
+    var self = location.hostname.replace(/^www\./, '');
+    if (host === self) return 'internal';
+    if (/(^|\.)(google|bing|duckduckgo|ecosia|yahoo|yandex)\./.test(host)) return 'organic_search';
+    if (/(^|\.)(facebook|instagram|t|twitter|x|tiktok|pinterest|linkedin|youtube|snapchat)\.?/.test(host)) return 'social';
+    if (/(chatgpt|openai|perplexity|gemini|bard|claude|copilot)/.test(host)) return 'ai_referral';
+    return 'referral';
+  }
+
+  // Eksponer for Oppgave 3 (tags) i samme snippet, og for egen verifisering.
+  window.__SK_ATTR = attr;
+  window.__SK_CLARITY_DEBUG = DEBUG;
+})();
+</script>
