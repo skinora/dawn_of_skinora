@@ -105,24 +105,26 @@
   color: var(--cr-fg);
 }
 
-/* Betalingslogoer inline til høyre i betalings-punktet (erstatter egen rad) */
+/* Betalingslogoene får egen linje under teksten og god størrelse – Klarna og
+   Vipps er det norske kunder faktisk ser etter, så de skal veie tyngre enn
+   Shop Pay / G Pay-knappene over. */
 .cart-reassure__item--pay {
   flex-wrap: wrap;
 }
 
 .cart-reassure__paylogos {
-  display: inline-flex;
+  flex-basis: 100%;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  margin-left: auto;
+  gap: 10px;
+  margin: 8px 0 0 28px; /* linjer opp med teksten (ikon 18px + gap 10px) */
 }
 
-/* Logoene vises i sine ekte merkefarger – grayscale/dempet opacity fikk dem
-   til å se deaktiverte ut. */
+/* Ekte merkefarger – grayscale fikk dem til å se deaktiverte ut. */
 .cart-reassure__paylogos img {
   display: block;
   width: auto;
-  height: 16px;
+  height: 26px;
 }
 
 /* ---------- Leveringslinje ---------- */
