@@ -1484,16 +1484,32 @@
         "default": "79"
       },
       {
+        "type": "paragraph",
+        "content": "Sitatene MÅ være ekte, verifiserte Okendo-anmeldelser (aldri oppdiktet – markedsføringsloven). Clear-sitatet vises når Skinora Clear ligger i kurven; ellers vises standardsitatet."
+      },
+      {
         "type": "text",
         "id": "cart_review_quote",
-        "label": "Short review quote",
-        "default": "Huden min føles roligere etter noen uker."
+        "label": "Review quote – default (Radiance)",
+        "default": "Dette er første gang noen spør meg hva jeg gjør med huden"
       },
       {
         "type": "text",
         "id": "cart_review_name",
-        "label": "Reviewer first name",
-        "default": "Ingrid"
+        "label": "Reviewer first name – default",
+        "default": "Anita G."
+      },
+      {
+        "type": "text",
+        "id": "cart_review_quote_clear",
+        "label": "Review quote – Clear in cart",
+        "default": "Hudpleier-time hver måned = 900 kr. Denne betaler seg selv på et halvår"
+      },
+      {
+        "type": "text",
+        "id": "cart_review_name_clear",
+        "label": "Reviewer first name – Clear",
+        "default": "Victoria O."
       },
       {
         "type": "number",

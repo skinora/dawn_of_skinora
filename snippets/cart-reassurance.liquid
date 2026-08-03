@@ -90,6 +90,20 @@
       assign cr_rating = cr_avg | replace: '.', ','
       assign cr_show_count = cr_count
     endif
+
+    # Kontekstuelt sitat: ligger Clear i kurven, vis Clear-anmeldelsen.
+    # Begge er ekte, verifiserte Okendo-anmeldelser (aldri oppdiktet).
+    assign cr_quote = settings.cart_review_quote
+    assign cr_name = settings.cart_review_name
+    for cr_i in cart.items
+      if cr_i.product.handle contains 'clear'
+        if settings.cart_review_quote_clear != blank
+          assign cr_quote = settings.cart_review_quote_clear
+          assign cr_name = settings.cart_review_name_clear
+        endif
+        break
+      endif
+    endfor
   -%}
   <div class="cart-reassure cart-reassure--{{ cr_context }}">
     {%- comment -%} Sosialt bevis — ekte tall fra kurvens produkter, ellers tema-innstillinger {%- endcomment -%}
@@ -104,9 +118,9 @@
         <span class="cart-reassure__rating">
           {{- 'sections.cart.reassure_reviews' | t: rating: cr_rating, count: cr_show_count -}}
         </span>
-        {%- if settings.cart_review_quote != blank -%}
+        {%- if cr_quote != blank -%}
           <p class="cart-reassure__quote">
-            «{{ settings.cart_review_quote }}»{%- if settings.cart_review_name != blank -%}&nbsp;<cite>— {{ settings.cart_review_name }}</cite>{%- endif -%}
+            «{{ cr_quote }}»{%- if cr_name != blank -%}&nbsp;<cite>— {{ cr_name }}</cite>{%- endif -%}
           </p>
         {%- endif -%}
       </div>
