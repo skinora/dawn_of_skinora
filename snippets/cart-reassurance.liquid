@@ -111,16 +111,9 @@
 
     assign cr_quotes = cr_q_raw | split: '||'
     assign cr_names = cr_n_raw | split: '||'
-    # Indeks fra klokkeslettet (sekunder) → nytt sitat ved hver sidevisning.
-    # (cart.item_count ville vært stabilt og dermed ikke vekslet i praksis.)
-    assign cr_quote = ''
-    assign cr_name = ''
-    if cr_quotes.size > 0
-      assign cr_seed = 'now' | date: '%S' | plus: 0
-      assign cr_idx = cr_seed | modulo: cr_quotes.size
-      assign cr_quote = cr_quotes[cr_idx]
-      assign cr_name = cr_names[cr_idx]
-    endif
+    # Alle sitatene rendres i markup; ett velges klientside (se script under).
+    # Liquid-basert rotasjon virker ikke – /cart-responsen caches, så både
+    # cart.item_count og 'now' ga samme sitat ved hver visning.
   -%}
   <div class="cart-reassure cart-reassure--{{ cr_context }}">
     {%- comment -%} Sosialt bevis — ekte tall fra kurvens produkter, ellers tema-innstillinger {%- endcomment -%}
@@ -135,10 +128,19 @@
         <span class="cart-reassure__rating">
           {{- 'sections.cart.reassure_reviews' | t: rating: cr_rating, count: cr_show_count -}}
         </span>
-        {%- if cr_quote != blank -%}
-          <p class="cart-reassure__quote">
-            «{{ cr_quote }}»{%- if cr_name != blank -%}&nbsp;<cite>— {{ cr_name }}</cite>{%- endif -%}
-          </p>
+        {%- comment -%}
+          Alle sitatene ligger i markup (overlever AJAX-re-render). Første vises
+          som standard; scriptet under bytter til et tilfeldig ett per visning.
+          Uten JS ser brukeren fortsatt ett ekte sitat.
+        {%- endcomment -%}
+        {%- if cr_quotes.size > 0 -%}
+          <div class="cart-reassure__quotes" data-cr-quotes>
+            {%- for cr_q in cr_quotes -%}
+              <p class="cart-reassure__quote{% unless forloop.first %} is-hidden{% endunless %}">
+                «{{ cr_q }}»{%- assign cr_n = cr_names[forloop.index0] -%}{%- if cr_n != blank -%}&nbsp;<cite>— {{ cr_n }}</cite>{%- endif -%}
+              </p>
+            {%- endfor -%}
+          </div>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -175,4 +177,28 @@
       </ul>
     {%- endunless -%}
   </div>
+
+  {%- comment -%} Velger ett tilfeldig sitat per visning. Delegert + idempotent,
+    så det også treffer blokker som re-rendres av cart.js. {%- endcomment -%}
+  <script>
+    (function () {
+      function pick(root) {
+        (root || document).querySelectorAll('[data-cr-quotes]').forEach(function (box) {
+          if (box.dataset.crPicked) return;
+          box.dataset.crPicked = '1';
+          var qs = box.querySelectorAll('.cart-reassure__quote');
+          if (qs.length < 2) return;
+          var i = Math.floor(Math.random() * qs.length);
+          qs.forEach(function (q, n) { q.classList.toggle('is-hidden', n !== i); });
+        });
+      }
+      pick();
+      document.addEventListener('DOMContentLoaded', function () { pick(); });
+      // cart.js bytter ut seksjons-HTML ved kvantitetsendring → plukk på nytt.
+      new MutationObserver(function () { pick(); }).observe(document.documentElement, {
+        childList: true,
+        subtree: true,
+      });
+    })();
+  </script>
 {%- endif -%}

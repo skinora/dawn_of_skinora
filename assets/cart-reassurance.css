@@ -58,6 +58,15 @@
   font-weight: 600;
 }
 
+/* Alle sitatene rendres; ett vises. .is-hidden skjuler resten. */
+.cart-reassure__quotes {
+  flex-basis: 100%;
+}
+
+.cart-reassure__quote.is-hidden {
+  display: none;
+}
+
 /* ---------- Trygghetsliste (3 punkter, ÉN kolonne på alle breakpoints) ----------
    Kun hairline OVER blokka – ingen border-bottom. Hvert punkt er én linje. */
 .cart-reassure__grid {
