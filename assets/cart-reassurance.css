@@ -97,12 +97,12 @@
   margin-left: auto;
 }
 
+/* Logoene vises i sine ekte merkefarger – grayscale/dempet opacity fikk dem
+   til å se deaktiverte ut. */
 .cart-reassure__paylogos img {
   display: block;
   width: auto;
   height: 16px;
-  filter: grayscale(1);
-  opacity: 0.65;
 }
 
 /* ---------- Leveringslinje ---------- */

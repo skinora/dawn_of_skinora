@@ -199,7 +199,21 @@
   margin-top: var(--sk-gap-sm, 16px);
 }
 
-/* ---------- Oppsummeringsrader ---------- */
+/* ---------- Oppsummeringsrader ----------
+   .totals er flex-row + line-height:1 fra component-totals.css, som la alle
+   radene på ÉN linje. Nullstill for vårt kort: radene skal stables. */
+#main-cart-footer .sk-sum {
+  display: block;
+}
+
+#main-cart-footer .sk-sum * {
+  line-height: inherit;
+}
+
+#main-cart-footer .sk-sum > * {
+  font-size: inherit;
+}
+
 #main-cart-footer .sk-sum__eyebrow {
   margin: 0 0 var(--sk-gap-sm, 16px);
   font-size: var(--sk-section-eyebrow-size, 1.2rem);
