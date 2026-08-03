@@ -1,3 +1,33 @@
+{%- liquid
+  # Under kampanje skjules melding 1 (10 %-tilbudet): to rabatter samtidig
+  # kannibaliserer og gjør kampanjeprisen utydelig. Meldingen slettes ikke –
+  # den kommer tilbake når kampanje_aktiv slås av.
+  assign vis_melding_1 = true
+  if settings.kampanje_aktiv
+    assign vis_melding_1 = false
+  endif
+
+  # Tell synlige meldinger og utled animasjonstiming, så det aldri blir en
+  # tom periode der ingen melding vises.
+  assign ann_count = 0
+  if section.settings.message_1 != blank and vis_melding_1
+    assign ann_count = ann_count | plus: 1
+  endif
+  if section.settings.message_2 != blank
+    assign ann_count = ann_count | plus: 1
+  endif
+  if section.settings.message_3 != blank
+    assign ann_count = ann_count | plus: 1
+  endif
+  if ann_count < 1
+    assign ann_count = 1
+  endif
+
+  assign ann_cycle = ann_count | times: 5
+  assign ann_slot = 100.0 | divided_by: ann_count
+  assign ann_fade_out = ann_slot | minus: 3
+-%}
+
 <style>
   .sk-announcement {
     background: #30273e;
@@ -31,8 +61,17 @@
     color: inherit;
     text-decoration: none;
     opacity: 0;
-    animation: sk-announcement-rotate 15s infinite;
+    animation: sk-announcement-rotate-{{ section.id }} {{ ann_cycle }}s infinite;
   }
+
+  {%- comment -%} Én melding igjen → ingen rotasjon, vis den statisk. {%- endcomment -%}
+  {%- if ann_count == 1 -%}
+  .sk-announcement__text,
+  .sk-announcement__link {
+    animation: none;
+    opacity: 1;
+  }
+  {%- endif -%}
 
   /* Fallback hvis animasjon ikke kjører: vis i det minste tilbudet. */
   .sk-announcement__inner > :first-child {
@@ -41,7 +80,9 @@
 
   .sk-announcement__inner > :nth-child(1) { animation-delay: 0s; }
   .sk-announcement__inner > :nth-child(2) { animation-delay: 5s; }
+  {%- if ann_count > 2 -%}
   .sk-announcement__inner > :nth-child(3) { animation-delay: 10s; }
+  {%- endif -%}
 
   .sk-announcement__link:focus-visible,
   .sk-announcement__link:hover {
@@ -49,9 +90,11 @@
     text-underline-offset: 0.2em;
   }
 
-  /* Hver melding synlig ~5s av 15s-syklusen. pointer-events følger synlighet,
-     så bare den viste meldingen (tilbudslenken) er klikkbar. */
-  @keyframes sk-announcement-rotate {
+  /* Hver melding synlig ~5s av syklusen. Prosentene utledes fra antall
+     synlige meldinger ({{ ann_count }}), så tidslinjen alltid går opp og
+     ingen tom periode oppstår. pointer-events følger synlighet, så bare
+     meldingen som vises er klikkbar. */
+  @keyframes sk-announcement-rotate-{{ section.id }} {
     0% {
       opacity: 0;
       pointer-events: none;
@@ -60,11 +103,11 @@
       opacity: 1;
       pointer-events: auto;
     }
-    30% {
+    {{ ann_fade_out }}% {
       opacity: 1;
       pointer-events: auto;
     }
-    33% {
+    {{ ann_slot }}% {
       opacity: 0;
       pointer-events: none;
     }
@@ -99,7 +142,7 @@
       i footeren via ankeret (#newsletter på .footer-top_section). Meldingene
       vises statisk (temaets eksisterende mekanisme — ingen rotasjon/script).
     {%- endcomment -%}
-    {%- if section.settings.message_1 != blank -%}
+    {%- if section.settings.message_1 != blank and vis_melding_1 -%}
       {%- if section.settings.message_1_anchor != blank -%}
         <a class="sk-announcement__link" href="{{ section.settings.message_1_anchor }}">
           {{- section.settings.message_1 -}}

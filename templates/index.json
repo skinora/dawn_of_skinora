@@ -26,8 +26,8 @@
         "sk_banner_img_mobile": "shopify://shop_images/skinora-led-masker.webp",
         "sk_banner_title": "Profesjonell LED-terapi hjemme – utviklet for synlige hudforbedringer",
         "sk_banner_description": "Skinora kombinerer klinisk inspirert LED-teknologi med brukervennlig design, for deg som ønsker synlige resultater uten klinikk",
-        "sk_banner_button_link": "shopify://collections/all",
-        "sk_banner_button_text": "STYRK HUDEN – NATURLIG",
+        "sk_banner_button_link": "/products/skinora-radiance-face",
+        "sk_banner_button_text": "",
         "sk_banner_cta_position_mobile": "top"
       }
     },
