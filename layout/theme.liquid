@@ -23,6 +23,9 @@
       })(window, document, "clarity", "script", "xmgzwwlwhg");
     </script>
 
+    {%- comment -%} Clarity-segmentering (UTM-normalisering + tags/events) – én snippet {%- endcomment -%}
+    {% render 'sk-clarity', product: product %}
+
     {%- if product.tags contains 'noindex' -%}
       <meta name="robots" content="noindex, nofollow">
     {%- endif -%}
