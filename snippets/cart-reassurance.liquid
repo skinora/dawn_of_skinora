@@ -91,19 +91,31 @@
       assign cr_show_count = cr_count
     endif
 
-    # Kontekstuelt sitat: ligger Clear i kurven, vis Clear-anmeldelsen.
-    # Begge er ekte, verifiserte Okendo-anmeldelser (aldri oppdiktet).
-    assign cr_quote = settings.cart_review_quote
-    assign cr_name = settings.cart_review_name
+    # Kontekstuelt sitat (alle er EKTE, verifiserte Okendo-anmeldelser):
+    #   Clear i kurven → Clear-sitatet.
+    #   Ellers         → veksler mellom de to Radiance-sitatene, bestemt av
+    #                    antall varer (stabilt per kurv, ingen JS/tilfeldighet).
+    assign cr_has_clear = false
     for cr_i in cart.items
       if cr_i.product.handle contains 'clear'
-        if settings.cart_review_quote_clear != blank
-          assign cr_quote = settings.cart_review_quote_clear
-          assign cr_name = settings.cart_review_name_clear
-        endif
+        assign cr_has_clear = true
         break
       endif
     endfor
+
+    if cr_has_clear and settings.cart_review_quote_clear != blank
+      assign cr_quote = settings.cart_review_quote_clear
+      assign cr_name = settings.cart_review_name_clear
+    else
+      assign cr_pick = cart.item_count | modulo: 2
+      if cr_pick == 1 and settings.cart_review_quote_2 != blank
+        assign cr_quote = settings.cart_review_quote_2
+        assign cr_name = settings.cart_review_name_2
+      else
+        assign cr_quote = settings.cart_review_quote
+        assign cr_name = settings.cart_review_name
+      endif
+    endif
   -%}
   <div class="cart-reassure cart-reassure--{{ cr_context }}">
     {%- comment -%} Sosialt bevis — ekte tall fra kurvens produkter, ellers tema-innstillinger {%- endcomment -%}

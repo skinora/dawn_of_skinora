@@ -1490,14 +1490,26 @@
       {
         "type": "text",
         "id": "cart_review_quote",
-        "label": "Review quote – default (Radiance)",
+        "label": "Review quote – Radiance 1",
         "default": "Dette er første gang noen spør meg hva jeg gjør med huden"
       },
       {
         "type": "text",
         "id": "cart_review_name",
-        "label": "Reviewer first name – default",
+        "label": "Reviewer first name – Radiance 1",
         "default": "Anita G."
+      },
+      {
+        "type": "text",
+        "id": "cart_review_quote_2",
+        "label": "Review quote – Radiance 2",
+        "default": "Beste investeringen. Huden er fastere og jeg føler meg fresh"
+      },
+      {
+        "type": "text",
+        "id": "cart_review_name_2",
+        "label": "Reviewer first name – Radiance 2",
+        "default": "Nina V."
       },
       {
         "type": "text",
