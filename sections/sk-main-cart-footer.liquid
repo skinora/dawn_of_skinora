@@ -72,10 +72,10 @@
                     <span>{{ 'sections.cart.subtotal' | t }}</span>
                     <span class="sk-sum__val">{{ cart.total_price | money }}</span>
                   </div>
-                  <div class="sk-sum__row">
-                    <span>{{ 'sections.cart.shipping' | t }}</span>
-                    <span class="sk-sum__val">{{ 'sections.cart.shipping_free' | t }}</span>
-                  </div>
+                  {%- comment -%}
+                    Ingen «Frakt»-rad her: gratis frakt står allerede som egen
+                    0-kr-linje i varelisten over. Nevnes maks én gang.
+                  {%- endcomment -%}
                   <div class="sk-sum__row">
                     <span>{{ 'sections.cart.vat' | t }}</span>
                     <span class="sk-sum__val">{{ 'sections.cart.vat_included' | t }}</span>
