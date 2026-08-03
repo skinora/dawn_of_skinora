@@ -209,11 +209,13 @@
   }
 }
 
-/* På /cart: gi litt mer luft og la raden bli 4-kolonners på store skjermer */
+/* På /cart ligger blokka i den SMALE totalen-kolonnen (~320px). 4 kolonner
+   klemmer teksten til 3–4 linjer per punkt. Hold 2 kolonner (2×2) også på
+   desktop → hvert punkt får dobbelt bredde og brekker pent på 1–2 linjer. */
 @media screen and (min-width: 990px) {
   .cart-reassure--cart .cart-reassure__grid {
-    grid-template-columns: repeat(4, 1fr);
-    min-height: 4.4rem; /* 1 rad */
+    grid-template-columns: 1fr 1fr;
+    min-height: 8.4rem; /* 2 rader */
   }
 }
 
