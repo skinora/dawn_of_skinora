@@ -341,6 +341,33 @@
   margin: 0 0 1.4rem;
 }
 
+/* ---------- Mobil: anmeldelser ETTER oppsummeringen ----------
+   Seksjonene er søsken i #MainContent og kan ikke omrokeres per breakpoint i
+   templaten. :has() scoper flex-konteksten til kurv-siden; order-reglene er
+   uvirksomme ellers. Uten :has()-støtte beholdes DOM-rekkefølgen (ufarlig). */
+@media screen and (max-width: 749px) {
+  #MainContent:has(> .cart__footer-wrapper) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #MainContent > .shopify-section {
+    order: 1; /* vareliste */
+  }
+
+  #MainContent > .cart__footer-wrapper {
+    order: 2; /* oppsummering + kjøpsknapp */
+  }
+
+  #MainContent > .sk-cart-reviews-section {
+    order: 3; /* anmeldelser */
+  }
+
+  #MainContent > .sk-cart-reassure-section {
+    order: 4; /* trygghetsblokk nederst */
+  }
+}
+
 /* ---------- Mobil: full bredde, ingen sticky ---------- */
 @media screen and (max-width: 749px) {
   #main-cart-footer .cart__blocks {
