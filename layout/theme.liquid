@@ -1134,6 +1134,9 @@
 
     {%- comment -%} Produktveiviser: config + modal-loader (én gang) + fast fane {%- endcomment -%}
     {% render 'sk-quiz-trigger', part: 'boot' %}
-    {% render 'sk-quiz-trigger', part: 'tab' %}
+    {%- comment -%} Ingen fast fane i kassen-flyten (/cart) – alt skal peke mot kjøp. {%- endcomment -%}
+    {%- unless request.page_type == 'cart' -%}
+      {% render 'sk-quiz-trigger', part: 'tab' %}
+    {%- endunless -%}
   </body>
 </html>
