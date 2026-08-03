@@ -45,6 +45,9 @@
   --color-bg-light: #f1eff4;
   --color-dark: #3a3939;
   --color-lilac: #cdb7ed;
+  /* Stjernefarge for anmeldelser. KUN til review-stjerner – aldri tekst,
+     knapper, ikoner eller flater (merkevaren er monokrom aubergine). */
+  --accent-gold: #d4a843;
   /* RGB fallbacks for alpha usage */
   --color-brand-rgb: 48, 39, 62; /* 0x30 0x27 0x3e */
   --color-white-rgb: 255, 255, 255;

@@ -160,3 +160,175 @@
 #main-cart-items .cart-items thead {
   display: none;
 }
+
+/* =============================================================
+   ORDREOPPSUMMERING — kort på /cart
+   Alt scopet til #main-cart-footer så handlekurv-DRAWEREN er urørt.
+   Én justeringsakse: label venstre / verdi høyre.
+   ============================================================= */
+
+/* Grid-ramme: innhold + oppsummeringskort. Erstatter flex + width:35rem-hacket
+   fra component-cart.css (.cart__footer > * { width: 35rem }). */
+@media screen and (min-width: 990px) {
+  #main-cart-footer .cart__footer {
+    display: grid;
+    grid-template-columns: 1fr minmax(360px, 420px);
+    gap: var(--sk-gap-lg, 48px);
+    align-items: start;
+  }
+
+  #main-cart-footer .cart__footer > * {
+    width: auto; /* opphever 35rem-låsen */
+  }
+
+  #main-cart-footer .cart__blocks {
+    position: sticky;
+    top: calc(clamp(50px, 6vw, 90px) + 24px); /* header-høyde + luft */
+  }
+}
+
+/* Selve kortet */
+#main-cart-footer .cart__blocks {
+  background: rgba(var(--color-brand-rgb), 0.03);
+  border: 1px solid rgba(var(--color-brand-rgb), 0.1);
+  border-radius: 14px;
+  padding: 28px;
+}
+
+#main-cart-footer .cart__blocks > * + * {
+  margin-top: var(--sk-gap-sm, 16px);
+}
+
+/* ---------- Oppsummeringsrader ---------- */
+#main-cart-footer .sk-sum__eyebrow {
+  margin: 0 0 var(--sk-gap-sm, 16px);
+  font-size: var(--sk-section-eyebrow-size, 1.2rem);
+  letter-spacing: var(--sk-section-eyebrow-spacing, 0.22em);
+  text-transform: uppercase;
+  color: rgba(var(--sk-color-body-text), 0.55);
+}
+
+#main-cart-footer .sk-sum__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.6rem;
+  font-size: 1.4rem;
+  line-height: var(--sk-line-height-tight, 1.45);
+  color: rgba(var(--sk-color-body-text), 0.85);
+}
+
+#main-cart-footer .sk-sum__row + .sk-sum__row {
+  margin-top: 8px;
+}
+
+#main-cart-footer .sk-sum__val {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+#main-cart-footer .sk-sum__rule {
+  height: 1px;
+  margin: var(--sk-gap-sm, 16px) 0;
+  background: rgba(var(--color-brand-rgb), 0.12);
+}
+
+/* Totalrad – samme akse, samme baseline */
+#main-cart-footer .sk-sum__row--total {
+  align-items: baseline;
+}
+
+#main-cart-footer .sk-sum__row--total .totals__total {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-size: var(--sk-font-size-small);
+  text-transform: uppercase;
+  letter-spacing: var(--sk-letter-spacing-button, 0.08em);
+  color: rgb(var(--sk-color-heading-text));
+}
+
+#main-cart-footer .sk-sum__row--total .totals__total-value {
+  margin: 0;
+  font-size: var(--sk-font-size-large);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--color-brand);
+}
+
+/* ---------- CTA ---------- */
+#main-cart-footer .cart__ctas {
+  margin-top: var(--sk-gap-md, 24px);
+}
+
+#main-cart-footer .cart__ctas button {
+  width: 100%;
+  min-height: 54px;
+}
+
+/* «eller betal med» – dempet deler med hairline på hver side */
+#main-cart-footer .sk-or {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: var(--sk-gap-sm, 16px) 0;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(var(--sk-color-body-text), 0.55);
+}
+
+#main-cart-footer .sk-or::before,
+#main-cart-footer .sk-or::after {
+  content: '';
+  flex: 1 1 auto;
+  height: 1px;
+  background: rgba(var(--color-brand-rgb), 0.12);
+}
+
+/* ---------- Wallets (kun wrapperen – aldri Shopify-generert markup inni) ----
+   min-height reserverer plass så knappene ikke skaper layout shift ved lasting. */
+#main-cart-footer .cart__dynamic-checkout-buttons {
+  max-width: none;
+  margin: 0;
+  min-height: 46px;
+}
+
+#main-cart-footer .cart__dynamic-checkout-buttons .dynamic-checkout__content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 8px;
+}
+
+#main-cart-footer .cart__dynamic-checkout-buttons [role='button'],
+#main-cart-footer .cart__dynamic-checkout-buttons button {
+  height: 46px;
+  border-radius: var(--buttons-radius, 4px);
+}
+
+/* ---------- Trust + reviews under knappene ---------- */
+#main-cart-footer .cart-reassure--cart {
+  margin: var(--sk-gap-md, 24px) 0 0;
+}
+
+#main-cart-footer .cart-reassure--cart .cart-reassure__reviews {
+  margin: 0 0 1.4rem;
+}
+
+/* ---------- Mobil: full bredde, ingen sticky ---------- */
+@media screen and (max-width: 749px) {
+  #main-cart-footer .cart__blocks {
+    position: static;
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  #main-cart-footer .sk-sum__row,
+  #main-cart-footer .cart-reassure--cart .cart-reassure__item {
+    font-size: 1.4rem;
+  }
+
+  #main-cart-footer .cart__dynamic-checkout-buttons .dynamic-checkout__content {
+    grid-template-columns: 1fr;
+  }
+}

@@ -95,16 +95,18 @@
     {%- comment -%} Sosialt bevis — ekte tall fra kurvens produkter, ellers tema-innstillinger {%- endcomment -%}
     {%- if cr_rating != blank and cr_show_count != blank -%}
       <div class="cart-reassure__reviews">
-        <span class="cart-reassure__stars" aria-hidden="true">★★★★★</span>
+        {%- comment -%} Inline SVG-stjerner (14px) – eneste bruk av --accent-gold. {%- endcomment -%}
+        <span class="cart-reassure__stars" aria-hidden="true">
+          {%- for i in (1..5) -%}
+            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14" aria-hidden="true"><path d="M10 1.6l2.47 5.3 5.53.62-4.12 3.9 1.1 5.68L10 14.3l-4.98 2.8 1.1-5.68L2 7.52l5.53-.62L10 1.6z"/></svg>
+          {%- endfor -%}
+        </span>
         <span class="cart-reassure__rating">
           {{- 'sections.cart.reassure_reviews' | t: rating: cr_rating, count: cr_show_count -}}
         </span>
         {%- if settings.cart_review_quote != blank -%}
           <p class="cart-reassure__quote">
-            «{{ settings.cart_review_quote }}»
-            {%- if settings.cart_review_name != blank -%}
-              <cite>— {{ settings.cart_review_name }}</cite>
-            {%- endif -%}
+            «{{ settings.cart_review_quote }}»{%- if settings.cart_review_name != blank -%}&nbsp;<cite>— {{ settings.cart_review_name }}</cite>{%- endif -%}
           </p>
         {%- endif -%}
       </div>
@@ -116,22 +118,28 @@
       rad i varelisten via part: 'shipping_line').
     {%- endcomment -%}
     {%- unless cr_context == 'drawer' -%}
+      {%- comment -%}
+        Tre punkter som tilfører NOE NYTT – ordrelinjene over viser allerede
+        «Gratis frakt i hele Norge» og «30 dagers åpent kjøp» som 0-kr-rader.
+        Siste punkt absorberer betalingslogoene (inline, grå, 16px).
+      {%- endcomment -%}
       <ul class="cart-reassure__grid" role="list">
         <li class="cart-reassure__item">
-          <svg class="cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
-          <span>{{ 'sections.cart.reassure_free_shipping' | t }}</span>
-        </li>
-        <li class="cart-reassure__item">
-          <svg class="cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-          <span>{{ 'sections.cart.reassure_try_home' | t }}</span>
-        </li>
-        <li class="cart-reassure__item">
-          <svg class="cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <span>{{ 'sections.cart.reassure_secure_payment' | t }}</span>
-        </li>
-        <li class="cart-reassure__item">
           <svg class="cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-          <span>{{ 'sections.cart.reassure_norwegian_warehouse' | t }}</span>
+          <span>{{ 'sections.cart.trust_warehouse' | t }}</span>
+        </li>
+        <li class="cart-reassure__item">
+          <svg class="cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+          <span>{{ 'sections.cart.trust_returns' | t }}</span>
+        </li>
+        <li class="cart-reassure__item cart-reassure__item--pay">
+          <svg class="cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>{{ 'sections.cart.trust_payment' | t }}</span>
+          <span class="cart-reassure__paylogos" aria-hidden="true">
+            <img src="{{ 'klarna-logo.svg' | asset_url }}" alt="" height="16" loading="lazy">
+            <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="" height="16" width="40" loading="lazy">
+            <img src="{{ 'mastercard-logo.svg' | asset_url }}" alt="" height="16" loading="lazy">
+          </span>
         </li>
       </ul>
     {%- endunless -%}
