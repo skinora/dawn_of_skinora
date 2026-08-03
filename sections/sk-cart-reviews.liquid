@@ -81,11 +81,15 @@
       color: rgb(var(--color-foreground));
     }
 
-    /* Mobil: stable – tre spalter blir for trange */
+    /* Mobil: stable – tre spalter blir for trange. Ingen tekst under 14px. */
     @media screen and (max-width: 749px) {
       #shopify-section-{{ section.id }} .sk-cart-reviews__grid {
         grid-template-columns: 1fr;
         gap: 1.8rem;
+      }
+
+      #shopify-section-{{ section.id }} .sk-cart-reviews__name {
+        font-size: 1.4rem;
       }
     }
   </style>

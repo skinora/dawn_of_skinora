@@ -340,8 +340,12 @@
     border-radius: 12px;
   }
 
+  /* Ingen tekst under 14px i blokka. Eyebrow-tokenet er clamp() med vw og
+     faller til 9px på 390px – derfor eksplisitt minimum her. */
   #main-cart-footer .sk-sum__row,
-  #main-cart-footer .cart-reassure--cart .cart-reassure__item {
+  #main-cart-footer .cart-reassure--cart .cart-reassure__item,
+  #main-cart-footer .sk-sum__eyebrow,
+  #main-cart-footer .sk-or {
     font-size: 1.4rem;
   }
 
