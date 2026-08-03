@@ -128,16 +128,16 @@
         <span class="cart-reassure__rating">
           {{- 'sections.cart.reassure_reviews' | t: rating: cr_rating, count: cr_show_count -}}
         </span>
-        {%- comment -%}
-          Alle sitatene ligger i markup (overlever AJAX-re-render). Første vises
-          som standard; scriptet under bytter til et tilfeldig ett per visning.
-          Uten JS ser brukeren fortsatt ett ekte sitat.
-        {%- endcomment -%}
+        {%- comment -%} Alle sitatene vises side ved side – ingen rotasjon. {%- endcomment -%}
         {%- if cr_quotes.size > 0 -%}
-          <div class="cart-reassure__quotes" data-cr-quotes>
+          <div class="cart-reassure__quotes">
             {%- for cr_q in cr_quotes -%}
-              <p class="cart-reassure__quote{% unless forloop.first %} is-hidden{% endunless %}">
-                «{{ cr_q }}»{%- assign cr_n = cr_names[forloop.index0] -%}{%- if cr_n != blank -%}&nbsp;<cite>— {{ cr_n }}</cite>{%- endif -%}
+              <p class="cart-reassure__quote">
+                «{{ cr_q }}»
+                {%- assign cr_n = cr_names[forloop.index0] -%}
+                {%- if cr_n != blank -%}
+                  <cite>— {{ cr_n }}</cite>
+                {%- endif -%}
               </p>
             {%- endfor -%}
           </div>
@@ -177,28 +177,4 @@
       </ul>
     {%- endunless -%}
   </div>
-
-  {%- comment -%} Velger ett tilfeldig sitat per visning. Delegert + idempotent,
-    så det også treffer blokker som re-rendres av cart.js. {%- endcomment -%}
-  <script>
-    (function () {
-      function pick(root) {
-        (root || document).querySelectorAll('[data-cr-quotes]').forEach(function (box) {
-          if (box.dataset.crPicked) return;
-          box.dataset.crPicked = '1';
-          var qs = box.querySelectorAll('.cart-reassure__quote');
-          if (qs.length < 2) return;
-          var i = Math.floor(Math.random() * qs.length);
-          qs.forEach(function (q, n) { q.classList.toggle('is-hidden', n !== i); });
-        });
-      }
-      pick();
-      document.addEventListener('DOMContentLoaded', function () { pick(); });
-      // cart.js bytter ut seksjons-HTML ved kvantitetsendring → plukk på nytt.
-      new MutationObserver(function () { pick(); }).observe(document.documentElement, {
-        childList: true,
-        subtree: true,
-      });
-    })();
-  </script>
 {%- endif -%}

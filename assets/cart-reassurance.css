@@ -44,27 +44,38 @@
   font-size: 1.4rem;
 }
 
-.cart-reassure__quote {
+/* Alle sitatene side ved side (tre kolonner) */
+.cart-reassure__quotes {
   flex-basis: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-top: 0.4rem;
+}
+
+.cart-reassure__quote {
   font-style: italic;
   color: var(--cr-muted);
-  font-size: 1.3rem;
-  line-height: 1.4;
+  font-size: 1.15rem;
+  line-height: 1.45;
   margin: 0;
 }
 
 .cart-reassure__quote cite {
+  display: block;
+  margin-top: 0.3rem;
   font-style: normal;
   font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--cr-fg);
 }
 
-/* Alle sitatene rendres; ett vises. .is-hidden skjuler resten. */
-.cart-reassure__quotes {
-  flex-basis: 100%;
-}
-
-.cart-reassure__quote.is-hidden {
-  display: none;
+/* Smal skjerm: stable i stedet for tre trange spalter */
+@media screen and (max-width: 480px) {
+  .cart-reassure__quotes {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
 }
 
 /* ---------- Trygghetsliste (3 punkter, ÉN kolonne på alle breakpoints) ----------
