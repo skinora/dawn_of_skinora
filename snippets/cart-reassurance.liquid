@@ -128,20 +128,11 @@
         <span class="cart-reassure__rating">
           {{- 'sections.cart.reassure_reviews' | t: rating: cr_rating, count: cr_show_count -}}
         </span>
-        {%- comment -%} Alle sitatene vises side ved side – ingen rotasjon. {%- endcomment -%}
-        {%- if cr_quotes.size > 0 -%}
-          <div class="cart-reassure__quotes">
-            {%- for cr_q in cr_quotes -%}
-              <p class="cart-reassure__quote">
-                «{{ cr_q }}»
-                {%- assign cr_n = cr_names[forloop.index0] -%}
-                {%- if cr_n != blank -%}
-                  <cite>— {{ cr_n }}</cite>
-                {%- endif -%}
-              </p>
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
+        {%- comment -%}
+          Sitatene vises IKKE her – de har fått egen full-bredde seksjon
+          (sections/sk-cart-reviews.liquid) under varelisten, der tre spalter
+          faktisk har plass. Her står kun stjerner + rating.
+        {%- endcomment -%}
       </div>
     {%- endif -%}
 

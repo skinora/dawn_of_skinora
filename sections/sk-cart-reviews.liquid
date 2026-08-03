@@ -1,0 +1,169 @@
+{%- comment -%}
+  sk-cart-reviews — anmeldelses-banner på /cart
+  ---------------------------------------------
+  Full bredde under varelisten. Viser de tre EKTE Okendo-sitatene side ved
+  side (de fikk bare ~113px hver inne i det 420px brede oppsummeringskortet).
+  Sitatene hentes fra samme tema-innstillinger som handlekurv-blokka
+  (settings.cart_review_quote / _2 / _clear), så de vedlikeholdes ett sted.
+
+  Skjules automatisk når kurven er tom.
+{%- endcomment -%}
+
+{{ 'cart-reassurance.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign q_raw = ''
+  assign n_raw = ''
+  if settings.cart_review_quote != blank
+    assign q_raw = q_raw | append: settings.cart_review_quote | append: '||'
+    assign n_raw = n_raw | append: settings.cart_review_name | append: '||'
+  endif
+  if settings.cart_review_quote_2 != blank
+    assign q_raw = q_raw | append: settings.cart_review_quote_2 | append: '||'
+    assign n_raw = n_raw | append: settings.cart_review_name_2 | append: '||'
+  endif
+  if settings.cart_review_quote_clear != blank
+    assign q_raw = q_raw | append: settings.cart_review_quote_clear | append: '||'
+    assign n_raw = n_raw | append: settings.cart_review_name_clear | append: '||'
+  endif
+  assign quotes = q_raw | split: '||'
+  assign names = n_raw | split: '||'
+-%}
+
+{%- if cart != empty and quotes.size > 0 -%}
+  <style>
+    #shopify-section-{{ section.id }} .sk-cart-reviews {
+      background: {% if section.settings.background_style == 'lavender' %}var(--paper-150, #f1eff4){% elsif section.settings.background_style == 'gray' %}var(--paper-50, #faf9fb){% else %}transparent{% endif %};
+      border-radius: 14px;
+      padding: clamp(2rem, 3vw, 3.2rem);
+    }
+
+    #shopify-section-{{ section.id }} .sk-cart-reviews__head {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.4rem 1rem;
+      margin: 0 0 clamp(1.6rem, 2.5vw, 2.4rem);
+    }
+
+    #shopify-section-{{ section.id }} .sk-cart-reviews__rating {
+      font-weight: 600;
+      font-size: 1.4rem;
+      color: rgb(var(--color-foreground));
+    }
+
+    #shopify-section-{{ section.id }} .sk-cart-reviews__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1.6rem, 3vw, 3.2rem);
+      max-width: 96rem;
+      margin-inline: auto;
+    }
+
+    #shopify-section-{{ section.id }} .sk-cart-reviews__item {
+      margin: 0;
+      text-align: center;
+    }
+
+    #shopify-section-{{ section.id }} .sk-cart-reviews__quote {
+      margin: 0 0 0.8rem;
+      font-style: italic;
+      font-size: 1.4rem;
+      line-height: 1.55;
+      color: rgba(var(--color-foreground), 0.78);
+    }
+
+    #shopify-section-{{ section.id }} .sk-cart-reviews__name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      font-style: normal;
+      color: rgb(var(--color-foreground));
+    }
+
+    /* Mobil: stable – tre spalter blir for trange */
+    @media screen and (max-width: 749px) {
+      #shopify-section-{{ section.id }} .sk-cart-reviews__grid {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+      }
+    }
+  </style>
+
+  <div class="page-width">
+    <section
+      class="sk-cart-reviews"
+      aria-label="{{ 'sections.cart.reviews_aria' | t | default: 'Kundeanmeldelser' }}"
+      style="margin-top:{{ section.settings.padding_top }}px;margin-bottom:{{ section.settings.padding_bottom }}px;"
+    >
+      <div class="sk-cart-reviews__head">
+        <span class="cart-reassure__stars" aria-hidden="true">
+          {%- for i in (1..5) -%}
+            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14" aria-hidden="true"><path d="M10 1.6l2.47 5.3 5.53.62-4.12 3.9 1.1 5.68L10 14.3l-4.98 2.8 1.1-5.68L2 7.52l5.53-.62L10 1.6z"/></svg>
+          {%- endfor -%}
+        </span>
+        {%- if settings.cart_review_rating != blank and settings.cart_review_count != blank -%}
+          <span class="sk-cart-reviews__rating">
+            {{- 'sections.cart.reassure_reviews' | t: rating: settings.cart_review_rating, count: settings.cart_review_count -}}
+          </span>
+        {%- endif -%}
+      </div>
+
+      <div class="sk-cart-reviews__grid">
+        {%- for q in quotes -%}
+          <figure class="sk-cart-reviews__item">
+            <blockquote class="sk-cart-reviews__quote">«{{ q }}»</blockquote>
+            {%- assign nm = names[forloop.index0] -%}
+            {%- if nm != blank -%}
+              <figcaption class="sk-cart-reviews__name">— {{ nm }}</figcaption>
+            {%- endif -%}
+          </figure>
+        {%- endfor -%}
+      </div>
+    </section>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Cart reviews",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Viser de tre anmeldelsene fra Innstillinger → Cart reassurance. Skjules når kurven er tom."
+    },
+    {
+      "type": "select",
+      "id": "background_style",
+      "label": "Bakgrunn",
+      "options": [
+        { "value": "none", "label": "Ingen" },
+        { "value": "lavender", "label": "Lavendel" },
+        { "value": "gray", "label": "Lys grå" }
+      ],
+      "default": "lavender"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Luft over",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Luft under",
+      "default": 8
+    }
+  ],
+  "presets": [{ "name": "Cart reviews" }]
+}
+{% endschema %}

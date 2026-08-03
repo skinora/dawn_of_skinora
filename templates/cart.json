@@ -7,6 +7,14 @@
         "padding_bottom": 36
       }
     },
+    "cart-reviews": {
+      "type": "sk-cart-reviews",
+      "settings": {
+        "background_style": "lavender",
+        "padding_top": 24,
+        "padding_bottom": 8
+      }
+    },
     "cart-footer": {
       "type": "sk-main-cart-footer",
       "blocks": {
@@ -38,6 +46,7 @@
   },
   "order": [
     "cart-items",
+    "cart-reviews",
     "cart-footer",
     "cart-reassurance"
   ]
