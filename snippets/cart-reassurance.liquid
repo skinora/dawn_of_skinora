@@ -111,10 +111,13 @@
 
     assign cr_quotes = cr_q_raw | split: '||'
     assign cr_names = cr_n_raw | split: '||'
+    # Indeks fra klokkeslettet (sekunder) → nytt sitat ved hver sidevisning.
+    # (cart.item_count ville vært stabilt og dermed ikke vekslet i praksis.)
     assign cr_quote = ''
     assign cr_name = ''
     if cr_quotes.size > 0
-      assign cr_idx = cart.item_count | modulo: cr_quotes.size
+      assign cr_seed = 'now' | date: '%S' | plus: 0
+      assign cr_idx = cr_seed | modulo: cr_quotes.size
       assign cr_quote = cr_quotes[cr_idx]
       assign cr_name = cr_names[cr_idx]
     endif
