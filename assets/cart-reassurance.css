@@ -105,25 +105,20 @@
   color: var(--cr-fg);
 }
 
-/* Betalingslogoene får egen linje under teksten og god størrelse – Klarna og
-   Vipps er det norske kunder faktisk ser etter, så de skal veie tyngre enn
-   Shop Pay / G Pay-knappene over. */
-.cart-reassure__item--pay {
-  flex-wrap: wrap;
+/* Betalingslogoene ligger rett under kjøpsknappen (egen rad, part:'payments').
+   Klarna og Vipps er det norske kunder ser etter, så de får tyngde her –
+   Shop Pay / G Pay kommer under som mindre snarveier. Ekte merkefarger:
+   grayscale fikk dem til å se deaktiverte ut. */
+.cart-reassure--cart + .cart-reassure-payments,
+#main-cart-footer .cart-reassure-payments {
+  margin-top: 1.2rem;
 }
 
-.cart-reassure__paylogos {
-  flex-basis: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 8px 0 0 28px; /* linjer opp med teksten (ikon 18px + gap 10px) */
+#main-cart-footer .cart-reassure-payments__list {
+  gap: 1rem;
 }
 
-/* Ekte merkefarger – grayscale fikk dem til å se deaktiverte ut. */
-.cart-reassure__paylogos img {
-  display: block;
-  width: auto;
+#main-cart-footer .cart-reassure-payments__item img {
   height: 26px;
 }
 

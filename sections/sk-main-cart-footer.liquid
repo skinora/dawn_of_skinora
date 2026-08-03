@@ -110,6 +110,14 @@
                 </button>
               </div>
 
+              {%- comment -%}
+                Klarna/Vipps/kort rett under kjøpsknappen – det er dem norske
+                kunder ser etter. Shop Pay / G Pay kommer under som snarveier.
+              {%- endcomment -%}
+              {%- unless cart == empty -%}
+                {% render 'cart-reassurance', context: 'cart', part: 'payments' %}
+              {%- endunless -%}
+
               {%- if additional_checkout_buttons -%}
                 <p class="sk-or" aria-hidden="true">{{ 'sections.cart.or_pay_with' | t }}</p>
                 <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
