@@ -40,21 +40,32 @@
      ========================================================================= */
   var SS_KEY = 'sk_attr_v1';
 
+  /* Query-strengen parses ÉN gang og deles av attribusjonen under og
+     partner-taggene lenger nede (tidligere to separate parsinger). */
+  var qs;
+  try { qs = new URLSearchParams(location.search); } catch (e) { qs = null; }
+
+  // Siste ikke-tomme verdi per nøkkel (getAll, ikke get).
+  function last(key) {
+    if (!qs) return '';
+    var all = qs.getAll(key);
+    for (var i = all.length - 1; i >= 0; i--) { if (all[i] !== '') return all[i]; }
+    return '';
+  }
+
+  // Vertsnavn fra referreren uten www., tom streng hvis intern/ugyldig.
+  function externalReferrerHost() {
+    var r = document.referrer || '';
+    if (!r) return '';
+    var host;
+    try { host = new URL(r).hostname.replace(/^www\./, ''); } catch (e) { return ''; }
+    return host === location.hostname.replace(/^www\./, '') ? '' : host;
+  }
+
   var attr = null;
   try { attr = JSON.parse(sessionStorage.getItem(SS_KEY) || 'null'); } catch (e) {}
 
   if (!attr) {
-    var qs;
-    try { qs = new URLSearchParams(location.search); } catch (e) { qs = null; }
-
-    // Siste ikke-tomme verdi per nøkkel (getAll, ikke get).
-    function last(key) {
-      if (!qs) return '';
-      var all = qs.getAll(key);
-      for (var i = all.length - 1; i >= 0; i--) { if (all[i] !== '') return all[i]; }
-      return '';
-    }
-
     var gclid   = last('gclid');
     var gbraid  = last('gbraid');           // (wbraid finnes også for app-kampanjer – kan legges til ved behov)
     var srsltid = last('srsltid');          // Google gratis-oppføring / Merchant surface-signal
@@ -87,6 +98,58 @@
     log('attribusjon fanget (first-touch):', attr);
   } else {
     log('attribusjon gjenbrukt fra økt:', attr);
+  }
+
+  /* =========================================================================
+     PARTNER-ATTRIBUSJON — partner_source / partner_campaign / partner_content
+     Clarity sitt innebygde «henvisende nettsted»-filter er upålitelig for denne
+     butikken (kortet viser økter, filteret returnerer 0), så vi setter egne
+     tagger og filtrerer på dem i stedet.
+
+     Settes ved HVER sidevisning (Shopify er flersidig), med sessionStorage
+     (sk_partner_*) som hukommelse gjennom økten. Mangler utm_source helt, men
+     referreren er ekstern, brukes vertsnavnet uten www. – det fanger utaggede
+     innkommende lenker.
+
+     BEGRENSNING: theme.liquid rendres ikke i Shopifys checkout på ikke-Plus.
+     Taggene dekker altså butikken, ikke selve kassen (Clarity kan uansett ikke
+     ta opp checkout, så ingen opptaksdata går tapt).
+     ========================================================================= */
+  var PARTNER = [
+    { param: 'utm_source', store: 'sk_partner_source', tag: 'partner_source' },
+    { param: 'utm_campaign', store: 'sk_partner_campaign', tag: 'partner_campaign' },
+    { param: 'utm_content', store: 'sk_partner_content', tag: 'partner_content' }
+  ];
+
+  /* Verdiene er brukerkontrollerte (kommer fra URL): små bokstaver, kun
+     [a-z0-9-_.], maks 50 tegn. Tomt resultat => nøkkelen hoppes over. */
+  function cleanTag(value) {
+    if (!value) return '';
+    return String(value).toLowerCase().replace(/[^a-z0-9\-_.]/g, '').slice(0, 50);
+  }
+
+  function ss(key, value) {
+    try {
+      if (value === undefined) return sessionStorage.getItem(key);
+      sessionStorage.setItem(key, value);
+    } catch (e) { /* privat modus – taggene virker fortsatt for denne siden */ }
+    return value;
+  }
+
+  var partnerTags = {};
+  PARTNER.forEach(function (p) {
+    var v = cleanTag(last(p.param)); // URL vinner
+    if (v) ss(p.store, v);
+    else v = cleanTag(ss(p.store));  // ellers: det økten allerede vet
+    if (v) partnerTags[p.tag] = v;
+  });
+
+  if (!partnerTags.partner_source) {
+    var refHost = cleanTag(externalReferrerHost());
+    if (refHost) {
+      ss('sk_partner_source', refHost);
+      partnerTags.partner_source = refHost;
+    }
   }
 
   // Utled kanal fra referrer når det ikke finnes klikk-id eller feed-UTM.
@@ -148,6 +211,9 @@
     country: SK.country
   };
   if (SK.product_handle) tags.product_handle = SK.product_handle; // kun på produktsider
+
+  // Partner-taggene (settes per sidevisning, se blokken over)
+  Object.keys(partnerTags).forEach(function (k) { tags[k] = partnerTags[k]; });
 
   // Defensiv: gjør ingenting hvis window.clarity mangler. Hopp over tomme verdier
   // (f.eks. utm_* på organisk trafikk) så vi ikke lager støy-tags.
