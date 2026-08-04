@@ -23,6 +23,89 @@
       })(window, document, "clarity", "script", "xmgzwwlwhg");
     </script>
 
+    <script type="text/javascript">
+      /* Partner attribution tags for Microsoft Clarity.
+         Clarity's built-in "referring site" filter is unreliable for this store
+         (the card shows sessions, the filter returns none), so we set our own
+         custom tags and filter on those instead.
+
+         Runs on every page view: Shopify is a multi-page app, so tags must be
+         re-applied on each load, not only on the landing page. UTM values are
+         persisted in sessionStorage so they survive navigation within the visit.
+
+         LIMITATION: theme.liquid does not render on Shopify's checkout pages on
+         non-Plus plans. These tags therefore cover the storefront (product,
+         collection, cart, etc.) but NOT checkout itself. Clarity cannot record
+         checkout either, so no session data is lost that we would otherwise have. */
+      (function () {
+        try {
+          var KEYS = [
+            { param: 'utm_source', store: 'sk_partner_source', tag: 'partner_source' },
+            { param: 'utm_campaign', store: 'sk_partner_campaign', tag: 'partner_campaign' },
+            { param: 'utm_content', store: 'sk_partner_content', tag: 'partner_content' }
+          ];
+
+          /* Values come from the URL and are user-controlled: lowercase, strip
+             anything outside [a-z0-9-_.], cap at 50 chars. Returns '' if nothing
+             usable remains, so the key is skipped entirely. Keeps PII out. */
+          function clean(value) {
+            if (!value) return '';
+            return String(value).toLowerCase().replace(/[^a-z0-9\-_.]/g, '').slice(0, 50);
+          }
+
+          function session(key, value) {
+            try {
+              if (value === undefined) return sessionStorage.getItem(key);
+              sessionStorage.setItem(key, value);
+            } catch (e) {
+              /* private mode / storage disabled — tags still work for this page */
+            }
+            return value;
+          }
+
+          var params = new URLSearchParams(location.search);
+          var resolved = {};
+
+          KEYS.forEach(function (k) {
+            /* URL wins; otherwise fall back to what the session already knows. */
+            var value = clean(params.get(k.param));
+            if (value) session(k.store, value);
+            else value = clean(session(k.store));
+            if (value) resolved[k.tag] = value;
+          });
+
+          /* No utm_source anywhere, but we arrived from an external site:
+             use the referrer host (minus www.) so untagged inbound links are
+             still attributable. Persisted so it survives internal navigation. */
+          if (!resolved.partner_source && document.referrer) {
+            var host = '';
+            try {
+              host = new URL(document.referrer).hostname.replace(/^www\./, '');
+            } catch (e) {
+              host = '';
+            }
+            if (host && host !== location.hostname.replace(/^www\./, '')) {
+              var referrerSource = clean(host);
+              if (referrerSource) {
+                session('sk_partner_source', referrerSource);
+                resolved.partner_source = referrerSource;
+              }
+            }
+          }
+
+          /* The Clarity snippet above defines window.clarity as a queue function
+             immediately, so this is safe even before the tag has downloaded. */
+          if (typeof window.clarity === 'function') {
+            Object.keys(resolved).forEach(function (tag) {
+              window.clarity('set', tag, resolved[tag]);
+            });
+          }
+        } catch (e) {
+          /* Never let attribution break the rest of the theme. */
+        }
+      })();
+    </script>
+
     {%- comment -%} Clarity-segmentering (UTM-normalisering + tags/events) – én snippet {%- endcomment -%}
     {% render 'sk-clarity', product: product %}
 
