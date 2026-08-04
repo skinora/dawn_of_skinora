@@ -244,6 +244,18 @@
   }
 }
 
+/* ---------- Samtykkebanner blokkerte KASSE-knappen ----------
+   #shopify-pc__banner er position:fixed nederst med svært høy z-index og la
+   seg OVER kjøpsknappen – kunden måtte gjette at banneret måtte lukkes først.
+   Vi hever IKKE knappen over banneret (samtykket skal være synlig); i stedet
+   reserveres plass under den så lenge banneret finnes i DOM. Shopify fjerner
+   banneret når kunden har svart, og da forsvinner paddingen av seg selv.
+   Uten :has()-støtte er oppførselen som før (ufarlig). */
+body:has(#shopify-pc__banner:not([hidden]):not([style*='display:none']):not([style*='display: none'])) .drawer__footer,
+body:has(#shopify-pc__banner:not([hidden]):not([style*='display:none']):not([style*='display: none'])) #main-cart-footer .cart__blocks {
+  padding-bottom: 11rem;
+}
+
 /* =============================================================
    sk-cart-reassurance — rolig blokk under kurven på /cart
    (erstatter Featured collection). Sentrert, to kolonner.
