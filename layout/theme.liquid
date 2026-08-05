@@ -26,6 +26,14 @@
     {%- comment -%} Clarity-segmentering (UTM-normalisering + tags/events) – én snippet {%- endcomment -%}
     {% render 'sk-clarity', product: product %}
 
+    {%- comment -%}
+      Quiz-CSS må stå i <head>: baren og header-pillen males helt øverst, og
+      reglene som skjuler dem per viewport (.sk-quiz-bar / .sk-quiz-trigger--header)
+      må gjelde ved FØRSTE maling. Lå tidligere i boot-snippeten nederst i <body>,
+      som ga et synlig hopp på mobil. 3,3 kB gzippet – rimelig pris mot CLS.
+    {%- endcomment -%}
+    {{ 'sk-quiz.css' | asset_url | stylesheet_tag }}
+
     {%- if product.tags contains 'noindex' -%}
       <meta name="robots" content="noindex, nofollow">
     {%- endif -%}

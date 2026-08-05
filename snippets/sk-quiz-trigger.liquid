@@ -19,7 +19,13 @@
 {%- assign _quiz_url = pages.hudveiviser.url | default: '/pages/hudveiviser' -%}
 
 {%- if _part == 'boot' -%}
-  {{ 'sk-quiz.css' | asset_url | stylesheet_tag }}
+  {%- comment -%}
+    sk-quiz.css lastes IKKE her lenger. Boot rendres nederst i <body>, mens
+    quiz-baren og header-pillen står øverst i headeren — CSS-en kom altså etter
+    at de var malt. Før den landet manglet display:none-reglene, så baren viste
+    seg på feil viewport og hoppet når stilen kom (CLS på mobil).
+    Lastes nå i <head>, se layout/theme.liquid.
+  {%- endcomment -%}
   <script type="application/json" id="sk-quiz-config">
     {
       "jsUrl": {{ 'sk-quiz.js' | asset_url | json }},
