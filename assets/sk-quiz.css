@@ -346,9 +346,37 @@ sk-quiz {
   gap: 0.5rem;
 }
 
-/* Full bredde øverst i menyskuffen (mobil) */
-.menu-drawer__quiz { padding: 1.2rem 0 0.4rem; }
-.sk-quiz-trigger--drawer { display: flex; width: 100%; }
+/* Veiviser-knappen i menyskuffen – står UNDER menypunktene.
+   Egen luft over/under så den leser som et eget steg, ikke som et menyvalg. */
+.menu-drawer__quiz {
+  padding: 2rem 2.4rem 2.4rem;
+}
+
+.sk-quiz-trigger--drawer {
+  display: flex;
+  width: 100%;
+  padding-block: 1.4rem;
+  /* Glir rolig inn like etter at skuffen har åpnet seg – nok til å fange
+     blikket etter at øyet har lest gjennom menyvalgene, uten å hoppe. */
+  animation: skqDrawerCta 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) 0.22s both;
+}
+
+@keyframes skqDrawerCta {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-quiz-trigger--drawer {
+    animation: none;
+  }
+}
 
 /* Fast fane i venstre skjermkant (kun desktop) */
 .sk-quiz-tab {
