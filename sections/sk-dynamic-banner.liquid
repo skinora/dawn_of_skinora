@@ -402,13 +402,22 @@
       align-items: flex-start;
     }
 
+    /* Innholdskolonnen fyller hele heroen: overskrift/tekst/CTA i toppen,
+       mens tillitsraden skyves helt ned med margin-top:auto. Da lander den
+       på de hvite t-skjortene nederst i bildet – rolig, lys bakgrunn – i
+       stedet for oppå håret, der stjernene forsvant. */
     .sk-dynamic-banner__container {
-      height: auto;
+      height: 100%;
     }
 
     .sk-dynamic-banner__content {
-      min-height: 0;
+      min-height: 100%;
       justify-content: flex-start;
+    }
+
+    .sk-dynamic-banner__trust {
+      margin-top: auto;
+      padding-bottom: 0.4rem;
     }
 
     /* VENSTRESTILT, IKKE SENTRERT — sentrert stabel er det som gjør at hero
