@@ -1114,6 +1114,17 @@ footer .footer__column.footer__column--menu a:hover {
    override. */
 [data-oke-container],
 .okeReviews,
+/* CLS-reserve for stjernevurderingen (produktside, over folden).
+   Okendo legger inn <style data-href="…">-plassholdere og henter den ekte
+   CSS-en asynkront. Før den lander rendres .oke-sr som stablede blokk-divs
+   (høy), og kollapser så til én kompakt rad (lav) — alt under hopper opp.
+   Vi reserverer sluttilstandens høyde og isolerer reflowen til blokka. */
+[data-oke-star-rating] {
+  display: block;
+  min-height: 2.2rem;
+  contain: layout;
+}
+
 .oke-sr,
 .oke-stars-foreground {
   --oke-stars-foregroundColor: var(--accent-gold) !important;
