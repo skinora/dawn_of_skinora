@@ -354,13 +354,20 @@
      Tillitslinje og brødtekst beholdes.
      ===================================================================== */
   @media (max-width: 700px) {
-    /* Gradient bak tekstkolonnen for lesbar kontrast (bildet er urørt) */
+    /* Gradient bak tekstkolonnen for lesbar kontrast (bildet er urørt).
+       Går høyere og blir tettere i bunn enn før, så teksten sitter trygt
+       oppå bildet i stedet for å bli dyttet under det. */
     .sk-dynamic-banner::after {
       content: '';
       position: absolute;
       inset: auto 0 0 0;
-      height: 62%;
-      background: linear-gradient(to top, rgba(255, 255, 255, 0.92) 42%, rgba(255, 255, 255, 0) 100%);
+      height: 72%;
+      background: linear-gradient(
+        to top,
+        rgb(255, 255, 255) 30%,
+        rgba(255, 255, 255, 0.94) 48%,
+        rgba(255, 255, 255, 0) 100%
+      );
       pointer-events: none;
       z-index: 0;
     }
@@ -370,30 +377,69 @@
       z-index: 1;
     }
 
-    .sk-dynamic-banner__content {
-      gap: 1rem;
+    /* VENSTRESTILT, IKKE SENTRERT — sentrert stabel er det som gjør at hero
+       leser som en mal. Venstrekant gir redaksjonell ro og raskere lesing. */
+    .sk-dynamic-banner__container {
+      text-align: left;
     }
 
+    .sk-dynamic-banner__content {
+      gap: 1.1rem;
+      padding-inline: 0.2rem;
+      padding-bottom: 0.5rem;
+    }
+
+    /* Sentence case i serif — versaler + sperret spacing var hovedgrunnen til
+       at den så datert ut. Strammere line-height og et kort mål (16ch) gir
+       en overskrift med tyngde i stedet for tre brede versal-linjer. */
     .sk-dynamic-banner__title {
-      line-height: 1.08;
+      font-size: clamp(3rem, 9.2vw, 4rem);
+      line-height: 1.04;
+      letter-spacing: -0.022em;
+      text-transform: none;
+      text-align: left;
+      max-width: 16ch;
+      padding-inline: 0;
+      text-wrap: balance;
     }
 
     .sk-dynamic-banner__eyebrow {
       font-size: 1.15rem;
+      text-align: left;
     }
 
-    /* Minst 48px trykkhøyde på mobil */
+    /* Brødteksten er støtte, ikke hovedrolle: mindre, dempet, kort mål. */
+    .sk-dynamic-banner__description {
+      font-size: 1.45rem;
+      line-height: 1.45;
+      letter-spacing: 0;
+      color: rgba(var(--color-foreground), 0.72);
+      max-width: 32ch;
+      margin-top: 0;
+      text-align: left;
+    }
+
+    /* CTA i full bredde – tommelvennlig og tydelig endestasjon. */
+    .sk-dynamic-banner__cta {
+      width: 100%;
+      justify-content: flex-start;
+    }
+
     .sk-dynamic-banner__button.sk-btn {
-      min-height: 48px;
+      width: 100%;
+      min-height: 54px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      font-size: 1.45rem;
+      letter-spacing: 0.04em;
     }
 
     .sk-dynamic-banner__trust {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       line-height: 1.4;
-      text-wrap: balance;
+      text-align: left;
+      color: rgba(var(--color-foreground), 0.6);
     }
   }
 
@@ -403,16 +449,17 @@
     }
 
     .sk-dynamic-banner__content {
-      gap: 0.85rem;
+      gap: 0.95rem;
     }
 
     .sk-dynamic-banner__title {
-      line-height: 1.05;
+      font-size: clamp(2.7rem, 10.2vw, 3.4rem);
+      line-height: 1.03;
     }
 
     .sk-dynamic-banner__description {
-      font-size: 1.15rem;
-      line-height: 1.35;
+      font-size: 1.35rem;
+      line-height: 1.4;
     }
 
     .sk-dynamic-banner__trust {
@@ -489,7 +536,7 @@
 
         {%- comment -%} Tillitslinje – vises uansett kampanjestatus. {%- endcomment -%}
         <p class="sk-dynamic-banner__trust">
-          Vipps og Apple Pay
+          Vipps og Klarna
           {%- if hero_count != blank and hero_rating != blank -%}
             &nbsp;· {{ hero_rating }} ★ av {{ hero_count }} anmeldelser
           {%- endif -%}
