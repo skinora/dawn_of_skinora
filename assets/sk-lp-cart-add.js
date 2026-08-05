@@ -55,29 +55,39 @@
           return v.available;
         }) || product.variants[0];
 
-      /* 2. Add to cart via AJAX */
+      /* 2. Add to cart via AJAX \u2014 drawer-seksjonene bes om i SAMME kall.
+         Tidligere var dette tre sekvensielle rundturer (produkt-JSON \u2192 add \u2192
+         /cart?sections=\u2026) \u00e0 ~0,7 s = ~2,1 s f\u00f8r skuffen \u00e5pnet. Seksjonene er
+         gratis i add-svaret, s\u00e5 vi er nede i to. */
       const addRes = await fetch('/cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: [{ id: variant.id, quantity: 1 }] }),
+        body: JSON.stringify({
+          items: [{ id: variant.id, quantity: 1 }],
+          sections: 'cart-drawer,cart-icon-bubble',
+          sections_url: window.location.pathname,
+        }),
       });
       if (!addRes.ok) throw new Error('Add-to-cart failed');
+      const addData = await addRes.json();
 
       /* 3. Success state */
       btn.textContent = 'Lagt til \u2713';
 
-      /* 4. Refresh and open cart drawer */
+      /* 4. Open cart drawer with the sections we already have */
       const cartDrawer = document.querySelector('cart-drawer');
       if (cartDrawer) {
         cartDrawer.classList.remove('is-empty');
         const drawerItems = cartDrawer.querySelector('cart-drawer-items');
         if (drawerItems) drawerItems.classList.remove('is-empty');
 
-        const sectionsUrl = '/cart?sections=cart-drawer,cart-icon-bubble';
-        const sectionsRes = await fetch(sectionsUrl);
-        const sections = await sectionsRes.json();
-
-        cartDrawer.renderContents({ id: variant.id, sections: sections });
+        if (addData && addData.sections) {
+          cartDrawer.renderContents(addData);
+        } else {
+          /* Fallback hvis seksjonene mangler i svaret */
+          const sectionsRes = await fetch('/cart?sections=cart-drawer,cart-icon-bubble');
+          cartDrawer.renderContents({ id: variant.id, sections: await sectionsRes.json() });
+        }
       } else {
         window.location.href = '/cart';
         return;

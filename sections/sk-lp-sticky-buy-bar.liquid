@@ -416,13 +416,21 @@
         labelEl.textContent = 'Legger til\u2026';
         if (errorEl) { errorEl.style.display = 'none'; errorEl.textContent = ''; }
 
+        /* Be om drawer-seksjonene i SAMME kall som add. Tidligere ble de hentet
+           i et eget /cart?sections=\u2026 etterp\u00e5 \u2014 to sekvensielle rundturer \u00e0 ~0,7 s
+           (m\u00e5lt), alts\u00e5 ~1,4 s f\u00f8r skuffen \u00e5pnet. Shopify rendrer seksjonene
+           gratis i add-svaret, s\u00e5 dette halverer ventetiden. */
+        var atcBody = new FormData(form);
+        atcBody.append('sections', 'cart-drawer,cart-icon-bubble');
+        atcBody.append('sections_url', window.location.pathname);
+
         fetch('/cart/add.js', {
           method: 'POST',
           headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-          body: new FormData(form)
+          body: atcBody
         })
         .then(function (r) { if (!r.ok) throw new Error('ATC failed'); return r.json(); })
-        .then(function () {
+        .then(function (data) {
           labelEl.textContent = 'Lagt til \u2713';
           /* Refresh and open cart drawer */
           var cartDrawer = document.querySelector('cart-drawer');
@@ -430,11 +438,14 @@
             cartDrawer.classList.remove('is-empty');
             var drawerItems = cartDrawer.querySelector('cart-drawer-items');
             if (drawerItems) drawerItems.classList.remove('is-empty');
-            fetch('/cart?sections=cart-drawer,cart-icon-bubble')
-              .then(function (r) { return r.json(); })
-              .then(function (sections) {
-                cartDrawer.renderContents({ sections: sections });
-              });
+            if (data && data.sections) {
+              cartDrawer.renderContents(data);
+            } else {
+              /* Fallback hvis seksjonene mangler i svaret */
+              fetch('/cart?sections=cart-drawer,cart-icon-bubble')
+                .then(function (r) { return r.json(); })
+                .then(function (sections) { cartDrawer.renderContents({ sections: sections }); });
+            }
           } else {
             window.location.href = '/cart';
             return;
