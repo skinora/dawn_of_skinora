@@ -638,10 +638,21 @@
           );
         }
 
+        /* Prioritet: Google-taggene (GTM/gtag/Ads) skal fyre FØRST av de utsatte,
+           så konverterings- og kampanjedata registreres så tidlig som mulig.
+           De er få og lette sammenlignet med Klaviyo/Okendo, og køen sorteres
+           bare – ingenting hoppes over.
+           MERK: Clarity er ikke i delayJS i det hele tatt (lastes i <head>,
+           linje ~18), så den har allerede høyest prioritet og berøres ikke. */
+        var priorityJS = /googletagmanager\.com|google-analytics\.com|\/gtag\/|googleads|googleadservices/;
+
         function fire() {
           if (done) return;
           done = true;
           mo.disconnect();
+          saved.sort(function (a, b) {
+            return (priorityJS.test(b) ? 1 : 0) - (priorityJS.test(a) ? 1 : 0);
+          });
           drain(0);
         }
 
