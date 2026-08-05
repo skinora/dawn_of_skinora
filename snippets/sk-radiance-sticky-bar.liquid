@@ -464,22 +464,25 @@
 
     portal.addEventListener('click', handlePortalClick);
 
-    /* ── Scroll-driven visibility with rAF gate (avoids forced reflow per scroll tick) ── */
+    /* ── Visibility bak én rAF-gate ──────────────────────────────────────────
+       updateVisibility() leser layout (getBoundingClientRect) og skriver
+       deretter klasser. Uten gate blir det en tvungen reflow per hendelse.
+       Scroll var allerede gatet; resize var det IKKE — og på mobil fyrer
+       resize gjentatte ganger når nettleserens URL-linje skjules/vises under
+       scrolling, så den ugatede varianten ga en reflow-storm midt i
+       interaksjonen (INP). Begge deler bruker nå samme gate. */
     let stickyTicking = false;
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (!stickyTicking) {
-          stickyTicking = true;
-          requestAnimationFrame(() => {
-            updateVisibility(portal);
-            stickyTicking = false;
-          });
-        }
-      },
-      { passive: true }
-    );
-    window.addEventListener('resize', () => updateVisibility(portal));
+    const scheduleVisibility = () => {
+      if (stickyTicking) return;
+      stickyTicking = true;
+      requestAnimationFrame(() => {
+        updateVisibility(portal);
+        stickyTicking = false;
+      });
+    };
+
+    window.addEventListener('scroll', scheduleVisibility, { passive: true });
+    window.addEventListener('resize', scheduleVisibility, { passive: true });
 
     document.addEventListener('sk:offerchange', (e) => updateSticky(e.detail));
   })();
