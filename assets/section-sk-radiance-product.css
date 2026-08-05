@@ -527,6 +527,18 @@
 .sk-radiance-buy-buttons__button.loading .sk-radiance-buy-buttons__button-text {
   visibility: hidden;
 }
+
+/* «Legger til …»-tilstand: teksten byttes i JS, knappen dempes litt så
+   klikket får umiddelbar visuell respons. Ingen spinner – teksten forblir
+   synlig, så knappen blir aldri stående blank mens kallet går. */
+.sk-radiance-buy-buttons__button.is-adding {
+  background: rgba(var(--color-brand-rgb), 0.82);
+  cursor: progress;
+}
+
+.sk-radiance-buy-buttons__button.is-adding .sk-radiance-buy-buttons__button-text {
+  visibility: visible;
+}
 .sk-radiance-buy-buttons__button .loading__spinner {
   position: absolute;
   top: 50%;

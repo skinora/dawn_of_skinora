@@ -32,20 +32,19 @@ if (!customElements.get('product-form')) {
         const spinner = this.querySelector('.loading__spinner');
         let loadingTimer = null;
 
-        /* Terskel før spinneren vises. Poenget er å unngå at den blinker ved
-           raske svar — men /cart/add.js mot Shopify måler stabilt ~0,7 s (målt
-           live, 3 kjøringer), så 200 ms ga bare dødtid der klikket ikke fikk
-           respons. 80 ms er fortsatt over blink-grensen ved cache-treff, men
-           føles umiddelbart.
-           MERK: .loading skjuler knappeteksten (section-sk-radiance-product.css),
-           så spinneren må finnes — uten den blir knappen blank mens den laster. */
-        if (spinner) {
-          loadingTimer = window.setTimeout(() => {
-            this.submitButton.classList.add('loading');
-            spinner.classList.remove('hidden');
-          }, 80);
-        } else {
+        /* Tilbakemelding: tekstbytte + fargeskift, IKKE spinner.
+           Spinner-varianten skjulte knappeteksten og ga en blank knapp i de
+           ~0,7 s /cart/add.js tar (målt live). Tekstbytte er umiddelbart,
+           forklarer hva som skjer, og er samme mønster som LP-knappene bruker.
+           Spinneren beholdes i markup som fallback for knapper uten tekst-span. */
+        const ADDING_LABEL = (window.variantStrings && window.variantStrings.adding) || 'Legger til …';
+        this.originalButtonLabel = this.submitButtonText ? this.submitButtonText.textContent : '';
+        this.submitButton.classList.add('is-adding');
+        if (this.submitButtonText) {
+          this.submitButtonText.textContent = ADDING_LABEL;
+        } else if (spinner) {
           this.submitButton.classList.add('loading');
+          spinner.classList.remove('hidden');
         }
 
         try {
@@ -149,7 +148,11 @@ if (!customElements.get('product-form')) {
             })
             .finally(() => {
               if (loadingTimer) window.clearTimeout(loadingTimer);
-              this.submitButton.classList.remove('loading');
+              this.submitButton.classList.remove('loading', 'is-adding');
+              /* Ikke overskriv «Utsolgt»-teksten som feilgrenen kan ha satt. */
+              if (this.submitButtonText && !this.error && this.originalButtonLabel) {
+                this.submitButtonText.textContent = this.originalButtonLabel;
+              }
               if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
               if (!this.error) this.submitButton.removeAttribute('aria-disabled');
               spinner?.classList.add('hidden');
@@ -159,7 +162,10 @@ if (!customElements.get('product-form')) {
         } catch (error) {
           console.error('[product-form] submit failed before fetch', error);
           if (loadingTimer) window.clearTimeout(loadingTimer);
-          this.submitButton.classList.remove('loading');
+          this.submitButton.classList.remove('loading', 'is-adding');
+          if (this.submitButtonText && this.originalButtonLabel) {
+            this.submitButtonText.textContent = this.originalButtonLabel;
+          }
           this.submitButton.removeAttribute('aria-disabled');
           spinner?.classList.add('hidden');
         }
