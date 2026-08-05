@@ -32,12 +32,18 @@ if (!customElements.get('product-form')) {
         const spinner = this.querySelector('.loading__spinner');
         let loadingTimer = null;
 
-        // Avoid showing a spinner for fast responses (reduces perceived latency).
+        /* Terskel før spinneren vises. Poenget er å unngå at den blinker ved
+           raske svar — men /cart/add.js mot Shopify måler stabilt ~0,7 s (målt
+           live, 3 kjøringer), så 200 ms ga bare dødtid der klikket ikke fikk
+           respons. 80 ms er fortsatt over blink-grensen ved cache-treff, men
+           føles umiddelbart.
+           MERK: .loading skjuler knappeteksten (section-sk-radiance-product.css),
+           så spinneren må finnes — uten den blir knappen blank mens den laster. */
         if (spinner) {
           loadingTimer = window.setTimeout(() => {
             this.submitButton.classList.add('loading');
             spinner.classList.remove('hidden');
-          }, 200);
+          }, 80);
         } else {
           this.submitButton.classList.add('loading');
         }
