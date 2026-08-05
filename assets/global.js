@@ -786,7 +786,20 @@ class SliderComponent extends HTMLElement {
     if (!this.slider || !this.nextButton) return;
 
     this.initPages();
-    const resizeObserver = new ResizeObserver((entries) => this.initPages());
+    /* initPages() leser layout og kaller update() som muterer DOM. Kjørt direkte
+       i observer-callbacken gir det «ResizeObserver loop completed with undelivered
+       notifications» (2,13 % av øktene i Clarity) og en reflow-storm som skader INP.
+       rAF flytter arbeidet ut av observasjonssyklusen; flagget hindrer at flere
+       raske resize-hendelser køer opp duplikate kjøringer. */
+    let roPending = false;
+    const resizeObserver = new ResizeObserver(() => {
+      if (roPending) return;
+      roPending = true;
+      requestAnimationFrame(() => {
+        roPending = false;
+        this.initPages();
+      });
+    });
     resizeObserver.observe(this.slider);
 
     this.slider.addEventListener('scroll', this.update.bind(this), { passive: true });
