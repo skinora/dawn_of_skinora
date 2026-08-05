@@ -190,6 +190,14 @@
     cursor: pointer;
   }
 
+  /* «Legger til …»-tilstand: umiddelbar respons på knappen som faktisk ble
+     trykket. Hovedskjemaets knapp er scrollet ut av syne når baren er synlig,
+     så uten dette så klikket uresponsivt ut i de ~0,7 s kallet tar. */
+  .sk-radiance-sticky-bottom-bar__cta.is-adding {
+    background: rgba(var(--color-brand-rgb), 0.82);
+    cursor: progress;
+  }
+
   .sk-radiance-sticky-bottom-bar__button {
     min-width: clamp(10rem, 24vw, 15rem);
     display: inline-flex;
@@ -279,6 +287,7 @@
   assign section_id = section.id
   assign add_label = 'products.product.add_to_cart' | t
   assign sold_out_label = 'products.product.sold_out' | t
+  assign adding_label = 'Legger til …'
   assign selected_variant = product.selected_or_first_available_variant
 -%}
 
@@ -428,7 +437,41 @@
           .forEach((input) => applyVariantToInput(input, latestOfferDetail.variantId));
       }
 
+      /* Tilbakemelding på DENNE knappen. safeSubmitForm() sender hovedskjemaet,
+         så product-form.js gir «Legger til …» på hovedknappen – men den er
+         scrollet ut av syne når sticky-baren er synlig, så klikket her så helt
+         uresponsivt ut i de ~0,7 s kallet tar. Vi speiler samme mønster lokalt.
+         cartUpdate/cartError (pub-sub) rydder opp; timeout er sikkerhetsnett. */
+      if (!btn.dataset.skAdding) {
+        btn.dataset.skAdding = '1';
+        btn.dataset.skLabel = btn.textContent;
+        btn.textContent = '{{ adding_label | default: "Legger til …" }}';
+        btn.classList.add('is-adding');
+        btn.setAttribute('aria-disabled', 'true');
+        restoreStickyCta(btn);
+      }
+
       safeSubmitForm(form);
+    }
+
+    /* Gjenopprett knappen når kurven har svart (eller etter timeout). */
+    function restoreStickyCta(btn) {
+      let done = false;
+      const restore = () => {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        btn.textContent = btn.dataset.skLabel || btn.textContent;
+        btn.classList.remove('is-adding');
+        btn.removeAttribute('aria-disabled');
+        delete btn.dataset.skAdding;
+        delete btn.dataset.skLabel;
+      };
+      const timer = setTimeout(restore, 4000);
+      if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+        const un1 = subscribe(PUB_SUB_EVENTS.cartUpdate, () => { restore(); un1 && un1(); });
+        const un2 = subscribe(PUB_SUB_EVENTS.cartError, () => { restore(); un2 && un2(); });
+      }
     }
 
     function updateSticky(detail) {
