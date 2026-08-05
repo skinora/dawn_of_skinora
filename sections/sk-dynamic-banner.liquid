@@ -147,12 +147,18 @@
 
   /* Tillitsrad under knappen: stjerner + vurdering + betalingslogoer.
      Flex med wrap, så den aldri brekker midt i en setning. */
+  /* Tillitsraden er BEVISST to grupper som hver kan legge seg på egen linje:
+     [stjerner + vurdering] og [betalingslogoer]. Tidligere hadde vurderingen
+     white-space:nowrap og logoene fast bredde, så raden ble bredere enn
+     kolonnen og elementene la seg oppå hverandre. Nå krymper tekstgruppa og
+     logoene wrapper ned i stedet. */
   .sk-dynamic-banner__trust {
     margin: 0;
+    width: 100%;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.5rem 1rem;
+    gap: 0.6rem 1.2rem;
     font-size: clamp(1.1rem, 1.5vw, 1.3rem);
     line-height: 1.45;
     color: rgba(var(--color-foreground), 0.72);
@@ -162,18 +168,21 @@
     display: inline-flex;
     align-items: center;
     gap: 1px;
+    flex: 0 0 auto;
     color: var(--accent-gold, #d4a843);
     line-height: 1;
   }
 
   .sk-dynamic-banner__rating {
-    white-space: nowrap;
+    flex: 0 1 auto;
+    min-width: 0;
   }
 
   .sk-dynamic-banner__pay {
     display: inline-flex;
     align-items: center;
     gap: 0.7rem;
+    flex: 0 0 auto;
   }
 
   .sk-dynamic-banner__pay img {
