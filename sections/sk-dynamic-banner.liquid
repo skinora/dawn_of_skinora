@@ -145,12 +145,41 @@
     color: var(--color-brand, rgb(var(--sk-color-heading-text)));
   }
 
-  /* Tillitslinje under knappen */
+  /* Tillitsrad under knappen: stjerner + vurdering + betalingslogoer.
+     Flex med wrap, så den aldri brekker midt i en setning. */
   .sk-dynamic-banner__trust {
     margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
     font-size: clamp(1.1rem, 1.5vw, 1.3rem);
     line-height: 1.45;
     color: rgba(var(--color-foreground), 0.72);
+  }
+
+  .sk-dynamic-banner__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    color: var(--accent-gold, #d4a843);
+    line-height: 1;
+  }
+
+  .sk-dynamic-banner__rating {
+    white-space: nowrap;
+  }
+
+  .sk-dynamic-banner__pay {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .sk-dynamic-banner__pay img {
+    display: block;
+    width: auto;
+    height: 16px;
   }
 
   .sk-dynamic-banner__button .sk-btn {
@@ -354,27 +383,32 @@
      Tillitslinje og brødtekst beholdes.
      ===================================================================== */
   @media (max-width: 700px) {
-    /* Gradient bak tekstkolonnen for lesbar kontrast (bildet er urørt).
-       Går høyere og blir tettere i bunn enn før, så teksten sitter trygt
-       oppå bildet i stedet for å bli dyttet under det. */
+    /* Ingen gradient-overlay: bildet er lyst nok til at aubergine tekst leser
+       fint direkte oppå, og overlayet la en synlig dis over motivet. */
     .sk-dynamic-banner::after {
-      content: '';
-      position: absolute;
-      inset: auto 0 0 0;
-      height: 72%;
-      background: linear-gradient(
-        to top,
-        rgb(255, 255, 255) 30%,
-        rgba(255, 255, 255, 0.94) 48%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      pointer-events: none;
-      z-index: 0;
+      content: none;
     }
 
     .sk-dynamic-banner .page-width {
       position: relative;
       z-index: 1;
+    }
+
+    /* Innholdet samles i TOPPEN, over hodene på modellene – der er bakgrunnen
+       rolig. Tidligere dyttet en margin-top:auto teksten ned; da jeg nullstilte
+       den ble alt liggende øverst med et stort tomrom under. Nå er plasseringen
+       et bevisst valg i stedet for en bieffekt. */
+    .sk-dynamic-banner {
+      align-items: flex-start;
+    }
+
+    .sk-dynamic-banner__container {
+      height: auto;
+    }
+
+    .sk-dynamic-banner__content {
+      min-height: 0;
+      justify-content: flex-start;
     }
 
     /* VENSTRESTILT, IKKE SENTRERT — sentrert stabel er det som gjør at hero
@@ -392,15 +426,20 @@
     /* Sentence case i serif — versaler + sperret spacing var hovedgrunnen til
        at den så datert ut. Strammere line-height og et kort mål (16ch) gir
        en overskrift med tyngde i stedet for tre brede versal-linjer. */
+    /* hyphens:auto delte «LED-tekno-logi» midt i ordet. Slått av – heller en
+       kortere linje enn et brukket fagord. */
     .sk-dynamic-banner__title {
-      font-size: clamp(3rem, 9.2vw, 4rem);
-      line-height: 1.04;
+      font-size: clamp(2.8rem, 8.6vw, 3.6rem);
+      line-height: 1.06;
       letter-spacing: -0.022em;
       text-transform: none;
       text-align: left;
-      max-width: 16ch;
+      max-width: 15ch;
       padding-inline: 0;
       text-wrap: balance;
+      hyphens: none;
+      overflow-wrap: normal;
+      word-break: normal;
     }
 
     .sk-dynamic-banner__eyebrow {
@@ -534,14 +573,24 @@
           </a>
         </div>
 
-        {%- comment -%} Tillitslinje – vises uansett kampanjestatus. {%- endcomment -%}
-        <p class="sk-dynamic-banner__trust">
-          Vipps og Klarna
+        {%- comment -%}
+          Tillitsrad – vises uansett kampanjestatus. Stjerner og betalingslogoer
+          som grafikk i stedet for én lang tekstlinje som brakk i to.
+        {%- endcomment -%}
+        <div class="sk-dynamic-banner__trust">
           {%- if hero_count != blank and hero_rating != blank -%}
-            &nbsp;· {{ hero_rating }} ★ av {{ hero_count }} anmeldelser
+            <span class="sk-dynamic-banner__stars" aria-hidden="true">
+              {%- for i in (1..5) -%}
+                <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13"><path d="M10 1.6l2.47 5.3 5.53.62-4.12 3.9 1.1 5.68L10 14.3l-4.98 2.8 1.1-5.68L2 7.52l5.53-.62L10 1.6z"/></svg>
+              {%- endfor -%}
+            </span>
+            <span class="sk-dynamic-banner__rating">{{ hero_rating }} av 5 · {{ hero_count }} anmeldelser</span>
           {%- endif -%}
-          &nbsp;· Gratis frakt fra norsk lager
-        </p>
+          <span class="sk-dynamic-banner__pay" aria-label="Vipps og Klarna">
+            <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="" height="16" width="40" loading="lazy">
+            <img src="{{ 'klarna-logo.svg' | asset_url }}" alt="" height="16" loading="lazy">
+          </span>
+        </div>
       </div>
     </div>
   </div>
