@@ -8,6 +8,16 @@
     min-height: 100vh;
     contain: layout style;
   }
+
+  /* Vakten må matche heroens FAKTISKE høyde. Under 435px settes heroen til
+     80vh, mens wrapperen sto igjen på 100vh – de 20vh differanse ble et tomt
+     hvitt felt mellom hero og logostripen. Over 435px er heroen 100vh, så
+     vakten stemmer allerede der. */
+  @media (max-width: 435px) {
+    #shopify-section-{{ section.id }} {
+      min-height: 80vh;
+    }
+  }
 </style>
 
 {%- comment -%}
