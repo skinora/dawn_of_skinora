@@ -419,14 +419,24 @@
       height: 100%;
     }
 
+    /* Overskrift + brødtekst i toppen; CTA og tillitsrad skyves ned som ÉN
+       gruppe til brysthøyde på modellene, der t-skjortene gir rolig, lys
+       bakgrunn. margin-top:auto på CTA-en spiser mellomrommet, og
+       padding-bottom løfter gruppa opp fra bildekanten (tillitsraden ble
+       ellers klippet nederst). */
     .sk-dynamic-banner__content {
       min-height: 100%;
       justify-content: flex-start;
+      padding-bottom: 14vh;
+    }
+
+    .sk-dynamic-banner__cta {
+      margin-top: auto;
     }
 
     .sk-dynamic-banner__trust {
-      margin-top: auto;
-      padding-bottom: 0.4rem;
+      margin-top: 0.9rem;
+      padding-bottom: 0;
     }
 
     /* VENSTRESTILT, IKKE SENTRERT — sentrert stabel er det som gjør at hero
