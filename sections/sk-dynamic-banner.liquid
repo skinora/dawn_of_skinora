@@ -164,18 +164,34 @@
     color: rgba(var(--color-foreground), 0.72);
   }
 
+  /* Sosialt bevis skal BRØLE: større stjerner, full metning og fete tall.
+     Dette er heroens sterkeste tillitssignal – det tåler å rope. */
   .sk-dynamic-banner__stars {
     display: inline-flex;
     align-items: center;
-    gap: 1px;
+    gap: 2px;
     flex: 0 0 auto;
     color: var(--accent-gold, #d4a843);
     line-height: 1;
   }
 
+  .sk-dynamic-banner__stars svg {
+    width: 18px;
+    height: 18px;
+    filter: drop-shadow(0 1px 2px rgba(45, 27, 61, 0.18));
+  }
+
   .sk-dynamic-banner__rating {
     flex: 0 1 auto;
     min-width: 0;
+    font-size: 1.45rem;
+    color: rgb(var(--color-foreground));
+  }
+
+  .sk-dynamic-banner__rating strong {
+    font-weight: 700;
+    font-size: 1.7rem;
+    letter-spacing: -0.01em;
   }
 
   .sk-dynamic-banner__pay {
@@ -502,11 +518,13 @@
       letter-spacing: 0.04em;
     }
 
+    /* Ikke demp tillitsraden på mobil – den skal brøle her også. */
     .sk-dynamic-banner__trust {
-      font-size: 1.15rem;
+      font-size: 1.3rem;
       line-height: 1.4;
       text-align: left;
-      color: rgba(var(--color-foreground), 0.6);
+      color: rgb(var(--color-foreground));
+      gap: 0.6rem 1rem;
     }
   }
 
@@ -529,8 +547,10 @@
       line-height: 1.4;
     }
 
+    /* Tillitsraden krympes IKKE på små skjermer – den er heroens sterkeste
+       tillitssignal og skal lese tydelig også der. */
     .sk-dynamic-banner__trust {
-      font-size: 1.1rem;
+      font-size: 1.25rem;
     }
   }
 </style>
@@ -605,15 +625,23 @@
           Tillitsrad – vises uansett kampanjestatus. Stjerner og betalingslogoer
           som grafikk i stedet for én lang tekstlinje som brakk i to.
         {%- endcomment -%}
+        {%- comment -%}
+          Vurdering og antall er BEVISST hardkodet her, ikke hentet fra
+          reviews-metafeltet: heroen ligger på forsiden og skal vise butikkens
+          TOTALE tall, ikke ett produkts. Summen er verifisert 3. aug 2026 mot
+          produktsidenes JSON-LD: Radiance Face 79 + Clear 68 + Neck 62 = 209,
+          alle 4,8. MÅ oppdateres manuelt når antallet vokser vesentlig –
+          tallet skal alltid være sant.
+        {%- endcomment -%}
         <div class="sk-dynamic-banner__trust">
-          {%- if hero_count != blank and hero_rating != blank -%}
-            <span class="sk-dynamic-banner__stars" aria-hidden="true">
-              {%- for i in (1..5) -%}
-                <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13"><path d="M10 1.6l2.47 5.3 5.53.62-4.12 3.9 1.1 5.68L10 14.3l-4.98 2.8 1.1-5.68L2 7.52l5.53-.62L10 1.6z"/></svg>
-              {%- endfor -%}
-            </span>
-            <span class="sk-dynamic-banner__rating">{{ hero_rating }} av 5 · {{ hero_count }} anmeldelser</span>
-          {%- endif -%}
+          <span class="sk-dynamic-banner__stars" aria-hidden="true">
+            {%- for i in (1..5) -%}
+              <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M10 1.6l2.47 5.3 5.53.62-4.12 3.9 1.1 5.68L10 14.3l-4.98 2.8 1.1-5.68L2 7.52l5.53-.62L10 1.6z"/></svg>
+            {%- endfor -%}
+          </span>
+          <span class="sk-dynamic-banner__rating">
+            <strong>4,8</strong> av 5 · <strong>209</strong> anmeldelser
+          </span>
           <span class="sk-dynamic-banner__pay" aria-label="Vipps og Klarna">
             <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="" height="16" width="40" loading="lazy">
             <img src="{{ 'klarna-logo.svg' | asset_url }}" alt="" height="16" loading="lazy">
