@@ -535,10 +535,12 @@
       </div>
     </div>
   </header>
-  {%- comment -%} Mobil «3. linje»: quizen på egen full-bredde rad under headeren (kun mobil) {%- endcomment -%}
-  {%- unless request.page_type == 'cart' -%}
-    {% render 'sk-quiz-trigger', part: 'bar', label: 'Finn maske som passer deg' %}
-  {%- endunless -%}
+  {%- comment -%}
+    Mobil-CTA-raden for quizen er fjernet: den tok en hel linje over folden på
+    hver eneste side. Quizen nås fortsatt fra menyskuffen på mobil, og fra
+    header-pillen på desktop. Snippeten støtter fortsatt part:'bar' – re-aktiver
+    ved å sette inn render-kallet her igjen (CSS-en ligger i sk-quiz.css).
+  {%- endcomment -%}
 </{{ header_tag }}>
 
 {% schema %}
