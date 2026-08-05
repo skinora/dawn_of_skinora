@@ -606,16 +606,43 @@
 
         mo.observe(document.documentElement, { childList: true, subtree: true });
 
+        /* INP-arbeid (aug 2026): tidligere ble ALLE utsatte skript (~35: Klaviyo,
+           Okendo, pixels) injisert i én synkron løkke – trigget av brukerens
+           FØRSTE interaksjon, altså nøyaktig i vinduet INP måles. Det ga en
+           byge av long-tasks midt i tappet (målt INP 340 ms).
+           Nå slippes de i små puljer per idle-slot: interaksjonen får returnere
+           først, og hovedtråden puster mellom hver pulje. Ingenting fjernes –
+           kun NÅR det kjøres endres. 2 s timeout garanterer at sporing fyrer
+           selv om nettleseren aldri blir helt idle. */
+        var idle =
+          window.requestIdleCallback ||
+          function (cb) {
+            return setTimeout(cb, 1);
+          };
+
+        function drain(i) {
+          if (i >= saved.length) return;
+          idle(
+            function () {
+              /* Liten pulje per slot – nok til å komme gjennom raskt, lite nok
+                 til at ingen enkelt task blir lang. */
+              for (var n = 0; n < 2 && i < saved.length; n++, i++) {
+                var s = document.createElement('script');
+                s.src = saved[i];
+                s.async = true;
+                document.body.appendChild(s);
+              }
+              drain(i);
+            },
+            { timeout: 2000 }
+          );
+        }
+
         function fire() {
           if (done) return;
           done = true;
           mo.disconnect();
-          saved.forEach(function (src) {
-            var s = document.createElement('script');
-            s.src = src;
-            s.async = true;
-            document.body.appendChild(s);
-          });
+          drain(0);
         }
 
         /* Expose: disconnect observer early once content_for_header is done,
