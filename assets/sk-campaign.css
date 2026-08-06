@@ -11,20 +11,21 @@
    stjal knappens autoritet.
    Banneret er derfor en ROLIG lavendel-panel (informasjon), med én høykontrast
    detalj: spar-pilla. Da får siden ett tydelig rop, ikke to. */
+/* Redaksjonelt: ingen flate, kun hårfine streker over og under. Samme språk
+   som klinikk-seksjonen, så kampanjen leser som en del av butikken – ikke som
+   et påklistret varsel. Kjøpsknappen beholder dermed den fylte aubergine-
+   flaten helt alene, og spar-pilla er banerets eneste rop.
+   Grønn og gull ble vurdert og forkastet: merkevaren er bevisst monokrom
+   aubergine (varmen ligger i fotografiet), og gull er reservert for
+   anmeldelsesstjerner. */
 .sk-campaign {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.6rem 1.2rem;
-  padding: 1.1rem 1.4rem;
-  border-radius: 10px;
-  /* Toning FRA merkefargen, ikke nøytral grå: --paper-150 (#f4f4f8) er knapt
-     synlig på hvit bakgrunn, og banneret ville forsvunnet. 7 % aubergine gir
-     nok kontrast til å leses som et eget felt, og binder det til kampanjen. */
-  background: rgba(var(--color-brand-rgb), 0.07);
-  /* Aksentkant til venstre gir banneret retning og skiller det tydelig fra
-     knappens symmetriske form, uten å låne dens flate. */
-  border-left: 3px solid var(--color-brand);
+  padding: 1.2rem 0;
+  border-top: 1px solid rgba(var(--color-brand-rgb), 0.16);
+  border-bottom: 1px solid rgba(var(--color-brand-rgb), 0.16);
   color: rgba(var(--sk-color-body-text), 0.85);
   font-family: var(--font-body-family);
   font-size: 1.35rem;
@@ -79,7 +80,7 @@
 
 @media screen and (max-width: 749px) {
   .sk-campaign {
-    padding: 1rem 1.2rem;
+    padding: 1.1rem 0;
     gap: 0.5rem 0.9rem;
     font-size: 1.25rem;
   }
