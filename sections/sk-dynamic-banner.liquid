@@ -566,9 +566,12 @@
   assign hero_desc = section.settings.sk_banner_description
   assign hero_btn = 'SE RADIANCE FACE'
   if kampanje
-    assign hero_title = 'Profesjonell LED-terapi hjemme — nå ' | append: settings.kampanje_pris
-    assign hero_desc = 'Radiance Face med rødt og nær-infrarødt lys, 1072 nm. Ordinær pris ' | append: settings.kampanje_ordinaerpris | append: '. Gratis frakt fra norsk lager.'
-    assign hero_btn = 'KJØP RADIANCE FACE – ' | append: settings.kampanje_pris
+    # Kampanje-copyen følger samme korte stemme som ordinær hero. Den gamle
+    # varianten («Profesjonell LED-terapi hjemme …» + bølgelengder + frakt) var
+    # dobbelt så lang og kolliderte med modellenes hoder på mobil.
+    assign hero_title = 'Klinikkens LED-teknologi. Nå ' | append: settings.kampanje_pris | append: '.'
+    assign hero_desc = 'Friskere, fastere hud – på 10 minutter om dagen. Ordinært ' | append: settings.kampanje_ordinaerpris | append: '.'
+    assign hero_btn = 'KJØP NÅ – ' | append: settings.kampanje_pris
   endif
 
   # Knappen peker på produktet uansett kampanjestatus (samleside → produktside).
@@ -577,19 +580,9 @@
     assign hero_link = '/products/skinora-radiance-face'
   endif
 
-  # Tillitslinje: anmeldelsestall fra samme kilde som produktsiden
-  # (reviews-metafeltet Okendo synker til), med tema-innstilling som fallback.
-  assign hero_product = all_products['skinora-radiance-face']
-  assign hero_rc = hero_product.metafields.reviews.rating_count | plus: 0
-  if hero_rc > 0
-    assign hero_count = hero_rc
-  else
-    assign hero_count = settings.cart_review_count
-  endif
-  assign hero_rating = settings.cart_review_rating
-  if hero_product.metafields.reviews.rating.value != blank
-    assign hero_rating = hero_product.metafields.reviews.rating.value.rating | round: 1 | replace: '.', ','
-  endif
+  # (Tidligere ble anmeldelsestall hentet fra reviews-metafeltet her. Fjernet:
+  #  tillitsraden viser nå butikkens TOTALE tall, hardkodet i markup under,
+  #  siden metafeltet kun gir ett produkts tall.)
 -%}
 
 <section class="sk-dynamic-banner sk-dynamic-banner--cta-{{ section.settings.sk_banner_cta_position_mobile }}{% if kampanje %} sk-dynamic-banner--kampanje{% endif %}">
