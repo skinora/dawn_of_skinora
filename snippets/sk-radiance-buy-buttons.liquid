@@ -19,7 +19,11 @@
       endif
     endif
     if btn_save > 0
-      assign btn_label = 'sections.cart.campaign_cta' | t | replace: '{amount}', btn_save | money_without_trailing_zeros
+      # Beløpet MÅ formateres i et eget steg. Skrevet på én linje traff
+      # | money_without_trailing_zeros resultatet av replace (hele strengen),
+      # ikke tallet – og knappen endte med å vise «0».
+      assign btn_save_money = btn_save | money_without_trailing_zeros
+      assign btn_label = 'sections.cart.campaign_cta' | t | replace: '{amount}', btn_save_money
     endif
   endif
 -%}
