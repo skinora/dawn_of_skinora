@@ -147,14 +147,25 @@
 
   /* Tillitsrad under knappen: stjerner + vurdering + betalingslogoer.
      Flex med wrap, så den aldri brekker midt i en setning. */
-  /* Kampanjens prislinje – tall som tall, ikke prosa. */
+  /* Kampanjens prislinje – tall som tall, ikke prosa.
+     Egen, strammere avstand til CTA-en: pris og knapp hører sammen som ett
+     kjøpsargument og skal ikke drive fra hverandre av kolonnens store gap. */
   .sk-dynamic-banner__price {
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
-    gap: 0.8rem;
-    margin: 0;
+    gap: 0.8rem 1.2rem;
+    margin: 0 0 calc(-1 * clamp(0.6rem, 1.2vw, 1.4rem));
     font-family: var(--font-heading-family);
+  }
+
+  /* Ny pris FØRST (den er budskapet), så ordinærpris som referanse, så
+     besparelsen. Motsatt rekkefølge lot øyet lande på den gamle prisen. */
+  .sk-dynamic-banner__price-now {
+    font-size: clamp(2.4rem, 6vw, 3rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-brand, rgb(var(--sk-color-heading-text)));
   }
 
   .sk-dynamic-banner__price-was {
@@ -163,11 +174,19 @@
     color: rgba(var(--color-foreground), 0.5);
   }
 
-  .sk-dynamic-banner__price-now {
-    font-size: clamp(2.4rem, 6vw, 3rem);
+  /* Besparelsen er kampanjens sterkeste enkeltargument – den skal leses, ikke
+     gjettes ut fra to tall. */
+  .sk-dynamic-banner__save {
+    font-family: var(--font-body-family);
+    font-size: 1.3rem;
     font-weight: 600;
-    letter-spacing: -0.02em;
-    color: var(--color-brand, rgb(var(--sk-color-heading-text)));
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--color-brand, rgb(var(--sk-color-heading-text)));
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    white-space: nowrap;
   }
 
   /* Tillitsraden er BEVISST to grupper som hver kan legge seg på egen linje:
@@ -235,10 +254,13 @@
     padding: clamp(0.65rem, 1.8vw, 0.95rem) clamp(1.6rem, 3vw, 2.6rem);
   }
 
+  /* CTA-en var sentrert mens overskrift, brødtekst, pris og tillitsrad alle
+     står venstrestilt – knappen «hoppet» dermed ut av kolonnens venstrekant.
+     justify-content:flex-start setter alt på samme akse. */
   .sk-dynamic-banner__cta {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 0;
     background: transparent;
     -webkit-mask-image: none;
@@ -597,6 +619,41 @@
     assign hero_btn = 'KJØP NÅ – ' | append: settings.kampanje_pris
   endif
 
+  # Kampanjeperiode: «3.–17. august» hvis startdato er satt, ellers «til 17. august».
+  assign kampanje_periode = settings.kampanje_sluttdato
+  if settings.kampanje_startdato != blank
+    assign kampanje_periode = settings.kampanje_startdato | append: '–' | append: settings.kampanje_sluttdato
+  else
+    assign kampanje_periode = 'til ' | append: settings.kampanje_sluttdato
+  endif
+
+  # Besparelsen REGNES UT fra de to prisene i stedet for å være et eget felt –
+  # da kan den aldri komme i utakt med prisene (samme feilen som kampanje-copyen
+  # hadde). Tall trekkes ut ved å strippe mellomrom (også hardt mellomrom) og «kr».
+  assign _ny = settings.kampanje_pris | replace: ' ', '' | replace: ' ', '' | replace: 'kr', '' | replace: ',-', '' | strip | plus: 0
+  assign _ord = settings.kampanje_ordinaerpris | replace: ' ', '' | replace: ' ', '' | replace: 'kr', '' | replace: ',-', '' | strip | plus: 0
+  assign kampanje_spar = 0
+  if _ord > _ny
+    assign kampanje_spar = _ord | minus: _ny
+  endif
+
+  # Tusenskille: Liquid mangler formatering, så vi setter det manuelt.
+  assign spar_tekst = ''
+  if kampanje_spar > 0
+    if kampanje_spar >= 1000
+      assign _t = kampanje_spar | divided_by: 1000
+      assign _r = kampanje_spar | modulo: 1000
+      if _r < 10
+        assign _r = _r | prepend: '00'
+      elsif _r < 100
+        assign _r = _r | prepend: '0'
+      endif
+      assign spar_tekst = _t | append: ' ' | append: _r | append: ' kr'
+    else
+      assign spar_tekst = kampanje_spar | append: ' kr'
+    endif
+  endif
+
   # Knappen peker på produktet uansett kampanjestatus (samleside → produktside).
   assign hero_link = section.settings.sk_banner_button_link
   if hero_link == blank
@@ -614,7 +671,7 @@
     <div class="sk-dynamic-banner__container">
       <div class="sk-dynamic-banner__content">
         {%- if kampanje and settings.kampanje_sluttdato != blank -%}
-          <p class="sk-dynamic-banner__eyebrow">Kampanje — til {{ settings.kampanje_sluttdato }}</p>
+          <p class="sk-dynamic-banner__eyebrow">Kampanje {{ kampanje_periode }}</p>
         {%- endif -%}
 
         <h2 lang="no" class="sk-header__section sk-dynamic-banner__title">
@@ -632,10 +689,13 @@
         {%- endcomment -%}
         {%- if kampanje and settings.kampanje_pris != blank -%}
           <p class="sk-dynamic-banner__price">
+            <span class="sk-dynamic-banner__price-now">{{ settings.kampanje_pris }}</span>
             {%- if settings.kampanje_ordinaerpris != blank -%}
               <span class="sk-dynamic-banner__price-was">{{ settings.kampanje_ordinaerpris }}</span>
             {%- endif -%}
-            <span class="sk-dynamic-banner__price-now">{{ settings.kampanje_pris }}</span>
+            {%- if spar_tekst != blank -%}
+              <span class="sk-dynamic-banner__save">Spar {{ spar_tekst }}</span>
+            {%- endif -%}
           </p>
         {%- endif -%}
 

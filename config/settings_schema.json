@@ -1547,6 +1547,13 @@
       },
       {
         "type": "text",
+        "id": "kampanje_startdato",
+        "label": "Startdato",
+        "info": "Vises som periode i etiketten, f.eks. «3.–17. august». La stå tom for å kun vise sluttdato.",
+        "default": "3."
+      },
+      {
+        "type": "text",
         "id": "kampanje_sluttdato",
         "label": "Sluttdato (vises i etiketten)",
         "default": "17. august"
