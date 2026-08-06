@@ -147,6 +147,29 @@
 
   /* Tillitsrad under knappen: stjerner + vurdering + betalingslogoer.
      Flex med wrap, så den aldri brekker midt i en setning. */
+  /* Kampanjens prislinje – tall som tall, ikke prosa. */
+  .sk-dynamic-banner__price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin: 0;
+    font-family: var(--font-heading-family);
+  }
+
+  .sk-dynamic-banner__price-was {
+    font-size: 1.6rem;
+    text-decoration: line-through;
+    color: rgba(var(--color-foreground), 0.5);
+  }
+
+  .sk-dynamic-banner__price-now {
+    font-size: clamp(2.4rem, 6vw, 3rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-brand, rgb(var(--sk-color-heading-text)));
+  }
+
   /* Tillitsraden er BEVISST to grupper som hver kan legge seg på egen linje:
      [stjerner + vurdering] og [betalingslogoer]. Tidligere hadde vurderingen
      white-space:nowrap og logoene fast bredde, så raden ble bredere enn
@@ -564,13 +587,13 @@
 
   assign hero_title = section.settings.sk_banner_title
   assign hero_desc = section.settings.sk_banner_description
+  # Kampanjen LEGGER TIL, den erstatter ikke. Overskrift og brødtekst har ÉN
+  # kilde (seksjonsinnstillingene) uansett kampanjestatus – tidligere fantes en
+  # egen kampanjeversjon av samme budskap, og de to drev fra hverandre med én
+  # gang heroen ble omskrevet. Kampanjen bidrar kun med det som faktisk endrer
+  # seg: etiketten, prislinja og prisen i knappen.
   assign hero_btn = 'SE RADIANCE FACE'
   if kampanje
-    # Kampanje-copyen følger samme korte stemme som ordinær hero. Den gamle
-    # varianten («Profesjonell LED-terapi hjemme …» + bølgelengder + frakt) var
-    # dobbelt så lang og kolliderte med modellenes hoder på mobil.
-    assign hero_title = 'Klinikkens LED-teknologi. Nå ' | append: settings.kampanje_pris | append: '.'
-    assign hero_desc = 'Friskere, fastere hud – på 10 minutter om dagen. Ordinært ' | append: settings.kampanje_ordinaerpris | append: '.'
     assign hero_btn = 'KJØP NÅ – ' | append: settings.kampanje_pris
   endif
 
@@ -601,6 +624,20 @@
         <p class="sk-section-body sk-dynamic-banner__description">
           {{ hero_desc }}
         </p>
+
+        {%- comment -%}
+          Prislinja er kampanjens ENESTE tillegg til budskapet. Tall som tall
+          (strøket ordinærpris + ny pris) leser raskere enn samme informasjon
+          pakket inn i en setning – og holder brødteksten fri for pris.
+        {%- endcomment -%}
+        {%- if kampanje and settings.kampanje_pris != blank -%}
+          <p class="sk-dynamic-banner__price">
+            {%- if settings.kampanje_ordinaerpris != blank -%}
+              <span class="sk-dynamic-banner__price-was">{{ settings.kampanje_ordinaerpris }}</span>
+            {%- endif -%}
+            <span class="sk-dynamic-banner__price-now">{{ settings.kampanje_pris }}</span>
+          </p>
+        {%- endif -%}
 
         <div class="sk-dynamic-banner__cta">
           <a
