@@ -586,6 +586,29 @@
       color: rgb(var(--color-foreground));
       gap: 0.6rem 1rem;
     }
+
+    /* Fristen er en fotnote til knappen, ikke et budskap i seg selv –
+       holdes liten så den ikke konkurrerer med pris og CTA på liten skjerm. */
+    .sk-dynamic-banner__deadline {
+      font-size: 1.15rem;
+      line-height: 1.35;
+      max-width: 34ch;
+    }
+
+    /* Prisen er allerede stor i seg selv; demp litt på mobil så linja
+       (pris + ordinærpris + spar-pille) får plass uten å dominere. */
+    .sk-dynamic-banner__price-now {
+      font-size: clamp(2.2rem, 7vw, 2.8rem);
+    }
+
+    .sk-dynamic-banner__price-was {
+      font-size: 1.4rem;
+    }
+
+    .sk-dynamic-banner__save {
+      font-size: 1.15rem;
+      padding: 0.35rem 0.85rem;
+    }
   }
 
   @media (max-width: 435px) {
@@ -738,9 +761,9 @@
         {%- endcomment -%}
         {%- if kampanje and settings.kampanje_sluttdato != blank -%}
           <p class="sk-dynamic-banner__deadline">
-            Tilbudet varer til <strong>{{ settings.kampanje_sluttdato }}</strong>
+            Kun til <strong>{{ settings.kampanje_sluttdato }}</strong>
             {%- if settings.kampanje_ordinaerpris != blank -%}
-              – da er prisen tilbake på {{ settings.kampanje_ordinaerpris }}
+              {{ ' ' }}– deretter {{ settings.kampanje_ordinaerpris }}
             {%- endif -%}
           </p>
         {%- endif -%}
