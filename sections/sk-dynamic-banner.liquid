@@ -189,6 +189,21 @@
     white-space: nowrap;
   }
 
+  /* Fristen rett under CTA-en. Dempet nok til ikke å konkurrere med knappen,
+     tydelig nok til å leses – datoen uthevet fordi det er den som haster.
+     Bevisst ingen nedtellingsklokke: den skriker og eldes dårlig. */
+  .sk-dynamic-banner__deadline {
+    margin: calc(-1 * clamp(0.6rem, 1.2vw, 1.4rem)) 0 0;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  .sk-dynamic-banner__deadline strong {
+    font-weight: 600;
+    color: var(--color-brand, rgb(var(--sk-color-heading-text)));
+  }
+
   /* Tillitsraden er BEVISST to grupper som hver kan legge seg på egen linje:
      [stjerner + vurdering] og [betalingslogoer]. Tidligere hadde vurderingen
      white-space:nowrap og logoene fast bredde, så raden ble bredere enn
@@ -671,7 +686,12 @@
     <div class="sk-dynamic-banner__container">
       <div class="sk-dynamic-banner__content">
         {%- if kampanje and settings.kampanje_sluttdato != blank -%}
-          <p class="sk-dynamic-banner__eyebrow">Kampanje {{ kampanje_periode }}</p>
+          {%- comment -%}
+            Etiketten RAMMER INN (dette er en kampanje). Selve fristen står
+            nede ved knappen – hastverk virker kun der beslutningen tas, ikke
+            som en overskrift kunden har rukket å glemme.
+          {%- endcomment -%}
+          <p class="sk-dynamic-banner__eyebrow">Kampanje</p>
         {%- endif -%}
 
         <h2 lang="no" class="sk-header__section sk-dynamic-banner__title">
@@ -710,6 +730,20 @@
             </span>
           </a>
         </div>
+
+        {%- comment -%}
+          Fristen står RETT under knappen: hastverk må stå der nølingen skjer.
+          Formulert som tap («da er prisen tilbake på …»), ikke bare som en dato
+          – tapsaversjon flytter flere enn en nøytral opplysning.
+        {%- endcomment -%}
+        {%- if kampanje and settings.kampanje_sluttdato != blank -%}
+          <p class="sk-dynamic-banner__deadline">
+            Tilbudet varer til <strong>{{ settings.kampanje_sluttdato }}</strong>
+            {%- if settings.kampanje_ordinaerpris != blank -%}
+              – da er prisen tilbake på {{ settings.kampanje_ordinaerpris }}
+            {%- endif -%}
+          </p>
+        {%- endif -%}
 
         {%- comment -%}
           Tillitsrad – vises uansett kampanjestatus. Stjerner og betalingslogoer
