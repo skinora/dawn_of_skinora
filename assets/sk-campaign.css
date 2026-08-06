@@ -40,18 +40,34 @@
   color: rgba(var(--sk-color-body-text), 0.5);
 }
 
-/* Eneste høykontrast-element i banneret. Liten nok til ikke å konkurrere med
-   knappen, sterk nok til å bli lest først. */
+/* Besparelsen i dyp skoggrønn (--accent-green), ikke aubergine. To grunner:
+   1) Den skiller seg fra kjøpsknappen, som eier aubergine – ingen konkurranse.
+   2) Grønn = besparelse er en sterk konvensjon som gjør at tallet finnes med
+      én gang i skanning.
+   Bevisst mørk og lavmettet: lys «rabattgrønn» ville dratt merkevaren mot
+   lavpris. Fargen fantes fra før i temaet (Clear-selvtestens ja-svar). */
 .sk-campaign__save {
   font-weight: 600;
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--color-white, #fff);
-  background: var(--color-brand);
-  padding: 0.45rem 1.1rem;
+  background: var(--accent-green, #2f7d5b);
+  padding: 0.5rem 1.2rem;
   border-radius: 999px;
   white-space: nowrap;
+}
+
+/* Strekene tar farge fra grønnfargen så banneret leser som én enhet i stedet
+   for en grå ramme med et fargeelement inni. */
+.sk-campaign {
+  border-top-color: rgba(47, 125, 91, 0.28);
+  border-bottom-color: rgba(47, 125, 91, 0.28);
+}
+
+/* Fristen får litt mer vekt – «blekk» var reell kritikk. */
+.sk-campaign__deadline {
+  color: rgba(var(--sk-color-body-text), 0.82);
 }
 
 /* Fristen står ved kjøpsknappen fordi hastverk kun virker der nølingen skjer.

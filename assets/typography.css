@@ -19,6 +19,12 @@
   /* ---------- ACCENT ---------- */
   --accent-clay: #a0522d;
   --accent-gold: #d4a843;
+  /* Dyp, avdempet skoggrønn – eneste tillatte «positiv/besparelse»-signal.
+     Fantes fra før som --clr-yes i Clear-selvtesten; løftet hit så verdien
+     har ÉN kilde. Bevisst mørk og lavmettet: en lys rabattgrønn ville dratt
+     merkevaren mot lavpris. Brukes kun til besparelse og ja-svar, aldri som
+     flatefarge eller i typografi. */
+  --accent-green: #2f7d5b;
 
   /* ---------- FONT FAMILIES ---------- */
   --ff-serif: 'freight-text-pro', Georgia, 'Times New Roman', serif;
