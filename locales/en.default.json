@@ -258,6 +258,10 @@
     }
   },
   "templates": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "404"
+    },
     "search": {
       "no_results": "No results found for “{{ terms }}”. Check the spelling or use a different word or phrase.",
       "page": "Page",
@@ -301,10 +305,6 @@
         "post_success": "Thanks for contacting us. We'll get back to you as soon as possible.",
         "error_heading": "Please adjust the following:"
       }
-    },
-    "404": {
-      "title": "Page not found",
-      "subtext": "404"
     }
   },
   "sections": {
@@ -329,10 +329,10 @@
       "remove_title": "Remove {{ title }}",
       "estimated_total": "Total to pay",
       "campaign_label": "Campaign",
-    "campaign_save": "Save",
-    "campaign_until": "Only until",
-    "campaign_then": "then",
-    "summary": "Summary",
+      "campaign_save": "Save",
+      "campaign_until": "Only until",
+      "campaign_then": "then",
+      "summary": "Summary",
       "subtotal": "Subtotal",
       "shipping": "Shipping",
       "vat": "VAT",
@@ -382,7 +382,8 @@
       "login": {
         "title": "Have an account?",
         "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Log in</a> to check out faster."
-      }
+      },
+      "campaign_cta": "Add to cart – save {amount}"
     },
     "footer": {
       "payment": "Payment methods",

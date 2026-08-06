@@ -1769,8 +1769,13 @@
             {% render 'sk-radiance-price', product: product, section: section, show_badges: false %}
           </div>
 
-          <!-- ÆRLIG PRIS — luftig tekstblokk med hårfin toppdeler -->
-          {%- if section.settings.honesty_show -%}
+          {%- comment -%}
+            ÆRLIG PRIS — skjules mens kampanjen går. «Ingen rabattkupp. Ingen
+            falske «før»-priser.» rett over en strøket førpris er en direkte
+            selvmotsigelse. Betinget i stedet for slettet, så budskapet kommer
+            tilbake av seg selv når bryteren slås av.
+          {%- endcomment -%}
+          {%- if section.settings.honesty_show and settings.kampanje_aktiv != true -%}
             <div class="sk-price-honesty">
               {%- if section.settings.honesty_heading != blank -%}
                 <p class="sk-price-honesty__title">{{ section.settings.honesty_heading }}</p>

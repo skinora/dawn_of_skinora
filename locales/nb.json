@@ -258,6 +258,10 @@
     }
   },
   "templates": {
+    "404": {
+      "title": "Siden finnes ikke",
+      "subtext": "404"
+    },
     "search": {
       "no_results": "Fant ingen resultater for «{{ terms }}». Kontroller stavemåten, eller bruk et annet ord.",
       "page": "Side",
@@ -301,10 +305,6 @@
         "error_heading": "Juster følgende:",
         "title": "Kontaktskjema"
       }
-    },
-    "404": {
-      "title": "Siden finnes ikke",
-      "subtext": "404"
     }
   },
   "sections": {
@@ -339,10 +339,10 @@
       },
       "estimated_total": "Totalt å betale",
       "campaign_label": "Kampanje",
-    "campaign_save": "Spar",
-    "campaign_until": "Kun til",
-    "campaign_then": "deretter",
-    "summary": "Oppsummering",
+      "campaign_save": "Spar",
+      "campaign_until": "Kun til",
+      "campaign_then": "deretter",
+      "summary": "Oppsummering",
       "subtotal": "Delsum",
       "shipping": "Frakt",
       "vat": "Mva.",
@@ -375,7 +375,8 @@
       "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html": "Inkluder tollplikter. Avgifter, rabatter og <a href=\"{{ link }}\">frakt</a> beregnes i kassen.",
       "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy": "Inkluder tollplikter. Avgifter, rabatter og frakt beregnes i kassen.",
       "taxes_at_checkout_shipping_at_checkout_with_policy_html": "Avgifter, rabatter og <a href=\"{{ link }}\">frakt</a> beregnes i kassen.",
-      "taxes_at_checkout_shipping_at_checkout_without_policy": "Avgifter, rabatter og frakt beregnes i kassen."
+      "taxes_at_checkout_shipping_at_checkout_without_policy": "Avgifter, rabatter og frakt beregnes i kassen.",
+      "campaign_cta": "Legg i kurv – spar {amount}"
     },
     "footer": {
       "payment": "Betalingsmåter",

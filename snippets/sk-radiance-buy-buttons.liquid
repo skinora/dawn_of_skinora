@@ -2,6 +2,26 @@
   assign resolved_section_id = section_id | default: section.id
   assign resolved_product_form_id = product_form_id | default: 'product-form-' | append: resolved_section_id
   assign current_variant = product.selected_or_first_available_variant
+
+  # Knappetekst: under kampanje bærer den besparelsen. «Legg i handlekurv» er
+  # en instruksjon; «Legg i kurv – spar 1 300 kr» er et argument. Beløpet
+  # regnes fra produktets egne tall (evt. forhåndsvisningsprisen på DEV), så
+  # knappen aldri kan love noe annet enn kampanjestripen over den.
+  assign btn_label = 'products.product.add_to_cart' | t
+  assign btn_save = 0
+  if settings.kampanje_aktiv
+    if product.compare_at_price > product.price
+      assign btn_save = product.compare_at_price | minus: product.price
+    elsif settings.kampanje_forhandsvis_ordinaerpris > 0
+      assign _prev = settings.kampanje_forhandsvis_ordinaerpris | times: 100
+      if _prev > product.price
+        assign btn_save = _prev | minus: product.price
+      endif
+    endif
+    if btn_save > 0
+      assign btn_label = 'sections.cart.campaign_cta' | t | replace: '{amount}', btn_save | money_without_trailing_zeros
+    endif
+  endif
 -%}
 
 <div
@@ -43,7 +63,7 @@
               style="width: 100%;"
             >
               <span class="sk-radiance-buy-buttons__button-text">
-                {{ 'products.product.add_to_cart' | t }}
+                {{ btn_label }}
               </span>
               {%- render 'loading-spinner' -%}
             </button>

@@ -5,69 +5,80 @@
    skriker, eldes dårlig og undergraver quiet-luxury-uttrykket.
    ============================================================= */
 
+/* Fylt aubergine-banner, ikke en tynn linje. En kampanje som hvisker blir
+   ikke trodd – dette er sidens ene sted der det er lov å rope. */
 .sk-campaign {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.8rem 1.2rem;
+  gap: 0.6rem 1.2rem;
+  padding: 1.2rem 1.6rem;
+  border-radius: 12px;
+  background: var(--color-brand);
+  color: var(--color-white, #fff);
   font-family: var(--font-body-family);
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   line-height: 1.4;
-  color: rgba(var(--sk-color-body-text), 0.78);
 }
 
-/* Etiketten rammer inn – kort, dempet, ikke et budskap i seg selv. */
 .sk-campaign__label {
   font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: var(--sk-section-eyebrow-spacing, 0.22em);
   text-transform: uppercase;
-  color: rgba(var(--sk-color-body-text), 0.55);
+  color: rgba(255, 255, 255, 0.7);
 }
 
-/* Besparelsen er kampanjens sterkeste enkeltargument – den skal leses,
-   ikke regnes ut av kunden. */
+/* Besparelsen er kampanjens sterkeste enkeltargument – invertert til hvitt
+   felt så den leser først av alt i banneret. */
 .sk-campaign__save {
   font-weight: 600;
-  font-size: 1.25rem;
-  letter-spacing: 0.04em;
+  font-size: 1.6rem;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: var(--color-white, #fff);
-  background: var(--color-brand);
-  padding: 0.4rem 1rem;
+  color: var(--color-brand);
+  background: var(--color-white, #fff);
+  padding: 0.5rem 1.2rem;
   border-radius: 999px;
   white-space: nowrap;
 }
 
-/* Fristen står ved kjøpsknappen fordi hastverk kun virker der nølingen
-   skjer. Formulert som tap («deretter …»), ikke som en nøytral dato. */
+/* Fristen står ved kjøpsknappen fordi hastverk kun virker der nølingen skjer.
+   Formulert som tap («deretter …»), ikke som en nøytral dato. */
+.sk-campaign__deadline {
+  flex-basis: 100%;
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
 .sk-campaign__deadline strong {
   font-weight: 600;
-  color: var(--color-brand);
+  color: var(--color-white, #fff);
 }
 
 /* Full-bredde variant (f.eks. over en seksjon) */
 .sk-campaign--bar {
   justify-content: center;
   text-align: center;
-  background: var(--paper-150, #f1eff4);
-  border-radius: 12px;
-  padding: 1.2rem 1.6rem;
 }
 
-/* Inline-variant i kjøpsområdet: luft over/under, ingen flate */
+/* Inline-variant i kjøpsområdet */
 .sk-campaign--inline {
-  margin: 1.2rem 0;
+  margin: 1.4rem 0;
 }
 
 @media screen and (max-width: 749px) {
   .sk-campaign {
-    font-size: 1.2rem;
-    gap: 0.6rem 1rem;
+    padding: 1.1rem 1.3rem;
+    gap: 0.5rem 1rem;
   }
 
   .sk-campaign__save {
-    font-size: 1.15rem;
-    padding: 0.35rem 0.85rem;
+    font-size: 1.45rem;
+    padding: 0.45rem 1rem;
+  }
+
+  .sk-campaign__deadline {
+    font-size: 1.2rem;
   }
 }
