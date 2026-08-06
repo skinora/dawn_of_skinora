@@ -5,40 +5,50 @@
    skriker, eldes dårlig og undergraver quiet-luxury-uttrykket.
    ============================================================= */
 
-/* Fylt aubergine-banner, ikke en tynn linje. En kampanje som hvisker blir
-   ikke trodd – dette er sidens ene sted der det er lov å rope. */
+/* HIERARKI: kjøpsknappen er sidens eneste store fylte aubergine-flate – den
+   eier den behandlingen. Banneret hadde samme fylte flate og konkurrerte om
+   samme visuelle vekt; to like blokker over hverandre leste som en feil og
+   stjal knappens autoritet.
+   Banneret er derfor en ROLIG lavendel-panel (informasjon), med én høykontrast
+   detalj: spar-pilla. Da får siden ett tydelig rop, ikke to. */
 .sk-campaign {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.6rem 1.2rem;
-  padding: 1.2rem 1.6rem;
-  border-radius: 12px;
-  background: var(--color-brand);
-  color: var(--color-white, #fff);
+  padding: 1.1rem 1.4rem;
+  border-radius: 10px;
+  /* Toning FRA merkefargen, ikke nøytral grå: --paper-150 (#f4f4f8) er knapt
+     synlig på hvit bakgrunn, og banneret ville forsvunnet. 7 % aubergine gir
+     nok kontrast til å leses som et eget felt, og binder det til kampanjen. */
+  background: rgba(var(--color-brand-rgb), 0.07);
+  /* Aksentkant til venstre gir banneret retning og skiller det tydelig fra
+     knappens symmetriske form, uten å låne dens flate. */
+  border-left: 3px solid var(--color-brand);
+  color: rgba(var(--sk-color-body-text), 0.85);
   font-family: var(--font-body-family);
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   line-height: 1.4;
 }
 
 .sk-campaign__label {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: var(--sk-section-eyebrow-spacing, 0.22em);
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(var(--sk-color-body-text), 0.5);
 }
 
-/* Besparelsen er kampanjens sterkeste enkeltargument – invertert til hvitt
-   felt så den leser først av alt i banneret. */
+/* Eneste høykontrast-element i banneret. Liten nok til ikke å konkurrere med
+   knappen, sterk nok til å bli lest først. */
 .sk-campaign__save {
   font-weight: 600;
-  font-size: 1.6rem;
+  font-size: 1.45rem;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: var(--color-brand);
-  background: var(--color-white, #fff);
-  padding: 0.5rem 1.2rem;
+  color: var(--color-white, #fff);
+  background: var(--color-brand);
+  padding: 0.45rem 1.1rem;
   border-radius: 999px;
   white-space: nowrap;
 }
@@ -47,13 +57,13 @@
    Formulert som tap («deretter …»), ikke som en nøytral dato. */
 .sk-campaign__deadline {
   flex-basis: 100%;
-  font-size: 1.25rem;
-  color: rgba(255, 255, 255, 0.82);
+  font-size: 1.2rem;
+  color: rgba(var(--sk-color-body-text), 0.72);
 }
 
 .sk-campaign__deadline strong {
   font-weight: 600;
-  color: var(--color-white, #fff);
+  color: var(--color-brand);
 }
 
 /* Full-bredde variant (f.eks. over en seksjon) */
@@ -69,16 +79,17 @@
 
 @media screen and (max-width: 749px) {
   .sk-campaign {
-    padding: 1.1rem 1.3rem;
-    gap: 0.5rem 1rem;
+    padding: 1rem 1.2rem;
+    gap: 0.5rem 0.9rem;
+    font-size: 1.25rem;
   }
 
   .sk-campaign__save {
-    font-size: 1.45rem;
-    padding: 0.45rem 1rem;
+    font-size: 1.35rem;
+    padding: 0.4rem 0.95rem;
   }
 
   .sk-campaign__deadline {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
   }
 }
