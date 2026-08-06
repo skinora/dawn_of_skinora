@@ -338,7 +338,11 @@
         "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Logg på</a> for å betale raskere."
       },
       "estimated_total": "Totalt å betale",
-      "summary": "Oppsummering",
+      "campaign_label": "Kampanje",
+    "campaign_save": "Spar",
+    "campaign_until": "Kun til",
+    "campaign_then": "deretter",
+    "summary": "Oppsummering",
       "subtotal": "Delsum",
       "shipping": "Frakt",
       "vat": "Mva.",

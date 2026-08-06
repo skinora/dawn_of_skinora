@@ -43,20 +43,20 @@
 
 {%- if cb_on -%}
   <div class="sk-campaign sk-campaign--{{ cb_layout }}">
-    <span class="sk-campaign__label">{{ 'sections.campaign.label' | t: default: 'Kampanje' }}</span>
+    <span class="sk-campaign__label">{{ 'sections.cart.campaign_label' | t }}</span>
 
     {%- if cb_save > 0 -%}
       <span class="sk-campaign__save">
-        {{- 'sections.campaign.save' | t: default: 'Spar' }} {{ cb_save | money_without_trailing_zeros -}}
+        {{- 'sections.cart.campaign_save' | t }} {{ cb_save | money_without_trailing_zeros -}}
       </span>
     {%- endif -%}
 
     {%- if settings.kampanje_sluttdato != blank -%}
       <span class="sk-campaign__deadline">
-        {{- 'sections.campaign.until' | t: default: 'Kun til' }}
+        {{- 'sections.cart.campaign_until' | t }}
         <strong>{{ settings.kampanje_sluttdato }}</strong>
         {%- if cb_save > 0 -%}
-          {{ ' ' }}– {{ 'sections.campaign.then' | t: default: 'deretter' }}
+          {{ ' ' }}– {{ 'sections.cart.campaign_then' | t }}
           {{ cb_was | money_without_trailing_zeros }}
         {%- endif -%}
       </span>
