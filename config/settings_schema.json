@@ -1569,6 +1569,20 @@
         "id": "kampanje_ordinaerpris",
         "label": "Ordinær pris",
         "default": "4 690 kr"
+      },
+      {
+        "type": "header",
+        "content": "Forhåndsvisning (kun testing)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Produktpriser deles av ALLE temaer – endrer du dem, ser kundene det med én gang. Temainnstillinger er derimot per tema. Sett feltet under KUN på DEV-temaet for å se hvordan kampanjen tar seg ut med besparelse, uten å røre ekte priser. La det stå tomt på det publiserte temaet."
+      },
+      {
+        "type": "number",
+        "id": "kampanje_forhandsvis_ordinaerpris",
+        "label": "Fiktiv ordinærpris (kr)",
+        "info": "F.eks. 4690. Brukes kun når produktet mangler «sammenlign med»-pris. Tom = av."
       }
     ]
   },

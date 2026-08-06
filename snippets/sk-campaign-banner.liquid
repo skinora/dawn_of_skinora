@@ -22,8 +22,22 @@
 
   # Besparelse fra produktets EGNE tall (ikke tema-innstillinger).
   assign cb_save = 0
+  assign cb_was = 0
   if product and product.compare_at_price > product.price
     assign cb_save = product.compare_at_price | minus: product.price
+    assign cb_was = product.compare_at_price
+  endif
+
+  # Forhåndsvisning: produktpriser deles av alle temaer, så de kan ikke endres
+  # for å teste uten at kundene ser det. Denne fiktive ordinærprisen settes KUN
+  # på DEV-temaet (temainnstillinger er per tema) og brukes bare når produktet
+  # mangler ekte «sammenlign med»-pris.
+  if cb_save == 0 and product and settings.kampanje_forhandsvis_ordinaerpris > 0
+    assign cb_preview = settings.kampanje_forhandsvis_ordinaerpris | times: 100
+    if cb_preview > product.price
+      assign cb_save = cb_preview | minus: product.price
+      assign cb_was = cb_preview
+    endif
   endif
 -%}
 
@@ -43,7 +57,7 @@
         <strong>{{ settings.kampanje_sluttdato }}</strong>
         {%- if cb_save > 0 -%}
           {{ ' ' }}– {{ 'sections.campaign.then' | t: default: 'deretter' }}
-          {{ product.compare_at_price | money_without_trailing_zeros }}
+          {{ cb_was | money_without_trailing_zeros }}
         {%- endif -%}
       </span>
     {%- endif -%}
