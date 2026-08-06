@@ -14,6 +14,13 @@ if (!customElements.get('product-form')) {
         this.submitButton = this.querySelector('[type="submit"]');
         this.submitButtonText = this.submitButton ? this.submitButton.querySelector('span') : null;
 
+        /* Serverrendret knappetekst tas vare på. Under kampanje er den
+           «Legg i kurv – spar 1 300 kr», ikke standard «Legg i handlekurv» –
+           og toggleSubmitButton() nedenfor skrev tidligere alltid tilbake
+           window.variantStrings.addToCart, så kampanjeteksten forsvant så
+           snart kunden byttet variant. */
+        this.defaultButtonLabel = this.submitButtonText ? this.submitButtonText.textContent.trim() : '';
+
         if (document.querySelector('cart-drawer') && this.submitButton)
           this.submitButton.setAttribute('aria-haspopup', 'dialog');
 
@@ -192,7 +199,8 @@ if (!customElements.get('product-form')) {
           if (text && this.submitButtonText) this.submitButtonText.textContent = text;
         } else {
           this.submitButton.removeAttribute('disabled');
-          if (this.submitButtonText) this.submitButtonText.textContent = window.variantStrings.addToCart;
+          if (this.submitButtonText)
+            this.submitButtonText.textContent = this.defaultButtonLabel || window.variantStrings.addToCart;
         }
       }
 
