@@ -34,6 +34,11 @@
     {%- endcomment -%}
     {{ 'sk-quiz.css' | asset_url | stylesheet_tag }}
 
+    {%- comment -%} Kampanjestripe – lastes kun når kampanjen faktisk er på {%- endcomment -%}
+    {%- if settings.kampanje_aktiv -%}
+      {{ 'sk-campaign.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+
     {%- if product.tags contains 'noindex' -%}
       <meta name="robots" content="noindex, nofollow">
     {%- endif -%}

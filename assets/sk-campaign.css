@@ -1,0 +1,73 @@
+/* =============================================================
+   sk-campaign — kampanjestripe (produktsider m.m.)
+   Rendres av snippets/sk-campaign-banner.liquid. Aubergine på lavendel,
+   samme tokens som resten av butikken. Ingen nedtellingsklokke: den
+   skriker, eldes dårlig og undergraver quiet-luxury-uttrykket.
+   ============================================================= */
+
+.sk-campaign {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.2rem;
+  font-family: var(--font-body-family);
+  font-size: 1.3rem;
+  line-height: 1.4;
+  color: rgba(var(--sk-color-body-text), 0.78);
+}
+
+/* Etiketten rammer inn – kort, dempet, ikke et budskap i seg selv. */
+.sk-campaign__label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: var(--sk-section-eyebrow-spacing, 0.22em);
+  text-transform: uppercase;
+  color: rgba(var(--sk-color-body-text), 0.55);
+}
+
+/* Besparelsen er kampanjens sterkeste enkeltargument – den skal leses,
+   ikke regnes ut av kunden. */
+.sk-campaign__save {
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-white, #fff);
+  background: var(--color-brand);
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Fristen står ved kjøpsknappen fordi hastverk kun virker der nølingen
+   skjer. Formulert som tap («deretter …»), ikke som en nøytral dato. */
+.sk-campaign__deadline strong {
+  font-weight: 600;
+  color: var(--color-brand);
+}
+
+/* Full-bredde variant (f.eks. over en seksjon) */
+.sk-campaign--bar {
+  justify-content: center;
+  text-align: center;
+  background: var(--paper-150, #f1eff4);
+  border-radius: 12px;
+  padding: 1.2rem 1.6rem;
+}
+
+/* Inline-variant i kjøpsområdet: luft over/under, ingen flate */
+.sk-campaign--inline {
+  margin: 1.2rem 0;
+}
+
+@media screen and (max-width: 749px) {
+  .sk-campaign {
+    font-size: 1.2rem;
+    gap: 0.6rem 1rem;
+  }
+
+  .sk-campaign__save {
+    font-size: 1.15rem;
+    padding: 0.35rem 0.85rem;
+  }
+}

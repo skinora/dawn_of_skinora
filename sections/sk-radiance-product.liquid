@@ -1788,6 +1788,13 @@
             </div>
           {%- endif -%}
 
+          {%- comment -%}
+            Kampanjestripe – vises kun når tema-innstillingen «Kampanje aktiv»
+            er på. Besparelsen regnes fra produktets egen pris vs «sammenlign
+            med»-pris, så hver produktside viser sitt eget, korrekte tall.
+          {%- endcomment -%}
+          {% render 'sk-campaign-banner', product: product, layout: 'inline' %}
+
           {%- comment -%} Produktveiviser: hjelpelenke rett under variantvelgeren {%- endcomment -%}
           {%- capture sk_quiz_product_label -%}{{ 'sk_quiz.product_link' | t }}{%- endcapture -%}
           <p class="sk-purchase__quiz-hint">

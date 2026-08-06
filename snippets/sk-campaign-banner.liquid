@@ -1,0 +1,51 @@
+{%- comment -%}
+  sk-campaign-banner — gjenbrukbar kampanjestripe
+  ------------------------------------------------
+  Viser kampanjens RAMME (etikett + frist) på tvers av butikken, mens PRISEN
+  leses fra produktet i Shopify. Det er bevisst: kampanje_pris er ett felt, men
+  produktene har ulik pris – en global kampanje med én pris ville vist feil tall
+  på de andre sidene. Setter du salgspris + «sammenlign med»-pris på produktet,
+  regnes besparelsen ut av seg selv og kan aldri komme i utakt.
+
+  Parametre:
+    product : produktobjekt (valgfritt). Uten det vises kun etikett + frist.
+    layout  : 'inline' (standard, i kjøpsområdet) | 'bar' (full bredde)
+
+  Styres av tema-innstillingene under «Kampanje»:
+    kampanje_aktiv / _startdato / _sluttdato
+  Er bryteren av, rendres ingenting.
+{%- endcomment -%}
+
+{%- liquid
+  assign cb_on = settings.kampanje_aktiv
+  assign cb_layout = layout | default: 'inline'
+
+  # Besparelse fra produktets EGNE tall (ikke tema-innstillinger).
+  assign cb_save = 0
+  if product and product.compare_at_price > product.price
+    assign cb_save = product.compare_at_price | minus: product.price
+  endif
+-%}
+
+{%- if cb_on -%}
+  <div class="sk-campaign sk-campaign--{{ cb_layout }}">
+    <span class="sk-campaign__label">{{ 'sections.campaign.label' | t: default: 'Kampanje' }}</span>
+
+    {%- if cb_save > 0 -%}
+      <span class="sk-campaign__save">
+        {{- 'sections.campaign.save' | t: default: 'Spar' }} {{ cb_save | money_without_trailing_zeros -}}
+      </span>
+    {%- endif -%}
+
+    {%- if settings.kampanje_sluttdato != blank -%}
+      <span class="sk-campaign__deadline">
+        {{- 'sections.campaign.until' | t: default: 'Kun til' }}
+        <strong>{{ settings.kampanje_sluttdato }}</strong>
+        {%- if cb_save > 0 -%}
+          {{ ' ' }}– {{ 'sections.campaign.then' | t: default: 'deretter' }}
+          {{ product.compare_at_price | money_without_trailing_zeros }}
+        {%- endif -%}
+      </span>
+    {%- endif -%}
+  </div>
+{%- endif -%}
