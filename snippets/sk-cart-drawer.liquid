@@ -72,7 +72,38 @@
         </div>
       {%- endif -%}
       <div class="drawer__header">
-        <p class="drawer__heading" role="heading" aria-level="2">{{ 'sections.cart.title' | t }}</p>
+        {%- comment -%}
+          «Handlekurven din» er fjernet som synlig overskrift – varelisten rett
+          under sier allerede hva dette er. Plassen den etterlot går til
+          «Fortsett å handle», som manglet helt så lenge kurven ikke var tom:
+          eneste vei ut var da X-en i hjørnet, og på mobil er drawer-en nå hele
+          skjermen.
+
+          Overskriften beholdes visuelt skjult. Dialogen har aria-label, men
+          skjermlesere som navigerer på overskriftsnivå ville ellers mistet
+          ankeret sitt i kurven.
+        {%- endcomment -%}
+        <h2 class="visually-hidden">{{ 'sections.cart.title' | t }}</h2>
+
+        <button
+          class="sk-cart-continue"
+          type="button"
+          onclick="this.closest('cart-drawer').close()"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+          {{ 'general.continue_shopping' | t }}
+        </button>
+
         <button
           class="drawer__close"
           type="button"
