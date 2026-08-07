@@ -1,0 +1,19 @@
+# Linjeskift
+# -----------
+# Shopify skriver alle temafiler tilbake til repoet med LF. Uten denne fila
+# lagret git CRLF (Windows + core.autocrlf), og da så git HELE filen som endret
+# hver gang Shopify skrev tilbake. Resultatet var merge-konflikter fra første
+# til siste linje – uten en eneste reell innholdsendring. Én slik konflikt
+# havnet i snippets/sk-cart-drawer.liquid, som theme.liquid rendrer på alle
+# sider, så «<<<<<<< HEAD» ble skrevet ut øverst i hele butikken.
+#
+# eol=lf gjør at også arbeidstreet får LF, ikke bare repoet. Da er det som
+# ligger på disk identisk med det Shopify sender og mottar, og `shopify theme
+# push` kan ikke lenger introdusere forskjellen på nytt.
+* text=auto eol=lf
+
+# Binærfiler skal aldri røres av linjeskift-konvertering.
+*.png binary
+*.gif binary
+*.glb binary
+*.xlsx binary
