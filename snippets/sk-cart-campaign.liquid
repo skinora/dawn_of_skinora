@@ -21,6 +21,8 @@
     part : 'anchor'   → gjennomstreket ordinærpris, står over totalsummen
            'save'     → besparelsen i grønn pille, står under totalsummen
            'deadline' → fristen, står under kjøpsknappen
+           'line'     → gjennomstreket ordinærpris på ÉN varelinje (krever item)
+    item : varelinje, kun for part: 'line'
 {%- endcomment -%}
 
 {%- liquid
@@ -29,6 +31,9 @@
   assign ck_save = 0
 
   if settings.kampanje_aktiv
+    # Én løkke dekker både varelinjene og summen. Prisregelen (compare_at, ellers
+    # DEV-forhåndsvisning) står dermed ett sted – to kopier ville drevet fra
+    # hverandre, og da hadde varelinjene og totalen lovet ulike tall.
     for ck_item in cart.items
       assign ck_line_was = 0
 
@@ -44,18 +49,28 @@
         endif
       endif
 
-      # Varer uten kampanjepris teller med til sin egen pris, slik at ankeret
-      # er ordinærprisen for HELE kurven – ikke bare for kampanjevarene.
-      if ck_line_was > 0
-        assign ck_line_total = ck_line_was | times: ck_item.quantity
+      if ck_part == 'line'
+        # Bare linja vi er bedt om. key er unik per varelinje, så den skiller
+        # to linjer av samme variant med ulike egenskaper.
+        if ck_item.key == item.key and ck_line_was > 0
+          assign ck_was = ck_line_was | times: ck_item.quantity
+          if ck_was > ck_item.final_line_price
+            assign ck_save = ck_was | minus: ck_item.final_line_price
+          endif
+        endif
       else
-        assign ck_line_total = ck_item.original_line_price
+        # Varer uten kampanjepris teller med til sin egen pris, slik at ankeret
+        # er ordinærprisen for HELE kurven – ikke bare for kampanjevarene.
+        if ck_line_was > 0
+          assign ck_line_total = ck_line_was | times: ck_item.quantity
+        else
+          assign ck_line_total = ck_item.original_line_price
+        endif
+        assign ck_was = ck_was | plus: ck_line_total
       endif
-
-      assign ck_was = ck_was | plus: ck_line_total
     endfor
 
-    if ck_was > cart.total_price
+    if ck_part != 'line' and ck_was > cart.total_price
       assign ck_save = ck_was | minus: cart.total_price
     endif
   endif
@@ -83,6 +98,13 @@
           {{- 'sections.cart.campaign_cart_save' | t: amount: ck_save_money -}}
         </span>
       </p>
+
+    {%- when 'line' -%}
+      {%- assign ck_line_was_money = ck_was | money_without_trailing_zeros -%}
+      <s class="sk-cart-campaign__line-was">
+        <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+        {{- ck_line_was_money -}}
+      </s>
 
     {%- when 'deadline' -%}
       {%- if settings.kampanje_sluttdato != blank -%}
