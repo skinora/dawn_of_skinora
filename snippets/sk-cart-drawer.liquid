@@ -527,10 +527,19 @@
             {%- endif -%}
           </div>
 
+          {%- comment -%}
+            Ankring: ordinærprisen står over totalsummen, besparelsen under.
+            Kunden leser 5 690 → 4 390 → «du sparer 1 300» i én bevegelse, og
+            tallet møter prisinnvendingen akkurat der den topper seg.
+          {%- endcomment -%}
+          {% render 'sk-cart-campaign', part: 'anchor' %}
+
           <div class="totals" role="status">
             <p class="totals__total" role="heading" aria-level="2">{{ 'sections.cart.estimated_total' | t }}</p>
             <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
           </div>
+
+          {% render 'sk-cart-campaign', part: 'save' %}
 
           <small class="tax-note caption-large rte">
             {%- if cart.duties_included and cart.taxes_included -%}
@@ -592,6 +601,14 @@
           >
             {{ 'sections.cart.checkout' | t }}
           </button>
+
+          {%- comment -%}
+            Fristen står under kassaknappen fordi hastverk kun virker der
+            nølingen faktisk skjer. Ingen nedtellingsklokke – den skriker,
+            eldes dårlig og undergraver quiet luxury (samme vurdering som i
+            assets/sk-campaign.css).
+          {%- endcomment -%}
+          {% render 'sk-cart-campaign', part: 'deadline' %}
         </div>
 
         {%- unless cart == empty -%}

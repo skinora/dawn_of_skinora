@@ -1,0 +1,94 @@
+{%- comment -%}
+  sk-cart-campaign — kampanjen i handlekurven
+  -------------------------------------------
+  Kurven kan IKKE se kampanjen selv. item.original_price skiller seg fra
+  final_price kun ved ekte Shopify-rabatter (kode eller automatisk rabatt);
+  compare_at_price – som kampanjen vår bygger på – rører ikke kurven i det hele
+  tatt. Shopifys egne rabattrader i drawer-en er derfor tomme, og forblir tomme.
+  Besparelsen summeres her, linje for linje, på nøyaktig samme grunnlag som
+  produktsiden bruker (se snippets/sk-campaign-banner.liquid), så de to aldri
+  kan love ulike tall.
+
+  FORMULERINGSREGEL: totalsummen synker ikke i kassen – den ER allerede
+  kampanjeprisen. Derfor «du sparer X mot ordinærpris», aldri «− X» som et
+  avslag kunden venter på. Bryter vi den, venter kunden et fradrag som ikke
+  kommer, og det er der tilliten ryker.
+
+  Ingen JS trengs: hele #CartDrawer rendres på nytt serverside ved hver
+  mengdeendring (assets/cart-drawer.js), så tallene kan ikke komme i utakt.
+
+  Parametre:
+    part : 'anchor'   → gjennomstreket ordinærpris, står over totalsummen
+           'save'     → besparelsen i grønn pille, står under totalsummen
+           'deadline' → fristen, står under kjøpsknappen
+{%- endcomment -%}
+
+{%- liquid
+  assign ck_part = part | default: 'anchor'
+  assign ck_was = 0
+  assign ck_save = 0
+
+  if settings.kampanje_aktiv
+    for ck_item in cart.items
+      assign ck_line_was = 0
+
+      if ck_item.variant.compare_at_price > ck_item.variant.price
+        assign ck_line_was = ck_item.variant.compare_at_price
+      elsif settings.kampanje_forhandsvis_ordinaerpris > 0
+        # Forhåndsvisningsprisen er ETT tall for hele butikken, så den treffer
+        # bare riktig når kurven inneholder ett produkt. Den er kun ment for
+        # testing på DEV – på det publiserte temaet skal feltet stå tomt.
+        assign ck_prev = settings.kampanje_forhandsvis_ordinaerpris | times: 100
+        if ck_prev > ck_item.variant.price
+          assign ck_line_was = ck_prev
+        endif
+      endif
+
+      # Varer uten kampanjepris teller med til sin egen pris, slik at ankeret
+      # er ordinærprisen for HELE kurven – ikke bare for kampanjevarene.
+      if ck_line_was > 0
+        assign ck_line_total = ck_line_was | times: ck_item.quantity
+      else
+        assign ck_line_total = ck_item.original_line_price
+      endif
+
+      assign ck_was = ck_was | plus: ck_line_total
+    endfor
+
+    if ck_was > cart.total_price
+      assign ck_save = ck_was | minus: cart.total_price
+    endif
+  endif
+-%}
+
+{%- if ck_save > 0 -%}
+  {%- case ck_part -%}
+    {%- when 'anchor' -%}
+      {%- assign ck_was_money = ck_was | money_without_trailing_zeros -%}
+      <p class="sk-cart-campaign__anchor">
+        {{ 'sections.cart.campaign_cart_was' | t }}
+        <s>{{ ck_was_money }}</s>
+      </p>
+
+    {%- when 'save' -%}
+      {%- comment -%}
+        Beløpet formateres i eget assign og settes inn via t-filterets egen
+        interpolering. Ikke via | replace: – da traff money-filteret hele
+        strengen i stedet for tallet, og CTA-en på produktsiden endte med å
+        vise «0» (se commit ee00e188).
+      {%- endcomment -%}
+      {%- assign ck_save_money = ck_save | money_without_trailing_zeros -%}
+      <p class="sk-cart-campaign__saveline">
+        <span class="sk-cart-campaign__save">
+          {{- 'sections.cart.campaign_cart_save' | t: amount: ck_save_money -}}
+        </span>
+      </p>
+
+    {%- when 'deadline' -%}
+      {%- if settings.kampanje_sluttdato != blank -%}
+        <p class="sk-cart-campaign__deadline">
+          {{ 'sections.cart.campaign_cart_until_html' | t: date: settings.kampanje_sluttdato }}
+        </p>
+      {%- endif -%}
+  {%- endcase -%}
+{%- endif -%}
