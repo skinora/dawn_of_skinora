@@ -121,6 +121,9 @@
     "show_cart_note": false,
     "cart_drawer_collection": "",
     "kampanje_aktiv": true,
+    "kampanje_startdato": "7.august",
+    "kampanje_sluttdato": "17. august",
+    "kampanje_forhandsvis_ordinaerpris": 5990,
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
@@ -211,10 +214,7 @@
           "shadow": "#121212"
         }
       }
-    },
-    "kampanje_startdato": "3.",
-    "kampanje_sluttdato": "17. august",
-    "kampanje_forhandsvis_ordinaerpris": 5990
+    }
   },
   "presets": {
     "Default": {
