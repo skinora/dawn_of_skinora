@@ -543,7 +543,13 @@
 
           <div class="totals" role="status">
             <p class="totals__total" role="heading" aria-level="2">{{ 'sections.cart.estimated_total' | t }}</p>
-            <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+            {%- comment -%}
+              | money, ikke money_with_currency → «14.370 kr» som ordrelinjene
+              og kampanjetallene over. money_with_currency ga «14.370 NOK», og
+              to skrivemåter for samme valuta i samme kolonne leser som en feil.
+              Samme valg som i sections/sk-main-cart-footer.liquid.
+            {%- endcomment -%}
+            <p class="totals__total-value">{{ cart.total_price | money }}</p>
           </div>
 
           {% render 'sk-cart-campaign', part: 'save' %}

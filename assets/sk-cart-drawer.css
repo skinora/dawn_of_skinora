@@ -192,6 +192,19 @@ cart-drawer {
 cart-drawer-items {
   overflow: auto;
   flex: 1;
+  /* Ingen scroll-lekkasje til siden bak når man drar forbi enden av varelisten. */
+  overscroll-behavior: contain;
+}
+
+/* Verken toppen eller bunnen skal krympe. cart-drawer-items har flex: 1, altså
+   flex-basis 0 – den kan ikke gi fra seg plass i det hele tatt, så HELE
+   overskuddet ble tatt fra footeren. Og .drawer__inner har overflow: hidden.
+   På lave skjermer ble totalsummen, besparelsen og fristen dermed klippet bort
+   i stedet for at varelisten scrollet. Det ble verre da kampanjelinjene kom
+   til, som er grunnen til at de ikke var å se på mobil. */
+.drawer__header,
+.drawer__footer {
+  flex-shrink: 0;
 }
 
 @media screen and (max-height: 650px) {
@@ -323,6 +336,25 @@ cart-drawer-items {
 
   .cart-drawer .cart-item cart-remove-button .button {
     color: var(--color-brand);
+  }
+
+  /* Full skjermbredde. Stripen av siden bak (max-width: calc(100vw - 3rem))
+     var ikke en invitasjon til å lukke – den var en glipe kunden kunne bomme
+     seg ut gjennom, og en påminnelse om alt annet på siden. Kurven skal være
+     hele skjermen mens den står åpen. */
+  .drawer__inner {
+    width: 100%;
+    max-width: 100%;
+    border-left: 0;
+  }
+
+  /* iOS: height: 100% på et fixed element måles mot LAYOUT-viewporten, som er
+     høyere enn det synlige når adresselinjen står framme. Bunnen av drawer-en
+     – totalsum, besparelse, kassaknapp – havnet dermed under skjermkanten.
+     dvh måles mot det som faktisk vises. Nettlesere uten dvh beholder 100%. */
+  cart-drawer,
+  .drawer {
+    height: 100dvh;
   }
 }
 

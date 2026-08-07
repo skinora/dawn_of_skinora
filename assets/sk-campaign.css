@@ -137,6 +137,9 @@
   color: rgba(var(--sk-color-body-text), 0.5);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.1em;
+  /* Totalkolonnen er 1fr av 4 på mobil (~75 px). Et brekk midt i beløpet ville
+     lest som to tall, ikke ett – heller la det stå på én linje. */
+  white-space: nowrap;
 }
 
 /* Fristen er søsken til .cart__ctas, ikke barn: den containeren er
