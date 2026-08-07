@@ -14,6 +14,27 @@
   justify-content: flex-end;
   background-color: rgba(var(--color-foreground), 0.65);
   transition: visibility var(--duration-default) ease;
+  overscroll-behavior: contain;
+}
+
+/* Bakgrunnen skal stå HELT stille mens kurven er åpen.
+   body.overflow-hidden (satt av cart-drawer.js) er ikke nok: på mobil er det
+   <html> som scroller, ikke <body>, så siden bak gled videre bak overlayet.
+   I tillegg kjeder touch som starter på overlayet, headeren eller footeren
+   seg videre til dokumentet – touch-action: none stopper det ved kilden.
+
+   cart-drawer-items er utelatt MED VILJE: varelisten skal fortsatt kunne
+   scrolle. touch-action på en forelder ville ikke kunne skrus på igjen i et
+   barn (verdiene snittes langs kjeden), derfor står regelen kun på de tre
+   flatene som aldri skal scrolle. */
+html:has(body.cart-drawer-open) {
+  overflow: hidden;
+}
+
+body.cart-drawer-open .cart-drawer__overlay,
+body.cart-drawer-open .drawer__header,
+body.cart-drawer-open .drawer__footer {
+  touch-action: none;
 }
 
 .drawer.active {
