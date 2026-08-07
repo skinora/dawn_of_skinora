@@ -129,9 +129,20 @@
   font-size: 1.35rem;
 }
 
-/* Fristen ligger inne i .cart__ctas, rett under knappen. Sentrert fordi
-   knappen er full bredde – venstrestilt ville sett løsrevet ut. */
-.cart__ctas .sk-cart-campaign__deadline {
+/* Ordinærprisen på varelinja, over linjesummen. Samme dempede grå som ankeret
+   nede ved totalen, så de to leses som samme signal på to nivåer. */
+.sk-cart-campaign__line-was {
+  font-size: 1.3rem;
+  line-height: 1.3;
+  color: rgba(var(--sk-color-body-text), 0.5);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.1em;
+}
+
+/* Fristen er søsken til .cart__ctas, ikke barn: den containeren er
+   display:flex, så fristen ble klemt VED SIDEN AV knappen på desktop.
+   Sentrert fordi knappen er full bredde – venstrestilt ville sett løsrevet ut. */
+.drawer__footer .sk-cart-campaign__deadline {
   margin: 0.8rem 0 0;
   font-family: var(--font-body-family);
   font-size: 1.3rem;
@@ -140,7 +151,7 @@
   color: rgba(var(--sk-color-body-text), 0.72);
 }
 
-.cart__ctas .sk-cart-campaign__deadline strong {
+.drawer__footer .sk-cart-campaign__deadline strong {
   font-weight: 600;
   color: var(--color-brand);
 }

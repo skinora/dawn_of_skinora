@@ -246,6 +246,13 @@
                         <td class="cart-item__totals right" role="cell" headers="CartDrawer-ColumnTotal">
                           {%- render 'loading-spinner' -%}
                           <div class="cart-item__price-wrapper">
+                            {%- comment -%}
+                              Ordinærprisen på selve varelinja. Shopify kan ikke
+                              rendre den selv: compare_at_price følger ikke med
+                              inn i kurven, så blokka under ser aldri forskjell.
+                            {%- endcomment -%}
+                            {% render 'sk-cart-campaign', part: 'line', item: item %}
+
                             {%- if item.original_line_price != item.final_line_price -%}
                               <div class="cart-item__discounted-prices">
                                 <span class="visually-hidden">
@@ -601,15 +608,19 @@
           >
             {{ 'sections.cart.checkout' | t }}
           </button>
-
-          {%- comment -%}
-            Fristen står under kassaknappen fordi hastverk kun virker der
-            nølingen faktisk skjer. Ingen nedtellingsklokke – den skriker,
-            eldes dårlig og undergraver quiet luxury (samme vurdering som i
-            assets/sk-campaign.css).
-          {%- endcomment -%}
-          {% render 'sk-cart-campaign', part: 'deadline' %}
         </div>
+
+        {%- comment -%}
+          Fristen står under kassaknappen fordi hastverk kun virker der nølingen
+          faktisk skjer. Ingen nedtellingsklokke – den skriker, eldes dårlig og
+          undergraver quiet luxury (samme vurdering som i assets/sk-campaign.css).
+
+          UTENFOR .cart__ctas med vilje: den containeren er display:flex
+          (sk-cart.css), så fristen ble en flex-søsken VED SIDEN AV knappen og
+          klemt sammen på desktop. Å legge til flex-wrap der ville rørt en
+          container /cart-siden deler.
+        {%- endcomment -%}
+        {% render 'sk-cart-campaign', part: 'deadline' %}
 
         {%- unless cart == empty -%}
           {% render 'cart-reassurance', context: 'drawer', part: 'payments' %}
