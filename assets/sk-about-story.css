@@ -44,7 +44,7 @@
   line-height: 1.4;
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--ink-500);
+  color: var(--ink-400);
   margin: 0 0 var(--space-4);
 }
 
@@ -108,7 +108,7 @@
   font-size: var(--fs-xs);
   font-weight: var(--fw-regular);
   line-height: var(--lh-loose);
-  color: var(--ink-500);
+  color: var(--ink-400);
   margin-top: var(--space-3);
 }
 
@@ -142,7 +142,7 @@
   font-size: var(--fs-sm);
   font-weight: var(--fw-regular);
   line-height: 1.4;
-  color: var(--ink-700);
+  color: var(--ink-500);
   margin: 0;
   text-align: right;
 }
@@ -288,7 +288,7 @@
   font-size: var(--fs-sm);
   font-weight: var(--fw-regular);
   line-height: var(--lh-normal);
-  color: var(--ink-500);
+  color: var(--ink-400);
   margin: 0;
 }
 
@@ -337,13 +337,15 @@
   margin: 0;
 }
 
+/* Samme rolle som eyebrow-en (sperret versal metalinje), derfor samme
+   trinn i blekkstigen. */
 .sk-story__signature-role {
   font-family: var(--ff-sans);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semibold);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--ink-500);
+  color: var(--ink-400);
   margin: var(--space-2) 0 0;
 }
 
