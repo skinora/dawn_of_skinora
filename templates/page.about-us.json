@@ -10,9 +10,118 @@
 {
   "sections": {
     "hero": {
-      "type": "sk-about-hero-editorial",
+      "type": "sk-about-story",
+      "blocks": {
+        "fact_selskap": {
+          "type": "fact",
+          "settings": {
+            "label": "Selskap",
+            "value": "Norsk og familieeid"
+          }
+        },
+        "fact_support": {
+          "type": "fact",
+          "settings": {
+            "label": "Kundeservice",
+            "value": "På norsk, fra Norge"
+          }
+        },
+        "fact_garanti": {
+          "type": "fact",
+          "settings": {
+            "label": "Prøvetid",
+            "value": "30 dagers fornøydgaranti"
+          }
+        },
+        "p_leting": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Så begynte jeg å lete etter en maske til meg selv. Den letingen tok mye lengre tid enn jeg hadde regnet med.</p>"
+          }
+        },
+        "p_norge": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Det norske markedet var fullt av rimelige masker der det samme produktet dukket opp igjen og igjen under stadig nye logoer. Ingen tydelige spesifikasjoner. Ingen dokumentasjon. Ingen som kunne svare på hva som faktisk satt i panelet. Når ingen kan fortelle deg hva du holder foran ansiktet ditt, er det vanskelig å vite om det er trygt – enn si om det gjør noe.</p>"
+          }
+        },
+        "p_utland": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>De etablerte utenlandske merkene var noe helt annet: gjennomarbeidede produkter og tydelig fagkunnskap – men til en pris man grubler på i ukevis. Og passet masken likevel ikke ansiktet ditt, ventet stive returregler, retur til utlandet og kundeservice i en annen tidssone.</p>"
+          }
+        },
+        "quote_valg": {
+          "type": "quote",
+          "settings": {
+            "text": "Hvorfor må man velge mellom noe man ikke tør stole på, og noe man ikke tør å angre på?",
+            "note": ""
+          }
+        },
+        "p_svaret": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Det spørsmålet ble Skinora. Jeg ville lage en maske bygget med samme alvor som de etablerte produsentene – uten prislappen som følger et internasjonalt merkenavn, og uten markedsføring som lover mer enn produktet kan holde.</p>"
+          }
+        },
+        "p_wellaging": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Vi tror på well-aging: små, synlige forbedringer over tid, bygget på rutine og kvalitet. Ikke en forvandling på syv dager, men en vane som faktisk varer.</p>"
+          }
+        },
+        "pr_apenhet": {
+          "type": "principle",
+          "settings": {
+            "title": "Vi sier hva som sitter i masken",
+            "text": "Bølgelengder, effekt og materialer står oppført – slik at du kan sammenligne oss med hvem du vil. Tall du kan lese før kjøpet, ikke etterpå."
+          }
+        },
+        "pr_kvalitet": {
+          "type": "principle",
+          "settings": {
+            "title": "Den skal tåle ukentlig bruk",
+            "text": "Utførelse og komfort avgjør om en maske blir en rutine eller en skuffelse i en skuff. Vi bygger for det første."
+          }
+        },
+        "pr_trygghet": {
+          "type": "principle",
+          "settings": {
+            "title": "Trygghet hele veien",
+            "text": "Norsk selskap, kundeservice på norsk og 30 dagers fornøydgaranti. Du skal kunne ombestemme deg uten at det blir et prosjekt."
+          }
+        }
+      },
+      "block_order": [
+        "fact_selskap",
+        "fact_support",
+        "fact_garanti",
+        "p_leting",
+        "p_norge",
+        "p_utland",
+        "quote_valg",
+        "p_svaret",
+        "p_wellaging",
+        "pr_apenhet",
+        "pr_kvalitet",
+        "pr_trygghet"
+      ],
       "settings": {
-        "image_loading": "eager"
+        "background": "paper",
+        "eyebrow": "Historien bak Skinora",
+        "heading": "Det begynte med en lånt maske",
+        "lead": "<p>Jeg heter Anastasia, og jeg står bak Skinora. For fire år siden lånte jeg LED-masken til en venninne – mest av nysgjerrighet. Etter to uker med jevnlig bruk så jeg forskjell i mitt eget speil. Det var nok til at jeg ville forstå hva som faktisk lå bak lyset.</p>",
+        "lead_note": "Min egen erfaring. Resultater varierer fra person til person.",
+        "image": "shopify://shop_images/ChatGPT_Image_Dec_13_2025_04_03_16_PM.png",
+        "image_alt": "",
+        "image_caption": "",
+        "image_loading": "eager",
+        "principles_title": "Tre ting vi ikke går på akkord med",
+        "closing": "<p>Skinora er ikke laget for hype. Det er laget for deg som vil vite hva du kjøper – og som heller vil ha en rutine som varer enn et løfte som ikke gjør det.</p>",
+        "signature_name": "Anastasia",
+        "signature_role": "Grunnlegger, Skinora®",
+        "cta_label": "Se maskene våre →",
+        "cta_url": "shopify://collections/all"
       }
     },
     "philosophy_anchor": {
