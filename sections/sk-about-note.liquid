@@ -1,0 +1,194 @@
+{%- comment -%}
+  sk-about-note — kort grunnleggernotat for forsiden.
+
+  Komprimert utgave av sk-about-story: én serif-setning som bærer
+  historien, to setninger som forklarer, håndskrevet signatur og en
+  lenke videre til hele fortellingen på /pages/om-skinora.
+
+  Bevisst ulik sk-lp-hudterapeut, som har samme ingredienser (portrett,
+  sitat, navn/rolle, CTA) i en «møt personen»-komposisjon. Her er formen
+  et signert notat: teksten bærer, portrettet er ankeret – bunnjustert
+  mot tekstkolonnen, ikke midtstilt i sin egen.
+{%- endcomment -%}
+
+{{ 'sk-about-note.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign portrait_alt = s.image_alt | default: s.signature_name
+-%}
+
+<section class="sk-note sk-note--{{ s.background }} sk-note--media-{{ s.media_position }}">
+  <div class="sk-note__inner">
+    <div class="sk-note__grid">
+      <div class="sk-note__text">
+        {%- if s.eyebrow != blank -%}
+          <p class="sk-note__eyebrow">{{ s.eyebrow | escape }}</p>
+        {%- endif -%}
+
+        {%- if s.statement != blank -%}
+          <p class="sk-note__statement">{{ s.statement | escape }}</p>
+        {%- endif -%}
+
+        {%- if s.body != blank -%}
+          <div class="sk-note__body">{{ s.body }}</div>
+        {%- endif -%}
+
+        <div class="sk-note__sign">
+          <span class="sk-note__rule" aria-hidden="true"></span>
+
+          {%- if s.signature_image != blank -%}
+            {{
+              s.signature_image
+              | image_url: width: 500
+              | image_tag:
+                widths: '170, 260, 340, 500',
+                sizes: '170px',
+                class: 'sk-note__signature-img',
+                alt: s.signature_name,
+                loading: 'lazy'
+            }}
+          {%- elsif s.signature_name != blank -%}
+            <p class="sk-note__signature">{{ s.signature_name | escape }}</p>
+          {%- endif -%}
+
+          {%- if s.signature_role != blank -%}
+            <p class="sk-note__role">{{ s.signature_role | escape }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- if s.link_label != blank and s.link_url != blank -%}
+          <a class="sk-note__link" href="{{ s.link_url }}">{{ s.link_label | escape }}</a>
+        {%- endif -%}
+      </div>
+
+      {%- if s.image != blank -%}
+        <div class="sk-note__media" style="--sk-note-portrait-y: {{ s.image_focus_y }}%;">
+          {{
+            s.image
+            | image_url: width: 1200
+            | image_tag:
+              widths: '320, 480, 640, 900, 1200',
+              sizes: '(min-width: 769px) 300px, 100vw',
+              class: 'sk-note__portrait',
+              alt: portrait_alt,
+              loading: 'lazy'
+          }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SK Grunnleggernotat",
+  "tag": "section",
+  "class": "sk-note-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Bakgrunn",
+      "options": [
+        { "value": "cream", "label": "Varm krem" },
+        { "value": "paper", "label": "Hvit" },
+        { "value": "cool", "label": "Kjølig grå" }
+      ],
+      "default": "cream"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Fra grunnleggeren"
+    },
+    {
+      "type": "textarea",
+      "id": "statement",
+      "label": "Setningen som bærer",
+      "info": "Én setning, gjerne to. Dette er kroken – hold den kort nok til å leses på to linjer.",
+      "default": "Jeg lånte en LED-maske av en venninne. Fire år senere lagde jeg min egen."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Forklaringen",
+      "default": "<p>Jeg lette etter en maske jeg kunne stole på, og fant enten billige kopier uten spesifikasjoner eller utenlandske merker jeg ikke hadde råd til å angre på. Skinora ble det jeg selv lette etter.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Portrett"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Portrett"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Alt-tekst"
+    },
+    {
+      "type": "range",
+      "id": "image_focus_y",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Vertikalt bildefokus",
+      "info": "Lav verdi holder toppen av bildet og beskjærer mer fra bunnen. 50 % = midtstilt.",
+      "default": 30
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Portrettets plassering",
+      "options": [
+        { "value": "right", "label": "Høyre" },
+        { "value": "left", "label": "Venstre" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "header",
+      "content": "Signatur"
+    },
+    {
+      "type": "image_picker",
+      "id": "signature_image",
+      "label": "Signaturbilde",
+      "info": "Samme fil som på Om-siden. Vises uten marger – luften må ligge i selve PNG-en."
+    },
+    {
+      "type": "text",
+      "id": "signature_name",
+      "label": "Navn",
+      "default": "Anastasia"
+    },
+    {
+      "type": "text",
+      "id": "signature_role",
+      "label": "Rolle",
+      "default": "Grunnlegger, Skinora®"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Lenketekst",
+      "default": "Les hele historien →"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Lenke"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Grunnleggernotat"
+    }
+  ]
+}
+{% endschema %}

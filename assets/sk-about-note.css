@@ -1,0 +1,210 @@
+/* =============================================================
+   sk-about-note — kort grunnleggernotat (forside)
+   Tokens fra assets/typography.css. Ingen !important,
+   ingen egne farger, ingen gradienter.
+
+   Komposisjonen er bevisst ulik sk-lp-hudterapeut, som deler de
+   samme ingrediensene. Der er portrettet midtstilt i sin egen
+   kolonne ("møt personen"); her er teksten hovedsaken og portrettet
+   bunnjustert mot den, så de to kolonnene deler grunnlinje i stedet
+   for midtakse. Asymmetrien er poenget.
+   ============================================================= */
+
+.sk-note {
+  --sk-note-media: 300px;
+  background: var(--paper-100);
+  padding-block: var(--space-section-sm);
+}
+
+.sk-note--paper {
+  background: var(--paper-0);
+}
+
+.sk-note--cool {
+  background: var(--paper-150);
+}
+
+.sk-note__inner {
+  width: 100%;
+  max-width: var(--lp-w-wide);
+  margin-inline: auto;
+  padding-inline: var(--lp-gutter);
+}
+
+/* ---------- Grid ----------
+   Mobil: portrettet først (order: -1), så den sammenhengende
+   tekstblokken. Desktop: to spor som deler grunnlinje. */
+.sk-note__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+@media (min-width: 769px) {
+  .sk-note__grid {
+    grid-template-columns: minmax(0, 1fr) var(--sk-note-media);
+    gap: clamp(40px, 6vw, 72px);
+    align-items: end;
+  }
+
+  .sk-note--media-left .sk-note__grid {
+    grid-template-columns: var(--sk-note-media) minmax(0, 1fr);
+  }
+
+  .sk-note--media-left .sk-note__media {
+    order: -1;
+  }
+}
+
+/* ---------- Tekst ---------- */
+.sk-note__eyebrow {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+  margin: 0 0 var(--space-4);
+}
+
+/* Setningen som bærer. Smal måleenhet så den brekker på to linjer
+   i stedet for å legge seg utover hele sporet. */
+.sk-note__statement {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+  max-width: 24ch;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.sk-note__body {
+  margin-top: var(--space-5);
+}
+
+.sk-note__body p {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-700);
+  max-width: var(--measure-narrow);
+  margin: 0 0 var(--space-3);
+}
+
+.sk-note__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Signatur ----------
+   Kort strek i stedet for hårstrek i full bredde: dette er et
+   brev-avslutning, ikke et seksjonsskille. */
+.sk-note__sign {
+  margin-top: var(--space-5);
+}
+
+.sk-note__rule {
+  display: block;
+  width: 48px;
+  height: 1px;
+  background: var(--ink-300);
+  margin-bottom: var(--space-4);
+}
+
+.sk-note__signature-img {
+  display: block;
+  width: auto;
+  max-width: 170px;
+  height: auto;
+  margin: 0;
+}
+
+/* Tekst-fallback når signaturbildet mangler. */
+.sk-note__signature {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-3xl);
+  font-style: italic;
+  font-weight: var(--fw-regular);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+  margin: 0;
+}
+
+.sk-note__role {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+  margin: var(--space-2) 0 0;
+}
+
+/* Bildet bærer sin egen luft, så rollelinjen legger ikke på mer. */
+.sk-note__signature-img + .sk-note__role {
+  margin-top: 0;
+}
+
+.sk-note__link {
+  display: inline-block;
+  margin-top: var(--space-5);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-900);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+}
+
+.sk-note__link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.sk-note__link:focus-visible {
+  outline: 2px solid var(--ink-900);
+  outline-offset: 4px;
+  text-decoration: none;
+}
+
+/* ---------- Portrett ----------
+   Skarpe hjørner og husets skygge, som de øvrige mediarammene. */
+.sk-note__media {
+  overflow: hidden;
+  background: var(--paper-50);
+  box-shadow: 0 30px 60px color-mix(in srgb, var(--ink-900) 18%, transparent);
+}
+
+.sk-note__portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center var(--sk-note-portrait-y, 30%);
+}
+
+/* ---------- Mobil ----------
+   Portrettet legger seg først og bytter til liggende utsnitt, så
+   notatet ikke sluker skjermen på en forside. */
+@media (max-width: 768px) {
+  .sk-note__media {
+    order: -1;
+  }
+
+  .sk-note__portrait {
+    aspect-ratio: 3 / 2;
+  }
+
+  .sk-note__statement {
+    font-size: var(--fs-2xl);
+    max-width: none;
+  }
+}

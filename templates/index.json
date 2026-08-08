@@ -259,6 +259,25 @@
         "section_subtitle": "Resultater etter jevn bruk"
       }
     },
+    "sk_about_note_home": {
+      "type": "sk-about-note",
+      "name": "Grunnleggernotat",
+      "settings": {
+        "background": "cream",
+        "eyebrow": "Fra grunnleggeren",
+        "statement": "Jeg lånte en LED-maske av en venninne. Fire år senere lagde jeg min egen.",
+        "body": "<p>Jeg lette etter en maske jeg kunne stole på, og fant enten billige kopier uten spesifikasjoner eller utenlandske merker jeg ikke hadde råd til å angre på. Skinora ble det jeg selv lette etter.</p>",
+        "image": "shopify://shop_images/skinora-grunder.webp",
+        "image_alt": "Anastasia, grunnlegger av Skinora",
+        "image_focus_y": 30,
+        "media_position": "right",
+        "signature_image": "shopify://shop_images/penup_20260808_161044.webp",
+        "signature_name": "Anastasia",
+        "signature_role": "Grunnlegger, Skinora®",
+        "link_label": "Les hele historien →",
+        "link_url": "shopify://pages/om-skinora"
+      }
+    },
     "sk_lp_hudterapeut_BRKq6y": {
       "type": "sk-lp-hudterapeut",
       "disabled": true,
@@ -488,6 +507,7 @@
     "sk_product_listing_dYMpyE",
     "sk_quiz_cta_home",
     "sk_before_after_HqFkek",
+    "sk_about_note_home",
     "sk_lp_hudterapeut_BRKq6y",
     "sk_led_technology_kjwDjX",
     "sk_features_pHkfMf",
