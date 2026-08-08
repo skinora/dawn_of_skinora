@@ -64,6 +64,12 @@
             "text": "<p>Det spørsmålet ble Skinora. Jeg ville lage en maske bygget med samme alvor som de etablerte produsentene – uten prislappen som følger et internasjonalt merkenavn, og uten markedsføring som lover mer enn produktet kan holde.</p>"
           }
         },
+        "p_familie": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Skinora er fortsatt familieeid, og det merkes på hva vi tør å selge. Alt vi fører har ligget mot mitt eget ansikt først, uke etter uke. Er det noe jeg ikke ville anbefalt til en venninne, kommer det ikke i butikken.</p>"
+          }
+        },
         "p_wellaging": {
           "type": "paragraph",
           "settings": {
@@ -101,6 +107,7 @@
         "p_utland",
         "quote_valg",
         "p_svaret",
+        "p_familie",
         "p_wellaging",
         "pr_apenhet",
         "pr_kvalitet",
