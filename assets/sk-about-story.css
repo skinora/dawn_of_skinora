@@ -94,13 +94,16 @@
   margin: 0;
 }
 
+/* Vertikalt fokus styres av --sk-story-portrait-y (satt per seksjon i
+   Liquid). Lav verdi holder toppen av bildet og beskjaerer fra bunnen;
+   50% = midtstilt. Standard 30% gir hodet luft og kutter nedover. */
 .sk-story__portrait-img {
   display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  object-position: center;
+  object-position: center var(--sk-story-portrait-y, 30%);
 }
 
 .sk-story__portrait-caption {

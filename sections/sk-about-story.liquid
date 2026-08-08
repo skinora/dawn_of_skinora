@@ -57,7 +57,10 @@
         <aside class="sk-story__aside">
           <div class="sk-story__aside-inner">
             {%- if section.settings.image != blank -%}
-              <figure class="sk-story__portrait">
+              <figure
+                class="sk-story__portrait"
+                style="--sk-story-portrait-y: {{ section.settings.image_focus_y }}%;"
+              >
                 {{
                   section.settings.image
                   | image_url: width: 1200
@@ -243,6 +246,17 @@
       "id": "image_caption",
       "label": "Bildetekst",
       "default": "Anastasia, grunnlegger av Skinora"
+    },
+    {
+      "type": "range",
+      "id": "image_focus_y",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Vertikalt bildefokus",
+      "info": "Lav verdi holder toppen av bildet og beskjærer mer fra bunnen. 50 % = midtstilt.",
+      "default": 30
     },
     {
       "type": "select",

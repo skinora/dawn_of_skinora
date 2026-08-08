@@ -122,6 +122,7 @@
         "image": "shopify://shop_images/ChatGPT_Image_Dec_13_2025_04_03_16_PM.png",
         "image_alt": "",
         "image_caption": "",
+        "image_focus_y": 30,
         "image_loading": "eager",
         "principles_title": "Tre ting vi ikke går på akkord med",
         "closing": "<p>Skinora er ikke laget for hype. Det er laget for deg som vil vite hva du kjøper – og som heller vil ha en rutine som varer enn et løfte som ikke gjør det.</p>",
