@@ -123,6 +123,33 @@
   margin: 0;
 }
 
+/* ---------- Beskåret signatur ----------
+   Signaturfilen er 600×600 med ugjennomsiktig hvit bakgrunn, og blekket
+   dekker bare x 12,8–84,8 % og y 44,8–66,2 % (målt på filen). Uten
+   beskjæring blir signaturen et lite merke midt i en stor firkant.
+
+   Vinduet under viser x 8–90 % og y 39–72 %, altså blekket med litt
+   margin. Zoomen 1.22 er 1 / 0.82: bildet skaleres så de 82 % vi vil
+   se fyller rammens bredde. Prosentene i translate() regnes av bildets
+   egen bredde og høyde, som er like store siden filen er kvadratisk. */
+.sk-note__signature-frame {
+  --sig-w: clamp(170px, 22vw, 220px);
+  position: relative;
+  width: var(--sig-w);
+  aspect-ratio: 82 / 33;
+  overflow: hidden;
+}
+
+.sk-note__signature-frame .sk-note__signature-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--sig-w) * 1.22);
+  max-width: none;
+  height: auto;
+  transform: translate(-8%, -39%);
+}
+
 /* Tekst-fallback når signaturbildet mangler. */
 .sk-note__signature {
   font-family: var(--ff-serif);
@@ -145,9 +172,13 @@
   margin: var(--space-2) 0 0;
 }
 
-/* Bildet bærer sin egen luft, så rollelinjen legger ikke på mer. */
+/* Ubeskåret bilde bærer sin egen luft; det beskårne gjør ikke det. */
 .sk-note__signature-img + .sk-note__role {
   margin-top: 0;
+}
+
+.sk-note__signature-frame + .sk-note__role {
+  margin-top: var(--space-3);
 }
 
 .sk-note__link {
@@ -182,25 +213,26 @@
   box-shadow: 0 30px 60px color-mix(in srgb, var(--ink-900) 18%, transparent);
 }
 
+/* Kvadratisk på alle bredder. Kilden er 797×1344 (svært stående), så et
+   1:1-utsnitt viser bare 59 % av høyden og 41 % må vekk et sted.
+
+   Toppen av håret ligger 10,1 % ned i filen (målt). Fokus 30 % la
+   vinduet på 12,2 % og kappet hodet; 15 % legger det på 6,1 % og gir
+   4 % klaring over håret. Byttes portrettet, må slideren måles på nytt. */
 .sk-note__portrait {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  object-position: center var(--sk-note-portrait-y, 30%);
+  object-position: center var(--sk-note-portrait-y, 15%);
 }
 
 /* ---------- Mobil ----------
-   Portrettet legger seg først og bytter til liggende utsnitt, så
-   notatet ikke sluker skjermen på en forside. */
+   Portrettet legger seg først, men beholder det kvadratiske utsnittet. */
 @media (max-width: 768px) {
   .sk-note__media {
     order: -1;
-  }
-
-  .sk-note__portrait {
-    aspect-ratio: 3 / 2;
   }
 
   .sk-note__statement {

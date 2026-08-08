@@ -38,16 +38,24 @@
           <span class="sk-note__rule" aria-hidden="true"></span>
 
           {%- if s.signature_image != blank -%}
-            {{
-              s.signature_image
-              | image_url: width: 500
-              | image_tag:
-                widths: '170, 260, 340, 500',
-                sizes: '170px',
-                class: 'sk-note__signature-img',
-                alt: s.signature_name,
-                loading: 'lazy'
-            }}
+            {%- capture signature_img -%}
+              {{
+                s.signature_image
+                | image_url: width: 700
+                | image_tag:
+                  widths: '240, 360, 480, 700',
+                  sizes: '260px',
+                  class: 'sk-note__signature-img',
+                  alt: s.signature_name,
+                  loading: 'lazy'
+              }}
+            {%- endcapture -%}
+
+            {%- if s.signature_crop -%}
+              <div class="sk-note__signature-frame">{{ signature_img }}</div>
+            {%- else -%}
+              {{ signature_img }}
+            {%- endif -%}
           {%- elsif s.signature_name != blank -%}
             <p class="sk-note__signature">{{ s.signature_name | escape }}</p>
           {%- endif -%}
@@ -138,8 +146,8 @@
       "step": 5,
       "unit": "%",
       "label": "Vertikalt bildefokus",
-      "info": "Lav verdi holder toppen av bildet og beskjærer mer fra bunnen. 50 % = midtstilt.",
-      "default": 30
+      "info": "Utsnittet er kvadratisk. Lav verdi holder toppen av bildet – dra ned hvis toppen av hodet kappes.",
+      "default": 15
     },
     {
       "type": "select",
@@ -159,7 +167,14 @@
       "type": "image_picker",
       "id": "signature_image",
       "label": "Signaturbilde",
-      "info": "Samme fil som på Om-siden. Vises uten marger – luften må ligge i selve PNG-en."
+      "info": "Samme fil som på Om-siden."
+    },
+    {
+      "type": "checkbox",
+      "id": "signature_crop",
+      "label": "Beskjær bort luften rundt signaturen",
+      "info": "På: viser bare selve skriften. Slå av hvis du laster opp en fil som allerede er beskåret.",
+      "default": true
     },
     {
       "type": "text",

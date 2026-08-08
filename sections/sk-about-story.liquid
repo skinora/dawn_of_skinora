@@ -161,16 +161,24 @@
       {%- endif -%}
 
       {%- if section.settings.signature_image != blank -%}
-        {{
-          section.settings.signature_image
-          | image_url: width: 600
-          | image_tag:
-            widths: '200, 300, 400, 600',
-            sizes: '220px',
-            class: 'sk-story__signature-img',
-            alt: section.settings.signature_name,
-            loading: 'lazy'
-        }}
+        {%- capture story_signature_img -%}
+          {{
+            section.settings.signature_image
+            | image_url: width: 800
+            | image_tag:
+              widths: '280, 420, 560, 800',
+              sizes: '300px',
+              class: 'sk-story__signature-img',
+              alt: section.settings.signature_name,
+              loading: 'lazy'
+          }}
+        {%- endcapture -%}
+
+        {%- if section.settings.signature_crop -%}
+          <div class="sk-story__signature-frame">{{ story_signature_img }}</div>
+        {%- else -%}
+          {{ story_signature_img }}
+        {%- endif -%}
       {%- elsif section.settings.signature_name != blank -%}
         <p class="sk-story__signature">{{ section.settings.signature_name | escape }}</p>
       {%- endif -%}
@@ -297,7 +305,14 @@
       "type": "image_picker",
       "id": "signature_image",
       "label": "Signaturbilde (valgfritt)",
-      "info": "Skannet signatur som transparent PNG, gjerne kvadratisk (1:1). Bildet vises i sitt eget format og uten marger – luften rundt signaturen må ligge i selve filen. Uten bilde vises navnet i kursiv serif."
+      "info": "Skannet signatur. Uten bilde vises navnet i kursiv serif."
+    },
+    {
+      "type": "checkbox",
+      "id": "signature_crop",
+      "label": "Beskjær bort luften rundt signaturen",
+      "info": "På: viser bare selve skriften. Slå av hvis du laster opp en fil som allerede er beskåret.",
+      "default": true
     },
     {
       "type": "text",

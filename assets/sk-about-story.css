@@ -331,15 +331,38 @@
   margin: var(--space-6) 0 0;
 }
 
-/* Signaturbilde: rendres i sitt eget forhold (ingen påtvunget ratio, ingen
-   beskjæring) og helt uten marger. PNG-en har rikelig med luft innebygd –
-   legger vi på våre egne marger, dobles avstanden. */
+/* Ubeskåret signatur: eget format, ingen marger. */
 .sk-story__signature-img {
   display: block;
   width: auto;
   max-width: clamp(160px, 20vw, 220px);
   height: auto;
   margin: 0;
+}
+
+/* ---------- Beskåret signatur ----------
+   Filen er 600×600 med ugjennomsiktig hvit bakgrunn, og blekket dekker
+   bare x 12,8–84,8 % og y 44,8–66,2 % (målt). Vinduet viser x 8–90 % og
+   y 39–72 %. Zoomen 1.22 er 1 / 0.82, så de 82 % vi vil se fyller
+   rammens bredde; prosentene i translate() regnes av bildets egen
+   bredde og høyde, som er like siden filen er kvadratisk. */
+.sk-story__signature-frame {
+  --sig-w: clamp(190px, 24vw, 260px);
+  position: relative;
+  width: var(--sig-w);
+  aspect-ratio: 82 / 33;
+  overflow: hidden;
+  margin: 0;
+}
+
+.sk-story__signature-frame .sk-story__signature-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--sig-w) * 1.22);
+  max-width: none;
+  height: auto;
+  transform: translate(-8%, -39%);
 }
 
 /* Samme rolle som eyebrow-en (sperret versal metalinje), derfor samme
@@ -354,9 +377,13 @@
   margin: var(--space-2) 0 0;
 }
 
-/* Bildet bærer sin egen luft, så rollelinjen legger ikke på mer. */
+/* Ubeskåret bilde bærer sin egen luft; det beskårne gjør ikke det. */
 .sk-story__signature-img + .sk-story__signature-role {
   margin-top: 0;
+}
+
+.sk-story__signature-frame + .sk-story__signature-role {
+  margin-top: var(--space-3);
 }
 
 .sk-story__cta {
