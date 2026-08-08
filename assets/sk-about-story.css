@@ -48,9 +48,11 @@
   margin: 0 0 var(--space-4);
 }
 
+/* --fs-hero, ikke --fs-4xl: konstitusjonen setter hero-H1 til 28–32px
+   på mobil, og --fs-4xl bunner ut på 36px. */
 .sk-story__heading {
   font-family: var(--ff-serif);
-  font-size: var(--fs-4xl);
+  font-size: var(--fs-hero);
   font-weight: var(--fw-regular);
   line-height: var(--lh-tight);
   letter-spacing: var(--tracking-tight);
@@ -401,6 +403,16 @@
   .sk-story__quote {
     margin-block: var(--space-5);
     padding-left: var(--space-4);
+  }
+
+  /* På mobil er overskriften 28px. En ingress på --fs-2xl (24px) legger
+     seg for tett inntil den, så serif-stemmen trappes ned et hakk. */
+  .sk-story__lead p {
+    font-size: var(--fs-xl);
+  }
+
+  .sk-story__quote-text {
+    font-size: var(--fs-xl);
   }
 
   .sk-story__signature {

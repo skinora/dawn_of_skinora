@@ -47,7 +47,10 @@
   --fs-2xl: clamp(24px, 2vw + 18px, 28px);
   --fs-3xl: clamp(30px, 2.4vw + 22px, 36px);
   --fs-4xl: clamp(36px, 3.2vw + 24px, 48px);
-  --fs-hero: clamp(1.75rem, 1.4rem + 1.8vw, 3.25rem); /* 28px @390 → ~36px @768 → 52px @1440 */
+  /* Var skrevet i rem, men theme.liquid setter html til 62.5 % (1rem = 10px),
+     så tokenet leverte 20.8px @390 og 32.5px @1440 — under gulvet på 28px.
+     Omskrevet i px, som resten av skalaen, så verdiene under faktisk stemmer. */
+  --fs-hero: clamp(28px, 2.29vw + 19.1px, 52px); /* 28px @390 → ~37px @768 → 52px @1440 */
   --fs-5xl: clamp(44px, 5vw + 28px, 64px);
   --fs-price: clamp(32px, 2.4vw + 22px, 40px);
 

@@ -43,14 +43,19 @@
 
 <section class="sk-story sk-story--{{ bg }}">
   <div class="sk-story__inner">
-    <header class="sk-story__head">
+    {%- comment -%}
+      Bevisst <div> og ikke <header>: sk-base.css har en global
+      `header:not(.sk-header) { display: flex !important }` under 700px
+      som ellers legger eyebrow og overskrift ved siden av hverandre.
+    {%- endcomment -%}
+    <div class="sk-story__head">
       {%- if section.settings.eyebrow != blank -%}
         <p class="sk-story__eyebrow">{{ section.settings.eyebrow | escape }}</p>
       {%- endif -%}
       {%- if section.settings.heading != blank -%}
         <h1 class="sk-story__heading">{{ section.settings.heading | escape }}</h1>
       {%- endif -%}
-    </header>
+    </div>
 
     <div class="sk-story__body">
       {%- if section.settings.image != blank or has_facts -%}
