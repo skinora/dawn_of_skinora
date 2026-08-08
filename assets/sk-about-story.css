@@ -1,0 +1,404 @@
+/* =============================================================
+   sk-about-story — grunnleggerfortelling (Om oss)
+   Tokens fra assets/typography.css. Ingen !important,
+   ingen egne farger, ingen gradienter.
+
+   Layout:
+     head        → eyebrow + H1, venstrestilt
+     body        → sticky portrett-kolonne | fortellerkolonne
+     principles  → nummerert bånd med hårstrek over
+     sign        → avslutning + signatur + lenke
+   ============================================================= */
+
+.sk-story {
+  --sk-story-hairline: var(--ink-300);
+  --sk-story-aside: 300px;
+  background: var(--paper-0);
+  padding-block: var(--space-section-md);
+}
+
+.sk-story--cream {
+  background: var(--paper-100);
+}
+
+.sk-story--cool {
+  background: var(--paper-150);
+}
+
+.sk-story__inner {
+  width: 100%;
+  max-width: var(--lp-w-wide);
+  margin-inline: auto;
+  padding-inline: var(--lp-gutter);
+}
+
+/* ---------- Topp ---------- */
+.sk-story__head {
+  margin-bottom: var(--space-7);
+}
+
+.sk-story__eyebrow {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-500);
+  margin: 0 0 var(--space-4);
+}
+
+.sk-story__heading {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+  max-width: 22ch;
+  margin: 0;
+}
+
+/* ---------- Kropp: portrett + fortelling ---------- */
+.sk-story__body {
+  display: grid;
+  gap: var(--space-6);
+}
+
+@media (min-width: 990px) {
+  .sk-story__body {
+    grid-template-columns: var(--sk-story-aside) minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+}
+
+.sk-story__aside {
+  align-self: start;
+}
+
+@media (min-width: 990px) {
+  .sk-story__aside {
+    position: sticky;
+    top: calc(var(--header-height, 80px) + var(--space-5));
+  }
+}
+
+.sk-story__aside-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.sk-story__portrait {
+  margin: 0;
+}
+
+.sk-story__portrait-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+}
+
+.sk-story__portrait-caption {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-loose);
+  color: var(--ink-500);
+  margin-top: var(--space-3);
+}
+
+/* Faktalinjer under portrettet */
+.sk-story__facts {
+  margin: 0;
+  border-top: 1px solid var(--sk-story-hairline);
+}
+
+.sk-story__fact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  justify-content: space-between;
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--sk-story-hairline);
+}
+
+.sk-story__fact-label {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+  margin: 0;
+}
+
+.sk-story__fact-value {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: 1.4;
+  color: var(--ink-700);
+  margin: 0;
+  text-align: right;
+}
+
+/* ---------- Fortellerkolonnen ---------- */
+.sk-story__narrative {
+  max-width: var(--measure-body);
+}
+
+.sk-story__lead p {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-regular);
+  line-height: 1.35;
+  letter-spacing: var(--tracking-normal);
+  color: var(--ink-900);
+  margin: 0 0 var(--space-4);
+  max-width: none;
+}
+
+.sk-story__lead p:last-child {
+  margin-bottom: 0;
+}
+
+.sk-story__note {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-loose);
+  color: var(--ink-400);
+  margin: var(--space-3) 0 0;
+}
+
+.sk-story__text {
+  margin-top: var(--space-5);
+}
+
+.sk-story__text p {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-700);
+  margin: 0 0 var(--space-4);
+  max-width: none;
+}
+
+.sk-story__text p:last-child {
+  margin-bottom: 0;
+}
+
+.sk-story__text strong {
+  font-weight: var(--fw-semibold);
+  color: var(--ink-900);
+}
+
+/* Sitat — hårstrek til venstre, serif kursiv */
+.sk-story__quote {
+  margin: var(--space-6) 0;
+  padding-left: var(--space-5);
+  border-left: 2px solid var(--ink-900);
+}
+
+.sk-story__quote-text {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-2xl);
+  font-style: italic;
+  font-weight: var(--fw-regular);
+  line-height: 1.3;
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.sk-story__quote-note {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+  margin-top: var(--space-3);
+}
+
+/* ---------- Prinsippbånd ---------- */
+.sk-story__principles {
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--sk-story-hairline);
+}
+
+.sk-story__principles-title {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+  color: var(--ink-900);
+  margin: 0 0 var(--space-6);
+}
+
+.sk-story__principle-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-6);
+}
+
+@media (min-width: 750px) {
+  .sk-story__principle-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-7);
+  }
+}
+
+.sk-story__principle {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--sk-story-hairline);
+}
+
+.sk-story__principle-num {
+  display: block;
+  font-family: var(--ff-serif);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-regular);
+  line-height: 1;
+  color: var(--ink-300);
+  margin-bottom: var(--space-3);
+}
+
+.sk-story__principle-title {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--ink-900);
+  margin: 0 0 var(--space-2);
+}
+
+.sk-story__principle-text {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+  margin: 0;
+}
+
+/* ---------- Avslutning + signatur ---------- */
+.sk-story__sign {
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--sk-story-hairline);
+  max-width: var(--measure-body);
+}
+
+.sk-story__closing p {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-700);
+  margin: 0 0 var(--space-6);
+  max-width: none;
+}
+
+.sk-story__closing p:last-child {
+  margin-bottom: 0;
+}
+
+/* Tekst-fallback når det ikke er lastet opp signaturbilde. */
+.sk-story__signature {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-4xl);
+  font-style: italic;
+  font-weight: var(--fw-regular);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+  margin: var(--space-6) 0 0;
+}
+
+/* Signaturbilde: rendres i sitt eget forhold (ingen påtvunget ratio, ingen
+   beskjæring) og helt uten marger. PNG-en har rikelig med luft innebygd –
+   legger vi på våre egne marger, dobles avstanden. */
+.sk-story__signature-img {
+  display: block;
+  width: auto;
+  max-width: clamp(160px, 20vw, 220px);
+  height: auto;
+  margin: 0;
+}
+
+.sk-story__signature-role {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-500);
+  margin: var(--space-2) 0 0;
+}
+
+/* Bildet bærer sin egen luft, så rollelinjen legger ikke på mer. */
+.sk-story__signature-img + .sk-story__signature-role {
+  margin-top: 0;
+}
+
+.sk-story__cta {
+  display: inline-block;
+  margin-top: var(--space-6);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-900);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.sk-story__cta:hover {
+  text-decoration-thickness: 2px;
+}
+
+.sk-story__cta:focus-visible {
+  outline: 2px solid var(--ink-900);
+  outline-offset: 4px;
+  text-decoration: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-story__cta {
+    transition: none;
+  }
+}
+
+/* ---------- Mobil ---------- */
+@media (max-width: 749px) {
+  .sk-story__head {
+    margin-bottom: var(--space-6);
+  }
+
+  .sk-story__portrait-img {
+    aspect-ratio: 3 / 4;
+  }
+
+  .sk-story__quote {
+    margin-block: var(--space-5);
+    padding-left: var(--space-4);
+  }
+
+  .sk-story__signature {
+    font-size: var(--fs-3xl);
+  }
+}
