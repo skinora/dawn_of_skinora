@@ -54,10 +54,12 @@
   --color-white-rgb: 255, 255, 255;
   /* Extended palette */
   --color-black: #000000;
-  --color-neutral-1: #6c6c6c;
-  --color-neutral-2: #666666;
-  --color-neutral-3: #333333;
-  --color-neutral-4: #49494a;
+  /* Noeytrale graatoner uten slektskap med paletten. Mappet paa blekkstigen
+     saa de 35 bruksstedene arver auberginé i stedet for kald graa. */
+  --color-neutral-1: var(--ink-500);
+  --color-neutral-2: var(--ink-500);
+  --color-neutral-3: var(--ink-700);
+  --color-neutral-4: var(--ink-700);
   --color-danger: #e74c3c;
   --color-danger-weak: #df4040c7; /* includes alpha hex in original */
   --color-muted: #95a5a6;

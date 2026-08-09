@@ -24,7 +24,14 @@ All design tokens live in [assets/typography.css](assets/typography.css), in the
   - `--ink-500 rgba(45,27,61,.72)` — secondary body, captions, meta
   - `--ink-400 rgba(45,27,61,.58)` — low-emphasis body, sub-captions
   - `--ink-300 rgba(45,27,61,.42)` — hint, divider, disabled
-- Fonts: `freight-text-pro` for serif/display, `sofia-pro` for sans/body.
+- Fonts: `Bespoke Serif` for serif/display, `Switzer` for sans/body. Both from
+  Fontshare, self-hosted as variable `.woff2` in `assets/`. Never name a font
+  family in a rule — always `var(--ff-serif)` / `var(--ff-sans)`.
+- **NEVER use `rem` for font-size.** `layout/theme.liquid` sets the root to
+  62.5 % (`1rem = 10px`), so a value written against a 16px assumption delivers
+  62.5 % of what the author intended. This has produced a 20.8px hero (meant to
+  be 28–32px), an 8px price and a 6.5px badge. Use `--fs-*`, or px if no token
+  fits.
 
 ## Reading floors (mobile)
 - Body ≥ 16px
@@ -68,3 +75,36 @@ Use `--space-section-sm / -md / -lg` (responsive 48→72, 72→96, 96→128) via
 - `sections/sk-lp-documentation.liquid`
 - `sections/sk-lp-faq.liquid` (+ `sections/skinora-faq.liquid`)
 - `sections/sk-lp-cta.liquid`
+
+## Cascade traps (verified — read before writing a new section)
+The stylesheet order in `layout/theme.liquid` is
+`typography.css` → `base.css` → `sk-base.css` → section CSS.
+**Loading first means losing ties**, not winning them. A rule in
+`typography.css` with the same specificity as one in `base.css` loses.
+
+- **No semantic `<header>` inside a section.** `sk-base.css` has
+  `header:not(.sk-header) { display: flex !important }` under 700px, which
+  collapses the element into a flex row on mobile. Use a `<div>`.
+- **Sections from the 2nd onward are containing blocks.**
+  `.content-for-layout > .shopify-section:nth-child(n + 2)` gets
+  `content-visibility: auto`, so `position: fixed`/`sticky` inside a child
+  breaks. Two sections already work around this with `!important` and a JS
+  portal.
+- **`[class^='sk-'] img { border-radius: 0 !important }`** enforces sharp
+  image corners across every `sk-` section.
+- **Never load another section's CSS file.** `section-sk-lp-radiance-face.css`
+  is loaded by 17 sections and carries a `:root` block; its position in the
+  cascade then depends on which section renders first.
+- **`buttons.css` uses a `body ` prefix as a specificity hack.** Editing
+  `.lp-btn` in a section file has no effect on background, radius, padding or
+  shadow.
+- **`.sk-lp-section` / `.lp-section` are no-op markers.** The `--sm`/`--lg`
+  modifier mechanism described under "Section padding" does not exist in any
+  CSS file. Actual practice is `padding-block: var(--space-section-md)`
+  directly in the section file.
+
+## Verify in the browser, not in the file
+Several defects in this theme were invisible in the source and only appeared
+when the rendered page was measured: the dead `body` block, the 8px price
+behind four competing rules, the cropped portrait. After a visual change,
+measure the live DEV theme — computed styles, not the stylesheet.

@@ -69,7 +69,7 @@
 .price-item {
   font-size: var(--sk-font-size-medium);
   font-weight: 500;
-  color: #333333 !important;
+  color: var(--ink-700) !important;
 }
 
 /* Remove duplicate product titles that Dawn sometimes prints */
