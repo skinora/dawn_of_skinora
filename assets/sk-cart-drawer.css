@@ -347,7 +347,7 @@ cart-drawer-items {
 
 .cart-drawer .cart-item__name:hover,
 .cart-drawer .cart-item__name:focus-visible {
-  color: #30273e;
+  color: var(--ink-900);
   font-weight: 600;
 }
 

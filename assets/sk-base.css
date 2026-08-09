@@ -7,7 +7,7 @@
 :root {
   --root-font-size: 10px;
   /* Brand color */
-  --color-brand: #30273e;
+  --color-brand: var(--ink-900);
 
   /* Common color tokens */
   --color-white: #ffffff;
@@ -34,7 +34,11 @@
   --mine-shaft-800-rgb: 69, 69, 69;
   --mine-shaft-900-rgb: 51, 51, 51;
   --mine-shaft-950-rgb: 38, 38, 38;
-  --sk-color-body-text: var(--mine-shaft-900-rgb);
+  /* Var --mine-shaft-900-rgb (51,51,51) — en noeytral graa som ikke hoerer til
+     merkevaren. Den forsynte 42 konsumenter, inkludert --color-foreground under,
+     og sto for 27 % av all synlig tekst maalt paa forsiden. Naa --ink-700
+     #3a3448, samme verdi som CLAUDE.md utpeker til primaer broedtekst. */
+  --sk-color-body-text: 58, 52, 72;
   --sk-color-heading-text: 58, 52, 72; /* softened eggplant for headings */
   --sk-color-subheader-text: rgba(var(--mine-shaft-500), 1);
   --sk-body-text-strong: rgba(var(--sk-color-body-text), 1);
@@ -46,7 +50,7 @@
   --color-dark: #3a3939;
   --color-lilac: #cdb7ed;
   /* RGB fallbacks for alpha usage */
-  --color-brand-rgb: 48, 39, 62; /* 0x30 0x27 0x3e */
+  --color-brand-rgb: 45, 27, 61; /* --ink-900 #2d1b3d. Maa foelge --color-brand over. */
   --color-white-rgb: 255, 255, 255;
   /* Extended palette */
   --color-black: #000000;
@@ -924,7 +928,7 @@ footer .footer__column.footer__column--menu a:hover {
 }
 
 .icon-hamburger-variants .icon-close {
-  background: var(--color-brand, #30273e);
+  background: var(--color-brand, var(--ink-900));
   color: var(--color-white, #ffffff);
 }
 
@@ -1106,7 +1110,7 @@ footer .footer__column.footer__column--menu a:hover {
 }
 
 /* Okendo's current widget (oke-sr) paints the filled stars from this CSS
-   variable, which Okendo sets to the brand purple (#30273E) from its admin.
+   variable, which Okendo sets to the brand purple (var(--ink-900)) from its admin.
    The .oke-stars-full rules above only cover Okendo's older markup, so we
    also override the variable here. NB: the authoritative place to change
    this is Okendo's admin (Styling → star colour); this is the theme-side

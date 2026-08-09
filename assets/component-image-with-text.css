@@ -123,7 +123,7 @@
   font-size: clamp(2.2rem, 3.5vw + 1rem, 4rem) !important;
   line-height: 1.15 !important;
   font-weight: 700 !important;
-  color: #30273e !important;
+  color: var(--ink-900) !important;
 }
 
 .image-with-text__text {
@@ -155,7 +155,7 @@
 .image-with-text__bullet-icon {
   width: 22px;
   height: 22px;
-  color: #30273e;
+  color: var(--ink-900);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -163,7 +163,7 @@
 
 .image-with-text__list-item span {
   font-size: 1.05rem !important;
-  color: #30273e !important;
+  color: var(--ink-900) !important;
 }
 
 /* -------------------------------------------------------------------------- */

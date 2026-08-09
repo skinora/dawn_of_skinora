@@ -33,7 +33,7 @@
 
 /* ---- LP CTA SYSTEM — brand purple ---- */
 :root {
-  --lp-cta-bg: #30273e;
+  --lp-cta-bg: var(--ink-900);
   --lp-cta-bg-hover: #3d3450;
   --lp-cta-bg-active: #221a2e;
   --lp-cta-fg: #ffffff;

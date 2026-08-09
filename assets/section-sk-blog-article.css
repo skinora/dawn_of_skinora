@@ -42,7 +42,7 @@
   font-size: var(--section-heading-h1);
   line-height: var(--section-heading-h1-line);
   font-weight: 600;
-  color: var(--color-brand, #30273e);
+  color: var(--color-brand, var(--ink-900));
   margin-bottom: 20px;
   margin-top: 0;
 }
@@ -99,7 +99,7 @@
 .sk-blog-article__body h4,
 .sk-blog-article__body h5,
 .sk-blog-article__body h6 {
-  color: var(--color-brand, #30273e);
+  color: var(--color-brand, var(--ink-900));
   font-weight: 600;
   margin-top: 40px;
   margin-bottom: 20px;
@@ -150,7 +150,7 @@
 .sk-blog-article__body a,
 .sk-blog-article__block-content a,
 .sk-blog-article__right-content a {
-  color: var(--color-brand, #30273e);
+  color: var(--color-brand, var(--ink-900));
   font-weight: 500;
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -179,7 +179,7 @@
 .sk-blog-article__block-heading {
   font-size: calc(var(--sk-font-size-xl) * 0.95);
   font-weight: 600;
-  color: var(--color-brand, #30273e);
+  color: var(--color-brand, var(--ink-900));
   margin-bottom: 20px;
   margin-top: 0;
 }
