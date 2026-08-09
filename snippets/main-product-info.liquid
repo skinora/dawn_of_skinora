@@ -43,7 +43,7 @@
               {%- if product.selected_or_first_available_variant.inventory_quantity
                   <= block.settings.inventory_threshold
               -%}
-                <span class="svg-wrapper" style="color: rgb(238, 148, 65)">
+                <span class="svg-wrapper" style="color: var(--accent-gold)">
                   {{- 'icon-inventory-status.svg' | inline_asset_content -}}
                 </span>
                 {%- if block.settings.show_inventory_quantity -%}
@@ -55,7 +55,7 @@
                   {{- 'products.product.inventory_low_stock' | t -}}
                 {%- endif -%}
               {%- else -%}
-                <span class="svg-wrapper" style="color: rgb(62, 214, 96)">
+                <span class="svg-wrapper" style="color: var(--accent-green)">
                   {{- 'icon-inventory-status.svg' | inline_asset_content -}}
                 </span>
                 {%- if block.settings.show_inventory_quantity -%}
@@ -69,12 +69,12 @@
               {%- endif -%}
             {%- else -%}
               {%- if product.selected_or_first_available_variant.inventory_policy == 'continue' -%}
-                <span class="svg-wrapper" style="color: rgb(62, 214, 96)">
+                <span class="svg-wrapper" style="color: var(--accent-green)">
                   {{- 'icon-inventory-status.svg' | inline_asset_content -}}
                 </span>
                 {{- 'products.product.inventory_out_of_stock_continue_selling' | t -}}
               {%- else -%}
-                <span class="svg-wrapper" style="color: rgb(200, 200, 200)">
+                <span class="svg-wrapper" style="color: var(--ink-300)">
                   {{- 'icon-inventory-status.svg' | inline_asset_content -}}
                 </span>
                 {{- 'products.product.inventory_out_of_stock' | t -}}

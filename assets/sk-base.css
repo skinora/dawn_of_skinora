@@ -66,7 +66,9 @@
   /* Additional semantic tokens */
   --color-warning: #ffc107;
   --color-warning-dark: #856404;
-  --color-success: #27ae60;
+  /* Var #27ae60 — en lys, mettet «rabattgroenn». --accent-green er bevisst
+     moerk og lavmettet av samme grunn som staar dokumentert i typography.css. */
+  --color-success: var(--accent-green);
   --color-border: #dddddd;
   --color-border-light: #ababab;
   --color-ink-dark: #1d1925;
