@@ -1,12 +1,12 @@
 <link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
-<link
-  rel="stylesheet"
-  href="{{ 'component-cart-notification.css' | asset_url }}"
-  media="print"
-  onload="this.media='all'"
->
+{%- comment -%}
+  component-cart-notification.css er fjernet. Butikken bruker cart drawer
+  (settings_data cart_type: "drawer"), saa varselet ble aldri rendret —
+  den eneste `render 'cart-notification'` sto inne i snippetens egen
+  kommentarblokk. CSS-en ble likevel lastet paa hver eneste sidevisning.
+{%- endcomment -%}
 
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
