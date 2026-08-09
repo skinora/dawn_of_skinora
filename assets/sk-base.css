@@ -300,7 +300,10 @@ html {
   --sk-mobile-heading-line: 1.2;
   --sk-mobile-body-size: clamp(1.6rem, 4.2vw, 2rem);
   --sk-mobile-body-line: 1.55;
-  --sk-section-eyebrow-size: clamp(0.9rem, 2vw, 1.2rem);
+  /* Var clamp(0.9rem, 2vw, 1.2rem). Rot er 10px, saa den leverte 9-12px —
+     under caption-gulvet paa 13px. Forfatteren regnet mot 16px og mente
+     14-19px. --fs-xs (13-14px) er kanon for eyebrow i typography.css:256. */
+  --sk-section-eyebrow-size: var(--fs-xs);
   --sk-section-eyebrow-spacing: 0.22em;
   --sk-section-subtitle-size: clamp(1.4rem, 2.6vw, 1.8rem);
   --sk-section-subtitle-line: 1.55;

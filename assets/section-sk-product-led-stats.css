@@ -204,14 +204,16 @@
   margin: 0;
 }
 
+/* Var 0.32em, altsaa relativ til det store talltegnet ved siden av — den
+   landet paa 8,4px. Enheten skal vaere liten, men ikke uleselig. */
 .sk-led-stats__unit {
-  font-size: 0.32em;
+  font-size: var(--fs-xs);
   font-style: italic;
   opacity: 0.7;
 }
 
 .sk-led-stats__label {
-  font-size: 10px;
+  font-size: var(--fs-xs); /* var 10px, under caption-gulvet paa 13px */
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -310,7 +312,8 @@
   }
 
   .sk-led-stats__label {
-    font-size: 9px;
+    /* Mobil-nedskaleringen er fjernet: 9px laa under caption-gulvet.
+       Labelen arver naa --fs-xs fra regelen over paa alle bredder. */
     letter-spacing: 0.12em;
   }
 

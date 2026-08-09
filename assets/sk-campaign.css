@@ -33,7 +33,7 @@
 }
 
 .sk-campaign__label {
-  font-size: 1.05rem;
+  font-size: var(--fs-xs); /* var 1.05rem = 10,5px ved 10px rot */
   font-weight: 600;
   letter-spacing: var(--sk-section-eyebrow-spacing, 0.22em);
   text-transform: uppercase;

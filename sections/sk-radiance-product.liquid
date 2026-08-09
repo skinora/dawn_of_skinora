@@ -470,7 +470,7 @@
       display: block;
       width: auto;
       margin: 0.75rem calc(var(--sk-card-pad-x, 0.75rem) * -1) calc(var(--sk-card-pad-b, 0.9rem) * -1);
-      font-size: 1.15rem;
+      font-size: var(--fs-xs); /* var 1.15rem = 11,5px ved 10px rot */
       font-weight: 600;
       color: var(--sk-brand, var(--ink-900));
       background: color-mix(in srgb, var(--color-lilac, #cdb7ed) 30%, #fff);
@@ -1118,7 +1118,7 @@
         width: max-content;
         background: var(--sk-brand);
         color: var(--color-white);
-        font-size: 0.65rem;
+        font-size: var(--fs-xs); /* var 0.65rem = 6,5px ved 10px rot */
         padding: 0.25rem 0.5rem;
         grid-column: 1 / -1;
         justify-self: end;
