@@ -87,7 +87,10 @@
 .badge--top-left,
 .badge--bottom-right,
 .badge--top-right {
-  background: #487AB7 !important; /* Skinora Regatta blue */
+  /* Var #487AB7 «Skinora Regatta blue» — en blaafarge uten tilknytning til
+     paletten, synlig i kolleksjon, soek og forsidegrid. Merkevaren er bevisst
+     avdempet: et sterkt rabattmerke ville dratt den mot lavpris. */
+  background: var(--ink-900) !important;
   color: white !important;
   border-radius: 18px;
   font-weight: 600 !important;
