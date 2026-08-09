@@ -850,17 +850,19 @@
             }
 
             :root {
-              --font-body-family: 'sofia-pro', 'sofia-pro-fallback', {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+              {%- comment -%}
+                Peker paa tokenet i typography.css i stedet for aa gjenta
+                fontnavnet. 81 erklaeringer i temaet henter familie herfra;
+                naa flytter de seg naar --ff-sans flytter seg.
+              {%- endcomment -%}
+              --font-body-family: var(--ff-sans);
               --font-body-style: normal;
               {%- comment -%} 300 er forbudt i CLAUDE.md, og ingen 300-face finnes uansett. {%- endcomment -%}
               --font-body-weight: 400;
               --font-body-weight-bold: 600;
 
-              {%- comment -%}
-                Headings: keep your Freight families first.
-                iOS fallback: "New York" is the best system serif match.
-              {%- endcomment -%}
-              --font-heading-family: 'freight-text-pro', 'freight-text-pro-fallback', 'Freight Text Pro', 'New York', 'Georgia', serif;
+              {%- comment -%} Samme som over: én kilde, i typography.css. {%- endcomment -%}
+              --font-heading-family: var(--ff-serif);
               --font-heading-style: normal;
               --font-heading-weight: 400;
 

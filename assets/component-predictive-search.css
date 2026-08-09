@@ -174,7 +174,7 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
 }
 
 .predictive-search__item-query-result *:not(mark) {
-  font-weight: bolder;
+  font-weight: var(--fw-semibold);
 }
 
 .predictive-search__item-query-result mark {
