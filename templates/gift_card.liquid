@@ -26,27 +26,21 @@
 
     {{ content_for_header }}
 
-    {%- liquid
-      assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
-      assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
-      assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
-    %}
+    {%- comment -%}
+      Dawns font_face-utdata er fjernet. Det genererte @font-face for
+      settings.type_body_font / type_header_font, som staar paa arial_n4 —
+      en systemfont. Skrift hentes fra --ff-sans / --ff-serif.
+    {%- endcomment -%}
 
     {% style %}
-              {{ settings.type_body_font | font_face: font_display: 'swap' }}
-              {{ body_font_bold | font_face: font_display: 'swap' }}
-              {{ body_font_italic | font_face: font_display: 'swap' }}
-              {{ body_font_bold_italic | font_face: font_display: 'swap' }}
-              {{ settings.type_header_font | font_face: font_display: 'swap' }}
-
               :root {
                 --font-body-family: var(--ff-sans);
-                --font-body-style: {{ settings.type_body_font.style }};
-                --font-body-weight: {{ settings.type_body_font.weight }};
+                --font-body-style: normal;
+                --font-body-weight: var(--fw-regular);
 
-      --font-heading-family: var(--ff-serif);
-                --font-heading-style: {{ settings.type_header_font.style }};
-                --font-heading-weight: {{ settings.type_header_font.weight }};
+                --font-heading-family: var(--ff-serif);
+                --font-heading-style: normal;
+                --font-heading-weight: var(--fw-regular);
 
                 --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
                 --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
