@@ -34,7 +34,11 @@
   --mine-shaft-800-rgb: 69, 69, 69;
   --mine-shaft-900-rgb: 51, 51, 51;
   --mine-shaft-950-rgb: 38, 38, 38;
-  --sk-color-body-text: var(--mine-shaft-900-rgb);
+  /* Var --mine-shaft-900-rgb (51,51,51) — en noeytral graa som ikke hoerer til
+     merkevaren. Den forsynte 42 konsumenter, inkludert --color-foreground under,
+     og sto for 27 % av all synlig tekst maalt paa forsiden. Naa --ink-700
+     #3a3448, samme verdi som CLAUDE.md utpeker til primaer broedtekst. */
+  --sk-color-body-text: 58, 52, 72;
   --sk-color-heading-text: 58, 52, 72; /* softened eggplant for headings */
   --sk-color-subheader-text: rgba(var(--mine-shaft-500), 1);
   --sk-body-text-strong: rgba(var(--sk-color-body-text), 1);
