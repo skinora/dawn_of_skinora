@@ -573,7 +573,16 @@
                   this.media = 'all';
                 };
               }
-              /* Marketing scripts → delay until interaction / timeout */
+              /* Marketing scripts → delay until interaction / timeout.
+                 NB: `type = 'text/plain'` hindrer KJOERING, ikke nedlasting.
+                 MutationObserver fyrer etter innsetting, saa hentingen er
+                 allerede startet. Skriptet lastes altsaa ned én gang uten aa
+                 kjoere, og hentes igjen ved re-injisering — den andre gangen
+                 fra cache (maalt transferSize 0). Baandbreddekostnaden er
+                 dermed uendret, men nedlastingen skjer tidlig mens effekten
+                 kommer sent. Forsoek paa aa avbryte med removeChild ga ingen
+                 maalbar endring; en ekte loesning maa hindre innsettingen,
+                 ikke reagere paa den. */
               if (n.tagName === 'SCRIPT' && n.src && delayJS.test(n.src)) {
                 saved.push(n.src);
                 n.type = 'text/plain';
