@@ -108,25 +108,13 @@
     <link rel="preload" href="{{ 'sk-base.css' | asset_url }}" as="style">
 
     {%- comment -%}
-      Google Fonts removed — not used. Adobe Fonts (Typekit) is the sole font
-      provider. If any Shopify app re-injects Google Fonts CSS, the performance
-      interceptor below converts it to non-blocking automatically.
+      SKRIFT: Fontshare (Switzer + Bespoke Serif), selvhostet i assets/.
+      Ingen tredjeparts fontleverandoer. Preconnect til use.typekit.net er
+      fjernet sammen med resten av Adobe-oppsettet — cdn.shopify.com serverer
+      naa bade siden og fontene over samme forbindelse.
     {%- endcomment -%}
-
-    {%- comment -%}
-      ==========================
-      ADOBE FONTS (FIXED FOR iOS)
-      - Use ONE kit only (avoid multiple kits).
-      - Do NOT preload the kit CSS as "style" (can cause Safari timing/fallback issues).
-      - Preconnect only to the actual font domains.
-      ==========================
-    {%- endcomment -%}
-
-    <link rel="preconnect" href="https://use.typekit.net" crossorigin>
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     {%- comment -%}
-      p.typekit.net preconnect removed — only used by Adobe tracking beacon which loads
-      after window.load via kit CSS. Early preconnect wasted a connection slot.
       cdn.jsdelivr.net / cdn-static.okendo.io get lightweight dns-prefetch only (non-critical).
     {%- endcomment -%}
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
@@ -135,101 +123,78 @@
     {%- endif -%}
     <link rel="dns-prefetch" href="https://cdn-static.okendo.io">
 
-    {%- comment -%} Preload critical above-fold fonts (body + heading) for faster LCP text paint {%- endcomment -%}
-    <link
-      rel="preload"
-      as="font"
-      type="font/woff2"
-      crossorigin
-      href="https://use.typekit.net/af/1fbf9b/00000000000000007735f98d/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"
-    >
-    <link
-      rel="preload"
-      as="font"
-      type="font/woff2"
-      crossorigin
-      href="https://use.typekit.net/af/a9e142/00000000000000007735d61f/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3"
-    >
-    <link
-      rel="preload"
-      as="font"
-      type="font/woff2"
-      crossorigin
-      href="https://use.typekit.net/af/e7e7b3/00000000000000007735f99a/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3"
-    >
-
     {%- comment -%}
-      Critical @font-face declarations — inlined so the browser can match
-      the preloaded woff2 files BEFORE first paint, eliminating font-swap CLS.
-      Uses font-display:optional → if the preloaded file is cached the font
-      applies instantly; if not, fallback sticks for this navigation (no swap).
-      The deferred typekit-fonts.css below covers all remaining weights with optional.
+      Preload av begge variable fonter. Tre preloads mot Adobes CDN er
+      erstattet av to mot cdn.shopify.com — samme origin som resten av siden,
+      saa ingen ny DNS eller TLS-handshake staar mellom brukeren og teksten.
+      Én variabel fil per familie dekker alle vekter vi bruker (400/500/600).
     {%- endcomment -%}
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="{{ 'Switzer-Variable.woff2' | asset_url }}"
+    >
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="{{ 'BespokeSerif-Variable.woff2' | asset_url }}"
+    >
     <style>
-      /* Critical @font-face — matches preloaded woff2 files.
-         font-display:optional → use cached font or stick with fallback (no swap CLS).
-         Fallback @font-face with size-adjust below for metric-matched fallbacks. */
+      /* Fontshare, selvhostet. font-display:optional beholdt: rekker fila
+         vinduet brukes den fra foerste maling, ellers staar fallbacken
+         sidevisningen ut. Ingen swap aa se — aldri. */
       @font-face {
-        font-family: 'sofia-pro';
+        font-family: 'Switzer';
         font-style: normal;
-        font-weight: 400;
+        font-weight: 400 600;
         font-display: optional;
-        src: url('https://use.typekit.net/af/1fbf9b/00000000000000007735f98d/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3')
-          format('woff2');
+        src: url('{{ 'Switzer-Variable.woff2' | asset_url }}') format('woff2-variations');
       }
       @font-face {
-        font-family: 'sofia-pro';
+        font-family: 'Bespoke Serif';
         font-style: normal;
-        font-weight: 600;
+        font-weight: 400 600;
         font-display: optional;
-        src: url('https://use.typekit.net/af/e7e7b3/00000000000000007735f99a/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3')
-          format('woff2');
+        src: url('{{ 'BespokeSerif-Variable.woff2' | asset_url }}') format('woff2-variations');
       }
+
+      /* Metrikk-matchede fallbacks. size-adjust er kalibrert paa LINJEBREDDE,
+         ikke x-hoeyde: det er bredden som avgjoer hvor linjene brekker, og
+         dermed om siden hopper naar fonten ikke rekker vinduet.
+         Maalt paa 100px i nettleser:
+           Switzer 1339,0 / Arial   1350,8  -> 99 %
+           Bespoke 1442,1 / Georgia 1356,3  -> 106 %
+         ascent/descent er lest av de nye fontene (98/25 og 101/27). */
       @font-face {
-        font-family: 'freight-text-pro';
-        font-style: normal;
-        font-weight: 400;
-        font-display: optional;
-        src: url('https://use.typekit.net/af/a9e142/00000000000000007735d61f/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3')
-          format('woff2');
-      }
-      /* Metric-matched fallback — prevents CLS even when custom font misses
-         the optional window. size-adjust calibrated to sofia-pro / freight-text-pro. */
-      @font-face {
-        font-family: 'sofia-pro-fallback';
+        font-family: 'Switzer-fallback';
         src: local('Arial');
-        size-adjust: 101%;
+        size-adjust: 99%;
         ascent-override: 98%;
         descent-override: 25%;
         line-gap-override: 0%;
       }
       @font-face {
-        font-family: 'freight-text-pro-fallback';
+        font-family: 'BespokeSerif-fallback';
         src: local('Georgia');
-        size-adjust: 108%;
-        ascent-override: 95%;
+        size-adjust: 106%;
+        ascent-override: 101%;
         descent-override: 27%;
         line-gap-override: 0%;
       }
     </style>
 
-    {%- comment -%}
-      Adobe kit CSS REMOVED — it was the #1 CLS offender (0.851 score).
-      Kit CSS (jxm0xpk.css + pbt1clx.css) injected its own @font-face rules with
-      DIFFERENT source URLs and uncontrolled font-display (auto/block), overriding
-      our tuned inline optional declarations. Different URLs = browser re-downloads
-      fonts → text disappears → reappears → massive layout shift on <main>.
-      typekit-fonts.css already self-hosts all font URLs from use.typekit.net with
-      controlled font-display:optional, so the kit CSS provided zero rendering value.
-      Adobe font-tracking/licensing is handled by the typekit-fonts.css URLs which
-      still point to use.typekit.net (Adobe's CDN).
-    {%- endcomment -%}
     {%- comment -%} Favicon {%- endcomment -%}
     <link rel="icon" type="image/png" href="{{ 'skinora-48.png' | asset_url }}">
     <link rel="apple-touch-icon" href="{{ 'skinora.png' | asset_url }}">
 
-    {%- comment -%} typekit-fonts.css deferred — all @font-face rules use font-display:optional (zero CLS) {%- endcomment -%}
-    <link rel="stylesheet" href="{{ 'typekit-fonts.css' | asset_url }}" media="print" onload="this.media='all'">
+    {%- comment -%}
+      typekit-fonts.css er slettet. Den self-hostet sju @font-face mot Adobes
+      CDN og var det femte og siste stedet fontene ble lastet fra.
+    {%- endcomment -%}
 
     {%- comment -%}
       Bootstrap CSS removed (24.7 KiB CDN) — replaced by sk-accordion.css (~0.6 KiB).
@@ -567,10 +532,10 @@
     <script>
       (function () {
         var deferCSS = /accelerated-checkout|fonts\.googleapis\.com/;
-        /* Adobe kit CSS — injected by content_for_header (Shopify Adobe Fonts
-           integration). Redundant: typekit-fonts.css already self-hosts every weight
-           with font-display:optional. Kit CSS re-declares @font-face with
-           font-display:auto — triggers FOIT and CLS (the 0.851 offender). Block it. */
+        /* Adobe kit CSS — injiseres av content_for_header saa lenge Shopifys
+           Adobe Fonts-app er koblet til i admin. Temaet bruker ikke Adobe lenger
+           (Fontshare, selvhostet), men appen fortsetter aa sende kit-CSS til den
+           kobles fra. Blokkeringen staar til det er gjort; da kan den slettes. */
         var blockCSS = /use\.typekit\.net\/[a-z0-9]+\.css/;
         /* googletagmanager.com added: GTM/gtag was named in the comment above but
            was missing from the regex, so it ran during initial load. Only catches
@@ -753,46 +718,10 @@
     </script>
 
     {%- comment -%}
-      Re-assert font-display:optional AFTER content_for_header.
-      Shopify injects Adobe kit CSS (jxm0xpk.css / pbt1clx.css) via content_for_header
-      which redeclares @font-face with font-display:auto, causing FOIT and CLS.
-      These declarations come LAST → override the kit (last @font-face wins).
-      src URLs match the preloaded woff2 files so no extra downloads.
+      Her laa en andre inline @font-face-blokk som re-erklaerte Adobe-fontene
+      ETTER content_for_header, for aa slaa Shopifys Adobe Fonts-app. Bade
+      blokken og grunnen til den er borte naa som fontene er selvhostet.
     {%- endcomment -%}
-    <style>
-      @font-face {
-        font-family: 'sofia-pro';
-        font-style: normal;
-        font-weight: 400;
-        font-display: optional;
-        src: url('https://use.typekit.net/af/1fbf9b/00000000000000007735f98d/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3')
-          format('woff2');
-      }
-      @font-face {
-        font-family: 'sofia-pro';
-        font-style: italic;
-        font-weight: 400;
-        font-display: optional;
-        src: url('https://use.typekit.net/af/a80b27/00000000000000007735f98c/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3')
-          format('woff2');
-      }
-      @font-face {
-        font-family: 'sofia-pro';
-        font-style: normal;
-        font-weight: 600;
-        font-display: optional;
-        src: url('https://use.typekit.net/af/e7e7b3/00000000000000007735f99a/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3')
-          format('woff2');
-      }
-      @font-face {
-        font-family: 'freight-text-pro';
-        font-style: normal;
-        font-weight: 400;
-        font-display: optional;
-        src: url('https://use.typekit.net/af/a9e142/00000000000000007735d61f/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3')
-          format('woff2');
-      }
-    </style>
 
     {%- liquid
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'

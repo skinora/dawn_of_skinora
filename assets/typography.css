@@ -31,8 +31,8 @@
      size-adjust) staar med i kjeden. De hindrer layout-hopp naar webfonten
      ikke rekker font-display:optional-vinduet, og maa derfor foelge tokenet -
      ikke ligge i en parallell kjede hos hver konsument. */
-  --ff-serif: 'freight-text-pro', 'freight-text-pro-fallback', Georgia, 'Times New Roman', serif;
-  --ff-sans: 'sofia-pro', 'sofia-pro-fallback', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ff-serif: 'Bespoke Serif', 'BespokeSerif-fallback', Georgia, 'Times New Roman', serif;
+  --ff-sans: 'Switzer', 'Switzer-fallback', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
   /* ---------- WEIGHTS (only three) ---------- */
   --fw-regular: 400;
