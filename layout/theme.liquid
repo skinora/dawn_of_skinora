@@ -723,12 +723,11 @@
       blokken og grunnen til den er borte naa som fontene er selvhostet.
     {%- endcomment -%}
 
-    {%- liquid
-      assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
-      assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
-      assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
-      assign heading_family_downcase = settings.type_header_font.family | default: '' | downcase
-    %}
+    {%- comment -%}
+      Fire font-variabler laa her (body_font_bold/-italic/-bold_italic og
+      heading_family_downcase). De ble konsumert av @font-face-blokken over,
+      som er borte. Ingen andre lesere — fjernet.
+    {%- endcomment -%}
 
     {% style %}
       {%- comment -%} Ensure scheme_classes is defined so theme-check doesn't warn about undefined object {%- endcomment -%}
