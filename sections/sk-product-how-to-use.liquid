@@ -202,7 +202,8 @@
         margin: 0;
       }
       .sk-product-how-to-use-{{ section.id }} .sk-how-to-use__step-number {
-        font-size: calc(var(--sk-font-size-xxs) * 0.8);
+        /* Var calc(var(--sk-font-size-xxs) * 0.8) = 10,9px. Stoerrelsen
+           arves naa fra --fs-sm i regelen lenger opp paa alle bredder. */
         width: 2.2rem;
       }
 
