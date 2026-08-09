@@ -63,7 +63,7 @@
 
 .footer__brand-name {
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: var(--fw-semibold);
   margin-bottom: 1.6rem;
   margin-top: 0;
 }
@@ -80,7 +80,7 @@
 
 .footer__newsletter-heading {
   font-size: 1.4rem;
-  font-weight: bold;
+  font-weight: var(--fw-semibold);
   margin-bottom: 1rem;
   margin-top: 0;
 }
@@ -116,7 +116,7 @@
 /* Menu column styles */
 .footer__menu-heading {
   font-size: 1.9rem;
-  font-weight: bold;
+  font-weight: var(--fw-semibold);
   margin-bottom: 1.6rem;
   margin-top: 0;
   color: var(--color-neutral-3);
@@ -980,7 +980,7 @@ footer .field__input:focus {
 }
 
 .footer-top_section-content h2 {
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   font-size: var(--section-heading-h1);
   line-height: var(--section-heading-h1-line);
   margin-bottom: 20px;

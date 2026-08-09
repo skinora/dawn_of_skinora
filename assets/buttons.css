@@ -33,7 +33,7 @@
   --btn-radius-pill: 999px;
 
   /* ---------- Type ---------- */
-  --btn-font: 'sofia-pro', sofia-pro-fallback, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --btn-font: var(--ff-sans);
   --btn-weight: 600;
   --btn-tracking: 0.04em;
   --btn-transform: uppercase;

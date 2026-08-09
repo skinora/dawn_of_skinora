@@ -133,7 +133,7 @@
   background: var(--sk-color-button-bg);
   color: var(--color-white);
   padding: 12px 20px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   cursor: pointer;
   box-shadow: 0 10px 22px var(--sk-color-button-shadow);
   transition: background 0.15s ease, transform 0.05s ease, box-shadow 0.15s ease;
