@@ -15,17 +15,17 @@
 
 :root {
   /* ---------- Brand ink ---------- */
-  --btn-primary-bg: #30273e;
+  --btn-primary-bg: var(--ink-900);
   --btn-primary-bg-hover: #1f1830;
   --btn-primary-bg-active: #15101f;
   --btn-primary-fg: #ffffff;
 
   --btn-secondary-bg: #ffffff;
-  --btn-secondary-fg: #30273e;
-  --btn-secondary-border: #30273e;
+  --btn-secondary-fg: var(--ink-900);
+  --btn-secondary-border: var(--ink-900);
   --btn-secondary-bg-hover: #f4f1ec;
 
-  --btn-ghost-fg: #30273e;
+  --btn-ghost-fg: var(--ink-900);
   --btn-ghost-fg-hover: #1f1830;
 
   /* ---------- Geometry ---------- */

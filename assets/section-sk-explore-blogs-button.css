@@ -6,7 +6,7 @@
 .sk-explore-blogs-button__heading {
   text-align: center;
   margin: 0 0 24px;
-  color: var(--color-brand, #30273e);
+  color: var(--color-brand, var(--ink-900));
 }
 
 .sk-explore-blogs-button__wrapper {

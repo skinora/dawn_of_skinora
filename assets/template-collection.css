@@ -61,7 +61,7 @@
   font-size: var(--sk-font-size-medium);
   font-weight: 600;
   line-height: 1.25;
-  color: #30273E;                  /* Skinora dark iris */
+  color: var(--ink-900);                  /* Skinora dark iris */
   margin-top: 12px;
 }
 

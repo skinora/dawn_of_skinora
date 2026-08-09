@@ -1134,7 +1134,7 @@ deferred-media {
 .header__heading-logo-wrapper svg path,
 .header__heading-logo-wrapper svg polygon,
 .header__heading-logo-wrapper svg circle {
-  fill: var(--color-brand, #30273e);
+  fill: var(--color-brand, var(--ink-900));
 }
 
 /* Desktop: give the logo wrapper the exact theme-controlled width so
