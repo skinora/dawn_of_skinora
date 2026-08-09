@@ -820,9 +820,11 @@ html {
   min-width: 23rem;
 }
 
+/* `color: unset` er fjernet: den noeytraliserte lenkefargene i
+   typography.css:339/343 for hele siden. text-decoration blir staaende —
+   typography.css setter den ikke, saa uten den faar siden understreker overalt. */
 a {
   text-decoration: none;
-  color: unset;
 }
 
 .d-none {
