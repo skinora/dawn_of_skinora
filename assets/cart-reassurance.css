@@ -33,6 +33,15 @@
   line-height: 1;
 }
 
+/* Stjernene er teksttegn (★★★★★ fra sk-cart-reassurance.liquid), ikke SVG.
+   Regelen under dimensjonerte kun svg-barn, saa glyfene arvet en tilfeldig
+   stoerrelse. font-size paa selve elementet er det som faktisk virker.
+   svg-regelen staar igjen i tilfelle ikoner tas i bruk senere. */
+.cart-reassure__stars {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+}
+
 .cart-reassure__stars svg {
   display: block;
   width: 14px;
@@ -40,8 +49,8 @@
 }
 
 .cart-reassure__rating {
-  font-weight: 600;
-  font-size: 1.4rem;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-xs); /* var 1.4rem — rem mot 10px rot */
 }
 
 /* Alle sitatene side ved side (tre kolonner) */

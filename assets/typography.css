@@ -59,15 +59,18 @@
   --fs-price: clamp(32px, 2.4vw + 22px, 40px);
 
   /* ---------- LINE HEIGHT ---------- */
+  --lh-none: 1; /* tall, ikoner, enkeltlinjede etiketter — 56 bruk i temaet */
   --lh-tight: 1.1; /* display */
   --lh-snug: 1.25; /* H2, H3 */
+  --lh-relaxed: 1.4; /* pills, knapper, korte flerlinjede etiketter — 35 bruk */
   --lh-normal: 1.55; /* body */
   --lh-loose: 1.7; /* small captions w/ breathing room */
 
-  /* ---------- TRACKING (em-based, only three values) ---------- */
+  /* ---------- TRACKING (em-based) ---------- */
   --tracking-tight: -0.01em; /* display */
   --tracking-normal: 0;
   --tracking-wide: 0.06em; /* eyebrow, button labels */
+  --tracking-wider: 0.12em; /* sperret versal i sma stoerrelser */
 
   /* ---------- VERTICAL RHYTHM ---------- */
   --space-1: 4px;
@@ -87,8 +90,15 @@
 
   /* ---------- READABILITY MAX-WIDTHS ---------- */
   --measure-narrow: 38ch;
+  --measure-intro: 56ch; /* ingress og seksjonsinnledning — laa mellom narrow og body */
   --measure-body: 62ch;
   --measure-wide: 72ch;
+
+  /* ---------- HAIRLINE ----------
+     Laa tidligere kun i .sk-lp og ble derfor aldri konsumert av noe:
+     0 bruk i hele repoet, mens fire lokale varianter levde i seksjonsfiler.
+     Flyttet hit saa den faktisk kan naas. */
+  --hairline: color-mix(in srgb, var(--ink-700) 12%, transparent);
 
   /* ---------- LP CONTAINER SYSTEM ----------
      Three standard widths every LP section snaps to, plus one
@@ -161,7 +171,7 @@ p:last-child {
   --sk-brand: var(--ink-900);
   --sk-text: var(--ink-700);
   --sk-muted: var(--ink-500);
-  --sk-hairline: color-mix(in srgb, var(--ink-700) 12%, transparent);
+  --sk-hairline: var(--hairline);
   --sk-surface: var(--paper-0);
   --sk-surface-soft: var(--paper-50);
 
