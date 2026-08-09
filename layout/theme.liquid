@@ -573,10 +573,19 @@
                   this.media = 'all';
                 };
               }
-              /* Marketing scripts → delay until interaction / timeout */
+              /* Marketing scripts → delay until interaction / timeout.
+                 `type = 'text/plain'` hindrer KJOERING, men ikke nedlastingen:
+                 MutationObserver fyrer etter innsetting, saa nettleseren har
+                 alt startet henting. Resultatet var at fbevents.js ble hentet
+                 to ganger a 104 kB — én gang uten aa kjoere, og én gang etter
+                 re-injiseringen. Samme gjaldt Klaviyo, Okendo og Bundler.
+                 Aa ta noden ut av DOM-en i tillegg lar nettleseren avbryte
+                 den paagaaende hentingen. src er allerede lagret i `saved`,
+                 saa skriptet kjoerer som foer — bare én gang. */
               if (n.tagName === 'SCRIPT' && n.src && delayJS.test(n.src)) {
                 saved.push(n.src);
                 n.type = 'text/plain';
+                if (n.parentNode) n.parentNode.removeChild(n);
               }
             }
           }
