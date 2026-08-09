@@ -852,7 +852,8 @@
             :root {
               --font-body-family: 'sofia-pro', 'sofia-pro-fallback', {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
               --font-body-style: normal;
-              --font-body-weight: 300;
+              {%- comment -%} 300 er forbudt i CLAUDE.md, og ingen 300-face finnes uansett. {%- endcomment -%}
+              --font-body-weight: 400;
               --font-body-weight-bold: 600;
 
               {%- comment -%}

@@ -1578,15 +1578,15 @@ html {
   overflow-x: hidden; /* Prevent horizontal scroll — on html so body stays the natural flow container and position:fixed works */
 }
 
-body {
-  font-family: var(--font-body-family);
-  font-style: var(--font-body-style);
-  font-weight: var(--font-body-weight);
-  font-size: var(--sk-font-size-base);
-  line-height: var(--sk-line-height-base);
-  letter-spacing: 0.01em;
-  color: rgb(var(--sk-color-body-text));
-}
+/* body-blokken er fjernet med vilje.
+   Den satte font-family, -style, -weight, -size, line-height, letter-spacing
+   og color — altsa hver eneste egenskap typography.css setter pa body.
+   base.css lastes ETTER typography.css (theme.liquid:1036-1037), og ved lik
+   spesifisitet (body mot body) vinner den som kommer sist. Resultatet var at
+   assets/typography.css, som CLAUDE.md utpeker som eneste kilde, var doed kode
+   for all global tekst: siden rendret vekt 300, #333333 og 21,85px i stedet for
+   400, --ink-700 og --fs-md.
+   Skal global broedtekst endres, skjer det i typography.css. Ikke her. */
 
 button,
 input,
