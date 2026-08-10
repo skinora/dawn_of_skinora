@@ -2,7 +2,7 @@
   /* === SECTION WRAPPER === */
   .sk-wavelengths {
     --sk-spacing-unit: 4px;
-    --sk-title-block-height: calc(var(--sk-spacing-unit) * 22);
+    /* --sk-title-block-height fjernet: den laaste tittelblokken til fast hoeyde og klippet lange titler med line-clamp. */
 
     /* Map section colors to existing theme tokens (no hex). */
     --sk-color-brand: rgb(var(--color-foreground));
@@ -52,167 +52,142 @@
     margin-top: calc(var(--sk-spacing-unit) * 4);
   }
 
-  /* === CARD WRAPPER === */
+  /* ============================================================
+     KORT — omskrevet. Det gamle designet var sentrert, avrundet, med
+     et flytende pill-merke over kortet og en shimmer-animasjon. Alt
+     tre er moenstre som daterer en side, og ingen av dem finnes ellers
+     i temaet.
+
+     Naa: venstrestilt redaksjonelt kort med skarpe hjoerner, som
+     resten av butikken. Boelgelengden — 630 nm, 830 nm, 1072 nm — er
+     loeftet ut av tittelen og satt i serif som kortets ankerpunkt.
+     Det er tallene posisjoneringen hviler paa; de laa begravd midt i
+     en sentrert h3 bak en |-separator.
+     ============================================================ */
   .sk-wavelength {
-    background: rgb(var(--color-background));
-    border-radius: calc(var(--sk-spacing-unit) * 2);
-    padding: calc(var(--sk-spacing-unit) * 8);
-    border: none;
-    text-align: center;
+    background: var(--paper-0);
+    border: 1px solid var(--hairline);
+    padding: 0 0 var(--card-padding);
+    text-align: left;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    box-shadow: none;
     position: relative;
-    overflow: visible;
-    margin-top: calc(var(--sk-spacing-unit) * 2);
+    height: 100%;
   }
 
-  .sk-wavelength--has-tag {
-    margin-top: calc(var(--sk-spacing-unit) * 6);
-  }
-
-  /* === IMAGE WRAPPER === */
+  /* === BILDE — fyller kortets bredde, skarpe hjoerner === */
   .sk-wavelength__visual {
     width: 100%;
-    max-width: calc(var(--sk-spacing-unit) * 138);
-    margin: 0 auto calc(var(--sk-spacing-unit) * 4);
-    aspect-ratio: 1 / 0.75;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin: 0 0 var(--space-5);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--paper-50);
   }
 
   .sk-wavelength__visual img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
-    border-radius: calc(var(--sk-spacing-unit) * 2) !important;
   }
 
-  .sk-tag {
-    position: absolute;
-    top: calc(var(--sk-spacing-unit) * -4);
-    left: 50%;
-    transform: translateX(-50%);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1.2px;
-    padding: calc(var(--sk-spacing-unit) * 2) calc(var(--sk-spacing-unit) * 5);
-    color: var(--sk-color-tag-text);
-    background: var(--sk-color-brand);
-    border-radius: 999px;
-    text-transform: uppercase;
-    white-space: nowrap;
-    overflow: hidden;
-    isolation: isolate;
+  /* === TOPPRAD: eyebrow til venstre, merke til hoeyre ===
+     Merket laa foer som en fylt pille som svevde over kortkanten og
+     blinket. Naa en rolig markoer paa linje med eyebrow-en. */
+  .sk-wavelength__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-inline: var(--card-padding);
   }
 
-  .sk-tag::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      120deg,
-      transparent 0%,
-      rgba(var(--color-background), 0.7) 45%,
-      transparent 90%
-    );
-    transform: translateX(-150%);
-    pointer-events: none;
-    z-index: -1;
-    opacity: 0;
-  }
-
-  .sk-tag.sk-tag--shimmer::after {
-    animation: sk-tag-shimmer 1.4s ease-out forwards;
-    opacity: 1;
-  }
-
-  @keyframes sk-tag-shimmer {
-    0% {
-      transform: translateX(-150%);
-      opacity: 0;
-    }
-    20% {
-      opacity: 1;
-    }
-    60% {
-      transform: translateX(150%);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(150%);
-      opacity: 0;
-    }
+  .sk-wavelength__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-inline: var(--card-padding);
+    margin-bottom: var(--space-3);
   }
 
   .sk-wavelength__eyebrow {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--ink-400);
     margin: 0;
-    /* Farge/vekt arves fra den delte .sk-copy-eyebrow (0.85, --sk-color-body-text)
-       slik at kort-eyebrow-ene er konsistente med seksjons-eyebrow-en. */
   }
 
-  .sk-wavelength__header {
-    min-height: var(--sk-title-block-height);
-    max-height: var(--sk-title-block-height);
+  .sk-tag {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent-clay);
+    white-space: nowrap;
+  }
+
+  /* === TITTEL: boelgelengde + loefte === */
+  .sk-wavelength__title {
+    margin: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: calc(var(--sk-spacing-unit) * 2);
-    margin-bottom: calc(var(--sk-spacing-unit) * 6);
-    overflow: hidden;
+    gap: var(--space-2);
   }
 
-  /* === TITLES === */
-  .sk-wavelength__title {
-    font-family: var(--font-body-family);
-    font-size: 22px;
-    font-weight: 600;
-    margin: 0;
-    line-height: 1.3;
-    color: var(--sk-color-brand);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  .sk-wavelength__nm {
+    font-family: var(--ff-serif);
+    font-size: var(--fs-3xl);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--ink-900);
   }
 
-  /* === BENEFITS LIST === */
+  .sk-wavelength__claim {
+    font-family: var(--ff-sans);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-snug);
+    color: var(--ink-700);
+  }
+
+  /* === FORDELER === */
   .sk-wavelength__benefits {
     list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: left;
-    width: 100%;
-    max-width: calc(var(--sk-spacing-unit) * 125);
+    padding: var(--space-5) var(--card-padding) 0;
+    margin: var(--space-5) 0 0;
+    border-top: 1px solid var(--hairline);
   }
 
   .sk-wavelength__benefits li {
-    font-family: var(--font-body-family);
-    font-size: 16px;
-    margin-bottom: calc(var(--sk-spacing-unit) * 2);
-    display: grid;
-    grid-template-columns: calc(var(--sk-spacing-unit) * 3) 1fr;
-    column-gap: calc(var(--sk-spacing-unit) * 2);
-    align-items: center;
-    line-height: 1.6;
-    color: rgba(var(--sk-color-body-text), .9);
+    font-family: var(--ff-sans);
+    font-size: var(--fs-sm);
     font-weight: var(--fw-regular);
+    line-height: var(--lh-normal);
+    color: var(--ink-500);
+    margin-bottom: var(--space-3);
+    padding-left: var(--space-4);
+    position: relative;
   }
 
+  .sk-wavelength__benefits li:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Kort strek i stedet for prikk — samme spraak som hairline-skillene
+     ellers i temaet, og mindre paagaaende enn en fylt sirkel. */
   .sk-wavelength__benefits li::before {
     content: '';
-    width: calc(var(--sk-spacing-unit) * 2);
-    height: calc(var(--sk-spacing-unit) * 2);
-    border-radius: 50%;
-    background: var(--sk-color-brand);
-    margin-top: 0;
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 8px;
+    height: 1px;
+    background: var(--ink-300);
   }
 
   /* Scroll-snap track (mobile carousel). */
@@ -360,9 +335,6 @@
       margin-top: calc(var(--sk-spacing-unit) * -2);
     }
 
-    .sk-wavelength--has-tag {
-      margin-top: calc(var(--sk-spacing-unit) * 1);
-    }
 
     .sk-wavelengths__arrow {
       width: auto;
@@ -377,17 +349,16 @@
       margin: 0 0 calc(var(--sk-spacing-unit) * 4);
     }
 
-    .sk-wavelength__title {
-      font-size: 20px;
+    /* Boelgelengden trappes ned et hakk paa mobil, men beholder serif og
+       ink-900 fra basisregelen. */
+    .sk-wavelength__nm {
+      font-size: var(--fs-2xl);
     }
 
-    .sk-wavelength__benefits li {
-      font-family: var(--font-body-family);
-      font-size: 16px;
-      line-height: 1.6;
-      color: rgba(var(--sk-color-body-text), .9);
-      font-weight: var(--fw-regular);
-    }
+    /* Den gamle mobilregelen for fordelslisten satte font-family, stoerrelse
+       og farge paa nytt og overstyrte det nye kortdesignet — listen rendret
+       fortsatt i rgba(sk-color-body-text, .9) i stedet for --ink-500.
+       Den er fjernet; basisregelen gjelder paa alle bredder. */
   }
 </style>
 
@@ -450,12 +421,7 @@
             assign card_highlight_tag = card.highlight_tag_text.value | default: card.highlight_tag_text
             assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
           %}
-          <div class="sk-wavelength{% if card_show_highlight %} sk-wavelength--has-tag{% endif %}">
-            {% if card_show_highlight %}
-              <span class="sk-tag">
-                {{ card_highlight_tag | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
-              </span>
-            {% endif %}
+          <div class="sk-wavelength">
 
             {% if card_image %}
               <div class="sk-wavelength__visual">
@@ -470,22 +436,18 @@
             {% endif %}
 
             {% if card_eyebrow != blank or card_primary_title != blank or card_secondary_title != blank %}
+              <div class="sk-wavelength__meta">
+                {% if card_eyebrow != blank %}<p class="sk-wavelength__eyebrow">{{ card_eyebrow }}</p>{% endif %}
+                {% if card_show_highlight %}<span class="sk-tag">{{ card_highlight_tag | default: "AVANSERT TEKNOLOGI" }}</span>{% endif %}
+              </div>
+
               <div class="sk-wavelength__header">
-                {% if card_eyebrow != blank %}
-                  <p class="sk-wavelength__eyebrow sk-copy-eyebrow">{{ card_eyebrow }}</p>
-                {% endif %}
+                
 
                 {% if card_primary_title != blank or card_secondary_title != blank %}
                   <h3 class="sk-wavelength__title">
-                    {% if card_primary_title != blank %}
-                      {{ card_primary_title }}
-                    {% endif %}
-                    {% if card_primary_title != blank and card_secondary_title != blank %}
-                      |
-                    {% endif %}
-                    {% if card_secondary_title != blank %}
-                      <em>{{ card_secondary_title }}</em>
-                    {% endif %}
+                    {% if card_primary_title != blank %}<span class="sk-wavelength__nm">{{ card_primary_title }}</span>{% endif %}
+                    {% if card_secondary_title != blank %}<span class="sk-wavelength__claim">{{ card_secondary_title }}</span>{% endif %}
                   </h3>
                 {% endif %}
               </div>
@@ -528,12 +490,7 @@
               assign card_show_highlight = card.show_highlight_text.value | default: card.show_highlight_text
             %}
             <div class="sk-llw-slide">
-              <div class="sk-wavelength{% if card_show_highlight %} sk-wavelength--has-tag{% endif %}">
-                {% if card_show_highlight %}
-                  <span class="sk-tag">
-                    {{ card_highlight_tag | default: 'NY DYPTVIRKENDE BØLGELENGDE' }}
-                  </span>
-                {% endif %}
+              <div class="sk-wavelength">
 
                 {% if card_image %}
                   <div class="sk-wavelength__visual">
@@ -549,23 +506,19 @@
                 {% endif %}
 
                 {% if card_eyebrow != blank or card_primary_title != blank or card_secondary_title != blank %}
-                  <div class="sk-wavelength__header">
-                    {% if card_eyebrow != blank %}
-                      <p class="sk-wavelength__eyebrow sk-copy-eyebrow">{{ card_eyebrow }}</p>
-                    {% endif %}
+                  <div class="sk-wavelength__meta">
+                {% if card_eyebrow != blank %}<p class="sk-wavelength__eyebrow">{{ card_eyebrow }}</p>{% endif %}
+                {% if card_show_highlight %}<span class="sk-tag">{{ card_highlight_tag | default: "AVANSERT TEKNOLOGI" }}</span>{% endif %}
+              </div>
+
+              <div class="sk-wavelength__header">
+                    
 
                     {% if card_primary_title != blank or card_secondary_title != blank %}
                       <h3 class="sk-wavelength__title">
-                        {% if card_primary_title != blank %}
-                          {{ card_primary_title }}
-                        {% endif %}
-                        {% if card_primary_title != blank and card_secondary_title != blank %}
-                          |
-                        {% endif %}
-                        {% if card_secondary_title != blank %}
-                          <em>{{ card_secondary_title }}</em>
-                        {% endif %}
-                      </h3>
+                    {% if card_primary_title != blank %}<span class="sk-wavelength__nm">{{ card_primary_title }}</span>{% endif %}
+                    {% if card_secondary_title != blank %}<span class="sk-wavelength__claim">{{ card_secondary_title }}</span>{% endif %}
+                  </h3>
                     {% endif %}
                   </div>
                 {% endif %}
@@ -623,59 +576,14 @@
 </section>
 
 <script>
-  var skShimmerObserver = null;
-
-  function skTriggerShimmer(tag) {
-    if (!tag) return;
-    tag.classList.remove('sk-tag--shimmer');
-    // Defer reflow to next frame to avoid synchronous forced reflow
-    requestAnimationFrame(function () {
-      tag.classList.add('sk-tag--shimmer');
-    });
-    window.setTimeout(function () {
-      tag.classList.remove('sk-tag--shimmer');
-    }, 1600);
-  }
-
-  function skTriggerAllShimmers(scope) {
-    var root = scope || document;
-    var selector = root === document ? '.sk-wavelengths .sk-tag' : '.sk-tag';
-    root.querySelectorAll(selector).forEach(skTriggerShimmer);
-  }
-
-  function skInitShimmerObserver(scopeEl) {
-    var root = scopeEl || document;
-
-    if (!('IntersectionObserver' in window)) {
-      skTriggerAllShimmers(root);
-      return null;
-    }
-
-    if (skShimmerObserver) {
-      skShimmerObserver.disconnect();
-      skShimmerObserver = null;
-    }
-
-    skShimmerObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.querySelectorAll('.sk-tag').forEach(skTriggerShimmer);
-          }
-        });
-      },
-      {
-        threshold: [0, 0.45],
-        rootMargin: '0px 0px -10% 0px',
-      }
-    );
-
-    root.querySelectorAll('.sk-wavelength').forEach(function (card) {
-      skShimmerObserver.observe(card);
-    });
-
-    return skShimmerObserver;
-  }
+  /* Shimmer-animasjonen er fjernet sammen med kortdesignet. Den svepte en
+     gradient over merket hvert gang kortet kom i viewport - dekorativ
+     bevegelse uten informasjonsverdi, og en IntersectionObserver per kort
+     i kjoeretid. Funksjonene beholdes som tomme saa kallstedene under ikke
+     brekker; de kan fjernes naar noen gaar gjennom JS-en i seksjonen. */
+  function skTriggerShimmer() {}
+  function skTriggerAllShimmers() {}
+  function skInitShimmerObserver() { return null; }
 
   document.addEventListener('DOMContentLoaded', function () {
     var sectionEl = document.getElementById('sk-wavelengths-{{ section.id }}');
