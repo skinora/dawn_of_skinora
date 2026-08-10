@@ -1966,7 +1966,7 @@
         const slideCount = thumbnails.length || swiperElement.querySelectorAll('.swiper-slide').length;
         const shouldLoop = slideCount > 1;
 
-        /* Peek paa mobil: 8 % av neste bilde stikker inn fra hoeyre kant.
+        /* Peek paa mobil: en kant av neste bilde stikker inn fra hoeyre.
            Med slidesPerView: 1 var neste bilde helt usynlig, og da finnes
            ingen antydning om at galleriet kan dras — brukeren ser ett
            produktbilde og tror det er hele galleriet. Kanten leses umiddelbart
@@ -1975,12 +1975,17 @@
            som studerer bildet, og bryter WCAG 2.2.2 uten pauseknapp.
 
            Kun under 769px — samme grense som CSS-en bruker for mobil.
-           Krever minst tre bilder: loop med brøkdels slidesPerView blir
-           ustabil paa to. */
+           Krever minst tre bilder: loop med broekdels slidesPerView blir
+           ustabil paa to.
+
+           Foerste forsoek var 1.08 med 8 px mellomrom. Det ga 21 px, altsaa
+           13 px av neste bilde etter mellomrommet — maalt, og praktisk talt
+           usynlig paa telefon. 1.18 med 12 px gir ~47 px synlig kant, nok til
+           aa leses som et bilde til, mens hovedbildet bare krymper 8 %. */
         const usePeek = slideCount > 2;
         const swiperOptions = {
-          slidesPerView: usePeek ? 1.08 : 1,
-          spaceBetween: usePeek ? 8 : 0,
+          slidesPerView: usePeek ? 1.18 : 1,
+          spaceBetween: usePeek ? 12 : 0,
           breakpoints: { 769: { slidesPerView: 1, spaceBetween: 0 } },
           loop: shouldLoop,
           allowTouchMove: true,
