@@ -540,7 +540,8 @@
                     <img
                       src="{{ card_image | image_url: width: 800 }}"
                       alt="{{ card_title | default: 'Skinora LED lys' | escape }}"
-                      loading="lazy"
+                      {%- comment -%} Se sk-before-after.liquid: peek-kanten er tom uten dette. {%- endcomment -%}
+                      {% if forloop.index <= 2 %}loading="eager"{% else %}loading="lazy"{% endif %}
                       width="{{ card_image.width | default: 800 }}"
                       height="{{ card_image.height | default: 600 }}"
                     >

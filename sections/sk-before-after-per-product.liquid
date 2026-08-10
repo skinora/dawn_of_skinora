@@ -276,7 +276,8 @@
                     alt="{{ display_alt | escape }}"
                     width="{{ img_w }}"
                     height="{{ img_h }}"
-                    loading="lazy"
+                    {%- comment -%} Se sk-before-after.liquid: peek-kanten er tom uten dette. {%- endcomment -%}
+                    {% if forloop.index <= 2 %}loading="eager"{% else %}loading="lazy"{% endif %}
                     decoding="async"
                   >
                 {% endif %}

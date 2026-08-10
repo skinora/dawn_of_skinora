@@ -247,7 +247,13 @@
                   alt="{{ block.settings.before_image.alt | escape }}"
                   width="{{ block.settings.before_image.width | default: 500 }}"
                   height="{{ block.settings.before_image.height | default: 360 }}"
-                  loading="lazy"
+                  {%- comment -%}
+                    De to foerste lastes med én gang. Kortet ved siden av
+                    stikker 32 px inn i sporet (flex 85 %), men med lazy ble
+                    bildet aldri hentet — maalt naturalWidth 0 — saa kanten
+                    var tom og karusellen saa ut som ett enkelt kort.
+                  {%- endcomment -%}
+                  {% if forloop.index <= 2 %}loading="eager"{% else %}loading="lazy"{% endif %}
                   decoding="async"
                 >
                 <span class="sk-ba-pill sk-ba-pill--before">FØR</span>
