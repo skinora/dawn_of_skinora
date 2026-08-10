@@ -67,7 +67,7 @@
   .sk-wavelength {
     background: var(--paper-0);
     border: 1px solid var(--hairline);
-    padding: 0 0 var(--card-padding);
+    padding: 0 0 var(--space-4);
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -78,7 +78,7 @@
   /* === BILDE — fyller kortets bredde, skarpe hjoerner === */
   .sk-wavelength__visual {
     width: 100%;
-    margin: 0 0 var(--space-5);
+    margin: 0 0 var(--space-4);
     aspect-ratio: 4 / 3;
     overflow: hidden;
     background: var(--paper-50);
@@ -98,25 +98,31 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    padding-inline: var(--card-padding);
+    padding-inline: var(--space-4);
   }
 
+  /* flex-wrap: naar eyebrow og merke ikke faar plass paa samme linje,
+     droppes merket ned i stedet for at eyebrow-en brekker midt i ordet.
+     "LED-TEKNOLOGI" + "AVANSERT TEKNOLOGI" er ~300 px med sperret versal,
+     som er mer enn kortets innhold har paa mobil. */
   .sk-wavelength__meta {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: var(--space-3);
-    padding-inline: var(--card-padding);
-    margin-bottom: var(--space-3);
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+    padding-inline: var(--space-4);
+    margin-bottom: var(--space-2);
   }
 
   .sk-wavelength__eyebrow {
     font-family: var(--ff-sans);
     font-size: var(--fs-xs);
     font-weight: var(--fw-semibold);
-    letter-spacing: var(--tracking-wider);
+    letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
     color: var(--ink-400);
+    white-space: nowrap;
     margin: 0;
   }
 
@@ -124,7 +130,7 @@
     font-family: var(--ff-sans);
     font-size: var(--fs-xs);
     font-weight: var(--fw-semibold);
-    letter-spacing: var(--tracking-wider);
+    letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
     color: var(--accent-clay);
     white-space: nowrap;
@@ -135,12 +141,12 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--space-1);
   }
 
   .sk-wavelength__nm {
     font-family: var(--ff-serif);
-    font-size: var(--fs-3xl);
+    font-size: var(--fs-xl);
     font-weight: var(--fw-regular);
     line-height: var(--lh-tight);
     letter-spacing: var(--tracking-tight);
@@ -149,17 +155,20 @@
 
   .sk-wavelength__claim {
     font-family: var(--ff-sans);
-    font-size: var(--fs-md);
+    font-size: var(--fs-sm);
     font-weight: var(--fw-regular);
     line-height: var(--lh-snug);
     color: var(--ink-700);
   }
 
-  /* === FORDELER === */
+  /* === FORDELER ===
+     Ingen markoer foran punktene. Linjeavstanden skiller dem godt nok,
+     og en strek eller prikk foran hver linje tilfoerer bare stoey naar
+     punktene uansett staar under hverandre. */
   .sk-wavelength__benefits {
     list-style: none;
-    padding: var(--space-5) var(--card-padding) 0;
-    margin: var(--space-5) 0 0;
+    padding: var(--space-4) var(--space-4) 0;
+    margin: var(--space-4) 0 0;
     border-top: 1px solid var(--hairline);
   }
 
@@ -167,27 +176,14 @@
     font-family: var(--ff-sans);
     font-size: var(--fs-sm);
     font-weight: var(--fw-regular);
-    line-height: var(--lh-normal);
+    line-height: var(--lh-snug);
     color: var(--ink-500);
-    margin-bottom: var(--space-3);
-    padding-left: var(--space-4);
-    position: relative;
+    margin-bottom: var(--space-2);
+    padding: 0;
   }
 
   .sk-wavelength__benefits li:last-child {
     margin-bottom: 0;
-  }
-
-  /* Kort strek i stedet for prikk — samme spraak som hairline-skillene
-     ellers i temaet, og mindre paagaaende enn en fylt sirkel. */
-  .sk-wavelength__benefits li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.7em;
-    width: 8px;
-    height: 1px;
-    background: var(--ink-300);
   }
 
   /* Scroll-snap track (mobile carousel). */
@@ -352,7 +348,7 @@
     /* Boelgelengden trappes ned et hakk paa mobil, men beholder serif og
        ink-900 fra basisregelen. */
     .sk-wavelength__nm {
-      font-size: var(--fs-2xl);
+      font-size: var(--fs-lg);
     }
 
     /* Den gamle mobilregelen for fordelslisten satte font-family, stoerrelse
