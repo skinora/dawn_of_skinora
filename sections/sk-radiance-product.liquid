@@ -1539,8 +1539,18 @@
                         alt="{{ image.alt | default: product.title | append: ' LED light therapy device' }}"
                         width="900"
                         height="900"
+                        {%- comment -%}
+                          Bilde 2 lastes ogsaa med én gang. Peek-kanten paa mobil
+                          viser 47 px av neste slide, men med loading="lazy" ble
+                          bildet aldri hentet — maalt naturalWidth 0 og tom
+                          currentSrc — saa kanten var en tom hvit flate.
+                          Geometrien var riktig; det manglet bare et bilde i den.
+                          fetchpriority="low" saa det ikke konkurrerer med LCP.
+                        {%- endcomment -%}
                         {% if forloop.first %}
                           loading="eager" fetchpriority="high"
+                        {% elsif forloop.index == 2 %}
+                          loading="eager" fetchpriority="low"
                         {% else %}
                           loading="lazy"
                         {% endif %}
