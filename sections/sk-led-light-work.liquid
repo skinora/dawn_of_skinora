@@ -321,6 +321,13 @@
 
   /* === MOBILE SLIDER === */
   @media (max-width: 750px) {
+    /* Kanten av neste kort synlig. Var flex: 0 0 100%, altsaa noeyaktig
+       sporbredde — neste kort laa helt utenfor og ingenting antydet at
+       karusellen kunne dras. Kun mobil; over 750px staar den som foer. */
+    .sk-llw-slide {
+      flex: 0 0 85%;
+    }
+
     .sk-wavelengths__grid {
       display: none;
     }

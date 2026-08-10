@@ -131,9 +131,14 @@
     display: none;
   }
 
-  /* 1 slide on mobile */
+  /* 1 slide paa mobil, med kanten av neste synlig.
+     Var flex: 0 0 100% — da laa neste kort noeyaktig utenfor sporet, og
+     ingenting antydet at karusellen kunne dras. 85 % lar ~36 px av neste
+     kort stikke inn etter gapet paa 20 px. Kortene har egen bakgrunn, saa
+     kanten leses som et kort til.
+     Desktop er urOert: 700px og 1024px overstyrer under. */
   .sk-ba-slide {
-    flex: 0 0 100%;
+    flex: 0 0 85%;
   }
 
   @media (min-width: 700px) {
