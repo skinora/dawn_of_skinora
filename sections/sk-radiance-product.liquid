@@ -72,20 +72,14 @@
       height: 100%;
     }
 
-    /* Slide-bredden eies av Swiper, ikke av CSS. `width: 100%` her laaste
-       hver slide til full containerbredde og gjorde slidesPerView: 1.08
-       virkningsloes — peek-kanten ble 0 px. */
+    /* Full containerbredde. Dette laaser samtidig slidene mot broekdels
+       slidesPerView, som er med vilje: se kommentaren ved swiperOptions
+       om hvorfor peek ikke skal brukes i dette galleriet. Regelen er ogsaa
+       sikringen hvis Swiper ikke initialiserer — uten den faar slidene
+       ingen bredde og galleriet kollapser. */
     .sk-hero-media-swiper .swiper-slide {
-      height: 100%;
-    }
-
-    /* Sikring: initialiserer ikke Swiper (JS feiler, blokkeres, eller kommer
-       for sent), setter den ingen bredde paa slidene og galleriet kollapser.
-       Foer peek-endringen tok `width: 100%` seg av det. Swiper legger til
-       .swiper-initialized naar den er oppe, saa denne gjelder kun i
-       mellomtiden eller hvis den aldri kommer. */
-    .sk-hero-media-swiper .swiper:not(.swiper-initialized) .swiper-slide {
       width: 100%;
+      height: 100%;
     }
 
     .sk-hero-media-main img,
@@ -1976,27 +1970,21 @@
         const slideCount = thumbnails.length || swiperElement.querySelectorAll('.swiper-slide').length;
         const shouldLoop = slideCount > 1;
 
-        /* Peek paa mobil: en kant av neste bilde stikker inn fra hoeyre.
-           Med slidesPerView: 1 var neste bilde helt usynlig, og da finnes
-           ingen antydning om at galleriet kan dras — brukeren ser ett
-           produktbilde og tror det er hele galleriet. Kanten leses umiddelbart
-           som "det er mer her", uten at noe beveger seg av seg selv.
-           Autoplay ble vurdert og forkastet: det tar kontrollen fra en bruker
-           som studerer bildet, og bryter WCAG 2.2.2 uten pauseknapp.
+        /* slidesPerView: 1 — IKKE endre til en broekdel her.
+           Et forsoek paa peek-kant (1.08, senere 1.18) ble rullet tilbake:
+           hero-bildene har tekst bakt inn i selve filen ("UKE 4-6",
+           "JEVNERE HUDTONE" osv.), og siden slidene bruker
+           object-fit: cover, beskjaerer en smalere slide teksten bort.
+           Paa 375px krympet sliden fra 375 til 316 px og kuttet ordene i
+           begge kanter.
 
-           Kun under 769px — samme grense som CSS-en bruker for mobil.
-           Krever minst tre bilder: loop med broekdels slidesPerView blir
-           ustabil paa to.
-
-           Foerste forsoek var 1.08 med 8 px mellomrom. Det ga 21 px, altsaa
-           13 px av neste bilde etter mellomrommet — maalt, og praktisk talt
-           usynlig paa telefon. 1.18 med 12 px gir ~47 px synlig kant, nok til
-           aa leses som et bilde til, mens hovedbildet bare krymper 8 %. */
-        const usePeek = slideCount > 2;
+           Peek er dessuten feil virkemiddel for dette galleriet: kantene av
+           produktbildene er samme flate krem (maalt rgb(244,236,228) paa
+           begge sider), saa selv en bred kant hadde ingenting aa vise.
+           Karusellene som TAALER peek er sk-before-after og
+           sk-led-light-work — der er kortene innholdsrike helt ut i kanten. */
         const swiperOptions = {
-          slidesPerView: usePeek ? 1.18 : 1,
-          spaceBetween: usePeek ? 12 : 0,
-          breakpoints: { 769: { slidesPerView: 1, spaceBetween: 0 } },
+          slidesPerView: 1,
           loop: shouldLoop,
           allowTouchMove: true,
           speed: 400,
