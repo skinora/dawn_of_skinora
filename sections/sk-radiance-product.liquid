@@ -79,6 +79,15 @@
       height: 100%;
     }
 
+    /* Sikring: initialiserer ikke Swiper (JS feiler, blokkeres, eller kommer
+       for sent), setter den ingen bredde paa slidene og galleriet kollapser.
+       Foer peek-endringen tok `width: 100%` seg av det. Swiper legger til
+       .swiper-initialized naar den er oppe, saa denne gjelder kun i
+       mellomtiden eller hvis den aldri kommer. */
+    .sk-hero-media-swiper .swiper:not(.swiper-initialized) .swiper-slide {
+      width: 100%;
+    }
+
     .sk-hero-media-main img,
     .sk-hero-thumb img {
       width: 100%;
