@@ -1950,7 +1950,27 @@
 
         const slideCount = thumbnails.length || swiperElement.querySelectorAll('.swiper-slide').length;
         const shouldLoop = slideCount > 1;
-        const swiperOptions = { slidesPerView: 1, loop: shouldLoop, allowTouchMove: true, speed: 400 };
+
+        /* Peek paa mobil: 8 % av neste bilde stikker inn fra hoeyre kant.
+           Med slidesPerView: 1 var neste bilde helt usynlig, og da finnes
+           ingen antydning om at galleriet kan dras — brukeren ser ett
+           produktbilde og tror det er hele galleriet. Kanten leses umiddelbart
+           som "det er mer her", uten at noe beveger seg av seg selv.
+           Autoplay ble vurdert og forkastet: det tar kontrollen fra en bruker
+           som studerer bildet, og bryter WCAG 2.2.2 uten pauseknapp.
+
+           Kun under 769px — samme grense som CSS-en bruker for mobil.
+           Krever minst tre bilder: loop med brøkdels slidesPerView blir
+           ustabil paa to. */
+        const usePeek = slideCount > 2;
+        const swiperOptions = {
+          slidesPerView: usePeek ? 1.08 : 1,
+          spaceBetween: usePeek ? 8 : 0,
+          breakpoints: { 769: { slidesPerView: 1, spaceBetween: 0 } },
+          loop: shouldLoop,
+          allowTouchMove: true,
+          speed: 400,
+        };
         if (prevButton && nextButton) swiperOptions.navigation = { prevEl: prevButton, nextEl: nextButton };
 
         const heroSwiper = new Swiper(swiperElement, swiperOptions);
