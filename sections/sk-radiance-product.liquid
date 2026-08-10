@@ -67,9 +67,15 @@
       position: relative;
     }
 
-    .sk-hero-media-swiper .swiper,
-    .sk-hero-media-swiper .swiper-slide {
+    .sk-hero-media-swiper .swiper {
       width: 100%;
+      height: 100%;
+    }
+
+    /* Slide-bredden eies av Swiper, ikke av CSS. `width: 100%` her laaste
+       hver slide til full containerbredde og gjorde slidesPerView: 1.08
+       virkningsloes — peek-kanten ble 0 px. */
+    .sk-hero-media-swiper .swiper-slide {
       height: 100%;
     }
 
