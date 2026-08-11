@@ -1770,7 +1770,20 @@
             mister kraft av aa vaere permanent.
           {%- endcomment -%}
           {%- liquid
+            comment
+              Antallet hentes i tre trinn, mest presist foerst:
+              1) metafeltet custom.stock_left — settes per produkt, manuell kontroll
+              2) Shopifys eget lagertall — per produkt, alltid sant, null vedlikehold
+              3) seksjonsinnstillingen — SISTE utvei. product.sk-radiance.json er
+                 ÉN mal delt av alle produktene, saa denne gir samme tall paa alle.
+            endcomment
             assign stock_left = product.metafields.custom.stock_left.value | default: product.metafields.custom.stock_left
+
+            assign inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0
+            if stock_left == blank and inv_qty > 0
+              assign stock_left = inv_qty
+            endif
+
             if stock_left == blank
               assign stock_left = section.settings.stock_left
             endif
@@ -2792,7 +2805,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Vises rett under undertittelen i hero. Sett tallet per produkt i metafeltet custom.stock_left — feltet under gjelder alle produkter som bruker denne malen."
+      "content": "Vises rett under undertittelen i hero. Antallet hentes i tre trinn: 1) metafeltet custom.stock_left på produktet, 2) Shopifys eget lagertall hvis du fører lager, 3) feltet under. ADVARSEL: denne malen deles av alle produktene, så feltet under gir SAMME tall på alle. Bruk metafeltet når tallene skiller seg."
     },
     {
       "type": "checkbox",
