@@ -1779,19 +1779,9 @@
             endcomment
             assign stock_left = product.metafields.custom.stock_left.value | default: product.metafields.custom.stock_left
 
-            if stock_left == blank
-              assign current_variant = product.selected_or_first_available_variant
-              comment
-                inventory_quantity maa gjennom `default: 0` FOER sammenlikning.
-                Foeres ikke lager, er verdien nil, og `nil > 0` kaster en
-                Liquid-feil som avbryter hele denne blokken — da blir verken
-                stock_left eller show_stock satt, og baandet forsvinner uten
-                synlig feilmelding. Det skjedde.
-              endcomment
-              assign inv_qty = current_variant.inventory_quantity | default: 0
-              if current_variant.inventory_management == 'shopify' and inv_qty > 0
-                assign stock_left = inv_qty
-              endif
+            assign inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0
+            if stock_left == blank and inv_qty > 0
+              assign stock_left = inv_qty
             endif
 
             if stock_left == blank
