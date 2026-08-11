@@ -68,43 +68,57 @@
     }
 
     /* ── LAGERSTATUS ──
-       Bevisst en opplysning, ikke en plakat: ingen ramme, ingen bakgrunn,
-       ingen animasjon, ingen rødt. Rødt er feilfarge i paletten og leser
-       som panikk; --accent-gold er tokenet lav lagerbeholdning allerede
-       bruker ellers i temaet, og leser som "merk deg dette".
-       Tallet i semibold fordi presisjonen er det som gjoer linja
-       troverdig — "4" kan etterproeves, "faa igjen" kan ikke. */
+       Foerste utkast var en tynn linje i --accent-gold. Den forsvant:
+       gull paa hvitt gir 2,2:1 i kontrast, saa prikken var praktisk talt
+       usynlig, og hele linja leste som en fotnote.
+
+       Naa et fylt baand i --ink-900 over hele infokolonnen. Auberginé og
+       ikke roedt med vilje: et roedt baand leser som lavprisbutikk, mens
+       merkevarefargen leser som noe butikken selv har bestemt. Tallet er
+       satt stort i serif — samme grep som boelgelengdene i
+       sk-led-light-work: tallet ER budskapet, saa det faar baere flaten.
+       Skarpe hjoerner som resten av huset. Ingen animasjon. */
     .sk-stock {
       display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-      margin: var(--space-3) 0 0;
-      font-family: var(--ff-sans);
-      font-size: var(--fs-sm);
-      line-height: var(--lh-snug);
-      color: var(--ink-700);
-    }
-
-    .sk-stock__dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent-gold);
-      flex: 0 0 auto;
-      align-self: center;
+      align-items: center;
+      gap: var(--space-4);
+      margin: var(--space-5) 0 0;
+      padding: var(--space-4) var(--space-5);
+      background: var(--ink-900);
+      color: var(--paper-0);
     }
 
     .sk-stock__count {
-      font-weight: var(--fw-semibold);
+      font-family: var(--ff-serif);
+      font-size: var(--fs-4xl);
+      font-weight: var(--fw-regular);
+      line-height: 0.9;
+      letter-spacing: var(--tracking-tight);
+      flex: 0 0 auto;
     }
 
-    .sk-stock__sep {
-      color: var(--ink-300);
+    .sk-stock__body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      min-width: 0;
+    }
+
+    .sk-stock__label {
+      font-family: var(--ff-sans);
+      font-size: var(--fs-xs);
+      font-weight: var(--fw-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: color-mix(in srgb, var(--paper-0) 78%, transparent);
     }
 
     .sk-stock__restock {
-      color: var(--ink-500);
+      font-family: var(--ff-sans);
+      font-size: var(--fs-sm);
+      font-weight: var(--fw-regular);
+      line-height: var(--lh-snug);
+      color: var(--paper-0);
     }
 
     .sk-hero-media-swiper .swiper {
@@ -1691,14 +1705,20 @@
             endif
           -%}
           {%- if show_stock -%}
-            <p class="sk-stock" role="status">
-              <span class="sk-stock__dot" aria-hidden="true"></span>
-              <span class="sk-stock__count">{{ stock_left }} igjen</span>
-              {%- if section.settings.stock_restock != blank -%}
-                <span class="sk-stock__sep" aria-hidden="true">·</span>
-                <span class="sk-stock__restock">{{ section.settings.stock_restock }}</span>
-              {%- endif -%}
-            </p>
+            <div class="sk-stock" role="status">
+              <span class="sk-stock__count" aria-hidden="true">{{ stock_left }}</span>
+              <span class="sk-stock__body">
+                <span class="sk-stock__label">
+                  {{- section.settings.stock_label | default: 'igjen på lager' -}}
+                </span>
+                {%- if section.settings.stock_restock != blank -%}
+                  <span class="sk-stock__restock">{{ section.settings.stock_restock }}</span>
+                {%- endif -%}
+              </span>
+              <span class="visually-hidden">
+                {{- stock_left }} {{ section.settings.stock_label | default: 'igjen på lager' -}}
+              </span>
+            </div>
           {%- endif -%}
 
           <!-- REVIEWS -->
@@ -2698,9 +2718,15 @@
     },
     {
       "type": "text",
+      "id": "stock_label",
+      "label": "Tekst ved siden av tallet",
+      "default": "igjen på lager"
+    },
+    {
+      "type": "text",
       "id": "stock_restock",
       "label": "Neste levering",
-      "info": "F.eks. «neste levering i september». Tøm feltet for å vise kun antallet."
+      "info": "F.eks. «Neste levering slutten av september». Tøm feltet for å vise kun antallet."
     },
     {
       "type": "header",

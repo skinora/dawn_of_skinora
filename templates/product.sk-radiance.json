@@ -23,6 +23,11 @@
         "okendo_star_rating_HVN7ie"
       ],
       "settings": {
+        "stock_show": true,
+        "stock_left": 4,
+        "stock_threshold": 5,
+        "stock_label": "igjen på lager",
+        "stock_restock": "Neste levering slutten av september",
         "honesty_show": true,
         "honesty_heading": "Fastpris — 365 dager i året.",
         "honesty_body": "<p>Ingen rabattkupp. Ingen falske «før»-priser.</p>"
