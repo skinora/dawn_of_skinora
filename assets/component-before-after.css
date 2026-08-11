@@ -38,7 +38,15 @@
   position: absolute;
   inset: 0;
   cursor: ew-resize;
-  touch-action: none;
+  /* pan-y, ikke none. Slideren dekker hele bildet (inset: 0), saa med
+     `none` fanget den ALL berøring — ogsaa loddrette sveip — og siden
+     kunne ikke scrolles saa lenge fingeren laa paa foer/etter-bildet.
+
+     `pan-y` deler ansvaret: loddrett panorering tilhoerer siden, vannrett
+     tilhoerer slideren. Nettleseren avgjoer selv hvilken vei gesten gaar,
+     og sender pointercancel til JS-en naar den lander paa scroll. Ingen
+     "trykk for aa aktivere" trengs. */
+  touch-action: pan-y;
   outline: none;
 }
 

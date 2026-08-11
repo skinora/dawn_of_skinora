@@ -54,7 +54,12 @@ class BeforeAfterSlider {
   }
 
   handlePointerDown(event) {
-    event.preventDefault();
+    // preventDefault kun for mus og penn — der hindrer den tekstmarkering
+    // og at nettleseren drar bildet. For touch skal nettleseren selv faa
+    // avgjoere om gesten er en vannrett dra eller en loddrett scroll;
+    // det styres av touch-action: pan-y i CSS. Kaller vi preventDefault
+    // her ogsaa for touch, tar vi tilbake kontrollen vi nettopp ga fra oss.
+    if (event.pointerType !== 'touch') event.preventDefault();
     this.dragging = true;
     this.element.dataset.dragging = 'true';
     if (event.pointerId !== undefined && this.slider.setPointerCapture) {
@@ -70,7 +75,9 @@ class BeforeAfterSlider {
 
   handlePointerMove(event) {
     if (!this.dragging) return;
-    event.preventDefault();
+    // Samme grunn som over: for touch avgjoer touch-action retningen, og
+    // nettleseren sender pointercancel hvis gesten viser seg aa vaere scroll.
+    if (event.pointerType !== 'touch') event.preventDefault();
     this.setPercent(this.eventToPercent(event));
   }
 
