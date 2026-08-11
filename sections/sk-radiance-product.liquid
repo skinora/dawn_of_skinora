@@ -67,6 +67,46 @@
       position: relative;
     }
 
+    /* ── LAGERSTATUS ──
+       Bevisst en opplysning, ikke en plakat: ingen ramme, ingen bakgrunn,
+       ingen animasjon, ingen rødt. Rødt er feilfarge i paletten og leser
+       som panikk; --accent-gold er tokenet lav lagerbeholdning allerede
+       bruker ellers i temaet, og leser som "merk deg dette".
+       Tallet i semibold fordi presisjonen er det som gjoer linja
+       troverdig — "4" kan etterproeves, "faa igjen" kan ikke. */
+    .sk-stock {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin: var(--space-3) 0 0;
+      font-family: var(--ff-sans);
+      font-size: var(--fs-sm);
+      line-height: var(--lh-snug);
+      color: var(--ink-700);
+    }
+
+    .sk-stock__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      flex: 0 0 auto;
+      align-self: center;
+    }
+
+    .sk-stock__count {
+      font-weight: var(--fw-semibold);
+    }
+
+    .sk-stock__sep {
+      color: var(--ink-300);
+    }
+
+    .sk-stock__restock {
+      color: var(--ink-500);
+    }
+
     .sk-hero-media-swiper .swiper {
       width: 100%;
       height: 100%;
@@ -1627,6 +1667,40 @@
             <p class="sk-product-subtitle">{{ product_info.radiance_subheading.value }}</p>
           {% endif %}
 
+          {%- comment -%}
+            LAGERSTATUS
+            Tallet hentes foerst fra produktets eget metafelt custom.stock_left,
+            saa hvert produkt kan ha sitt eget. Er det tomt, faller den tilbake
+            til seksjonsinnstillingen — men merk at product.sk-radiance.json er
+            ÉN mal delt av alle tre produktene, saa reserven gir samme tall paa
+            alle. Metafeltet er det riktige stedet naar tallene skiller seg.
+
+            Vises kun naar antallet er paa eller under terskelen. Over den er
+            linja usynlig, slik at den aldri staar der uten dekning — og ikke
+            mister kraft av aa vaere permanent.
+          {%- endcomment -%}
+          {%- liquid
+            assign stock_left = product.metafields.custom.stock_left.value | default: product.metafields.custom.stock_left
+            if stock_left == blank
+              assign stock_left = section.settings.stock_left
+            endif
+            assign stock_threshold = section.settings.stock_threshold | default: 5
+            assign show_stock = false
+            if section.settings.stock_show and stock_left != blank and stock_left > 0 and stock_left <= stock_threshold
+              assign show_stock = true
+            endif
+          -%}
+          {%- if show_stock -%}
+            <p class="sk-stock" role="status">
+              <span class="sk-stock__dot" aria-hidden="true"></span>
+              <span class="sk-stock__count">{{ stock_left }} igjen</span>
+              {%- if section.settings.stock_restock != blank -%}
+                <span class="sk-stock__sep" aria-hidden="true">·</span>
+                <span class="sk-stock__restock">{{ section.settings.stock_restock }}</span>
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+
           <!-- REVIEWS -->
           <div class="sk-product-reviews">
             {% for block in section.blocks %}
@@ -2595,6 +2669,39 @@
     }
   ],
   "settings": [
+    {
+      "type": "header",
+      "content": "Lagerstatus"
+    },
+    {
+      "type": "paragraph",
+      "content": "Vises rett under undertittelen i hero. Sett tallet per produkt i metafeltet custom.stock_left — feltet under gjelder alle produkter som bruker denne malen."
+    },
+    {
+      "type": "checkbox",
+      "id": "stock_show",
+      "label": "Vis lagerstatus",
+      "default": false
+    },
+    {
+      "type": "number",
+      "id": "stock_left",
+      "label": "Antall igjen",
+      "info": "Brukes kun når produktet mangler metafeltet custom.stock_left."
+    },
+    {
+      "type": "number",
+      "id": "stock_threshold",
+      "label": "Vis kun når antallet er dette eller lavere",
+      "default": 5,
+      "info": "Over terskelen er linja usynlig, så den aldri står der uten dekning."
+    },
+    {
+      "type": "text",
+      "id": "stock_restock",
+      "label": "Neste levering",
+      "info": "F.eks. «neste levering i september». Tøm feltet for å vise kun antallet."
+    },
     {
       "type": "header",
       "content": "Ærlig pris-boks"
