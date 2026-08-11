@@ -83,6 +83,13 @@
        Resultatet har ingen kant i det hele tatt - den bare oppstaar og
        forsvinner. backdrop-filter ville ikke gitt noe her: det er hvitt bak
        elementet, og uskarphet paa hvitt er hvitt. */
+    /* Frostet glass. Samme teknikk som glass-chipsene i sk-led-stats, men
+       her paa lys bakgrunn.
+       Nokkelen: backdrop-filter trenger noe BAK seg for aa ha effekt, og
+       siden er hvit. Derfor ligger en iriserende, uskarp fargeflate i
+       ::before under panelet — det er DEN glasset gjoer uskarpt. Uten den
+       ville frostingen vaert usynlig.
+       Fargene er merkevarens egne: lilla, clay og gull i et varmt sveip. */
     .sk-stock {
       position: relative;
       isolation: isolate;
@@ -92,34 +99,51 @@
       column-gap: var(--space-5);
       margin: var(--space-6) 0 0;
       padding: var(--space-5) var(--space-6);
+      border-radius: 18px;
+      background: color-mix(in srgb, var(--paper-0) 52%, transparent);
+      backdrop-filter: blur(20px) saturate(170%);
+      -webkit-backdrop-filter: blur(20px) saturate(170%);
+      border: 1px solid color-mix(in srgb, var(--paper-0) 72%, transparent);
+      box-shadow:
+        0 22px 44px -28px color-mix(in srgb, var(--ink-900) 55%, transparent),
+        inset 0 1px 0 color-mix(in srgb, var(--paper-0) 85%, transparent);
+      color: var(--ink-900);
     }
 
+    /* Den iriserende flaten glasset hviler paa. */
     .sk-stock::before {
       content: '';
       position: absolute;
-      inset: 0;
+      inset: -14px;
       z-index: -1;
+      border-radius: 28px;
       background:
         radial-gradient(
-          62% 130% at 14% 52%,
-          color-mix(in srgb, var(--color-lilac) 88%, transparent),
+          58% 120% at 10% 40%,
+          color-mix(in srgb, var(--color-lilac) 92%, transparent),
+          transparent 70%
+        ),
+        radial-gradient(
+          52% 110% at 52% 100%,
+          color-mix(in srgb, var(--accent-clay) 42%, transparent),
           transparent 68%
         ),
         radial-gradient(
-          78% 150% at 88% 28%,
-          color-mix(in srgb, var(--ink-900) 20%, transparent),
-          transparent 66%
-        ),
-        radial-gradient(
-          90% 180% at 60% 100%,
-          color-mix(in srgb, var(--accent-clay) 16%, transparent),
-          transparent 62%
+          60% 120% at 92% 15%,
+          color-mix(in srgb, var(--accent-gold) 48%, transparent),
+          transparent 70%
         );
-      filter: blur(18px);
-      opacity: 0.95;
+      filter: blur(22px);
+      opacity: 0.92;
     }
 
-    /* Tallet baerer flaten. Serif, stort, i full merkevarefarge. */
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .sk-stock {
+        background: color-mix(in srgb, var(--paper-0) 88%, transparent);
+      }
+    }
+
+    /* Tallet baerer flaten. */
     .sk-stock__count {
       font-family: var(--ff-serif);
       font-size: var(--fs-5xl);
