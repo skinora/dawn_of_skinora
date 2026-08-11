@@ -78,23 +78,79 @@
        satt stort i serif — samme grep som boelgelengdene i
        sk-led-light-work: tallet ER budskapet, saa det faar baere flaten.
        Skarpe hjoerner som resten av huset. Ingen animasjon. */
+    /* Diffus flate i stedet for fylt boks. To radiale gradienter i lilla og
+       auberginé som toner ut i gjennomsiktig, og som deretter gjoeres uskarpe.
+       Resultatet har ingen kant i det hele tatt - den bare oppstaar og
+       forsvinner. backdrop-filter ville ikke gitt noe her: det er hvitt bak
+       elementet, og uskarphet paa hvitt er hvitt. */
+    /* Frostet glass. Samme teknikk som glass-chipsene i sk-led-stats, men
+       her paa lys bakgrunn.
+       Nokkelen: backdrop-filter trenger noe BAK seg for aa ha effekt, og
+       siden er hvit. Derfor ligger en iriserende, uskarp fargeflate i
+       ::before under panelet — det er DEN glasset gjoer uskarpt. Uten den
+       ville frostingen vaert usynlig.
+       Fargene er merkevarens egne: lilla, clay og gull i et varmt sveip. */
     .sk-stock {
-      display: flex;
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
       align-items: center;
-      gap: var(--space-4);
-      margin: var(--space-5) 0 0;
-      padding: var(--space-4) var(--space-5);
-      background: var(--ink-900);
-      color: var(--paper-0);
+      column-gap: var(--space-5);
+      margin: var(--space-6) 0 0;
+      padding: var(--space-5) var(--space-6);
+      border-radius: 18px;
+      background: color-mix(in srgb, var(--paper-0) 52%, transparent);
+      backdrop-filter: blur(20px) saturate(170%);
+      -webkit-backdrop-filter: blur(20px) saturate(170%);
+      border: 1px solid color-mix(in srgb, var(--paper-0) 72%, transparent);
+      box-shadow:
+        0 22px 44px -28px color-mix(in srgb, var(--ink-900) 55%, transparent),
+        inset 0 1px 0 color-mix(in srgb, var(--paper-0) 85%, transparent);
+      color: var(--ink-900);
     }
 
+    /* Den iriserende flaten glasset hviler paa. */
+    .sk-stock::before {
+      content: '';
+      position: absolute;
+      inset: -14px;
+      z-index: -1;
+      border-radius: 28px;
+      background:
+        radial-gradient(
+          58% 120% at 10% 40%,
+          color-mix(in srgb, var(--color-lilac) 92%, transparent),
+          transparent 70%
+        ),
+        radial-gradient(
+          52% 110% at 52% 100%,
+          color-mix(in srgb, var(--accent-clay) 42%, transparent),
+          transparent 68%
+        ),
+        radial-gradient(
+          60% 120% at 92% 15%,
+          color-mix(in srgb, var(--accent-gold) 48%, transparent),
+          transparent 70%
+        );
+      filter: blur(22px);
+      opacity: 0.92;
+    }
+
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .sk-stock {
+        background: color-mix(in srgb, var(--paper-0) 88%, transparent);
+      }
+    }
+
+    /* Tallet baerer flaten. */
     .sk-stock__count {
       font-family: var(--ff-serif);
-      font-size: var(--fs-4xl);
+      font-size: var(--fs-5xl);
       font-weight: var(--fw-regular);
-      line-height: 0.9;
+      line-height: 0.82;
       letter-spacing: var(--tracking-tight);
-      flex: 0 0 auto;
+      color: var(--ink-900);
     }
 
     .sk-stock__body {
@@ -110,7 +166,7 @@
       font-weight: var(--fw-semibold);
       letter-spacing: var(--tracking-wider);
       text-transform: uppercase;
-      color: color-mix(in srgb, var(--paper-0) 78%, transparent);
+      color: var(--ink-500);
     }
 
     .sk-stock__restock {
@@ -118,7 +174,7 @@
       font-size: var(--fs-sm);
       font-weight: var(--fw-regular);
       line-height: var(--lh-snug);
-      color: var(--paper-0);
+      color: var(--ink-900);
     }
 
     .sk-hero-media-swiper .swiper {
