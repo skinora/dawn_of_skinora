@@ -26,6 +26,18 @@
      flatefarge eller i typografi. */
   --accent-green: #2f7d5b;
 
+  /* ---------- LED-SPEKTER ----------
+     Lyset masken faktisk sender ut. Verdiene fantes fra foer inline i
+     sk-lp-mechanism.liquid; loeftet hit saa de har ÉN kilde, slik auditen
+     anbefalte. Brukes til gloed og lyseffekter — aldri som tekstfarge
+     eller stor flate.
+     Merk: dette er merkevarebaerende verdier. Skal de endres, maa det
+     avstemmes mot posisjoneringen, ikke mot naermeste palett-token. */
+  --led-rose: #ff7a85; /* roedt lys, myk ende */
+  --led-magenta: #d04a6e;
+  --led-violet: #7a7eea;
+  --led-indigo: #4f5bd5;
+
   /* ---------- FONT FAMILIES ---------- */
   /* De metrikk-matchede fallbackene ('*-fallback', definert i theme.liquid med
      size-adjust) staar med i kjeden. De hindrer layout-hopp naar webfonten

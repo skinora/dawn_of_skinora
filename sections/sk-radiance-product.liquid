@@ -117,24 +117,29 @@
       inset: -14px;
       z-index: -1;
       border-radius: 28px;
+      /* LED-spekteret, ikke jordfarger. Foerste utkast brukte --accent-clay
+         og --accent-gold fordi de var tokens som fantes — men brunt og
+         sennep i en gloed leser som grums, ikke som lys. Rose, magenta og
+         periwinkle er hentet fra bolgelengdefargene i sk-lp-mechanism:
+         det er lyset masken faktisk sender ut. */
       background:
         radial-gradient(
-          58% 120% at 10% 40%,
-          color-mix(in srgb, var(--color-lilac) 92%, transparent),
+          58% 120% at 10% 45%,
+          color-mix(in srgb, var(--led-rose) 82%, transparent),
           transparent 70%
         ),
         radial-gradient(
-          52% 110% at 52% 100%,
-          color-mix(in srgb, var(--accent-clay) 42%, transparent),
+          54% 115% at 52% 100%,
+          color-mix(in srgb, var(--led-magenta) 55%, transparent),
           transparent 68%
         ),
         radial-gradient(
-          60% 120% at 92% 15%,
-          color-mix(in srgb, var(--accent-gold) 48%, transparent),
+          62% 125% at 90% 12%,
+          color-mix(in srgb, var(--led-violet) 68%, transparent),
           transparent 70%
         );
       filter: blur(22px);
-      opacity: 0.92;
+      opacity: 0.9;
     }
 
     @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
