@@ -24,7 +24,7 @@
       ],
       "settings": {
         "stock_show": true,
-        "stock_left": 4,
+        "stock_left": 2,
         "stock_threshold": 5,
         "stock_label": "igjen på lager",
         "stock_restock": "Neste levering slutten av september",
@@ -54,9 +54,12 @@
       "name": "SK Resultater",
       "settings": {
         "eyebrow": "RESULTATER",
+        "kicker_secondary": "Klinisk utviklet",
         "heading": "Hva kan jeg forvente?",
         "bullet_intro_text": "<p>Del en kort introduksjon her.</p>",
         "rich_bullet_content": "<ul><li>Jevnere hudtone</li><li>Fastere hud</li><li>Mer glød</li><li>Mindre sliten hud</li></ul>",
+        "cta_text": "",
+        "cta_url": "",
         "note_text": "Resultater bygges gradvis og påvirkes av hudtype og kontinuitet.",
         "result_image_alt": "Rolig portrett"
       }
