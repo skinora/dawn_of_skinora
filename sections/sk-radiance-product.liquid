@@ -1814,6 +1814,7 @@
               assign show_stock = true
             endif
           -%}
+          <!-- SKDEBUG show={{ show_stock }} left={{ stock_left }} thr={{ stock_threshold }} on={{ section.settings.stock_show }} set={{ section.settings.stock_left }} inv={{ inv_qty }} -->
           {%- if show_stock -%}
             <div class="sk-stock{{ glow_class }}" role="status">
               <span class="sk-stock__count" aria-hidden="true">{{ stock_left }}</span>
