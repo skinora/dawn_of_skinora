@@ -90,7 +90,11 @@
        ::before under panelet — det er DEN glasset gjoer uskarpt. Uten den
        ville frostingen vaert usynlig.
        Fargene er merkevarens egne: lilla, clay og gull i et varmt sveip. */
+    /* Standard: roedt og naer-infraroedt (Radiance). */
     .sk-stock {
+      --glow-1: var(--led-rose);
+      --glow-2: var(--led-magenta);
+      --glow-3: var(--led-violet);
       position: relative;
       isolation: isolate;
       display: grid;
@@ -117,29 +121,35 @@
       inset: -14px;
       z-index: -1;
       border-radius: 28px;
-      /* LED-spekteret, ikke jordfarger. Foerste utkast brukte --accent-clay
-         og --accent-gold fordi de var tokens som fantes — men brunt og
-         sennep i en gloed leser som grums, ikke som lys. Rose, magenta og
-         periwinkle er hentet fra bolgelengdefargene i sk-lp-mechanism:
-         det er lyset masken faktisk sender ut. */
+      /* Gloeden lyser i produktets EGEN boelgelengde. Fargene settes av
+         --glow-1/2/3 paa .sk-stock, saa denne regelen er den samme uansett
+         maske — bare paletten byttes. Verdiene kommer fra LED-spekteret i
+         typography.css, som igjen stammer fra sk-lp-mechanism. */
       background:
         radial-gradient(
           58% 120% at 10% 45%,
-          color-mix(in srgb, var(--led-rose) 82%, transparent),
+          color-mix(in srgb, var(--glow-1) 82%, transparent),
           transparent 70%
         ),
         radial-gradient(
           54% 115% at 52% 100%,
-          color-mix(in srgb, var(--led-magenta) 55%, transparent),
+          color-mix(in srgb, var(--glow-2) 55%, transparent),
           transparent 68%
         ),
         radial-gradient(
           62% 125% at 90% 12%,
-          color-mix(in srgb, var(--led-violet) 68%, transparent),
+          color-mix(in srgb, var(--glow-3) 68%, transparent),
           transparent 70%
         );
       filter: blur(22px);
       opacity: 0.9;
+    }
+
+    /* Blaatt lys (Clear). Kaldere sveip: periwinkle -> indigo -> blaa. */
+    .sk-stock--blue {
+      --glow-1: var(--led-violet);
+      --glow-2: var(--led-indigo);
+      --glow-3: var(--led-blue);
     }
 
     @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -1765,13 +1775,34 @@
               assign stock_left = section.settings.stock_left
             endif
             assign stock_threshold = section.settings.stock_threshold | default: 5
+
+            comment
+              Gloedens palett foelger maskens egen boelgelengde.
+              1) metafeltet custom.led_glow ("blue" eller "red") vinner
+              2) ellers utledes den av handle — Clear er blaatt lys,
+                 Radiance er roedt og naer-infraroedt
+              Faller alltid tilbake til roedt, som er flertallet.
+            endcomment
+            assign glow_kind = product.metafields.custom.led_glow.value | default: product.metafields.custom.led_glow | downcase | strip
+            if glow_kind == blank
+              if product.handle contains 'clear'
+                assign glow_kind = 'blue'
+              else
+                assign glow_kind = 'red'
+              endif
+            endif
+            assign glow_class = ''
+            if glow_kind == 'blue'
+              assign glow_class = ' sk-stock--blue'
+            endif
+
             assign show_stock = false
             if section.settings.stock_show and stock_left != blank and stock_left > 0 and stock_left <= stock_threshold
               assign show_stock = true
             endif
           -%}
           {%- if show_stock -%}
-            <div class="sk-stock" role="status">
+            <div class="sk-stock{{ glow_class }}" role="status">
               <span class="sk-stock__count" aria-hidden="true">{{ stock_left }}</span>
               <span class="sk-stock__body">
                 <span class="sk-stock__label">

@@ -37,6 +37,7 @@
   --led-magenta: #d04a6e;
   --led-violet: #7a7eea;
   --led-indigo: #4f5bd5;
+  --led-blue: #3b3fbf; /* blaatt lys, Clear */
 
   /* ---------- FONT FAMILIES ---------- */
   /* De metrikk-matchede fallbackene ('*-fallback', definert i theme.liquid med
