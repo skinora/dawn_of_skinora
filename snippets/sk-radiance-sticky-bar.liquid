@@ -286,10 +286,26 @@
       display: none;
     }
 
+    /* Prisblokka faar krympe, knappen ikke. Uten dette hadde info-siden
+       `nowrap` paa tre elementer (pris, foer-pris, spar-merke) og kunne
+       ikke gi fra seg en piksel — saa knappen ble skjoevet ut av skjermen
+       og «LEGG I KURV» var kuttet til «LEG». Knappen er hele grunnen til
+       at baren finnes; den skal aldri vaere den som taper plasskampen. */
     .sk-radiance-sticky-bottom-bar__price {
       justify-content: flex-start;
       flex-wrap: nowrap;
       white-space: nowrap;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    /* Foer-pris og spar-merke droppes i baren paa mobil. Begge staar
+       allerede i heroen, og her koster de plassen knappen trenger.
+       Baren skal minne om prisen og gi ett trykk — ikke gjenta hele
+       tilbudsargumentet. */
+    .sk-radiance-sticky-bottom-bar__price .sk-price__value,
+    .sk-radiance-sticky-bottom-bar__price .sk-price__badge {
+      display: none;
     }
 
     .sk-radiance-sticky-bottom-bar__button {

@@ -1471,9 +1471,18 @@
       .sk-purchase > *:first-child { display: contents; }
 
       .sk-radiance-buy-buttons { order: 6; }
-      .sk-trust-inline { order: 7; }
+
+      /* Lagerbaand og variantvalg foelger rett etter knappen. Trust-raden og
+         betalingsikonene er 135 px til sammen, og de sto imellom — kunden
+         maatte forbi tre trygghetselementer for aa se at det finnes en
+         Face + Neck. Trygghet er svar paa en innvending; den hoerer hjemme
+         ETTER at valget er presentert, ikke foran det. */
+      .sk-stock { order: 7; }
+      .sk-offer-cards { order: 8; }
+
+      .sk-trust-inline { order: 9; }
       .payment-icons,
-      .sk-payment { order: 8; }
+      .sk-payment { order: 10; }
 
       /* Gitteret mellom galleri og tekstkolonne. 15 px dødluft midt i
          hoeydebudsjettet over folden. */
