@@ -1424,6 +1424,87 @@
         padding: 0;
       }
 
+      /* ══════════════════════════════════════════════════════════════════════
+         KJOEPSREKKEFOELGE PAA MOBIL
+         ══════════════════════════════════════════════════════════════════════
+         97 % av trafikken er mobil, og kjoepsknappen laa 1 331 px nede i
+         dokumentet — den ble aldri sett uten at kunden scrollet aktivt etter
+         den. Alt over den var 701 px med informasjon kunden ikke hadde bedt om
+         enda: eyebrow, undertittel, pills, og to 332 px hoye tilbudskort.
+
+         Ny rekkefoelge: navn -> vurdering -> hva den gjoer -> pris -> knapp.
+         Foerst naar kunden har sagt ja til Aa KJOEPE er det interessant HVILKEN
+         variant — derfor flyttes tilbudskortene UNDER knappen.
+
+         Hele omleggingen er ren CSS. Ingen markup er flyttet, og det er med
+         vilje: variantvalg, prissynkronisering og sticky-baren henger sammen
+         via sk:offerchange og DOM-strukturen. Flytter man noder, maa alt det
+         rigges paa nytt. `order` endrer bare malerekkefoelgen — JS-en ser
+         nøyaktig samme dokument som foer.
+
+         `display: contents` paa .sk-purchase er nokkelen: den loeser opp
+         boksen slik at dens fire barn (knapp, trust-rad, betalingsikoner,
+         resten) blir soesken av tilbudskortene og kan sorteres inn i samme
+         flate liste. Trygt her fordi .sk-purchase kun har display:grid,
+         gap og en 5 px toppmarg — ingen bakgrunn, ramme, padding eller
+         skygge som ville forsvunnet med boksen. */
+      .sk-hero-content {
+        gap: var(--space-2);
+      }
+
+      .sk-purchase {
+        display: contents;
+      }
+
+      .sk-product-title { order: 1; }
+      .sk-product-reviews { order: 2; }
+      .sk-product-subtitle { order: 3; }
+      .sk-shared-price { order: 4; }
+      .sk-campaign--inline { order: 5; }
+
+      /* Knappen. Foerste barn av .sk-purchase er kjoepsknapp-wrapperen. */
+      .sk-purchase > *:first-child { order: 6; }
+      .sk-trust-inline { order: 7; }
+      .sk-payment { order: 8; }
+
+      /* Lagerbaandet staar UNDER knappen, ikke over. Knapphet som argument
+         virker naar kunden allerede vil ha varen; over knappen er det bare
+         42 px som skyver kjoepet lenger ned. */
+      .sk-stock { order: 9; }
+
+      .sk-offer-cards { order: 10; }
+      .sk-hero-info { order: 11; }
+      .sk-radiance-pills { order: 12; }
+
+      /* Eyebrow droppes paa mobil. «PRESIS LED-STIMULERING FOR HUDEN» sier
+         det samme som undertittelen, i versaler og 12 px — den kostet plass
+         over folden uten aa tilfoere noe. Beholdes paa desktop, der plassen
+         finnes. */
+      .sk-eyebrow {
+        display: none;
+      }
+
+      /* Kampanjestripa var 72 px fordi den brakk til tre linjer. Én linje,
+         ellipse hvis det ikke er plass — budskapet er «det haster og du
+         sparer», ikke hele vilkaarsteksten. */
+      .sk-campaign--inline {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: baseline;
+        gap: var(--space-1);
+        max-height: 24px;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: var(--fs-xs);
+        line-height: 24px;
+      }
+
+      .sk-campaign--inline .sk-campaign__deadline {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+      }
+
       /* Paa mobil staar kortene under hverandre. Da er det ingenting aa rette
          inn mot, og reservert plass til en linje nummer to er bare luft. */
       .sk-offer-card__title {
