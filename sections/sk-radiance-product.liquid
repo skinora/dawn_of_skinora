@@ -395,10 +395,12 @@
         font-weight: var(--fw-semibold);
       }
 
+      /* Marg ned til 4 px: .sk-hero-content har allerede 10 px flex-gap, saa
+         de to stablet seg og ga 20 px foer stjernene i det hele tatt begynte. */
       .sk-product-subtitle {
         font-size: 1.9rem;
         line-height: 1.6;
-        margin-bottom: 1rem;
+        margin-bottom: var(--space-1);
       }
 
       .sk-offer-card__title {
@@ -411,6 +413,31 @@
       .sk-pill {
         font-size: var(--fs-xs);
       }
+    }
+
+    /* =============================
+       ANMELDELSER (Okendo)
+    ============================= */
+
+    /* Stjernene hoerer til produktnavnet, ikke til kjoepsflaten under, saa de
+       skal ligge tett paa undertittelen. Maalt paa mobil var luften 36 px —
+       men bare 18 av dem sto i vaar egen CSS:
+
+         8 px  .sk-product-subtitle margin-bottom
+        10 px  .sk-hero-content flex-gap
+        16 px  Okendo sin .oke-is-clickable margin-top   <- inne i app-blokka
+         2 px  baseline-luft under .oke-sr (inline-block)
+
+       Derfor saa kilden riktig ut. De to siste nulles her, scoped til vaar
+       egen container slik at widgeten ellers staar urort. */
+    .sk-product-reviews {
+      /* Dreper linjeboksen den inline-block'a widgeten henger i. Barna setter
+         sin egen line-height, saa dette treffer bare den tomme luften. */
+      line-height: 0;
+    }
+
+    .sk-product-reviews .oke-is-clickable {
+      margin-top: 0;
     }
 
     /* =============================
@@ -1251,7 +1278,7 @@
       }
 
       .sk-product-subtitle {
-        margin: 0 0 var(--space-2);
+        margin: 0 0 var(--space-1);
         font-size: 1.4rem;
         line-height: 1.5;
         color: var(--color-neutral-4, #8c8c95);
