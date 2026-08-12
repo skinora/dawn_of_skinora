@@ -1462,10 +1462,26 @@
       .sk-shared-price { order: 4; }
       .sk-campaign--inline { order: 5; }
 
-      /* Knappen. Foerste barn av .sk-purchase er kjoepsknapp-wrapperen. */
-      .sk-purchase > *:first-child { order: 6; }
+      /* Kjoepsknapp-wrapperen loeses ogsaa opp. Den inneholder betalings-
+         ikonene FOER knappen — 36 px kort og logoer som skjoev selve kjoepet
+         nedover. Ikonene er trygghet, ikke et argument for aa trykke; de
+         hoerer hjemme UNDER knappen sammen med trust-raden. */
+      .sk-purchase > *:first-child { display: contents; }
+
+      .sk-radiance-buy-buttons { order: 6; }
       .sk-trust-inline { order: 7; }
+      .payment-icons,
       .sk-payment { order: 8; }
+
+      /* Gitteret mellom galleri og tekstkolonne. 15 px dødluft midt i
+         hoeydebudsjettet over folden. */
+      .sk-hero-grid {
+        gap: var(--space-2);
+      }
+
+      .sk-shared-price {
+        margin-block: 2px;
+      }
 
       /* Lagerbaandet staar UNDER knappen, ikke over. Knapphet som argument
          virker naar kunden allerede vil ha varen; over knappen er det bare
@@ -1493,6 +1509,7 @@
         align-items: baseline;
         gap: var(--space-1);
         max-height: 24px;
+        margin-top: var(--space-1);
         overflow: hidden;
         white-space: nowrap;
         font-size: var(--fs-xs);
