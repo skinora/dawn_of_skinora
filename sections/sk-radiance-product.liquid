@@ -1918,6 +1918,20 @@
               assign show_stock = true
             endif
           -%}
+          {%- comment -%}
+            Anmeldelsene staar FOER lagerbaandet: vurderingen svarer paa
+            "er den bra", knappheten paa "maa jeg bestemme meg naa". Det
+            foerste spoerdmaalet kommer foerst, og et hastesignal foer
+            produktet er vurdert leser som press.
+          {%- endcomment -%}
+          <div class="sk-product-reviews">
+            {% for block in section.blocks %}
+              {% if block.type == '@app' %}
+                {% render block %}
+              {% endif %}
+            {% endfor %}
+          </div>
+
           {%- if show_stock -%}
             <div class="sk-stock{{ glow_class }}" role="status">
               <span class="sk-stock__count" aria-hidden="true">{{ stock_left }}</span>
@@ -1934,15 +1948,6 @@
               </span>
             </div>
           {%- endif -%}
-
-          <!-- REVIEWS -->
-          <div class="sk-product-reviews">
-            {% for block in section.blocks %}
-              {% if block.type == '@app' %}
-                {% render block %}
-              {% endif %}
-            {% endfor %}
-          </div>
 
           {%- comment -%}
             PILLS — produktfakta fra metafeltet, pluss sertifiseringen til slutt.
