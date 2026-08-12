@@ -427,10 +427,31 @@
     .sk-pill {
       border: 1.5px solid var(--color-border-light, #d4d4dc);
       border-radius: 999px;
-      padding: 0.5rem 1.25rem;
-      font-size: 1.15rem;
-      font-weight: 500;
+      padding: var(--space-2) var(--space-4);
+      /* Var 1.15rem — det ga 11,5 px ved 10 px rot, under caption-gulvet. */
+      font-size: var(--fs-xs);
+      font-weight: var(--fw-medium);
       background: var(--color-white);
+    }
+
+    /* Sertifiseringspill. Samme form som produktfaktaene, men tyngre kant og
+       vekt saa den leser som dokumentasjon og ikke som en egenskap.
+       Haken staar i --ink-700, ikke i groent: --accent-green er reservert for
+       besparelse og ja-svar, og skal ikke brukes i typografi. */
+    .sk-pill--cert {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      border-color: var(--ink-300);
+      font-weight: var(--fw-semibold);
+      color: var(--ink-900);
+    }
+
+    .sk-pill--cert::before {
+      content: '✓';
+      font-size: 0.9em;
+      line-height: 1;
+      color: var(--ink-700);
     }
 
     /* =============================
@@ -1840,8 +1861,18 @@
             {% endfor %}
           </div>
 
-          <!-- PILLS -->
-          {% if pills_list != blank %}
+          {%- comment -%}
+            PILLS — produktfakta fra metafeltet, pluss sertifiseringen til slutt.
+
+            CE staar som seksjonsinnstilling og ikke i metafeltet: merkingen
+            gjelder alle produktene likt, saa den skal settes ett sted. Den er
+            ogsaa plassert sist med vilje — produktfaktaene svarer «hva er
+            dette», sertifiseringen svarer «toer jeg».
+
+            Vilkaaret dekker ogsaa tilfellet der et produkt mangler pills:
+            da rendres raden likevel, med bare sertifiseringen.
+          {%- endcomment -%}
+          {% if pills_list != blank or section.settings.ce_text != blank %}
             <div class="sk-radiance-pills">
               {% for pill in pills_list %}
                 {% assign pill_text = pill | strip %}
@@ -1849,6 +1880,10 @@
                   <span class="sk-pill">{{ pill_text }}</span>
                 {% endif %}
               {% endfor %}
+
+              {% if section.settings.ce_text != blank %}
+                <span class="sk-pill sk-pill--cert">{{ section.settings.ce_text }}</span>
+              {% endif %}
             </div>
           {% endif %}
 
@@ -2799,6 +2834,17 @@
     }
   ],
   "settings": [
+    {
+      "type": "header",
+      "content": "Sertifisering"
+    },
+    {
+      "type": "text",
+      "id": "ce_text",
+      "label": "Sertifiseringsmerke i hero",
+      "default": "CE-merket",
+      "info": "Vises som siste pill under anmeldelsene, på alle produkter. Merk: for de fleste elektriske apparater er CE en produsenterklæring, ikke en tredjepartssertifisering — «CE-merket» er den korrekte formuleringen. Tøm feltet for å skjule."
+    },
     {
       "type": "header",
       "content": "Lagerstatus"
