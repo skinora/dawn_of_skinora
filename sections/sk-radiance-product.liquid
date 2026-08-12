@@ -409,7 +409,7 @@
       }
 
       .sk-pill {
-        font-size: 1.4rem;
+        font-size: var(--fs-xs);
       }
     }
 
@@ -417,16 +417,30 @@
        PILLS
     ============================= */
 
+    /* Raden arver LED-paletten fra samme kilde som lagerbaandet, saa prikkene
+       og gloeden lyser i produktets EGEN boelgelengde. Standard er roedt og
+       naer-infraroedt (Radiance); --blue bytter til det kalde spekteret. */
     .sk-radiance-pills {
+      --glow-1: var(--led-rose);
+      --glow-2: var(--led-magenta);
+      --glow-3: var(--led-violet);
       display: flex;
       gap: var(--space-2);
       flex-wrap: wrap;
       margin: 0;
     }
 
+    .sk-radiance-pills--blue {
+      --glow-1: var(--led-violet);
+      --glow-2: var(--led-indigo);
+      --glow-3: var(--led-blue);
+    }
+
     /* Paddingen er strammet inn samtidig som fontstoerrelsen ble rettet.
        Uten det brakk raden til tre linjer da den fjerde pillen kom til. */
     .sk-pill {
+      display: inline-flex;
+      align-items: center;
       border: 1px solid var(--color-border-light, #d4d4dc);
       border-radius: 999px;
       padding: var(--space-1) var(--space-3);
@@ -437,14 +451,26 @@
       background: var(--color-white);
     }
 
+    /* Lyspunktet. Hvert faktum foeres av en liten diode i sin egen farge —
+       --sk-dot settes per pille i Liquid og peker paa --glow-1/2/3, saa raden
+       leser som et spekter og ikke som en grå liste. Gloeden er en myknet
+       kopi av samme farge; uten den blir prikken en flat sirkel. */
+    .sk-pill::before {
+      content: '';
+      flex: none;
+      width: 6px;
+      height: 6px;
+      margin-right: var(--space-2);
+      border-radius: 999px;
+      background: var(--sk-dot, var(--glow-3));
+      box-shadow: 0 0 6px color-mix(in srgb, var(--sk-dot, var(--glow-3)) 60%, transparent);
+    }
+
     /* Sertifiseringspill. Samme form som produktfaktaene, men tyngre kant og
        vekt saa den leser som dokumentasjon og ikke som en egenskap.
-       Haken staar i --ink-700, ikke i groent: --accent-green er reservert for
-       besparelse og ja-svar, og skal ikke brukes i typografi. */
+       Haken erstatter dioden: sertifiseringen er ikke en boelgelengde. */
     .sk-pill--cert {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
+      gap: 0;
       border-color: var(--ink-300);
       font-weight: var(--fw-semibold);
       color: var(--ink-900);
@@ -452,6 +478,12 @@
 
     .sk-pill--cert::before {
       content: '✓';
+      width: auto;
+      height: auto;
+      border-radius: 0;
+      background: none;
+      box-shadow: none;
+      margin-right: var(--space-2);
       font-size: 0.9em;
       line-height: 1;
       color: var(--ink-700);
@@ -780,8 +812,9 @@
         max-width: 120px;
       }
 
+      /* Var 1.2rem = 12 px ved 10 px rot — under caption-gulvet paa 13 px. */
       .sk-pill {
-        font-size: 1.2rem;
+        font-size: var(--fs-xs);
       }
     }
 
@@ -1153,9 +1186,14 @@
         display: block;
         font-size: var(--fs-xs);
         line-height: var(--lh-relaxed);
-        color: var(--ink-500);
+        /* Var --ink-500. Raden leste som grå smaatekst; dette er
+           produktets faktiske spesifikasjon og skal baere sin egen vekt. */
+        color: var(--ink-700);
       }
 
+      /* Boksene er fortsatt borte — det var de som kostet hoeyde. Men
+         prikken blir med: den er baade skilletegn OG farge, saa raden
+         faar liv uten aa vokse en eneste piksel. */
       .sk-pill {
         display: inline;
         border: 0;
@@ -1166,14 +1204,34 @@
         font-weight: var(--fw-regular);
       }
 
-      .sk-pill + .sk-pill::before {
-        content: ' · ';
-        color: var(--ink-300);
+      .sk-pill::before {
+        display: inline-block;
+        vertical-align: 0.12em;
+        margin-right: 5px;
       }
 
+      /* Luft foran neste diode, ikke etter teksten — ellers henger et
+         mellomrom igjen paa slutten av en brukket linje. */
+      .sk-pill + .sk-pill {
+        margin-left: 5px;
+      }
+
+      /* Sertifiseringen er radens ankerpunkt: liten fylt chip med haken i
+         produktets lysfarge. Den er det eneste elementet med flate her,
+         og det er meningen — blikket skal lande paa den. */
       .sk-pill--cert {
+        display: inline-block;
+        padding: 1px var(--space-2);
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--ink-900) 6%, transparent);
         font-weight: var(--fw-semibold);
         color: var(--ink-900);
+      }
+
+      .sk-pill--cert::before {
+        vertical-align: baseline;
+        margin-right: 4px;
+        color: var(--sk-dot, var(--glow-2));
       }
 
       .sk-eyebrow {
@@ -1909,8 +1967,10 @@
               endif
             endif
             assign glow_class = ''
+            assign pills_glow_class = ''
             if glow_kind == 'blue'
               assign glow_class = ' sk-stock--blue'
+              assign pills_glow_class = ' sk-radiance-pills--blue'
             endif
 
             assign show_stock = false
@@ -1961,11 +2021,19 @@
             da rendres raden likevel, med bare sertifiseringen.
           {%- endcomment -%}
           {% if pills_list != blank or section.settings.ce_text != blank %}
-            <div class="sk-radiance-pills">
+            <div class="sk-radiance-pills{{ pills_glow_class }}">
               {% for pill in pills_list %}
                 {% assign pill_text = pill | strip %}
                 {% if pill_text != blank %}
-                  <span class="sk-pill">{{ pill_text }}</span>
+                  {%- comment -%}
+                    Prikken vandrer gjennom --glow-1/2/3 og begynner forfra
+                    naar de er brukt opp. Fargene bytter med masken, saa raden
+                    lyser i det spekteret produktet faktisk sender ut.
+                  {%- endcomment -%}
+                  {%- assign dot_index = forloop.index0 | modulo: 3 | plus: 1 -%}
+                  <span class="sk-pill" style="--sk-dot: var(--glow-{{ dot_index }})">
+                    {{- pill_text -}}
+                  </span>
                 {% endif %}
               {% endfor %}
 
