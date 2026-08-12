@@ -356,10 +356,15 @@
 
   /* ===== Fix: iPhone logo clipping ===== */
   @media (max-width: 749px) {
-    /* Give header a bit more vertical room */
+    /* Vertikal luft rundt logoen. Var 11 px, som ga en 64 px header.
+       Ned til 7 px = 56 px. Logoen er 40 px, saa 40 + 14 + 2 px grid-padding
+       gaar opp — klippingen denne regelen ble laget for kommer ikke tilbake.
+       Grunnen til kuttet: 97 % av trafikken er mobil, og headeren spiste 64
+       av de 700 pikslene som skal romme galleri, tittel, pris og kjoepsknapp
+       over folden. */
     .header.sk-header {
-      padding-top: 11px !important;
-      padding-bottom: 11px !important;
+      padding-top: 7px !important;
+      padding-bottom: 7px !important;
       min-height: auto !important;
       height: auto !important;
       overflow: visible !important;
