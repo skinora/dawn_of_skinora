@@ -23,11 +23,12 @@
         "okendo_star_rating_HVN7ie"
       ],
       "settings": {
+        "ce_text": "CE-merket",
         "stock_show": true,
         "stock_left": 4,
         "stock_threshold": 5,
         "stock_label": "igjen på lager",
-        "stock_restock": "Neste levering slutten av september",
+        "stock_restock": "Neste levering i september",
         "honesty_show": true,
         "honesty_heading": "Fastpris — 365 dager i året.",
         "honesty_body": "<p>Ingen rabattkupp. Ingen falske «før»-priser.</p>"
@@ -54,9 +55,12 @@
       "name": "SK Resultater",
       "settings": {
         "eyebrow": "RESULTATER",
+        "kicker_secondary": "Klinisk utviklet",
         "heading": "Hva kan jeg forvente?",
         "bullet_intro_text": "<p>Del en kort introduksjon her.</p>",
         "rich_bullet_content": "<ul><li>Jevnere hudtone</li><li>Fastere hud</li><li>Mer glød</li><li>Mindre sliten hud</li></ul>",
+        "cta_text": "",
+        "cta_url": "",
         "note_text": "Resultater bygges gradvis og påvirkes av hudtype og kontinuitet.",
         "result_image_alt": "Rolig portrett"
       }
