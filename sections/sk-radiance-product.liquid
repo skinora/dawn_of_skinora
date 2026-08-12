@@ -212,6 +212,19 @@
       height: 100%;
     }
 
+    /* ── Slide 1 skal vises uten at galleri-JS har kjoert ────────────────────
+       Swiper setter .swiper-initialized foerst naar skriptet har kjoert. I
+       glippet foer det stables alle slidene under hverandre — hero-omraadet
+       ble maalt HELT TOMT i 4 sekunder paa foerste last, og deretter hoppet
+       layouten naar Swiper tok over.
+
+       Denne regelen viser kun slide 1 inntil Swiper melder seg. Da har
+       LCP-bildet en ferdig, riktig dimensjonert plass fra foerste maling, og
+       de oevrige bildene ligger ikke i viewport og trigger ikke henting. */
+    .sk-hero-media-swiper .swiper:not(.swiper-initialized) .swiper-slide:not(:first-child) {
+      display: none;
+    }
+
     .sk-hero-media-main img,
     .sk-hero-thumb img {
       width: 100%;
@@ -1343,7 +1356,7 @@
         /* Kapp hovedbildet til maks ~58% av skjermhøyden så tittel, pris
            og CTA kommer med over fold. Kvadratisk når 100vw < 58vh
            (høye telefoner), ellers beskjæres det til 58vh-båndet. */
-        max-height: 58vh;
+        max-height: min(58vh, 440px);
       }
 
       .sk-hero-media-swiper {
@@ -1351,7 +1364,7 @@
         aspect-ratio: 1 / 1;
         max-width: 100%;
         min-width: 0;
-        max-height: 58vh;
+        max-height: min(58vh, 440px);
       }
 
       .sk-hero-gallery-wrapper,
@@ -1856,8 +1869,14 @@
                   {% for image in media_images %}
                     <div class="swiper-slide">
                       <img
-                        src="{{ image | image_url: width: 900 }}"
-                        srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w, {{ image | image_url: width: 1200 }} 1200w, {{ image | image_url: width: 1600 }} 1600w"
+                        {%- comment -%}
+                          format: 'webp' er eksplisitt. Uten den leverer Shopify
+                          kildeformatet, og hero-bildet er en PNG — et format for
+                          strektegninger og gjennomsiktighet, ikke for fotografi.
+                          Samme motiv som webp er typisk 60-70 % mindre.
+                        {%- endcomment -%}
+                        src="{{ image | image_url: width: 900, format: 'webp' }}"
+                        srcset="{{ image | image_url: width: 400, format: 'webp' }} 400w, {{ image | image_url: width: 600, format: 'webp' }} 600w, {{ image | image_url: width: 900, format: 'webp' }} 900w, {{ image | image_url: width: 1200, format: 'webp' }} 1200w, {{ image | image_url: width: 1600, format: 'webp' }} 1600w"
                         {%- comment -%}
                           sizes matcher faktisk rendret bredde av .sk-hero-media-main, utledet fra
                           .page-width (max-width 1600px, padding 40px/side ved >=889px viewport) og
@@ -1870,19 +1889,22 @@
                         width="900"
                         height="900"
                         {%- comment -%}
-                          Bilde 2 lastes ogsaa med én gang. Peek-kanten paa mobil
-                          viser 47 px av neste slide, men med loading="lazy" ble
-                          bildet aldri hentet — maalt naturalWidth 0 og tom
-                          currentSrc — saa kanten var en tom hvit flate.
-                          Geometrien var riktig; det manglet bare et bilde i den.
-                          fetchpriority="low" saa det ikke konkurrerer med LCP.
+                          KUN slide 1 er eager. Bilde 2 var ogsaa eager — en rest
+                          fra peek-kanten paa mobil, der 47 px av neste slide var
+                          synlig og et lazy bilde derfor etterlot en tom hvit
+                          flate. Den peek-en er rullet tilbake (den kuttet tekst
+                          i bildene), saa bilde 2 er ikke lenger synlig ved
+                          foerste paint — men det ble fortsatt hentet.
+
+                          To eager-bilder stablet paa samme posisjon konkurrerer
+                          om den foerste malingen, og nettleseren kan ikke vite
+                          hvilket som er LCP. Ett eager-bilde, med hoey prioritet
+                          og ingen konkurrent, er hele poenget med fetchpriority.
                         {%- endcomment -%}
                         {% if forloop.first %}
-                          loading="eager" fetchpriority="high"
-                        {% elsif forloop.index == 2 %}
-                          loading="eager" fetchpriority="low"
+                          loading="eager" fetchpriority="high" decoding="sync"
                         {% else %}
-                          loading="lazy"
+                          loading="lazy" decoding="async"
                         {% endif %}
                       >
                     </div>
@@ -2372,6 +2394,12 @@
   {% endif %}
 
   {% render 'sk-radiance-sticky-bar', section: section, product: product, product_form_id: product_form_id %}
+
+  {%- comment -%}
+    Måler om kjøpsknappen i det hele tatt blir sett. Se snippeten for hvorfor
+    dette ikke er det samme som konverteringsraten.
+  {%- endcomment -%}
+  {%- render 'sk-atc-visibility-tracking' -%}
 
   {%- render 'sk-product-jsonld' -%}
 

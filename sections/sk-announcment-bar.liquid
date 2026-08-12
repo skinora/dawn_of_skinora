@@ -3,7 +3,14 @@
   # kannibaliserer og gjør kampanjeprisen utydelig. Meldingen slettes ikke –
   # den kommer tilbake når kampanje_aktiv slås av.
   assign vis_melding_1 = true
-  if settings.kampanje_aktiv
+-%}
+{%- capture ann_campaign_live -%}{% render 'sk-campaign-live' %}{%- endcapture -%}
+{%- liquid
+  # Kampanjen sjekkes via 'sk-campaign-live', ikke via bryteren alene: en
+  # kampanje som har passert sluttdatoen skal ikke lenger undertrykke
+  # 10 %-meldingen. Ellers ville velkomsttilbudet blitt borte for godt
+  # den dagen noen glemte å slå av bryteren.
+  if ann_campaign_live contains '1'
     assign vis_melding_1 = false
   endif
 
@@ -133,6 +140,34 @@
       display: none;
     }
   }
+
+  /* ── Mobil: ett budskap, 40 px ────────────────────────────────────────────
+     97 % av trafikken er mobil, og der teller hver piksel over folden —
+     ATC-knappen skal ligge under 700 px i dokumentet. Baren kostet 48 px og
+     roterte gjennom tre budskap, som betyr at kunden i verste fall ser feil
+     budskap i det halvsekundet hen bestemmer seg.
+
+     På mobil vises derfor kun frakt, statisk. Ingen animasjon: den koster
+     også en kompositor-lag per melding, i toppen av siden, mens LCP-bildet
+     kjemper om den samme rammen. */
+  @media (max-width: 749px) {
+    .sk-announcement__inner {
+      min-height: 40px;
+      padding-block: 0;
+    }
+
+    .sk-announcement__text,
+    .sk-announcement__link {
+      display: none;
+      animation: none;
+      opacity: 1;
+    }
+
+    .sk-announcement__text--primary {
+      display: block;
+      pointer-events: auto;
+    }
+  }
 </style>
 
 <div class="sk-announcement">
@@ -152,8 +187,15 @@
       {%- endif -%}
     {%- endif -%}
 
+    {%- comment -%}
+      Melding 2 = frakt. Den er merket fordi den er den ENESTE som vises på
+      mobil: 97 % av trafikken er mobil, og der er baren ren kostnad i
+      høydebudsjettet over folden. Frakt er det budskapet som faktisk
+      påvirker kjøpsbeslutningen — garanti og nyhetsbrev kan vente til
+      kunden har sett produktet.
+    {%- endcomment -%}
     {%- if section.settings.message_2 != blank -%}
-      <p class="sk-announcement__text">{{ section.settings.message_2 }}</p>
+      <p class="sk-announcement__text sk-announcement__text--primary">{{ section.settings.message_2 }}</p>
     {%- endif -%}
 
     {%- if section.settings.message_3 != blank -%}

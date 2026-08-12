@@ -16,8 +16,18 @@
   Er bryteren av, rendres ingenting.
 {%- endcomment -%}
 
+{%- comment -%}
+  Kampanjen skjules automatisk etter sluttdatoen — se 'sk-campaign-live'.
+  Bryteren alene har ingen tidsforståelse, og et utløpt tilbud er verre enn
+  ingen kampanje.
+{%- endcomment -%}
+{%- capture cb_live -%}{% render 'sk-campaign-live' %}{%- endcapture -%}
+
 {%- liquid
-  assign cb_on = settings.kampanje_aktiv
+  assign cb_on = false
+  if cb_live contains '1'
+    assign cb_on = true
+  endif
   assign cb_layout = layout | default: 'inline'
 
   # Besparelse fra produktets EGNE tall (ikke tema-innstillinger).
