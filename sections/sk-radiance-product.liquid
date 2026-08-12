@@ -1771,18 +1771,18 @@
           {%- endcomment -%}
           {%- liquid
             comment
-              Antallet hentes i tre trinn, mest presist foerst:
-              1) metafeltet custom.stock_left — settes per produkt, manuell kontroll
-              2) Shopifys eget lagertall — per produkt, alltid sant, null vedlikehold
-              3) seksjonsinnstillingen — SISTE utvei. product.sk-radiance.json er
-                 ÉN mal delt av alle produktene, saa denne gir samme tall paa alle.
+              Antallet settes MANUELT, per produkt.
+
+              Shopifys eget lagertall brukes bevisst IKKE: beholdningen der
+              er ikke ajour (maalt 135 / 25 / 28 mot faktisk situasjon), og
+              et automatisk tall som er galt er verre enn ingen linje.
+
+              1) metafeltet custom.stock_left — per produkt, dette er stedet
+              2) seksjonsinnstillingen — reserve. product.sk-radiance.json er
+                 ÉN mal delt av alle produktene, saa den gir samme tall paa
+                 alle. Bruk den bare hvis tallet faktisk skal vaere likt.
             endcomment
             assign stock_left = product.metafields.custom.stock_left.value | default: product.metafields.custom.stock_left
-
-            assign inv_qty = product.selected_or_first_available_variant.inventory_quantity | default: 0
-            if stock_left == blank and inv_qty > 0
-              assign stock_left = inv_qty
-            endif
 
             if stock_left == blank
               assign stock_left = section.settings.stock_left
@@ -2805,7 +2805,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Vises rett under undertittelen i hero. Antallet hentes i tre trinn: 1) metafeltet custom.stock_left på produktet, 2) Shopifys eget lagertall hvis du fører lager, 3) feltet under. ADVARSEL: denne malen deles av alle produktene, så feltet under gir SAMME tall på alle. Bruk metafeltet når tallene skiller seg."
+      "content": "Vises rett under undertittelen i hero. Antallet settes manuelt — Shopifys lagertall brukes ikke. Sett tallet PER PRODUKT i metafeltet custom.stock_left (Innstillinger → Egendefinerte data → Produkter → Legg til definisjon, type Heltall). Feltet under er kun reserve, og gir samme tall på alle produkter som bruker denne malen."
     },
     {
       "type": "checkbox",
