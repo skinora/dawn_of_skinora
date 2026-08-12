@@ -419,18 +419,21 @@
 
     .sk-radiance-pills {
       display: flex;
-      gap: 0.75rem;
+      gap: var(--space-2);
       flex-wrap: wrap;
       margin: 0;
     }
 
+    /* Paddingen er strammet inn samtidig som fontstoerrelsen ble rettet.
+       Uten det brakk raden til tre linjer da den fjerde pillen kom til. */
     .sk-pill {
-      border: 1.5px solid var(--color-border-light, #d4d4dc);
+      border: 1px solid var(--color-border-light, #d4d4dc);
       border-radius: 999px;
-      padding: var(--space-2) var(--space-4);
+      padding: var(--space-1) var(--space-3);
       /* Var 1.15rem — det ga 11,5 px ved 10 px rot, under caption-gulvet. */
       font-size: var(--fs-xs);
       font-weight: var(--fw-medium);
+      line-height: var(--lh-relaxed);
       background: var(--color-white);
     }
 
