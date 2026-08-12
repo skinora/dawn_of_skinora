@@ -276,7 +276,12 @@
       gap: 0.75rem;
     }
 
+    /* Prisen tar plassen som blir til overs, knappen tar det den trenger.
+       Uten `flex: 1 1 auto` her ble info-kolonnen presset til 0 px bredde
+       mens knappen vokste til 397 px paa en 412 px skjerm — teksten var
+       kuttet til «LEG». */
     .sk-radiance-sticky-bottom-bar__info {
+      flex: 1 1 auto;
       width: auto;
       min-width: 0;
       text-align: left;
@@ -314,10 +319,17 @@
       flex: 0 0 auto;
     }
 
+    /* Selve knappen arver width: 100% fra .sk-btn. I en rad betyr «100 %»
+       hele raden, saa den spiste all plassen og rant utenfor skjermen.
+       Her skal den vaere saa bred som teksten krever, ikke mer. */
     .sk-radiance-sticky-bottom-bar__cta {
+      width: auto;
+      min-width: 0;
+      max-width: 100%;
       min-height: 4.4rem;
       padding: 0 1.6rem;
       font-size: 1.5rem;
+      white-space: nowrap;
     }
   }
 </style>
