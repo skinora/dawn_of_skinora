@@ -1096,20 +1096,43 @@
     }
 
     @media (max-width: 768px) {
-      /* ── Lagerbaandet: 67 px er for mye over fold paa mobil ── */
+      /* ── Lagerbaandet paa mobil: alt paa én linje ──
+         Hoeyden kom av at etiketten og leveringsteksten laa stablet. Lagt
+         paa samme linje som tallet blir hele baandet én tekstlinje, og
+         brekker foerst hvis teksten faktisk er for lang. 67 px -> ~36 px. */
       .sk-stock {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
         margin-top: var(--space-3);
         padding: var(--space-2) var(--space-3);
-        column-gap: var(--space-3);
+        column-gap: var(--space-2);
+        row-gap: 2px;
         border-radius: 12px;
       }
 
       .sk-stock__count {
         font-size: var(--fs-lg);
+        line-height: var(--lh-relaxed);
+      }
+
+      .sk-stock__body {
+        display: contents;
+      }
+
+      .sk-stock__label {
+        font-size: var(--fs-xs);
+        letter-spacing: var(--tracking-wide);
       }
 
       .sk-stock__restock {
         font-size: var(--fs-xs);
+        color: var(--ink-700);
+      }
+
+      .sk-stock__restock::before {
+        content: '· ';
+        color: var(--ink-300);
       }
 
       /* ── Pills: fra fire rammer til én flytende linje ──
