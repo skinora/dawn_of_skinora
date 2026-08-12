@@ -638,10 +638,22 @@
       opacity: 0.85;
     }
 
+    /* Titlene er ulikt lange: «Radiance Face – Roedlysmaske for ansikt»
+       brekker til to linjer, «Radiance Face + Neck» til én. Grid'et strekker
+       kortene like hoye, men innholdet flyter fra toppen — saa den ene linjens
+       forskjell forplantet seg ned gjennom pris OG spar-baandet, maalt til
+       30 px forskyvning.
+
+       Loesningen er aa reservere plass til to linjer i tittelen. Da ligger alt
+       under den paa samme hoeyde uansett hvilken tittel som er lengst.
+       Hoeyden regnes ut fra --title-lh, saa den foelger med naar linjehoeyden
+       endres per brekkpunkt; sett aldri line-height direkte her igjen. */
     .sk-offer-card__title {
+      --title-lh: 2;
       font-size: 1.5rem;
       font-weight: 600;
-      line-height: 2;
+      line-height: var(--title-lh);
+      min-height: calc(var(--title-lh) * 2em);
       margin: 0;
     }
 
@@ -712,9 +724,11 @@
     }
 
     @media (min-width: 990px) {
+      /* --title-lh i stedet for line-height: min-height i grunnregelen
+         regner ut to-linjers hoeyden fra den, saa de to maa ikke skille lag. */
       .sk-offer-card__title {
+        --title-lh: 1.35;
         font-size: 1.6rem;
-        line-height: 1.35;
         font-weight: 600;
         margin: 0;
         letter-spacing: -0.01em;
@@ -1397,9 +1411,12 @@
         padding: 0;
       }
 
+      /* Paa mobil staar kortene under hverandre. Da er det ingenting aa rette
+         inn mot, og reservert plass til en linje nummer to er bare luft. */
       .sk-offer-card__title {
+        --title-lh: 1.45;
         font-size: 1.6rem;
-        line-height: 1.45;
+        min-height: 0;
         margin: 0;
         font-weight: 600;
         letter-spacing: -0.01em;
