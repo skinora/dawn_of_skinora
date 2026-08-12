@@ -276,8 +276,8 @@
     }
 
     .sk-hero-progress-dot {
-      width: clamp(12px, 2vw, 16px);
-      height: clamp(12px, 2vw, 16px);
+      width: clamp(7px, 1.4vw, 9px);
+      height: clamp(7px, 1.4vw, 9px);
       border: 1px solid var(--color-neutral-4, #49494a);
       background: transparent;
       border-radius: 0;
@@ -1096,8 +1096,56 @@
     }
 
     @media (max-width: 768px) {
+      /* ── Lagerbaandet: 67 px er for mye over fold paa mobil ── */
+      .sk-stock {
+        margin-top: var(--space-3);
+        padding: var(--space-2) var(--space-3);
+        column-gap: var(--space-3);
+        border-radius: 12px;
+      }
+
+      .sk-stock__count {
+        font-size: var(--fs-lg);
+      }
+
+      .sk-stock__restock {
+        font-size: var(--fs-xs);
+      }
+
+      /* ── Pills: fra fire rammer til én flytende linje ──
+         Rammene, paddingen og mellomrommene kostet mer plass enn teksten.
+         Paa mobil droppes boksene og punktene skilles med en midtprikk —
+         samme informasjon, langt mindre flate. Raden brekker av seg selv,
+         saa den er dynamisk uansett hvor mange punkter produktet har. */
+      .sk-radiance-pills {
+        display: block;
+        font-size: var(--fs-xs);
+        line-height: var(--lh-relaxed);
+        color: var(--ink-500);
+      }
+
+      .sk-pill {
+        display: inline;
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+        background: none;
+        font-size: inherit;
+        font-weight: var(--fw-regular);
+      }
+
+      .sk-pill + .sk-pill::before {
+        content: ' · ';
+        color: var(--ink-300);
+      }
+
+      .sk-pill--cert {
+        font-weight: var(--fw-semibold);
+        color: var(--ink-900);
+      }
+
       .sk-eyebrow {
-        margin: 0 0 0.5rem;
+        margin: 0 0 var(--space-1);
         letter-spacing: 0.1em;
         font-weight: 500;
         line-height: 1;
@@ -1106,14 +1154,14 @@
       }
 
       .sk-product-title {
-        font-size: 2.6rem;
+        font-size: 2.3rem;
         font-weight: 600;
-        margin: 0 0 0.5rem;
-        line-height: 1.25;
+        margin: 0 0 var(--space-1);
+        line-height: 1.18;
       }
 
       .sk-product-subtitle {
-        margin: 0 0 1rem;
+        margin: 0 0 var(--space-2);
         font-size: 1.4rem;
         line-height: 1.5;
         color: var(--color-neutral-4, #8c8c95);
