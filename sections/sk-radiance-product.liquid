@@ -1449,7 +1449,9 @@
          gap og en 5 px toppmarg — ingen bakgrunn, ramme, padding eller
          skygge som ville forsvunnet med boksen. */
       .sk-hero-content {
-        gap: var(--space-2);
+        /* 6 px, ikke 8: gapet gjelder mellom seks elementer over folden, saa
+           hver piksel her teller seks ganger mot hoeydebudsjettet. */
+        gap: 6px;
       }
 
       .sk-purchase {
