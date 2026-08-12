@@ -989,6 +989,11 @@ footer .footer__column.footer__column--menu a:hover {
     gap: clamp(0.4rem, 2vw, 1rem);
     margin: 0;
     padding-inline: clamp(0.75rem, 4vw, 1rem);
+    /* Hoeydebudsjett over folden: 97 % av trafikken er mobil, og headeren
+       kostet 64 px av de 700 som skal romme galleri, tittel, pris og
+       kjoepsknapp. 7 px block-padding gir 56 px. Logoen (40 px) og
+       ikonenes tappe-flate er urort — det er kun luften rundt som gaar. */
+    padding-block: 7px;
     box-sizing: border-box;
     overflow-x: hidden;
   }

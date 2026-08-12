@@ -39,6 +39,29 @@
       {{ 'sk-campaign.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
+    {%- if request.page_type == 'product' -%}
+      {%- comment -%}
+        Klaviyo-teaseren («FÅ 10 % RABATT») er 184 px fast plassert på z-index
+        90000 og legger seg dermed OVER kjøpsbaren på 2147483000-laget — den
+        spiser tappe-området for kjøp på små skjermer. På en produktside der
+        kunden er i ferd med å kjøpe, konkurrerer et rabattskjema direkte med
+        salget, og den er dessuten hovedkilden til form_start-støyen i GA4.
+
+        Dette skjuler den ved første maling. Den ordentlige fiksen — å hindre
+        at den i det hele tatt lastes, og å sette utløser til 25 sek ELLER
+        exit-intent — gjøres i Klaviyo under skjemaets målrettingsregler.
+        Denne regelen er sikkerhetsnettet, ikke løsningen.
+      {%- endcomment -%}
+      <style>
+        .klaviyo-form,
+        [class*='kl-teaser'],
+        [class*='kl-private-reset'],
+        div[data-testid='klaviyo-form'] {
+          display: none !important;
+        }
+      </style>
+    {%- endif -%}
+
     {%- if product.tags contains 'noindex' -%}
       <meta name="robots" content="noindex, nofollow">
     {%- endif -%}
@@ -1133,8 +1156,17 @@
 
     {%- comment -%} Produktveiviser: config + modal-loader (én gang) + fast fane {%- endcomment -%}
     {% render 'sk-quiz-trigger', part: 'boot' %}
-    {%- comment -%} Ingen fast fane i kassen-flyten (/cart) – alt skal peke mot kjøp. {%- endcomment -%}
-    {%- unless request.page_type == 'cart' -%}
+    {%- comment -%}
+      Ingen fast fane der brukeren allerede har valgt produkt.
+
+      /cart: alt skal peke mot kjøp.
+      /products/*: veiviseren svarer «hvilken maske passer meg» — et spørsmål
+      kunden er ferdig med når hen står på en produktside. Fanen er 237 px
+      fast plassert og konkurrerer med sticky-kjøpsbaren om tommelen på små
+      skjermer. Den beholdes på forside og kolleksjoner, der spørsmålet
+      fortsatt er åpent.
+    {%- endcomment -%}
+    {%- unless request.page_type == 'cart' or request.page_type == 'product' -%}
       {% render 'sk-quiz-trigger', part: 'tab' %}
     {%- endunless -%}
   </body>

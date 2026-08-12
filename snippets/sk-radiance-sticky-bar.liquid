@@ -251,39 +251,57 @@
     }
   }
 
+  /* ── Mobil: én rad, ikke to ───────────────────────────────────────────────
+     Innholdet sto i flex-direction: column, saa prisen ble stablet OVER
+     knappen og baren maalte 116 px. Paa en 844 px hoy skjerm er det 14 % av
+     viewporten permanent okkupert av noe som skal vaere en paaminnelse.
+
+     Rad i stedet: pris til venstre, knapp til hoeyre — samme informasjon,
+     halve hoeyden. Produktnavnet er droppet paa mobil; brukeren staar paa
+     produktsiden og vet hva den ser paa, og navnet var det som tvang
+     to linjer. */
   @media (max-width: 749px) {
+    .sk-radiance-sticky-bottom-bar--portal {
+      padding: 0.4rem 0;
+    }
+
     .sk-radiance-sticky-bottom-bar {
       padding: 0 0.75rem;
     }
 
     .sk-radiance-sticky-bottom-bar__content {
-      flex-direction: column;
-      align-items: stretch;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
       gap: 0.75rem;
     }
 
     .sk-radiance-sticky-bottom-bar__info {
-      width: 100%;
-      text-align: center;
+      width: auto;
+      min-width: 0;
+      text-align: left;
     }
 
     .sk-radiance-sticky-bottom-bar__product-name {
-      font-size: 1.125rem;
-      white-space: normal;
-      line-height: 1.4;
-      max-height: 2.8em;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      display: none;
     }
 
     .sk-radiance-sticky-bottom-bar__price {
-      justify-content: center;
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      white-space: nowrap;
     }
 
     .sk-radiance-sticky-bottom-bar__button {
-      width: 100%;
+      width: auto;
       min-width: auto;
+      flex: 0 0 auto;
+    }
+
+    .sk-radiance-sticky-bottom-bar__cta {
+      min-height: 4.4rem;
+      padding: 0 1.6rem;
+      font-size: 1.5rem;
     }
   }
 </style>
@@ -349,8 +367,6 @@
     const sectionId = '{{ section_id }}';
     const sourceId = 'stickyBottomBar-' + sectionId;
     const portalId = sourceId + '-portal';
-    const hero = document.querySelector('#MainProduct-' + sectionId);
-
     let latestOfferDetail = null;
 
     function mountPortal() {
@@ -368,12 +384,47 @@
       return portal;
     }
 
-    function updateVisibility(portal) {
-      if (!hero) return;
-      const rect = hero.getBoundingClientRect();
-      const isVisible = rect.bottom < 80;
-      portal.classList.toggle('visible', isVisible);
-      document.documentElement.classList.toggle('sk-sticky-bar-visible', isVisible);
+    /* ── Synlighet styrt av hoved-ATC, ikke av scroll ────────────────────────
+       Foer: updateVisibility() maalte hele #MainProduct-seksjonen og ble kun
+       kalt fra scroll- og resize-hendelser — aldri ved init. Derfor manglet
+       .visible ved foerste paint, baren sto paa translateY(100%) utenfor
+       skjermen, og den dukket foerst opp naar brukeren scrollet. Paa en side
+       der knappen uansett ligger under folden var det stikk motsatt av hva
+       baren er til for.
+
+       Naa er regelen den enkle: baren er en STEDFORTREDER for hoved-knappen.
+       Er knappen synlig, trengs ingen stedfortreder. Er den ute av syne,
+       trengs den. En IntersectionObserver svarer paa akkurat det spoersmaalet
+       uten aa vite noe om scroll-posisjon eller -retning, og den fyrer ved
+       observe() — saa tilstanden er riktig fra foerste frame. */
+    function setBarVisible(portal, visible) {
+      portal.classList.toggle('visible', visible);
+      document.documentElement.classList.toggle('sk-sticky-bar-visible', visible);
+    }
+
+    function observeMainAtc(portal) {
+      const main = document.getElementById('MainProduct-' + sectionId) || document;
+      const atc =
+        main.querySelector('[data-sk-main-atc]') ||
+        main.querySelector('.sk-radiance-buy-buttons button[type="submit"]') ||
+        main.querySelector('form[action*="/cart/add"] button[type="submit"]') ||
+        main.querySelector('button[name="add"]');
+
+      if (!atc || typeof IntersectionObserver === 'undefined') {
+        /* Finner vi ikke knappen, er det tryggere aa vise baren enn aa la
+           siden staa uten kjoepsmulighet i det hele tatt. */
+        setBarVisible(portal, true);
+        return;
+      }
+
+      new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => setBarVisible(portal, !entry.isIntersecting));
+        },
+        /* Litt margin i bunn: en knapp som saavidt stikker inn under
+           tastaturet eller nettleserlinja teller ikke som synlig. */
+        { rootMargin: '0px 0px -24px 0px', threshold: 0.35 }
+      ).observe(atc);
     }
 
     function findProductForm(btn) {
@@ -512,25 +563,12 @@
 
     portal.addEventListener('click', handlePortalClick);
 
-    /* ── Visibility bak én rAF-gate ──────────────────────────────────────────
-       updateVisibility() leser layout (getBoundingClientRect) og skriver
-       deretter klasser. Uten gate blir det en tvungen reflow per hendelse.
-       Scroll var allerede gatet; resize var det IKKE — og på mobil fyrer
-       resize gjentatte ganger når nettleserens URL-linje skjules/vises under
-       scrolling, så den ugatede varianten ga en reflow-storm midt i
-       interaksjonen (INP). Begge deler bruker nå samme gate. */
-    let stickyTicking = false;
-    const scheduleVisibility = () => {
-      if (stickyTicking) return;
-      stickyTicking = true;
-      requestAnimationFrame(() => {
-        updateVisibility(portal);
-        stickyTicking = false;
-      });
-    };
-
-    window.addEventListener('scroll', scheduleVisibility, { passive: true });
-    window.addEventListener('resize', scheduleVisibility, { passive: true });
+    /* Scroll- og resize-lytterne er borte med vilje. De maalte layout ved hver
+       hendelse og krevde en rAF-gate for ikke aa gi reflow-storm paa mobil,
+       der resize fyrer gjentatte ganger naar nettleserlinja skjules under
+       scrolling. IntersectionObserver gjoer maalingen utenfor hovedtraaden og
+       kaller bare tilbake naar svaret faktisk endrer seg. */
+    observeMainAtc(portal);
 
     document.addEventListener('sk:offerchange', (e) => updateSticky(e.detail));
   })();

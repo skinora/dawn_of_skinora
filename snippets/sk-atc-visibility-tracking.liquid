@@ -1,0 +1,97 @@
+{%- comment -%}
+  sk-atc-visibility-tracking — måler om kjøpsknappen i det hele tatt blir sett
+  ----------------------------------------------------------------------------
+  Sender ÉN gang per side per sesjon:
+
+    gtag('event', 'atc_visible', {
+      time_to_visible_ms, scroll_depth_pct, template: 'product'
+    })
+
+  Hvorfor dette er verdt et eget event: konverteringstall forteller hvor mange
+  som klikket, ikke hvor mange som fikk sjansen. Ligger knappen 1 340 px nede,
+  er en lav klikkrate ikke et budskapsproblem — det er et layoutproblem, og de
+  to krever motsatt tiltak. Dette skiller dem.
+
+  «Én gang per sesjon per side» håndheves med sessionStorage nøklet på
+  sti + template. Samme produkt sett to ganger i én sesjon teller én gang;
+  to ulike produkter teller hver for seg.
+
+  Merk: eventet krever at gtag finnes. Taggen lastes av Shopifys Google-
+  kanal / app-embed, ikke av temaet, og den lastes utsatt (se SKLoader i
+  theme.liquid). Derfor køes eventet i dataLayer-stil hvis gtag ennå ikke er
+  definert, i stedet for å gå tapt.
+{%- endcomment -%}
+
+<script>
+  (function () {
+    if (!window.IntersectionObserver) return;
+
+    var STORAGE_KEY = 'sk_atc_visible:' + location.pathname;
+
+    try {
+      if (sessionStorage.getItem(STORAGE_KEY)) return;
+    } catch (e) {
+      /* Privat modus e.l. — da måler vi heller én gang for mye enn ingenting. */
+    }
+
+    function send(payload) {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'atc_visible', payload);
+        return;
+      }
+      /* gtag er ikke lastet ennå. gtag() er egentlig bare en push til
+         dataLayer, så vi gjør det manuelt — når taggen initialiseres
+         plukker den opp køen og eventet kommer fram med riktig
+         client_id og sesjon. */
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(['event', 'atc_visible', payload]);
+    }
+
+    function scrollDepthPct() {
+      var doc = document.documentElement;
+      var scrollable = doc.scrollHeight - window.innerHeight;
+      if (scrollable <= 0) return 100;
+      return Math.max(0, Math.min(100, Math.round((window.scrollY / scrollable) * 100)));
+    }
+
+    function start() {
+      var atc = document.querySelector('[data-sk-main-atc]');
+      if (!atc) return;
+
+      /* Nullpunktet er DOMContentLoaded, ikke navigasjonsstart: vi måler hvor
+         lenge kunden må vente ETTER at siden er brukbar, ikke hvor treg
+         nettverket var. */
+      var domReadyAt =
+        (performance.getEntriesByType('navigation')[0] || {}).domContentLoadedEventEnd || 0;
+
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+
+            observer.disconnect();
+
+            try {
+              sessionStorage.setItem(STORAGE_KEY, '1');
+            } catch (e) {}
+
+            send({
+              time_to_visible_ms: Math.max(0, Math.round(performance.now() - domReadyAt)),
+              scroll_depth_pct: scrollDepthPct(),
+              template: 'product'
+            });
+          });
+        },
+        { threshold: 0.5 }
+      );
+
+      observer.observe(atc);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', start);
+    } else {
+      start();
+    }
+  })();
+</script>

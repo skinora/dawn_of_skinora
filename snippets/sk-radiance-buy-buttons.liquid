@@ -59,8 +59,16 @@
 
         <div class="sk-radiance-buy-buttons__wrapper">
           <div class="sk-radiance-buy-buttons__buttons">
+            {%- comment -%}
+              data-sk-main-atc er ankeret for to uavhengige maalinger:
+              sticky-baren skjuler seg naar denne knappen er synlig, og
+              atc_visible-eventet fyrer foerste gang den kommer i viewport.
+              Begge trenger ETT stabilt holdepunkt — id-en inneholder
+              seksjons-id og er derfor ikke egnet som selektor.
+            {%- endcomment -%}
             <button
               id="ProductSubmitButton-{{ resolved_section_id }}"
+              data-sk-main-atc
               type="submit"
               name="add"
               class="sk-btn sk-btn--primary sk-radiance-buy-buttons__button"

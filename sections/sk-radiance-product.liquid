@@ -212,6 +212,19 @@
       height: 100%;
     }
 
+    /* ── Slide 1 skal vises uten at galleri-JS har kjoert ────────────────────
+       Swiper setter .swiper-initialized foerst naar skriptet har kjoert. I
+       glippet foer det stables alle slidene under hverandre — hero-omraadet
+       ble maalt HELT TOMT i 4 sekunder paa foerste last, og deretter hoppet
+       layouten naar Swiper tok over.
+
+       Denne regelen viser kun slide 1 inntil Swiper melder seg. Da har
+       LCP-bildet en ferdig, riktig dimensjonert plass fra foerste maling, og
+       de oevrige bildene ligger ikke i viewport og trigger ikke henting. */
+    .sk-hero-media-swiper .swiper:not(.swiper-initialized) .swiper-slide:not(:first-child) {
+      display: none;
+    }
+
     .sk-hero-media-main img,
     .sk-hero-thumb img {
       width: 100%;
@@ -1343,7 +1356,7 @@
         /* Kapp hovedbildet til maks ~58% av skjermhøyden så tittel, pris
            og CTA kommer med over fold. Kvadratisk når 100vw < 58vh
            (høye telefoner), ellers beskjæres det til 58vh-båndet. */
-        max-height: 58vh;
+        max-height: min(58vh, 390px);
       }
 
       .sk-hero-media-swiper {
@@ -1351,7 +1364,7 @@
         aspect-ratio: 1 / 1;
         max-width: 100%;
         min-width: 0;
-        max-height: 58vh;
+        max-height: min(58vh, 390px);
       }
 
       .sk-hero-gallery-wrapper,
@@ -1409,6 +1422,110 @@
         justify-content: center;
         gap: 0.5rem;
         padding: 0;
+      }
+
+      /* ══════════════════════════════════════════════════════════════════════
+         KJOEPSREKKEFOELGE PAA MOBIL
+         ══════════════════════════════════════════════════════════════════════
+         97 % av trafikken er mobil, og kjoepsknappen laa 1 331 px nede i
+         dokumentet — den ble aldri sett uten at kunden scrollet aktivt etter
+         den. Alt over den var 701 px med informasjon kunden ikke hadde bedt om
+         enda: eyebrow, undertittel, pills, og to 332 px hoye tilbudskort.
+
+         Ny rekkefoelge: navn -> vurdering -> hva den gjoer -> pris -> knapp.
+         Foerst naar kunden har sagt ja til Aa KJOEPE er det interessant HVILKEN
+         variant — derfor flyttes tilbudskortene UNDER knappen.
+
+         Hele omleggingen er ren CSS. Ingen markup er flyttet, og det er med
+         vilje: variantvalg, prissynkronisering og sticky-baren henger sammen
+         via sk:offerchange og DOM-strukturen. Flytter man noder, maa alt det
+         rigges paa nytt. `order` endrer bare malerekkefoelgen — JS-en ser
+         nøyaktig samme dokument som foer.
+
+         `display: contents` paa .sk-purchase er nokkelen: den loeser opp
+         boksen slik at dens fire barn (knapp, trust-rad, betalingsikoner,
+         resten) blir soesken av tilbudskortene og kan sorteres inn i samme
+         flate liste. Trygt her fordi .sk-purchase kun har display:grid,
+         gap og en 5 px toppmarg — ingen bakgrunn, ramme, padding eller
+         skygge som ville forsvunnet med boksen. */
+      .sk-hero-content {
+        /* 6 px, ikke 8: gapet gjelder mellom seks elementer over folden, saa
+           hver piksel her teller seks ganger mot hoeydebudsjettet. */
+        gap: 6px;
+      }
+
+      .sk-purchase {
+        display: contents;
+      }
+
+      .sk-product-title { order: 1; }
+      .sk-product-reviews { order: 2; }
+      .sk-product-subtitle { order: 3; }
+      .sk-shared-price { order: 4; }
+      .sk-campaign--inline { order: 5; }
+
+      /* Kjoepsknapp-wrapperen loeses ogsaa opp. Den inneholder betalings-
+         ikonene FOER knappen — 36 px kort og logoer som skjoev selve kjoepet
+         nedover. Ikonene er trygghet, ikke et argument for aa trykke; de
+         hoerer hjemme UNDER knappen sammen med trust-raden. */
+      .sk-purchase > *:first-child { display: contents; }
+
+      .sk-radiance-buy-buttons { order: 6; }
+      .sk-trust-inline { order: 7; }
+      .payment-icons,
+      .sk-payment { order: 8; }
+
+      /* Gitteret mellom galleri og tekstkolonne. 15 px dødluft midt i
+         hoeydebudsjettet over folden. */
+      .sk-hero-grid {
+        gap: var(--space-2);
+      }
+
+      .sk-shared-price {
+        margin-block: 2px;
+        padding-block: 0;
+      }
+
+      /* Lagerbaandet staar UNDER knappen, ikke over. Knapphet som argument
+         virker naar kunden allerede vil ha varen; over knappen er det bare
+         42 px som skyver kjoepet lenger ned. */
+      .sk-stock { order: 9; }
+
+      .sk-offer-cards { order: 10; }
+      .sk-hero-info { order: 11; }
+      .sk-radiance-pills { order: 12; }
+
+      /* Eyebrow droppes paa mobil. «PRESIS LED-STIMULERING FOR HUDEN» sier
+         det samme som undertittelen, i versaler og 12 px — den kostet plass
+         over folden uten aa tilfoere noe. Beholdes paa desktop, der plassen
+         finnes. */
+      .sk-eyebrow {
+        display: none;
+      }
+
+      /* Kampanjestripa var 72 px fordi den brakk til tre linjer. Én linje,
+         ellipse hvis det ikke er plass — budskapet er «det haster og du
+         sparer», ikke hele vilkaarsteksten. */
+      .sk-campaign--inline {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: baseline;
+        gap: var(--space-1);
+        max-height: 24px;
+        /* Egen marg, ikke arvet: stripa hadde 14 px under seg, som la seg
+           oppaa flex-gapet og skjoev knappen 22 px ned helt alene. */
+        margin-block: var(--space-1) 0;
+        padding-block: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: var(--fs-xs);
+        line-height: 24px;
+      }
+
+      .sk-campaign--inline .sk-campaign__deadline {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
       }
 
       /* Paa mobil staar kortene under hverandre. Da er det ingenting aa rette
@@ -1855,9 +1972,23 @@
                 <div class="swiper-wrapper">
                   {% for image in media_images %}
                     <div class="swiper-slide">
+                      {%- comment -%}
+                        format: 'webp' er eksplisitt. Uten den leverer Shopify
+                        kildeformatet, og hero-bildet er en PNG — et format for
+                        strektegninger og gjennomsiktighet, ikke for fotografi.
+                        Samme motiv som webp er typisk 60-70 % mindre.
+
+                        ADVARSEL: denne kommentaren maa staa UTENFOR img-taggen.
+                        En Liquid-kommentar med bindestrek spiser linjeskiftet
+                        foran seg. Staar den rett etter selve taggaapningen,
+                        limes taggnavnet sammen med foerste attributt, og
+                        nettleseren parser et ukjent element helt uten bilde.
+                        Mellom to attributter er det ufarlig — HTML-parseren
+                        kommer seg etter det — men aldri rett etter aapningen.
+                      {%- endcomment -%}
                       <img
-                        src="{{ image | image_url: width: 900 }}"
-                        srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w, {{ image | image_url: width: 1200 }} 1200w, {{ image | image_url: width: 1600 }} 1600w"
+                        src="{{ image | image_url: width: 900, format: 'webp' }}"
+                        srcset="{{ image | image_url: width: 400, format: 'webp' }} 400w, {{ image | image_url: width: 600, format: 'webp' }} 600w, {{ image | image_url: width: 900, format: 'webp' }} 900w, {{ image | image_url: width: 1200, format: 'webp' }} 1200w, {{ image | image_url: width: 1600, format: 'webp' }} 1600w"
                         {%- comment -%}
                           sizes matcher faktisk rendret bredde av .sk-hero-media-main, utledet fra
                           .page-width (max-width 1600px, padding 40px/side ved >=889px viewport) og
@@ -1870,19 +2001,22 @@
                         width="900"
                         height="900"
                         {%- comment -%}
-                          Bilde 2 lastes ogsaa med én gang. Peek-kanten paa mobil
-                          viser 47 px av neste slide, men med loading="lazy" ble
-                          bildet aldri hentet — maalt naturalWidth 0 og tom
-                          currentSrc — saa kanten var en tom hvit flate.
-                          Geometrien var riktig; det manglet bare et bilde i den.
-                          fetchpriority="low" saa det ikke konkurrerer med LCP.
+                          KUN slide 1 er eager. Bilde 2 var ogsaa eager — en rest
+                          fra peek-kanten paa mobil, der 47 px av neste slide var
+                          synlig og et lazy bilde derfor etterlot en tom hvit
+                          flate. Den peek-en er rullet tilbake (den kuttet tekst
+                          i bildene), saa bilde 2 er ikke lenger synlig ved
+                          foerste paint — men det ble fortsatt hentet.
+
+                          To eager-bilder stablet paa samme posisjon konkurrerer
+                          om den foerste malingen, og nettleseren kan ikke vite
+                          hvilket som er LCP. Ett eager-bilde, med hoey prioritet
+                          og ingen konkurrent, er hele poenget med fetchpriority.
                         {%- endcomment -%}
                         {% if forloop.first %}
-                          loading="eager" fetchpriority="high"
-                        {% elsif forloop.index == 2 %}
-                          loading="eager" fetchpriority="low"
+                          loading="eager" fetchpriority="high" decoding="sync"
                         {% else %}
-                          loading="lazy"
+                          loading="lazy" decoding="async"
                         {% endif %}
                       >
                     </div>
@@ -2372,6 +2506,12 @@
   {% endif %}
 
   {% render 'sk-radiance-sticky-bar', section: section, product: product, product_form_id: product_form_id %}
+
+  {%- comment -%}
+    Måler om kjøpsknappen i det hele tatt blir sett. Se snippeten for hvorfor
+    dette ikke er det samme som konverteringsraten.
+  {%- endcomment -%}
+  {%- render 'sk-atc-visibility-tracking' -%}
 
   {%- render 'sk-product-jsonld' -%}
 

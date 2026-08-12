@@ -1,0 +1,42 @@
+{%- comment -%}
+  sk-campaign-live — én sannhet for «går kampanjen akkurat nå?»
+  -------------------------------------------------------------
+  Skriver ut «1» hvis kampanjen skal vises, ellers ingenting. Brukes slik:
+
+    {%- capture cb_live -%}{% render 'sk-campaign-live' %}{%- endcapture -%}
+    {%- if cb_live contains '1' -%} ... {%- endif -%}
+
+  Hvorfor en snippet og ikke bare settings.kampanje_aktiv:
+
+  Bryteren alene har ingen tidsforståelse. Feltet «Sluttdato» er ren tekst
+  («17. august») fordi det skal leses av mennesker i etiketten — det kan ikke
+  sammenlignes med dagens dato. Resultatet var at en kampanje sto og lyste
+  videre etter fristen til noen husket å slå den av manuelt, og et utløpt
+  tilbud er verre enn ingen kampanje: det forteller kunden at datoene på
+  siden ikke betyr noe.
+
+  kampanje_sluttdato_iso er maskinlesbar (ÅÅÅÅ-MM-DD) og finnes kun for denne
+  sammenligningen. Står den tom, oppfører alt seg som før — bryteren styrer
+  alene. Da er ingenting brutt for den som ikke fyller den ut.
+
+  Sluttdatoen er INKLUDERENDE: «Kun til 17. august» betyr ut den 17., så det
+  legges til 86 399 sekunder (23:59:59) på døgnets start.
+
+  Merk: Liquid rendres på serveren i butikkens tidssone, ikke i kundens.
+  Det er riktig her — en kampanje slutter når BUTIKKEN sier den slutter.
+{%- endcomment -%}
+{%- liquid
+  assign cl_live = settings.kampanje_aktiv
+
+  if cl_live and settings.kampanje_sluttdato_iso != blank
+    assign cl_end = settings.kampanje_sluttdato_iso | date: '%s' | plus: 86399
+    assign cl_now = 'now' | date: '%s' | plus: 0
+    if cl_now > cl_end
+      assign cl_live = false
+    endif
+  endif
+
+  if cl_live
+    echo '1'
+  endif
+-%}
