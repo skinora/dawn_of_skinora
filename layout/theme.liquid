@@ -91,8 +91,20 @@
         Banneret finnes heller ikke i serverkilden — alt bygges av
         JavaScript etter last.
 
-        Verten selv ligger i vanlig DOM og kan styles utenfra. Målt i
-        nettleseren: display:none på <pandectes-cmp> gir høyde 0.
+        Verten selv ligger i vanlig DOM og kan styles utenfra.
+
+        MEN IKKE MED display. Appen setter en INLINE stil på verten:
+          style="z-index: 2147483647; position: fixed; top: 0; left: 0;
+                 right: auto; display: block !important;"
+        Inline !important slår !important fra et stilark, så ingen
+        display-regel her kan vinne — uansett hvor spesifikk den er.
+
+        Appen setter derimot verken visibility eller pointer-events.
+        Der vinner vi. Testet direkte i live-siden:
+          visibility: hidden    -> beregnet visibility = hidden
+          pointer-events: none  -> beregnet pointerEvents = none
+        Banneret er dermed både usynlig og uklikkbart. Det tar ingen
+        plass uansett, siden verten er position: fixed.
 
         Konsekvens verdt å vite: verten inneholder BÅDE banneret og
         preferanse-dialogen, så på disse sidene kan heller ikke «administrer
@@ -104,7 +116,8 @@
       {%- endcomment -%}
       <style>
         pandectes-cmp {
-          display: none !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
         }
       </style>
     {%- endunless -%}
