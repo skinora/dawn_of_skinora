@@ -59,26 +59,30 @@
         div[data-testid='klaviyo-form'] {
           display: none !important;
         }
+      </style>
+    {%- endif -%}
 
-        /* ── Samtykkebanneret skjules på produktsider ──────────────────────
-           Bevisst forretningsvalg, tatt av butikkeier etter at innvendingen
-           er lagt fram: banneret dekker kjøpsflaten på de sidene folk lander
-           på fra annonser.
+    {%- unless request.page_type == 'index' -%}
+      {%- comment -%}
+        ── Samtykkebanneret vises KUN på forsiden ────────────────────────────
+        Bevisst forretningsvalg fra butikkeier, tatt etter at innvendingen er
+        lagt fram: banneret skal stå på forsiden med en OK-knapp, og ikke
+        andre steder.
 
-           MERK HVA DETTE ER OG IKKE ER. display:none skjuler kun. Banneret
-           ligger fortsatt i DOM-en, samtykke-API-et kjører som før, og
-           ingenting endres i hva som faktisk settes av informasjonskapsler.
-           Regelen fjerner altså bare kundens mulighet til å SE valget her —
-           den gir ingen ytelsesgevinst og endrer ingen sporing.
+        MERK HVA DETTE ER OG IKKE ER. display: none skjuler kun. Banneret
+        ligger fortsatt i DOM-en, appen kjører som før, og ingenting endres
+        i hvilke informasjonskapsler som faktisk settes. Regelen fjerner
+        kundens mulighet til å SE banneret på disse sidene — den gir ingen
+        ytelsesgevinst og påvirker ingen sporing.
 
-           Hvorfor Liquid og ikke en body-klasse: dette temaet setter kun
-           `template-<navn>-<suffiks>` på body, og bare når malen HAR et
-           suffiks. Produktsiden er `template-product-sk-radiance`, ikke
-           `template-product`. En selektor på `body.template-product` ville
-           aldri truffet, og et produkt uten suffiks får ingen klasse i det
-           hele tatt. request.page_type er uavhengig av mal og treffer alle
-           produkter — også nye som lages senere.
+        Hvorfor `unless index` og ikke en body-klasse: forbildet vi så på
+        brukte `body:not(.template-index)`. Det ville ikke virket her. Dette
+        temaet setter kun `template-<navn>-<suffiks>` på body, og bare når
+        malen HAR et suffiks — forsiden får derfor ingen `template-index` i
+        det hele tatt, og regelen ville skjult banneret overalt, også der
+        det skal stå. request.page_type er uavhengig av mal.
 
+<<<<<<< Updated upstream
            Selektorene gjelder Pandectes GDPR-appen: #pandectes-banner er
            ytterste wrapper rundt banneret, .cc-revoke er det lille
            «åpne igjen»-ikonet som vises etter et valg dersom revokable
@@ -91,12 +95,28 @@
 
            Skal dette rulles tilbake: slett denne ene regelen. Ingenting
            annet avhenger av den. */
+=======
+        Selektorene gjelder Pandectes GDPR-appen: #pandectes-banner er
+        ytterste wrapper rundt banneret, .cc-revoke er det lille «åpne
+        igjen»-ikonet som vises etter et valg dersom revokable står på.
+        Begge er hentet fra appens egen pandectes-core.js.
+
+        Preferanse-dialogen (.pd-cp-ui) er BEVISST ikke skjult. Den åpnes
+        kun når noen selv klikker «administrer samtykke», typisk fra
+        personvernsiden, og den lenken må fortsatt virke uansett hvilken
+        side kunden står på.
+
+        Rulles tilbake ved å slette hele denne blokken. Ingenting annet
+        avhenger av den.
+      {%- endcomment -%}
+      <style>
+>>>>>>> Stashed changes
         #pandectes-banner,
         .cc-revoke {
           display: none !important;
         }
       </style>
-    {%- endif -%}
+    {%- endunless -%}
 
     {%- if product.tags contains 'noindex' -%}
       <meta name="robots" content="noindex, nofollow">
