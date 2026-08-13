@@ -82,37 +82,28 @@
         det hele tatt, og regelen ville skjult banneret overalt, også der
         det skal stå. request.page_type er uavhengig av mal.
 
-<<<<<<< Updated upstream
-           Selektorene gjelder Pandectes GDPR-appen: #pandectes-banner er
-           ytterste wrapper rundt banneret, .cc-revoke er det lille
-           «åpne igjen»-ikonet som vises etter et valg dersom revokable
-           står på.
+        SELEKTOREN MÅ VÆRE VERTSELEMENTET — IKKE NOE INNI BANNERET.
+        Første forsøk brukte `#pandectes-banner` og `.cc-revoke`, hentet fra
+        appens pandectes-core.js. Det kunne aldri virket: denne versjonen av
+        Pandectes rendrer banneret i et SHADOW DOM på et egendefinert
+        element, <pandectes-cmp>. Innsiden av en shadow root er forseglet mot
+        CSS fra siden, så ingen regel her når fram til elementene der inne.
+        Banneret finnes heller ikke i serverkilden — alt bygges av
+        JavaScript etter last.
 
-           Preferanse-dialogen (.pd-cp-ui) er BEVISST ikke skjult. Den
-           åpnes kun når noen selv klikker «administrer samtykke», f.eks.
-           fra personvernsiden, og den lenken må fortsatt virke — også
-           for en kunde som står på en produktside.
+        Verten selv ligger i vanlig DOM og kan styles utenfra. Målt i
+        nettleseren: display:none på <pandectes-cmp> gir høyde 0.
 
-           Skal dette rulles tilbake: slett denne ene regelen. Ingenting
-           annet avhenger av den. */
-=======
-        Selektorene gjelder Pandectes GDPR-appen: #pandectes-banner er
-        ytterste wrapper rundt banneret, .cc-revoke er det lille «åpne
-        igjen»-ikonet som vises etter et valg dersom revokable står på.
-        Begge er hentet fra appens egen pandectes-core.js.
-
-        Preferanse-dialogen (.pd-cp-ui) er BEVISST ikke skjult. Den åpnes
-        kun når noen selv klikker «administrer samtykke», typisk fra
-        personvernsiden, og den lenken må fortsatt virke uansett hvilken
-        side kunden står på.
+        Konsekvens verdt å vite: verten inneholder BÅDE banneret og
+        preferanse-dialogen, så på disse sidene kan heller ikke «administrer
+        samtykke» åpnes. Lenken virker fortsatt fra personvernsiden, som
+        ikke er berørt av regelen.
 
         Rulles tilbake ved å slette hele denne blokken. Ingenting annet
         avhenger av den.
       {%- endcomment -%}
       <style>
->>>>>>> Stashed changes
-        #pandectes-banner,
-        .cc-revoke {
+        pandectes-cmp {
           display: none !important;
         }
       </style>
