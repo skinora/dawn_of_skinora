@@ -79,10 +79,20 @@
            hele tatt. request.page_type er uavhengig av mal og treffer alle
            produkter — også nye som lages senere.
 
+           Selektorene gjelder Pandectes GDPR-appen: #pandectes-banner er
+           ytterste wrapper rundt banneret, .cc-revoke er det lille
+           «åpne igjen»-ikonet som vises etter et valg dersom revokable
+           står på.
+
+           Preferanse-dialogen (.pd-cp-ui) er BEVISST ikke skjult. Den
+           åpnes kun når noen selv klikker «administrer samtykke», f.eks.
+           fra personvernsiden, og den lenken må fortsatt virke — også
+           for en kunde som står på en produktside.
+
            Skal dette rulles tilbake: slett denne ene regelen. Ingenting
            annet avhenger av den. */
-        #shopify-pc__banner,
-        .shopify-pc__banner {
+        #pandectes-banner,
+        .cc-revoke {
           display: none !important;
         }
       </style>
