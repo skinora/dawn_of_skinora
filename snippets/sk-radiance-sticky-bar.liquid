@@ -20,15 +20,19 @@
     bottom: 0;
     z-index: 2147483000;
 
-    /* Var linear-gradient(90deg, #c9c6cc, var(--ink-900)). Prisen staar i
-       den LYSE enden, og hvit tekst paa #c9c6cc gir 1,69:1 — WCAG AA krever
-       3,0 for stor tekst. Prisen var praktisk talt usynlig i venstre halvdel
-       av baren.
+    /* Gradienten gir knappen noe aa staa MOT. Med ensfarget --ink-900 fikk
+       baren samme farge som knappen, og knappen forsvant inn i flaten.
 
-       Ensfarget --ink-900 gir 15,6:1 og er dessuten merkevarens egen farge;
-       den grå-til-lilla overgangen hoerte ikke hjemme i en palett som ellers
-       er ensfarget aubergine paa hvitt. */
-    background: var(--ink-900);
+       Jeg fjernet den en kort stund fordi prisen maalte 1,69:1 mot den lyse
+       enden — men det gjaldt en midlertidig radlayout der prisen sto helt
+       til venstre, paa #c9c6cc. I to-raders layouten staar prisen SENTRERT,
+       altsaa midt i overgangen (~rgb(123,112,132)), og maaler 4,7:1. Det
+       klarer WCAG AA baade for stor og normal tekst.
+
+       Konklusjonen: gradienten var aldri problemet — radlayouten var det.
+       Endres layouten slik at prisen flyttes mot venstre igjen, maa
+       kontrasten maales paa nytt. */
+    background: linear-gradient(90deg, #c9c6cc, var(--ink-900));
     color: #fff;
     padding: 0.5rem 0;
     box-sizing: border-box;
