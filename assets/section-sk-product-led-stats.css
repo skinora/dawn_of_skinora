@@ -23,7 +23,15 @@
      Ingen fade er noedvendig. Naar begge lagene viser samme motiv, er
      byttet knapt merkbart; en opacity-animasjon ville bare gjort et
      usynlig skifte synlig igjen. */
-  background-color: var(--sk-led-bg, #f5e8ec);
+  /* Nøytral, ikke accent-fargen fra metaobjektet. Den var #c8203a — en
+     sterk rød som ikke finnes noe annet sted i paletten, og som derfor
+     leste som en feil de gangene den rakk å vises. --paper-100 er
+     merkevarens egen varme krem og glir inn i resten av siden.
+
+     Metafeltet `accent` leses fortsatt og sendes inn som --sk-led-bg, men
+     brukes ikke lenger her. Vil du ha per-produkt-tint tilbake, er det
+     bare å bytte denne linja til var(--sk-led-bg, var(--paper-100)). */
+  background-color: var(--paper-100, #f6f2ed);
   background-image: var(--sk-led-lqip, none);
   background-size: cover;
   background-position: center;
