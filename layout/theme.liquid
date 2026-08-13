@@ -59,6 +59,32 @@
         div[data-testid='klaviyo-form'] {
           display: none !important;
         }
+
+        /* ── Samtykkebanneret skjules på produktsider ──────────────────────
+           Bevisst forretningsvalg, tatt av butikkeier etter at innvendingen
+           er lagt fram: banneret dekker kjøpsflaten på de sidene folk lander
+           på fra annonser.
+
+           MERK HVA DETTE ER OG IKKE ER. display:none skjuler kun. Banneret
+           ligger fortsatt i DOM-en, samtykke-API-et kjører som før, og
+           ingenting endres i hva som faktisk settes av informasjonskapsler.
+           Regelen fjerner altså bare kundens mulighet til å SE valget her —
+           den gir ingen ytelsesgevinst og endrer ingen sporing.
+
+           Hvorfor Liquid og ikke en body-klasse: dette temaet setter kun
+           `template-<navn>-<suffiks>` på body, og bare når malen HAR et
+           suffiks. Produktsiden er `template-product-sk-radiance`, ikke
+           `template-product`. En selektor på `body.template-product` ville
+           aldri truffet, og et produkt uten suffiks får ingen klasse i det
+           hele tatt. request.page_type er uavhengig av mal og treffer alle
+           produkter — også nye som lages senere.
+
+           Skal dette rulles tilbake: slett denne ene regelen. Ingenting
+           annet avhenger av den. */
+        #shopify-pc__banner,
+        .shopify-pc__banner {
+          display: none !important;
+        }
       </style>
     {%- endif -%}
 
