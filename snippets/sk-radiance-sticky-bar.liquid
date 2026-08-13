@@ -20,7 +20,15 @@
     bottom: 0;
     z-index: 2147483000;
 
-    background: linear-gradient(90deg, #c9c6cc, var(--ink-900));
+    /* Var linear-gradient(90deg, #c9c6cc, var(--ink-900)). Prisen staar i
+       den LYSE enden, og hvit tekst paa #c9c6cc gir 1,69:1 — WCAG AA krever
+       3,0 for stor tekst. Prisen var praktisk talt usynlig i venstre halvdel
+       av baren.
+
+       Ensfarget --ink-900 gir 15,6:1 og er dessuten merkevarens egen farge;
+       den grå-til-lilla overgangen hoerte ikke hjemme i en palett som ellers
+       er ensfarget aubergine paa hvitt. */
+    background: var(--ink-900);
     color: #fff;
     padding: 0.5rem 0;
     box-sizing: border-box;
