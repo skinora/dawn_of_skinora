@@ -87,3 +87,106 @@
 
   {%- comment -%} Pickup availability removed - snippet not available {%- endcomment -%}
 </div>
+
+{%- comment -%}
+  ── Klikk-respons paa hovedknappen ────────────────────────────────────────
+  Knappen foeltes uresponsiv: man maatte trykke hardt eller flere ganger foer
+  noe skjedde. Trefferflaten er ikke problemet — den er 339x49 px, ingenting
+  ligger over den, og den er ikke deaktivert. Problemet er at det gaar ~0,7 s
+  med kurv-kallet uten at knappen sier fra om at trykket ble registrert.
+
+  Sticky-baren har allerede en «Legger til …»-tilstand nettopp av denne
+  grunn, med denne begrunnelsen i koden: «umiddelbar respons paa knappen som
+  faktisk ble trykket». Hovedknappen fikk aldri den behandlingen — den laa
+  langt nede paa siden og var ikke den man trykket paa. Naa som den ligger
+  over folden arver den problemet.
+
+  To lag, i den rekkefoelgen de merkes:
+
+  1. :active gir svar paa SAMME frame som fingeren treffer. Ren CSS, ingen
+     JS involvert, ingen ventetid. Temaets eksisterende regel var
+     translateY(1px) — for smaatt til aa merkes paa en telefon.
+
+  2. .is-adding settes ved pointerdown, ikke ved submit. Pointerdown fyrer
+     med det samme; submit venter paa at fingeren slippes.
+
+  Opprydningen er med vilje paranoid. En knapp som henger i «Legger til …»
+  er verre enn ingen tilstand i det hele tatt, saa den nullstilles paa alt
+  som ligner en avslutning — inkludert en hard tidsfrist.
+{%- endcomment -%}
+
+<style>
+  body .sk-radiance-buy-buttons__button:active {
+    transform: scale(0.985) translateY(1px);
+    filter: brightness(0.92);
+  }
+
+  .sk-radiance-buy-buttons__button.is-adding {
+    cursor: progress;
+    filter: brightness(0.92);
+  }
+
+  /* Teksten byttes ikke ut — den faar en ledsager. AA bytte selve etiketten
+     endrer knappens bredde midt i trykket, og da hopper layouten under. */
+  .sk-radiance-buy-buttons__button.is-adding .sk-radiance-buy-buttons__button-text::after {
+    content: ' …';
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body .sk-radiance-buy-buttons__button:active {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    var SEL = '[data-sk-main-atc]';
+
+    function clear(btn) {
+      if (btn) btn.classList.remove('is-adding');
+    }
+
+    function clearAll() {
+      document.querySelectorAll(SEL + '.is-adding').forEach(clear);
+    }
+
+    document.addEventListener(
+      'pointerdown',
+      function (event) {
+        var btn = event.target.closest && event.target.closest(SEL);
+        if (!btn || btn.disabled) return;
+
+        btn.classList.add('is-adding');
+
+        /* Hard frist. Feiler kurv-kallet, eller svarer det aldri, skal
+           knappen uansett bli trykkbar igjen. */
+        setTimeout(function () {
+          clear(btn);
+        }, 3000);
+      },
+      true
+    );
+
+    /* Alt som betyr «ferdig»: kurven oppdatert, skuffen aapnet, eller
+       brukeren forlot og kom tilbake. */
+    ['cart:updated', 'cart:refresh', 'cart-drawer:open', 'sk:cartupdated'].forEach(function (name) {
+      document.addEventListener(name, clearAll);
+    });
+
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) clearAll();
+    });
+
+    /* Kurv-skuffen har ingen felles hendelse paa tvers av temaets varianter,
+       saa vi ser etter at den faktisk aapner seg i DOM-en. */
+    if (window.MutationObserver) {
+      var drawer = document.querySelector('cart-drawer');
+      if (drawer) {
+        new MutationObserver(function () {
+          if (drawer.classList.contains('active')) clearAll();
+        }).observe(drawer, { attributes: true, attributeFilter: ['class'] });
+      }
+    }
+  })();
+</script>
