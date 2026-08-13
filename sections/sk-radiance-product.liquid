@@ -1471,9 +1471,18 @@
       .sk-purchase > *:first-child { display: contents; }
 
       .sk-radiance-buy-buttons { order: 6; }
-      .sk-trust-inline { order: 7; }
+
+      /* Lagerbaand og variantvalg foelger rett etter knappen. Trust-raden og
+         betalingsikonene er 135 px til sammen, og de sto imellom — kunden
+         maatte forbi tre trygghetselementer for aa se at det finnes en
+         Face + Neck. Trygghet er svar paa en innvending; den hoerer hjemme
+         ETTER at valget er presentert, ikke foran det. */
+      .sk-stock { order: 7; }
+      .sk-offer-cards { order: 8; }
+
+      .sk-trust-inline { order: 9; }
       .payment-icons,
-      .sk-payment { order: 8; }
+      .sk-payment { order: 10; }
 
       /* Gitteret mellom galleri og tekstkolonne. 15 px dødluft midt i
          hoeydebudsjettet over folden. */
@@ -1486,12 +1495,6 @@
         padding-block: 0;
       }
 
-      /* Lagerbaandet staar UNDER knappen, ikke over. Knapphet som argument
-         virker naar kunden allerede vil ha varen; over knappen er det bare
-         42 px som skyver kjoepet lenger ned. */
-      .sk-stock { order: 9; }
-
-      .sk-offer-cards { order: 10; }
       .sk-hero-info { order: 11; }
       .sk-radiance-pills { order: 12; }
 

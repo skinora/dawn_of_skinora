@@ -276,7 +276,12 @@
       gap: 0.75rem;
     }
 
+    /* Prisen tar plassen som blir til overs, knappen tar det den trenger.
+       Uten `flex: 1 1 auto` her ble info-kolonnen presset til 0 px bredde
+       mens knappen vokste til 397 px paa en 412 px skjerm — teksten var
+       kuttet til «LEG». */
     .sk-radiance-sticky-bottom-bar__info {
+      flex: 1 1 auto;
       width: auto;
       min-width: 0;
       text-align: left;
@@ -286,10 +291,26 @@
       display: none;
     }
 
+    /* Prisblokka faar krympe, knappen ikke. Uten dette hadde info-siden
+       `nowrap` paa tre elementer (pris, foer-pris, spar-merke) og kunne
+       ikke gi fra seg en piksel — saa knappen ble skjoevet ut av skjermen
+       og «LEGG I KURV» var kuttet til «LEG». Knappen er hele grunnen til
+       at baren finnes; den skal aldri vaere den som taper plasskampen. */
     .sk-radiance-sticky-bottom-bar__price {
       justify-content: flex-start;
       flex-wrap: nowrap;
       white-space: nowrap;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    /* Foer-pris og spar-merke droppes i baren paa mobil. Begge staar
+       allerede i heroen, og her koster de plassen knappen trenger.
+       Baren skal minne om prisen og gi ett trykk — ikke gjenta hele
+       tilbudsargumentet. */
+    .sk-radiance-sticky-bottom-bar__price .sk-price__value,
+    .sk-radiance-sticky-bottom-bar__price .sk-price__badge {
+      display: none;
     }
 
     .sk-radiance-sticky-bottom-bar__button {
@@ -298,10 +319,22 @@
       flex: 0 0 auto;
     }
 
-    .sk-radiance-sticky-bottom-bar__cta {
+    /* Selve knappen arver width: 100% fra .sk-btn i buttons.css. I en rad
+       betyr «100 %» hele raden, saa den spiste all plassen og rant utenfor
+       skjermen — «LEGG I KURV» ble kuttet til «LEG».
+
+       Selektoren maa ha TO klasser paa samme element. buttons.css bruker
+       `body .sk-btn` som spesifisitetstriks (0,1,1), og en enkelt klasse
+       (0,1,0) taper mot det. Knappen baerer allerede begge klassene, saa
+       dette er ingen ny markup — bare riktig vekt. */
+    .sk-radiance-sticky-bottom-bar__cta.sk-radiance-sticky-bottom-bar__button {
+      width: auto;
+      min-width: 0;
+      max-width: 100%;
       min-height: 4.4rem;
       padding: 0 1.6rem;
       font-size: 1.5rem;
+      white-space: nowrap;
     }
   }
 </style>
