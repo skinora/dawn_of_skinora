@@ -319,10 +319,15 @@
       flex: 0 0 auto;
     }
 
-    /* Selve knappen arver width: 100% fra .sk-btn. I en rad betyr «100 %»
-       hele raden, saa den spiste all plassen og rant utenfor skjermen.
-       Her skal den vaere saa bred som teksten krever, ikke mer. */
-    .sk-radiance-sticky-bottom-bar__cta {
+    /* Selve knappen arver width: 100% fra .sk-btn i buttons.css. I en rad
+       betyr «100 %» hele raden, saa den spiste all plassen og rant utenfor
+       skjermen — «LEGG I KURV» ble kuttet til «LEG».
+
+       Selektoren maa ha TO klasser paa samme element. buttons.css bruker
+       `body .sk-btn` som spesifisitetstriks (0,1,1), og en enkelt klasse
+       (0,1,0) taper mot det. Knappen baerer allerede begge klassene, saa
+       dette er ingen ny markup — bare riktig vekt. */
+    .sk-radiance-sticky-bottom-bar__cta.sk-radiance-sticky-bottom-bar__button {
       width: auto;
       min-width: 0;
       max-width: 100%;
