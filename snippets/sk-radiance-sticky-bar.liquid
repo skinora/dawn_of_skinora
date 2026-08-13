@@ -259,90 +259,55 @@
     }
   }
 
-  /* ── Mobil: én rad, ikke to ───────────────────────────────────────────────
-     Innholdet sto i flex-direction: column, saa prisen ble stablet OVER
-     knappen og baren maalte 116 px. Paa en 844 px hoy skjerm er det 14 % av
-     viewporten permanent okkupert av noe som skal vaere en paaminnelse.
+  /* ── Mobil: tilbake til to rader ──────────────────────────────────────────
+     Jeg forsoekte aa presse baren fra 116 til 52 px ved aa legge pris og
+     knapp paa samme rad. Det ga gjentatte feil: knappen arvet width:100%
+     fra .sk-btn og rant utenfor skjermen, og da jeg loeste det ble prisens
+     foer-pris og spar-merke skjult for aa skaffe plass.
 
-     Rad i stedet: pris til venstre, knapp til hoeyre — samme informasjon,
-     halve hoeyden. Produktnavnet er droppet paa mobil; brukeren staar paa
-     produktsiden og vet hva den ser paa, og navnet var det som tvang
-     to linjer. */
+     Baren er det siste kjoepspunktet paa siden. En bar som er 64 px hoy men
+     viser en kuttet knapp eller mangler besparelsen, er verre enn en som er
+     116 px og fungerer. Derfor er radlayouten reversert i sin helhet.
+
+     Beholdt fra forsoeket: ensfarget bakgrunn (gradienten ga 1,69:1 kontrast
+     paa prisen) og IntersectionObserver-styringen, som er uavhengig av
+     dette og retter at baren ikke viste seg ved foerste paint.
+
+     Skal hoeyden ned igjen, maa det gjoeres med en skjerm foran seg — ikke
+     paa maalinger i en fane som ikke maler frames. */
   @media (max-width: 749px) {
-    .sk-radiance-sticky-bottom-bar--portal {
-      padding: 0.4rem 0;
-    }
-
     .sk-radiance-sticky-bottom-bar {
       padding: 0 0.75rem;
     }
 
     .sk-radiance-sticky-bottom-bar__content {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: stretch;
       gap: 0.75rem;
     }
 
-    /* Prisen tar plassen som blir til overs, knappen tar det den trenger.
-       Uten `flex: 1 1 auto` her ble info-kolonnen presset til 0 px bredde
-       mens knappen vokste til 397 px paa en 412 px skjerm — teksten var
-       kuttet til «LEG». */
     .sk-radiance-sticky-bottom-bar__info {
-      flex: 1 1 auto;
-      width: auto;
-      min-width: 0;
-      text-align: left;
+      width: 100%;
+      text-align: center;
     }
 
     .sk-radiance-sticky-bottom-bar__product-name {
-      display: none;
+      font-size: 1.125rem;
+      white-space: normal;
+      line-height: 1.4;
+      max-height: 2.8em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
 
-    /* Prisblokka faar krympe, knappen ikke. Uten dette hadde info-siden
-       `nowrap` paa tre elementer (pris, foer-pris, spar-merke) og kunne
-       ikke gi fra seg en piksel — saa knappen ble skjoevet ut av skjermen
-       og «LEGG I KURV» var kuttet til «LEG». Knappen er hele grunnen til
-       at baren finnes; den skal aldri vaere den som taper plasskampen. */
     .sk-radiance-sticky-bottom-bar__price {
-      justify-content: flex-start;
-      flex-wrap: nowrap;
-      white-space: nowrap;
-      min-width: 0;
-      overflow: hidden;
-    }
-
-    /* Foer-pris og spar-merke droppes i baren paa mobil. Begge staar
-       allerede i heroen, og her koster de plassen knappen trenger.
-       Baren skal minne om prisen og gi ett trykk — ikke gjenta hele
-       tilbudsargumentet. */
-    .sk-radiance-sticky-bottom-bar__price .sk-price__value,
-    .sk-radiance-sticky-bottom-bar__price .sk-price__badge {
-      display: none;
+      justify-content: center;
     }
 
     .sk-radiance-sticky-bottom-bar__button {
-      width: auto;
+      width: 100%;
       min-width: auto;
-      flex: 0 0 auto;
-    }
-
-    /* Selve knappen arver width: 100% fra .sk-btn i buttons.css. I en rad
-       betyr «100 %» hele raden, saa den spiste all plassen og rant utenfor
-       skjermen — «LEGG I KURV» ble kuttet til «LEG».
-
-       Selektoren maa ha TO klasser paa samme element. buttons.css bruker
-       `body .sk-btn` som spesifisitetstriks (0,1,1), og en enkelt klasse
-       (0,1,0) taper mot det. Knappen baerer allerede begge klassene, saa
-       dette er ingen ny markup — bare riktig vekt. */
-    .sk-radiance-sticky-bottom-bar__cta.sk-radiance-sticky-bottom-bar__button {
-      width: auto;
-      min-width: 0;
-      max-width: 100%;
-      min-height: 4.4rem;
-      padding: 0 1.6rem;
-      font-size: 1.5rem;
-      white-space: nowrap;
     }
   }
 </style>
