@@ -9,8 +9,25 @@
   overflow: hidden;
   padding: clamp(48px, 8vw, 96px) 0;
   min-height: clamp(480px, 50vw, 680px);
-  /* Fallback bak bildet: accent-fargen (per produkt). Bildet legger seg over. */
-  background: var(--sk-led-bg, #f5e8ec);
+  /* ── To lag bak hovedbildet ───────────────────────────────────────────────
+     Nederst accent-fargen (per produkt) som siste fallback. Over den en
+     LQIP: en 40 px bred kopi av samme foto, skalert opp til cover og derfor
+     naturlig uskarp.
+
+     Hvorfor: hovedbildet er loading="lazy" og seksjonen ligger langt nede.
+     Scroller kunden raskt forbi, rekker det ikke fram, og accent-fargen sto
+     igjen som en naken flate — synlig i Clarity-opptakene. LQIP-en veier
+     noen hundre byte og kommer med én gang, saa overgangen blir uskarpt
+     foto -> skarpt foto i stedet for farge -> foto.
+
+     Ingen fade er noedvendig. Naar begge lagene viser samme motiv, er
+     byttet knapt merkbart; en opacity-animasjon ville bare gjort et
+     usynlig skifte synlig igjen. */
+  background-color: var(--sk-led-bg, #f5e8ec);
+  background-image: var(--sk-led-lqip, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .sk-led-stats__inner {
