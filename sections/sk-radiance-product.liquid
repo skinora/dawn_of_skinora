@@ -1509,6 +1509,15 @@
       /* Kampanjestripa var 72 px fordi den brakk til tre linjer. Én linje,
          ellipse hvis det ikke er plass — budskapet er «det haster og du
          sparer», ikke hele vilkaarsteksten. */
+      /* Kampanjestripa var 72 px fordi den brakk til tre linjer. Foerste
+         forsoek klemte den til 24 px med ellipse — da ble fristen kuttet
+         midt i: «Kun til 17. august – der…». Det er verre enn tre linjer.
+         Datoen uten «deretter 4.690 kr» er en frist uten konsekvens, og
+         det er nettopp ankeret som gjoer fristen troverdig.
+
+         Loesningen er ikke mindre plass, men mindre innhold: «Spar
+         1.000 kr» staar allerede paa knappen rett under. Med den borte
+         faar fristen hele bredden og staar hel paa én linje. */
       .sk-campaign--inline {
         display: flex;
         flex-wrap: nowrap;
@@ -1525,10 +1534,31 @@
         line-height: 24px;
       }
 
+      /* Tredje gjentakelse av samme tall paa under 100 px. «Spar 21 %» staar
+         ved prisen, «Spar 1.000 kr» her, og «LEGG I KURV – SPAR 1.000 KR»
+         paa knappen. Tre ganger leser ikke som et sterkere tilbud — det
+         leser som mas. Knappen beholder den; den staar sist foer handling. */
+      .sk-campaign--inline .sk-campaign__save {
+        display: none;
+      }
+
+      /* Etiketten har brei sperring paa desktop. Her koster hver piksel,
+         og sperringen alene spiste ~25 px av fristens plass. */
+      .sk-campaign--inline .sk-campaign__label {
+        letter-spacing: 0.04em;
+        flex: none;
+      }
+
+      /* Fristen fyller bredden noeyaktig ved dagens tekst: etikett 74 px +
+         gap 4 + frist 261 = 339. Null slark. Ellipsen brukes derfor ikke i
+         dag, men staar der som sikkerhetsnett: endres datoen eller prisen
+         til noe lengre, skal stripa degradere SYNLIG. Uten den ville
+         container-ens overflow: hidden klippet teksten stille, og da ser
+         siden riktig ut for alle andre enn kunden. */
       .sk-campaign--inline .sk-campaign__deadline {
+        min-width: 0;
         overflow: hidden;
         text-overflow: ellipsis;
-        min-width: 0;
       }
 
       /* Paa mobil staar kortene under hverandre. Da er det ingenting aa rette
