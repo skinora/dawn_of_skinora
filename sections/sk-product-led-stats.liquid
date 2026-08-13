@@ -66,9 +66,30 @@
 -%}
 
 {%- if show_section -%}
+  {%- comment -%}
+    LQIP — uskarp miniatyr som staar bak det ekte bildet.
+
+    Problemet den loeser: bakgrunnsbildet er loading="lazy", og seksjonen
+    ligger ~4 000 px nede i dokumentet. Scroller kunden raskt dit, rekker
+    ikke bildet fram, og accent-fargen staar igjen alene som en flat flate.
+    Det er synlig i Clarity-opptakene.
+
+    Loesningen er ikke aa laste hovedbildet tidligere — det ville kostet
+    baandbredde paa hver eneste produktside for aa dekke et tilfelle som
+    bare rammer raske scrollere. En 40 px bred kopi av SAMME bilde veier
+    noen hundre byte og kommer praktisk talt umiddelbart. Skalert opp til
+    full bredde blir den en myk, uskarp utgave av motivet — kunden ser
+    noe som ligner fotografiet, ikke en farge som ikke hoerer hjemme der.
+
+    Accent-fargen beholdes under LQIP-en som siste fallback.
+  {%- endcomment -%}
+  {%- assign led_lqip = '' -%}
+  {%- if hero_image != blank -%}
+    {%- capture led_lqip -%} --sk-led-lqip: url('{{ hero_image | image_url: width: 40, format: 'webp' }}');{%- endcapture -%}
+  {%- endif -%}
   <section
     class="sk-led-stats"
-    style="--sk-led-bg: {{ accent }};"
+    style="--sk-led-bg: {{ accent }};{{ led_lqip }}"
     {%- if heading != blank %} aria-labelledby="sk-led-stats-title-{{ section.id }}"{% endif -%}
   >
     {%- comment -%}
