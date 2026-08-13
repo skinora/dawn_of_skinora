@@ -1549,8 +1549,16 @@
         flex: none;
       }
 
+      /* Fristen fyller bredden noeyaktig ved dagens tekst: etikett 74 px +
+         gap 4 + frist 261 = 339. Null slark. Ellipsen brukes derfor ikke i
+         dag, men staar der som sikkerhetsnett: endres datoen eller prisen
+         til noe lengre, skal stripa degradere SYNLIG. Uten den ville
+         container-ens overflow: hidden klippet teksten stille, og da ser
+         siden riktig ut for alle andre enn kunden. */
       .sk-campaign--inline .sk-campaign__deadline {
         min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       /* Paa mobil staar kortene under hverandre. Da er det ingenting aa rette
