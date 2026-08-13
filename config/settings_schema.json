@@ -1560,12 +1560,6 @@
       },
       {
         "type": "text",
-        "id": "kampanje_sluttdato_iso",
-        "label": "Sluttdato (maskinlesbar, ÅÅÅÅ-MM-DD)",
-        "info": "F.eks. 2026-08-17. Når denne datoen er passert skjules kampanjen automatisk overalt, slik at siden aldri viser et utløpt tilbud. La stå tom for å styre kampanjen kun med bryteren over. Feltet over er ren tekst og kan ikke sammenlignes med dagens dato."
-      },
-      {
-        "type": "text",
         "id": "kampanje_pris",
         "label": "Kampanjepris",
         "default": "3 490 kr"
