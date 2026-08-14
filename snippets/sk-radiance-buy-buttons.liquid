@@ -126,11 +126,14 @@
     filter: brightness(0.92);
   }
 
-  /* Teksten byttes ikke ut — den faar en ledsager. AA bytte selve etiketten
-     endrer knappens bredde midt i trykket, og da hopper layouten under. */
-  .sk-radiance-buy-buttons__button.is-adding .sk-radiance-buy-buttons__button-text::after {
-    content: ' …';
-  }
+  /* MERK: ingen ::after med ellipse her.
+     Foerste versjon la paa « …» for aa gi umiddelbar respons. Men temaets
+     egen product-form.js bytter allerede hele etiketten til «Legger til …»
+     (locales/nb.json -> products.product.adding), saa de to la seg oppaa
+     hverandre og knappen sa «Legger til … …».
+
+     Den umiddelbare responsen er uansett daekket av :active, som svarer paa
+     samme frame som fingeren treffer, og av .is-adding sin nedtoning. */
 
   @media (prefers-reduced-motion: reduce) {
     body .sk-radiance-buy-buttons__button:active {
