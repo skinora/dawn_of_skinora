@@ -1499,12 +1499,19 @@
       /* Gitteret mellom galleri og tekstkolonne. 15 px dødluft midt i
          hoeydebudsjettet over folden. */
       .sk-hero-grid {
-        gap: var(--space-2);
+        gap: var(--space-1);
       }
 
       .sk-shared-price {
-        margin-block: 2px;
+        margin-block: 0;
         padding-block: 0;
+      }
+
+      /* Tittelen hadde 4 px under seg oppaa flex-gapet. Over folden teller
+         hver marg dobbelt, fordi den legger seg til gapet i stedet for aa
+         erstatte det. */
+      .sk-product-title {
+        margin-bottom: 0;
       }
 
       .sk-hero-info { order: 11; }
@@ -1518,9 +1525,6 @@
         display: none;
       }
 
-      /* Kampanjestripa var 72 px fordi den brakk til tre linjer. Én linje,
-         ellipse hvis det ikke er plass — budskapet er «det haster og du
-         sparer», ikke hele vilkaarsteksten. */
       /* Kampanjestripa var 72 px fordi den brakk til tre linjer. Foerste
          forsoek klemte den til 24 px med ellipse — da ble fristen kuttet
          midt i: «Kun til 17. august – der…». Det er verre enn tre linjer.
@@ -1538,7 +1542,7 @@
         max-height: 24px;
         /* Egen marg, ikke arvet: stripa hadde 14 px under seg, som la seg
            oppaa flex-gapet og skjoev knappen 22 px ned helt alene. */
-        margin-block: var(--space-1) 0;
+        margin-block: 0;
         padding-block: 0;
         overflow: hidden;
         white-space: nowrap;
