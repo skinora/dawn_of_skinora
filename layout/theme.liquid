@@ -122,6 +122,38 @@
       </style>
     {%- endunless -%}
 
+    {%- comment -%}
+      ── Samtykkevinduet vike for handlekurv-skuffen ───────────────────────
+      Observert i Clarity: en kunde som ikke hadde lukket samtykkevinduet
+      trykket «legg i kurv», skuffen åpnet seg — og ble liggende UNDER
+      vinduet. Kunden så ikke at varen kom i kurven, og kom ikke til
+      «gå til kasse».
+
+      Årsaken er z-index. Pandectes-verten står på 2147483647, som er så
+      høyt tallet kan bli. Ingen skuff kan legge seg over den, og det er
+      ikke noe å justere seg ut av — den vinner alltid.
+
+      Løsningen er å la vinduet trekke seg tilbake mens skuffen er åpen.
+      Samtykket forsvinner ikke; det kommer tilbake så snart skuffen
+      lukkes, og kunden kan svare da. Rekkefølgen er riktig: har kunden
+      først lagt noe i kurven, er kjøpet det viktigste på skjermen.
+
+      Samme mønster som sticky-kjøpsbaren allerede bruker
+      (sk-radiance-sticky-bar.liquid), men med visibility i stedet for
+      display, fordi appen setter display: block !important inline på
+      verten og dermed slår enhver display-regel herfra.
+
+      Denne står UTENFOR forside-betingelsen over med vilje: skuffen kan
+      åpnes fra handlekurv-ikonet på en hvilken som helst side, også
+      forsiden der banneret faktisk skal vises.
+    {%- endcomment -%}
+    <style>
+      body:has(cart-drawer.active) pandectes-cmp {
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+    </style>
+
     {%- if product.tags contains 'noindex' -%}
       <meta name="robots" content="noindex, nofollow">
     {%- endif -%}
