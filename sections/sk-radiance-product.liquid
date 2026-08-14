@@ -1356,7 +1356,7 @@
         /* Kapp hovedbildet til maks ~58% av skjermhøyden så tittel, pris
            og CTA kommer med over fold. Kvadratisk når 100vw < 58vh
            (høye telefoner), ellers beskjæres det til 58vh-båndet. */
-        max-height: min(58vh, 390px);
+        max-height: min(58vh, 280px);
       }
 
       .sk-hero-media-swiper {
@@ -1364,7 +1364,7 @@
         aspect-ratio: 1 / 1;
         max-width: 100%;
         min-width: 0;
-        max-height: min(58vh, 390px);
+        max-height: min(58vh, 280px);
       }
 
       .sk-hero-gallery-wrapper,
@@ -1460,7 +1460,19 @@
 
       .sk-product-title { order: 1; }
       .sk-product-reviews { order: 2; }
-      .sk-product-subtitle { order: 3; }
+
+      /* ── Undertittelen ut paa mobil ────────────────────────────────────
+         «Stoetter hudens struktur, spenst og naturlige gloed» er en god
+         setning, men den koster 21 px pluss mellomrom over folden — og paa
+         iPhone SE (375x553) var det noeyaktig de pikslene som skilte
+         kjoepsknappen fra aa vaere synlig.
+
+         Valget mellom denne og kampanjestripa gikk til stripa: den selger
+         hardere, og undertittelen gjentar i praksis det H1 og pills
+         allerede sier. Beholdt paa desktop, der plassen finnes. */
+      .sk-product-subtitle {
+        display: none;
+      }
       .sk-shared-price { order: 4; }
       .sk-campaign--inline { order: 5; }
 
