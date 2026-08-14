@@ -449,13 +449,26 @@
                passert oppover forbi toppen av skjermen. Det, og bare det,
                er «scrollet bort fra kjoepsknappen». Ingen tilstand aa holde
                styr paa — geometrien svarer selv. */
-            const passertOppover = entry.boundingClientRect.bottom <= 0;
-            setBarVisible(portal, !entry.isIntersecting && passertOppover);
+            setBarVisible(portal, entry.boundingClientRect.bottom <= 0);
           });
         },
-        /* Litt margin i bunn: en knapp som saavidt stikker inn under
-           tastaturet eller nettleserlinja teller ikke som synlig. */
-        { rootMargin: '0px 0px -24px 0px', threshold: 0.35 }
+        /* ── Terskelen MAA inneholde 0 ────────────────────────────────────
+           Foerste retningsfiks brukte threshold: 0.35 alene. Da varslet
+           observeren kun naar knappen krysset 35 % synlighet — og i det
+           oeyeblikket er den fortsatt delvis synlig, saa bottom > 0 og
+           baren ble liggende. Naar knappen deretter forsvant helt ut paa
+           toppen kom det INGEN ny callback, fordi det ikke fantes noen
+           terskel paa 0 aa krysse. Betingelsen ble dermed aldri evaluert
+           i det ene oeyeblikket den ville sagt ja, og baren kom aldri.
+
+           Med 0 i lista fyrer observeren ogsaa naar siste piksel forlater
+           skjermen. Det er noeyaktig det tidspunktet baren skal opp.
+
+           rootMargin -24px i bunn staar igjen: en knapp som saavidt
+           stikker inn under nettleserlinja teller ikke som synlig. Den
+           paavirker kun naar intersection regnes ut, ikke
+           boundingClientRect, som alltid maales mot ekte viewport. */
+        { rootMargin: '0px 0px -24px 0px', threshold: [0, 0.35] }
       ).observe(atc);
     }
 
