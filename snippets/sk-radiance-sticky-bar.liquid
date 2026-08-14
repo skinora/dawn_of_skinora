@@ -429,7 +429,29 @@
 
       new IntersectionObserver(
         (entries) => {
-          entries.forEach((entry) => setBarVisible(portal, !entry.isIntersecting));
+          entries.forEach((entry) => {
+            /* ── Retningen er avgjoerende ────────────────────────────────────
+               Foerste versjon brukte bare !entry.isIntersecting. Det er feil,
+               fordi «ikke synlig» daekker TO motsatte tilstander:
+
+                 knappen er OVER viewporten  -> brukeren har scrollet forbi,
+                                                baren skal opp
+                 knappen er UNDER viewporten -> brukeren har ikke kommet dit
+                                                enda, baren skal ligge
+
+               Paa mobil laa hoved-ATC paa 693 px i dokumentet, mens en ekte
+               telefon ofte har ~650-700 px synlig naar nettleserlinja er
+               framme. Knappen var altsaa saavidt under folden ved lasting,
+               og baren spratt opp med én gang — foer kunden hadde rukket aa
+               se at det finnes en kjoepsknapp i det hele tatt.
+
+               boundingClientRect.bottom < 0 betyr at hele knappen har
+               passert oppover forbi toppen av skjermen. Det, og bare det,
+               er «scrollet bort fra kjoepsknappen». Ingen tilstand aa holde
+               styr paa — geometrien svarer selv. */
+            const passertOppover = entry.boundingClientRect.bottom <= 0;
+            setBarVisible(portal, !entry.isIntersecting && passertOppover);
+          });
         },
         /* Litt margin i bunn: en knapp som saavidt stikker inn under
            tastaturet eller nettleserlinja teller ikke som synlig. */
