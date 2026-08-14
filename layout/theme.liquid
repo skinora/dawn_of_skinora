@@ -59,6 +59,24 @@
         div[data-testid='klaviyo-form'] {
           display: none !important;
         }
+
+        /* ── Annonsebaren av på produktsider under 768 px ──────────────────
+           Måling på 390×664: kjøpsknappens bunn lå på 737 px, altså 73 px
+           under fold. Clarity viser at 40 % av mobilbesøkende aldri scroller
+           forbi 10 % av siden, og at bare 0,9 % av alle tapp treffer
+           kjøpsknappen. Alt som skal selge må derfor ligge i første
+           skjermbilde, og baren er de billigste 40 pikslene å hente.
+
+           Budskapet går ikke tapt: «Gratis frakt i hele Norge» gjentas i
+           trust-raden under kjøpsknappen.
+
+           Kun produktsider. Forside og kolleksjoner beholder baren, der er
+           den første møtet med butikken og koster ingen kjøpsflate. */
+        @media (max-width: 767px) {
+          .sk-announcement {
+            display: none;
+          }
+        }
       </style>
     {%- endif -%}
 
