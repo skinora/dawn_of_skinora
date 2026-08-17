@@ -1375,6 +1375,34 @@
         max-height: min(55vh, 380px);
       }
 
+      /* ── Hvilken kant betaler for hoeydetaket ──────────────────────────
+         Taket over presser den kvadratiske boksen lavere enn 1:1, og
+         sentrert cover tar da halve differansen fra hver kant:
+
+           390x664   boks 390x365   12,5 px =  3,2 % per kant
+           360x570   boks 360x285   37,5 px = 10,4 % per kant
+           375x553   boks 375x277     49 px = 13,1 % per kant
+
+         Hero-bildene har tekst bakt inn i selve fila, og den ligger i
+         nederste baand — 3-6 % fra bunnkanten. Maalt i kildefilene:
+         «UTVIKLET I NORGE · NORSK LAGER · GRATIS FRAKT» 3,5 % fra bunn,
+         «de foerste behandlingene» og «* sjelden i LED-masker» like over.
+         Med sentrert kutt forsvinner de linjene paa korte skjermer, sammen
+         med nedre halvdel av 30-dagers-badgen. Microsoft Clarity fanget det.
+
+         Bunnforankring flytter HELE kuttet til toppen. Der ligger haar og
+         moerk bakgrunn i portrettene — de har god klaring over hodet og
+         taaler det. Garantien og fraktloftet taaler det ikke.
+
+         Dette er et strakstiltak, ikke en loesning: paa 375x553 mister
+         portrettene 13 % av toppen. Den varige fiksen er aa eksportere
+         bildene med typografien innenfor midterste 74 %, slik at sentrert
+         kutt paa opptil 13 % i begge ender er ufarlig. Da kan denne regelen
+         fjernes. */
+      .sk-hero-media-main img {
+        object-position: 50% 100%;
+      }
+
       /* ── Korte skjermer (iPhone SE-klassen) ────────────────────────────
          55vh av 553 px er 304 px. Da havner kjoepsknappens bunn paa 568 og
          faller under fold igjen. Disse skjermene har rett og slett ikke
