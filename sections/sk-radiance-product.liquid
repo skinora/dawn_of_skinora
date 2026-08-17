@@ -1347,24 +1347,44 @@
         padding: 0;
       }
 
+      /* ── Hoeydebudsjettet styrer BREDDEN, ikke hoeyden ─────────────────
+         Tidligere sto det max-height paa en kvadratisk boks i full
+         skjermbredde. Det er en selvmotsigelse: naar taket biter, kan ikke
+         boksen vaere baade 100vw bred og kvadratisk, og object-fit: cover
+         loeser konflikten ved aa kutte bort differansen — halvparten oeverst,
+         halvparten nederst.
+
+           390x664   boks 390x365   12,5 px =  3,2 % per kant
+           360x570   boks 360x285   37,5 px = 10,4 % per kant
+           375x553   boks 375x277     49 px = 13,1 % per kant
+
+         Kuttet var ikke gratis. Hero-bildene har tekst bakt inn i selve
+         fila, og den ligger i nederste baand — maalt 3-6 % fra bunnkanten:
+         «UTVIKLET I NORGE · NORSK LAGER · GRATIS FRAKT», «de foerste
+         behandlingene», «* sjelden i LED-masker», nedre halvdel av
+         30-dagers-badgen. Alt sammen borte paa korte skjermer. Microsoft
+         Clarity fanget det.
+
+         Loesningen er ikke aa velge hvilken kant som skal ofres, men aa
+         slutte aa ofre noen: la hoeydebudsjettet sette BREDDEN. Da forblir
+         boksen kvadratisk, cover har ingenting aa kutte, og hvert bilde
+         vises helt. Alle ni kildefilene er 1:1 (700x700, ±1 px), saa dette
+         holder saa lenge galleriet er kvadratisk.
+
+         Bytteforholdet ligger paa smale, korte skjermer: der blir bildet
+         smalere enn skjermen og faar bakgrunn paa sidene — 49 px per side
+         paa 375x553. Hoeye telefoner merker ingenting; der er 55vh stoerre
+         enn skjermbredden, saa bildet fyller bredden som foer.
+
+         380px-taket er borte med vilje. Det kuttet 5,8 % per kant paa store
+         telefoner (430x932) uten aa loese noe — kvadratet er uansett
+         hoeydebegrenset av 55vh og breddebegrenset av skjermen. */
       .sk-hero-media-main {
-        width: 100%;
+        width: min(100%, 55vh);
         min-width: 0;
         max-width: 100%;
         margin: 0;
         border-radius: 0;
-        /* Taket foelger skjermhoeyden, ikke et fast px-tall. Et fast tak
-           maa dimensjoneres for den trangeste skjermen, og da betaler alle
-           andre for den — paa 390x664 sto det 119 px ubrukt klaring under
-           kjoepsknappen mens bildet var kuttet like hardt som paa en
-           iPhone SE.
-
-           380px-taket biter foerst paa svaert hoye telefoner, der 55vh
-           ellers ville gitt et bilde som tar over hele skjermen.
-
-           Korte skjermer faar sitt eget, strammere tak lenger ned — se
-           @media (max-height: 620px). */
-        max-height: min(55vh, 380px);
       }
 
       .sk-hero-media-swiper {
@@ -1372,22 +1392,18 @@
         aspect-ratio: 1 / 1;
         max-width: 100%;
         min-width: 0;
-        max-height: min(55vh, 380px);
       }
 
       /* ── Korte skjermer (iPhone SE-klassen) ────────────────────────────
-         55vh av 553 px er 304 px. Da havner kjoepsknappens bunn paa 568 og
-         faller under fold igjen. Disse skjermene har rett og slett ikke
-         raad til det samme forholdet.
+         55vh av 553 px er 304 px, og da faller kjoepsknappen under fold.
+         Disse skjermene har ikke raad til samme forhold som de hoeye.
 
-         50vh gir 277 px og 12 px klaring — noeyaktig der de laa foer, saa
-         de taper ingenting paa at hoeyere telefoner faar mer. Det er hele
-         poenget med aa skille dem: den lille skjermen skal betale for sin
-         egen trangboddhet, ikke sende regningen til de andre. */
+         50vh gir 277 px og 12 px klaring — noeyaktig der de laa foer. Det er
+         hele poenget med aa skille dem: den lille skjermen skal betale for
+         sin egen trangboddhet, ikke sende regningen til de andre. */
       @media (max-height: 620px) {
-        .sk-hero-media-main,
-        .sk-hero-media-swiper {
-          max-height: 50vh;
+        .sk-hero-media-main {
+          width: min(100%, 50vh);
         }
       }
 
