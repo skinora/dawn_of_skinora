@@ -1023,9 +1023,54 @@
 
     /* Tre like kolonner med strekikon + UPPERCASE-tekst.
        Hårfin linje kun over — hvit luft ned mot badge-raden under. */
+    /* SKINORA PDP – kan fjernes ─────────────────────────────────────────
+       Risikoavlastning under prisen. Erstatter garantien som lå i
+       .sk-trust-inline på 13px versaler i #6c6c6c.
+
+       Merk: root står på 62.5 %, så `1.3rem` i regelen under er 13px, ikke
+       20,8px. Derfor brukes --fs-* her, aldri rem. */
+    .sk-risk-reversal {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      margin: var(--space-3) 0 var(--space-4);
+    }
+    .sk-risk-reversal__primary,
+    .sk-risk-reversal__secondary {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin: 0;
+      font-family: var(--ff-sans);
+      line-height: var(--lh-snug);
+      letter-spacing: var(--tracking-normal);
+      text-transform: none;
+    }
+    /* Garantien er argumentet — full kontrast, over lesegulvet på 16px. */
+    .sk-risk-reversal__primary {
+      font-size: var(--fs-md);
+      font-weight: var(--fw-medium);
+      color: var(--ink-700);
+    }
+    /* Frakten er støtte, ikke argument. Bevisst et hakk ned. */
+    .sk-risk-reversal__secondary {
+      font-size: var(--fs-sm);
+      font-weight: var(--fw-regular);
+      color: var(--ink-500);
+    }
+    .sk-risk-reversal__icon {
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+    }
+    /* ─────────────────────────────────────────────────────────────────── */
+
     .sk-trust-inline {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      /* SKINORA PDP – kan fjernes: var repeat(3, 1fr). To av tre elementer
+         er flyttet ut, og auto-fit gir full bredde til det som er igjen —
+         uten å knekke hvis noen legger tilbake flere. */
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
       gap: 1.6rem;
       font-size: 1.3rem;
       font-weight: 400;
@@ -1514,6 +1559,12 @@
         display: none;
       }
       .sk-shared-price { order: 4; }
+      /* SKINORA PDP – kan fjernes
+         Samme order som prisen. Ved lik order avgjør DOM-rekkefølgen, og
+         .sk-risk-reversal står rett etter .sk-shared-price i markupen — så
+         den lander mellom pris (4) og kampanjestripe (5) uten at noen av de
+         andre order-verdiene må renummereres. */
+      .sk-risk-reversal { order: 4; }
       .sk-campaign--inline { order: 5; }
 
       /* Kjoepsknapp-wrapperen loeses ogsaa opp. Den inneholder betalings-
@@ -2451,6 +2502,33 @@
           </div>
 
           {%- comment -%}
+            SKINORA PDP – kan fjernes
+            RISIKOAVLASTNING rett under prisen.
+
+            Garantien lå tidligere i .sk-trust-inline under kjøpsknappen, på
+            13px versaler i #6c6c6c — og på mobil på order: 9, altså etter
+            tilbudskortene og langt under folden. En førstegangskjøper som
+            skal bruke 3 690 kr hos et ukjent merke så den aldri.
+
+            Plassert rett etter prisen med vilje: innvendingen «det er dyrt»
+            oppstår i det øyeblikket tallet leses, og svaret skal komme der,
+            ikke fire skjermhøyder senere.
+
+            Ikonene er de samme to som sto i trust-raden. «Trygg betaling»
+            blir stående der den var.
+          {%- endcomment -%}
+          <div class="sk-risk-reversal">
+            <p class="sk-risk-reversal__primary">
+              <svg class="sk-risk-reversal__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+              <span>Prøv hjemme i 30 dager &ndash; pengene tilbake</span>
+            </p>
+            <p class="sk-risk-reversal__secondary">
+              <svg class="sk-risk-reversal__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+              <span>Gratis frakt i Norge</span>
+            </p>
+          </div>
+
+          {%- comment -%}
             ÆRLIG PRIS — skjules mens kampanjen går. «Ingen rabattkupp. Ingen
             falske «før»-priser.» rett over en strøket førpris er en direkte
             selvmotsigelse. Betinget i stedet for slettet, så budskapet kommer
@@ -2512,15 +2590,14 @@
               %}
             </div>
 
+            {%- comment -%}
+              SKINORA PDP – kan fjernes
+              «Gratis frakt i Norge» og «Prøv hjemme i 30 dager» er flyttet
+              herfra til .sk-risk-reversal rett under prisen. «Trygg betaling»
+              står igjen — den er en kvittering på kjøpsøyeblikket og hører
+              hjemme ved knappen, ikke ved prisen.
+            {%- endcomment -%}
             <div class="sk-trust-inline">
-              <span class="sk-trust-inline__item">
-                <svg class="sk-trust-inline__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
-                <span>Gratis frakt i Norge</span>
-              </span>
-              <span class="sk-trust-inline__item">
-                <svg class="sk-trust-inline__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-                <span>Prøv hjemme i 30 dager</span>
-              </span>
               <span class="sk-trust-inline__item">
                 <svg class="sk-trust-inline__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 <span>Trygg betaling</span>
