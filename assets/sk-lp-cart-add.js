@@ -22,12 +22,38 @@
 (function skLpCartAdd() {
   'use strict';
 
-  document.addEventListener('submit', async function (e) {
-    const form = e.target.closest('form.lp-cta-form');
-    if (!form) return;
+  /* Lytter på KLIKK, ikke submit — og det er ikke en stilistisk detalj.
 
-    const btn = form.querySelector('button[type="submit"]');
+     Målt i produksjon 22. aug: ett klikk på «KJØP NÅ» ga ÉN /cart/add.js og
+     én vare i kurven, men TO product_added_to_cart fra Shopifys web pixel,
+     ~0,7 s fra hverandre og med ulike hendelses-IDer. add_to_cart er
+     nøkkelhendelse i GA4, så konverteringstallet for den knappen ble blåst
+     opp med rundt 100 %.
+
+     Isolert ved å kjøre delene hver for seg:
+
+       submit-hendelse alene, uten nettverkskall   ->  0 hendelser
+       fetch alene, uten submit-hendelse           ->  1 hendelse
+       begge, altså et ekte klikk                  ->  2 hendelser
+       klikk blokkert før submit, deretter fetch   ->  1 hendelse
+
+     Pikselen teller altså både den observerte skjemainnsendingen og selve
+     kallet. Hindrer vi submit-hendelsen i å oppstå, ser den bare kallet.
+
+     Hovedkjøpsknappen har aldri doblet, fordi den går gjennom Dawns
+     <product-form> og ikke gjennom en nativ skjemainnsending.
+
+     Graceful degradation er uendret: uten JS er knappen fortsatt
+     type="submit" i et skjema med action="/cart/add", og nettleseren
+     submitter nativt. Reserven form.submit() i catch fyrer heller ingen
+     submit-hendelse — programmatisk submit gjør ikke det — så den dobler
+     ikke. */
+  document.addEventListener('click', async function (e) {
+    const btn = e.target.closest('form.lp-cta-form button[type="submit"]');
     if (!btn) return;
+
+    const form = btn.closest('form');
+    if (!form) return;
 
     /* Varianten leses fra skjemaets eget id-felt — den kunden faktisk har
        valgt.
@@ -66,7 +92,8 @@
     const qtyInput = form.querySelector('input[name="quantity"]');
     const quantity = (qtyInput && parseInt(qtyInput.value, 10)) || 1;
 
-    /* Prevent native submit — AJAX takes over */
+    /* preventDefault på klikket hindrer at skjemaet submitter i det hele tatt.
+       Ingen submit-hendelse oppstår, og duplikattellingen forsvinner. */
     e.preventDefault();
 
     /* ── Prevent double-submits ── */
