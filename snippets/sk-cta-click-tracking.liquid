@@ -1,0 +1,55 @@
+{%- comment -%}
+  sk-cta-click-tracking — måler hvilken CTA som faktisk blir klikket
+  ----------------------------------------------------------------------------
+  Sender ett event per klikk:
+
+    gtag('event', 'cta_click', { cta_id: 'cta_hero', template: 'product' })
+
+  `cta_id` er verdien av `data-analytics` på knappen. Attributtene fantes fra
+  før på to CTA-er, men uten lytter noe sted — de har aldri fyrt. En Custom
+  Pixel kan ikke fylle hullet: den kjører i sandkasse-iframe og når ikke
+  elementer i hoveddokumentet. Derfor må lytteren ligge her.
+
+  Delegert på document, så CTA-er som rendres av seksjoner lastet senere
+  (sticky-barer, app-blokker) fanges uten at noe må re-initialiseres.
+
+  Kun korte kodeverdier sendes — aldri knappetekst eller annen fritekst.
+  Samme regel som i sk-quiz.js.
+
+  Merk: gtag bruker sendBeacon, så eventet overlever at en <a>-CTA navigerer
+  bort. Fallback til dataLayer er beholdt for parring med
+  sk-atc-visibility-tracking, men treffer sjelden nå som taggen lastes ~1,4 s.
+{%- endcomment -%}
+
+<script>
+  (function () {
+    var TEMPLATE = {{ template.name | default: 'unknown' | json }};
+
+    function send(ctaId) {
+      var payload = { cta_id: ctaId, template: TEMPLATE };
+
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'cta_click', payload);
+        return;
+      }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(['event', 'cta_click', payload]);
+    }
+
+    document.addEventListener(
+      'click',
+      function (event) {
+        var el = event.target && event.target.closest && event.target.closest('[data-analytics]');
+        if (!el) return;
+
+        var ctaId = el.getAttribute('data-analytics');
+        if (!ctaId) return;
+
+        send(ctaId);
+      },
+      /* capture: klikket telles selv om en annen lytter stopper propagering
+         (kjøpsknappene kaller preventDefault for AJAX-innlegging). */
+      true
+    );
+  })();
+</script>

@@ -1294,5 +1294,12 @@
     {%- unless request.page_type == 'cart' or request.page_type == 'product' -%}
       {% render 'sk-quiz-trigger', part: 'tab' %}
     {%- endunless -%}
+
+    {%- comment -%}
+      cta_click — delegert lytter på [data-analytics]. Ligger i layoutet, ikke i
+      seksjonene, fordi CTA-ene er spredt over 11 filer og sticky-barene rendres
+      utenom den vanlige seksjonsrekkefølgen.
+    {%- endcomment -%}
+    {% render 'sk-cta-click-tracking' %}
   </body>
 </html>
