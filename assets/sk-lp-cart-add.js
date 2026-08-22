@@ -22,6 +22,21 @@
 (function skLpCartAdd() {
   'use strict';
 
+  /* Guard mot flere kjøringer.
+
+     Fire seksjoner laster dette skriptet med hver sin <script src>, og
+     landingssiden bruker tre av dem. Nettleseren henter filen én gang, men
+     KJØRER den én gang per tag — uten denne guarden blir det tre
+     document-lyttere på samme klikk.
+
+     Målt 22. aug: ingen dobbelthandling i praksis, fordi is-loading-vakten
+     settes synkront før første await, så lytter to og tre returnerer
+     umiddelbart. Men da hviler hele beskyttelsen på at ingen await noen gang
+     havner foran den vakten. Dette gjør konstruksjonen robust i stedet for
+     heldig. */
+  if (window.__SK_LP_CART_ADD_BOUND) return;
+  window.__SK_LP_CART_ADD_BOUND = true;
+
   /* Lytter på KLIKK, ikke submit — og det er ikke en stilistisk detalj.
 
      Målt i produksjon 22. aug: ett klikk på «KJØP NÅ» ga ÉN /cart/add.js og
