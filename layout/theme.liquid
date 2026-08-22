@@ -688,8 +688,16 @@
            forsiden, så de kan trygt vente på interaksjon / 5 s-timeouten.
            Stjernerangeringen har reservert plass (sk-base.css), så utsatt
            lasting gir ikke CLS. */
-        var delayJS =
-          /connect\.facebook\.net|static\.klaviyo\.com|cdn-static\.okendo\.io|uppromote|secomapp|nice-team|bundler/;
+        /* connect.facebook.net, secomapp, nice-team og bundler FJERNET (målt
+           22. aug 2026), av samme grunn som googletagmanager over: de ble
+           aldri utsatt, bare lastet og kjørt to ganger. Bevist av at hver av
+           dem rakk å laste en avhengig underressurs lenge før 5 s-timeouten —
+           fbevents.js (824 ms) hentet signals/config (1140 ms), og
+           bundler-script.js (852 ms) hentet bundler.js (1628 ms) — for så å
+           bli hentet på nytt av drain() på hhv. 13,3 s og 15,3/17,3 s.
+           Okendo og UpPromote står igjen: Okendo forsinkes reelt, men av
+           SKLoader (se blokken nederst i filen), ikke av denne mekanismen. */
+        var delayJS = /static\.klaviyo\.com|cdn-static\.okendo\.io|uppromote/;
         var saved = [];
         var done = false;
 
