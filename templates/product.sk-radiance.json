@@ -25,7 +25,7 @@
       "settings": {
         "ce_text": "CE-merket",
         "stock_show": true,
-        "stock_left": 12,
+        "stock_left": 13,
         "stock_threshold": 15,
         "stock_label": "igjen av dette partiet",
         "stock_restock": "",
