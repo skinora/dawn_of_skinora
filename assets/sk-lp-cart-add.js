@@ -13,8 +13,7 @@
  *         enctype="multipart/form-data" class="lp-cta-form">
  *     <input type="hidden" name="id" value="{{ variant.id }}">
  *     <input type="hidden" name="quantity" value="1">
- *     <button type="submit" class="lp-btn"
- *             data-product-handle="skinora-clear">
+ *     <button type="submit" class="lp-btn">
  *       Kjøp nå
  *     </button>
  *   </form>
@@ -30,8 +29,25 @@
     const btn = form.querySelector('button[type="submit"]');
     if (!btn) return;
 
-    const handle = btn.dataset.productHandle;
-    if (!handle) return;
+    /* Varianten leses fra skjemaets eget id-felt — den kunden faktisk har
+       valgt.
+
+       Tidligere hentet denne /products/<handle>.js og gjettet seg fram med
+       variants.find(v => v.available), altså FØRSTE tilgjengelige variant
+       uansett hva kunden hadde valgt. På en landingsside med én variant traff
+       gjettingen alltid, så feilen var usynlig der. På produktsiden med
+       Face / Face + Neck la den feil variant i kurven, til feil pris.
+
+       Skjemaet har hele tiden sendt riktig id — den ble bare aldri lest.
+       Bonus: én rundtur mindre før varen er i kurven. */
+    const idInput = form.querySelector('input[name="id"]');
+    const variantId = idInput && idInput.value;
+    /* Uten variant-id kan vi ikke gjøre dette trygt. La nettleseren submitte
+       nativt — samme reserve som ved JS-feil. */
+    if (!variantId) return;
+
+    const qtyInput = form.querySelector('input[name="quantity"]');
+    const quantity = (qtyInput && parseInt(qtyInput.value, 10)) || 1;
 
     /* Prevent native submit — AJAX takes over */
     e.preventDefault();
@@ -42,39 +58,33 @@
     btn.disabled = true;
 
     const originalText = btn.textContent;
-    btn.textContent = 'Legger til\u2026';
+    btn.textContent = 'Legger til…';
+
+    /* Skiller «kom aldri i kurven» fra «kom i kurven, men noe etterpå
+       feilet». Uten det skillet kalte catch-grenen form.submit() også når
+       tillegget hadde gått bra, og la varen inn en gang til. */
+    let added = false;
 
     try {
-      /* 1. Fetch product JSON to get the first available variant */
-      const productRes = await fetch('/products/' + handle + '.js', { cache: 'default' });
-      if (!productRes.ok) throw new Error('Product not found');
-      const product = await productRes.json();
-
-      const variant =
-        product.variants.find(function (v) {
-          return v.available;
-        }) || product.variants[0];
-
-      /* 2. Add to cart via AJAX \u2014 drawer-seksjonene bes om i SAMME kall.
-         Tidligere var dette tre sekvensielle rundturer (produkt-JSON \u2192 add \u2192
-         /cart?sections=\u2026) \u00e0 ~0,7 s = ~2,1 s f\u00f8r skuffen \u00e5pnet. Seksjonene er
-         gratis i add-svaret, s\u00e5 vi er nede i to. */
+      /* Legg i kurv — drawer-seksjonene bes om i SAMME kall. De er gratis i
+         add-svaret, så hele operasjonen er én rundtur. */
       const addRes = await fetch('/cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          items: [{ id: variant.id, quantity: 1 }],
+          items: [{ id: variantId, quantity: quantity }],
           sections: 'cart-drawer,cart-icon-bubble',
           sections_url: window.location.pathname,
         }),
       });
       if (!addRes.ok) throw new Error('Add-to-cart failed');
       const addData = await addRes.json();
+      added = true;
 
-      /* 3. Success state */
-      btn.textContent = 'Lagt til \u2713';
+      /* Success state */
+      btn.textContent = 'Lagt til ✓';
 
-      /* 4. Open cart drawer with the sections we already have */
+      /* Open cart drawer with the sections we already have */
       const cartDrawer = document.querySelector('cart-drawer');
       if (cartDrawer) {
         cartDrawer.classList.remove('is-empty');
@@ -86,14 +96,14 @@
         } else {
           /* Fallback hvis seksjonene mangler i svaret */
           const sectionsRes = await fetch('/cart?sections=cart-drawer,cart-icon-bubble');
-          cartDrawer.renderContents({ id: variant.id, sections: await sectionsRes.json() });
+          cartDrawer.renderContents({ id: variantId, sections: await sectionsRes.json() });
         }
       } else {
         window.location.href = '/cart';
         return;
       }
 
-      /* 5. Revert button text after brief delay */
+      /* Revert button text after brief delay */
       setTimeout(function () {
         btn.textContent = originalText;
         btn.classList.remove('is-loading');
@@ -104,8 +114,10 @@
       btn.textContent = originalText;
       btn.classList.remove('is-loading');
       btn.disabled = false;
-      /* Fallback: submit the form natively */
-      form.submit();
+      /* Reserve KUN hvis varen aldri kom i kurven. Feiler noe etter at
+         tillegget lyktes — for eksempel drawer-rendringen — skal vi ikke
+         legge den inn på nytt. */
+      if (!added) form.submit();
     }
   });
 })();
