@@ -2893,6 +2893,23 @@
           applyVariantToInput(el, variantId);
         });
 
+        /* Seksjonen «Hva kan du forvente» rendrer sin egen form.lp-cta-form
+           UTENFOR denne seksjonen, så ingen av selektorene over treffer den.
+           Målt 22. aug: skjemaet beholdt base-varianten selv når kunden hadde
+           valgt Face + Neck.
+
+           sk-lp-cart-add.js leser nå window.__SK_ACTIVE_VARIANT_ID og legger
+           riktig variant i kurven uansett, så dette er ikke lenger en aktiv
+           feil. Men skjemaet skal ikke stå igjen med feil verdi: svikter
+           globalen, faller skriptet tilbake på nettopp dette feltet — og da er
+           den gamle feilen stille tilbake.
+
+           Selektoren er bevisst smal. Et document-wide input[name="id"] ville
+           truffet handlekurvskuffen og produktkort. */
+        document.querySelectorAll('form.lp-cta-form input[name="id"]').forEach((el) => {
+          applyVariantToInput(el, variantId);
+        });
+
         if (mainProductSection) {
           mainProductSection
             .querySelectorAll(
