@@ -670,10 +670,17 @@
            (Fontshare, selvhostet), men appen fortsetter aa sende kit-CSS til den
            kobles fra. Blokkeringen staar til det er gjort; da kan den slettes. */
         var blockCSS = /use\.typekit\.net\/[a-z0-9]+\.css/;
-        /* googletagmanager.com added: GTM/gtag was named in the comment above but
-           was missing from the regex, so it ran during initial load. Only catches
-           copies injected into the MAIN document — scripts loaded inside Shopify's
-           sandboxed Web Pixel iframe are outside this MutationObserver's reach. */
+        /* googletagmanager.com FJERNET (målt 22. aug 2026). Den utsatte aldri
+           Google-taggen. Et script-element prepareres i det øyeblikket det
+           settes inn i DOM-en, og already-started-flagget gjør at en senere
+           endring av `type` ignoreres — nøytraliseringen under er en no-op for
+           alt som settes inn med `src` allerede satt. Taggen kjørte normalt på
+           841 ms (bevist av Googles fan-out på 1200 ms og page_view-beacon på
+           1225 ms), og drain() lastet og kjørte den på nytt på 7–9 s. Eneste
+           effekt var dobbel nedlasting og dobbel kjøring av alle tre ID-ene:
+           G-59CPLXB6PZ, AW-18203200666, GT-NMJZLTG3.
+           Ikke legg den inn igjen uten å hindre innsettingen — å reagere på
+           den i etterkant kan ikke virke. */
         /* Okendo, UpPromote og bundler-appen lagt til (INP-arbeid, aug 2026):
            forsiden lastet okendo-reviews.js selv om temaets egen SKLoader-blokk
            bevisst hopper over Okendo utenfor produktsider — app-embeds injiserer
@@ -682,7 +689,7 @@
            Stjernerangeringen har reservert plass (sk-base.css), så utsatt
            lasting gir ikke CLS. */
         var delayJS =
-          /connect\.facebook\.net|static\.klaviyo\.com|googletagmanager\.com|cdn-static\.okendo\.io|uppromote|secomapp|nice-team|bundler/;
+          /connect\.facebook\.net|static\.klaviyo\.com|cdn-static\.okendo\.io|uppromote|secomapp|nice-team|bundler/;
         var saved = [];
         var done = false;
 
