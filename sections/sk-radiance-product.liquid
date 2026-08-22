@@ -1069,8 +1069,11 @@
       display: grid;
       /* SKINORA PDP – kan fjernes: var repeat(3, 1fr). To av tre elementer
          er flyttet ut, og auto-fit gir full bredde til det som er igjen —
-         uten å knekke hvis noen legger tilbake flere. */
-      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+         uten å knekke hvis noen legger tilbake flere.
+         140px som minimum, ikke 0: med minmax(0, 1fr) lager nettleseren så
+         mange spor den får plass til, og computed style ble målt til 41
+         kollapsede spor. Visuelt riktig, men et unødvendig artefakt. */
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 1.6rem;
       font-size: 1.3rem;
       font-weight: 400;
