@@ -115,7 +115,7 @@
 
           {%- if s.cta_text != blank and s.cta_url != blank -%}
             <div class="lp-therapist__cta-wrap">
-              <a href="{{ s.cta_url }}" class="lp-btn lp-therapist__cta">
+              <a href="{{ s.cta_url }}" class="lp-btn lp-therapist__cta" data-analytics="cta_hudterapeut">
                 <span>{{ s.cta_text }}</span>
                 <svg class="lp-therapist__cta-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
                   <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>

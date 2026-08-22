@@ -190,6 +190,7 @@
                 <button
                   type="submit"
                   class="sk-btn sk-btn--primary"
+                  data-analytics="cta_results"
                   data-product-handle="{{ product.handle }}"
                 >
                   {{ result_cta_text }}
@@ -197,7 +198,7 @@
                 </button>
               </form>
             {% else %}
-              <a class="sk-btn sk-btn--primary sk-results__cta" href="{{ result_cta_url }}">
+              <a class="sk-btn sk-btn--primary sk-results__cta" href="{{ result_cta_url }}" data-analytics="cta_results">
                 {{ result_cta_text }}
                 <span class="sk-btn__icon" aria-hidden="true">→</span>
               </a>
