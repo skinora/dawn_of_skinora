@@ -41,7 +41,24 @@
        Skjemaet har hele tiden sendt riktig id — den ble bare aldri lest.
        Bonus: én rundtur mindre før varen er i kurven. */
     const idInput = form.querySelector('input[name="id"]');
-    const variantId = idInput && idInput.value;
+
+    /* Produktsiden selger to tilbud — «Face» og «Face + Neck» — som IKKE er
+       Shopify-varianter, men egne radiokort (input[name="sk-offer"]). Når
+       kunden bytter, oppdaterer sk-radiance-product sine skjulte id-felter,
+       men bare innenfor sin egen seksjon. Dette skjemaet ligger i seksjonen
+       «Hva kan du forvente», altså utenfor, og beholder derfor base-varianten.
+       Målt 22. aug: valgt Face + Neck (6 990 kr), fikk Face (3 690 kr).
+
+       Seksjonen publiserer det aktive valget som window.__SK_ACTIVE_VARIANT_ID.
+       Det er den eneste kontrakten som krysser seksjonsgrensen, så vi leser den.
+
+       Guarden på sk-offer-radioene er med vilje: bare sider som faktisk har
+       tilbudsvelgeren skal la globalen overstyre. Landingssidene har ingen
+       velger og skal bruke sitt eget skjema. */
+    const hasOfferPicker = document.querySelector('input[name="sk-offer"]');
+    const variantId =
+      (hasOfferPicker && window.__SK_ACTIVE_VARIANT_ID) || (idInput && idInput.value);
+
     /* Uten variant-id kan vi ikke gjøre dette trygt. La nettleseren submitte
        nativt — samme reserve som ved JS-feil. */
     if (!variantId) return;
