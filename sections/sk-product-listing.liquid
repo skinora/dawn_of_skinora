@@ -32,6 +32,30 @@
     align-items: stretch;
   }
 
+  /* SKINORA mellombredder – kan fjernes ────────────────────────────────
+     Målt 26. aug 2026 på 900 / 1009 / 1150 px, verifisert i Clarity på
+     1009x641. Windows-laptoper med 125–150 % skalering lander her.
+
+     auto-fit med minmax(260px) flipper til 3 kolonner ved ~912 px
+     viewport og holder 3 helt opp til ~1100. I det båndet blir kortene
+     260–320 px:
+
+       900 px  ->  2 kolonner, 394 px kort   (allerede greit)
+       1009 px ->  3 kolonner, 291 px kort   (klemt)
+       1150 px ->  3 kolonner, 336 px kort
+
+     .sk-product-card__badge er fast 120x120 px og skalerer ikke med
+     kortet — 41 % av kortbredden ved 1009 px. To kolonner løser
+     forholdet uten å røre badgen: kortet blir 447 px, badgen 27 %.
+
+     Bevisst kun min-width 750 til max-width 1150: mobil under 750 og
+     full desktop over 1150 er uendret. */
+  @media screen and (min-width: 750px) and (max-width: 1150px) {
+    .sk-product-listing__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   .sk-product-card {
     position: relative;
     text-align: center;
