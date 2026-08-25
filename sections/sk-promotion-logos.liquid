@@ -45,6 +45,34 @@
   .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card{
       flex: 0 0 100px
   }
+
+  /* SKINORA mellombredder – kan fjernes ────────────────────────────────
+     Marqueen har to spor som skal flislegges sømløst: primary går
+     0 → -100 %, secondary går 100 % → 0. Begge er `width: inherit`,
+     altså 100 % av forelderen — men innholdet er 11 kort à faste 100 px,
+     altså 1100 px.
+
+     Er forelderen smalere enn 1100 px, er sporene for smale for sitt eget
+     innhold, og slutten av det ene renner inn i starten av det andre.
+     Målt 26. aug 2026 ved 1009 px: spor 994 px, innhold 1100 px, 3 kort
+     overlapper hverandre synlig.
+
+     Mobilreglene under løser det samme ved å blåse opp forelderen til
+     140 % og 208 %. Mellom 750 px og ~1115 px fantes ingen tilsvarende
+     regel — seksjonen har ingen breakpoints over 749 px.
+
+     max-content lar sporet være nøyaktig så bredt som kortene krever, så
+     translateX(-100%) flytter det nøyaktig én innholdsbredde og flisene
+     møtes kant i kant. Merkene beholder sine 100 px; raden ruller, som
+     den allerede gjør.
+
+     Over 1150 px får innholdet plass i 100 % og space-around fordeler
+     dem jevnt — derfor stopper regelen der. */
+  @media screen and (min-width: 750px) and (max-width: 1150px) {
+    .sw-publication-{{ section.id }} .sw-publication__scroll-element {
+      width: max-content;
+    }
+  }
   .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card img,
   .sw-publication-{{ section.id }} .sw-publication__scroll-element .sw-publication__card svg{
       width:100%;
