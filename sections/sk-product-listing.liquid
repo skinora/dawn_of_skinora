@@ -399,13 +399,7 @@
                     <a class="sk-product-card__title-link" href="{{ card_product.url }}">
                       <h3 class="sk-product-card__title">{{ card_product.title | escape }}</h3>
                     </a>
-                    {%- comment -%} Okendo star rating widget for product cards {%- endcomment -%}
-                    <!-- OKENDO DEBUG: {{ card_product.handle }} / {{ card_product.id }} -->
-                    <div
-                      class="okeReviews okeReviews--reviewsSummary-starRating"
-                      data-oke-reviews-product-id="shopify-{{ card_product.id }}"
-                      data-oke-star-rating
-                    ></div>
+                    {% render 'sk-star-rating', sr_product: card_product %}
                     {% if block.settings.show_description and card_product.description != blank %}
                       <div class="sk-product-card__description sk-section-body">
                         <p>{{ card_product.description | strip_html }}</p>

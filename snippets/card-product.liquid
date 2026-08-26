@@ -70,12 +70,7 @@
       </div>
 
       {%- if show_rating -%}
-        {%- comment -%} Okendo star rating widget for product cards {%- endcomment -%}
-        <div
-          class="okeReviews okeReviews--reviewsSummary-starRating"
-          data-oke-reviews-product-id="shopify-{{ product.id }}"
-          data-oke-star-rating
-        ></div>
+        {% render 'sk-star-rating', sr_product: product %}
       {%- endif -%}
     </div>
 

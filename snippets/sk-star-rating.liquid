@@ -1,0 +1,54 @@
+{%- comment -%}
+  sk-star-rating.liquid
+  ---------------------
+  Stjernevurdering for produktkort, lest rett fra Shopifys standard-metafelt
+  (reviews.rating / reviews.rating_count). Erstatter Okendos kort-widget.
+
+  Hvorfor egen markup i stedet for enda en app-widget:
+  - Ingen JS. Stjernene står i første frame, uten layout-hopp og uten
+    CLS-reserve.
+  - Virker på alle sidetyper. Okendos script lastes bare på produktsider,
+    så kolleksjonskortene var avhengige av at app-embedet rakk fram.
+  - Metafeltene er de samme før og etter overgangen fra Okendo til Klaviyo
+    Reviews — begge skriver til `reviews`-namespacet. Denne filen overlever
+    migreringen uendret.
+
+  Bruk:
+    {% render 'sk-star-rating', sr_product: card_product %}
+    {% render 'sk-star-rating', sr_product: product, sr_show_count: false %}
+
+  Stjernestørrelse og -farge styres av --sk-star-size / --sk-star-color
+  fra sk-base.css. Rendrer ingenting når produktet mangler anmeldelser.
+{%- endcomment -%}
+
+{%- liquid
+  assign sr_p = sr_product | default: product
+  assign sr_rating = sr_p.metafields.reviews.rating.value.rating | plus: 0.0
+  assign sr_count = sr_p.metafields.reviews.rating_count | plus: 0
+  assign sr_max = sr_p.metafields.reviews.rating.value.scale_max | plus: 0
+  if sr_max <= 0
+    assign sr_max = 5
+  endif
+-%}
+
+{%- if sr_count > 0 and sr_rating > 0 -%}
+  {%- liquid
+    assign sr_fill = sr_rating | times: 100.0 | divided_by: sr_max | round: 1
+    assign sr_label_rating = sr_rating | round: 1 | replace: '.', ','
+    comment
+      Kortene viser tallet, men skjermlesere skal ikke lese «(62)» som ren
+      parentes — hele komponenten er ett role="img" med full setning.
+    endcomment
+    assign sr_label = sr_label_rating | append: ' av ' | append: sr_max | append: ' stjerner, basert på ' | append: sr_count | append: ' anmeldelser'
+  -%}
+
+  <div class="sk-stars" role="img" aria-label="{{ sr_label | escape }}">
+    <span class="sk-stars__track" aria-hidden="true">
+      <span class="sk-stars__row sk-stars__row--empty"></span>
+      <span class="sk-stars__row sk-stars__row--full" style="width: {{ sr_fill }}%"></span>
+    </span>
+    {%- unless sr_show_count == false -%}
+      <span class="sk-stars__count" aria-hidden="true">({{ sr_count }})</span>
+    {%- endunless -%}
+  </div>
+{%- endif -%}

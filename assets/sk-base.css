@@ -1093,30 +1093,72 @@ footer .footer__column.footer__column--menu a:hover {
   display: block;
 }
 
-/* Okendo star rating widget - Product Listing Cards */
-.okeReviews--reviewsSummary-starRating {
+/* Stjernevurdering på produktkort — snippets/sk-star-rating.liquid.
+   Erstatter Okendos kort-widget (fase 2 i Klaviyo-overgangen).
+
+   To lag med samme maske: en tom rad under, en fylt rad over som klippes
+   til ratingens prosentandel. Stjernen har innebygd luft i sitt eget
+   viewBox (banen spenner 2–22 av 24), så avstanden mellom stjernene kommer
+   fra maskeflisen og ikke fra en gap-variabel — det er det som lar
+   prosenten mappe lineært over nøyaktig fem like fliser. Sporet er derfor
+   5 × --sk-star-size bredt.
+
+   Ingen JS og ingen CLS-reserve: bredden er kjent i første frame. Marginene
+   er de samme som Okendo-diven hadde, så kortenes vertikale rytme er
+   uendret. */
+.sk-stars {
+  --sk-star-size: 17px;
+  --sk-star-color: var(--accent-gold);
+  --sk-star-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z'/%3E%3C/svg%3E");
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
   margin-top: 6px;
   margin-bottom: 8px;
   line-height: 1;
+}
+
+.sk-stars__track {
+  position: relative;
   display: block;
+  flex: none;
+  width: calc(5 * var(--sk-star-size));
+  height: var(--sk-star-size);
 }
 
-/* Optional: keep stars aligned with your typography */
-.okeReviews--reviewsSummary-starRating .okeReviews-starRating,
-.okeReviews--reviewsSummary-starRating .okeReviews-starRatingContainer {
-  display: inline-flex;
-  align-items: center;
+.sk-stars__row {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  display: block;
+  background-color: var(--sk-star-color);
+  -webkit-mask-image: var(--sk-star-mask);
+  mask-image: var(--sk-star-mask);
+  -webkit-mask-size: var(--sk-star-size) 100%;
+  mask-size: var(--sk-star-size) 100%;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
 }
 
-/* Star colors - star-gold (--accent-gold token), ikke merkefarge lilla */
-.okeReviews--reviewsSummary-starRating .oke-starRating-star svg,
-.okeReviews--reviewsSummary-starRating .oke-stars svg,
+.sk-stars__row--empty {
+  width: 100%;
+  background-color: color-mix(in srgb, var(--sk-star-color) 25%, transparent);
+}
+
+.sk-stars__count {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  color: var(--ink-500);
+}
+
+/* Okendos egne stjerner beholdes inntil videre — produktsidens hero og
+   anmeldelses-widget er fortsatt app-blokker. Fjernes i fase 4. */
 .okeReviews .oke-stars-full svg {
   fill: var(--accent-gold) !important;
 }
 
-/* Empty stars - faint gold */
-.okeReviews--reviewsSummary-starRating .oke-starRating-star-empty svg,
 .okeReviews .oke-stars-empty svg {
   fill: color-mix(in srgb, var(--accent-gold) 25%, transparent) !important;
 }
