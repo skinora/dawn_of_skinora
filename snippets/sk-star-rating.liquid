@@ -25,7 +25,7 @@
   assign sr_p = sr_product | default: product
   assign sr_rating = sr_p.metafields.reviews.rating.value.rating | plus: 0.0
   assign sr_count = sr_p.metafields.reviews.rating_count | plus: 0
-  assign sr_max = sr_p.metafields.reviews.rating.value.scale_max | plus: 0
+  assign sr_max = sr_p.metafields.reviews.rating.value.scale_max | plus: 0 | floor
   if sr_max <= 0
     assign sr_max = 5
   endif
