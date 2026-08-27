@@ -397,7 +397,31 @@
     {% render 'meta-tags' %}
     {% render 'seo-breadcrumbs-jsonld' %}
 
+    {%- comment -%}
+      Landingssidene har ingen `product` i scope, så aggregatet ble hardkodet
+      da schemaet ble skrevet. Tallene rustet: siden oppga 62 anmeldelser mens
+      metafeltet sto på 79. Google slår ned på aggregateRating som ikke stemmer
+      med det som er synlig på siden.
+
+      Nå slås produktet opp på handle og tallene leses fra de samme
+      standard-metafeltene som resten av temaet bruker. Det gjør blokken
+      selvkorrigerende — den følger metafeltet uansett hvilken app som skriver
+      til det (Okendo i dag, Klaviyo Reviews etter overgangen).
+
+      review-arrayet under er fortsatt statisk, og det er riktig: de sitatene
+      finnes ordrett i seksjonsblokkene på siden. Endres sitatene der, må de
+      endres her.
+    {%- endcomment -%}
     {%- if request.page_type == 'page' and page.handle == 'skinora-radiance-face' -%}
+      {%- liquid
+        assign lp_product = all_products['skinora-radiance-face']
+        assign lp_rating = lp_product.metafields.reviews.rating.value.rating
+        assign lp_count = lp_product.metafields.reviews.rating_count | plus: 0
+        assign lp_scale = lp_product.metafields.reviews.rating.value.scale_max | plus: 0 | floor
+        if lp_scale <= 0
+          assign lp_scale = 5
+        endif
+      -%}
       <script type="application/ld+json">
         {
           "@context": "https://schema.org",
@@ -446,12 +470,14 @@
               "returnFees": "https://schema.org/FreeReturn"
             }
           },
+          {%- if lp_count > 0 and lp_rating != blank -%}
           "aggregateRating": {
             "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "reviewCount": "62",
-            "bestRating": "5"
+            "ratingValue": {{ lp_rating | json }},
+            "reviewCount": {{ lp_count | json }},
+            "bestRating": {{ lp_scale | json }}
           },
+          {%- endif -%}
           "review": [
             {
               "@type": "Review",
@@ -494,7 +520,17 @@
       </script>
     {%- endif -%}
 
+    {%- comment -%} Samme som over — se kommentaren ved radiance-face. {%- endcomment -%}
     {%- if request.page_type == 'page' and page.handle == 'skinora-clear' -%}
+      {%- liquid
+        assign lp_product = all_products['skinora-clear']
+        assign lp_rating = lp_product.metafields.reviews.rating.value.rating
+        assign lp_count = lp_product.metafields.reviews.rating_count | plus: 0
+        assign lp_scale = lp_product.metafields.reviews.rating.value.scale_max | plus: 0 | floor
+        if lp_scale <= 0
+          assign lp_scale = 5
+        endif
+      -%}
       <script type="application/ld+json">
         {
           "@context": "https://schema.org",
@@ -540,12 +576,14 @@
               "returnFees": "https://schema.org/FreeReturn"
             }
           },
+          {%- if lp_count > 0 and lp_rating != blank -%}
           "aggregateRating": {
             "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "reviewCount": "47",
-            "bestRating": "5"
+            "ratingValue": {{ lp_rating | json }},
+            "reviewCount": {{ lp_count | json }},
+            "bestRating": {{ lp_scale | json }}
           },
+          {%- endif -%}
           "review": [
             {
               "@type": "Review",
