@@ -135,6 +135,10 @@
     "1759515838eeeda580": {
       "type": "apps",
       "blocks": {
+        "klaviyo_reviews_product_reviews_Dcrdpw": {
+          "type": "shopify://apps/klaviyo-reviews/blocks/product-reviews/db20e365-d984-4ac4-9655-e1588d951ca9",
+          "settings": {}
+        },
         "okendo_reviews_widget_bWp9Qg": {
           "type": "shopify://apps/okendo/blocks/reviews-widget/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
           "settings": {
@@ -144,6 +148,7 @@
         }
       },
       "block_order": [
+        "klaviyo_reviews_product_reviews_Dcrdpw",
         "okendo_reviews_widget_bWp9Qg"
       ],
       "settings": {
