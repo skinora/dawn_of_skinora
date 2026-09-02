@@ -248,13 +248,12 @@
     {%- endcomment -%}
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     {%- comment -%}
-      cdn.jsdelivr.net / cdn-static.okendo.io get lightweight dns-prefetch only (non-critical).
+      cdn.jsdelivr.net gets lightweight dns-prefetch only (non-critical).
     {%- endcomment -%}
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     {%- if template.name == 'product' -%}
       <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     {%- endif -%}
-    <link rel="dns-prefetch" href="https://cdn-static.okendo.io">
 
     {%- comment -%}
       Preload av begge variable fonter. Tre preloads mot Adobes CDN er
@@ -733,9 +732,9 @@
            fbevents.js (824 ms) hentet signals/config (1140 ms), og
            bundler-script.js (852 ms) hentet bundler.js (1628 ms) — for så å
            bli hentet på nytt av drain() på hhv. 13,3 s og 15,3/17,3 s.
-           Okendo og UpPromote står igjen: Okendo forsinkes reelt, men av
-           SKLoader (se blokken nederst i filen), ikke av denne mekanismen. */
-        var delayJS = /static\.klaviyo\.com|cdn-static\.okendo\.io|uppromote/;
+           UpPromote staar igjen. Okendo er fjernet sammen med
+           anmeldelses-appen (fase 4 i Klaviyo-overgangen). */
+        var delayJS = /static\.klaviyo\.com|uppromote/;
         var saved = [];
         var done = false;
 
@@ -1295,24 +1294,6 @@
 
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
-
-    {%- comment -%}
-      Okendo — idle-loaded on first interaction OR requestIdleCallback
-      (5 s deadline). Below-fold; delayed loading frees main-thread budget
-      during the critical LCP + TBT measurement window (0-5 s).
-      Uses SKLoader from performance-loader.js for consistent deferred loading.
-      Both onInteraction and onIdle race — whichever fires first wins (deduplicated).
-    {%- endcomment -%}
-    {%- comment -%} Okendo only renders widgets on product pages — skip loading on other pages. {%- endcomment -%}
-    {%- if request.page_type == 'product' -%}
-      <script>
-        if (window.SKLoader) {
-          var okSrc = 'https://cdn-static.okendo.io/reviews-widget-plus/js/okendo-reviews.min.js';
-          SKLoader.onInteraction(okSrc, { events: ['scroll', 'touchstart', 'mouseover'] });
-          SKLoader.onIdle(okSrc, { timeout: 5000 });
-        }
-      </script>
     {%- endif -%}
 
     {% comment %}theme-check-enable RemoteAsset{% endcomment %}

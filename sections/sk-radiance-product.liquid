@@ -429,27 +429,15 @@
     }
 
     /* =============================
-       ANMELDELSER (Okendo)
+       ANMELDELSER
     ============================= */
 
     /* Stjernene hoerer til produktnavnet, ikke til kjoepsflaten under, saa de
-       skal ligge tett paa undertittelen. Maalt paa mobil var luften 36 px —
-       men bare 18 av dem sto i vaar egen CSS:
-
-         8 px  .sk-product-subtitle margin-bottom
-        10 px  .sk-hero-content flex-gap
-        16 px  Okendo sin .oke-is-clickable margin-top   <- inne i app-blokka
-         2 px  baseline-luft under .oke-sr (inline-block)
-
-       Derfor saa kilden riktig ut. De to siste nulles her, scoped til vaar
-       egen container slik at widgeten ellers staar urort. */
-    .sk-product-reviews {
-      /* Dreper linjeboksen den inline-block'a widgeten henger i. Barna setter
-         sin egen line-height, saa dette treffer bare den tomme luften. */
-      line-height: 0;
-    }
-
-    .sk-product-reviews .oke-is-clickable {
+       skal ligge tett paa undertittelen: 4 px fra .sk-product-subtitle og
+       10 px flex-gap fra .sk-hero-content er all luften de skal ha.
+       .sk-stars er bygget for produktkort og har 6 px egen toppmarg — den
+       nulles her, scoped til heroen, slik at kortene staar urort. */
+    .sk-product-reviews .sk-stars {
       margin-top: 0;
     }
 
@@ -1063,28 +1051,6 @@
       width: 18px;
       height: 18px;
     }
-
-    /* Okendos klikkflate for stjernene er 289 x 22 px — under 44 px-minimum
-       for touch, og en målt kilde til bomklikk der 90 % av trafikken er
-       mobil.
-
-       Treffområdet utvides med et pseudo-element, ikke med padding: padding
-       ville dyttet alt under stjernene 24 px ned, og seksjonen har allerede
-       ofret undertittelen for å spare 21 px over folden. Dette koster null
-       piksler i layout.
-
-       Scopet til .sk-product-reviews, så Okendo-widgets i produktkort og
-       lister ikke berøres. */
-    .sk-product-reviews .oke-is-clickable {
-      position: relative;
-    }
-    .sk-product-reviews .oke-is-clickable::after {
-      content: '';
-      position: absolute;
-      inset-block: -11px;
-      inset-inline: 0;
-    }
-    /* ─────────────────────────────────────────────────────────────────── */
 
     .sk-trust-inline {
       display: grid;
@@ -2326,81 +2292,33 @@
             foerste spoerdmaalet kommer foerst, og et hastesignal foer
             produktet er vurdert leser som press.
           {%- endcomment -%}
-          <div class="sk-product-reviews">
-            {% for block in section.blocks %}
-              {% if block.type == '@app' %}
-                {% render block %}
-              {% endif %}
-            {% endfor %}
-          </div>
-
           {%- comment -%}
-            SKINORA PDP – kan fjernes
-            Stjernene skal føre til anmeldelsene. Okendo scroller selv, men
-            leser posisjonen mens seksjon 4–14 står med content-visibility:
-            auto. Målt 23. aug: dokumentet er da 5 336 px for kort, og
-            widgeten rapporteres på y=7109 i stedet for y=10559 — 3 450 px
-            feil. Klikket landet i seksjon 11, rett ved FAQ.
-
-            Vi tar klikket i capture-fasen, tvinger utlegging, og scroller
-            selv. content-visibility slås av for resten av sidevisningen; det
-            er en lastetidsoptimalisering, og brukeren er uansett på vei til
-            bunnen av siden.
-
-            Endrer Okendo klassenavnene sine, slutter dette å matche og
-            oppførselen faller tilbake til dagens. Den blir ikke verre.
+            Anmeldelses-widgeten er en app-blokk (Klaviyo Reviews). Har
+            seksjonen ingen app-blokk — tilfellet etter at Okendos
+            stjerneblokk ble fjernet — rendrer vi temaets egne stjerner fra
+            reviews-metafeltene i stedet: samme komponent som produktkortene,
+            uten JS og uten CLS. Begge anmeldelses-appene skriver til de
+            samme metafeltene, saa denne fallbacken overlever appbytter.
           {%- endcomment -%}
-          <script>
-            (function () {
-              if (window.__SK_STARS_TO_REVIEWS) return;
-              window.__SK_STARS_TO_REVIEWS = true;
-
-              /* Siden har to [data-oke-container]: stjernene i heroen og
-                 anmeldelses-widgeten. Vi vil alltid ha den som IKKE er i
-                 heroen. */
-              function reviewsWidget() {
-                var el = document.querySelector('[data-oke-widget]');
-                if (el && !el.closest('.sk-product-reviews')) return el;
-                var alt = document.querySelectorAll('[data-oke-container]');
-                for (var i = alt.length - 1; i >= 0; i--) {
-                  if (!alt[i].closest('.sk-product-reviews')) return alt[i];
-                }
-                return null;
-              }
-
-              function go(e) {
-                if (!e.target || !e.target.closest) return;
-                if (!e.target.closest('.sk-product-reviews .oke-is-clickable')) return;
-
-                var target = reviewsWidget();
-                /* Ingen widget å scrolle til — la Okendo få forsøke. */
-                if (!target) return;
-
-                e.preventDefault();
-                e.stopPropagation();
-
-                document.querySelectorAll('.shopify-section').forEach(function (s) {
-                  s.style.contentVisibility = 'visible';
-                });
-                /* Tving reflow FØR vi måler, ellers scroller vi mot samme
-                   feil tall som Okendo gjorde. */
-                void document.documentElement.offsetHeight;
-
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-
-              document.addEventListener('click', go, true);
-              /* Elementet er role="button" med tabindex="0", så tastatur må
-                 dekkes for seg. */
-              document.addEventListener(
-                'keydown',
-                function (e) {
-                  if (e.key === 'Enter' || e.key === ' ') go(e);
-                },
-                true
-              );
-            })();
-          </script>
+          {%- liquid
+            assign sk_has_app_block = false
+            for block in section.blocks
+              if block.type == '@app'
+                assign sk_has_app_block = true
+              endif
+            endfor
+          -%}
+          <div class="sk-product-reviews">
+            {%- if sk_has_app_block -%}
+              {% for block in section.blocks %}
+                {% if block.type == '@app' %}
+                  {% render block %}
+                {% endif %}
+              {% endfor %}
+            {%- else -%}
+              {% render 'sk-star-rating', sr_product: product %}
+            {%- endif -%}
+          </div>
 
           {%- if show_stock -%}
             <div class="sk-stock{{ glow_class }}" role="status">
