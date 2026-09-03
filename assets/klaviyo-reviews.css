@@ -1,0 +1,127 @@
+/* ============================================================================
+   KLAVIYO REVIEWS — Skinora-tilpasning
+   ============================================================================
+
+   Widgeten er en app-blokk (templates/product.sk-radiance.json, seksjon
+   "1759515838eeeda580") og rendrer i light DOM med klasseprefikset
+   `kl_reviews__` under #klaviyo-product-reviews-wrapper.
+
+   HVORFOR VARIABLER OG IKKE REGLER
+   Klaviyos egne regler bruker gjentatt klassenavn som spesifisitetshack
+   (`.kl_reviews__reviews_list.kl_reviews__reviews_list.kl_reviews__reviews_list …`
+   = 0-3-0). Å konkurrere med dem direkte krever enten !important eller like
+   stygge selektorer — begge forbudt av temaets constitution. Men hele
+   widgeten leser fargene, typografien og geometrien sin fra
+   `--kl-reviews-*`-variabler, så det holder å sette variablene.
+
+   HVORFOR DETTE VINNER OVER KLAVIYO-ADMIN
+   Klaviyo skriver verdiene fra Reviews-admin inn i en inline
+   `<style>@layer base { :root { … } }`. Regler UTENFOR et lag slår alltid
+   regler inne i et lag, uavhengig av spesifisitet og rekkefølge. Denne filen
+   er ulaget, så den vinner.
+   => Endringer i Klaviyo-admin får IKKE effekt på det som står her.
+      Skal fargene endres, endres de her — ikke i Klaviyo.
+
+   Filen lastes fra layout/theme.liquid rett etter buttons.css.
+   ============================================================================ */
+
+#klaviyo-product-reviews-wrapper {
+  /* ---------- Farge ----------
+     Klaviyos standard er Shopify Polaris-grått (#202223 / #606A72) og
+     Klaviyo-blått (#1C65AD). Ingen av dem finnes i Skinora-paletten. */
+  --kl-reviews-reviews-primary-font-color: var(--ink-700);
+  --kl-reviews-reviews-secondary-font-color: var(--ink-500);
+  --kl-reviews-reviews-filter-placeholder-text-color: var(--ink-400);
+  --kl-reviews-reviews-accent-color: var(--ink-700);
+  --kl-reviews-color-light-gray: var(--hairline);
+  --kl-reviews-reviews-secondary-background-color: var(--paper-100);
+
+  /* ---------- Stjerner ----------
+     Samme gull som produktkortene (snippets/sk-star-rating.liquid via
+     --sk-star-color), slik at stjernene i widgeten og stjernene i
+     kolleksjonskortene er samme farge. Klaviyos #F8BE00 er en annen gul.
+     Tom stjerne blandes mot papir og ikke mot transparent — stop-color i
+     SVG-gradienten skal være ugjennomsiktig. */
+  --kl-reviews-reviews-star-color: var(--accent-gold);
+  --kl-reviews-reviews-empty-star-color: color-mix(in srgb, var(--accent-gold) 25%, var(--paper-0));
+
+  /* ---------- Typografi ----------
+     Alle størrelser i widgeten er calc() på disse to basene:
+       primary   x1     -> brødtekst
+       primary   x3.43  -> snittkarakteren
+       secondary x0.86  -> forfatter, tidsstempel, svar, filterpiller
+       secondary x1.14  -> anmeldelsestittel
+     Klaviyos fallback er 14px, som gir 12,04px på alt x0.86 — under temaets
+     caption-gulv på 13px, og 14px brødtekst er under gulvet på 16px.
+     16px base gir 16px brødtekst og 13,76px caption. */
+  --kl-reviews-reviews-primary-font-font-family: var(--ff-sans);
+  --kl-reviews-reviews-secondary-font-font-family: var(--ff-sans);
+  --kl-reviews-reviews-primary-font-font-size: 16px;
+  --kl-reviews-reviews-secondary-font-font-size: 16px;
+  --kl-reviews-reviews-primary-font-font-weight: var(--fw-regular);
+  --kl-reviews-reviews-secondary-font-font-weight: var(--fw-regular);
+
+  /* ---------- Knapper ----------
+     «Skriv en anmeldelse» arver nå geometrien til temaets primærknapp
+     (buttons.css). Klaviyos standard var 12px tekst i 8px padding. */
+  --kl-reviews-reviews-button-font-font-family: var(--ff-sans);
+  --kl-reviews-reviews-button-font-font-weight: var(--fw-semibold);
+  --kl-reviews-reviews-button-font-color: var(--paper-0);
+  --kl-reviews-reviews-button-hover-color: var(--ink-900);
+  --kl-reviews-reviews-button-corner-radius: var(--btn-radius);
+  --kl-reviews-reviews-button-inner-padding-top: var(--btn-py-md);
+  --kl-reviews-reviews-button-inner-padding-bottom: var(--btn-py-md);
+  --kl-reviews-reviews-button-inner-padding-left: var(--btn-px-md);
+  --kl-reviews-reviews-button-inner-padding-right: var(--btn-px-md);
+
+  /* ---------- Geometri ----------
+     Bildene beholder 0 i radius — [class^='sk-'] img i sk-base.css tvinger
+     skarpe hjørner ellers i temaet, og widgeten skal følge samme regel. */
+  --kl-reviews-reviews-corner-radius: 12px;
+  --kl-reviews-reviews-filter-button-corner-radius-fallback: var(--btn-radius-pill);
+  --kl-reviews-reviews-review-images-corner-radius: 0px;
+  --kl-reviews-reviews-summary-images-corner-radius: 0px;
+}
+
+/* ============================================================================
+   Det variablene ikke rekker
+   Klaviyo regner ut noen verdier med multiplikatorer som gir forbudte tall:
+   font-weight blir calc(400 * 1.75) = 700, og snittkarakteren blir
+   calc(16px * 3.43) = 54,9px. Multiplikatoren kan ikke settes, så disse fire
+   settes direkte. ID-scopet gir 1-1-0 og slår Klaviyos 0-3-1 uten !important.
+   ============================================================================ */
+
+#klaviyo-product-reviews-wrapper .kl_reviews__summary__average_value {
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  color: var(--ink-900);
+}
+
+#klaviyo-product-reviews-wrapper .kl_reviews__summary__header {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-normal);
+  line-height: var(--lh-snug);
+  color: var(--ink-700);
+}
+
+#klaviyo-product-reviews-wrapper .kl_reviews__list__tab {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-500);
+}
+
+#klaviyo-product-reviews-wrapper .kl_reviews__list__tab--active {
+  color: var(--ink-700);
+}
+
+/* Både den fylte og den hule knappen har hardkodet 12px i Klaviyos ark. */
+#klaviyo-product-reviews-wrapper button.kl_reviews__button,
+#klaviyo-product-reviews-wrapper button.kl_reviews__button--outline {
+  font-size: var(--btn-fs-md);
+  letter-spacing: var(--btn-tracking);
+  min-height: var(--btn-min-h);
+}
