@@ -8,6 +8,32 @@
     <meta name="theme-color" content="var(--ink-900)">
 
     {%- comment -%}
+      OpenAI ChatGPT Ads — measurement pixel, pixel CuKz4tHodoU8H6iAcC2zKz.
+      Injected directly in <head>, same reasoning as Clarity below: a Shopify
+      custom pixel runs sandboxed on another origin and cannot write the
+      first-party __oppref cookie. The SDK reads the oppref parameter off the
+      LANDING URL, so it has to run on first paint — hence the placement here,
+      above everything else. Not matched by the perf interceptor's delayJS
+      regex below, so it loads immediately.
+      The purchase events live in Settings -> Customer events -> "OpenAI Ads".
+    {%- endcomment -%}
+    <script>
+      (function (w, d, s, u) {
+        if (w.oaiq) return;
+        var q = function () { q.q.push(arguments); };
+        q.q = [];
+        w.oaiq = q;
+        var js = d.createElement(s);
+        js.async = true;
+        js.src = u;
+        var f = d.getElementsByTagName(s)[0];
+        f.parentNode.insertBefore(js, f);
+      })(window, document, "script", "https://bzrcdn.openai.com/sdk/oaiq.min.js");
+
+      oaiq("init", { pixelId: "CuKz4tHodoU8H6iAcC2zKz", debug: true });
+    </script>
+
+    {%- comment -%}
       Microsoft Clarity — official snippet, project xmgzwwlwhg.
       Injected directly in <head> (not via Shopify custom web pixel, which runs
       sandboxed and never fired). Placed high, before other scripts. Not matched
