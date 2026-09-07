@@ -8,32 +8,6 @@
     <meta name="theme-color" content="var(--ink-900)">
 
     {%- comment -%}
-      OpenAI ChatGPT Ads — measurement pixel, pixel CuKz4tHodoU8H6iAcC2zKz.
-      Injected directly in <head>, same reasoning as Clarity below: a Shopify
-      custom pixel runs sandboxed on another origin and cannot write the
-      first-party __oppref cookie. The SDK reads the oppref parameter off the
-      LANDING URL, so it has to run on first paint — hence the placement here,
-      above everything else. Not matched by the perf interceptor's delayJS
-      regex below, so it loads immediately.
-      The purchase events live in Settings -> Customer events -> "OpenAI Ads".
-    {%- endcomment -%}
-    <script>
-      (function (w, d, s, u) {
-        if (w.oaiq) return;
-        var q = function () { q.q.push(arguments); };
-        q.q = [];
-        w.oaiq = q;
-        var js = d.createElement(s);
-        js.async = true;
-        js.src = u;
-        var f = d.getElementsByTagName(s)[0];
-        f.parentNode.insertBefore(js, f);
-      })(window, document, "script", "https://bzrcdn.openai.com/sdk/oaiq.min.js");
-
-      oaiq("init", { pixelId: "CuKz4tHodoU8H6iAcC2zKz", debug: true });
-    </script>
-
-    {%- comment -%}
       Microsoft Clarity — official snippet, project xmgzwwlwhg.
       Injected directly in <head> (not via Shopify custom web pixel, which runs
       sandboxed and never fired). Placed high, before other scripts. Not matched
@@ -1351,6 +1325,83 @@
         }
       </script>
     {%- endif -%}
+
+    {%- comment -%}
+      OpenAI ChatGPT Ads — base-piksel, pixel CuKz4tHodoU8H6iAcC2zKz.
+
+      Ligger i temaet og ikke bare som custom pixel fordi en custom pixel
+      kjoerer sandboxet paa et annet origin og ikke faar skrevet den
+      foersteparts __oppref-cookien.
+
+      Hele jobben til denne blokka er aa fange klikk-ID-en. SDK-en (v0.1.41)
+      gjoer i praksis dette ved init:
+
+        param = new URLSearchParams(location.search).get('oppref')
+        if (param) { setCookie('__oppref', param, 30 dager); return param }
+        return getCookie('__oppref')
+
+      Den leser altsaa URL-en slik den er NAAR init kjoerer, med cookien som
+      fallback. Derfor:
+
+      - Med oppref i URL-en (ekte annonseklikk, en liten andel av trafikken)
+        lastes SDK-en med en gang. Rekker den ikke foer besoekende navigerer
+        videre, er parameteren borte og klikket kan ikke gjenopprettes.
+      - Uten oppref har blokka ingenting aa gjoere paa foerste maling —
+        cookien er allerede satt, eller saa er dette ikke annonsetrafikk.
+        Da utsettes den til foerste interaksjon eller idle, som Okendo over.
+
+      Maalehendelsene ligger i Shopify-admin under Settings -> Customer
+      events -> "OpenAI Ads", ikke her.
+    {%- endcomment -%}
+    <script>
+      (function () {
+        var src = 'https://bzrcdn.openai.com/sdk/oaiq.min.js';
+
+        function boot() {
+          if (window.oaiq) return;
+          var q = function () { q.q.push(arguments); };
+          q.q = [];
+          window.oaiq = q;
+          q('init', { pixelId: 'CuKz4tHodoU8H6iAcC2zKz', debug: true });
+        }
+
+        boot();
+
+        function inject() {
+          if (document.querySelector('script[src="' + src + '"]')) return;
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = src;
+          document.head.appendChild(s);
+        }
+
+        if (/[?&]oppref=/.test(window.location.search)) {
+          inject();
+          return;
+        }
+
+        /* performance-loader.js lastes med defer, og deferred skript kjoerer
+           foerst NAAR dokumentet er ferdig parset. Denne blokka er inline og
+           kjoerer under parsingen, saa window.SKLoader finnes ikke enda —
+           ventingen paa DOMContentLoaded er det som gjoer at vi faktisk
+           treffer SKLoader og ikke faller rett i reserveloesningen. */
+        function schedule() {
+          if (window.SKLoader) {
+            SKLoader.onInteraction(src, { events: ['scroll', 'touchstart', 'mouseover'] });
+            SKLoader.onIdle(src, { timeout: 5000 });
+          } else {
+            /* En maalepiksel som aldri lastes er verre enn en sen en. */
+            window.addEventListener('load', inject);
+          }
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', schedule);
+        } else {
+          schedule();
+        }
+      })();
+    </script>
 
     {% comment %}theme-check-enable RemoteAsset{% endcomment %}
 
