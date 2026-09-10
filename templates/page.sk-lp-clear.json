@@ -168,6 +168,63 @@
         "image": "shopify://shop_images/Photorealistic_editorial-docum_Nano_Banana_2_83728.png"
       }
     },
+    "results": {
+      "type": "sk-lp-results-timeline",
+      "blocks": {
+        "c_1": {
+          "type": "comparison",
+          "settings": {
+            "before_image": "shopify://shop_images/panne_tsone_kviser_for.png",
+            "after_image": "shopify://shop_images/etter_bruk_ren_hud.png",
+            "before_label": "UKE 0",
+            "after_label": "UKE 8",
+            "before_alt": "Linnea, 26 – panne og T-sone før behandling med Skinora Clear",
+            "after_alt": "Linnea, 26 – panne og T-sone etter 8 uker med Skinora Clear",
+            "customer_name": "Linnea, 26 – Stavanger",
+            "concern_tag": "Panne & T-sone",
+            "usage_tag": "10 min, 4x/uke · Etter 8 uker"
+          }
+        },
+        "c_2": {
+          "type": "comparison",
+          "settings": {
+            "before_image": "shopify://shop_images/kundebildet_for.png",
+            "after_image": "shopify://shop_images/kundebilde_etter.png",
+            "before_label": "UKE 0",
+            "after_label": "UKE 6",
+            "before_alt": "Sondre, 29 – voksenakne og rødhet før Skinora Clear",
+            "after_alt": "Sondre, 29 – voksenakne og rødhet etter 6 uker med Skinora Clear",
+            "customer_name": "Sondre, 29 – Oslo",
+            "concern_tag": "Voksenakne, post-akne-arr og rødhet",
+            "usage_tag": "10 min, 5x/uke · Etter 6 uker"
+          }
+        },
+        "c_3": {
+          "type": "comparison",
+          "settings": {
+            "before_image": "shopify://shop_images/for.png",
+            "after_image": "shopify://shop_images/etter.png",
+            "before_label": "UKE 0",
+            "after_label": "UKE 8",
+            "before_alt": "Marte, 34 – hormonell akne på hake og kjeve før Skinora Clear",
+            "after_alt": "Marte, 34 – hormonell akne på hake og kjeve etter 8 uker med Skinora Clear",
+            "customer_name": "Marte, 34 – Trondheim",
+            "concern_tag": "Hormonell akne på hake og kjeve",
+            "usage_tag": "10 min, 4x/uke · Etter 8 uker"
+          }
+        }
+      },
+      "block_order": [
+        "c_1",
+        "c_2",
+        "c_3"
+      ],
+      "settings": {
+        "heading": "Hva kan du forvente?",
+        "intro": "Realistiske resultater fra ekte brukere",
+        "disclaimer": "<p>Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.</p>"
+      }
+    },
     "sk_lp_mechanism_WhVKGN": {
       "type": "sk-lp-mechanism",
       "blocks": {
@@ -300,63 +357,6 @@
         "guarantee_line": "30 dagers åpent kjøp."
       }
     },
-    "results": {
-      "type": "sk-lp-results-timeline",
-      "blocks": {
-        "c_1": {
-          "type": "comparison",
-          "settings": {
-            "before_image": "shopify://shop_images/panne_tsone_kviser_for.png",
-            "after_image": "shopify://shop_images/etter_bruk_ren_hud.png",
-            "before_label": "UKE 0",
-            "after_label": "UKE 8",
-            "before_alt": "Linnea, 26 – panne og T-sone før behandling med Skinora Clear",
-            "after_alt": "Linnea, 26 – panne og T-sone etter 8 uker med Skinora Clear",
-            "customer_name": "Linnea, 26 – Stavanger",
-            "concern_tag": "Panne & T-sone",
-            "usage_tag": "10 min, 4x/uke · Etter 8 uker"
-          }
-        },
-        "c_2": {
-          "type": "comparison",
-          "settings": {
-            "before_image": "shopify://shop_images/kundebildet_for.png",
-            "after_image": "shopify://shop_images/kundebilde_etter.png",
-            "before_label": "UKE 0",
-            "after_label": "UKE 6",
-            "before_alt": "Sondre, 29 – voksenakne og rødhet før Skinora Clear",
-            "after_alt": "Sondre, 29 – voksenakne og rødhet etter 6 uker med Skinora Clear",
-            "customer_name": "Sondre, 29 – Oslo",
-            "concern_tag": "Voksenakne, post-akne-arr og rødhet",
-            "usage_tag": "10 min, 5x/uke · Etter 6 uker"
-          }
-        },
-        "c_3": {
-          "type": "comparison",
-          "settings": {
-            "before_image": "shopify://shop_images/for.png",
-            "after_image": "shopify://shop_images/etter.png",
-            "before_label": "UKE 0",
-            "after_label": "UKE 8",
-            "before_alt": "Marte, 34 – hormonell akne på hake og kjeve før Skinora Clear",
-            "after_alt": "Marte, 34 – hormonell akne på hake og kjeve etter 8 uker med Skinora Clear",
-            "customer_name": "Marte, 34 – Trondheim",
-            "concern_tag": "Hormonell akne på hake og kjeve",
-            "usage_tag": "10 min, 4x/uke · Etter 8 uker"
-          }
-        }
-      },
-      "block_order": [
-        "c_1",
-        "c_2",
-        "c_3"
-      ],
-      "settings": {
-        "heading": "Hva kan du forvente?",
-        "intro": "Realistiske resultater fra ekte brukere",
-        "disclaimer": "<p>Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.</p>"
-      }
-    },
     "how_to_use": {
       "type": "sk-lp-how-to-use",
       "blocks": {
@@ -461,7 +461,9 @@
       ],
       "settings": {
         "heading": "Hvorfor Skinora® Clear er annerledes",
-        "intro": ""
+        "intro": "",
+        "background_image": "shopify://shop_images/skinora-clear-led-specs.webp",
+        "scrim_strength": 60
       }
     },
     "reviews": {
