@@ -87,7 +87,12 @@
 
      Elementene slås opp på nytt hver gang. Det koster ingenting for to noder,
      og gjør oss immune mot at en seksjon byttes ut i DOM-en etter lasting. */
-  var SUPPRESS_SELECTOR = '[data-blog-funnel-full], .footer, footer.shopify-section, [id*="__footer"]';
+  /* .shopify-section[id*="__footer"] — ikke [id*="__footer"] alene. Den bredere
+     varianten traff også NewsletterForm--…__footer, altså et inputfelt inne i
+     footeren. Harmløst i praksis (feltet er bare i syne når footeren er det),
+     men en tekstboks har ingenting i en liste over «CTA-en er allerede
+     synlig» å gjøre. */
+  var SUPPRESS_SELECTOR = '[data-blog-funnel-full], .footer, .shopify-section[id*="__footer"]';
 
   function ctaAlreadyOnScreen() {
     var nodes = document.querySelectorAll(SUPPRESS_SELECTOR);
@@ -192,6 +197,13 @@
   /* Sidehøyden endrer seg mye mens bilder og app-blokker lander. Én ekstra
      evaluering etter load fanger opp at scroll-andelen har flyttet seg. */
   window.addEventListener('load', onScroll);
+
+  /* requestAnimationFrame står stille i en skjult fane. Kommer brukeren
+     tilbake til fanen etter å ha scrollet bort og tilbake i mellomtiden, kan
+     baren ellers stå igjen i forrige tilstand til neste scroll. */
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) update();
+  });
 
   update();
 })();
