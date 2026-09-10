@@ -7,7 +7,10 @@
 <style>
   .lp-citations {
     background: transparent;
-    padding: clamp(40px, 6vw, 64px) 16px;
+    /* Sto på clamp(40px, 6vw, 64px) — en egen skala for én seksjon.
+       Kildelisten er en avslutningsblokk, så den bruker det kompakte
+       seksjonstokenet. */
+    padding: var(--space-section-sm) 16px;
     border-top: 1px solid rgba(48, 39, 62, 0.06);
   }
   .lp-citations__inner {

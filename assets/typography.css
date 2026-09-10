@@ -97,6 +97,13 @@
   --space-9: 96px;
   --space-10: 128px;
 
+  /* Seksjonsrytme. Gjaldt tidligere 48/72/96 på mobil og ble bumpet til
+     72/96/128 over 769px. Bumpen er fjernet (sep 2026): med 96px som standard
+     ga to naboseksjoner 192px tomrom på desktop, og siden leste som løsrevne
+     blokker i stedet for én flate. Målt på Clear-LP-en lå 11 av 17 seksjoner
+     på nøyaktig 96px — rytmen var altså riktig, bare for stor.
+     Nå er 72px standarden på alle bredder: gapet mellom to seksjoner er 144px.
+     Skal desktop puste mer igjen, er dette det ene stedet å endre. */
   --space-section-sm: 48px;
   --space-section-md: 72px;
   --space-section-lg: 96px;
@@ -129,13 +136,10 @@
   --card-padding: clamp(24px, 2vw + 16px, 32px);
 }
 
-@media (min-width: 769px) {
-  :root {
-    --space-section-sm: 72px;
-    --space-section-md: 96px;
-    --space-section-lg: 128px;
-  }
-}
+/* Desktop-bumpen av seksjonsrytmen (72/96/128) er fjernet – se
+   --space-section-* over. Ingen erstatningsregel her med vilje: verdiene skal
+   ha ÉN kilde, og en tom media-blokk ville bare invitert til at noen fyller
+   den igjen. */
 
 /* =============================================================
    2 — BASE: html/body

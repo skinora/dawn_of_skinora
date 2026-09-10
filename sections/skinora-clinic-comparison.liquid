@@ -16,7 +16,7 @@
     --clinic-faint: rgba(var(--sk-color-body-text), 0.55);
     --clinic-line: rgba(var(--sk-color-body-text), 0.16);
     background: {% if section.settings.background_style == 'lavender' %}var(--paper-150){% elsif section.settings.background_style == 'gray' %}var(--paper-50){% else %}var(--paper-0){% endif %};
-    padding-block: clamp(3rem, 6vw, 4.5rem);
+    padding-block: var(--space-section-sm);
   }
 
   .sk-clinic-{{ section.id }} .sk-clinic__inner {
@@ -97,9 +97,8 @@
 
   /* ---------- Mobil: stable, tallet først ---------- */
   @media (max-width: 749px) {
-    .sk-clinic-{{ section.id }} {
-      padding-block: clamp(2.5rem, 8vw, 3.5rem);
-    }
+    /* Egen padding-block her er fjernet: seksjonstokenet er nå det samme på
+       alle bredder, så overstyringen var en duplikat av seg selv. */
     .sk-clinic-{{ section.id }} .sk-clinic__inner {
       grid-template-columns: 1fr;
       align-items: start;

@@ -27,7 +27,9 @@
   .sk-xsell__inner {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 80px 24px;
+    /* Sto på 80px, som ikke finnes i spacing-skalaen og derfor brøt rytmen
+       mot naboseksjonene. Nå på seksjonstokenet som alle andre. */
+    padding: var(--space-section-md) 24px;
     text-align: center;
   }
   .sk-xsell__header {
@@ -200,7 +202,7 @@
 
   @media (max-width: 640px) {
     .sk-xsell__inner {
-      padding: 56px 16px;
+      padding: var(--space-section-sm) 16px;
     }
     .sk-xsell__header {
       margin-bottom: 28px;
