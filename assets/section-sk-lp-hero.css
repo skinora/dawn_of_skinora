@@ -394,8 +394,15 @@ body .lp-hero--overlay .lp-btn--hero:focus-visible {
 @media (max-width: 768px) {
   .lp-hero__inner {
     /* Was section-md (72px) top + bottom; clamp gives 32–56px so the
-       hero feels intentional without crowding small viewports. */
+       hero feels intentional without crowding small viewports.
+
+       Bunnen må i tillegg reservere plass til trustbaren, som løftes opp
+       på heroen. Denne regelen overstyrte reservasjonen i basis-regelen —
+       den er skrevet som padding-block og kommer senere i fila — så
+       trustbaren la seg oppå pills-raden. Derfor står bunnverdien
+       eksplisitt her. */
     padding-block: clamp(32px, 8vw, 56px);
+    padding-bottom: calc(clamp(32px, 8vw, 56px) + var(--lp-trustbar-h));
   }
   .lp-hero__title {
     margin-bottom: var(--space-3);
