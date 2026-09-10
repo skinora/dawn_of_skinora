@@ -100,8 +100,11 @@
       color-mix(in srgb, var(--ink-900) 10%, transparent) 45%,
       color-mix(in srgb, var(--ink-900) 20%, transparent) 58%,
       color-mix(in srgb, var(--ink-900) 55%, transparent) 74%,
-      color-mix(in srgb, var(--ink-900) 80%, transparent) 88%,
-      color-mix(in srgb, var(--ink-900) 90%, transparent) 100%
+      /* Lettes mot bunnen: den nederste stripen ligger bak trustbarens
+         frostglass, og var scrimen like mørk der som resten, hadde glasset
+         ikke hatt noe bilde å slippe gjennom. */
+      color-mix(in srgb, var(--ink-900) 62%, transparent) 88%,
+      color-mix(in srgb, var(--ink-900) 45%, transparent) 100%
     );
   }
 }
