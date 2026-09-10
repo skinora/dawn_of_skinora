@@ -112,11 +112,20 @@
   --sk-letter-spacing-button: 0.08em;
 }
 
-/* ── Hide global header/announcement on landing pages ── */
-.template-page-sk-lp-clear .section-header,
-.template-page-sk-lp-clear .shopify-section-header-group,
-.template-page-sk-lp-radiance-face .section-header,
-.template-page-sk-lp-radiance-face .shopify-section-header-group {
+/* ── Hide global header/announcement on landing pages ──
+   Regelen het `.shopify-section-header-group`. Shopify skriver
+   `.shopify-section-group-header-group` — ordene sto i feil rekkefølge, så
+   den selektoren traff aldri noe. Headeren ble likevel skjult, fordi den
+   dessuten har klassen `.section-header`. Annonseringsbaren har den ikke, og
+   ble derfor stående synlig på begge LP-ene siden regelen ble skrevet.
+
+   Med riktig klassenavn skjules hele header-gruppen: både baren og headeren.
+   Det er meningen på en landingsside — budskapet finnes allerede to ganger
+   lenger ned («Gratis frakt» som hero-pille, «Sendes fra norsk lager» i
+   trustbaren), og en tredje gjentakelse over kampanjebåndet stjeler bare
+   høyde over folden. */
+.template-page-sk-lp-clear .shopify-section-group-header-group,
+.template-page-sk-lp-radiance-face .shopify-section-group-header-group {
   display: none !important;
 }
 
