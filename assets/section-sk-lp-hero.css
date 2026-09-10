@@ -120,7 +120,17 @@
 }
 
 /* ---------- Eyebrow ---------- */
-.lp-hero--overlay .lp-eyebrow {
+/* Dobbel klasse på hero-elementet er en spesifisitets-nødvendighet, ikke
+   pynt. section-sk-lp-radiance-face.css setter `.lp-hero .lp-eyebrow`
+   { color: var(--ink-500) } — samme spesifisitet som `.lp-hero--overlay
+   .lp-eyebrow` (0,2,0). Den fila lastes av 17 seksjoner, så kopiene av den
+   kommer ETTER denne fila i kaskaden og vant uavgjort. Resultatet var mørk
+   aubergine eyebrow oppå et mørkt hero-foto: praktisk talt uleselig.
+
+   `.lp-hero.lp-hero--overlay` gir (0,3,0) og avgjør uansett rekkefølge.
+   Den ordentlige fiksen er at 17 seksjoner ikke skal laste en annen
+   seksjons CSS — se «Cascade traps» i CLAUDE.md — men det er en egen jobb. */
+.lp-hero.lp-hero--overlay .lp-eyebrow {
   font-family: var(--ff-sans);
   font-size: var(--fs-xs);
   font-weight: var(--fw-semibold);
