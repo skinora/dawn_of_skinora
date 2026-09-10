@@ -889,6 +889,7 @@
     },
     "sk_lp_citations_wCJfGi": {
       "type": "sk-lp-citations",
+      "disabled": true,
       "blocks": {
         "citation_wV88tM": {
           "type": "citation",
