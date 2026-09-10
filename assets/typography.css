@@ -129,6 +129,14 @@
   --lp-w-narrow: 760px;  /* tight reading: FAQ list, CTA inner, single-col problem */
   --lp-gutter: clamp(16px, 4vw, 32px);
 
+  /* Trustbarens høyde. Ligger her, ikke i seksjonsfila, fordi TO seksjoner
+     må være enige om tallet: trustbaren løftes opp på heroen med en negativ
+     margin like stor som sin egen høyde, og heroen reserverer like mye
+     bunnpadding så innholdet ikke havner under den. Endres den ett sted
+     uten det andre, får du enten et hull eller overlappende tekst.
+     Høyden er derfor låst med min-height, ikke overlatt til innholdet. */
+  --lp-trustbar-h: 120px; /* mobil: to rader */
+
   /* ---------- CARD PADDING ----------
      Single source for the inner padding on every card-style component
      (reviews, trust-full, documentation, why-choose, mechanism). Scales
@@ -140,6 +148,13 @@
    --space-section-* over. Ingen erstatningsregel her med vilje: verdiene skal
    ha ÉN kilde, og en tom media-blokk ville bare invitert til at noen fyller
    den igjen. */
+
+/* Trustbaren står på én rad fra 769px og trenger mindre høyde. */
+@media (min-width: 769px) {
+  :root {
+    --lp-trustbar-h: 76px;
+  }
+}
 
 /* =============================================================
    2 — BASE: html/body

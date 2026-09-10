@@ -15,10 +15,38 @@
    Tokens from assets/typography.css.
    ============================================================= */
 
+/* Matt glass oppå hero-bildet.
+   Baren lå tidligere som en solid --ink-900-stripe RETT UNDER heroen, altså
+   ikke over bildet i det hele tatt. Den løftes nå opp på heroen med en
+   negativ margin like stor som sin egen høyde, og heroen reserverer like
+   mye bunnpadding (se section-sk-lp-hero.css). Begge leser
+   --lp-trustbar-h fra typography.css, så tallet har ÉN kilde.
+
+   min-height låser høyden. Uten den ville innholdet bestemt høyden, den
+   negative marginen ikke lenger stemt, og du fikk enten et hull under
+   heroen eller en bar som spiste hero-innholdet.
+
+   backdrop-filter trenger noe å filtrere: derfor halvgjennomsiktig bakgrunn
+   og z-index over hero-laget. Faller filteret bort (eldre nettlesere), står
+   fargen igjen alene og baren er fortsatt lesbar — bare uten uskarphet. */
 .lp-trustbar {
-  background: var(--ink-900);
-  padding-block: var(--space-5);
-  /* No top/bottom borders — band reads as continuous dark mass. */
+  position: relative;
+  z-index: 3;
+  margin-top: calc(-1 * var(--lp-trustbar-h));
+  min-height: var(--lp-trustbar-h);
+  display: flex;
+  align-items: center;
+  background: color-mix(in srgb, var(--ink-900) 52%, transparent);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  border-top: 1px solid color-mix(in srgb, var(--paper-0) 14%, transparent);
+  padding-block: var(--space-4);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .lp-trustbar {
+    background: color-mix(in srgb, var(--ink-900) 88%, transparent);
+  }
 }
 
 .lp-trustbar__grid {
@@ -40,9 +68,19 @@
   flex: 0 1 auto;
 }
 
-/* Icon — refined 24px. SVG sources in assets/ are now natively
-   coloured in --accent-clay (#A0522D), so no CSS filter is needed.
-   See assets/no_1.svg, lager.svg, garanti.svg, sikker_betaling.svg. */
+/* Icon — 24px, tvunget til hvitt.
+   Kommentaren her sa at SVG-ene er «natively coloured in --accent-clay» og
+   at ingen filter trengs. Det gjaldt kopiene i assets/. Seksjonen henter
+   dem fra Shopify Files (shopify://shop_images/…), og DE er mørk lilla —
+   på --ink-900 var de praktisk talt usynlige.
+
+   brightness(0) invert(1) gjør enhver fyllfarge hvit uten at vi må røre
+   filene. Det er med vilje: merchant-opplastede filer skal ikke kopieres
+   ned i temaet for å omfarges, da får du to sannheter om samme ikon. */
+.lp-trustbar__icon img {
+  filter: brightness(0) invert(1);
+}
+
 .lp-trustbar__icon {
   width: 24px;
   height: 24px;

@@ -107,6 +107,10 @@
 }
 
 /* ---------- Content positioning wrapper ---------- */
+/* Bunnpaddingen reserverer plass til trustbaren, som løftes opp på heroen
+   med en negativ margin like stor som sin egen høyde (se
+   section-sk-lp-trustbar.css). Uten reservasjonen ville baren lagt seg oppå
+   pills-raden. Begge filene leser --lp-trustbar-h fra typography.css. */
 .lp-hero__inner {
   position: relative;
   z-index: 2;
@@ -116,7 +120,8 @@
   min-height: 100dvh;
   max-width: var(--lp-w-wide);
   margin-inline: auto;
-  padding: var(--space-section-md) var(--lp-gutter);
+  padding: var(--space-section-md) var(--lp-gutter)
+    calc(var(--space-section-md) + var(--lp-trustbar-h));
 }
 
 .lp-hero__content {
