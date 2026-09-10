@@ -67,6 +67,19 @@
         "link_url": "#slik-bruker-du"
       }
     },
+    "urgency": {
+      "type": "sk-lp-urgency",
+      "settings": {
+        "enabled": true,
+        "price_before": "4 390 kr",
+        "price_now": "3 390 kr",
+        "save_text": "Spar 1 000 kr",
+        "deadline_iso": "2026-09-15",
+        "deadline_label": "Tilbudet slutter om",
+        "demand_text": "Stor pågang",
+        "aria_label": "Kampanje på Skinora Clear"
+      }
+    },
     "trustbar": {
       "type": "sk-lp-trustbar",
       "blocks": {
@@ -933,6 +946,7 @@
     "announcement",
     "header",
     "hero",
+    "urgency",
     "trustbar",
     "problem",
     "sk_lp_mechanism_WhVKGN",

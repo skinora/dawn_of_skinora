@@ -1,0 +1,235 @@
+{%- comment -%}
+  sk-lp-urgency — kampanjebånd for landingssidene
+  ----------------------------------------------------------------------------
+  Før/nå-pris + spar-beløp, nedtelling til sluttdato, og «stor pågang».
+
+  Prisene settes PER TEMPLATE, aldri via schema-default: seksjonen deles
+  mellom Clear (3 390) og Radiance (4 690), og en default her ville dratt
+  den ene inn i den andres pris.
+
+  Nedtellingen skjuler HELE båndet når fristen er passert. Et utløpt tilbud
+  er verre enn ingen kampanje — det forteller kunden at datoene på siden
+  ikke betyr noe. Samme resonnement som i snippets/sk-campaign-live.liquid.
+  Kontrollen skjer både i Liquid (serverens tid) og i JS (klientens), så
+  båndet forsvinner selv om siden ligger cachet i en fane.
+{%- endcomment -%}
+
+{%- liquid
+  assign u_end_iso = section.settings.deadline_iso | strip
+  assign u_live = section.settings.enabled
+
+  if u_live and u_end_iso != blank
+    comment
+      Sluttdatoen er INKLUDERENDE: «til 15. september» betyr ut den 15.,
+      derfor + 86 399 sekunder (23:59:59).
+    endcomment
+    assign u_end_ts = u_end_iso | date: '%s' | plus: 86399
+    assign u_now_ts = 'now' | date: '%s' | plus: 0
+    if u_now_ts > u_end_ts
+      assign u_live = false
+    endif
+  endif
+-%}
+
+{%- if u_live -%}
+  {{ 'section-sk-lp-urgency.css' | asset_url | stylesheet_tag }}
+
+  <aside
+    class="sk-lp-urgency"
+    data-sk-urgency
+    {% if u_end_iso != blank %}
+      data-deadline="{{ u_end_iso }}T23:59:59"
+    {% endif %}
+    aria-label="{{ section.settings.aria_label | default: 'Kampanje' | escape }}"
+  >
+    <div class="sk-lp-urgency__inner">
+      {%- if section.settings.price_now != blank -%}
+        <p class="sk-lp-urgency__prices">
+          {%- if section.settings.price_before != blank -%}
+            <span class="sk-lp-urgency__before">
+              <span class="visually-hidden">Før:</span>
+              {{ section.settings.price_before }}
+            </span>
+          {%- endif -%}
+          <span class="sk-lp-urgency__now">
+            <span class="visually-hidden">Nå:</span>
+            {{ section.settings.price_now }}
+          </span>
+          {%- if section.settings.save_text != blank -%}
+            <span class="sk-lp-urgency__save">{{ section.settings.save_text }}</span>
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+
+      {%- if u_end_iso != blank -%}
+        <div class="sk-lp-urgency__deadline">
+          <span class="sk-lp-urgency__deadline-label">
+            {{ section.settings.deadline_label | default: 'Tilbudet slutter om' }}
+          </span>
+          {%- comment -%}
+            Serveren skriver ut ferdige tall, så båndet er riktig allerede ved
+            første maling. JS oppdaterer dem hvert sekund. Uten dette ville
+            klokka stått på 00 til første tikk og gitt et hopp.
+          {%- endcomment -%}
+          {%- liquid
+            assign u_left = u_end_ts | minus: u_now_ts
+            if u_left < 0
+              assign u_left = 0
+            endif
+            assign u_d = u_left | divided_by: 86400
+            assign u_h = u_left | modulo: 86400 | divided_by: 3600
+            assign u_m = u_left | modulo: 3600 | divided_by: 60
+            assign u_s = u_left | modulo: 60
+          -%}
+          <p class="sk-lp-urgency__clock" data-sk-urgency-clock role="timer">
+            <span class="sk-lp-urgency__unit">
+              <span class="sk-lp-urgency__num" data-u="d">{{ u_d }}</span>
+              <span class="sk-lp-urgency__unit-label">dager</span>
+            </span>
+            <span class="sk-lp-urgency__unit">
+              <span class="sk-lp-urgency__num" data-u="h">{{ u_h }}</span>
+              <span class="sk-lp-urgency__unit-label">timer</span>
+            </span>
+            <span class="sk-lp-urgency__unit">
+              <span class="sk-lp-urgency__num" data-u="m">{{ u_m }}</span>
+              <span class="sk-lp-urgency__unit-label">min</span>
+            </span>
+            <span class="sk-lp-urgency__unit">
+              <span class="sk-lp-urgency__num" data-u="s">{{ u_s }}</span>
+              <span class="sk-lp-urgency__unit-label">sek</span>
+            </span>
+          </p>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.demand_text != blank -%}
+        <p class="sk-lp-urgency__demand">
+          <span class="sk-lp-urgency__dot" aria-hidden="true"></span>
+          {{ section.settings.demand_text }}
+        </p>
+      {%- endif -%}
+    </div>
+  </aside>
+
+  <script>
+    (function () {
+      var band = document.querySelector('[data-sk-urgency]');
+      if (!band) return;
+      var raw = band.getAttribute('data-deadline');
+      if (!raw) return;
+
+      var clock = band.querySelector('[data-sk-urgency-clock]');
+      if (!clock) return;
+
+      var end = new Date(raw).getTime();
+      if (isNaN(end)) return;
+
+      var cells = {};
+      ['d', 'h', 'm', 's'].forEach(function (k) {
+        cells[k] = clock.querySelector('[data-u="' + k + '"]');
+      });
+
+      var timer;
+      function tick() {
+        var left = Math.floor((end - Date.now()) / 1000);
+        if (left <= 0) {
+          /* Fristen passert mens siden sto åpen. Fjern hele båndet — et
+             utløpt tilbud er verre enn ingen kampanje. */
+          clearInterval(timer);
+          band.remove();
+          return;
+        }
+        var d = Math.floor(left / 86400);
+        var h = Math.floor((left % 86400) / 3600);
+        var m = Math.floor((left % 3600) / 60);
+        var s = left % 60;
+        if (cells.d) cells.d.textContent = d;
+        if (cells.h) cells.h.textContent = h < 10 ? '0' + h : h;
+        if (cells.m) cells.m.textContent = m < 10 ? '0' + m : m;
+        if (cells.s) cells.s.textContent = s < 10 ? '0' + s : s;
+      }
+
+      tick();
+      timer = setInterval(tick, 1000);
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "LP kampanjebånd",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Vis kampanjebåndet",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Pris"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sett prisene her, per landingsside. Feltene har med vilje ingen standardverdi: seksjonen deles mellom Clear og Radiance, og en default ville dratt den ene inn i den andres pris."
+    },
+    {
+      "type": "text",
+      "id": "price_before",
+      "label": "Før-pris (overstrøket)",
+      "info": "Må være prisen som faktisk gjaldt før kampanjen. Bruk «sammenlign med»-prisen på produktet i Shopify."
+    },
+    {
+      "type": "text",
+      "id": "price_now",
+      "label": "Kampanjepris"
+    },
+    {
+      "type": "text",
+      "id": "save_text",
+      "label": "Spar-etikett",
+      "info": "F.eks. «Spar 1 000 kr». Vises i grønt – den eneste tillatte besparelse-fargen i merkevaren."
+    },
+    {
+      "type": "header",
+      "content": "Nedtelling"
+    },
+    {
+      "type": "text",
+      "id": "deadline_iso",
+      "label": "Sluttdato (ÅÅÅÅ-MM-DD)",
+      "info": "Maskinlesbar. Datoen er inkluderende – kampanjen varer ut denne dagen. Når den passeres, forsvinner HELE båndet av seg selv, både på serveren og i nettleseren. Tomt felt = ingen klokke."
+    },
+    {
+      "type": "text",
+      "id": "deadline_label",
+      "label": "Tekst foran klokka",
+      "default": "Tilbudet slutter om"
+    },
+    {
+      "type": "header",
+      "content": "Pågang"
+    },
+    {
+      "type": "text",
+      "id": "demand_text",
+      "label": "Pågang-tekst",
+      "info": "Vises med en pulserende rød prikk. Tomt felt = skjult. Pulsen stopper automatisk for besøkende som har slått på «redusert bevegelse» i operativsystemet.",
+      "default": "Stor pågang"
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Skjermleser-etikett for båndet",
+      "default": "Kampanje"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP kampanjebånd"
+    }
+  ]
+}
+{% endschema %}
