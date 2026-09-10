@@ -60,8 +60,8 @@
         "audience_label": "kunder med problemhud",
         "cta_text": "Prøv risikofritt i 30 dager",
         "cta_url": "/products/skinora-clear",
-        "price_display": "4 390 kr",
-        "klarna_text": "fra 122 kr/mnd med Klarna",
+        "price_display": "3 390 kr",
+        "klarna_text": "fra 94 kr/mnd med Klarna",
         "show_link": false,
         "link_text": "Se hvordan den brukes (60 sek) ↓",
         "link_url": "#slik-bruker-du"
@@ -565,7 +565,7 @@
         "trustpilot_business_unit_id": "",
         "product_url": "/products/skinora-clear",
         "midpage_cta_text": "Få klarere hud nå",
-        "midpage_klarna_text": "Fra 122 kr/mnd med Klarna"
+        "midpage_klarna_text": "Fra 94 kr/mnd med Klarna"
       }
     },
     "trust_full": {
@@ -753,8 +753,8 @@
         "faq_price": {
           "type": "faq",
           "settings": {
-            "question": "Er 4 390 kr mye å betale for LED-behandling?",
-            "answer": "Sammenlignet med klinikk er det faktisk det motsatte. Én LED-behandling hos hudterapeut koster typisk 800–1 500 kr. Med Skinora® Clear betaler du én gang og kan bruke den ubegrenset hjemme. Etter bare 3–6 behandlinger har produktet betalt seg selv – resten er ren gevinst. Du kan også dele opp betalingen med Klarna fra 122 kr/mnd."
+            "question": "Er 3 390 kr mye å betale for LED-behandling?",
+            "answer": "Sammenlignet med klinikk er det faktisk det motsatte. Én LED-behandling hos hudterapeut koster typisk 800–1 500 kr. Med Skinora® Clear betaler du én gang og kan bruke den ubegrenset hjemme. Etter bare 3–5 behandlinger har produktet betalt seg selv – resten er ren gevinst. Du kan også dele opp betalingen med Klarna fra 94 kr/mnd."
           }
         }
       },
@@ -804,11 +804,11 @@
       "settings": {
         "heading": "Klar for klarere hud?",
         "text": "Gi huden din den støtten den trenger – hjemme, på dine premisser, med teknologi som faktisk virker.",
-        "price_text": "4 390 kr",
+        "price_text": "3 390 kr",
         "button_text": "Bestill nå",
         "product_url": "/products/skinora-clear",
         "anchor_id": "kjop",
-        "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra 122 kr/mnd med Klarna</strong>"
+        "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra 94 kr/mnd med Klarna</strong>"
       }
     },
     "cross_sell": {
@@ -921,8 +921,8 @@
       "settings": {
         "enabled": true,
         "product": "skinora-clear",
-        "price": "Fra 122 kr/mnd med Klarna",
-        "subprice": "4 390 kr engangspris",
+        "price": "Fra 94 kr/mnd med Klarna",
+        "subprice": "3 390 kr engangspris",
         "cta_label": "Prøv risikofritt →",
         "trigger_selector": ".lp-hero__actions",
         "hide_selector": ".lp-cta-final"
