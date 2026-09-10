@@ -237,8 +237,9 @@
 }
 
 /* ---------- 3. HERO ----------
-   Mobile: hero fills one dynamic viewport (100dvh).
-     - image pinned to top, capped at 38dvh
+   Mobile: hero fills one SMALL viewport (100svh - ikke dvh, som joggler
+     hoeyden naar adresselinjen skjuler seg under scroll).
+     - image pinned to top, capped at 38svh
      - content fills the remainder, vertically centered
    Desktop: 2-column grid, min-height 80vh so the hero feels intentional.
    ---------------------------------------------------------------- */
@@ -279,7 +280,8 @@
 
 @media (max-width: 768px) {
   .lp-hero {
-    min-height: 100dvh;
+    min-height: 100vh;
+    min-height: 100svh;
     padding-block: 0;
     display: flex;
     flex-direction: column;
@@ -295,7 +297,7 @@
   .lp-hero__image {
     order: -1;
     flex: 0 0 auto;
-    height: 38dvh;
+    height: 38svh;
     margin: 0;
     overflow: hidden;
   }

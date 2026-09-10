@@ -4,7 +4,7 @@
    stack (eyebrow + H1 + italic serif subline + rating + CTA cluster
    + ≤3 trust pills).
 
-   Mobile: 100dvh, content anchored to bottom-left over the image.
+   Mobile: 100svh (IKKE dvh - se .lp-hero--overlay), innhold delt topp/bunn.
    Desktop: 85dvh, content vertically centered, max-w container.
 
    Tokens from assets/typography.css.
@@ -21,7 +21,14 @@
   isolation: isolate;
   overflow: hidden;
   width: 100%;
-  min-height: 100dvh;
+  /* svh, IKKE dvh: dvh endrer seg kontinuerlig mens adresselinjen skjuler
+     og viser seg under scroll på mobil. Hero-hoeyden fulgte med, og siden
+     bildet er object-fit: cover, ble hver hoeydeendring en omskalering —
+     det leste som at bildet zoomet inn og ut mens man scrollet.
+     svh er den lille viewporten (adresselinje synlig) og staar stille.
+     vh-linjen over er fallback for nettlesere uten svh. */
+  min-height: 100vh;
+  min-height: 100svh;
   padding-block: 0; /* override base hero padding */
   background: var(--ink-900); /* fallback before media loads */
   color: var(--paper-0);
@@ -120,7 +127,8 @@
   display: flex;
   align-items: flex-end; /* content bottom on mobile */
   width: 100%;
-  min-height: 100dvh;
+  min-height: 100vh;
+  min-height: 100svh;
   max-width: var(--lp-w-wide);
   margin-inline: auto;
   padding: var(--space-section-md) var(--lp-gutter)
