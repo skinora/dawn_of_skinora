@@ -577,6 +577,8 @@
         "enable_trustpilot_embed": false,
         "trustpilot_business_unit_id": "",
         "product_url": "/products/skinora-clear",
+        "all_reviews_url": "/products/skinora-clear#fulfilled-reviews-all",
+        "all_reviews_text": "Les alle anmeldelser →",
         "midpage_cta_text": "Få klarere hud nå",
         "midpage_klarna_text": "Fra 94 kr/mnd med Klarna"
       }

@@ -143,7 +143,29 @@
           shown on desktop only when there are more than visible_count reviews.
           CSS handles the responsive visibility.
         {%- endcomment -%}
-        {%- if section.blocks.size > mobile_hero_count -%}
+        {%- comment -%}
+          «Les alle anmeldelser» peker til produktsidens anmeldelser når
+          all_reviews_url er satt. Grunnen: LP-en har seks kuraterte
+          anmeldelser i seksjonsblokker, mens produktsiden har hele
+          Klaviyo-widgeten. Å utvide til seks er svakere sosialt bevis enn å
+          sende kunden til alle — og det flytter dem samtidig til siden der
+          kjøpet skjer.
+
+          Står feltet tomt, oppfører knappen seg som før og utvider listen
+          på stedet. Ingenting er brutt for en LP uten produktside å peke til.
+        {%- endcomment -%}
+        {%- assign all_reviews_url = section.settings.all_reviews_url | strip -%}
+        {%- if all_reviews_url != blank -%}
+          <div class="lp-reviews__more">
+            <a
+              class="lp-reviews__more-btn btn btn--ghost"
+              href="{{ all_reviews_url }}"
+              data-analytics="cta_lp_all_reviews"
+            >
+              {{ section.settings.all_reviews_text | default: 'Les alle anmeldelser →' }}
+            </a>
+          </div>
+        {%- elsif section.blocks.size > mobile_hero_count -%}
           {%- assign collapsed_label = 'Les alle anmeldelser →' -%}
           {%- assign expanded_label = section.settings.show_less_text | default: 'Vis færre anmeldelser ↑' -%}
           <div class="lp-reviews__more">
@@ -384,6 +406,22 @@
       "type": "text",
       "id": "trustpilot_business_unit_id",
       "label": "Trustpilot Business Unit ID"
+    },
+    {
+      "type": "header",
+      "content": "«Les alle anmeldelser»"
+    },
+    {
+      "type": "text",
+      "id": "all_reviews_url",
+      "label": "Lenke til alle anmeldelser",
+      "info": "F.eks. /products/skinora-clear#fulfilled-reviews-all — ankeret er Klaviyo-widgeten på produktsiden. Er feltet satt, blir knappen en lenke dit. Tomt felt = knappen utvider listen på stedet, som før."
+    },
+    {
+      "type": "text",
+      "id": "all_reviews_text",
+      "label": "Lenketekst",
+      "default": "Les alle anmeldelser →"
     },
     {
       "type": "header",
