@@ -21,6 +21,19 @@
       "disabled": true,
       "settings": {}
     },
+    "urgency": {
+      "type": "sk-lp-urgency",
+      "settings": {
+        "enabled": true,
+        "price_before": "4 390 kr",
+        "price_now": "3 390 kr",
+        "save_text": "Spar 1 000 kr",
+        "deadline_iso": "2026-09-15",
+        "deadline_label": "Tilbudet slutter om",
+        "demand_text": "Stor pågang",
+        "aria_label": "Kampanje på Skinora Clear"
+      }
+    },
     "hero": {
       "type": "sk-lp-hero",
       "blocks": {
@@ -49,7 +62,7 @@
         "pill_3"
       ],
       "settings": {
-        "image": "shopify://shop_images/skinora-clear-i-bruk_1.webp",
+        "image": "shopify://shop_images/skinora_clear_hero_landing_page.webp",
         "image_mobile": "shopify://shop_images/skinra-clear-mobile.webp",
         "hero_video_url": "",
         "eyebrow": "Skinora® Clear",
@@ -58,6 +71,7 @@
         "rating_score": "4.9",
         "review_count": "89",
         "audience_label": "kunder med problemhud",
+        "rating_anchor": "#reviews",
         "cta_text": "Prøv risikofritt i 30 dager",
         "cta_url": "/products/skinora-clear",
         "price_display": "3 390 kr",
@@ -65,19 +79,6 @@
         "show_link": false,
         "link_text": "Se hvordan den brukes (60 sek) ↓",
         "link_url": "#slik-bruker-du"
-      }
-    },
-    "urgency": {
-      "type": "sk-lp-urgency",
-      "settings": {
-        "enabled": true,
-        "price_before": "4 390 kr",
-        "price_now": "3 390 kr",
-        "save_text": "Spar 1 000 kr",
-        "deadline_iso": "2026-09-15",
-        "deadline_label": "Tilbudet slutter om",
-        "demand_text": "Stor pågang",
-        "aria_label": "Kampanje på Skinora Clear"
       }
     },
     "trustbar": {
@@ -290,9 +291,13 @@
         "background_style": "soft",
         "number": "3 390",
         "unit": "kr",
+        "once_label": "Én gang",
+        "lead": "I klinikken betaler du 800–1 500 kr for hver behandling.",
+        "kicker": "Skinora koster som noen få økter – så er masken din. Bruk den hjemme, så ofte du vil.",
         "show_cta": true,
         "cta_label": "Prøv risikofritt i 30 dager",
-        "cta_link": "/products/skinora-clear"
+        "cta_link": "/products/skinora-clear",
+        "guarantee_line": "30 dagers åpent kjøp."
       }
     },
     "results": {
@@ -578,9 +583,9 @@
         "before_after_disclaimer": "<p>Bilder fra ekte verifiserte kunder, brukt med tillatelse. Ikke retusjert. Resultater kan variere fra person til person og avhenger av jevn bruk over 6–8 uker.</p>",
         "enable_trustpilot_embed": false,
         "trustpilot_business_unit_id": "",
-        "product_url": "/products/skinora-clear",
         "all_reviews_url": "/products/skinora-clear#fulfilled-reviews-all",
         "all_reviews_text": "Les alle anmeldelser →",
+        "product_url": "/products/skinora-clear",
         "midpage_cta_text": "Få klarere hud nå",
         "midpage_klarna_text": "Fra 94 kr/mnd med Klarna"
       }
@@ -819,6 +824,7 @@
         "g_3"
       ],
       "settings": {
+        "eyebrow": "Kom i gang",
         "heading": "Klar for klarere hud?",
         "text": "Gi huden din den støtten den trenger – hjemme, på dine premisser, med teknologi som faktisk virker.",
         "price_before": "4 390 kr",
