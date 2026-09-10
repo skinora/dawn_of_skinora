@@ -20,14 +20,14 @@
 <div class="sk-lp">
   <section class="lp-results-timeline" aria-labelledby="lp-results-timeline-h-{{ section.id }}">
     <div class="lp-results-timeline__inner">
-      <header class="lp-results-timeline__header">
+      <div class="lp-results-timeline__header">
         <h2 id="lp-results-timeline-h-{{ section.id }}" class="lp-section-heading">
           {{ section.settings.heading }}
         </h2>
         {%- if section.settings.intro != blank -%}
           <p class="lp-section-intro">{{ section.settings.intro }}</p>
         {%- endif -%}
-      </header>
+      </div>
 
       {%- assign comparisons = section.blocks | where: 'type', 'comparison' -%}
       {%- if comparisons.size > 0 -%}

@@ -22,8 +22,19 @@
    - heading margin-bottom: space-3 mobile, space-4 desktop
    - intro fs-sm/fs-md, max-width 52ch, margin-bottom space-6 mobile,
      space-7 desktop (provides the gap to the grid below). */
+/* Elementet var et semantisk <header>. sk-base.css har
+   `header:not(.sk-header) { display: flex !important }` under 700px, og siden
+   denne regelen bare satte text-align, ble overskrift og ingress dyttet ut
+   som to kolonner side om side på mobil — 202px H2 ved siden av 156px tekst.
+   Det er trap nummer én i CLAUDE.md. Elementet er nå en <div>.
+
+   Innrammingen følger .lp-mech__head, som er mønsteret for en redaksjonell
+   seksjonsinngang i dette temaet: sentrert, med en målbredde så ingressen
+   ikke løper like bredt som innholdet under. */
 .lp-results-timeline__header {
   text-align: center;
+  max-width: 56ch;
+  margin-inline: auto;
 }
 
 .lp-results-timeline__header .lp-section-heading {
