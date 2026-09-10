@@ -29,6 +29,22 @@
    backdrop-filter trenger noe å filtrere: derfor halvgjennomsiktig bakgrunn
    og z-index over hero-laget. Faller filteret bort (eldre nettlesere), står
    fargen igjen alene og baren er fortsatt lesbar — bare uten uskarphet. */
+/* Seksjonen må slippe containment før baren kan løftes opp på heroen.
+   sk-base.css gir `.content-for-layout > .shopify-section:nth-child(n + 2)`
+   content-visibility: auto, og det medfører `contain: paint`. Alt som stikker
+   utenfor seksjonens boks blir da KLIPPET BORT — og en bar med negativ margin
+   gjør nettopp det. Resultatet var at panelet forsvant helt, selv om det lå i
+   DOM-en med riktig høyde og posisjon.
+
+   Samme spesifisitet som regelen i sk-base.css (0,3,0), men denne fila lastes
+   av seksjonen og kommer derfor senere i kaskaden. Ingen !important.
+   Ingen CLS-risiko: høyden er låst av --lp-trustbar-h. */
+.content-for-layout > .shopify-section:has(.lp-trustbar) {
+  content-visibility: visible;
+  contain: none;
+  contain-intrinsic-size: auto;
+}
+
 .lp-trustbar {
   position: relative;
   z-index: 3;
