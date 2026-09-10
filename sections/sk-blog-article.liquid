@@ -46,10 +46,25 @@
             Navnet hentes fra seksjonsinnstillingen «Forfatternavn» når den er
             satt, ellers fra artikkelens eget author-felt i Shopify.
           {%- endcomment -%}
-          {%- assign sk_author_name = section.settings.forfatter_navn | strip -%}
-          {%- if sk_author_name == blank -%}
-            {%- assign sk_author_name = article.author | strip -%}
-          {%- endif -%}
+          {%- liquid
+            assign sk_author_name = section.settings.forfatter_navn | strip
+            if sk_author_name == blank
+              comment
+                article.author er «Skinora» på alle artiklene i denne butikken —
+                Shopify setter forfatter til butikkeieren. Å vise «Av Skinora»
+                under en Skinora-artikkel sier ingenting, og å skrive det inn i
+                schema som Person er direkte feil: det er en organisasjon.
+                Derfor brukes article.author kun når det faktisk avviker fra
+                butikknavnet, altså når noen har satt en ekte person på
+                artikkelen. Ellers står byline og Person-schema over til
+                «Forfatternavn» er fylt ut i seksjonsinnstillingene.
+              endcomment
+              assign sk_author_fallback = article.author | strip
+              unless sk_author_fallback == blank or sk_author_fallback == shop.name
+                assign sk_author_name = sk_author_fallback
+              endunless
+            endif
+          -%}
           <div class="sk-blog-article__meta">
             {%- if sk_author_name != blank -%}
               <span class="sk-blog-article__author" rel="author">
@@ -105,7 +120,7 @@
         </div>
 
         {% render 'blog-author-box',
-          navn: section.settings.forfatter_navn,
+          navn: sk_author_name,
           tittel: section.settings.forfatter_tittel,
           bio: section.settings.forfatter_bio,
           bilde: section.settings.forfatter_bilde,
@@ -245,21 +260,29 @@
       dette den eneste BlogPosting-noden på siden, og det oppstår ingen duplikat.
     {%- endcomment -%}
     {%- liquid
-      assign ld_author = section.settings.forfatter_navn | strip
-      if ld_author == blank
-        assign ld_author = article.author | strip
-      endif
       assign ld_url = section.settings.forfatter_url | default: '/pages/om-skinora'
       unless ld_url contains '://'
         assign ld_url = ld_url | prepend: request.origin
       endunless
     -%}
-    {%- if ld_author != blank -%}
+    {%- if sk_author_name != blank -%}
       "author": {
         "@type": "Person",
-        "name": {{ ld_author | json }},
+        "name": {{ sk_author_name | json }},
         "jobTitle": {{ section.settings.forfatter_tittel | default: 'Fagansvarlig hudpleie' | json }},
         "url": {{ ld_url | json }}
+      },
+    {%- else -%}
+      {%- comment -%}
+        Ingen navngitt person ennå → behold Organization. En Person-node med
+        «Skinora» som name ville vært verre enn den vi erstattet: gyldig
+        syntaks, men usant, og nettopp det misforholdet mellom synlig byline
+        og schema Google slår ned på.
+      {%- endcomment -%}
+      "author": {
+        "@type": "Organization",
+        "name": "Skinora",
+        "url": "{{ shop.url }}"
       },
     {%- endif -%}
     "publisher": {
@@ -340,7 +363,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Navnet vises som byline under tittelen og brukes som author (Person) i BlogPosting-schemaet. Står feltet tomt, brukes artikkelens eget forfatterfelt i Shopify."
+      "content": "Fyll inn en ekte person. Navnet vises som byline under tittelen, i boksen «Om skribenten» nederst, og som author (Person) i BlogPosting-schemaet. Står feltet tomt, faller vi tilbake til artikkelens forfatterfelt i Shopify — men KUN hvis det avviker fra butikknavnet. Er begge «Skinora», vises ingen byline og ingen forfatterboks, og schemaet beholder Organization. Det er med vilje: «Person: Skinora» er usant og skader E-E-A-T mer enn det hjelper."
     },
     {
       "type": "text",
