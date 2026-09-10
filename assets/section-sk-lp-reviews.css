@@ -8,6 +8,10 @@
 
 /* ---------- Section shell ---------- */
 .lp-reviews {
+  /* Ankermål for stjernene i heroen (#reviews). scroll-margin gir litt luft
+     over overskriften når man hopper hit, i stedet for at seksjonen limes
+     helt inntil toppkanten. */
+  scroll-margin-top: var(--space-6);
   background: var(--paper-0);
   padding-block: var(--space-section-md);
   text-align: center;

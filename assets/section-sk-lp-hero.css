@@ -154,6 +154,33 @@
   letter-spacing: 2px;
   color: var(--accent-gold);
 }
+
+/* Ratingen som lenke til anmeldelsene.
+   Arver farge fra heroen (som har både lys og overlay-variant), så den
+   ikke plutselig blir lilla lenkefarge oppå et fotografi. Understreken
+   kommer først på hover/fokus: en permanent understrek under stjernene
+   ville lest som en feil, mens ingen affordans i det hele tatt gjør at
+   ingen prøver å klikke. */
+.lp-hero__rating--link,
+.lp-hero__rating--link:link,
+.lp-hero__rating--link:visited {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.lp-hero__rating--link:hover .lp-hero__rating-score,
+.lp-hero__rating--link:focus-visible .lp-hero__rating-score {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+.lp-hero__rating--link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
 .lp-hero--overlay .lp-hero__rating-score {
   font-family: var(--ff-serif);
   font-size: var(--fs-lg);

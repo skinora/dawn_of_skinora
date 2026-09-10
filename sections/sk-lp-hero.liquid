@@ -212,7 +212,21 @@
           {%- assign sk_lp_count_display = section.settings.review_count | default: '0' -%}
         {%- endif -%}
         {%- if sk_lp_rating_display != blank -%}
-          <div class="lp-hero__rating">
+          {%- comment -%}
+            Stjernene lenker til anmeldelsesseksjonen. Innholdet fanges én gang
+            og gjenbrukes i begge grenene, så lenket og ulenket versjon ikke kan
+            gli fra hverandre.
+
+            Det er en ekte <a href>, ikke en klikklytter: den virker uten JS, med
+            tastatur, med «åpne i ny fane» og den vises i statuslinjen. Stjernene
+            er aria-hidden, så lenken får sitt tilgjengelige navn av aria-label —
+            uten den ville skjermlesere lest «4.9/5 · fra 89 verifiserte kunder»
+            som lenketekst, uten å si hvor den fører.
+
+            Tomt ankerfelt = ingen lenke. Nødvendig fordi seksjonen deles av
+            flere landingssider, og en av dem kan mangle anmeldelsesseksjonen.
+          {%- endcomment -%}
+          {%- capture sk_lp_rating_inner -%}
             <span class="lp-hero__rating-stars" aria-hidden="true">★★★★★</span>
             <span class="lp-hero__rating-score">{{ sk_lp_rating_display }}/5</span>
             <span class="lp-hero__rating-sep" aria-hidden="true">·</span>
@@ -220,7 +234,21 @@
               fra {{ sk_lp_count_display }}
               {{ section.settings.audience_label | default: 'verifiserte kunder' }}</span
             >
-          </div>
+          {%- endcapture -%}
+          {%- assign sk_lp_rating_anchor = section.settings.rating_anchor | strip -%}
+          {%- if sk_lp_rating_anchor != blank -%}
+            <a
+              class="lp-hero__rating lp-hero__rating--link"
+              href="{{ sk_lp_rating_anchor }}"
+              aria-label="{{ sk_lp_rating_display }} av 5 fra {{ sk_lp_count_display }} {{ section.settings.audience_label | default: 'verifiserte kunder' }}. Les anmeldelsene."
+            >
+              {{ sk_lp_rating_inner }}
+            </a>
+          {%- else -%}
+            <div class="lp-hero__rating">
+              {{ sk_lp_rating_inner }}
+            </div>
+          {%- endif -%}
         {%- endif -%}
 
         <div class="lp-hero__actions">
@@ -382,6 +410,13 @@
       "label": "Målgruppe-etikett (vises etter antall)",
       "info": "F.eks. «kvinner over 40» eller «kunder med problemhud». Speiler målgruppen for siden — bruk noe konkret som kjøperen kjenner seg igjen i. Unngå dømmende ord som «uren hud».",
       "default": "verifiserte kunder"
+    },
+    {
+      "type": "text",
+      "id": "rating_anchor",
+      "label": "Stjernene lenker til",
+      "info": "Anker på samme side, f.eks. #reviews (anmeldelsesseksjonen har den ID-en). Tomt felt = stjernene er ikke klikkbare. La stå tomt på sider uten anmeldelsesseksjon, ellers får du en lenke som ikke fører noe sted.",
+      "default": "#reviews"
     },
     {
       "type": "header",
