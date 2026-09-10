@@ -9,33 +9,92 @@
   igjen tegn for tegn, så H2-attributter (id, class, anker) bevares uendret.
 
   PLASSERING
-    kompakt : rett etter ingressen — første </p> i blokken før første H2.
+    kompakt : rett etter det FØRSTE avsnittet med minst 120 tegn faktisk
+              brødtekst, uansett hvor i artikkelen det står.
     full    : rett før H2-en som inneholder «Kilder».
               Fallback 1: før «Om denne artikkelen».
               Fallback 2: etter alt innholdet.
 
-  Hvorfor ingressen og ikke «rett før andre H2», som var første utgave:
-  målt på DEV i 390 px havnet kortet da 1 551 px ned på siden, mot et krav
-  om at det skal være synlig innen 1,5 skjermhøyder (1 245 px). Første
-  seksjon er ~1 080 tegn på en typisk artikkel her, så de to reglene kan
-  ikke holde samtidig. Etter ingressen lander kortet på ~716 px.
+  Hvorfor «første vesentlige avsnitt» og ikke «første </p>»:
+  alle artiklene åpner brødteksten med en meta-linje —
+  «<em>Av Skinora Redaksjonen</em><br><em>Publisert 1. september 2026</em>»,
+  ~49 tegn — og en naiv replace_first la kortet mellom datostempelet og
+  teksten. Terskelen er ren lengde, ikke gjenkjenning av datoformat eller
+  byline, så regelen tåler også meta-linjer vi ikke har sett ennå.
 
-  Har blokken før første H2 ingen </p> i det hele tatt, faller kortet
-  naturlig til slutten av den blokken — altså rett før første H2.
+  Hvorfor «uansett hvor» og ikke «før første H2»: flere publiserte artikler
+  har ingen ingress i det hele tatt — brødteksten går rett fra meta-linjen
+  til første <h2>. En regel som stopper ved første H2 finner da ingen
+  kandidat og faller tilbake til meta-linjen, altså feil sted igjen. Ved å
+  la søket krysse H2-grensen lander kortet etter første virkelige avsnitt
+  i seksjon 1 i stedet. Innholdssporet legger inn ekte ingresser framover;
+  da treffer samme regel ingressen, som er der kortet hører hjemme.
+
+  Hvorfor «rett før andre H2» ble forlatt: målt på DEV i 390 px havnet
+  kortet da 1 551 px ned på siden, mot et krav om synlighet innen 1,5
+  skjermhøyder (1 245 px).
 
   MERK om «Kilder»-testen: vi ser bare på selve overskriften
   (part | split: '</h2>' | first), ikke på hele seksjonen. Å teste hele
-  delen — som en naiv `part contains '>Kilder'` gjør — treffer også brødtekst
-  og lenketekster lenger nede i seksjonen og flytter kortet feil sted.
-  Testen tåler dessuten <h2><strong>Kilder</strong></h2>.
+  delen — som en naiv `part contains '>Kilder'` gjør — treffer også
+  brødtekst og lenketekster lenger nede i seksjonen og flytter kortet feil
+  sted. Testen tåler dessuten <h2><strong>Kilder</strong></h2>.
 
   Tabeller pakkes i .blog-funnel-tablewrap (overflow-x: auto på mobil).
 {%- endcomment -%}
 
+{%- comment -%}
+  Kompaktkortet fanges som HTML først, så det kan settes inn med en
+  plassholder hvor som helst i innholdet — også midt inne i en seksjon.
+  Et {% render %} kan ikke kalles fra innsiden av en streng.
+{%- endcomment -%}
+{%- capture bfk_kompakt_html -%}
+  {%- render 'blog-funnel-card', article: article, variant: 'kompakt', klaviyo_form_id: klaviyo_form_id -%}
+{%- endcapture -%}
+
 {%- liquid
+  assign bfk_slot = '%%SKFUNNELKOMPAKT%%'
+
   assign bfk_content = article.content
   assign bfk_content = bfk_content | replace: '<table', '<div class="blog-funnel-tablewrap"><table'
   assign bfk_content = bfk_content | replace: '</table>', '</table></div>'
+
+  comment
+    Finn første avsnitt med nok brødtekst, og sett plassholderen rett etter.
+    split dropper skilletegnet, så halen kuttes med remove_first på et
+    prefiks i stedet for å settes sammen av chunks igjen — ellers ville en
+    avsluttende </p> gått tapt.
+  endcomment
+  if bfk_content contains '</p>'
+    assign bfk_chunks = bfk_content | split: '</p>'
+    assign bfk_cut = 0
+    for bfk_chunk in bfk_chunks
+      assign bfk_txt = bfk_chunk | strip_html | strip
+      if bfk_cut == 0 and bfk_txt.size >= 120
+        assign bfk_cut = forloop.index
+      endif
+    endfor
+    comment
+      Ingen avsnitt nådde terskelen — kort artikkel uten vesentlige avsnitt.
+      Bruk første </p>, altså gammel oppførsel.
+    endcomment
+    if bfk_cut == 0
+      assign bfk_cut = 1
+    endif
+
+    assign bfk_head = ''
+    for bfk_chunk in bfk_chunks limit: bfk_cut
+      assign bfk_head = bfk_head | append: bfk_chunk | append: '</p>'
+    endfor
+    assign bfk_rest = bfk_content | remove_first: bfk_head
+    assign bfk_content = bfk_head | append: bfk_slot | append: bfk_rest
+  else
+    comment
+      Ingen avsnitt i det hele tatt. Kortet skal likevel finnes — en
+      artikkel skal aldri stå uten CTA.
+    endcomment
+    assign bfk_content = bfk_slot | append: bfk_content
+  endif
 
   assign bfk_parts = bfk_content | split: '<h2'
 
@@ -43,11 +102,11 @@
   assign bfk_om_idx = 0
   for bfk_part in bfk_parts
     unless forloop.first
-      assign bfk_head = bfk_part | split: '</h2>' | first
-      if bfk_full_idx == 0 and bfk_head contains 'Kilder'
+      assign bfk_heading = bfk_part | split: '</h2>' | first
+      if bfk_full_idx == 0 and bfk_heading contains 'Kilder'
         assign bfk_full_idx = forloop.index
       endif
-      if bfk_om_idx == 0 and bfk_head contains 'Om denne artikkelen'
+      if bfk_om_idx == 0 and bfk_heading contains 'Om denne artikkelen'
         assign bfk_om_idx = forloop.index
       endif
     endunless
@@ -69,56 +128,8 @@
   assign bfk_h2_open = '<h2'
 -%}
 
-{%- comment -%} ── Ingressen, med kompaktkortet rett etter ──────────────────
-  Kortet settes etter første avsnitt med FAKTISK brødtekst, ikke etter
-  første </p>. Alle artiklene i dag åpner brødteksten med en meta-linje —
-  «<em>Av Skinora Redaksjonen</em><br><em>Publisert 1. september 2026</em>» —
-  og en naiv replace_first la kortet mellom datostempelet og ingressen.
-
-  Terskelen er ren lengde, ikke gjenkjenning av datoformat eller byline:
-  en meta-linje er ~50 tegn, en ingress 150–400. Da tåler regelen også
-  meta-linjer vi ikke har sett ennå, uten å gjette på innhold.
-
-  Innholdssporet fjerner meta-linjen fra brødteksten (den dupliserer
-  uansett datoen temaet selv viser over tittelen), men temaet skal ikke
-  være avhengig av at hver eneste artikkel er ryddet.
-{%- endcomment -%}
-{%- liquid
-  assign bfk_head = bfk_parts.first
-  assign bfk_tail = ''
-
-  if bfk_head contains '</p>'
-    assign bfk_chunks = bfk_parts.first | split: '</p>'
-    assign bfk_cut = 0
-    for bfk_chunk in bfk_chunks
-      assign bfk_txt = bfk_chunk | strip_html | strip
-      if bfk_cut == 0 and bfk_txt.size >= 120
-        assign bfk_cut = forloop.index
-      endif
-    endfor
-    comment
-      Ingen avsnitt nådde terskelen (svært kort ingress). Fall tilbake til
-      første </p> — samme oppførsel som før.
-    endcomment
-    if bfk_cut == 0
-      assign bfk_cut = 1
-    endif
-
-    assign bfk_head = ''
-    for bfk_chunk in bfk_chunks limit: bfk_cut
-      assign bfk_head = bfk_head | append: bfk_chunk | append: '</p>'
-    endfor
-    comment
-      bfk_head er per konstruksjon et prefiks av blokken, så remove_first
-      kutter nøyaktig der. Å sette sammen halen av chunks igjen ville
-      mistet en avsluttende </p>, siden split dropper skilletegnet.
-    endcomment
-    assign bfk_tail = bfk_parts.first | remove_first: bfk_head
-  endif
--%}
-{{- bfk_head -}}
-{%- render 'blog-funnel-card', article: article, variant: 'kompakt', klaviyo_form_id: klaviyo_form_id -%}
-{{- bfk_tail -}}
+{%- comment -%} ── Blokken før første H2 ───────────────────────────────────── {%- endcomment -%}
+{{- bfk_parts.first | replace: bfk_slot, bfk_kompakt_html -}}
 
 {%- comment -%} ── Resten: én del per H2 ───────────────────────────────────── {%- endcomment -%}
 {%- for bfk_part in bfk_parts offset: 1 -%}
@@ -127,7 +138,7 @@
     {%- render 'blog-funnel-card', article: article, variant: 'full', klaviyo_form_id: klaviyo_form_id -%}
     {%- assign bfk_full_done = true -%}
   {%- endif -%}
-  {{- bfk_h2_open }}{{ bfk_part -}}
+  {{- bfk_h2_open }}{{ bfk_part | replace: bfk_slot, bfk_kompakt_html -}}
 {%- endfor -%}
 
 {%- unless bfk_full_done -%}
