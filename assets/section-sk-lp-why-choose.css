@@ -157,6 +157,7 @@
   color: var(--accent-clay);
 }
 
+
 /* =============================================================
    VARIANT --media — bleed-bilde bak, glasspaneler foran
    -------------------------------------------------------------
@@ -164,18 +165,22 @@
    rendres alt over uendret, så Radiance-LP-en (som deler
    seksjonen) ikke berøres.
 
-   Lagdeling: bilde (0) → scrim (1) → innhold (2). Scrimen ligger
-   i eget lag, ikke som gradient på bildet, så styrken kan endres
-   fra seksjonsinnstillingen uten å røre bildelaget.
+   TO TONER, styrt fra seksjonsinnstillingen:
+     --onlight  mørk tekst på hvitt glass   (lyse bilder)
+     --ondark   lys tekst på mørkt glass    (mørke bilder)
 
+   Tonen er et VALG, ikke en antakelse. Første utgave hadde bare
+   den mørke: hvit tekst på et lyst produktfoto forsvant helt.
+   Nettleseren kan ikke måle et bakgrunnsbildes lyshet, så den
+   vurderingen må tas der noen faktisk ser bildet.
+
+   Lagdeling: bilde (0) → scrim (1) → innhold (2).
    isolation: isolate holder z-indexene lokale, så de ikke
    konkurrerer med sticky-baren eller trustbaren.
    ============================================================= */
 .lp-why-choose--media {
   position: relative;
   isolation: isolate;
-  background: var(--ink-900); /* fallback før bildet er lastet */
-  color: var(--paper-0);
 }
 
 .lp-why-choose--media .lp-why-choose__media {
@@ -194,17 +199,19 @@
   display: block;
 }
 
+/* Scrimen ligger i eget lag, ikke som gradient på bildet, så styrken
+   kan justeres fra seksjonsinnstillingen uten å røre bildelaget.
+   --wc-scrim settes per seksjon i Liquid, --wc-scrim-ink av tonen. */
 .lp-why-choose--media .lp-why-choose__scrim {
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  /* --wc-scrim settes per seksjon i Liquid (standard 60 %). */
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--ink-900) calc(var(--wc-scrim, 60%) - 12%), transparent) 0%,
-    color-mix(in srgb, var(--ink-900) var(--wc-scrim, 60%), transparent) 45%,
-    color-mix(in srgb, var(--ink-900) calc(var(--wc-scrim, 60%) + 8%), transparent) 100%
+    color-mix(in srgb, var(--wc-scrim-ink) calc(var(--wc-scrim, 45%) - 10%), transparent) 0%,
+    color-mix(in srgb, var(--wc-scrim-ink) var(--wc-scrim, 45%), transparent) 45%,
+    color-mix(in srgb, var(--wc-scrim-ink) calc(var(--wc-scrim, 45%) + 8%), transparent) 100%
   );
 }
 
@@ -213,25 +220,8 @@
   z-index: 2;
 }
 
-/* ---------- Tekst på mørk flate ---------- */
-.lp-why-choose--media .lp-section-heading,
-.lp-why-choose--media .lp-why-choose__title {
-  color: var(--paper-0);
-}
-
-.lp-why-choose--media .lp-why-choose__intro {
-  color: color-mix(in srgb, var(--paper-0) 82%, transparent);
-}
-
-.lp-why-choose--media .lp-why-choose__text {
-  color: color-mix(in srgb, var(--paper-0) 78%, transparent);
-}
-
-/* ---------- Glasspaneler ----------
-   Listen mister hårstrekene her: streker som skiller rader gir
-   ingen mening når hver rad allerede er sin egen flate. Panelene
-   er det som gjør teksten lesbar, ikke scrimen alene — derfor
-   backdrop-filter på hvert kort og ikke bare på seksjonen. */
+/* Hårstrekene faller bort: streker som skiller rader gir ingen mening
+   når hver rad allerede er sin egen flate. */
 .lp-why-choose--media .lp-why-choose__grid {
   border-top: 0;
   gap: var(--space-4);
@@ -248,28 +238,77 @@
   border-bottom: 0;
   padding: var(--card-padding);
   border-radius: 14px;
-  background: color-mix(in srgb, var(--paper-0) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--paper-0) 18%, transparent);
-  backdrop-filter: blur(14px) saturate(130%);
-  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
 }
 
-@media (min-width: 769px) {
-  .lp-why-choose--media .lp-why-choose__card {
-    padding: var(--card-padding);
+/* ---------- Tone: mørk tekst på hvitt glass (lyse bilder) ---------- */
+.lp-why-choose--onlight {
+  --wc-scrim-ink: var(--paper-0);
+  background: var(--paper-0); /* fallback før bildet er lastet */
+}
+
+.lp-why-choose--onlight .lp-why-choose__card {
+  /* 62 % hvitt: nok flate til at brødtekst i --ink-500 holder kontrast
+     selv over et travelt, lyst motiv. Lavere ble pent og uleselig. */
+  background: color-mix(in srgb, var(--paper-0) 62%, transparent);
+  border: 1px solid color-mix(in srgb, var(--paper-0) 75%, transparent);
+  box-shadow: 0 2px 24px color-mix(in srgb, var(--ink-900) 8%, transparent);
+}
+
+/* Tekstfargene er temaets vanlige — ingen overstyring trengs, men de
+   skrives ut eksplisitt så tonen er lesbar i én blokk. */
+.lp-why-choose--onlight .lp-section-heading,
+.lp-why-choose--onlight .lp-why-choose__title {
+  color: var(--ink-900);
+}
+
+.lp-why-choose--onlight .lp-why-choose__intro,
+.lp-why-choose--onlight .lp-why-choose__text {
+  color: var(--ink-500);
+}
+
+.lp-why-choose--onlight .lp-why-choose__card::before {
+  color: var(--ink-300);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .lp-why-choose--onlight .lp-why-choose__card {
+    background: color-mix(in srgb, var(--paper-0) 92%, transparent);
   }
 }
 
-/* Tallet var --ink-300 mot hvit flate. På glass må det være lyst,
-   men fortsatt hviske — derfor lav opasitet, ikke full hvit. */
-.lp-why-choose--media .lp-why-choose__card::before {
+/* ---------- Tone: lys tekst på mørkt glass (mørke bilder) ---------- */
+.lp-why-choose--ondark {
+  --wc-scrim-ink: var(--ink-900);
+  background: var(--ink-900);
+  color: var(--paper-0);
+}
+
+.lp-why-choose--ondark .lp-why-choose__card {
+  background: color-mix(in srgb, var(--paper-0) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--paper-0) 18%, transparent);
+}
+
+.lp-why-choose--ondark .lp-section-heading,
+.lp-why-choose--ondark .lp-why-choose__title {
+  color: var(--paper-0);
+}
+
+.lp-why-choose--ondark .lp-why-choose__intro {
+  color: color-mix(in srgb, var(--paper-0) 82%, transparent);
+}
+
+.lp-why-choose--ondark .lp-why-choose__text {
+  color: color-mix(in srgb, var(--paper-0) 78%, transparent);
+}
+
+.lp-why-choose--ondark .lp-why-choose__card::before {
   color: color-mix(in srgb, var(--paper-0) 38%, transparent);
 }
 
-/* Uten backdrop-filter finnes ingen uskarphet, og 10 % hvitt ville
-   vært for tynt til å bære tekst. Da trengs en solid flate. */
 @supports not (backdrop-filter: blur(1px)) {
-  .lp-why-choose--media .lp-why-choose__card {
+  .lp-why-choose--ondark .lp-why-choose__card {
     background: color-mix(in srgb, var(--ink-900) 72%, transparent);
   }
 }

@@ -13,9 +13,12 @@
   urørt til noen setter et bilde der også.
 {%- endcomment -%}
 {%- assign wc_image = section.settings.background_image -%}
+{%- assign wc_tone = section.settings.text_tone | default: 'onlight' -%}
 
 <div class="sk-lp">
-  <section class="lp-why-choose{% if wc_image != blank %} lp-why-choose--media{% endif %}">
+  <section
+    class="lp-why-choose{% if wc_image != blank %} lp-why-choose--media lp-why-choose--{{ wc_tone }}{% endif %}"
+  >
     {%- if wc_image != blank -%}
       <div class="lp-why-choose__media" aria-hidden="true">
         <img
@@ -40,7 +43,7 @@
       <div
         class="lp-why-choose__scrim"
         aria-hidden="true"
-        style="--wc-scrim: {{ section.settings.scrim_strength | default: 60 }}%;"
+        style="--wc-scrim: {{ section.settings.scrim_strength | default: 45 }}%;"
       ></div>
     {%- endif -%}
     <div class="lp-why-choose__inner">
@@ -90,7 +93,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Tomt felt = seksjonen ser ut som før, med hvit bakgrunn og mørk tekst. Settes et bilde, går seksjonen over til full bredde med bildet bak, mørk scrim og glasspaneler rundt hvert punkt. Velg et rolig motiv uten skarpe detaljer der teksten står — glasspanelene tåler mye, men ikke alt."
+      "content": "Tomt felt = seksjonen ser ut som før, med hvit bakgrunn og mørk tekst. Settes et bilde, går seksjonen over til full bredde med bildet bak og glasspaneler rundt hvert punkt. Velg et rolig motiv uten skarpe detaljer der teksten står — glasspanelene tåler mye, men ikke alt."
     },
     {
       "type": "image_picker",
@@ -98,15 +101,26 @@
       "label": "Bakgrunnsbilde"
     },
     {
+      "type": "select",
+      "id": "text_tone",
+      "label": "Tekst og glass",
+      "info": "Velg etter hvor lyst bildet er. Feil valg her er den vanligste grunnen til uleselig tekst: hvit tekst på et lyst bilde forsvinner helt.",
+      "options": [
+        { "value": "onlight", "label": "Mørk tekst på hvitt glass (lyst bilde)" },
+        { "value": "ondark", "label": "Lys tekst på mørkt glass (mørkt bilde)" }
+      ],
+      "default": "onlight"
+    },
+    {
       "type": "range",
       "id": "scrim_strength",
-      "label": "Mørkhet på bildet",
-      "info": "Høyere verdi = mørkere bilde og mer lesbar tekst. Lavere = mer synlig motiv.",
-      "min": 30,
+      "label": "Demping av bildet",
+      "info": "Høyere verdi = roligere bilde og mer lesbar tekst. Dempingen er hvit ved lyst bilde og mørk ved mørkt bilde, så den følger valget over.",
+      "min": 20,
       "max": 85,
       "step": 5,
       "unit": "%",
-      "default": 60
+      "default": 45
     }
   ],
   "blocks": [
