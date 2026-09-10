@@ -73,33 +73,38 @@
   }
 
   /* Fullkortet og footeren. Er en av dem synlig, har brukeren allerede
-     CTA-en foran seg og baren skal vike. */
-  var suppressors = 0;
-  var watchTargets = [];
-  var fullCard = document.querySelector('[data-blog-funnel-full]');
-  if (fullCard) watchTargets.push(fullCard);
-  var footer = document.querySelector('.footer, footer.shopify-section, [id*="__footer"]');
-  if (footer) watchTargets.push(footer);
+     CTA-en foran seg og baren skal vike.
 
-  if ('IntersectionObserver' in window && watchTargets.length) {
-    var io = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            if (!entry.target.__bfSeen) {
-              entry.target.__bfSeen = true;
-              suppressors += 1;
-            }
-          } else if (entry.target.__bfSeen) {
-            entry.target.__bfSeen = false;
-            suppressors -= 1;
-          }
-        });
-        update();
-      },
-      { rootMargin: '0px 0px -10% 0px' }
-    );
-    watchTargets.forEach(function (t) {
+     IntersectionObserver brukes som VEKKER, ikke som fasit: den forteller oss
+     når det er verdt å regne på nytt, mens svaret leses av geometrien i samme
+     øyeblikk. Første utgave holdt i stedet en teller som IO-en økte og senket.
+     Den satte seg fast over null på ekte sider: artikkelen vokser kraftig
+     under innlasting (dokumentet gikk fra ~7 500 til ~13 700 px her, etter
+     hvert som bilder og app-blokker landet), og et par av de tidlige
+     isIntersecting-hendelsene ble aldri motsvart av en «forlot»-hendelse.
+     Baren viste seg da aldri, selv om både fullkort og footer lå langt
+     utenfor skjermen. En tilstandsløs sjekk kan ikke havne i den situasjonen.
+
+     Elementene slås opp på nytt hver gang. Det koster ingenting for to noder,
+     og gjør oss immune mot at en seksjon byttes ut i DOM-en etter lasting. */
+  var SUPPRESS_SELECTOR = '[data-blog-funnel-full], .footer, footer.shopify-section, [id*="__footer"]';
+
+  function ctaAlreadyOnScreen() {
+    var nodes = document.querySelectorAll(SUPPRESS_SELECTOR);
+    for (var i = 0; i < nodes.length; i++) {
+      var r = nodes[i].getBoundingClientRect();
+      if (r.height === 0 && r.width === 0) continue;
+      /* 10 % slingringsmonn nederst, så baren viker like før kortet er inne. */
+      if (r.top < window.innerHeight * 0.9 && r.bottom > 0) return true;
+    }
+    return false;
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function () {
+      update();
+    }, { rootMargin: '0px 0px -10% 0px' });
+    document.querySelectorAll(SUPPRESS_SELECTOR).forEach(function (t) {
       io.observe(t);
     });
   }
@@ -148,7 +153,7 @@
       setVisible(false);
       return;
     }
-    setVisible(scrolledEnough() && suppressors === 0 && !overlayOpen());
+    setVisible(scrolledEnough() && !ctaAlreadyOnScreen() && !overlayOpen());
   }
 
   var ticking = false;
@@ -183,6 +188,10 @@
     var mo = new MutationObserver(onScroll);
     mo.observe(document.body, { childList: true, subtree: false, attributes: true, attributeFilter: ['class'] });
   }
+
+  /* Sidehøyden endrer seg mye mens bilder og app-blokker lander. Én ekstra
+     evaluering etter load fanger opp at scroll-andelen har flyttet seg. */
+  window.addEventListener('load', onScroll);
 
   update();
 })();
