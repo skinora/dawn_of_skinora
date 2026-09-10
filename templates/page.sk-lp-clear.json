@@ -945,8 +945,8 @@
   "order": [
     "announcement",
     "header",
-    "hero",
     "urgency",
+    "hero",
     "trustbar",
     "problem",
     "sk_lp_mechanism_WhVKGN",
