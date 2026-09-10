@@ -1,0 +1,67 @@
+{%- comment -%}
+  sk-reviews-anchor — får #fulfilled-reviews-all til å treffe på produktsiden
+  ----------------------------------------------------------------------------
+  Rendres fra layout/theme.liquid, kun på produktsider.
+
+  PROBLEMET
+  Klaviyo-widgeten er et tomt <div id="fulfilled-reviews-all"> i server-HTML-en.
+  Selve anmeldelsene injiseres av JS, og temaets ytelses-interceptor utsetter
+  static.klaviyo.com til første interaksjon eller 5 sekunder. Kommer man inn på
+  /products/…#fulfilled-reviews-all, hopper nettleseren derfor til en container
+  med høyde 0 nede ved footeren. Når widgeten senere vokser til ~1 900 px,
+  holder nettleserens scroll-anchoring det synlige innholdet – footeren – i ro,
+  og anmeldelsene skyves opp og ut av syne.
+
+  Målt på DEV før fiksen: man landet 1 896 px FORBI toppen av anmeldelsene,
+  altså i praksis på footeren.
+
+  LØSNINGEN
+  Følg containeren mens den vokser og hold den i toppen av skjermen. Stopper
+  ved første brukerinteraksjon, så vi aldri kaprer scrollen fra noen som selv
+  har begynt å bla. Gir opp etter 12 sekunder uansett.
+
+  Kjører kun når hashen faktisk peker hit. Vanlige produktsidebesøk berøres
+  ikke i det hele tatt.
+{%- endcomment -%}
+
+<script>
+  (function () {
+    var HASH = '#fulfilled-reviews-all';
+    if (window.location.hash !== HASH) return;
+    if (!('ResizeObserver' in window)) return;
+
+    var el = document.getElementById('fulfilled-reviews-all');
+    if (!el) return;
+
+    var ro;
+    var stopped = false;
+    function stop() {
+      if (stopped) return;
+      stopped = true;
+      if (ro) {
+        try {
+          ro.disconnect();
+        } catch (e) {}
+      }
+    }
+
+    /* Brukeren har tatt over — ikke rør scrollen mer. */
+    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (evt) {
+      window.addEventListener(evt, stop, { once: true, passive: true });
+    });
+
+    function align() {
+      if (stopped) return;
+      el.scrollIntoView({ block: 'start' });
+    }
+
+    ro = new ResizeObserver(align);
+    ro.observe(el);
+
+    /* Widgeten kan bruke over 5 sekunder (utsatt lasting). 12 s er romslig
+       nok til at den rekker det, og kort nok til at ingenting henger igjen. */
+    setTimeout(stop, 12000);
+
+    align();
+  })();
+</script>

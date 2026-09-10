@@ -125,3 +125,13 @@
   letter-spacing: var(--btn-tracking);
   min-height: var(--btn-min-h);
 }
+
+/* ── Ankermål for «Les alle anmeldelser» fra landingssidene ──────────────────
+   overflow-anchor: none tar containeren ut av nettleserens scroll-anchoring.
+   Uten den kompenserer nettleseren når widgeten vokser fra 0 til ~1 900 px,
+   holder footeren i ro, og skyver anmeldelsene ut av syne oppover.
+   snippets/sk-reviews-anchor.liquid gjør resten av jobben. */
+#fulfilled-reviews-all {
+  overflow-anchor: none;
+  scroll-margin-top: var(--space-6, 32px);
+}

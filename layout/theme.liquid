@@ -1174,6 +1174,12 @@
     {%- endcomment -%}
     {%- if request.page_type == 'product' -%}
       {{ 'klaviyo-reviews.css' | asset_url | stylesheet_tag }}
+      {%- comment -%}
+        Får #fulfilled-reviews-all til å treffe når man kommer fra
+        «Les alle anmeldelser» på landingssidene. Widgeten fylles av JS lenge
+        etter at nettleseren har hoppet. Kjører kun når hashen peker dit.
+      {%- endcomment -%}
+      {% render 'sk-reviews-anchor' %}
     {%- endif -%}
     {%- comment -%} Non-critical base CSS (grid, forms, buttons, modals, rte, spinners) — deferred {%- endcomment -%}
     <link rel="stylesheet" href="{{ 'base-deferred.css' | asset_url }}" media="print" onload="this.media='all'">
