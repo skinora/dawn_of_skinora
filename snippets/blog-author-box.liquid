@@ -1,0 +1,48 @@
+{%- comment -%}
+  blog-author-box — «Om skribenten», E-E-A-T-boks nederst i artikkelen
+  ----------------------------------------------------------------------------
+  Parametre (alle fra seksjonsinnstillinger på sk-blog-article):
+    navn   : forfatterens navn
+    tittel : jobbtittel / rolle
+    bio    : én til to linjer om bakgrunn
+    bilde  : image_picker
+    url    : lenke til forfatter-/om-siden (standard /pages/om-skinora)
+
+  Rendres ingenting hvis navnet mangler — en tom boks er verre enn ingen boks.
+{%- endcomment -%}
+
+{%- liquid
+  assign ab_navn = navn | strip
+  assign ab_tittel = tittel | strip
+  assign ab_bio = bio | strip
+  assign ab_url = url | default: '/pages/om-skinora'
+-%}
+
+{%- if ab_navn != blank -%}
+  <aside class="blog-author-box" aria-labelledby="blog-author-box-heading">
+    <p class="blog-author-box__heading" id="blog-author-box-heading">Om skribenten</p>
+    <div class="blog-author-box__inner">
+      {%- if bilde != blank -%}
+        <span class="blog-author-box__media">
+          <img
+            src="{{ bilde | image_url: width: 176 }}"
+            alt="{{ bilde.alt | default: ab_navn | escape }}"
+            width="88"
+            height="88"
+            loading="lazy"
+            decoding="async"
+          >
+        </span>
+      {%- endif -%}
+      <div class="blog-author-box__text">
+        <p class="blog-author-box__name">
+          {{ ab_navn | escape }}{% if ab_tittel != blank %}<span class="blog-author-box__role">{{ ab_tittel | escape }}</span>{% endif %}
+        </p>
+        {%- if ab_bio != blank -%}
+          <p class="blog-author-box__bio">{{ ab_bio | escape }}</p>
+        {%- endif -%}
+        <a class="blog-author-box__link" href="{{ ab_url }}">Mer om Skinora</a>
+      </div>
+    </div>
+  </aside>
+{%- endif -%}

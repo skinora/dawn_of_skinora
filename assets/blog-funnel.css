@@ -1,0 +1,364 @@
+/* =============================================================================
+   blog-funnel.css
+   Kontekstuelle CTA-kort + mobil sticky-bar for bloggartikler.
+   Lastes KUN av sections/sk-blog-article.liquid (artikkelmalen).
+
+   Alle verdier kommer fra tokens i typography.css. Ingen !important,
+   ingen font-weight 300, ingen rem for font-size (roten er 62.5 %).
+
+   Klassene har prefikset `blog-` og IKKE `sk-`. Bevisst: sk-base.css har
+   `[class^='sk-'] img { border-radius: 0 !important }`. Kortene arver den
+   allerede via forelderen .sk-blog-article__body, så bildene her har skarpe
+   hjørner — vi følger den regelen i stedet for å tape en spesifisitetskamp.
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   Felles kort-skall — redaksjonell boks, ikke annonse.
+   Rolig ramme (hairline), papirflate, ingen skygge, ingen aksentfarge.
+   --------------------------------------------------------------------------- */
+.blog-funnel-card {
+  margin-block: var(--space-7);
+  padding: var(--space-5);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: var(--paper-50);
+  font-family: var(--ff-sans);
+  color: var(--ink-700);
+}
+
+.blog-funnel-card .blog-funnel-card__eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+}
+
+.blog-funnel-card .blog-funnel-card__title {
+  margin: 0 0 var(--space-2);
+  font-family: var(--ff-serif);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-normal);
+  color: var(--ink-900);
+}
+
+.blog-funnel-card .blog-funnel-card__body {
+  margin: 0 0 var(--space-4);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+  max-width: var(--measure-body);
+}
+
+.blog-funnel-card .blog-funnel-card__trust {
+  margin: var(--space-3) 0 0;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-loose);
+  color: var(--ink-400);
+}
+
+.blog-funnel-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+}
+
+/* Sekundærlenken skal lese som en lenke, ikke som knapp nummer to. */
+.blog-funnel-card .blog-funnel-card__secondary,
+.blog-funnel-card .blog-funnel-card__secondary:link,
+.blog-funnel-card .blog-funnel-card__secondary:visited {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-normal);
+  color: var(--ink-700);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+.blog-funnel-card .blog-funnel-card__secondary:hover,
+.blog-funnel-card .blog-funnel-card__secondary:focus-visible {
+  text-decoration-thickness: 2px;
+}
+
+/* Knappen arver bakgrunn, radius, padding og skygge fra .lp-btn i buttons.css
+   (som bruker `body `-prefiks for spesifisitet). Vi rører ingen av delene.
+
+   MEN: kortene ligger inne i .sk-blog-article__body, og rik-tekst-regelen
+   `.sk-blog-article__body a` (0,1,1) er nøyaktig like spesifikk som
+   `body .lp-btn` (0,1,1) — og section-CSS-en lastes ETTER buttons.css.
+   Uten denne blokka ville knappeteksten blitt lilla og understreket på
+   mørk bunn. `.blog-funnel-card .lp-btn` (0,2,1) avgjør det, og henter
+   verdiene fra buttons.css sine egne tokens i stedet for literaler. */
+.blog-funnel-card .lp-btn {
+  white-space: normal;
+  text-align: center;
+  color: var(--btn-primary-fg);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+.blog-funnel-card .lp-btn:hover,
+.blog-funnel-card .lp-btn:focus-visible {
+  color: var(--btn-primary-fg);
+  text-decoration: none;
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------------------
+   Media
+   --------------------------------------------------------------------------- */
+.blog-funnel-card__media {
+  display: block;
+  overflow: hidden;
+  background: var(--paper-100);
+  flex: none;
+}
+
+.blog-funnel-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------------------------------------------------------------------------
+   VARIANT: kompakt — horisontal rad, lite bilde, ÉN knapp.
+   --------------------------------------------------------------------------- */
+.blog-funnel-card--kompakt {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+}
+
+.blog-funnel-card--kompakt .blog-funnel-card__media {
+  width: 88px;
+  height: 88px;
+}
+
+.blog-funnel-card--kompakt .blog-funnel-card__text {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+.blog-funnel-card--kompakt .blog-funnel-card__eyebrow {
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-xs);
+}
+
+.blog-funnel-card--kompakt .blog-funnel-card__title {
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-lg);
+}
+
+.blog-funnel-card--kompakt .blog-funnel-card__body {
+  margin-bottom: 0;
+  font-size: var(--fs-sm);
+}
+
+.blog-funnel-card--kompakt .blog-funnel-card__actions {
+  flex: none;
+}
+
+@media (max-width: 599px) {
+  .blog-funnel-card--kompakt {
+    flex-wrap: wrap;
+  }
+
+  .blog-funnel-card--kompakt .blog-funnel-card__media {
+    width: 64px;
+    height: 64px;
+  }
+
+  .blog-funnel-card--kompakt .blog-funnel-card__actions,
+  .blog-funnel-card--kompakt .blog-funnel-card__actions .lp-btn {
+    width: 100%;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   VARIANT: full — kort med bilde, alle linjer, to lenker.
+   --------------------------------------------------------------------------- */
+.blog-funnel-card--full {
+  padding: var(--space-6);
+}
+
+.blog-funnel-card--full .blog-funnel-card__inner {
+  display: flex;
+  gap: var(--space-6);
+  align-items: flex-start;
+}
+
+.blog-funnel-card--full .blog-funnel-card__media {
+  width: 220px;
+  height: 220px;
+}
+
+.blog-funnel-card--full .blog-funnel-card__text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+@media (max-width: 749px) {
+  .blog-funnel-card--full {
+    padding: var(--space-5);
+  }
+
+  .blog-funnel-card--full .blog-funnel-card__inner {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .blog-funnel-card--full .blog-funnel-card__media {
+    width: 100%;
+    height: 200px;
+  }
+
+  .blog-funnel-card--full .blog-funnel-card__actions,
+  .blog-funnel-card--full .blog-funnel-card__actions .lp-btn {
+    width: 100%;
+  }
+
+  .blog-funnel-card--full .blog-funnel-card__secondary {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   VARIANT: epost — Klaviyo embedded form.
+   Skjemaet stiles av Klaviyo; vi eier bare boksen rundt og overskriften.
+   min-height reserverer plass så innlastingen ikke gir CLS.
+   --------------------------------------------------------------------------- */
+.blog-funnel-card__form {
+  margin-top: var(--space-4);
+  min-height: 96px;
+}
+
+/* ---------------------------------------------------------------------------
+   Tabell-wrapper — legges rundt <table> i artikkelinnholdet av
+   snippets/blog-funnel-content.liquid.
+   --------------------------------------------------------------------------- */
+.blog-funnel-tablewrap {
+  max-width: 100%;
+  margin-block: var(--space-5);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 749px) {
+  .blog-funnel-tablewrap > table {
+    min-width: 520px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   MOBIL STICKY-BAR (≤ 749 px)
+   position: fixed → kan per definisjon ikke bidra til CLS.
+   Skjult som utgangspunkt; vises av blog-funnel.js etter 35 % scroll.
+
+   z-index 60 er bevisst lavt: Klaviyo-teaseren ligger på 90000 og Shopifys
+   personvernbanner på 2147483001 (sk-base.css). Begge skal ligge OVER baren.
+   Baren skyver i tillegg banneret opp via html.sk-sticky-bar-visible, som
+   allerede finnes i sk-base.css.
+   --------------------------------------------------------------------------- */
+.blog-funnel-sticky {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  display: none;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  background: var(--ink-700);
+  border-top: 1px solid var(--hairline);
+  box-shadow: 0 -2px 16px rgba(20, 16, 28, 0.18);
+  font-family: var(--ff-sans);
+
+  transform: translateY(110%);
+  visibility: hidden;
+  transition: transform 0.24s ease, visibility 0s linear 0.24s;
+}
+
+@media (max-width: 749px) {
+  .blog-funnel-sticky {
+    display: flex;
+  }
+}
+
+.blog-funnel-sticky.is-visible {
+  transform: translateY(0);
+  visibility: visible;
+  transition: transform 0.24s ease, visibility 0s linear 0s;
+}
+
+.blog-funnel-sticky__link,
+.blog-funnel-sticky__link:link,
+.blog-funnel-sticky__link:visited {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--tracking-normal);
+  color: var(--paper-0);
+  text-decoration: none;
+}
+
+.blog-funnel-sticky__link:focus-visible {
+  outline: 2px solid var(--paper-0);
+  outline-offset: 2px;
+}
+
+.blog-funnel-sticky__label {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.blog-funnel-sticky__arrow {
+  flex: none;
+}
+
+.blog-funnel-sticky__close {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 22px;
+  line-height: var(--lh-none);
+  color: var(--paper-0);
+  opacity: 0.7;
+}
+
+.blog-funnel-sticky__close:hover,
+.blog-funnel-sticky__close:focus-visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-funnel-sticky,
+  .blog-funnel-sticky.is-visible {
+    transition: none;
+  }
+}

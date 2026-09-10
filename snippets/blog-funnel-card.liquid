@@ -1,0 +1,204 @@
+{%- comment -%}
+  blog-funnel-card — kontekstuelt CTA-kort i bloggartikler
+  ----------------------------------------------------------------------------
+  Parametre:
+    article          : artikkel-objektet (påkrevd)
+    variant          : 'kompakt' | 'full'  (standard: 'full')
+    klaviyo_form_id  : ID-en til Klaviyo embedded form (fra seksjonsinnstilling)
+
+  Metafelt som leses:
+    article.metafields.custom.funnel_type    – 'produkt' | 'quiz' | 'epost'
+    article.metafields.custom.funnel_produkt – produktreferanse
+    article.metafields.custom.funnel_hook    – kontekstlinje (maks 90 tegn)
+    product.metafields.custom.kort_nytte     – nyttebasert kortbeskrivelse
+
+  FALLBACK-KJEDE (artikler skal ALDRI stå uten CTA):
+    tomt / ukjent funnel_type      → quiz
+    'produkt' uten produktreferanse → quiz
+    'epost' uten klaviyo_form_id    → quiz
+    'epost' i kompakt-plassering    → quiz  (kun ett skjema per side)
+
+  INGEN PRIS. Prisen er ikke fast (Clear 4 390 / Radiance 4 690 settes
+  per template), så et hardkodet eller dynamisk beløp her ville vært feil
+  i minst én av kontekstene.
+
+  Sporing: alle CTA-er bærer data-blog-cta / data-cta-variant / data-cta-type.
+  Lytteren ligger i assets/blog-funnel.js.
+{%- endcomment -%}
+
+{%- liquid
+  assign bfc_variant = variant | default: 'full'
+  assign bfc_type = article.metafields.custom.funnel_type.value | downcase | strip
+  assign bfc_hook = article.metafields.custom.funnel_hook.value | strip
+  assign bfc_product = article.metafields.custom.funnel_produkt.value
+  assign bfc_form_id = klaviyo_form_id | strip
+
+  unless bfc_type == 'produkt' or bfc_type == 'quiz' or bfc_type == 'epost'
+    assign bfc_type = 'quiz'
+  endunless
+
+  if bfc_type == 'produkt' and bfc_product == blank
+    assign bfc_type = 'quiz'
+  endif
+
+  if bfc_type == 'epost' and bfc_form_id == blank
+    assign bfc_type = 'quiz'
+  endif
+
+  comment
+    Kun ETT skjema per side: e-postartikler viser skjemaet på full-plassen og
+    quiz-kortet på kompakt-plassen.
+  endcomment
+  if bfc_type == 'epost' and bfc_variant == 'kompakt'
+    assign bfc_type = 'quiz'
+  endif
+
+  assign bfc_quiz_url = pages.hudveiviser.url | default: '/pages/hudveiviser'
+-%}
+
+<div
+  class="blog-funnel-card blog-funnel-card--{{ bfc_variant }} blog-funnel-card--{{ bfc_type }}"
+  {% if bfc_variant == 'full' %}data-blog-funnel-full{% endif %}
+  data-cta-type="{{ bfc_type }}"
+>
+  {%- case bfc_type -%}
+    {%- when 'produkt' -%}
+      {%- liquid
+        assign bfc_img = bfc_product.featured_image
+        assign bfc_nytte = bfc_product.metafields.custom.kort_nytte.value | strip
+        if bfc_hook == blank
+          assign bfc_hook = 'Brukes i rutinen i denne artikkelen'
+        endif
+        if bfc_variant == 'kompakt'
+          assign bfc_img_px = 176
+        else
+          assign bfc_img_px = 440
+        endif
+      -%}
+
+      {%- if bfc_variant == 'kompakt' -%}
+        {%- if bfc_img -%}
+          <span class="blog-funnel-card__media">
+            <img
+              src="{{ bfc_img | image_url: width: bfc_img_px }}"
+              alt="{{ bfc_img.alt | default: bfc_product.title | escape }}"
+              width="88"
+              height="88"
+              loading="lazy"
+              decoding="async"
+            >
+          </span>
+        {%- endif -%}
+        <div class="blog-funnel-card__text">
+          <p class="blog-funnel-card__eyebrow">{{ bfc_hook | escape }}</p>
+          <p class="blog-funnel-card__title">{{ bfc_product.title | escape }}</p>
+          {%- if bfc_nytte != blank -%}
+            <p class="blog-funnel-card__body">{{ bfc_nytte | escape }}</p>
+          {%- endif -%}
+        </div>
+        <div class="blog-funnel-card__actions">
+          <a
+            href="{{ bfc_product.url }}"
+            class="lp-btn"
+            data-blog-cta="{{ article.handle }}"
+            data-cta-variant="kompakt"
+            data-cta-type="produkt"
+          >
+            Se {{ bfc_product.title | escape }}
+          </a>
+        </div>
+
+      {%- else -%}
+        <div class="blog-funnel-card__inner">
+          {%- if bfc_img -%}
+            <span class="blog-funnel-card__media">
+              <img
+                src="{{ bfc_img | image_url: width: bfc_img_px }}"
+                alt="{{ bfc_img.alt | default: bfc_product.title | escape }}"
+                width="220"
+                height="220"
+                loading="lazy"
+                decoding="async"
+              >
+            </span>
+          {%- endif -%}
+          <div class="blog-funnel-card__text">
+            <p class="blog-funnel-card__eyebrow">{{ bfc_hook | escape }}</p>
+            <p class="blog-funnel-card__title">{{ bfc_product.title | escape }}</p>
+            {%- if bfc_nytte != blank -%}
+              <p class="blog-funnel-card__body">{{ bfc_nytte | escape }}</p>
+            {%- endif -%}
+            <div class="blog-funnel-card__actions">
+              <a
+                href="{{ bfc_product.url }}"
+                class="lp-btn"
+                data-blog-cta="{{ article.handle }}"
+                data-cta-variant="full"
+                data-cta-type="produkt"
+              >
+                Se {{ bfc_product.title | escape }}
+              </a>
+              <a
+                href="{{ bfc_quiz_url }}"
+                class="blog-funnel-card__secondary"
+                data-sk-quiz-trigger
+                data-placement="blog-funnel-full"
+                data-blog-cta="{{ article.handle }}"
+                data-cta-variant="full"
+                data-cta-type="quiz"
+              >
+                Usikker på hvilken maske? Ta 60-sekunders testen
+              </a>
+            </div>
+            <p class="blog-funnel-card__trust">
+              30 dagers fornøydgaranti · Del opp betalingen med Klarna
+            </p>
+          </div>
+        </div>
+      {%- endif -%}
+
+    {%- when 'epost' -%}
+      {%- liquid
+        assign bfc_epost_title = bfc_hook
+        if bfc_epost_title == blank
+          assign bfc_epost_title = 'Få hudguiden vår på e-post'
+        endif
+      -%}
+      <p class="blog-funnel-card__title">{{ bfc_epost_title | escape }}</p>
+      {%- comment -%}
+        Klaviyo embedded form. ID-en kommer fra seksjonsinnstillingen, aldri
+        hardkodet. MERK: theme.liquid skjuler .klaviyo-form med display:none,
+        men KUN på produktsider (request.page_type == 'product'), så skjemaet
+        er synlig her.
+      {%- endcomment -%}
+      <div class="blog-funnel-card__form">
+        <div
+          class="klaviyo-form-{{ bfc_form_id }}"
+          data-blog-cta="{{ article.handle }}"
+          data-cta-variant="{{ bfc_variant }}"
+          data-cta-type="epost"
+        ></div>
+      </div>
+
+    {%- else -%}
+      {%- comment -%} quiz — også fallback for alt annet {%- endcomment -%}
+      <p class="blog-funnel-card__title">Hvilken LED-maske passer din hud?</p>
+      <p class="blog-funnel-card__body">
+        Svar på noen korte spørsmål om hudtype, mål og tåleevne, så får du en
+        anbefaling som passer huden din.
+      </p>
+      <div class="blog-funnel-card__actions">
+        <a
+          href="{{ bfc_quiz_url }}"
+          class="lp-btn"
+          data-sk-quiz-trigger
+          data-placement="blog-funnel-{{ bfc_variant }}"
+          data-blog-cta="{{ article.handle }}"
+          data-cta-variant="{{ bfc_variant }}"
+          data-cta-type="quiz"
+        >
+          Ta testen (60 sek)
+        </a>
+      </div>
+  {%- endcase -%}
+</div>

@@ -1,4 +1,11 @@
 {{ 'section-sk-blog-article.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Bloggtrakt: kontekstuelle CTA-kort, mobil sticky-bar og klikksporing.
+  Begge filene lastes KUN herfra, og denne seksjonen brukes kun av
+  templates/article.blog-post.json — altså kun på artikkelsider.
+{%- endcomment -%}
+{{ 'blog-funnel.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'blog-funnel.js' | asset_url }}" defer></script>
 
 <div class="sk-blog-article section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="page-width">
@@ -29,12 +36,26 @@
             {{ article.title | escape }}
           </h1>
           {%- comment -%}
-            Datoer vises direkte under tittelen. Forfatter er bevisst utelatt fra
-            synlig visning — Skinora er et brand-blog, ikke personlige byline-poster.
-            Forfatter beholdes i JSON-LD nedenfor som Organization (Skinora) for å
-            oppfylle Googles krav til BlogPosting-schema uten å vise navnet på siden.
+            Forfatter vises nå under tittelen, sammen med publiserings- og
+            oppdateringsdato. Tidligere var byline bevisst utelatt (brand-blog,
+            ikke personlige poster), men E-E-A-T-arbeidet krever en navngitt,
+            sporbar avsender: JSON-LD nedenfor bruker nå Person, ikke
+            Organization, og en Person-author uten synlig motstykke på siden er
+            nettopp det Google behandler som et misforhold.
+
+            Navnet hentes fra seksjonsinnstillingen «Forfatternavn» når den er
+            satt, ellers fra artikkelens eget author-felt i Shopify.
           {%- endcomment -%}
+          {%- assign sk_author_name = section.settings.forfatter_navn | strip -%}
+          {%- if sk_author_name == blank -%}
+            {%- assign sk_author_name = article.author | strip -%}
+          {%- endif -%}
           <div class="sk-blog-article__meta">
+            {%- if sk_author_name != blank -%}
+              <span class="sk-blog-article__author" rel="author">
+                Av {{ sk_author_name | escape }}
+              </span>
+            {%- endif -%}
             <time class="sk-blog-article__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="18" viewBox="0 0 22 18" fill="none">
                 <path d="M0.985352 14.8333C0.985352 16.25 2.29451 17.3333 4.00648 17.3333H18.1051C19.8171 17.3333 21.1262 16.25 21.1262 14.8333V8.16663H0.985352V14.8333ZM18.1051 2.33329H16.091V1.49996C16.091 0.999959 15.6882 0.666626 15.084 0.666626C14.4797 0.666626 14.0769 0.999959 14.0769 1.49996V2.33329H8.03466V1.49996C8.03466 0.999959 7.63184 0.666626 7.02762 0.666626C6.42339 0.666626 6.02057 0.999959 6.02057 1.49996V2.33329H4.00648C2.29451 2.33329 0.985352 3.41663 0.985352 4.83329V6.49996H21.1262V4.83329C21.1262 3.41663 19.8171 2.33329 18.1051 2.33329Z" fill="#9F9F9F"/>
@@ -70,9 +91,26 @@
           </div>
         </header>
 
+        {%- comment -%}
+          Artikkelteksten rendres via blog-funnel-content, som skyter inn
+          CTA-kortene mellom seksjonene. Innholdet selv endres ikke — kun
+          <table> pakkes i en scroll-wrapper. Se snippeten for plasserings-
+          reglene og fallback-kjeden.
+        {%- endcomment -%}
         <div class="sk-blog-article__body">
-          {{ article.content }}
+          {%- render 'blog-funnel-content',
+            article: article,
+            klaviyo_form_id: section.settings.klaviyo_form_id
+          -%}
         </div>
+
+        {% render 'blog-author-box',
+          navn: section.settings.forfatter_navn,
+          tittel: section.settings.forfatter_tittel,
+          bio: section.settings.forfatter_bio,
+          bilde: section.settings.forfatter_bilde,
+          url: section.settings.forfatter_url
+        %}
 
         {%- if section.blocks.size > 0 -%}
           <div class="sk-blog-article__custom-content">
@@ -171,6 +209,16 @@
 </div>
 
 {%- comment -%}
+  Mobil sticky-bar. Rendres her, utenfor .sk-blog-article, men fortsatt inne i
+  seksjonen. Det er trygt: denne seksjonen er nth-child(1) i .content-for-layout,
+  og CLS-regelen i sk-base.css gir kun content-visibility: auto til
+  :nth-child(n + 2). Baren får derfor ingen containing block over seg og
+  position: fixed virker som normalt — i motsetning til sticky-barene på
+  LP-malene, som må portaleres ut.
+{%- endcomment -%}
+{% render 'blog-funnel-sticky', article: article %}
+
+{%- comment -%}
   BlogPosting JSON-LD — gives Google explicit datePublished + dateModified.
   Shopify also auto-injects {{ article | structured_data }} on some templates,
   but this section is custom (sk-blog-article) and was missing structured data.
@@ -184,11 +232,36 @@
     "image": {%- if article.image -%}{{ article.image | image_url: width: 1200 | prepend: 'https:' | json }}{%- else -%}null{%- endif -%},
     "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
     "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
-    "author": {
-      "@type": "Organization",
-      "name": "Skinora",
-      "url": "{{ shop.url }}"
-    },
+    {%- comment -%}
+      author er Person, ikke Organization (endret sep 2026, E-E-A-T).
+      Navn: seksjonsinnstilling → article.author som fallback.
+      jobTitle og url kommer fra seksjonsinnstillingene og speiler boksen
+      «Om skribenten» nederst i artikkelen. Blokken utelates helt hvis vi
+      ikke har et navn — en Person uten name er ugyldig schema.
+
+      Ingen SEO-app genererer BlogPosting på denne malen: Shopifys egen
+      {{ article | structured_data }} kalles kun fra sections/main-article.liquid
+      (Dawn-standardmalen article.json), som ingen artikkel bruker. Derfor er
+      dette den eneste BlogPosting-noden på siden, og det oppstår ingen duplikat.
+    {%- endcomment -%}
+    {%- liquid
+      assign ld_author = section.settings.forfatter_navn | strip
+      if ld_author == blank
+        assign ld_author = article.author | strip
+      endif
+      assign ld_url = section.settings.forfatter_url | default: '/pages/om-skinora'
+      unless ld_url contains '://'
+        assign ld_url = ld_url | prepend: request.origin
+      endunless
+    -%}
+    {%- if ld_author != blank -%}
+      "author": {
+        "@type": "Person",
+        "name": {{ ld_author | json }},
+        "jobTitle": {{ section.settings.forfatter_tittel | default: 'Fagansvarlig hudpleie' | json }},
+        "url": {{ ld_url | json }}
+      },
+    {%- endif -%}
     "publisher": {
       "@type": "Organization",
       "name": "Skinora",
@@ -246,6 +319,55 @@
       ],
       "default": "background-1",
       "label": "t:sections.all.colors.label"
+    },
+    {
+      "type": "header",
+      "content": "Trakt (CTA-kort i artikkelen)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Hva kortene viser styres per artikkel med metafeltene custom.funnel_type (produkt / quiz / epost), custom.funnel_produkt og custom.funnel_hook. Står funnel_type tomt, vises quiz-kortet. Feltet under gjelder kun når funnel_type = epost."
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_form_id",
+      "label": "Klaviyo form-ID (embedded)",
+      "info": "Kun ID-en, f.eks. XyZ123. Finnes i Klaviyo: Sign-up forms → velg skjemaet → Embed. Tomt felt = e-postartikler faller tilbake til quiz-kortet."
+    },
+    {
+      "type": "header",
+      "content": "Om skribenten (E-E-A-T)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Navnet vises som byline under tittelen og brukes som author (Person) i BlogPosting-schemaet. Står feltet tomt, brukes artikkelens eget forfatterfelt i Shopify."
+    },
+    {
+      "type": "text",
+      "id": "forfatter_navn",
+      "label": "Forfatternavn"
+    },
+    {
+      "type": "text",
+      "id": "forfatter_tittel",
+      "label": "Jobbtittel / rolle",
+      "default": "Fagansvarlig hudpleie"
+    },
+    {
+      "type": "textarea",
+      "id": "forfatter_bio",
+      "label": "Kort bio (1–2 linjer)"
+    },
+    {
+      "type": "image_picker",
+      "id": "forfatter_bilde",
+      "label": "Portrett"
+    },
+    {
+      "type": "url",
+      "id": "forfatter_url",
+      "label": "Lenke fra forfatterboksen",
+      "info": "Tomt felt = /pages/om-skinora (settes i Liquid, url-innstillinger støtter ikke default)."
     },
     {
       "type": "header",

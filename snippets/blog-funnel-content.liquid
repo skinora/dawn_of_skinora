@@ -1,0 +1,106 @@
+{%- comment -%}
+  blog-funnel-content — rendrer article.content med CTA-kort skutt inn
+  ----------------------------------------------------------------------------
+  Parametre:
+    article          : artikkel-objektet (påkrevd)
+    klaviyo_form_id  : sendes videre til blog-funnel-card
+
+  article.content er én HTML-blob. Den splittes på '<h2' og settes sammen
+  igjen tegn for tegn, så H2-attributter (id, class, anker) bevares uendret.
+
+  PLASSERING
+    kompakt : rett før artikkelens ANDRE H2 (dvs. etter første seksjon).
+              Har artikkelen færre enn to H2, settes kortet rett etter
+              ingressen — første </p> i blokken før første H2.
+    full    : rett før H2-en som inneholder «Kilder».
+              Fallback 1: før «Om denne artikkelen».
+              Fallback 2: etter alt innholdet.
+
+  Kollisjonsvern: havner full-kortet på eller før kompakt-plassen (kort
+  artikkel der «Kilder» er andre H2), flyttes kompakt-kortet opp til
+  ingressen. Da kan de to aldri rendres på samme sted.
+
+  MERK om «Kilder»-testen: vi ser bare på selve overskriften
+  (part | split: '</h2>' | first), ikke på hele seksjonen. Å teste hele
+  delen — som en naiv `part contains '>Kilder'` gjør — treffer også brødtekst
+  og lenketekster lenger nede i seksjonen og flytter kortet feil sted.
+  Testen tåler dessuten <h2><strong>Kilder</strong></h2>.
+
+  Tabeller pakkes i .blog-funnel-tablewrap (overflow-x: auto på mobil).
+{%- endcomment -%}
+
+{%- liquid
+  assign bfk_content = article.content
+  assign bfk_content = bfk_content | replace: '<table', '<div class="blog-funnel-tablewrap"><table'
+  assign bfk_content = bfk_content | replace: '</table>', '</table></div>'
+
+  assign bfk_parts = bfk_content | split: '<h2'
+  assign bfk_size = bfk_parts.size
+
+  assign bfk_full_idx = 0
+  assign bfk_om_idx = 0
+  for bfk_part in bfk_parts
+    unless forloop.first
+      assign bfk_head = bfk_part | split: '</h2>' | first
+      if bfk_full_idx == 0 and bfk_head contains 'Kilder'
+        assign bfk_full_idx = forloop.index
+      endif
+      if bfk_om_idx == 0 and bfk_head contains 'Om denne artikkelen'
+        assign bfk_om_idx = forloop.index
+      endif
+    endunless
+  endfor
+
+  if bfk_full_idx == 0
+    assign bfk_full_idx = bfk_om_idx
+  endif
+
+  comment
+    Indeks 3 i parts = andre H2 (parts[0] er alt før første H2).
+  endcomment
+  assign bfk_kompakt_idx = 3
+  if bfk_size < 3
+    assign bfk_kompakt_idx = 0
+  endif
+  if bfk_full_idx > 0 and bfk_full_idx <= bfk_kompakt_idx
+    assign bfk_kompakt_idx = 0
+  endif
+
+  assign bfk_full_done = false
+
+  comment
+    Åpningstaggen skrives ut via en variabel, ikke som literal markup.
+    En naken `<h2` i malen er gyldig Liquid — strengene settes sammen igjen
+    tegn for tegn — men theme-check parser Liquid OG HTML, og en uavsluttet
+    tagg gir LiquidHTMLSyntaxError. Variabelen gir identisk utdata uten å
+    legge igjen en feil i `shopify theme check`.
+  endcomment
+  assign bfk_h2_open = '<h2'
+-%}
+
+{%- comment -%} ── Blokken før første H2 (ingress) ─────────────────────────── {%- endcomment -%}
+{%- if bfk_kompakt_idx == 0 -%}
+  {%- assign bfk_intro = bfk_parts.first | replace_first: '</p>', '</p>%%SKFUNNEL%%' | split: '%%SKFUNNEL%%' -%}
+  {{- bfk_intro[0] -}}
+  {%- render 'blog-funnel-card', article: article, variant: 'kompakt', klaviyo_form_id: klaviyo_form_id -%}
+  {{- bfk_intro[1] -}}
+{%- else -%}
+  {{- bfk_parts.first -}}
+{%- endif -%}
+
+{%- comment -%} ── Resten: én del per H2 ───────────────────────────────────── {%- endcomment -%}
+{%- for bfk_part in bfk_parts offset: 1 -%}
+  {%- assign bfk_idx = forloop.index | plus: 1 -%}
+  {%- if bfk_idx == bfk_kompakt_idx -%}
+    {%- render 'blog-funnel-card', article: article, variant: 'kompakt', klaviyo_form_id: klaviyo_form_id -%}
+  {%- endif -%}
+  {%- if bfk_idx == bfk_full_idx and bfk_full_done == false -%}
+    {%- render 'blog-funnel-card', article: article, variant: 'full', klaviyo_form_id: klaviyo_form_id -%}
+    {%- assign bfk_full_done = true -%}
+  {%- endif -%}
+  {{- bfk_h2_open }}{{ bfk_part -}}
+{%- endfor -%}
+
+{%- unless bfk_full_done -%}
+  {%- render 'blog-funnel-card', article: article, variant: 'full', klaviyo_form_id: klaviyo_form_id -%}
+{%- endunless -%}

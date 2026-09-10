@@ -1,0 +1,77 @@
+{%- comment -%}
+  blog-funnel-sticky — mobil sticky-bar for bloggartikler (<= 749 px)
+  ----------------------------------------------------------------------------
+  Parametre:
+    article : artikkel-objektet (påkrevd)
+
+  Vises av assets/blog-funnel.js etter 35 % scroll, og skjules igjen når
+  fullkortet eller footeren kommer i synsfeltet (IntersectionObserver).
+
+  Ingen CLS: baren er position: fixed og ligger utenfor dokumentflyten fra
+  første maling. Den starter translateY(110%) + visibility: hidden, så den
+  verken males eller kan klikkes før JS slår den på.
+
+  Kolliderer ikke med:
+    - Shopifys personvernbanner: sk-base.css løfter banneret 80 px når
+      <html> har .sk-sticky-bar-visible, som JS-en setter.
+    - Klaviyo-popup/teaser: JS-en skjuler baren mens en av dem er oppe.
+    - Quiz-fanen (.sk-quiz-tab): den er allerede display:none under 750 px
+      (sk-quiz.css), altså nøyaktig der denne baren lever. Ingen overlapp.
+    - Quiz-modalen / handlekurv-skuffen: begge setter .overflow-hidden på
+      <body>, som JS-en behandler som «overlay åpen».
+
+  INGEN PRIS i baren — samme begrunnelse som i blog-funnel-card.
+{%- endcomment -%}
+
+{%- liquid
+  assign bfs_type = article.metafields.custom.funnel_type.value | downcase | strip
+  assign bfs_product = article.metafields.custom.funnel_produkt.value
+
+  unless bfs_type == 'produkt' or bfs_type == 'quiz' or bfs_type == 'epost'
+    assign bfs_type = 'quiz'
+  endunless
+  if bfs_type == 'produkt' and bfs_product == blank
+    assign bfs_type = 'quiz'
+  endif
+
+  assign bfs_quiz_url = pages.hudveiviser.url | default: '/pages/hudveiviser'
+
+  if bfs_type == 'produkt'
+    assign bfs_label = bfs_product.title | append: ' · Se masken'
+    assign bfs_href = bfs_product.url
+  else
+    assign bfs_label = 'Hvilken maske passer din hud? Ta testen'
+    assign bfs_href = bfs_quiz_url
+  endif
+-%}
+
+<div
+  class="blog-funnel-sticky"
+  data-blog-funnel-sticky
+  role="region"
+  aria-label="Snarvei"
+  aria-hidden="true"
+>
+  <a
+    href="{{ bfs_href }}"
+    class="blog-funnel-sticky__link"
+    {% if bfs_type != 'produkt' %}
+      data-sk-quiz-trigger
+      data-placement="blog-funnel-sticky"
+    {% endif %}
+    data-blog-cta="{{ article.handle }}"
+    data-cta-variant="sticky"
+    data-cta-type="{{ bfs_type }}"
+  >
+    <span class="blog-funnel-sticky__label">{{ bfs_label | escape }}</span>
+    <span class="blog-funnel-sticky__arrow" aria-hidden="true">→</span>
+  </a>
+  <button
+    type="button"
+    class="blog-funnel-sticky__close"
+    data-blog-funnel-sticky-close
+    aria-label="Lukk"
+  >
+    &times;
+  </button>
+</div>

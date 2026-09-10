@@ -86,11 +86,36 @@
   gap: 4px;
 }
 
+/* ── Lesbarhet: ÉN felles innholdsbredde ─────────────────────────────────────
+   .page-width er 1600 px på denne butikken, så brødteksten løp over ~1500 px
+   på store skjermer, mens avsnitt, lister og tabeller i tillegg brøt ulikt.
+   Hele innholdskolonnen — header, brødtekst, lister, tabeller, bilder og
+   trakt-kortene — snapper nå til én bredde.
+
+   Verdien er px, ikke ch: ch følger fontstørrelsen, og da ville tabeller og
+   bilder fått en annen bredde enn avsnittene, som er nøyaktig problemet vi
+   løser. Det utvendige bildet (featured image) beholder full bredde. */
+.sk-blog-article__content {
+  max-width: 700px;
+  margin-inline: auto;
+}
+
 .sk-blog-article__body {
-  font-size: var(--sk-font-size-medium);
-  line-height: 28px;
+  font-size: var(--fs-md); /* 17px @390 → 18px desktop */
+  line-height: var(--lh-loose); /* 1.7 */
   color: var(--color-neutral-4, #4f4f4f);
   margin-bottom: 40px;
+}
+
+/* Alt på innholdsnivå deler bredden med avsnittene. */
+.sk-blog-article__body > p,
+.sk-blog-article__body > ul,
+.sk-blog-article__body > ol,
+.sk-blog-article__body > blockquote,
+.sk-blog-article__body > figure,
+.sk-blog-article__body > img,
+.sk-blog-article__body > .blog-funnel-tablewrap {
+  max-width: 100%;
 }
 
 .sk-blog-article__body h1,
@@ -317,7 +342,97 @@
     line-height: var(--section-heading-h1-line);
   }
 
+  /* Nedskaleringen sto tidligere på calc(var(--sk-font-size-large) * 1.1),
+     som med 62.5 %-roten gir ~25px — under lesegulvet på 28px i
+     temakonstitusjonen. H2 beholder nå 28px også på mobil. */
   .sk-blog-article__body h2 {
-    font-size: calc(var(--sk-font-size-large) * 1.1);
+    font-size: 28px;
   }
+}
+
+/* ── «Om skribenten» (E-E-A-T) ───────────────────────────────────────────────
+   Rendres av snippets/blog-author-box.liquid, rett før related_articles.
+   Bildet får skarpe hjørner uansett: sk-base.css tvinger border-radius 0 på
+   img under [class^='sk-']. Vi kjemper ikke mot den. */
+.blog-author-box {
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--hairline);
+  font-family: var(--ff-sans);
+}
+
+.blog-author-box__heading {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+
+.blog-author-box__inner {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.blog-author-box__media {
+  flex: none;
+  display: block;
+  width: 88px;
+  height: 88px;
+  overflow: hidden;
+  background: var(--paper-100);
+}
+
+.blog-author-box__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blog-author-box__text {
+  min-width: 0;
+}
+
+.blog-author-box__name {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--ink-900);
+}
+
+.blog-author-box__role {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-normal);
+  text-transform: none;
+  color: var(--ink-500);
+}
+
+.blog-author-box__bio {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+}
+
+.blog-author-box__link,
+.blog-author-box__link:link,
+.blog-author-box__link:visited {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--ink-700);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+/* Byline under tittelen. Meta-raden er allerede flex + centered. */
+.sk-blog-article__author {
+  color: var(--ink-500);
 }
