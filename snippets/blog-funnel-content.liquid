@@ -69,11 +69,56 @@
   assign bfk_h2_open = '<h2'
 -%}
 
-{%- comment -%} ── Ingressen, med kompaktkortet rett etter ────────────────── {%- endcomment -%}
-{%- assign bfk_intro = bfk_parts.first | replace_first: '</p>', '</p>%%SKFUNNEL%%' | split: '%%SKFUNNEL%%' -%}
-{{- bfk_intro[0] -}}
+{%- comment -%} ── Ingressen, med kompaktkortet rett etter ──────────────────
+  Kortet settes etter første avsnitt med FAKTISK brødtekst, ikke etter
+  første </p>. Alle artiklene i dag åpner brødteksten med en meta-linje —
+  «<em>Av Skinora Redaksjonen</em><br><em>Publisert 1. september 2026</em>» —
+  og en naiv replace_first la kortet mellom datostempelet og ingressen.
+
+  Terskelen er ren lengde, ikke gjenkjenning av datoformat eller byline:
+  en meta-linje er ~50 tegn, en ingress 150–400. Da tåler regelen også
+  meta-linjer vi ikke har sett ennå, uten å gjette på innhold.
+
+  Innholdssporet fjerner meta-linjen fra brødteksten (den dupliserer
+  uansett datoen temaet selv viser over tittelen), men temaet skal ikke
+  være avhengig av at hver eneste artikkel er ryddet.
+{%- endcomment -%}
+{%- liquid
+  assign bfk_head = bfk_parts.first
+  assign bfk_tail = ''
+
+  if bfk_head contains '</p>'
+    assign bfk_chunks = bfk_parts.first | split: '</p>'
+    assign bfk_cut = 0
+    for bfk_chunk in bfk_chunks
+      assign bfk_txt = bfk_chunk | strip_html | strip
+      if bfk_cut == 0 and bfk_txt.size >= 120
+        assign bfk_cut = forloop.index
+      endif
+    endfor
+    comment
+      Ingen avsnitt nådde terskelen (svært kort ingress). Fall tilbake til
+      første </p> — samme oppførsel som før.
+    endcomment
+    if bfk_cut == 0
+      assign bfk_cut = 1
+    endif
+
+    assign bfk_head = ''
+    for bfk_chunk in bfk_chunks limit: bfk_cut
+      assign bfk_head = bfk_head | append: bfk_chunk | append: '</p>'
+    endfor
+    comment
+      bfk_head er per konstruksjon et prefiks av blokken, så remove_first
+      kutter nøyaktig der. Å sette sammen halen av chunks igjen ville
+      mistet en avsluttende </p>, siden split dropper skilletegnet.
+    endcomment
+    assign bfk_tail = bfk_parts.first | remove_first: bfk_head
+  endif
+-%}
+{{- bfk_head -}}
 {%- render 'blog-funnel-card', article: article, variant: 'kompakt', klaviyo_form_id: klaviyo_form_id -%}
-{{- bfk_intro[1] -}}
+{{- bfk_tail -}}
 
 {%- comment -%} ── Resten: én del per H2 ───────────────────────────────────── {%- endcomment -%}
 {%- for bfk_part in bfk_parts offset: 1 -%}
