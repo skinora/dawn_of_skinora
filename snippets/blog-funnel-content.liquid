@@ -9,16 +9,19 @@
   igjen tegn for tegn, så H2-attributter (id, class, anker) bevares uendret.
 
   PLASSERING
-    kompakt : rett før artikkelens ANDRE H2 (dvs. etter første seksjon).
-              Har artikkelen færre enn to H2, settes kortet rett etter
-              ingressen — første </p> i blokken før første H2.
+    kompakt : rett etter ingressen — første </p> i blokken før første H2.
     full    : rett før H2-en som inneholder «Kilder».
               Fallback 1: før «Om denne artikkelen».
               Fallback 2: etter alt innholdet.
 
-  Kollisjonsvern: havner full-kortet på eller før kompakt-plassen (kort
-  artikkel der «Kilder» er andre H2), flyttes kompakt-kortet opp til
-  ingressen. Da kan de to aldri rendres på samme sted.
+  Hvorfor ingressen og ikke «rett før andre H2», som var første utgave:
+  målt på DEV i 390 px havnet kortet da 1 551 px ned på siden, mot et krav
+  om at det skal være synlig innen 1,5 skjermhøyder (1 245 px). Første
+  seksjon er ~1 080 tegn på en typisk artikkel her, så de to reglene kan
+  ikke holde samtidig. Etter ingressen lander kortet på ~716 px.
+
+  Har blokken før første H2 ingen </p> i det hele tatt, faller kortet
+  naturlig til slutten av den blokken — altså rett før første H2.
 
   MERK om «Kilder»-testen: vi ser bare på selve overskriften
   (part | split: '</h2>' | first), ikke på hele seksjonen. Å teste hele
@@ -35,7 +38,6 @@
   assign bfk_content = bfk_content | replace: '</table>', '</table></div>'
 
   assign bfk_parts = bfk_content | split: '<h2'
-  assign bfk_size = bfk_parts.size
 
   assign bfk_full_idx = 0
   assign bfk_om_idx = 0
@@ -55,17 +57,6 @@
     assign bfk_full_idx = bfk_om_idx
   endif
 
-  comment
-    Indeks 3 i parts = andre H2 (parts[0] er alt før første H2).
-  endcomment
-  assign bfk_kompakt_idx = 3
-  if bfk_size < 3
-    assign bfk_kompakt_idx = 0
-  endif
-  if bfk_full_idx > 0 and bfk_full_idx <= bfk_kompakt_idx
-    assign bfk_kompakt_idx = 0
-  endif
-
   assign bfk_full_done = false
 
   comment
@@ -78,22 +69,15 @@
   assign bfk_h2_open = '<h2'
 -%}
 
-{%- comment -%} ── Blokken før første H2 (ingress) ─────────────────────────── {%- endcomment -%}
-{%- if bfk_kompakt_idx == 0 -%}
-  {%- assign bfk_intro = bfk_parts.first | replace_first: '</p>', '</p>%%SKFUNNEL%%' | split: '%%SKFUNNEL%%' -%}
-  {{- bfk_intro[0] -}}
-  {%- render 'blog-funnel-card', article: article, variant: 'kompakt', klaviyo_form_id: klaviyo_form_id -%}
-  {{- bfk_intro[1] -}}
-{%- else -%}
-  {{- bfk_parts.first -}}
-{%- endif -%}
+{%- comment -%} ── Ingressen, med kompaktkortet rett etter ────────────────── {%- endcomment -%}
+{%- assign bfk_intro = bfk_parts.first | replace_first: '</p>', '</p>%%SKFUNNEL%%' | split: '%%SKFUNNEL%%' -%}
+{{- bfk_intro[0] -}}
+{%- render 'blog-funnel-card', article: article, variant: 'kompakt', klaviyo_form_id: klaviyo_form_id -%}
+{{- bfk_intro[1] -}}
 
 {%- comment -%} ── Resten: én del per H2 ───────────────────────────────────── {%- endcomment -%}
 {%- for bfk_part in bfk_parts offset: 1 -%}
   {%- assign bfk_idx = forloop.index | plus: 1 -%}
-  {%- if bfk_idx == bfk_kompakt_idx -%}
-    {%- render 'blog-funnel-card', article: article, variant: 'kompakt', klaviyo_form_id: klaviyo_form_id -%}
-  {%- endif -%}
   {%- if bfk_idx == bfk_full_idx and bfk_full_done == false -%}
     {%- render 'blog-funnel-card', article: article, variant: 'full', klaviyo_form_id: klaviyo_form_id -%}
     {%- assign bfk_full_done = true -%}
