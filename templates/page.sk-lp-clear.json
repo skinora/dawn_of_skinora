@@ -288,9 +288,11 @@
       "name": "Klinikksammenligning",
       "settings": {
         "background_style": "soft",
+        "number": "3 390",
+        "unit": "kr",
         "show_cta": true,
         "cta_label": "Prøv risikofritt i 30 dager",
-        "cta_link": ""
+        "cta_link": "/products/skinora-clear"
       }
     },
     "results": {
@@ -819,7 +821,9 @@
       "settings": {
         "heading": "Klar for klarere hud?",
         "text": "Gi huden din den støtten den trenger – hjemme, på dine premisser, med teknologi som faktisk virker.",
+        "price_before": "4 390 kr",
         "price_text": "3 390 kr",
+        "save_text": "Spar 1 000 kr",
         "button_text": "Bestill nå",
         "product_url": "/products/skinora-clear",
         "anchor_id": "kjop",

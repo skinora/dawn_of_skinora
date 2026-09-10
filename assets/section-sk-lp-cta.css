@@ -79,6 +79,11 @@
 
 /* Scoped under __card so it out-specifies typography.css `.lp-cta-final p`. */
 .lp-cta-final__card .lp-cta-final__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-2) var(--space-3);
   font-family: var(--ff-serif);
   font-size: var(--fs-price);
   font-weight: var(--fw-medium);
@@ -86,6 +91,41 @@
   letter-spacing: var(--tracking-tight);
   color: var(--ink-900);
   margin: 0;
+}
+
+/* ── Kampanjepris ──────────────────────────────────────────────────────────
+   Før-prisen er sans og dempet, ikke bare mindre serif: to serif-tall i
+   samme størrelsesorden konkurrerer, og øyet skal lande på det nye tallet
+   først. Strøket ligger på <s> i markup, dette er bare vekting. */
+.lp-cta-final__card .lp-cta-final__price-before {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-normal);
+  color: var(--ink-400);
+  text-decoration-thickness: 2px;
+}
+
+.lp-cta-final__card .lp-cta-final__price-now {
+  color: var(--ink-900);
+}
+
+/* Grønn er den eneste tillatte besparelse-fargen i merkevaren
+   (--accent-green, typography.css). Samme pille som i kampanjebåndet
+   øverst på siden, så kunden kjenner igjen signalet. */
+.lp-cta-final__card .lp-cta-final__save {
+  align-self: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  background: var(--accent-green);
+  color: var(--paper-0);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--lh-relaxed);
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .lp-cta-final__card .lp-cta-final__permonth {

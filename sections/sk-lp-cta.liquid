@@ -24,7 +24,26 @@
 
       <div class="lp-cta-final__card">
         <div class="lp-cta-final__price-block">
-          <p class="lp-cta-final__price">{{ section.settings.price_text }}</p>
+          {%- comment -%}
+            Kampanjepris: før-pris overstrøket foran, spar-etikett etter.
+            Begge feltene er valgfrie — står de tomme, ser blokken ut
+            nøyaktig som før kampanjen. Da er ingenting å rydde bort når
+            tilbudet er over; det holder å tømme to felt.
+
+            Før-prisen er skrevet ut med <s>, ikke bare
+            text-decoration: line-through. Skjermlesere leser ikke CSS, og
+            en opplest «4 390 kr 3 390 kr» uten at den første er markert som
+            strøket er direkte villedende.
+          {%- endcomment -%}
+          <p class="lp-cta-final__price">
+            {%- if section.settings.price_before != blank -%}
+              <s class="lp-cta-final__price-before">{{ section.settings.price_before }}</s>
+            {%- endif -%}
+            <span class="lp-cta-final__price-now">{{ section.settings.price_text }}</span>
+            {%- if section.settings.save_text != blank -%}
+              <span class="lp-cta-final__save">{{ section.settings.save_text }}</span>
+            {%- endif -%}
+          </p>
           {%- if section.settings.klarna_text != blank -%}
             <p class="lp-cta-final__permonth">{{ section.settings.klarna_text }}</p>
           {%- endif -%}
@@ -106,9 +125,21 @@
     },
     {
       "type": "text",
+      "id": "price_before",
+      "label": "Før-pris (overstrøket)",
+      "info": "Må være prisen som faktisk gjaldt før kampanjen — bruk «sammenlign med»-prisen på produktet i Shopify. Tomt felt = ingen overstrøket pris, og blokken ser ut som før kampanjen."
+    },
+    {
+      "type": "text",
       "id": "price_text",
       "label": "Pris (visning)",
       "default": "4 390 kr"
+    },
+    {
+      "type": "text",
+      "id": "save_text",
+      "label": "Spar-etikett",
+      "info": "F.eks. «Spar 1 000 kr». Vises i grønt — den eneste tillatte besparelse-fargen i merkevaren. Tomt felt = skjult."
     },
     {
       "type": "text",

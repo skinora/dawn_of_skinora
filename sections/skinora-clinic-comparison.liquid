@@ -121,6 +121,11 @@
   # Prisen er IKKE hardkodet: tom «number»-innstilling => hent produktets pris.
   # Samme format som kjøpsboksen (money_without_trailing_zeros = «4 690 kr»),
   # men vi stripper valutaen siden enheten står i sin egen span.
+  #
+  # ADVARSEL: `product` finnes KUN på produktmaler. På en page-mal (LP-ene) er
+  # den nil, og da gir fallbacken ingenting. Sto seksjonen på Clear-LP-en med
+  # tom «number», rendret den en naken «kr» med «Én gang» under — et pristall
+  # uten tall. Sett «number» eksplisitt på page-maler.
   assign clinic_number = section.settings.number
   if clinic_number == blank and product
     assign clinic_number = product.price | money_without_trailing_zeros | remove: 'kr' | remove: 'NOK' | remove: ',-' | strip
@@ -128,6 +133,7 @@
 
   # CTA-lenke: tom => dette produktets side. Gjør seksjonen gjenbrukbar
   # på et hvilket som helst produkt uten å sette lenken manuelt.
+  # Samme forbehold som over: på page-maler må lenken settes.
   assign clinic_cta_link = section.settings.cta_link
   if clinic_cta_link == blank and product
     assign clinic_cta_link = product.url
@@ -136,15 +142,22 @@
 
 <section class="sk-clinic-{{ section.id }} sk-clinic section" aria-labelledby="sk-clinic-heading-{{ section.id }}">
   <div class="page-width sk-clinic__inner">
-    <div class="sk-clinic__figure-wrap">
-      <p class="sk-clinic__figure">
-        <span class="sk-clinic__num">{{ clinic_number }}</span>
-        <span class="sk-clinic__unit">{{ section.settings.unit }}</span>
-      </p>
-      {%- if section.settings.once_label != blank -%}
-        <span class="sk-clinic__once">{{ section.settings.once_label }}</span>
-      {%- endif -%}
-    </div>
+    {%- comment -%}
+      Uten tall skal HELE figuren utebli. En ensom «kr» med «Én gang» under
+      leser som en feil og undergraver argumentet seksjonen er bygget på.
+      Bedre å vise teksten alene enn et pristall uten pris.
+    {%- endcomment -%}
+    {%- if clinic_number != blank -%}
+      <div class="sk-clinic__figure-wrap">
+        <p class="sk-clinic__figure">
+          <span class="sk-clinic__num">{{ clinic_number }}</span>
+          <span class="sk-clinic__unit">{{ section.settings.unit }}</span>
+        </p>
+        {%- if section.settings.once_label != blank -%}
+          <span class="sk-clinic__once">{{ section.settings.once_label }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
 
     <div class="sk-clinic__body">
       {%- if section.settings.lead != blank -%}
