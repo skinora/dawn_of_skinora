@@ -81,22 +81,33 @@
             assign u_m = u_left | modulo: 3600 | divided_by: 60
             assign u_s = u_left | modulo: 60
           -%}
+          {%- comment -%}
+            Enhetene står på ÉN linje med korte bokstaver (5d 03t 34m 44s).
+            Stablet tall-over-ord ga fire bokser på ~48px høyde og var alene
+            grunnen til at båndet ble 90px på desktop og 209px på mobil.
+            Skjermlesere får de hele ordene via .visually-hidden, så
+            forkortelsene koster ingenting i tilgjengelighet.
+          {%- endcomment -%}
           <p class="sk-lp-urgency__clock" data-sk-urgency-clock role="timer">
             <span class="sk-lp-urgency__unit">
               <span class="sk-lp-urgency__num" data-u="d">{{ u_d }}</span>
-              <span class="sk-lp-urgency__unit-label">dager</span>
+              <span class="sk-lp-urgency__unit-label" aria-hidden="true">d</span>
+              <span class="visually-hidden">dager</span>
             </span>
             <span class="sk-lp-urgency__unit">
               <span class="sk-lp-urgency__num" data-u="h">{{ u_h }}</span>
-              <span class="sk-lp-urgency__unit-label">timer</span>
+              <span class="sk-lp-urgency__unit-label" aria-hidden="true">t</span>
+              <span class="visually-hidden">timer</span>
             </span>
             <span class="sk-lp-urgency__unit">
               <span class="sk-lp-urgency__num" data-u="m">{{ u_m }}</span>
-              <span class="sk-lp-urgency__unit-label">min</span>
+              <span class="sk-lp-urgency__unit-label" aria-hidden="true">m</span>
+              <span class="visually-hidden">minutter</span>
             </span>
             <span class="sk-lp-urgency__unit">
               <span class="sk-lp-urgency__num" data-u="s">{{ u_s }}</span>
-              <span class="sk-lp-urgency__unit-label">sek</span>
+              <span class="sk-lp-urgency__unit-label" aria-hidden="true">s</span>
+              <span class="visually-hidden">sekunder</span>
             </span>
           </p>
         </div>
