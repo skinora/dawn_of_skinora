@@ -32,6 +32,14 @@
   text-align: center;
 }
 
+/* Både __prices og __demand er <p>. Uten margin-reset la temaets
+   avsnittsmargin ~15px oppå båndet — usynlig i CSS-en, tydelig i målingen. */
+.sk-lp-urgency__prices,
+.sk-lp-urgency__demand,
+.sk-lp-urgency__clock {
+  margin: 0;
+}
+
 /* ── Pris: før → nå → spar ────────────────────────────────────────────────── */
 .sk-lp-urgency__prices {
   display: flex;
