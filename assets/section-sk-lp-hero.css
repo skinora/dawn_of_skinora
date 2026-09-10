@@ -85,15 +85,23 @@
   );
 }
 
+/* Mobil: innholdet er delt mellom topp og bunn (se «Delt innhold» under), så
+   scrimen må mørkne BEGGE ender og slippe midten fri. Tidligere gikk den bare
+   nedenfra, fordi alt innholdet lå i bunnen — da lå tekstblokken oppå ansiktet
+   på modellen. Midtsonen holdes på 10–12 % så motivet fortsatt leses som bilde
+   og ikke som bakgrunn. */
 @media (max-width: 768px) {
   .lp-hero__overlay {
     background: linear-gradient(
-      to top,
-      color-mix(in srgb, var(--ink-900) 88%, transparent) 0%,
-      color-mix(in srgb, var(--ink-900) 72%, transparent) 25%,
-      color-mix(in srgb, var(--ink-900) 42%, transparent) 55%,
-      color-mix(in srgb, var(--ink-900) 18%, transparent) 85%,
-      color-mix(in srgb, var(--ink-900) 12%, transparent) 100%
+      to bottom,
+      color-mix(in srgb, var(--ink-900) 72%, transparent) 0%,
+      color-mix(in srgb, var(--ink-900) 52%, transparent) 12%,
+      color-mix(in srgb, var(--ink-900) 18%, transparent) 30%,
+      color-mix(in srgb, var(--ink-900) 10%, transparent) 45%,
+      color-mix(in srgb, var(--ink-900) 20%, transparent) 58%,
+      color-mix(in srgb, var(--ink-900) 55%, transparent) 74%,
+      color-mix(in srgb, var(--ink-900) 80%, transparent) 88%,
+      color-mix(in srgb, var(--ink-900) 90%, transparent) 100%
     );
   }
 }
@@ -117,6 +125,44 @@
   color: var(--paper-0);
   margin: 0;
   padding: 0;
+}
+
+/* ---------- Delt innhold på mobil ----------
+   Alt innholdet lå samlet i bunnen, og blokken dekket munnen og haken på
+   modellen. Nå står budskapet (eyebrow, tittel, undertekst) øverst og beviset
+   (rating, CTA, pris, pills) nederst, slik at ansiktet ligger fritt i midten.
+
+   Ingen markup-endring: `margin-top: auto` på det første elementet i
+   bunngruppen skyver resten ned av seg selv. Ratingen er valgfri i
+   innstillingene, så CTA-en overtar rollen når den mangler — derfor de tre
+   reglene i den rekkefølgen.
+
+   Dobbel klasse på .lp-hero av samme grunn som eyebrow-en over:
+   section-sk-lp-radiance-face.css setter `.lp-hero__content` og lastes av 17
+   seksjoner, så uavgjort på spesifisitet taper her. */
+@media (max-width: 768px) {
+  .lp-hero.lp-hero--overlay .lp-hero__inner {
+    align-items: stretch;
+  }
+
+  .lp-hero.lp-hero--overlay .lp-hero__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Standard: CTA-blokken starter bunngruppen. */
+  .lp-hero.lp-hero--overlay .lp-hero__content > .lp-hero__actions {
+    margin-top: auto;
+  }
+
+  /* Finnes ratingen, er det den som starter bunngruppen i stedet. */
+  .lp-hero.lp-hero--overlay .lp-hero__content > .lp-hero__rating {
+    margin-top: auto;
+  }
+
+  .lp-hero.lp-hero--overlay .lp-hero__content > .lp-hero__rating ~ .lp-hero__actions {
+    margin-top: var(--space-4);
+  }
 }
 
 /* ---------- Eyebrow ---------- */
