@@ -6,8 +6,43 @@
 
 {{ 'section-sk-lp-why-choose.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%}
+  Bakgrunnsbildet er valgfritt. Uten det rendres seksjonen nøyaktig som før —
+  hvit flate, hårfine streker, mørk tekst. Modifikatoren --media slås bare på
+  når det faktisk finnes et bilde, så Radiance-LP-en, som deler seksjonen, er
+  urørt til noen setter et bilde der også.
+{%- endcomment -%}
+{%- assign wc_image = section.settings.background_image -%}
+
 <div class="sk-lp">
-  <section class="lp-why-choose">
+  <section class="lp-why-choose{% if wc_image != blank %} lp-why-choose--media{% endif %}">
+    {%- if wc_image != blank -%}
+      <div class="lp-why-choose__media" aria-hidden="true">
+        <img
+          src="{{ wc_image | image_url: width: 1800 }}"
+          srcset="
+            {{ wc_image | image_url: width: 800 }} 800w,
+            {{ wc_image | image_url: width: 1400 }} 1400w,
+            {{ wc_image | image_url: width: 1800 }} 1800w
+          "
+          sizes="100vw"
+          alt=""
+          width="{{ wc_image.width }}"
+          height="{{ wc_image.height }}"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+      {%- comment -%}
+        Scrim i eget lag, ikke som gradient på bildet: da kan styrken endres
+        uten å røre bildelaget, og bildet beholder sitt eget object-position.
+      {%- endcomment -%}
+      <div
+        class="lp-why-choose__scrim"
+        aria-hidden="true"
+        style="--wc-scrim: {{ section.settings.scrim_strength | default: 60 }}%;"
+      ></div>
+    {%- endif -%}
     <div class="lp-why-choose__inner">
       <div class="lp-why-choose__header">
         <h2 class="lp-section-heading">{{ section.settings.heading }}</h2>
@@ -48,6 +83,30 @@
       "type": "text",
       "id": "intro",
       "label": "Intro (valgfritt)"
+    },
+    {
+      "type": "header",
+      "content": "Bakgrunnsbilde"
+    },
+    {
+      "type": "paragraph",
+      "content": "Tomt felt = seksjonen ser ut som før, med hvit bakgrunn og mørk tekst. Settes et bilde, går seksjonen over til full bredde med bildet bak, mørk scrim og glasspaneler rundt hvert punkt. Velg et rolig motiv uten skarpe detaljer der teksten står — glasspanelene tåler mye, men ikke alt."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Bakgrunnsbilde"
+    },
+    {
+      "type": "range",
+      "id": "scrim_strength",
+      "label": "Mørkhet på bildet",
+      "info": "Høyere verdi = mørkere bilde og mer lesbar tekst. Lavere = mer synlig motiv.",
+      "min": 30,
+      "max": 85,
+      "step": 5,
+      "unit": "%",
+      "default": 60
     }
   ],
   "blocks": [
