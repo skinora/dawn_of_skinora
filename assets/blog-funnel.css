@@ -120,10 +120,18 @@
   flex: none;
 }
 
-.blog-funnel-card__media img {
+/* Dobbel klasse og eksplisitt margin: 0 er nødvendig. Kortene ligger inne i
+   artikkelteksten, og section-sk-blog-article.css har
+   `.sk-blog-article__body img { margin: 30px 0 }` for bilder i brødteksten.
+   Den regelen traff også kortbildet: i en 64px boks med overflow: hidden sto
+   bildet 30px ned, så toppen viste kortets beige bakgrunn og nederste halvdel
+   av bildet ble kuttet bort. Min regel satte bredde og høyde, men aldri margin.
+   `.blog-funnel-card .blog-funnel-card__media img` (0,2,1) slår (0,1,1). */
+.blog-funnel-card .blog-funnel-card__media img {
   display: block;
   width: 100%;
   height: 100%;
+  margin: 0;
   object-fit: cover;
 }
 
