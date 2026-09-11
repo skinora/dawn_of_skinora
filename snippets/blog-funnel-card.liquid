@@ -104,7 +104,15 @@
             data-cta-variant="kompakt"
             data-cta-type="produkt"
           >
-            Se {{ bfc_product.title | escape }}
+            {%- comment -%}
+              Kompaktkortet viser bare navnet før tankestreken («Skinora® Radiance
+              Face»), ikke hele tittelen. Produkttitlene har en beskrivende hale
+              («– Rødlysmaske for ansikt»), og i versaler ble knappen over 500px
+              bred. Hele tittelen står uansett rett over knappen. Fullkortet
+              beholder «Se {{ produkt.title }}» som spesifisert.
+            {%- endcomment -%}
+            {%- assign bfc_short = bfc_product.title | split: ' – ' | first | split: ' - ' | first | strip -%}
+            Se {{ bfc_short | escape }}
           </a>
         </div>
 

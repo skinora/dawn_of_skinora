@@ -130,20 +130,31 @@
 /* ---------------------------------------------------------------------------
    VARIANT: kompakt — horisontal rad, lite bilde, ÉN knapp.
    --------------------------------------------------------------------------- */
+/* Grid, ikke flex. Flex-versjonen kollapset på desktop: knappen sto i en
+   flex: none-kolonne og tok max-content-bredde — hele den lange produkttittelen
+   på én linje — så tekstkolonnen (flex-shrink 1, min-width 0) ble klemt ned til
+   ett ord per linje. I gridet ligger knappen UNDER teksten, i samme kolonne, og
+   kan aldri bli bredere enn teksten den står under. */
 .blog-funnel-card--kompakt {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  grid-template-areas:
+    'media text'
+    'media actions';
+  column-gap: var(--space-4);
+  row-gap: var(--space-3);
+  align-items: start;
   padding: var(--space-4);
 }
 
 .blog-funnel-card--kompakt .blog-funnel-card__media {
+  grid-area: media;
   width: 88px;
   height: 88px;
 }
 
 .blog-funnel-card--kompakt .blog-funnel-card__text {
-  flex: 1 1 220px;
+  grid-area: text;
   min-width: 0;
 }
 
@@ -163,12 +174,17 @@
 }
 
 .blog-funnel-card--kompakt .blog-funnel-card__actions {
-  flex: none;
+  grid-area: actions;
+  min-width: 0;
 }
 
+/* Mobil: knappen i full bredde under både bilde og tekst. */
 @media (max-width: 599px) {
   .blog-funnel-card--kompakt {
-    flex-wrap: wrap;
+    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-areas:
+      'media text'
+      'actions actions';
   }
 
   .blog-funnel-card--kompakt .blog-funnel-card__media {
@@ -176,7 +192,6 @@
     height: 64px;
   }
 
-  .blog-funnel-card--kompakt .blog-funnel-card__actions,
   .blog-funnel-card--kompakt .blog-funnel-card__actions .lp-btn {
     width: 100%;
   }
