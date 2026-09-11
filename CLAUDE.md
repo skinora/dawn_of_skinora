@@ -103,6 +103,26 @@ The stylesheet order in `layout/theme.liquid` is
   CSS file. Actual practice is `padding-block: var(--space-section-md)`
   directly in the section file.
 
+## Prices and campaigns (never hard-code a price)
+Every price on the landing pages, the homepage hero and the Product JSON-LD
+is computed from the product in Shopify by `snippets/sk-lp-pricing.liquid`.
+Settings hold placeholders, not numbers: `[pris]`, `[før-pris]`, `[spar]`,
+`[klarna]` (price / 36, rounded), `[behandlinger]`.
+
+- Seeing a price written as text is a bug. Replace it with a placeholder;
+  do not update the number.
+- A new section that shows a price must accept the product (`product` or a
+  `/products/<handle>` URL) and render through `sk-lp-pricing`. `product` is
+  nil on page templates — use the section's product URL or a product picker.
+- `[før-pris]` / `[spar]` render only when `compare_at_price > price`.
+- "Is a campaign running" is `sk-campaign-live` (switch + `kampanje_sluttdato_iso`),
+  never `settings.kampanje_aktiv` alone — the switch alone never expires.
+  Display dates come from `sk-campaign-date`.
+
+Running a campaign: set price + compare-at price on the product in Shopify,
+then Theme settings → Kampanje: switch on + end date. Everything else follows
+and switches itself off after the date.
+
 ## Verify in the browser, not in the file
 Several defects in this theme were invisible in the source and only appeared
 when the rendered page was measured: the dead `body` block, the 8px price
