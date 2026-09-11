@@ -15,11 +15,14 @@
       class="sk-cart-reassure-block__inner"
       style="padding-top:{{ section.settings.padding_top }}px;padding-bottom:{{ section.settings.padding_bottom }}px;"
     >
-      {%- if settings.cart_review_rating != blank and settings.cart_review_count != blank -%}
+      {%- comment -%} Ekte tall fra sk-review-stats (kurvens produkter, ellers hele butikken), ikke tema-innstillinger. {%- endcomment -%}
+      {%- capture cart_rv_rating -%}{%- render 'sk-review-stats', scope: 'cart', part: 'rating' -%}{%- endcapture -%}
+      {%- capture cart_rv_count -%}{%- render 'sk-review-stats', scope: 'cart', part: 'count' -%}{%- endcapture -%}
+      {%- if cart_rv_rating != blank -%}
         <p class="sk-cart-reassure-block__reviews">
           <span class="cart-reassure__stars" aria-hidden="true">★★★★★</span>
           <span class="cart-reassure__rating">
-            {{- 'sections.cart.reassure_reviews' | t: rating: settings.cart_review_rating, count: settings.cart_review_count -}}
+            {{- 'sections.cart.reassure_reviews' | t: rating: cart_rv_rating, count: cart_rv_count -}}
           </span>
         </p>
       {%- endif -%}

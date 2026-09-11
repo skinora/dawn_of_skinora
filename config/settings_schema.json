@@ -1469,19 +1469,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Social proof shown above the checkout button in the cart drawer and on /cart. Leave rating or count empty to hide the review line."
-      },
-      {
-        "type": "text",
-        "id": "cart_review_rating",
-        "label": "Review rating",
-        "default": "4,8"
-      },
-      {
-        "type": "text",
-        "id": "cart_review_count",
-        "label": "Review count",
-        "default": "79"
+        "content": "Social proof shown above the checkout button in the cart drawer and on /cart. Snitt og antall hentes automatisk fra Klaviyo Reviews (produktene i kurven, eller hele butikken når kurven er tom) — det er ingen tall å skrive inn."
       },
       {
         "type": "paragraph",

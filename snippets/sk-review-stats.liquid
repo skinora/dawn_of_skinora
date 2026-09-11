@@ -1,0 +1,75 @@
+{%- comment -%}
+  sk-review-stats — ÉN kilde til anmeldelsestall (snitt og antall)
+  ============================================================================
+  Leser Shopifys standard-metafelt reviews.rating og reviews.rating_count, som
+  Klaviyo Reviews holder oppdatert. Verifisert 11.09.2026 mot Klaviyo-widgeten
+  på produktsidene: Clear 4,7 · 76, Radiance Face 4,8 · 85, Radiance Neck
+  4,5 · 75 — metafeltene og widgeten var identiske.
+
+  Hvorfor: tallene sto hardkodet flere steder og hadde drevet fra hverandre.
+  Samme landingsside viste 4,7 · 76 i heroen og 4,9 · 89 lenger ned; forsiden
+  sa 4,8 · 209 mens butikken hadde 236 anmeldelser med snitt 4,7.
+
+  Parametre:
+    product : ett produkt → det produktets tall.
+    scope   : 'cart' → produktene i handlekurven (hvert produkt én gang).
+              Er kurven tom eller uten anmeldte produkter, brukes butikken.
+    Uten product og scope → hele butikken: vektet snitt og sum over alle
+              produkter med anmeldelser (collections.all), så et nytt produkt
+              telles med uten at noe må endres her.
+    part    : 'rating' → «4,8» (én desimal, norsk komma)
+              'count'  → «85»
+
+  Skriver ut ingenting når det ikke finnes anmeldelser. Det er med vilje: da
+  skjuler kallstedet linjen, i stedet for å vise et oppdiktet reservetall.
+{%- endcomment -%}
+{%- liquid
+  assign rs_count = 0
+  assign rs_weighted = 0.0
+
+  if product != blank
+    assign rs_rc = product.metafields.reviews.rating_count | plus: 0
+    if rs_rc > 0 and product.metafields.reviews.rating.value != blank
+      assign rs_r = product.metafields.reviews.rating.value.rating | times: 1.0
+      assign rs_count = rs_rc
+      assign rs_weighted = rs_r | times: rs_rc
+    endif
+  elsif scope == 'cart'
+    assign rs_seen = ','
+    for rs_item in cart.items
+      assign rs_key = ',' | append: rs_item.product.id | append: ','
+      unless rs_seen contains rs_key
+        assign rs_seen = rs_seen | append: rs_item.product.id | append: ','
+        assign rs_rc = rs_item.product.metafields.reviews.rating_count | plus: 0
+        if rs_rc > 0 and rs_item.product.metafields.reviews.rating.value != blank
+          assign rs_r = rs_item.product.metafields.reviews.rating.value.rating | times: 1.0
+          assign rs_count = rs_count | plus: rs_rc
+          assign rs_add = rs_r | times: rs_rc
+          assign rs_weighted = rs_weighted | plus: rs_add
+        endif
+      endunless
+    endfor
+  endif
+
+  if rs_count == 0 and product == blank
+    for rs_p in collections.all.products
+      assign rs_rc = rs_p.metafields.reviews.rating_count | plus: 0
+      if rs_rc > 0 and rs_p.metafields.reviews.rating.value != blank
+        assign rs_r = rs_p.metafields.reviews.rating.value.rating | times: 1.0
+        assign rs_count = rs_count | plus: rs_rc
+        assign rs_add = rs_r | times: rs_rc
+        assign rs_weighted = rs_weighted | plus: rs_add
+      endif
+    endfor
+  endif
+
+  if rs_count > 0
+    case part
+      when 'count'
+        echo rs_count
+      when 'rating'
+        assign rs_avg = rs_weighted | divided_by: rs_count | round: 1
+        echo rs_avg | replace: '.', ','
+    endcase
+  endif
+-%}

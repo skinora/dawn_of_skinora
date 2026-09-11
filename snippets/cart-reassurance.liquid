@@ -67,36 +67,15 @@
   </div>
 
 {%- else -%}
+  {%- comment -%}
+    Ekte review-tall fra sk-review-stats: produktene i kurven, eller hele
+    butikken når kurven er tom. Reserven var tidligere tema-innstillingene
+    cart_review_rating / cart_review_count (standard «4,8» / «79»), som aldri
+    ble oppdatert — butikken hadde 236 anmeldelser 11.09.2026.
+  {%- endcomment -%}
+  {%- capture cr_rating -%}{%- render 'sk-review-stats', scope: 'cart', part: 'rating' -%}{%- endcapture -%}
+  {%- capture cr_show_count -%}{%- render 'sk-review-stats', scope: 'cart', part: 'count' -%}{%- endcapture -%}
   {%- liquid
-    # Ekte review-tall, ikke hardkodet: summér antall fra produktene i kurven og
-    # regn vektet snitt av rating. Okendo synker aggregatet til standard-metafeltet
-    # reviews.rating / reviews.rating_count (samme som produktsidens JSON-LD bruker).
-    # Faller tilbake til tema-innstillingene hvis kurven er tom / metafelt mangler,
-    # så linja aldri blir blank eller viser 0.
-    assign cr_count = 0
-    assign cr_weighted = 0.0
-    assign cr_seen = ''
-    for cr_item in cart.items
-      assign cr_prod = cr_item.product
-      unless cr_seen contains cr_prod.id
-        assign cr_seen = cr_seen | append: cr_prod.id | append: ','
-        assign cr_rc = cr_prod.metafields.reviews.rating_count | plus: 0
-        if cr_rc > 0 and cr_prod.metafields.reviews.rating.value != blank
-          assign cr_r = cr_prod.metafields.reviews.rating.value.rating | times: 1.0
-          assign cr_count = cr_count | plus: cr_rc
-          assign cr_add = cr_r | times: cr_rc
-          assign cr_weighted = cr_weighted | plus: cr_add
-        endif
-      endunless
-    endfor
-
-    assign cr_rating = settings.cart_review_rating
-    assign cr_show_count = settings.cart_review_count
-    if cr_count > 0
-      assign cr_avg = cr_weighted | divided_by: cr_count | round: 1
-      assign cr_rating = cr_avg | replace: '.', ','
-      assign cr_show_count = cr_count
-    endif
 
     # Sitat-rotasjon (alle er EKTE, verifiserte Okendo-anmeldelser).
     # Veksler mellom alle tre – bestemt av antall varer i kurven, så det er

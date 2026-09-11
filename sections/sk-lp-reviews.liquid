@@ -31,12 +31,22 @@
         </div>
       {%- endif -%}
 
-      {%- if section.settings.score != blank -%}
+      {%- comment -%}
+        Snitt og antall fra Klaviyo Reviews via sk-review-stats (produktet i
+        Produkt-URL), ikke fra tekstfelt. Tallene her sto hardkodet på 4,9 · 89
+        (Clear) og 4,8 · 62 (Radiance), mens heroen på samme side viste de
+        ekte 4,7 · 76 og 4,8 · 85. Mangler tallene, skjules linjen.
+      {%- endcomment -%}
+      {%- assign rv_handle = section.settings.product_url | split: '/products/' | last | split: '?' | first -%}
+      {%- assign rv_product = all_products[rv_handle] -%}
+      {%- capture rv_rating -%}{%- render 'sk-review-stats', product: rv_product, part: 'rating' -%}{%- endcapture -%}
+      {%- capture rv_count -%}{%- render 'sk-review-stats', product: rv_product, part: 'count' -%}{%- endcapture -%}
+      {%- if section.settings.show_score != false and rv_rating != blank -%}
         <div class="lp-reviews__score-row">
           <span class="lp-reviews__score-stars">★★★★★</span>
-          <span class="lp-reviews__score-value">{{ section.settings.rating_score | default: '4.8' }}</span>
+          <span class="lp-reviews__score-value">{{ rv_rating }}</span>
           <span class="lp-reviews__score-count"
-            >· basert på {{ section.settings.review_count | default: '62' }} anmeldelser</span
+            >· basert på {{ rv_count }} anmeldelser</span
           >
         </div>
       {%- endif -%}
@@ -349,22 +359,11 @@
       "default": "Det norske kvinner sier"
     },
     {
-      "type": "text",
-      "id": "score",
-      "label": "Anmeldelsesscore (tekst)",
-      "default": "4.8 av 5 – basert på 62 anmeldelser"
-    },
-    {
-      "type": "text",
-      "id": "rating_score",
-      "label": "Score (tall)",
-      "default": "4.8"
-    },
-    {
-      "type": "text",
-      "id": "review_count",
-      "label": "Antall anmeldelser (tall)",
-      "default": "62"
+      "type": "checkbox",
+      "id": "show_score",
+      "label": "Vis vurderingslinje",
+      "info": "«★★★★★ 4,8 · basert på 85 anmeldelser». Tallene hentes automatisk fra Klaviyo Reviews for produktet i Produkt-URL.",
+      "default": true
     },
     {
       "type": "header",

@@ -106,9 +106,12 @@
             <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14" aria-hidden="true"><path d="M10 1.6l2.47 5.3 5.53.62-4.12 3.9 1.1 5.68L10 14.3l-4.98 2.8 1.1-5.68L2 7.52l5.53-.62L10 1.6z"/></svg>
           {%- endfor -%}
         </span>
-        {%- if settings.cart_review_rating != blank and settings.cart_review_count != blank -%}
+        {%- comment -%} Ekte tall fra sk-review-stats (kurvens produkter, ellers hele butikken), ikke tema-innstillinger. {%- endcomment -%}
+        {%- capture cart_rv_rating -%}{%- render 'sk-review-stats', scope: 'cart', part: 'rating' -%}{%- endcapture -%}
+        {%- capture cart_rv_count -%}{%- render 'sk-review-stats', scope: 'cart', part: 'count' -%}{%- endcapture -%}
+        {%- if cart_rv_rating != blank -%}
           <span class="sk-cart-reviews__rating">
-            {{- 'sections.cart.reassure_reviews' | t: rating: settings.cart_review_rating, count: settings.cart_review_count -}}
+            {{- 'sections.cart.reassure_reviews' | t: rating: cart_rv_rating, count: cart_rv_count -}}
           </span>
         {%- endif -%}
       </div>
