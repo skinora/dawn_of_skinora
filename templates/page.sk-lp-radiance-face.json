@@ -55,8 +55,8 @@
         "audience_label": "kvinner over 40",
         "cta_text": "Prøv risikofritt i 30 dager",
         "cta_url": "/products/skinora-radiance-face",
-        "price_display": "3 690 kr",
-        "klarna_text": "fra 103 kr/mnd med Klarna",
+        "price_display": "[pris]",
+        "klarna_text": "fra [klarna] kr/mnd med Klarna",
         "show_link": true,
         "link_text": "Se hvordan den brukes (60 sek) ↓",
         "link_url": "#slik-bruker-du"
@@ -298,7 +298,7 @@
         "trustpilot_business_unit_id": "",
         "product_url": "/products/skinora-radiance-face",
         "midpage_cta_text": "Få din Radiance Face nå",
-        "midpage_klarna_text": "Fra 103 kr/mnd med Klarna"
+        "midpage_klarna_text": "Fra [klarna] kr/mnd med Klarna"
       }
     },
     "why_choose": {
@@ -627,8 +627,8 @@
         "faq_price": {
           "type": "faq",
           "settings": {
-            "question": "Er 3 690 kr mye å betale for en LED-maske?",
-            "answer": "Sammenlignet med klinikk er det faktisk det motsatte. Én LED-behandling hos hudterapeut koster typisk 800–1.500 kr. Med Skinora® Radiance Face betaler du én gang og kan bruke masken ubegrenset hjemme. Etter bare 3–5 behandlinger har produktet betalt seg selv – resten er ren gevinst. Du kan også dele opp betalingen med Klarna fra 103 kr/mnd."
+            "question": "Er [pris] mye å betale for en LED-maske?",
+            "answer": "Sammenlignet med klinikk er det faktisk det motsatte. Én LED-behandling hos hudterapeut koster typisk 800–1.500 kr. Med Skinora® Radiance Face betaler du én gang og kan bruke masken ubegrenset hjemme. Etter bare [behandlinger] behandlinger har produktet betalt seg selv – resten er ren gevinst. Du kan også dele opp betalingen med Klarna fra [klarna] kr/mnd."
           }
         },
         "faq_1": {
@@ -708,7 +708,8 @@
         "faq_noresult"
       ],
       "settings": {
-        "heading": "Ofte stilte spørsmål"
+        "heading": "Ofte stilte spørsmål",
+        "product": "skinora-radiance-face"
       }
     },
     "cta": {
@@ -741,13 +742,13 @@
       "settings": {
         "heading": "Klar for synlige resultater?",
         "text": "Gi huden din den behandlingen den fortjener – hjemme, på dine premisser, med teknologi som faktisk virker.",
-        "price_before": "4 690 kr",
-        "price_text": "3 690 kr",
-        "save_text": "Spar 1 000 kr",
+        "price_before": "[før-pris]",
+        "price_text": "[pris]",
+        "save_text": "Spar [spar]",
         "button_text": "Bestill nå",
         "product_url": "/products/skinora-radiance-face",
         "anchor_id": "kjop",
-        "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra 103 kr/mnd med Klarna</strong>"
+        "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra [klarna] kr/mnd med Klarna</strong>"
       }
     },
     "sk_lp_cross_sell_N8N6MW": {
@@ -794,8 +795,8 @@
       "settings": {
         "enabled": true,
         "product": "skinora-radiance-face",
-        "price": "3 690 kr",
-        "subprice": "eller fra 103 kr/mnd med Klarna",
+        "price": "[pris]",
+        "subprice": "eller fra [klarna] kr/mnd med Klarna",
         "cta_label": "Prøv risikofritt →",
         "trigger_selector": ".lp-hero__actions",
         "hide_selector": ".lp-cta-final"
@@ -805,13 +806,14 @@
       "type": "sk-lp-urgency",
       "settings": {
         "enabled": true,
-        "price_before": "4 690 kr",
-        "price_now": "3 690 kr",
-        "save_text": "Spar 1 000 kr",
-        "deadline_iso": "2026-09-15",
+        "price_before": "[før-pris]",
+        "price_now": "[pris]",
+        "save_text": "Spar [spar]",
+        "deadline_iso": "",
         "deadline_label": "Tilbudet slutter om",
         "demand_text": "Stor pågang",
-        "aria_label": "Kampanje på Skinora Radiance Face"
+        "aria_label": "Kampanje på Skinora Radiance Face",
+        "product": "skinora-radiance-face"
       }
     }
   },

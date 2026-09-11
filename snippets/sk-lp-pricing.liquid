@@ -1,0 +1,148 @@
+{%- comment -%}
+  sk-lp-pricing — ÉN kilde til pris på landingssidene
+  ============================================================================
+  Alle priser, før-priser, besparelser og Klarna-beløp på LP-ene regnes ut her
+  fra produktet i Shopify. Ingen seksjon skal ha en pris som ren tekst.
+
+  Hvorfor: prisene sto som fritekst i ni felt per landingsside. Hver kampanje
+  betydde å endre dem for hånd — og glemte man ett, leste kunden én pris i hero
+  og betalte en annen i kassen. Det skjedde på begge LP-ene i september 2026.
+
+  KAMPANJE = to steg, ingen tekstendring:
+    1. Shopify → produktet: sett «Pris» til kampanjeprisen og «Sammenlign med»
+       til ordinærprisen.
+    2. Temainnstillinger → Kampanje: slå på, sett sluttdato (ÅÅÅÅ-MM-DD).
+  Før-pris, «Spar X kr», Klarna og kampanjebåndet følger av seg selv. Når
+  «Sammenlign med» fjernes igjen, forsvinner overstrekingen overalt.
+
+  ----------------------------------------------------------------------------
+  Parametre — produktet:
+    product : produkt-objekt (fra en product-innstilling)        ┐ ett av
+    url     : '/products/<handle>' (fra seksjonens produkt-URL)  ┘ disse
+
+  Parametre — hva som skal skrives ut (ett av disse):
+    text : fritekst der plassholdere byttes med verdier
+    part : én enkelt verdi, rått — for bruk i capture/if
+
+  PLASSHOLDERE i text
+    [pris]          3 690 kr      gjeldende pris
+    [før-pris]      4 690 kr      «Sammenlign med»-prisen (kun ved salg)
+    [spar]          1 000 kr      differansen (kun ved salg)
+    [klarna]        103           pris / 36, avrundet — skriv selv «kr/mnd»
+    [behandlinger]  3–5           klinikkbehandlinger à 800–1 500 kr som
+                                  tilsvarer prisen
+  [for-pris] godtas som alias for [før-pris].
+
+  PART-verdier: pris | pris-tall | for-pris | spar | klarna | behandlinger | salg
+    'salg' skriver ut «1» når produktet er på salg, ellers ingenting.
+
+  REGLER SOM BESKYTTER KUNDEN
+  - Tekst med [før-pris] eller [spar] skrives IKKE ut når produktet ikke er på
+    salg. En overstreket pris eller «Spar 0 kr» uten salg er verre enn ingen.
+  - Finnes ikke produktet, skrives tekst med plassholdere ikke ut i det hele
+    tatt. Alternativet — «fra [klarna] kr/mnd» rett ut til kunden — er verre.
+  - Varianten er selected_or_first_available_variant, samme som kjøpsknappene
+    legger i handlekurven. Prisen på siden er dermed prisen i kassen.
+{%- endcomment -%}
+
+{%- liquid
+  assign skp_p = product
+  if skp_p == blank and url != blank
+    assign skp_handle = url | split: '/products/' | last | split: '?' | first | split: '#' | first
+    assign skp_p = all_products[skp_handle]
+  endif
+
+  assign skp_text = text | default: ''
+  assign skp_has_token = false
+  if skp_text contains '['
+    assign skp_has_token = true
+  endif
+
+  comment
+    Uten produkt: ren tekst skrives ut uendret, tekst med plassholdere og
+    part-verdier skrives ikke ut i det hele tatt.
+  endcomment
+  assign skp_done = false
+  if skp_p == blank
+    if part == blank and skp_has_token == false
+      echo skp_text
+    endif
+    assign skp_done = true
+  endif
+
+  unless skp_done
+    assign skp_v = skp_p.selected_or_first_available_variant
+    assign skp_kr = skp_v.price | divided_by: 100
+    assign skp_cmp = skp_v.compare_at_price | default: 0 | divided_by: 100
+
+    assign skp_salg = false
+    if skp_cmp > skp_kr
+      assign skp_salg = true
+    endif
+    assign skp_spar_kr = skp_cmp | minus: skp_kr
+
+    comment
+      Klarna: pris / 36 avrundet til nærmeste krone, halv opp. Gir 122 for
+      4 390, 130 for 4 690, 94 for 3 390 og 103 for 3 690 — samme tall som
+      sto på sidene da de ble skrevet for hånd.
+    endcomment
+    assign skp_klarna = skp_kr | divided_by: 36.0 | round
+
+    comment
+      Hvor mange klinikkbehandlinger à 800–1 500 kr prisen tilsvarer. Regnes ut
+      i stedet for å skrives, fordi FAQ-argumentet ellers står og regner på
+      gammel pris etter hver prisendring. Det skjedde to ganger.
+    endcomment
+    assign skp_beh_lo = skp_kr | divided_by: 1500.0 | ceil
+    assign skp_beh_hi = skp_kr | divided_by: 800.0 | ceil
+    assign skp_beh = skp_beh_lo | append: '–' | append: skp_beh_hi
+  endunless
+-%}
+{%- unless skp_done -%}
+  {%- capture skp_pris -%}{%- render 'sk-kr', kroner: skp_kr -%}{%- endcapture -%}
+  {%- capture skp_pris_tall -%}{%- render 'sk-kr', kroner: skp_kr, unit: false -%}{%- endcapture -%}
+  {%- capture skp_for -%}{%- if skp_salg -%}{%- render 'sk-kr', kroner: skp_cmp -%}{%- endif -%}{%- endcapture -%}
+  {%- capture skp_spar -%}{%- if skp_salg -%}{%- render 'sk-kr', kroner: skp_spar_kr -%}{%- endif -%}{%- endcapture -%}
+  {%- liquid
+    if part != blank
+      case part
+        when 'pris'
+          echo skp_pris
+        when 'pris-tall'
+          echo skp_pris_tall
+        when 'for-pris'
+          echo skp_for
+        when 'spar'
+          echo skp_spar
+        when 'klarna'
+          echo skp_klarna
+        when 'behandlinger'
+          echo skp_beh
+        when 'salg'
+          if skp_salg
+            echo '1'
+          endif
+      endcase
+    else
+      comment
+        En overstreket pris eller «Spar 0 kr» uten salg er verre enn ingen tekst.
+      endcomment
+      assign skp_blokker = false
+      if skp_salg == false
+        if skp_text contains '[før-pris]' or skp_text contains '[for-pris]' or skp_text contains '[spar]'
+          assign skp_blokker = true
+        endif
+      endif
+      unless skp_blokker
+        assign skp_out = skp_text
+        assign skp_out = skp_out | replace: '[pris]', skp_pris
+        assign skp_out = skp_out | replace: '[før-pris]', skp_for
+        assign skp_out = skp_out | replace: '[for-pris]', skp_for
+        assign skp_out = skp_out | replace: '[spar]', skp_spar
+        assign skp_out = skp_out | replace: '[klarna]', skp_klarna
+        assign skp_out = skp_out | replace: '[behandlinger]', skp_beh
+        echo skp_out
+      endunless
+    endif
+  -%}
+{%- endunless -%}

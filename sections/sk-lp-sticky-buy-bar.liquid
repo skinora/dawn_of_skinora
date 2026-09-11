@@ -8,6 +8,13 @@
 {%- if section.settings.enabled -%}
   {%- assign sbb_product = section.settings.product -%}
   {%- assign sbb_variant = sbb_product.selected_or_first_available_variant -%}
+  {%- comment -%}
+    Begge linjene regnes ut fra produktet (sk-lp-pricing). Feltene tar
+    plassholdere, f.eks. «Fra [klarna] kr/mnd med Klarna» og «[pris] engangspris».
+    Fanges her, før markupen, fordi aria-labelen på knappen også trenger prisen.
+  {%- endcomment -%}
+  {%- capture sbb_price -%}{%- render 'sk-lp-pricing', product: sbb_product, text: section.settings.price -%}{%- endcapture -%}
+  {%- capture sbb_subprice -%}{%- render 'sk-lp-pricing', product: sbb_product, text: section.settings.subprice -%}{%- endcapture -%}
 
   <aside
     class="sk-sticky-bar"
@@ -19,8 +26,8 @@
   >
     <div class="sk-sticky-bar__inner">
       <div class="sk-sticky-bar__price-block">
-        <span class="sk-sticky-bar__price">{{ section.settings.price }}</span>
-        <span class="sk-sticky-bar__subprice">{{ section.settings.subprice }}</span>
+        <span class="sk-sticky-bar__price">{{ sbb_price }}</span>
+        <span class="sk-sticky-bar__subprice">{{ sbb_subprice }}</span>
       </div>
       <div class="sk-sticky-bar__cta-block">
         <form
@@ -36,7 +43,7 @@
             type="submit"
             class="sk-sticky-bar__btn"
             data-analytics="cta_sticky_bottom"
-            aria-label="Legg {{ sbb_product.title | default: 'Skinora Clear' }} i handlekurven – {{ section.settings.price }}"
+            aria-label="Legg {{ sbb_product.title | default: 'Skinora Clear' }} i handlekurven – {{ sbb_price | strip_html | escape }}"
           >
             {%- assign sbb_cta_clean = section.settings.cta_label
               | default: 'Prøv risikofritt'
@@ -488,15 +495,15 @@
       "type": "text",
       "id": "price",
       "label": "Hovedlinje (Klarna)",
-      "info": "Vises stort øverst i baren. Ledende linje er nå Klarna for å senke terskelen.",
-      "default": "Fra 122 kr/mnd med Klarna"
+      "info": "Vises stort øverst i baren. Plassholdere: [pris], [klarna], [før-pris], [spar] — hentet fra produktet over.",
+      "default": "Fra [klarna] kr/mnd med Klarna"
     },
     {
       "type": "text",
       "id": "subprice",
       "label": "Sekundærlinje (engangspris)",
-      "info": "Vises i mindre, lysere tekst under hovedlinjen.",
-      "default": "4 390 kr engangspris"
+      "info": "Vises i mindre, lysere tekst under hovedlinjen. Plassholdere som over.",
+      "default": "[pris] engangspris"
     },
     {
       "type": "text",

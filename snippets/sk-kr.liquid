@@ -1,0 +1,33 @@
+{%- comment -%}
+  sk-kr — formaterer et kronebeløp som «3 690 kr»
+  ----------------------------------------------------------------------------
+  Parametre:
+    kroner : heltall i kroner (ikke øre)
+    unit   : false for å droppe « kr» (standard: med)
+
+  Hvorfor ikke `| money`: butikkens pengeformat gir «3.690 kr» med punktum som
+  tusenskille (se sk-cart-drawer). Landingssidene har alltid skrevet «3 690 kr»
+  med mellomrom, som er norsk standard. Formatet bygges derfor her, så sidene
+  ser like ut som før og ikke skifter skrivemåte når prisene blir automatiske.
+
+  Mellomrommene er U+00A0 (hardt mellomrom), ikke vanlig mellomrom. Et vanlig
+  mellomrom lar nettleseren bryte «3» og «690 kr» over to linjer i smale
+  knapper og i sticky-baren.
+
+  Støtter beløp under 1 000 000 kr, som dekker alle produkter i butikken.
+{%- endcomment -%}
+{%- liquid
+  assign sk_kr_n = kroner | plus: 0
+  assign sk_kr_sp = ' '
+  if sk_kr_n >= 1000
+    assign sk_kr_th = sk_kr_n | divided_by: 1000
+    assign sk_kr_rest = sk_kr_n | modulo: 1000 | prepend: '00' | slice: -3, 3
+    assign sk_kr_out = sk_kr_th | append: sk_kr_sp | append: sk_kr_rest
+  else
+    assign sk_kr_out = sk_kr_n | append: ''
+  endif
+  unless unit == false
+    assign sk_kr_out = sk_kr_out | append: sk_kr_sp | append: 'kr'
+  endunless
+  echo sk_kr_out
+-%}

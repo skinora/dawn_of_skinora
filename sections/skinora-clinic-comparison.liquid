@@ -124,11 +124,22 @@
   # ADVARSEL: `product` finnes KUN på produktmaler. På en page-mal (LP-ene) er
   # den nil, og da gir fallbacken ingenting. Sto seksjonen på Clear-LP-en med
   # tom «number», rendret den en naken «kr» med «Én gang» under — et pristall
-  # uten tall. Sett «number» eksplisitt på page-maler.
+  # uten tall. Løst under: på page-maler hentes tallet fra CTA-lenkens produkt.
+  # «Tall»-feltet er nå bare en overstyring og står normalt tomt.
   assign clinic_number = section.settings.number
   if clinic_number == blank and product
     assign clinic_number = product.price | money_without_trailing_zeros | remove: 'kr' | remove: 'NOK' | remove: ',-' | strip
   endif
+-%}
+{%- comment -%}
+  Side-maler: `product` er nil, men CTA-lenken peker på produktet. Prisen
+  regnes ut derfra via sk-lp-pricing, med samme formatering som resten av
+  landingssiden («3 690»). Tomt «Tall»-felt er dermed alltid automatisk.
+{%- endcomment -%}
+{%- if clinic_number == blank and section.settings.cta_link contains '/products/' -%}
+  {%- capture clinic_number -%}{%- render 'sk-lp-pricing', url: section.settings.cta_link, part: 'pris-tall' -%}{%- endcapture -%}
+{%- endif -%}
+{%- liquid
 
   # CTA-lenke: tom => dette produktets side. Gjør seksjonen gjenbrukbar
   # på et hvilket som helst produkt uten å sette lenken manuelt.

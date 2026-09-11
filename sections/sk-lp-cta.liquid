@@ -26,26 +26,36 @@
         <div class="lp-cta-final__price-block">
           {%- comment -%}
             Kampanjepris: før-pris overstrøket foran, spar-etikett etter.
-            Begge feltene er valgfrie — står de tomme, ser blokken ut
-            nøyaktig som før kampanjen. Da er ingenting å rydde bort når
-            tilbudet er over; det holder å tømme to felt.
+            Begge vises av seg selv når produktet er på salg i Shopify, og
+            forsvinner av seg selv når det ikke er det. Ingen felt å tømme.
 
             Før-prisen er skrevet ut med <s>, ikke bare
             text-decoration: line-through. Skjermlesere leser ikke CSS, og
             en opplest «4 390 kr 3 390 kr» uten at den første er markert som
             strøket er direkte villedende.
           {%- endcomment -%}
+          {%- comment -%}
+            Alle tall kommer fra produktet (sk-lp-pricing). Før-pris og
+            spar-etikett skrives bare ut når produktet faktisk er på salg
+            («Sammenlign med» høyere enn pris) — snippeten returnerer tom
+            streng ellers, så overstrekingen forsvinner av seg selv når
+            kampanjen avsluttes i Shopify.
+          {%- endcomment -%}
+          {%- capture cta_before -%}{%- render 'sk-lp-pricing', product: sk_lp_product, text: section.settings.price_before -%}{%- endcapture -%}
+          {%- capture cta_price -%}{%- render 'sk-lp-pricing', product: sk_lp_product, text: section.settings.price_text -%}{%- endcapture -%}
+          {%- capture cta_save -%}{%- render 'sk-lp-pricing', product: sk_lp_product, text: section.settings.save_text -%}{%- endcapture -%}
+          {%- capture cta_klarna -%}{%- render 'sk-lp-pricing', product: sk_lp_product, text: section.settings.klarna_text -%}{%- endcapture -%}
           <p class="lp-cta-final__price">
-            {%- if section.settings.price_before != blank -%}
-              <s class="lp-cta-final__price-before">{{ section.settings.price_before }}</s>
+            {%- if cta_before != blank -%}
+              <s class="lp-cta-final__price-before">{{ cta_before }}</s>
             {%- endif -%}
-            <span class="lp-cta-final__price-now">{{ section.settings.price_text }}</span>
-            {%- if section.settings.save_text != blank -%}
-              <span class="lp-cta-final__save">{{ section.settings.save_text }}</span>
+            <span class="lp-cta-final__price-now">{{ cta_price }}</span>
+            {%- if cta_save != blank -%}
+              <span class="lp-cta-final__save">{{ cta_save }}</span>
             {%- endif -%}
           </p>
-          {%- if section.settings.klarna_text != blank -%}
-            <p class="lp-cta-final__permonth">{{ section.settings.klarna_text }}</p>
+          {%- if cta_klarna != blank -%}
+            <p class="lp-cta-final__permonth">{{ cta_klarna }}</p>
           {%- endif -%}
         </div>
 
@@ -127,19 +137,22 @@
       "type": "text",
       "id": "price_before",
       "label": "Før-pris (overstrøket)",
-      "info": "Må være prisen som faktisk gjaldt før kampanjen — bruk «sammenlign med»-prisen på produktet i Shopify. Tomt felt = ingen overstrøket pris, og blokken ser ut som før kampanjen."
+      "info": "Skriv [før-pris]. Vises KUN når produktet har en «Sammenlign med»-pris i Shopify som er høyere enn prisen — ellers skjult av seg selv.",
+      "default": "[før-pris]"
     },
     {
       "type": "text",
       "id": "price_text",
       "label": "Pris (visning)",
-      "default": "4 390 kr"
+      "info": "Skriv [pris] — hentes fra produktet i Produktlenke.",
+      "default": "[pris]"
     },
     {
       "type": "text",
       "id": "save_text",
       "label": "Spar-etikett",
-      "info": "F.eks. «Spar 1 000 kr». Vises i grønt — den eneste tillatte besparelse-fargen i merkevaren. Tomt felt = skjult."
+      "info": "Skriv «Spar [spar]». Vises i grønt og KUN når produktet er på salg. Tomt felt = aldri vist.",
+      "default": "Spar [spar]"
     },
     {
       "type": "text",
@@ -162,7 +175,8 @@
       "type": "html",
       "id": "klarna_text",
       "label": "Pris pr. måned (HTML, vises under prisen)",
-      "default": "Eller <strong>122 kr\/mnd<\/strong> med Klarna"
+      "info": "Bruk [klarna] for månedsbeløpet (pris / 36).",
+      "default": "Eller <strong>[klarna] kr\/mnd<\/strong> med Klarna"
     }
   ],
   "blocks": [

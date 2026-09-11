@@ -3,9 +3,9 @@
   ----------------------------------------------------------------------------
   Før/nå-pris + spar-beløp, nedtelling til sluttdato, og «stor pågang».
 
-  Prisene settes PER TEMPLATE, aldri via schema-default: seksjonen deles
-  mellom Clear (3 390) og Radiance (4 690), og en default her ville dratt
-  den ene inn i den andres pris.
+  Prisene regnes ut fra produktet i seksjonsinnstillingen (sk-lp-pricing).
+  Feltene inneholder plassholdere ([pris], [før-pris], [spar]), ikke tall —
+  derfor er schema-defaultene nå trygge å dele mellom Clear og Radiance.
 
   Nedtellingen skjuler HELE båndet når fristen er passert. Et utløpt tilbud
   er verre enn ingen kampanje — det forteller kunden at datoene på siden
@@ -14,9 +14,32 @@
   båndet forsvinner selv om siden ligger cachet i en fane.
 {%- endcomment -%}
 
+{%- comment -%}
+  STYRING (permanent kampanjeløsning, sep 2026)
+  Båndet vises bare når ALLE tre stemmer:
+    1. «Vis kampanjebåndet» er på i seksjonen
+    2. Kampanjen går — Temainnstillinger → Kampanje (sk-campaign-live:
+       bryteren er på og sluttdatoen er ikke passert)
+    3. Produktet er faktisk på salg i Shopify («Sammenlign med» > pris)
+  Sluttdato hentes fra temainnstillingene. Seksjonens egen dato er bare en
+  overstyring for spesialtilfeller og står normalt tom.
+  Prisene regnes ut fra produktet (sk-lp-pricing) — ingen tall skrives her.
+{%- endcomment -%}
+{%- capture u_campaign -%}{%- render 'sk-campaign-live' -%}{%- endcapture -%}
+{%- capture u_sale -%}{%- render 'sk-lp-pricing', product: section.settings.product, part: 'salg' -%}{%- endcapture -%}
+{%- capture u_before -%}{%- render 'sk-lp-pricing', product: section.settings.product, text: section.settings.price_before -%}{%- endcapture -%}
+{%- capture u_now -%}{%- render 'sk-lp-pricing', product: section.settings.product, text: section.settings.price_now -%}{%- endcapture -%}
+{%- capture u_save -%}{%- render 'sk-lp-pricing', product: section.settings.product, text: section.settings.save_text -%}{%- endcapture -%}
 {%- liquid
   assign u_end_iso = section.settings.deadline_iso | strip
+  if u_end_iso == blank
+    assign u_end_iso = settings.kampanje_sluttdato_iso | strip
+  endif
+
   assign u_live = section.settings.enabled
+  unless u_campaign contains '1' and u_sale contains '1'
+    assign u_live = false
+  endunless
 
   if u_live and u_end_iso != blank
     comment
@@ -43,20 +66,20 @@
     aria-label="{{ section.settings.aria_label | default: 'Kampanje' | escape }}"
   >
     <div class="sk-lp-urgency__inner">
-      {%- if section.settings.price_now != blank -%}
+      {%- if u_now != blank -%}
         <p class="sk-lp-urgency__prices">
-          {%- if section.settings.price_before != blank -%}
+          {%- if u_before != blank -%}
             <span class="sk-lp-urgency__before">
               <span class="visually-hidden">Før:</span>
-              {{ section.settings.price_before }}
+              {{ u_before }}
             </span>
           {%- endif -%}
           <span class="sk-lp-urgency__now">
             <span class="visually-hidden">Nå:</span>
-            {{ section.settings.price_now }}
+            {{ u_now }}
           </span>
-          {%- if section.settings.save_text != blank -%}
-            <span class="sk-lp-urgency__save">{{ section.settings.save_text }}</span>
+          {%- if u_save != blank -%}
+            <span class="sk-lp-urgency__save">{{ u_save }}</span>
           {%- endif -%}
         </p>
       {%- endif -%}
@@ -179,29 +202,39 @@
       "default": true
     },
     {
-      "type": "header",
-      "content": "Pris"
+      "type": "paragraph",
+      "content": "Båndet vises av seg selv når tre ting stemmer: (1) denne bryteren er på, (2) Temainnstillinger → Kampanje er på og sluttdatoen ikke er passert, og (3) produktet under har en «Sammenlign med»-pris i Shopify som er høyere enn prisen. Du trenger ikke skrive noen priser her."
     },
     {
-      "type": "paragraph",
-      "content": "Sett prisene her, per landingsside. Feltene har med vilje ingen standardverdi: seksjonen deles mellom Clear og Radiance, og en default ville dratt den ene inn i den andres pris."
+      "type": "product",
+      "id": "product",
+      "label": "Produkt",
+      "info": "Prisene hentes herfra."
+    },
+    {
+      "type": "header",
+      "content": "Pristekst"
     },
     {
       "type": "text",
       "id": "price_before",
       "label": "Før-pris (overstrøket)",
-      "info": "Må være prisen som faktisk gjaldt før kampanjen. Bruk «sammenlign med»-prisen på produktet i Shopify."
+      "info": "Plassholder [før-pris] = «Sammenlign med»-prisen.",
+      "default": "[før-pris]"
     },
     {
       "type": "text",
       "id": "price_now",
-      "label": "Kampanjepris"
+      "label": "Kampanjepris",
+      "info": "Plassholder [pris] = gjeldende pris.",
+      "default": "[pris]"
     },
     {
       "type": "text",
       "id": "save_text",
       "label": "Spar-etikett",
-      "info": "F.eks. «Spar 1 000 kr». Vises i grønt – den eneste tillatte besparelse-fargen i merkevaren."
+      "info": "Plassholder [spar] = differansen. Vises i grønt.",
+      "default": "Spar [spar]"
     },
     {
       "type": "header",
@@ -210,8 +243,8 @@
     {
       "type": "text",
       "id": "deadline_iso",
-      "label": "Sluttdato (ÅÅÅÅ-MM-DD)",
-      "info": "Maskinlesbar. Datoen er inkluderende – kampanjen varer ut denne dagen. Når den passeres, forsvinner HELE båndet av seg selv, både på serveren og i nettleseren. Tomt felt = ingen klokke."
+      "label": "Overstyr sluttdato (ÅÅÅÅ-MM-DD)",
+      "info": "La stå TOM — da brukes sluttdatoen i Temainnstillinger → Kampanje, som gjelder hele butikken. Fyll bare inn hvis akkurat denne siden skal ha en annen frist. Datoen er inkluderende, og båndet forsvinner av seg selv når den passeres."
     },
     {
       "type": "text",

@@ -15,17 +15,28 @@
       {%- if section.blocks.size > 0 -%}
         <div class="lp-faq__list" data-lp-faq>
           {%- for block in section.blocks -%}
-            <div class="lp-faq__item" {{ block.shopify_attributes }}>
-              <button class="lp-faq__question" type="button" aria-expanded="false">
-                {{ block.settings.question }}
-                <span class="lp-faq__icon">+</span>
-              </button>
-              <div class="lp-faq__answer">
-                <div class="lp-faq__answer-inner">
-                  {{ block.settings.answer }}
+            {%- comment -%}
+              Spørsmål og svar kan inneholde [pris], [klarna] og [behandlinger].
+              De byttes ut fra produktet i seksjonsinnstillingen (sk-lp-pricing),
+              både her og i FAQ-schemaet under, så Google og kunden alltid ser
+              samme tall. Blir spørsmål eller svar tomt etter utbytting (produkt
+              mangler), hoppes hele elementet over — ingen tomme knapper.
+            {%- endcomment -%}
+            {%- capture faq_vq -%}{%- render 'sk-lp-pricing', product: section.settings.product, text: block.settings.question -%}{%- endcapture -%}
+            {%- capture faq_va -%}{%- render 'sk-lp-pricing', product: section.settings.product, text: block.settings.answer -%}{%- endcapture -%}
+            {%- if faq_vq != blank and faq_va != blank -%}
+              <div class="lp-faq__item" {{ block.shopify_attributes }}>
+                <button class="lp-faq__question" type="button" aria-expanded="false">
+                  {{ faq_vq }}
+                  <span class="lp-faq__icon">+</span>
+                </button>
+                <div class="lp-faq__answer">
+                  <div class="lp-faq__answer-inner">
+                    {{ faq_va }}
+                  </div>
                 </div>
               </div>
-            </div>
+            {%- endif -%}
           {%- endfor -%}
         </div>
       {%- endif -%}
@@ -34,9 +45,15 @@
 </div>
 
 {%- comment -%} FAQPage JSON-LD structured data {%- endcomment -%}
+{%- comment -%}
+  Telles på utbyttet tekst, ikke rå innstillinger — ellers kunne et spørsmål
+  som ble tomt (produkt mangler) gitt en hengende komma i JSON-en.
+{%- endcomment -%}
 {%- assign faq_ld_count = 0 -%}
 {%- for block in section.blocks -%}
-  {%- if block.settings.question != blank and block.settings.answer != blank -%}
+  {%- capture faq_cq -%}{%- render 'sk-lp-pricing', product: section.settings.product, text: block.settings.question -%}{%- endcapture -%}
+  {%- capture faq_ca -%}{%- render 'sk-lp-pricing', product: section.settings.product, text: block.settings.answer -%}{%- endcapture -%}
+  {%- if faq_cq != blank and faq_ca != blank -%}
     {%- assign faq_ld_count = faq_ld_count | plus: 1 -%}
   {%- endif -%}
 {%- endfor -%}
@@ -48,14 +65,16 @@
       "mainEntity": [
         {%- assign faq_ld_idx = 0 -%}
         {%- for block in section.blocks -%}
-          {%- if block.settings.question != blank and block.settings.answer != blank -%}
+          {%- capture faq_q -%}{%- render 'sk-lp-pricing', product: section.settings.product, text: block.settings.question -%}{%- endcapture -%}
+          {%- capture faq_a -%}{%- render 'sk-lp-pricing', product: section.settings.product, text: block.settings.answer -%}{%- endcapture -%}
+          {%- if faq_q != blank and faq_a != blank -%}
             {%- assign faq_ld_idx = faq_ld_idx | plus: 1 -%}
             {
               "@type": "Question",
-              "name": {{ block.settings.question | json }},
+              "name": {{ faq_q | strip_html | strip | json }},
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": {{ block.settings.answer | strip_html | strip_newlines | json }}
+                "text": {{ faq_a | strip_html | strip_newlines | strip | json }}
               }
             }{%- if faq_ld_idx < faq_ld_count -%},{%- endif -%}
           {%- endif -%}
@@ -99,6 +118,12 @@
       "id": "heading",
       "label": "Overskrift",
       "default": "Ofte stilte spørsmål"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Produkt (for priser i svarene)",
+      "info": "Spørsmål og svar kan bruke [pris], [klarna] og [behandlinger] — tallene hentes fra dette produktet. Uten produkt skjules spørsmål som inneholder plassholdere."
     }
   ],
   "blocks": [

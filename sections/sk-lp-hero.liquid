@@ -272,16 +272,23 @@
             </button>
           </form>
 
-          {%- if section.settings.price_display != blank or section.settings.klarna_text != blank -%}
+          {%- comment -%}
+            Pris og Klarna regnes ut fra produktet (sk-lp-pricing), ikke skrevet
+            som tekst. Feltene tar plassholdere: «[pris]», «fra [klarna] kr/mnd
+            med Klarna». Tom verdi etter utregning = linjen skjules.
+          {%- endcomment -%}
+          {%- capture sk_lp_price_out -%}{%- render 'sk-lp-pricing', product: sk_lp_product, text: section.settings.price_display -%}{%- endcapture -%}
+          {%- capture sk_lp_klarna_out -%}{%- render 'sk-lp-pricing', product: sk_lp_product, text: section.settings.klarna_text -%}{%- endcapture -%}
+          {%- if sk_lp_price_out != blank or sk_lp_klarna_out != blank -%}
             <p class="lp-hero__cta-meta">
-              {%- if section.settings.price_display != blank -%}
-                <span class="lp-hero__cta-price">{{ section.settings.price_display }}</span>
+              {%- if sk_lp_price_out != blank -%}
+                <span class="lp-hero__cta-price">{{ sk_lp_price_out }}</span>
               {%- endif -%}
-              {%- if section.settings.price_display != blank and section.settings.klarna_text != blank -%}
+              {%- if sk_lp_price_out != blank and sk_lp_klarna_out != blank -%}
                 <span class="lp-hero__cta-meta-sep" aria-hidden="true">·</span>
               {%- endif -%}
-              {%- if section.settings.klarna_text != blank -%}
-                <span class="lp-hero__cta-klarna">{{ section.settings.klarna_text }}</span>
+              {%- if sk_lp_klarna_out != blank -%}
+                <span class="lp-hero__cta-klarna">{{ sk_lp_klarna_out }}</span>
               {%- endif -%}
             </p>
           {%- endif -%}
@@ -441,15 +448,15 @@
       "type": "text",
       "id": "price_display",
       "label": "Pris (vises som serif under CTA)",
-      "info": "La stå tom for å skjule pris-linjen.",
-      "default": "4 690 kr"
+      "info": "Skriv [pris] — prisen hentes fra produktet i CTA-lenken. Tomt felt skjuler linjen.",
+      "default": "[pris]"
     },
     {
       "type": "text",
       "id": "klarna_text",
       "label": "Klarna-tekst (vises etter pris)",
-      "info": "Vises ved siden av prisen. La stå tom for å skjule.",
-      "default": "fra 130 kr/mnd med Klarna"
+      "info": "Bruk [klarna] for månedsbeløpet (pris / 36). Tomt felt skjuler teksten.",
+      "default": "fra [klarna] kr/mnd med Klarna"
     },
     {
       "type": "header",

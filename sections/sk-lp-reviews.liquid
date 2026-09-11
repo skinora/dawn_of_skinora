@@ -271,7 +271,12 @@
   </form>
   <p class="lp-midpage-cta__guarantees">
     ✔ 30 dagers fornøydgaranti &nbsp;·&nbsp; ✔ Gratis frakt &nbsp;·&nbsp; ✔
-    {{ section.settings.midpage_klarna_text | default: 'Fra 130 kr/mnd med Klarna' }}
+    {%- comment -%}
+      Klarna regnes ut fra produktet i Produkt-URL (sk-lp-pricing). Den gamle
+      fallbacken «Fra 130 kr/mnd» var Radiance-tallet hardkodet, og ville vist
+      Radiance-prisen på Clear-siden hvis feltet sto tomt.
+    {%- endcomment -%}
+    {%- render 'sk-lp-pricing', product: reviews_product, text: section.settings.midpage_klarna_text -%}
   </p>
 </div>
 
@@ -443,7 +448,8 @@
       "type": "text",
       "id": "midpage_klarna_text",
       "label": "Klarna-tekst",
-      "default": "Fra 130 kr/mnd med Klarna"
+      "info": "Bruk [klarna] for månedsbeløpet (pris / 36), hentet fra produktet i Produkt-URL.",
+      "default": "Fra [klarna] kr/mnd med Klarna"
     }
   ],
   "blocks": [
