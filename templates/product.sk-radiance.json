@@ -15,11 +15,7 @@
       "block_order": [],
       "settings": {
         "ce_text": "CE-merket",
-        "stock_show": true,
-        "stock_left": 13,
-        "stock_threshold": 15,
-        "stock_label": "igjen av dette partiet",
-        "stock_restock": "",
+        "demand_show": true,
         "honesty_show": true,
         "honesty_heading": "Fastpris — 365 dager i året.",
         "honesty_body": "<p>Ingen rabattkupp. Ingen falske «før»-priser.</p>"
