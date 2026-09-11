@@ -121,10 +121,7 @@
     "show_cart_note": false,
     "cart_drawer_collection": "",
     "kampanje_aktiv": true,
-    "kampanje_startdato": "7.august",
-    "kampanje_sluttdato": "15.september",
-    "kampanje_pris": "3690",
-    "kampanje_forhandsvis_ordinaerpris": 5990,
+    "kampanje_sluttdato_iso": "2026-09-15",
     "sections": {
       "main-password-header": {
         "type": "main-password-header",

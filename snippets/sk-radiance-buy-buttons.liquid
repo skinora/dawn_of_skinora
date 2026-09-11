@@ -1,3 +1,8 @@
+{%- comment -%}
+  Kampanjestatus fra sk-campaign-live (bryter + sluttdato), ikke bryteren
+  alene — så «spar X kr» på knappen forsvinner av seg selv etter fristen.
+{%- endcomment -%}
+{%- capture btn_campaign_live -%}{%- render 'sk-campaign-live' -%}{%- endcapture -%}
 {%- liquid
   assign resolved_section_id = section_id | default: section.id
   assign resolved_product_form_id = product_form_id | default: 'product-form-' | append: resolved_section_id
@@ -9,7 +14,7 @@
   # knappen aldri kan love noe annet enn kampanjestripen over den.
   assign btn_label = 'products.product.add_to_cart' | t
   assign btn_save = 0
-  if settings.kampanje_aktiv
+  if btn_campaign_live contains '1'
     if product.compare_at_price > product.price
       assign btn_save = product.compare_at_price | minus: product.price
     elsif settings.kampanje_forhandsvis_ordinaerpris > 0

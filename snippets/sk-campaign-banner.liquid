@@ -61,10 +61,11 @@
       </span>
     {%- endif -%}
 
-    {%- if settings.kampanje_sluttdato != blank -%}
+    {%- capture cb_date -%}{%- render 'sk-campaign-date' -%}{%- endcapture -%}
+    {%- if cb_date != blank -%}
       <span class="sk-campaign__deadline">
         {{- 'sections.cart.campaign_until' | t }}
-        <strong>{{ settings.kampanje_sluttdato }}</strong>
+        <strong>{{ cb_date }}</strong>
         {%- if cb_save > 0 -%}
           {{ ' ' }}– {{ 'sections.cart.campaign_then' | t }}
           {{ cb_was | money_without_trailing_zeros }}

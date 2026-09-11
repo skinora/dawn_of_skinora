@@ -25,12 +25,19 @@
     item : varelinje, kun for part: 'line'
 {%- endcomment -%}
 
+{%- comment -%}
+  «Går kampanjen nå» avgjøres av sk-campaign-live (bryter + sluttdato), ikke
+  av bryteren alene. Tidligere leste kurven settings.kampanje_aktiv direkte,
+  og fortsatte derfor å love «Kampanjeprisen gjelder til …» etter fristen
+  helt til noen husket å slå bryteren av.
+{%- endcomment -%}
+{%- capture ck_live -%}{%- render 'sk-campaign-live' -%}{%- endcapture -%}
 {%- liquid
   assign ck_part = part | default: 'anchor'
   assign ck_was = 0
   assign ck_save = 0
 
-  if settings.kampanje_aktiv
+  if ck_live contains '1'
     # Én løkke dekker både varelinjene og summen. Prisregelen (compare_at, ellers
     # DEV-forhåndsvisning) står dermed ett sted – to kopier ville drevet fra
     # hverandre, og da hadde varelinjene og totalen lovet ulike tall.
@@ -107,9 +114,10 @@
       </s>
 
     {%- when 'deadline' -%}
-      {%- if settings.kampanje_sluttdato != blank -%}
+      {%- capture ck_date -%}{%- render 'sk-campaign-date' -%}{%- endcapture -%}
+      {%- if ck_date != blank -%}
         <p class="sk-cart-campaign__deadline">
-          {{ 'sections.cart.campaign_cart_until_html' | t: date: settings.kampanje_sluttdato }}
+          {{ 'sections.cart.campaign_cart_until_html' | t: date: ck_date }}
         </p>
       {%- endif -%}
   {%- endcase -%}

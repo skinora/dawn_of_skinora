@@ -2543,8 +2543,16 @@
             falske «før»-priser.» rett over en strøket førpris er en direkte
             selvmotsigelse. Betinget i stedet for slettet, så budskapet kommer
             tilbake av seg selv når bryteren slås av.
+
+            Gates nå på BÅDE kampanjestatus og produktets egne priser: har
+            produktet en «Sammenlign med»-pris over prisen, vises en strøket
+            førpris på siden uansett bryter — og da er «ingen falske
+            før-priser» like selvmotsigende.
           {%- endcomment -%}
-          {%- if section.settings.honesty_show and settings.kampanje_aktiv != true -%}
+          {%- capture honesty_campaign -%}{%- render 'sk-campaign-live' -%}{%- endcapture -%}
+          {%- assign honesty_on_sale = false -%}
+          {%- if product.compare_at_price > product.price -%}{%- assign honesty_on_sale = true -%}{%- endif -%}
+          {%- if section.settings.honesty_show and honesty_on_sale == false and honesty_campaign == blank -%}
             <div class="sk-price-honesty">
               {%- if section.settings.honesty_heading != blank -%}
                 <p class="sk-price-honesty__title">{{ section.settings.honesty_heading }}</p>

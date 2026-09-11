@@ -1,0 +1,26 @@
+{%- comment -%}
+  sk-campaign-date — kampanjens sluttdato som norsk tekst, f.eks. «15. september»
+  ----------------------------------------------------------------------------
+  Én dato i temainnstillingene (kampanje_sluttdato_iso, ÅÅÅÅ-MM-DD) styrer både
+  når kampanjen slutter (sk-campaign-live) OG hva som står i teksten. Tidligere
+  måtte datoen skrives to ganger — som tekst til visning og som maskinlesbar
+  verdi — og de to kunne gli fra hverandre uten at noe varslet om det.
+
+  Månedsnavnene er hardkodet på norsk: Liquid sin `date`-filter gir engelske
+  navn uavhengig av butikkens språk.
+
+  Fallback: står ISO-datoen tom, brukes det gamle tekstfeltet
+  kampanje_sluttdato uendret, så ingenting som leste det før brytes.
+{%- endcomment -%}
+{%- liquid
+  assign scd_iso = settings.kampanje_sluttdato_iso | strip
+  if scd_iso == blank
+    echo settings.kampanje_sluttdato
+  else
+    assign scd_day = scd_iso | date: '%-d'
+    assign scd_m = scd_iso | date: '%-m' | plus: 0
+    assign scd_months = 'januar,februar,mars,april,mai,juni,juli,august,september,oktober,november,desember' | split: ','
+    assign scd_idx = scd_m | minus: 1
+    echo scd_day | append: '. ' | append: scd_months[scd_idx]
+  endif
+-%}
