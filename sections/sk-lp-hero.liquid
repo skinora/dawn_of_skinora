@@ -214,9 +214,18 @@
           anmeldelse tilhørte målgruppen — noe anmeldelsene selv motsier — og
           på Radiance gjentok den «kvinner over 40» fra undertekstlinjen rett
           over. Antall anmeldelser kan slås på med «Vis antall anmeldelser».
+
+          «Stjernene gjelder» velger kilde. Standard er hele butikken (sep 2026,
+          merchantens valg): samme tall på begge landingssidene og forsiden.
+          Product-JSON-LD i theme.liquid beholder produktets egne tall — den
+          beskriver det ene produktet.
         {%- endcomment -%}
-        {%- capture sk_lp_rating_display -%}{%- render 'sk-review-stats', product: sk_lp_product, part: 'rating' -%}{%- endcapture -%}
-        {%- capture sk_lp_count_display -%}{%- render 'sk-review-stats', product: sk_lp_product, part: 'count' -%}{%- endcapture -%}
+        {%- assign sk_lp_stats_product = nil -%}
+        {%- if section.settings.rating_source == 'product' -%}
+          {%- assign sk_lp_stats_product = sk_lp_product -%}
+        {%- endif -%}
+        {%- capture sk_lp_rating_display -%}{%- render 'sk-review-stats', product: sk_lp_stats_product, part: 'rating' -%}{%- endcapture -%}
+        {%- capture sk_lp_count_display -%}{%- render 'sk-review-stats', product: sk_lp_stats_product, part: 'count' -%}{%- endcapture -%}
         {%- if sk_lp_rating_display != blank -%}
           {%- comment -%}
             Stjernene lenker til anmeldelsesseksjonen. Innholdet fanges én gang
@@ -404,13 +413,23 @@
     },
     {
       "type": "paragraph",
-      "content": "Snitt og antall hentes automatisk fra anmeldelsene i Klaviyo Reviews (produktet i CTA-lenken). Det finnes ingen tall å skrive inn her."
+      "content": "Snitt og antall hentes automatisk fra anmeldelsene i Klaviyo Reviews. Det finnes ingen tall å skrive inn her."
+    },
+    {
+      "type": "select",
+      "id": "rating_source",
+      "label": "Stjernene gjelder",
+      "options": [
+        { "value": "store", "label": "Hele butikken" },
+        { "value": "product", "label": "Produktet i CTA-lenken" }
+      ],
+      "default": "store"
     },
     {
       "type": "checkbox",
       "id": "rating_show_count",
       "label": "Vis antall anmeldelser",
-      "info": "Av: «★★★★★ 4,8/5». På: «★★★★★ 4,8/5 · 85 anmeldelser».",
+      "info": "Av: «★★★★★ 4,7/5». På: «★★★★★ 4,7/5 · 236 anmeldelser».",
       "default": false
     },
     {

@@ -32,21 +32,29 @@
       {%- endif -%}
 
       {%- comment -%}
-        Snitt og antall fra Klaviyo Reviews via sk-review-stats (produktet i
-        Produkt-URL), ikke fra tekstfelt. Tallene her sto hardkodet på 4,9 · 89
-        (Clear) og 4,8 · 62 (Radiance), mens heroen på samme side viste de
-        ekte 4,7 · 76 og 4,8 · 85. Mangler tallene, skjules linjen.
+        Snitt og antall fra Klaviyo Reviews via sk-review-stats, ikke fra
+        tekstfelt. Tallene her sto hardkodet på 4,9 · 89 (Clear) og 4,8 · 62
+        (Radiance), mens heroen på samme side viste de ekte 4,7 · 76 og
+        4,8 · 85. Mangler tallene, skjules linjen.
+
+        Standard er hele butikken (merchantens valg, sep 2026), som heroen.
+        Da står «av Skinora» bak antallet: under en overskrift om ett produkt
+        ville «236 anmeldelser» alene lese som 236 anmeldelser av DET
+        produktet.
       {%- endcomment -%}
-      {%- assign rv_handle = section.settings.product_url | split: '/products/' | last | split: '?' | first -%}
-      {%- assign rv_product = all_products[rv_handle] -%}
-      {%- capture rv_rating -%}{%- render 'sk-review-stats', product: rv_product, part: 'rating' -%}{%- endcapture -%}
-      {%- capture rv_count -%}{%- render 'sk-review-stats', product: rv_product, part: 'count' -%}{%- endcapture -%}
+      {%- assign rv_stats_product = nil -%}
+      {%- if section.settings.rating_source == 'product' -%}
+        {%- assign rv_handle = section.settings.product_url | split: '/products/' | last | split: '?' | first -%}
+        {%- assign rv_stats_product = all_products[rv_handle] -%}
+      {%- endif -%}
+      {%- capture rv_rating -%}{%- render 'sk-review-stats', product: rv_stats_product, part: 'rating' -%}{%- endcapture -%}
+      {%- capture rv_count -%}{%- render 'sk-review-stats', product: rv_stats_product, part: 'count' -%}{%- endcapture -%}
       {%- if section.settings.show_score != false and rv_rating != blank -%}
         <div class="lp-reviews__score-row">
           <span class="lp-reviews__score-stars">★★★★★</span>
           <span class="lp-reviews__score-value">{{ rv_rating }}</span>
           <span class="lp-reviews__score-count"
-            >· basert på {{ rv_count }} anmeldelser</span
+            >· basert på {{ rv_count }} anmeldelser{% if rv_stats_product == blank %} av Skinora{% endif %}</span
           >
         </div>
       {%- endif -%}
@@ -362,8 +370,18 @@
       "type": "checkbox",
       "id": "show_score",
       "label": "Vis vurderingslinje",
-      "info": "«★★★★★ 4,8 · basert på 85 anmeldelser». Tallene hentes automatisk fra Klaviyo Reviews for produktet i Produkt-URL.",
+      "info": "«★★★★★ 4,7 · basert på 236 anmeldelser av Skinora». Tallene hentes automatisk fra Klaviyo Reviews.",
       "default": true
+    },
+    {
+      "type": "select",
+      "id": "rating_source",
+      "label": "Vurderingslinjen gjelder",
+      "options": [
+        { "value": "store", "label": "Hele butikken" },
+        { "value": "product", "label": "Produktet i Produkt-URL" }
+      ],
+      "default": "store"
     },
     {
       "type": "header",
