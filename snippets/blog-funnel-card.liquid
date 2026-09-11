@@ -66,6 +66,16 @@
       {%- liquid
         assign bfc_img = bfc_product.featured_image
         assign bfc_nytte = bfc_product.metafields.custom.kort_nytte.value | strip
+
+        comment
+          Kortnavn til alle knapper: navnet før tankestreken («Skinora® Radiance
+          Face»). Produkttitlene har en beskrivende hale («– Rødlysmaske for
+          ansikt»), og i versaler ble knappene 380–500px brede og brakk til to
+          linjer. Hele tittelen står som overskrift i kortet rett over knappen,
+          så ingenting går tapt. Samme regel i sticky-baren
+          (snippets/blog-funnel-sticky.liquid).
+        endcomment
+        assign bfc_short = bfc_product.title | split: ' – ' | first | split: ' - ' | first | strip
         if bfc_hook == blank
           assign bfc_hook = 'Brukes i rutinen i denne artikkelen'
         endif
@@ -104,14 +114,6 @@
             data-cta-variant="kompakt"
             data-cta-type="produkt"
           >
-            {%- comment -%}
-              Kompaktkortet viser bare navnet før tankestreken («Skinora® Radiance
-              Face»), ikke hele tittelen. Produkttitlene har en beskrivende hale
-              («– Rødlysmaske for ansikt»), og i versaler ble knappen over 500px
-              bred. Hele tittelen står uansett rett over knappen. Fullkortet
-              beholder «Se {{ produkt.title }}» som spesifisert.
-            {%- endcomment -%}
-            {%- assign bfc_short = bfc_product.title | split: ' – ' | first | split: ' - ' | first | strip -%}
             Se {{ bfc_short | escape }}
           </a>
         </div>
@@ -144,7 +146,7 @@
                 data-cta-variant="full"
                 data-cta-type="produkt"
               >
-                Se {{ bfc_product.title | escape }}
+                Se {{ bfc_short | escape }}
               </a>
               <a
                 href="{{ bfc_quiz_url }}"

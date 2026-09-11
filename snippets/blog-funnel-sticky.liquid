@@ -37,7 +37,13 @@
   assign bfs_quiz_url = pages.hudveiviser.url | default: '/pages/hudveiviser'
 
   if bfs_type == 'produkt'
-    assign bfs_label = bfs_product.title | append: ' · Se masken'
+    comment
+      Kortnavnet (før tankestreken), ikke hele tittelen: med halen
+      «– Rødlysmaske for ansikt» brakk baren til to linjer på en 390px telefon.
+      Samme regel som knappene i blog-funnel-card.
+    endcomment
+    assign bfs_short = bfs_product.title | split: ' – ' | first | split: ' - ' | first | strip
+    assign bfs_label = bfs_short | append: ' · Se masken'
     assign bfs_href = bfs_product.url
   else
     assign bfs_label = 'Hvilken maske passer din hud? Ta testen'
