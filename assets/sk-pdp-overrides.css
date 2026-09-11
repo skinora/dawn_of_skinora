@@ -1,65 +1,10 @@
 /* ──────────────────────────────────────────────
-   PDP-only overrides (Okendo review list, radiance
-   product typography, responsive PDP tweaks).
+   PDP-only overrides (radiance product typography,
+   responsive PDP tweaks).
+   Okendo-reglene er fjernet sep 2026: produktsidene bruker Klaviyo Reviews,
+   og ingen mal rendrer et Okendo-widget lenger.
    Deferred – loaded only on product pages.
    ────────────────────────────────────────────── */
-
-/* Okendo review-list items */
-
-.okeReviews[data-oke-container] .oke-is-large .oke-w-reviews-list-item,
-div.okeReviews .oke-is-large .oke-w-reviews-list-item {
-  background: transparent !important;
-  border-bottom: 1px solid var(--mine-shaft-200) !important;
-  padding-bottom: 28px !important;
-  margin-bottom: 28px !important;
-}
-
-.okeReviews[data-oke-container] .oke-is-large .oke-w-reviews-list-item:last-child,
-div.okeReviews .oke-is-large .oke-w-reviews-list-item:last-child {
-  border-bottom: none !important;
-  margin-bottom: 0 !important;
-}
-
-.oke-w-reviews-list .oke-w-review-side {
-  margin-left: 24px !important;
-}
-
-/* Review text styling */
-.oke-w-reviews-main .oke-w-review-content .oke-reviewContent-title,
-.oke-w-reviews-main .oke-w-review-content .oke-reviewContent .oke-reviewContent-title {
-  font-family: var(--font-heading-family) !important;
-  font-size: clamp(1.6rem, 1.8vw, 1.8rem) !important;
-  line-height: 1.6 !important;
-  color: var(--color-brand) !important;
-  font-weight: 500 !important;
-  margin-bottom: 1rem !important;
-}
-
-.oke-w-reviews-main .oke-w-review-content .oke-reviewContent-body,
-.oke-w-reviews-main .oke-w-review-content .oke-reviewContent .oke-reviewContent-body,
-.oke-w-reviews-main .oke-w-reviewReply-body {
-  font-family: var(--font-body-family) !important;
-  font-size: clamp(1.6rem, 1.8vw, 1.8rem) !important;
-  line-height: 1.6 !important;
-  color: rgba(var(--sk-color-body-text), 1) !important;
-}
-
-.oke-w-reviews-main .oke-w-review-header .oke-w-reviewer-name,
-.oke-w-reviews-main .oke-w-reviewer-name {
-  font-family: var(--font-body-family) !important;
-  font-size: clamp(1.6rem, 1.8vw, 1.8rem) !important;
-  line-height: 1.6 !important;
-  font-weight: 500 !important;
-  color: var(--mine-shaft-900) !important;
-}
-
-.oke-w-reviews-main .oke-w-review-date,
-.oke-w-reviews-main .oke-w-verified-buyer {
-  font-family: var(--font-body-family) !important;
-  font-size: clamp(1.6rem, 1.8vw, 1.8rem) !important;
-  line-height: 1.6 !important;
-  color: var(--mine-shaft-500) !important;
-}
 
 /* PDP description metafield typography */
 
@@ -91,48 +36,6 @@ div.okeReviews .oke-is-large .oke-w-reviews-list-item:last-child {
   margin-bottom: 0;
 }
 
-/* Okendo review content reorder */
-
-.oke-w-reviews-main .oke-w-review-content .oke-reviewContent {
-  display: flex;
-  flex-direction: column-reverse;
-}
-
-.oke-w-reviews-main .oke-w-review-content .oke-reviewContent .oke-reviewContent-title {
-  order: 2;
-}
-
-.oke-w-reviews-main
-  .oke-w-review-content
-  .oke-reviewContent
-  .oke-reviewContent-title
-  + .oke-reviewContent-body.oke-bodyText {
-  order: 1;
-}
-
-.oke-w-reviews-main .oke-w-review-content .oke-reviewContent-top {
-  margin-top: 1rem !important;
-}
-
-/* Okendo button hover */
-
-.okeReviews[data-oke-container] .oke-button:not(.oke-is-loading):not(.oke-is-active):hover,
-div.okeReviews .oke-button:not(.oke-is-loading):not(.oke-is-active):hover {
-  color: var(--color-white) !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-}
-
-.okeReviews[data-oke-container] .oke-w-writeReview:hover:before,
-div.okeReviews .oke-w-writeReview:hover:before {
-  color: var(--color-white) !important;
-}
-
-.okeReviews[data-oke-container] .oke-w-review-main,
-div.okeReviews .oke-w-review-main {
-  margin-right: 24px;
-}
-
 /* PDP thumbnail hide on narrow screens */
 
 @media only screen and (max-width: 550px) {
@@ -160,11 +63,6 @@ div.okeReviews .oke-w-review-main {
 
   .sk-radiance-product__text.subtitle {
     font-size: var(--sk-font-size-xxs) !important;
-  }
-
-  .oke-sr .oke-is-clickable {
-    font-size: var(--sk-font-size-xxs) !important;
-    margin-top: 16px;
   }
 
   .sk-radiance-price-item--sale {
@@ -197,24 +95,6 @@ div.okeReviews .oke-w-review-main {
 
   .sk-radiance-product-description__content p,
   .sk-radiance-product__text {
-    font-size: var(--sk-font-size-xxs) !important;
-    line-height: 20px !important;
-  }
-
-  .okeReviews[data-oke-container] .oke-button,
-  div.okeReviews .oke-button {
-    font-size: 11px !important;
-    padding: 11px 12px !important;
-  }
-
-  .okeReviews[data-oke-container] .oke-w-reviews-head,
-  div.okeReviews .oke-w-reviews-head {
-    margin-bottom: 18px !important;
-  }
-
-  .oke-w-reviews-main .oke-w-review-content .oke-reviewContent .oke-reviewContent-title,
-  .okeReviews[data-oke-container] p,
-  div.okeReviews p {
     font-size: var(--sk-font-size-xxs) !important;
     line-height: 20px !important;
   }
