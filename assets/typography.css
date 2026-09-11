@@ -396,9 +396,16 @@ a:hover {
    No new selectors deeper than one class. No !important.
    ============================================================= */
 
-/* Hero ----------------------------------- */
+/* Hero -----------------------------------
+   --fs-hero, IKKE --fs-5xl. Konstitusjonen (CLAUDE.md) sier hero-H1 = 28–32px
+   mobil og 48–52px desktop via --fs-hero. Regelen her sto på --fs-5xl
+   (44–64px) og vant over .lp-hero__title { font-size: var(--fs-hero) } i
+   section-sk-lp-radiance-face.css på spesifisitet (0,1,1 mot 0,1,0).
+   Målt på Radiance-LP-en i 375px: 46,75px og seks linjer — overskriften
+   alene var 294px høy, og heroens delte topp/bunn-oppsett fikk ingen fri
+   midtsone igjen. */
 .lp-hero h1 {
-  font-size: var(--fs-5xl);
+  font-size: var(--fs-hero);
 }
 .lp-hero p {
   font-size: var(--fs-lg);
