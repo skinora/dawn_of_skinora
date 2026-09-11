@@ -128,21 +128,28 @@
     font-size: var(--sk-font-size-xxs);
   }
 
+  /* Sto på font-size 0.75rem = 7,5 px (roten er 62,5 %) og 0.35em sperring
+     i en fast 120 px sirkel. Et langt enkeltord som «PAKKERABATT» får ikke
+     plass der i lesbar størrelse, så sirkelen vokser nå med det lengste
+     ordet (min-content) og holder 120 px som minimum. Flerordstekst som
+     «LIMITED EDITION» brytes fortsatt over to linjer i 120 px. */
   .sk-product-card__badge {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 120px;
-    height: 120px;
+    width: min-content;
+    min-width: 120px;
+    aspect-ratio: 1;
+    box-sizing: border-box;
     border-radius: 999px;
     text-transform: uppercase;
-    letter-spacing: 0.35em;
-    font-size: 0.75rem;
+    letter-spacing: var(--tracking-wide);
+    font-size: var(--fs-xs);
     font-weight: var(--fw-semibold);
     top: -30px;
     right: -20px;
-    padding: 0.75rem;
+    padding: 0 var(--space-3);
     text-align: center;
     background: var(--color-brand);
     color: var(--color-white);

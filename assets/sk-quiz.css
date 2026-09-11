@@ -378,7 +378,7 @@ sk-quiz {
   }
 }
 
-/* Fast fane i venstre skjermkant (kun desktop) */
+/* Fast fane i venstre skjermkant (kun brede skjermer, se under) */
 .sk-quiz-tab {
   position: fixed; left: 0; top: 50%; transform: translateY(-50%);
   z-index: 20; display: flex; align-items: center;
@@ -405,9 +405,14 @@ sk-quiz {
   background: rgb(var(--color-background)); color: var(--color-brand, rgb(var(--color-foreground)));
   font-size: 1.4rem; line-height: 1; cursor: pointer;
 }
-@media (max-width: 749px) {
+/* Skjult under 1440 px. Fanen er 41 px bred og fast i venstre kant, men
+   hero-, problem- og produktseksjonene står 32–40 px fra kanten helt opp
+   til ~1400 px. Målt sep 2026: på 1024 px dekket fanen første bokstav i
+   hver hero-linje på landingssidene, på 1280–1366 px forsidens overskrift
+   og «Les mer». Fra 1440 px er det fri marg. */
+@media (max-width: 1439px) {
   .sk-quiz-tab,
-  .sk-quiz-tab:not([hidden]) { display: none; } /* skjult under 750 px */
+  .sk-quiz-tab:not([hidden]) { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
