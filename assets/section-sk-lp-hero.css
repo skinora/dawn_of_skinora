@@ -179,6 +179,17 @@
   .lp-hero.lp-hero--overlay .lp-hero__content > .lp-hero__rating ~ .lp-hero__actions {
     margin-top: var(--space-4);
   }
+
+  /* Pills skjules når trustbaren under viser det samme (seksjonsinnstilling,
+     standard på). CTA-blokken blir da siste element i bunngruppen og mister
+     sin bunnmarg, ellers står det en tom stripe mellom pris og trustbar. */
+  .lp-hero.lp-hero--pills-desktop-only .lp-hero__pills {
+    display: none;
+  }
+
+  .lp-hero.lp-hero--pills-desktop-only .lp-hero__actions {
+    margin-bottom: 0;
+  }
 }
 
 /* ---------- Eyebrow ---------- */

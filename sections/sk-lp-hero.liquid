@@ -57,7 +57,14 @@
 
 <!-- SECTION: Hero — full-bleed image with overlaid content -->
 <div class="sk-lp">
-  <section class="lp-hero lp-hero--overlay">
+  {%- comment -%}
+    --pills-desktop-only: pills-raden skjules under 769px. På mobil ligger
+    trustbaren som glasspanel rett under pillsene og sier det samme
+    («Norsk merke» ≈ «Norskutviklet», «30 dagers fornøydgaranti» ≈ «30 dagers
+    garanti»). To like rader oppå hverandre var en av grunnene til at heroen
+    leste travelt på små skjermer. Standard på; skru av på en LP uten trustbar.
+  {%- endcomment -%}
+  <section class="lp-hero lp-hero--overlay{% if section.settings.pills_desktop_only != false %} lp-hero--pills-desktop-only{% endif %}">
 
     {%- comment -%}
       Hero media: full-bleed background.
@@ -478,6 +485,17 @@
       "type": "url",
       "id": "link_url",
       "label": "Sekundærlenke URL"
+    },
+    {
+      "type": "header",
+      "content": "Trust-pills"
+    },
+    {
+      "type": "checkbox",
+      "id": "pills_desktop_only",
+      "label": "Skjul pills på mobil",
+      "info": "På mobil viser trustbaren rett under det samme. Skru av hvis landingssiden ikke har trustbar — da er pillsene de eneste tillitssignalene i heroen.",
+      "default": true
     }
   ],
   "blocks": [
