@@ -305,10 +305,11 @@
     /* Tre kort à fast 420 px trenger ~1360 px. Mellom 900 og ~1360 px
        rant raden ut på begge sider (justify-content: center) og html
        klipper overflyt: på 1024 px startet første kort på −155 px. Nå
-       deler kortene bredden og krymper, med 420 px som tak. */
+       krymper kortene med vinduet (en tredjedel av bredden minus marger
+       og mellomrom), med 420 px som tak — fra ~1400 px er alt som før. */
     .sk-led-technology__card {
-      flex: 1 1 0;
-      width: auto;
+      flex: 0 0 auto;
+      width: min(420px, calc((100vw - 2 * var(--space-6) - 2 * clamp(2rem, 3vw, 3rem)) / 3));
       min-width: 0;
       max-width: 420px;
       padding: clamp(1.25rem, 2vw, 1.9rem) clamp(1.35rem, 2.5vw, 2.1rem);
