@@ -639,11 +639,40 @@
 </style>
 
 {%- liquid
-  # ---- Kampanjebryter (settings.kampanje_aktiv). Alt kampanje-innhold er
-  #      betinget; er bryteren av, faller alt tilbake til seksjonens egne
-  #      innstillinger og siden er identisk med før. Ingen priser eller
-  #      datoer er hardkodet – de kommer fra tema-innstillingene.
-  assign kampanje = settings.kampanje_aktiv
+  # Knappen peker på produktet uansett kampanjestatus (samleside → produktside).
+  # Samme lenke er priskilden for kampanjen under.
+  assign hero_link = section.settings.sk_banner_button_link
+  if hero_link == blank
+    assign hero_link = '/products/skinora-radiance-face'
+  endif
+-%}
+{%- comment -%}
+  KAMPANJE — permanent løsning (sep 2026)
+  Prisene kom tidligere fra TEKSTFELT i temainnstillingene (kampanje_pris,
+  kampanje_ordinaerpris), og besparelsen ble regnet ut ved å strippe «kr» og
+  mellomrom fra de to strengene. Kampanjen måtte altså skrives inn for hånd på
+  forsiden i tillegg til i Shopify — og ingenting varslet om de to var uenige.
+
+  Nå hentes alt fra produktet i knappelenken (sk-lp-pricing):
+    pris      = produktets pris
+    før-pris  = «Sammenlign med»-prisen
+    spar      = differansen
+  Kampanjen vises når den går (sk-campaign-live: bryter + sluttdato) OG
+  produktet faktisk er på salg. Datoen kommer fra sk-campaign-date.
+  Er kampanjen av, faller alt tilbake til seksjonens egne innstillinger og
+  siden er identisk med før.
+{%- endcomment -%}
+{%- capture hb_live -%}{%- render 'sk-campaign-live' -%}{%- endcapture -%}
+{%- capture hb_sale -%}{%- render 'sk-lp-pricing', url: hero_link, part: 'salg' -%}{%- endcapture -%}
+{%- capture hb_pris -%}{%- render 'sk-lp-pricing', url: hero_link, part: 'pris' -%}{%- endcapture -%}
+{%- capture hb_for -%}{%- render 'sk-lp-pricing', url: hero_link, part: 'for-pris' -%}{%- endcapture -%}
+{%- capture hb_spar -%}{%- render 'sk-lp-pricing', url: hero_link, part: 'spar' -%}{%- endcapture -%}
+{%- capture hb_date -%}{%- render 'sk-campaign-date' -%}{%- endcapture -%}
+{%- liquid
+  assign kampanje = false
+  if hb_live contains '1' and hb_sale contains '1'
+    assign kampanje = true
+  endif
 
   assign hero_title = section.settings.sk_banner_title
   assign hero_desc = section.settings.sk_banner_description
@@ -654,48 +683,7 @@
   # seg: etiketten, prislinja og prisen i knappen.
   assign hero_btn = 'SE RADIANCE FACE'
   if kampanje
-    assign hero_btn = 'KJØP NÅ – ' | append: settings.kampanje_pris
-  endif
-
-  # Kampanjeperiode: «3.–17. august» hvis startdato er satt, ellers «til 17. august».
-  assign kampanje_periode = settings.kampanje_sluttdato
-  if settings.kampanje_startdato != blank
-    assign kampanje_periode = settings.kampanje_startdato | append: '–' | append: settings.kampanje_sluttdato
-  else
-    assign kampanje_periode = 'til ' | append: settings.kampanje_sluttdato
-  endif
-
-  # Besparelsen REGNES UT fra de to prisene i stedet for å være et eget felt –
-  # da kan den aldri komme i utakt med prisene (samme feilen som kampanje-copyen
-  # hadde). Tall trekkes ut ved å strippe mellomrom (også hardt mellomrom) og «kr».
-  assign _ny = settings.kampanje_pris | replace: ' ', '' | replace: ' ', '' | replace: 'kr', '' | replace: ',-', '' | strip | plus: 0
-  assign _ord = settings.kampanje_ordinaerpris | replace: ' ', '' | replace: ' ', '' | replace: 'kr', '' | replace: ',-', '' | strip | plus: 0
-  assign kampanje_spar = 0
-  if _ord > _ny
-    assign kampanje_spar = _ord | minus: _ny
-  endif
-
-  # Tusenskille: Liquid mangler formatering, så vi setter det manuelt.
-  assign spar_tekst = ''
-  if kampanje_spar > 0
-    if kampanje_spar >= 1000
-      assign _t = kampanje_spar | divided_by: 1000
-      assign _r = kampanje_spar | modulo: 1000
-      if _r < 10
-        assign _r = _r | prepend: '00'
-      elsif _r < 100
-        assign _r = _r | prepend: '0'
-      endif
-      assign spar_tekst = _t | append: ' ' | append: _r | append: ' kr'
-    else
-      assign spar_tekst = kampanje_spar | append: ' kr'
-    endif
-  endif
-
-  # Knappen peker på produktet uansett kampanjestatus (samleside → produktside).
-  assign hero_link = section.settings.sk_banner_button_link
-  if hero_link == blank
-    assign hero_link = '/products/skinora-radiance-face'
+    assign hero_btn = 'KJØP NÅ – ' | append: hb_pris
   endif
 
   # (Tidligere ble anmeldelsestall hentet fra reviews-metafeltet her. Fjernet:
@@ -708,7 +696,7 @@
   <div class="page-width">
     <div class="sk-dynamic-banner__container">
       <div class="sk-dynamic-banner__content">
-        {%- if kampanje and settings.kampanje_sluttdato != blank -%}
+        {%- if kampanje -%}
           {%- comment -%}
             Etiketten RAMMER INN (dette er en kampanje). Selve fristen står
             nede ved knappen – hastverk virker kun der beslutningen tas, ikke
@@ -730,14 +718,14 @@
           (strøket ordinærpris + ny pris) leser raskere enn samme informasjon
           pakket inn i en setning – og holder brødteksten fri for pris.
         {%- endcomment -%}
-        {%- if kampanje and settings.kampanje_pris != blank -%}
+        {%- if kampanje -%}
           <p class="sk-dynamic-banner__price">
-            <span class="sk-dynamic-banner__price-now">{{ settings.kampanje_pris }}</span>
-            {%- if settings.kampanje_ordinaerpris != blank -%}
-              <span class="sk-dynamic-banner__price-was">{{ settings.kampanje_ordinaerpris }}</span>
+            <span class="sk-dynamic-banner__price-now">{{ hb_pris }}</span>
+            {%- if hb_for != blank -%}
+              <s class="sk-dynamic-banner__price-was">{{ hb_for }}</s>
             {%- endif -%}
-            {%- if spar_tekst != blank -%}
-              <span class="sk-dynamic-banner__save">Spar {{ spar_tekst }}</span>
+            {%- if hb_spar != blank -%}
+              <span class="sk-dynamic-banner__save">Spar {{ hb_spar }}</span>
             {%- endif -%}
           </p>
         {%- endif -%}
@@ -759,11 +747,11 @@
           Formulert som tap («da er prisen tilbake på …»), ikke bare som en dato
           – tapsaversjon flytter flere enn en nøytral opplysning.
         {%- endcomment -%}
-        {%- if kampanje and settings.kampanje_sluttdato != blank -%}
+        {%- if kampanje and hb_date != blank -%}
           <p class="sk-dynamic-banner__deadline">
-            Kun til <strong>{{ settings.kampanje_sluttdato }}</strong>
-            {%- if settings.kampanje_ordinaerpris != blank -%}
-              {{ ' ' }}– deretter {{ settings.kampanje_ordinaerpris }}
+            Kun til <strong>{{ hb_date }}</strong>
+            {%- if hb_for != blank -%}
+              {{ ' ' }}– deretter {{ hb_for }}
             {%- endif -%}
           </p>
         {%- endif -%}

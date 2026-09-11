@@ -453,8 +453,14 @@
             "@type": "Offer",
             "url": "https://www.skinora.no/pages/skinora-radiance-face",
             "priceCurrency": "NOK",
-            "price": "4690.00",
-            "availability": "https://schema.org/InStock",
+            {%- comment -%}
+              Pris og lager fra produktet, ikke hardkodet. Sto tidligere som
+              "4690.00" og "InStock" — Google leste ordinærprisen mens siden viste
+              kampanjeprisen, og en utsolgt maske ville fortsatt stått på lager.
+            {%- endcomment -%}
+            {%- assign ld_v = all_products['skinora-radiance-face'].selected_or_first_available_variant -%}
+            "price": "{{ ld_v.price | divided_by: 100 }}.{{ ld_v.price | modulo: 100 | prepend: '0' | slice: -2, 2 }}",
+            "availability": "https://schema.org/{% if ld_v.available %}InStock{% else %}OutOfStock{% endif %}",
             "itemCondition": "https://schema.org/NewCondition",
             "shippingDetails": {
               "@type": "OfferShippingDetails",
@@ -559,8 +565,15 @@
             "@type": "Offer",
             "url": "https://www.skinora.no/pages/skinora-clear",
             "priceCurrency": "NOK",
-            "price": "4390.00",
-            "availability": "https://schema.org/InStock",
+
+            {%- comment -%}
+              Pris og lager fra produktet, ikke hardkodet. Sto tidligere som
+              "4390.00" og "InStock" — Google leste ordinærprisen mens siden viste
+              kampanjeprisen, og en utsolgt maske ville fortsatt stått på lager.
+            {%- endcomment -%}
+            {%- assign ld_v = all_products['skinora-clear'].selected_or_first_available_variant -%}
+            "price": "{{ ld_v.price | divided_by: 100 }}.{{ ld_v.price | modulo: 100 | prepend: '0' | slice: -2, 2 }}",
+            "availability": "https://schema.org/{% if ld_v.available %}InStock{% else %}OutOfStock{% endif %}",
             "itemCondition": "https://schema.org/NewCondition",
             "shippingDetails": {
               "@type": "OfferShippingDetails",
