@@ -105,8 +105,11 @@
       color-mix(in srgb, var(--ink-900) 52%, transparent) 12%,
       color-mix(in srgb, var(--ink-900) 18%, transparent) 30%,
       color-mix(in srgb, var(--ink-900) 10%, transparent) 45%,
-      color-mix(in srgb, var(--ink-900) 20%, transparent) 58%,
-      color-mix(in srgb, var(--ink-900) 55%, transparent) 74%,
+      /* Bunngruppen begynner høyere oppe etter at underteksten flyttet ned,
+         så scrimen må ta igjen litt tidligere. Midtsonen (30–45 %) er
+         urørt — det er den som holder ansiktet lesbart som bilde. */
+      color-mix(in srgb, var(--ink-900) 28%, transparent) 58%,
+      color-mix(in srgb, var(--ink-900) 60%, transparent) 72%,
       /* Lettes mot bunnen: den nederste stripen ligger bak trustbarens
          frostglass, og var scrimen like mørk der som resten, hadde glasset
          ikke hatt noe bilde å slippe gjennom. */
@@ -145,8 +148,14 @@
 
 /* ---------- Delt innhold på mobil ----------
    Alt innholdet lå samlet i bunnen, og blokken dekket munnen og haken på
-   modellen. Nå står budskapet (eyebrow, tittel, undertekst) øverst og beviset
-   (rating, CTA, pris, pills) nederst, slik at ansiktet ligger fritt i midten.
+   modellen. Nå står budskapet øverst og beviset nederst, slik at ansiktet
+   ligger fritt i midten.
+
+   Sep 2026: underteksten sto i toppgruppen, og på Radiance er den tre linjer.
+   Sammen med en tre-linjers H1 nådde toppblokken ned i ansiktet på modellen
+   uansett hvor lys scrimen var. Skillet er derfor flyttet opp: bare eyebrow
+   og tittel står øverst nå, mens undertekst, rating, CTA og pris følges ad
+   nederst. Det gir ~80 px fri billedflate midt på en iPhone-skjerm.
 
    Ingen markup-endring: `margin-top: auto` på det første elementet i
    bunngruppen skyver resten ned av seg selv. Ratingen er valgfri i
@@ -178,6 +187,20 @@
 
   .lp-hero.lp-hero--overlay .lp-hero__content > .lp-hero__rating ~ .lp-hero__actions {
     margin-top: var(--space-4);
+  }
+
+  /* Finnes underteksten, starter den bunngruppen — den er øverste ledd i
+     bevisrekka «hva er det → hva sier andre → kjøp». Reglene under nuller
+     auto-margen på leddene etter, ellers ville hver av dem dyttet seg selv
+     ned og sprengt gruppen fra hverandre. De står sist i blokken med vilje:
+     lik spesifisitet, så rekkefølgen avgjør. */
+  .lp-hero.lp-hero--overlay .lp-hero__content > .lp-hero__text {
+    margin-top: auto;
+  }
+
+  .lp-hero.lp-hero--overlay .lp-hero__content > .lp-hero__text ~ .lp-hero__rating,
+  .lp-hero.lp-hero--overlay .lp-hero__content > .lp-hero__text ~ .lp-hero__actions {
+    margin-top: 0;
   }
 
   /* Pills skjules når trustbaren under viser det samme (seksjonsinnstilling,
@@ -429,14 +452,17 @@ body .lp-hero--overlay .lp-btn--hero:focus-visible {
   .lp-hero__title {
     margin-bottom: var(--space-3);
   }
+  /* Strammet fra space-4 til space-3 (sep 2026): nå som undertekst, rating,
+     CTA og pris står samlet nederst, ble fire like store luker til en høy,
+     luftig blokk som igjen krøp opp i motivet. */
   .lp-hero__text {
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-3);
   }
   .lp-hero__rating {
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-3);
   }
   .lp-hero__actions {
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-3);
   }
 }
 
