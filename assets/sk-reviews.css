@@ -84,6 +84,14 @@
   animation: sk-quote-fade 13.5s linear infinite;
 }
 
+/* Sikring: kjører animasjonen ikke (blokkert, gammel nettleser, fanen var i
+   bakgrunnen da skuffen ble bygget), står det første sitatet synlig i stedet
+   for at kunden ser en tom flate. Nøkkelbildene overstyrer denne mens
+   animasjonen faktisk går. */
+.sk-quote-rot .sk-quote--rot:first-child {
+  opacity: 1;
+}
+
 .sk-quote-rot .sk-quote--rot:nth-child(2) {
   animation-delay: 4.5s;
 }
@@ -139,10 +147,18 @@
 }
 
 /* ── Modal ───────────────────────────────────────────────────────────────── */
+/* position: fixed + egen sentrering, ikke bare nettleserens.
+   showModal() sentrerer selv, men iOS Safari før 15.4 mangler den; da åpnes
+   dialogen med open-attributtet, og uten dette ville den lagt seg i den
+   vanlige tekstflyten midt på siden. */
 .sk-reviews-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: min(92vw, 520px);
   max-height: 86svh;
-  margin: auto;
+  margin: 0;
   padding: 0;
   border: 0;
   border-radius: 16px;
