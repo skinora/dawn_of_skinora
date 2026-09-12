@@ -1217,6 +1217,13 @@
       onload="this.media='all'"
     >
 
+    {%- comment -%}
+      Anmeldelses-modalen og sitatene. Lastes utsatt: laget vises først ved
+      klikk, og sitatrotasjonen i skuffen ligger under folden til skuffen åpnes.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'sk-reviews.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ 'sk-reviews.css' | asset_url }}"></noscript>
+
     {%- comment -%} Cart drawer CSS deferred — drawer is hidden by inline visibility:hidden until opened {%- endcomment -%}
     {%- if settings.cart_type == 'drawer' -%}
       <link rel="stylesheet" href="{{ 'sk-cart-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -1438,5 +1445,12 @@
       utenom den vanlige seksjonsrekkefølgen.
     {%- endcomment -%}
     {% render 'sk-cta-click-tracking' %}
+    {%- comment -%}
+      Anmeldelser i et lag over siden. Rendres ÉN gang her, ikke i seksjonene:
+      knappene som åpner den finnes i kurv-skuffen, på /cart og på
+      produktsiden, og skuffen byttes ut med ny HTML ved hver kurvendring.
+    {%- endcomment -%}
+    {% render 'sk-reviews-modal' %}
+
   </body>
 </html>

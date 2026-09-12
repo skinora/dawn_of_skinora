@@ -382,6 +382,20 @@ cart-drawer-items {
   grid-column: 2 / 5;
 }
 
+/* «+» var usynlig på mobil (Clarity, sep 2026: kunden så bare «–» og
+   søppelbøtta). base-deferred.css setter siste antallsknapp til
+   --color-foreground under 750 px — en regel skrevet for den LYSE
+   handlekurv-siden, men den traff også skuffen, der antallsfeltet er mørkt.
+   Målt: «+» rgb(58,52,72) på rgb(48,39,62).
+
+   Tre klasser (0,3,0) slår regelen i base-deferred (0,2,0) uansett hvilken
+   av de to utsatte stilfilene som lander sist. */
+.cart-drawer .quantity .quantity__button,
+.cart-drawer .quantity .quantity__button .svg-wrapper svg path {
+  color: var(--color-white);
+  fill: currentColor;
+}
+
 @media screen and (max-width: 749px) {
   .cart-drawer .cart-item cart-remove-button {
     margin-left: 0.8rem;

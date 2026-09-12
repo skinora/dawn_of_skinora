@@ -16,6 +16,12 @@
   Bruk:
     {% render 'sk-star-rating', sr_product: card_product %}
     {% render 'sk-star-rating', sr_product: product, sr_show_count: false %}
+    {% render 'sk-star-rating', sr_product: product, sr_trigger: true %}
+
+  sr_trigger gjør stjernene til en knapp som åpner anmeldelses-modalen
+  (sk-reviews-modal). Brukes på produktsiden, der anmeldelsene ellers ligger
+  ~82 % ned på siden. IKKE på produktkortene: de ligger inne i en <a>, og en
+  knapp inni en lenke er ugyldig HTML.
 
   Stjernestørrelse og -farge styres av --sk-star-size / --sk-star-color
   fra sk-base.css. Rendrer ingenting når produktet mangler anmeldelser.
@@ -42,7 +48,7 @@
     assign sr_label = sr_label_rating | append: ' av ' | append: sr_max | append: ' stjerner, basert på ' | append: sr_count | append: ' anmeldelser'
   -%}
 
-  <div class="sk-stars" role="img" aria-label="{{ sr_label | escape }}">
+  {%- capture sr_inner -%}
     <span class="sk-stars__track" aria-hidden="true">
       <span class="sk-stars__row sk-stars__row--empty"></span>
       <span class="sk-stars__row sk-stars__row--full" style="width: {{ sr_fill }}%"></span>
@@ -50,5 +56,25 @@
     {%- unless sr_show_count == false -%}
       <span class="sk-stars__count" aria-hidden="true">({{ sr_count }})</span>
     {%- endunless -%}
-  </div>
+  {%- endcapture -%}
+
+  {%- if sr_trigger -%}
+    {%- assign sr_set = 'radiance' -%}
+    {%- if sr_p.handle contains 'clear' -%}
+      {%- assign sr_set = 'clear' -%}
+    {%- endif -%}
+    <button
+      type="button"
+      class="sk-stars sk-rating-trigger"
+      data-sk-reviews-open
+      data-sk-reviews-set="{{ sr_set }}"
+      aria-label="{{ sr_label | escape }}. Se anmeldelsene."
+    >
+      {{ sr_inner }}
+    </button>
+  {%- else -%}
+    <div class="sk-stars" role="img" aria-label="{{ sr_label | escape }}">
+      {{ sr_inner }}
+    </div>
+  {%- endif -%}
 {%- endif -%}

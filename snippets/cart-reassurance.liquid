@@ -75,6 +75,20 @@
   {%- endcomment -%}
   {%- capture cr_rating -%}{%- render 'sk-review-stats', scope: 'cart', part: 'rating' -%}{%- endcapture -%}
   {%- capture cr_show_count -%}{%- render 'sk-review-stats', scope: 'cart', part: 'count' -%}{%- endcapture -%}
+  {%- comment -%}
+    Hvilket sitatsett som passer kurven. Clear er blått lys mot utbrudd,
+    Radiance er rødt/nær-infrarødt — sitatene handler om ulike ting, så et
+    Clear-sitat under en Radiance-kurv leser som en annen butikk. Ligger det
+    flere produkter i kurven, vinner Clear: den kunden har den mest spesifikke
+    bekymringen.
+  {%- endcomment -%}
+  {%- assign cr_set = 'radiance' -%}
+  {%- for cr_item in cart.items -%}
+    {%- if cr_item.product.handle contains 'clear' -%}
+      {%- assign cr_set = 'clear' -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
   {%- liquid
 
     # Sitat-rotasjon (alle er EKTE, verifiserte Okendo-anmeldelser).
@@ -103,8 +117,20 @@
   -%}
   <div class="cart-reassure cart-reassure--{{ cr_context }}">
     {%- comment -%} Sosialt bevis — ekte tall fra kurvens produkter, ellers tema-innstillinger {%- endcomment -%}
+    {%- comment -%}
+      Linjen er en KNAPP, ikke en <div>. Clarity (sep 2026): en mobilkunde
+      trykket fem ganger på den her, rett over kassaknappen. Den så klikkbar
+      ut, var det ikke, og hun forlot kurven. Nå åpner den anmeldelsene i et
+      lag over siden — skuffen blir stående.
+    {%- endcomment -%}
     {%- if cr_rating != blank and cr_show_count != blank -%}
-      <div class="cart-reassure__reviews">
+      <button
+        type="button"
+        class="cart-reassure__reviews sk-rating-trigger"
+        data-sk-reviews-open
+        data-sk-reviews-set="{{ cr_set }}"
+        aria-label="Vurdert {{ cr_rating }} av 5 i {{ cr_show_count }} anmeldelser. Se anmeldelsene."
+      >
         {%- comment -%} Inline SVG-stjerner (14px) – eneste bruk av --accent-gold. {%- endcomment -%}
         <span class="cart-reassure__stars" aria-hidden="true">
           {%- for i in (1..5) -%}
@@ -115,11 +141,21 @@
           {{- 'sections.cart.reassure_reviews' | t: rating: cr_rating, count: cr_show_count -}}
         </span>
         {%- comment -%}
-          Sitatene vises IKKE her – de har fått egen full-bredde seksjon
-          (sections/sk-cart-reviews.liquid) under varelisten, der tre spalter
-          faktisk har plass. Her står kun stjerner + rating.
+          På /cart står sitatene i egen full-bredde seksjon
+          (sections/sk-cart-reviews.liquid) under varelisten. I skuffen er det
+          ikke plass til tre spalter — der roterer de ett om gangen, rett
+          under denne linjen.
         {%- endcomment -%}
-      </div>
+      </button>
+    {%- endif -%}
+
+    {%- comment -%}
+      Sitatene i skuffen står mellom summen og «Gå til sikker betaling»: det
+      er der nølingen faktisk skjer. Faste sitater, ingen forespørsel ut —
+      skuffen skal ikke vente på noe for å bli ferdig.
+    {%- endcomment -%}
+    {%- if cr_context == 'drawer' and cart != empty -%}
+      {%- render 'sk-review-quotes', sk_set: cr_set, part: 'rotator' -%}
     {%- endif -%}
 
     {%- comment -%}

@@ -1,0 +1,216 @@
+/* ===========================================================================
+   sk-reviews.css — klikkbare vurderingslinjer, sitater og anmeldelses-modal
+   Hører til snippets/sk-reviews-modal.liquid og snippets/sk-review-quotes.liquid
+   =========================================================================== */
+
+/* ── Vurderingslinjen som knapp ──────────────────────────────────────────────
+   Linjen så klikkbar ut og ble trykket på (Clarity, sep 2026), men var en
+   <div>. Nå en ekte <button>: tastatur, fokusring og opplest navn følger med.
+   min-height/-width 44px er WCAG 2.5.8-målet for treffområde; paddingen gir
+   resten av flaten uten å flytte teksten. */
+.sk-rating-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  min-width: 44px;
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(45, 27, 61, 0.12);
+}
+
+.sk-rating-trigger:hover .sk-rating-trigger__label,
+.sk-rating-trigger:focus-visible .sk-rating-trigger__label {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.sk-rating-trigger:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* ── Sitat ───────────────────────────────────────────────────────────────── */
+.sk-quote {
+  margin: 0;
+}
+
+.sk-quote__stars {
+  color: var(--accent-gold, #c9a227);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.12em;
+}
+
+.sk-quote__text {
+  margin: 2px 0 0;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+  color: var(--ink-700);
+}
+
+.sk-quote__name {
+  margin: 2px 0 0;
+  font-size: var(--fs-xs);
+  color: var(--ink-500);
+}
+
+.sk-quote-list {
+  display: grid;
+  gap: var(--space-4);
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ── Rotasjon i kurv-skuffen ─────────────────────────────────────────────────
+   Tre sitater i samme rutenettcelle. Høyden settes av det lengste, så
+   kassaknappen står stille mens sitatene bytter. 13,5 s totalt = 4,5 s per
+   sitat: lenge nok til å leses, kort nok til at alle tre rekker å vises. */
+.sk-quote-rot {
+  display: grid;
+  margin: 0 0 var(--space-3);
+}
+
+.sk-quote-rot .sk-quote--rot {
+  grid-area: 1 / 1;
+  opacity: 0;
+  animation: sk-quote-fade 13.5s linear infinite;
+}
+
+.sk-quote-rot .sk-quote--rot:nth-child(2) {
+  animation-delay: 4.5s;
+}
+
+.sk-quote-rot .sk-quote--rot:nth-child(3) {
+  animation-delay: 9s;
+}
+
+@keyframes sk-quote-fade {
+  0% {
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  29% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* To sitater: 9 s totalt, samme tempo per sitat. */
+.sk-quote-rot[data-count='2'] .sk-quote--rot {
+  animation-duration: 9s;
+}
+
+.sk-quote-rot[data-count='2'] .sk-quote--rot:nth-child(2) {
+  animation-delay: 4.5s;
+}
+
+/* Ett sitat: ingen grunn til å tone noe. */
+.sk-quote-rot[data-count='1'] .sk-quote--rot {
+  animation: none;
+  opacity: 1;
+}
+
+/* WCAG 2.2.2: automatisk bevegelse må kunne slås av. Da står det første
+   sitatet stille, og de andre skjules så de ikke legger seg oppå. */
+@media (prefers-reduced-motion: reduce) {
+  .sk-quote-rot .sk-quote--rot {
+    animation: none;
+    opacity: 0;
+  }
+
+  .sk-quote-rot .sk-quote--rot:first-child {
+    opacity: 1;
+  }
+}
+
+/* ── Modal ───────────────────────────────────────────────────────────────── */
+.sk-reviews-modal {
+  width: min(92vw, 520px);
+  max-height: 86svh;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  background: var(--paper-0, #fff);
+  color: var(--ink-900);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.sk-reviews-modal::backdrop {
+  background: rgba(45, 27, 61, 0.55);
+}
+
+.sk-reviews-modal__inner {
+  padding: var(--space-5);
+}
+
+.sk-reviews-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.sk-reviews-modal__title {
+  margin: 0;
+  font-family: var(--ff-serif);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  color: var(--ink-900);
+}
+
+.sk-reviews-modal__close {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin: -8px -8px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-500);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.sk-reviews-modal__close:focus-visible {
+  outline: 2px solid var(--ink-900);
+  outline-offset: 2px;
+}
+
+.sk-reviews-modal__score {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-700);
+}
+
+.sk-reviews-modal__all {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: var(--space-4);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-900);
+}

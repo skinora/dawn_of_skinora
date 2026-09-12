@@ -1,0 +1,115 @@
+{%- comment -%}
+  sk-reviews-modal — anmeldelser i et lag over siden
+  ============================================================================
+  Bakgrunn (Clarity, sep 2026): en mobilkunde trykket fem ganger på
+  «★★★★★ 4,8 av 5 — 85 anmeldelser» rett over kassaknappen i kurv-skuffen.
+  Linjen var en <div>. Ingenting skjedde, og hun forlot siden med varen i
+  kurven. Anmeldelsesseksjonen ligger ~82 % ned på produktsiden, og bare
+  3–4 % av mobilbesøkende kommer så langt.
+
+  Nå åpner linjen dette laget i stedet. Kunden blir der hun er — skuffen
+  lukkes ikke, og siden bytter ikke.
+
+  <dialog> med showModal() er valgt med vilje: den legger seg i nettleserens
+  topplag og er derfor IKKE fanget av transformen på kurv-skuffen (en
+  position:fixed-boks inne i skuffen ville blitt klippet). Den gir også
+  fokusfelle, Esc og bakgrunnsdemping uten en linje JS.
+
+  Innholdet er de faste sitatene fra sk-review-quotes. Begge settene rendres
+  server-side; knappen bestemmer hvilket som vises. Ingen nettverkskall.
+{%- endcomment -%}
+
+{%- liquid
+  assign rm_clear = all_products['skinora-clear']
+  assign rm_radiance = all_products['skinora-radiance-face']
+  assign rm_sets = 'clear,radiance' | split: ','
+-%}
+
+<dialog class="sk-reviews-modal" id="SkReviewsModal" aria-labelledby="SkReviewsModalTitle">
+  <div class="sk-reviews-modal__inner">
+    <div class="sk-reviews-modal__head">
+      <h2 class="sk-reviews-modal__title" id="SkReviewsModalTitle">Det kundene sier</h2>
+      <button
+        type="button"
+        class="sk-reviews-modal__close"
+        data-sk-reviews-close
+        aria-label="Lukk anmeldelsene"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    {%- for rm_set in rm_sets -%}
+      {%- liquid
+        if rm_set == 'clear'
+          assign rm_product = rm_clear
+        else
+          assign rm_product = rm_radiance
+        endif
+        capture rm_rating
+          render 'sk-review-stats', product: rm_product, part: 'rating'
+        endcapture
+        capture rm_count
+          render 'sk-review-stats', product: rm_product, part: 'count'
+        endcapture
+      -%}
+      <div class="sk-reviews-modal__group" data-set="{{ rm_set }}" hidden>
+        {%- if rm_rating != blank -%}
+          <p class="sk-reviews-modal__score">
+            <span class="sk-quote__stars" aria-hidden="true">★★★★★</span>
+            <span>{{ rm_rating }} av 5 · {{ rm_count }} anmeldelser</span>
+          </p>
+        {%- endif -%}
+
+        {%- render 'sk-review-quotes', sk_set: rm_set, part: 'items' -%}
+
+        {%- if rm_product != blank -%}
+          {%- comment -%}
+            Lenken går til Klaviyo-widgeten på produktsiden. Den er det eneste
+            stedet med ALLE anmeldelsene; ankeret håndteres av
+            sk-reviews-anchor, som holder widgeten i toppen mens den vokser.
+          {%- endcomment -%}
+          <a class="sk-reviews-modal__all" href="{{ rm_product.url }}#fulfilled-reviews-all">
+            Les alle{% if rm_count != blank %} {{ rm_count }}{% endif %} anmeldelser
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</dialog>
+
+<script>
+  (function () {
+    var dlg = document.getElementById('SkReviewsModal');
+    if (!dlg) return;
+
+    /* Delegert: knappene finnes i kurv-skuffen, som byttes ut med ny HTML
+       hver gang kurven oppdateres. En lytter per knapp ville forsvunnet. */
+    document.addEventListener('click', function (e) {
+      var opener = e.target.closest('[data-sk-reviews-open]');
+      if (opener) {
+        e.preventDefault();
+        var set = opener.getAttribute('data-sk-reviews-set') || 'radiance';
+        var groups = dlg.querySelectorAll('[data-set]');
+        for (var i = 0; i < groups.length; i++) {
+          groups[i].hidden = groups[i].getAttribute('data-set') !== set;
+        }
+        if (typeof dlg.showModal === 'function') {
+          if (!dlg.open) dlg.showModal();
+        } else {
+          dlg.setAttribute('open', '');
+        }
+        return;
+      }
+      if (e.target.closest('[data-sk-reviews-close]')) {
+        dlg.close();
+      }
+    });
+
+    /* Klikk på bakgrunnen lukker. Treffer <dialog> selv bare når klikket
+       landet utenfor innholdsboksen. */
+    dlg.addEventListener('click', function (e) {
+      if (e.target === dlg) dlg.close();
+    });
+  })();
+</script>

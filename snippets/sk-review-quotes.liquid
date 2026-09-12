@@ -1,0 +1,108 @@
+{%- comment -%}
+  sk-review-quotes — faste kundesitater per produktfamilie
+  ============================================================================
+  Tre EKTE, verifiserte femstjerners anmeldelser per familie, hentet fra
+  Klaviyo Reviews 12.09.2026 og lagt i temainnstillingene. Bevisst STATISKE:
+  ingen kall til Klaviyo ved sidevisning, så hverken kurv-skuffen eller
+  produktsiden venter på et svar utenfra.
+
+  Sitatene vedlikeholdes ett sted — Temainnstillinger → Cart reassurance.
+  Bytter du ut et sitat, bruk et som faktisk står på produktsiden, og skriv
+  det ordrett. Ingen oppdiktede anmeldelser.
+
+  Parametre:
+    sk_set : 'clear' → Skinora Clear. Alt annet → Radiance (ansikt og hals).
+    part   : 'items'   → tre <figure> under hverandre (modal)
+             'rotator' → de samme tre stablet, ett synlig om gangen (skuff)
+
+  Skriver ut ingenting når innstillingene er tomme.
+{%- endcomment -%}
+{%- liquid
+  assign q_set = sk_set | default: 'radiance'
+  assign q_part = part | default: 'items'
+
+  assign q_raw = ''
+  assign n_raw = ''
+
+  if q_set == 'clear'
+    assign q_src = settings.cart_review_quote_clear
+    assign n_src = settings.cart_review_name_clear
+    if q_src != blank
+      assign q_raw = q_raw | append: q_src | append: '||'
+      assign n_raw = n_raw | append: n_src | append: '||'
+    endif
+    assign q_src = settings.cart_review_quote_clear_2
+    assign n_src = settings.cart_review_name_clear_2
+    if q_src != blank
+      assign q_raw = q_raw | append: q_src | append: '||'
+      assign n_raw = n_raw | append: n_src | append: '||'
+    endif
+    assign q_src = settings.cart_review_quote_clear_3
+    assign n_src = settings.cart_review_name_clear_3
+    if q_src != blank
+      assign q_raw = q_raw | append: q_src | append: '||'
+      assign n_raw = n_raw | append: n_src | append: '||'
+    endif
+  else
+    assign q_src = settings.cart_review_quote
+    assign n_src = settings.cart_review_name
+    if q_src != blank
+      assign q_raw = q_raw | append: q_src | append: '||'
+      assign n_raw = n_raw | append: n_src | append: '||'
+    endif
+    assign q_src = settings.cart_review_quote_2
+    assign n_src = settings.cart_review_name_2
+    if q_src != blank
+      assign q_raw = q_raw | append: q_src | append: '||'
+      assign n_raw = n_raw | append: n_src | append: '||'
+    endif
+    assign q_src = settings.cart_review_quote_3
+    assign n_src = settings.cart_review_name_3
+    if q_src != blank
+      assign q_raw = q_raw | append: q_src | append: '||'
+      assign n_raw = n_raw | append: n_src | append: '||'
+    endif
+  endif
+
+  assign q_list = q_raw | split: '||'
+  assign n_list = n_raw | split: '||'
+-%}
+
+{%- if q_list.size > 0 -%}
+  {%- if q_part == 'rotator' -%}
+    {%- comment -%}
+      Ett sitat om gangen. Rotasjonen er ren CSS (sk-reviews.css): ingen JS,
+      ingen timer å rydde opp i når skuffen lukkes. Alle tre ligger stablet i
+      samme rutenettcelle, så høyden er den høyeste av dem og ingenting
+      hopper når sitatet byttes. Skjermlesere leser alle tre som vanlig tekst.
+    {%- endcomment -%}
+    <div class="sk-quote-rot" data-count="{{ q_list.size }}">
+      {%- for q in q_list -%}
+        <figure class="sk-quote sk-quote--rot">
+          <span class="sk-quote__stars" aria-hidden="true">★★★★★</span>
+          <blockquote class="sk-quote__text">«{{ q }}»</blockquote>
+          {%- assign q_name = n_list[forloop.index0] -%}
+          {%- if q_name != blank -%}
+            <figcaption class="sk-quote__name">— {{ q_name }}</figcaption>
+          {%- endif -%}
+        </figure>
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    <ul class="sk-quote-list" role="list">
+      {%- for q in q_list -%}
+        <li>
+          <figure class="sk-quote">
+            <span class="sk-quote__stars" aria-hidden="true">★★★★★</span>
+            <span class="visually-hidden">5 av 5 stjerner.</span>
+            <blockquote class="sk-quote__text">«{{ q }}»</blockquote>
+            {%- assign q_name = n_list[forloop.index0] -%}
+            {%- if q_name != blank -%}
+              <figcaption class="sk-quote__name">— {{ q_name }}</figcaption>
+            {%- endif -%}
+          </figure>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+{%- endif -%}

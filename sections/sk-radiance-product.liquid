@@ -2160,7 +2160,12 @@
                 {% endif %}
               {% endfor %}
             {%- else -%}
-              {% render 'sk-star-rating', sr_product: product %}
+              {%- comment -%}
+                sr_trigger: stjernene åpner anmeldelses-modalen. Klaviyo-
+                widgeten ligger ~82 % ned på siden, og bare 3–4 % av
+                mobilbesøkende kommer dit. Modalen har lenken videre.
+              {%- endcomment -%}
+              {% render 'sk-star-rating', sr_product: product, sr_trigger: true %}
             {%- endif -%}
           </div>
 

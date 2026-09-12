@@ -1501,6 +1501,18 @@
       },
       {
         "type": "text",
+        "id": "cart_review_quote_3",
+        "label": "Review quote – Radiance 3",
+        "default": "Skikkelig bra kvalitetsfølelse. Enkel å bruke. Enkel å legge bort"
+      },
+      {
+        "type": "text",
+        "id": "cart_review_name_3",
+        "label": "Reviewer first name – Radiance 3",
+        "default": "Rita H."
+      },
+      {
+        "type": "text",
         "id": "cart_review_quote_clear",
         "label": "Review quote – Clear in cart",
         "default": "Hudpleier-time hver måned = 900 kr. Denne betaler seg selv på et halvår"
@@ -1510,6 +1522,30 @@
         "id": "cart_review_name_clear",
         "label": "Reviewer first name – Clear",
         "default": "Victoria O."
+      },
+      {
+        "type": "text",
+        "id": "cart_review_quote_clear_2",
+        "label": "Review quote – Clear 2",
+        "default": "Søstra mi så huden min og bestilte en til seg selv samme kveld"
+      },
+      {
+        "type": "text",
+        "id": "cart_review_name_clear_2",
+        "label": "Reviewer first name – Clear 2",
+        "default": "Anine V."
+      },
+      {
+        "type": "text",
+        "id": "cart_review_quote_clear_3",
+        "label": "Review quote – Clear 3",
+        "default": "Vi har prøvd mye forskjellig før. Denne er lett å holde fast ved"
+      },
+      {
+        "type": "text",
+        "id": "cart_review_name_clear_3",
+        "label": "Reviewer first name – Clear 3",
+        "default": "Camilla S."
       },
       {
         "type": "number",
