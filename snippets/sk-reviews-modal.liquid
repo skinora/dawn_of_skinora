@@ -111,5 +111,38 @@
     dlg.addEventListener('click', function (e) {
       if (e.target === dlg) dlg.close();
     });
+
+    /* Esc lukker. <dialog> gjør normalt dette selv, men målt på DEV
+       12.09.2026 gjorde den det ikke her (ekte Escape nådde dokumentet,
+       laget ble stående). Vi lukker derfor selv.
+
+       Og vi svelger det tilhørende keyup-et: kurv-skuffen lukker seg på
+       keyup + Escape (assets/cart-drawer.js), så uten dette ville ETT trykk
+       lukket både laget og skuffen — kunden ville mistet kurven sin av å
+       lukke en anmeldelse. Lytteren står i fangstfasen, altså før skuffens
+       egen. */
+    var swallowKeyup = false;
+
+    document.addEventListener(
+      'keydown',
+      function (e) {
+        if (e.key !== 'Escape' || !dlg.open) return;
+        e.preventDefault();
+        dlg.close();
+        swallowKeyup = true;
+      },
+      true
+    );
+
+    document.addEventListener(
+      'keyup',
+      function (e) {
+        if (e.key === 'Escape' && swallowKeyup) {
+          swallowKeyup = false;
+          e.stopPropagation();
+        }
+      },
+      true
+    );
   })();
 </script>
