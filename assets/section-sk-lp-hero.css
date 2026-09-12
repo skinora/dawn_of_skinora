@@ -103,7 +103,10 @@
       to bottom,
       color-mix(in srgb, var(--ink-900) 72%, transparent) 0%,
       color-mix(in srgb, var(--ink-900) 52%, transparent) 12%,
-      color-mix(in srgb, var(--ink-900) 18%, transparent) 30%,
+      /* 30 %: der siste linje i en tre-linjers H1 lander på en iPhone. Sto
+         på 18 %, og på Radiance leste «4 uker, synlig forskjell.» rett over
+         den lyse masken. */
+      color-mix(in srgb, var(--ink-900) 30%, transparent) 30%,
       color-mix(in srgb, var(--ink-900) 10%, transparent) 45%,
       /* Bunngruppen begynner høyere oppe etter at underteksten flyttet ned,
          så scrimen må ta igjen litt tidligere. Midtsonen (30–45 %) er
