@@ -23,7 +23,26 @@
 </style>
 <script>
   (function () {
-    var eagerContainers = ['header', '.section-header', '.banner', '.slideshow', '.hero'];
+    /* «.hero» traff ALDRI landingssidene: de bruker .lp-hero, og en
+       klasseselektor matcher ikke et prefiks. Hero-bildet på
+       /pages/skinora-* ble derfor regnet som under folden og fikk
+       loading="lazy" påført i etterkant — på nettopp det bildet som er
+       LCP-elementet. Målt 12.09.2026 på live: img med fetchpriority="high"
+       OG loading="lazy" samtidig.
+
+       I praksis rakk preload-lenken i head å starte nedlastingen først
+       (bildet kom via preload, ferdig etter 361 ms), så skaden var trolig
+       null. Men attributtet motsier seg selv og ville bitt oss den dagen
+       preloaden forsvant. */
+    var eagerContainers = [
+      'header',
+      '.section-header',
+      '.banner',
+      '.slideshow',
+      '.hero',
+      '.lp-hero',
+      '.sk-dynamic-banner',
+    ];
 
     function isAboveFold(el) {
       return eagerContainers.some(function (selector) {
@@ -36,6 +55,13 @@
       images.forEach(function (img, index) {
         if (!img.hasAttribute('decoding')) {
           img.setAttribute('decoding', 'async');
+        }
+
+        /* fetchpriority="high" er en eksplisitt beskjed fra malen om at dette
+           bildet skal males først. Da skal ingenting her gjøre det lazy —
+           uansett hvor i dokumentet det står. */
+        if (img.getAttribute('fetchpriority') === 'high') {
+          return;
         }
 
         var exempt = img.closest('[data-lazy-exempt]');
