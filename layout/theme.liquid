@@ -919,6 +919,28 @@
       Uses broad 'application/ld+json' match to catch variants with extra attributes
       like <script type="application/ld+json" data-source="app-name">.
     {%- endcomment -%}
+    {%- comment -%}
+      Liquids split DROPPER et tomt siste element. content_for_header slutter
+      alltid med </script>, så den siste lukketaggen forsvant da delene ble
+      satt sammen igjen under: forloop.last var sann for den siste ekte
+      delen, og da hoppet koden over lukketaggen.
+
+      Konsekvensen var ikke bare et ubalansert dokument. Et åpent
+      script-element svelger ALT som følger som ren tekst fram til neste
+      </script> — her hele <style data-shopify> med fargevariablene, pluss
+      snippeten som stopper ytelses-observeren. Nettleseren kastet
+      «SyntaxError: Unexpected token '<'», og stilene ble aldri parset.
+
+      Målt på live 13.09.2026: 55 <script> mot 54 </script> i head.
+
+      _cfh_closes sier om originalen faktisk endte med en lukketagg, slik at
+      vi legger den tilbake uten å finne på en som ikke fantes.
+    {%- endcomment -%}
+    {%- assign _cfh_tail = cfh | strip | slice: -9, 9 -%}
+    {%- assign _cfh_closes = false -%}
+    {%- if _cfh_tail == '</script>' -%}
+      {%- assign _cfh_closes = true -%}
+    {%- endif -%}
     {%- assign _ld_parts = cfh | split: '</script>' -%}
     {%- capture cfh -%}
       {%- for _part in _ld_parts -%}
@@ -934,7 +956,7 @@
           {%- endif -%}
         {%- else -%}
           {{- _part -}}
-          {%- unless forloop.last -%}</script>{%- endunless -%}
+          {%- if forloop.last == false or _cfh_closes -%}</script>{%- endif -%}
         {%- endif -%}
       {%- endfor -%}
     {%- endcapture -%}
