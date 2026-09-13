@@ -23,11 +23,21 @@
     fetchpriority="high"
   >
 {%- endif -%}
-{%- if section.settings.image_mobile != blank -%}
+{%- comment -%}
+  Mobil-preloaden hoppes over når layoutet allerede har lagt den i <head>
+  (sidens metafelt custom.hero_image_mobile, se theme.liquid). To preloads
+  med ULIKE kandidatlister ville fått nettleseren til å velge én variant til
+  preload og en annen til visning, altså hente bildet to ganger.
+
+  Er metafeltet tomt — nye landingssider, eller om noen fjerner det — står
+  denne igjen som reserve. Da er preloaden sen, men den finnes.
+{%- endcomment -%}
+{%- assign sk_lp_head_preload = page.metafields.custom.hero_image_mobile.value -%}
+{%- if section.settings.image_mobile != blank and sk_lp_head_preload == blank -%}
   <link
     rel="preload"
     as="image"
-    href="{{ section.settings.image_mobile | image_url: width: 1200 }}"
+    href="{{ section.settings.image_mobile | image_url: width: 750 }}"
     imagesrcset="{{ section.settings.image_mobile | image_url: width: 600 }} 600w, {{ section.settings.image_mobile | image_url: width: 750 }} 750w, {{ section.settings.image_mobile | image_url: width: 900 }} 900w, {{ section.settings.image_mobile | image_url: width: 1200 }} 1200w"
     imagesizes="100vw"
     media="(max-width: 768px)"

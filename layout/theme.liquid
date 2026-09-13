@@ -8,6 +8,42 @@
     <meta name="theme-color" content="var(--ink-900)">
 
     {%- comment -%}
+      LCP-preload for landingssidenes hero, MOBIL.
+      ========================================================================
+      Seksjonen sk-lp-hero legger sin egen preload, men den står i <body>,
+      cirka 190 kB inn i et dokument på 301 kB — <head> alene er 114 kB.
+      Nettleserens forhåndsskanner finner den derfor først når to tredjedeler
+      av HTML-en er strømmet ned. Målt i Lighthouse 13.09.2026: 570 ms
+      ressursforsinkelse på mobil, av en LCP på 5,8 s.
+
+      Her ligger den øverst i <head>, altså i de første hundre bytene
+      nettleseren ser.
+
+      Bildet kommer fra sidens metafelt fordi layoutet ikke kan lese
+      seksjonsinnstillinger. Er metafeltet tomt, faller vi tilbake til
+      seksjonens egen preload (se sk-lp-hero.liquid) — da er det ingen
+      dobbelthenting, for seksjonen hopper over sin når metafeltet finnes.
+
+      Kandidatbreddene er de SAMME som <source> i seksjonen. Er de ulike,
+      velger nettleseren én variant til preload og en annen til visning, og
+      da lastes bildet to ganger.
+    {%- endcomment -%}
+    {%- if template.name == 'page' and template.suffix contains 'sk-lp' -%}
+      {%- assign lp_hero_mobile = page.metafields.custom.hero_image_mobile.value -%}
+      {%- if lp_hero_mobile != blank -%}
+        <link
+          rel="preload"
+          as="image"
+          href="{{ lp_hero_mobile | image_url: width: 750 }}"
+          imagesrcset="{{ lp_hero_mobile | image_url: width: 600 }} 600w, {{ lp_hero_mobile | image_url: width: 750 }} 750w, {{ lp_hero_mobile | image_url: width: 900 }} 900w, {{ lp_hero_mobile | image_url: width: 1200 }} 1200w"
+          imagesizes="100vw"
+          media="(max-width: 768px)"
+          fetchpriority="high"
+        >
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%}
       Microsoft Clarity — official snippet, project xmgzwwlwhg.
       Injected directly in <head> (not via Shopify custom web pixel, which runs
       sandboxed and never fired). Placed high, before other scripts. Not matched
