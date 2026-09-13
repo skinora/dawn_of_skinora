@@ -43,8 +43,17 @@
     media="(max-width: 768px)"
     fetchpriority="high"
   >
-{%- elsif section.settings.image != blank -%}
-  {%- comment -%} Fall back to desktop image on mobile if no mobile-specific image is set {%- endcomment -%}
+{%- elsif section.settings.image != blank and sk_lp_head_preload == blank -%}
+  {%- comment -%}
+    Reserve: desktopbildet brukes på mobil når seksjonen ikke har et eget
+    mobilbilde.
+
+    Vilkåret om tomt metafelt må stå HER OGSÅ. Uten det slo denne grenen inn
+    i det øyeblikket mobilgrenen over ble hoppet over (fordi head allerede
+    hadde preloaden), og da forhåndslastet mobilen desktopbildet i tillegg —
+    cirka 85 kB helt bortkastet. Målt på DEV 13.09.2026, rett etter at
+    head-preloaden ble innført.
+  {%- endcomment -%}
   <link
     rel="preload"
     as="image"
