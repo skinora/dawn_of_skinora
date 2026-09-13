@@ -28,7 +28,7 @@
     rel="preload"
     as="image"
     href="{{ section.settings.image_mobile | image_url: width: 1200 }}"
-    imagesrcset="{{ section.settings.image_mobile | image_url: width: 600 }} 600w, {{ section.settings.image_mobile | image_url: width: 900 }} 900w, {{ section.settings.image_mobile | image_url: width: 1200 }} 1200w"
+    imagesrcset="{{ section.settings.image_mobile | image_url: width: 600 }} 600w, {{ section.settings.image_mobile | image_url: width: 750 }} 750w, {{ section.settings.image_mobile | image_url: width: 900 }} 900w, {{ section.settings.image_mobile | image_url: width: 1200 }} 1200w"
     imagesizes="100vw"
     media="(max-width: 768px)"
     fetchpriority="high"
@@ -162,7 +162,13 @@
           {%- if mobile_image != blank -%}
             <source
               media="(max-width: 768px)"
-              srcset="{{ mobile_image | image_url: width: 600 }} 600w, {{ mobile_image | image_url: width: 900 }} 900w, {{ mobile_image | image_url: width: 1200 }} 1200w"
+              {%- comment -%}
+                750w lagt til (sep 2026). Lighthouse mobil (412 px, DPR 1,75)
+                trenger 721 fysiske piksler og hoppet derfor til 900w = 81 kB.
+                750w dekker samme visning på ~60 kB. Hero-bildet er LCP-
+                elementet, så de 20 kB er de dyreste på hele siden.
+              {%- endcomment -%}
+              srcset="{{ mobile_image | image_url: width: 600 }} 600w, {{ mobile_image | image_url: width: 750 }} 750w, {{ mobile_image | image_url: width: 900 }} 900w, {{ mobile_image | image_url: width: 1200 }} 1200w"
               sizes="100vw"
             >
           {%- endif -%}

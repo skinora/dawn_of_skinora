@@ -50,6 +50,11 @@
                 role="group"
                 aria-label="Sammenligning før og etter — {{ block.settings.customer_name | default: 'kunde' | escape }}"
               >
+                {%- comment -%}
+                  700w lagt til (sep 2026): Lighthouse mobil er 412 px med
+                  DPR 1,75 = 721 fysiske piksler. Uten en kandidat der hoppet
+                  nettleseren til 800w. 700w dekker samme visning.
+                {%- endcomment -%}
                 {%- if block.settings.after_image != blank -%}
                   <div class="lp-comparison__after">
                     {{
@@ -59,7 +64,7 @@
                         loading: 'lazy',
                         decoding: 'async',
                         alt: after_alt,
-                        widths: '400, 600, 800, 1200',
+                        widths: '400, 600, 700, 800, 1200',
                         sizes: '(max-width: 768px) 92vw, 480px'
                     }}
                   </div>
@@ -74,7 +79,7 @@
                         loading: 'lazy',
                         decoding: 'async',
                         alt: before_alt,
-                        widths: '400, 600, 800, 1200',
+                        widths: '400, 600, 700, 800, 1200',
                         sizes: '(max-width: 768px) 92vw, 480px'
                     }}
                   </div>

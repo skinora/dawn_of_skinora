@@ -102,7 +102,11 @@
   font-size: var(--fs-lg);
   font-weight: var(--fw-regular);
   letter-spacing: var(--tracking-normal);
-  color: var(--ink-400);
+  /* --ink-400 er 58 % alfa. Blandet mot kortets #fafafa gir det 3,9:1 på
+     19 px tekst, og kravet er 4,5 (WCAG 1.4.3 — 19 px regnes ikke som stor
+     tekst). --ink-500 gir 5,3:1 og ser praktisk talt likt ut.
+     Målt 13.09.2026, funnet i Lighthouse. */
+  color: var(--ink-500);
   text-decoration-thickness: 2px;
 }
 
