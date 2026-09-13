@@ -1,0 +1,51 @@
+{%- comment -%}
+  sk-block-meta-pixel — holder Meta-pikselen unna landingssidene
+  ============================================================================
+  Rendres KUN på landingssidene (se theme.liquid). Merchanten kjører ikke
+  Meta-annonser mot disse sidene, og fbevents.js er 111 kB — den tyngste
+  enkeltposten i hovedtråden der (Lighthouse 13.09.2026: 1 063 ms script
+  evaluation totalt på mobil).
+
+  HVORFOR INNSETTING, IKKE UTSETTELSE
+  Temaet prøvde i august å utsette connect.facebook.net med
+  `type = 'text/plain'` via en MutationObserver. Det virket ikke: observeren
+  fyrer ETTER innsetting, så nedlastingen var allerede i gang. Skriptet ble
+  hentet én gang uten å kjøre, og så hentet på nytt ved re-injisering. Derfor
+  ble mønsteret fjernet igjen, og derfor patcher vi appendChild/insertBefore
+  her i stedet — det er det eneste stedet innsettingen kan stoppes.
+
+  Skriptet må stå tidlig i <head>, før Shopifys web-pixels-manager (wpmLoader)
+  kjører, ellers rekker den å sette inn pikselen først.
+
+  SLIK SLÅR DU DET AV: fjern render-kallet i theme.liquid. Ingen andre filer
+  vet om dette.
+
+  MERK: gjelder bare landingssidene. Produktsider, forside, kurv og kasse
+  sporer som før.
+{%- endcomment -%}
+<script>
+  (function () {
+    var BLOCK = /connect\.facebook\.net|facebook\.com\/tr/i;
+
+    function isMetaScript(node) {
+      return (
+        node &&
+        node.nodeType === 1 &&
+        node.tagName === 'SCRIPT' &&
+        BLOCK.test(node.src || '')
+      );
+    }
+
+    ['appendChild', 'insertBefore'].forEach(function (name) {
+      var original = Node.prototype[name];
+      if (!original) return;
+      Node.prototype[name] = function (node) {
+        /* Returner noden som om den ble satt inn: appendChild skal levere
+           tilbake argumentet, og kallere som kjeder videre på returverdien
+           ville ellers kastet. Noden havner aldri i dokumentet. */
+        if (isMetaScript(node)) return node;
+        return original.apply(this, arguments);
+      };
+    });
+  })();
+</script>

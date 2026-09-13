@@ -28,6 +28,16 @@
       velger nettleseren én variant til preload og en annen til visning, og
       da lastes bildet to ganger.
     {%- endcomment -%}
+    {%- comment -%}
+      Meta-pikselen holdes unna landingssidene (merchantens valg, sep 2026):
+      ingen Meta-annonser peker hit, og fbevents.js er 111 kB. Må stå FØR
+      Shopifys web-pixels-manager lenger nede i head, ellers rekker den å
+      sette inn pikselen først.
+    {%- endcomment -%}
+    {%- if template.name == 'page' and template.suffix contains 'sk-lp' -%}
+      {% render 'sk-block-meta-pixel' %}
+    {%- endif -%}
+
     {%- if template.name == 'page' and template.suffix contains 'sk-lp' -%}
       {%- assign lp_hero_mobile = page.metafields.custom.hero_image_mobile.value -%}
       {%- if lp_hero_mobile != blank -%}
