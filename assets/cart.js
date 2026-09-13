@@ -183,9 +183,16 @@ class CartItems extends HTMLElement {
           if (cartDrawerWrapper) cartDrawerWrapper.classList.toggle('is-empty', parsedState.item_count === 0);
 
           this.getSectionsToRender().forEach((section) => {
-            const elementToReplace =
-              document.getElementById(section.id).querySelector(section.selector) ||
-              document.getElementById(section.id);
+            /* Seksjonen finnes ikke alltid: lista over seksjoner som skal
+               tegnes på nytt er den samme uansett hvilken side vi står på, og
+               en tom kurv fjerner flere av dem fra DOM-en. Uten denne sjekken
+               kaster linja «Cannot read properties of null» midt i en
+               mengdeoppdatering, resten av forEach-en stopper, og knappene
+               slutter å svare — det ser ut som et dødt klikk for kunden.
+               cart-drawer.js har hatt samme vakt siden Dawn 15. */
+            const sectionContainer = document.getElementById(section.id);
+            if (!sectionContainer) return;
+            const elementToReplace = sectionContainer.querySelector(section.selector) || sectionContainer;
             elementToReplace.innerHTML = this.getSectionInnerHTML(
               parsedState.sections[section.section],
               section.selector
