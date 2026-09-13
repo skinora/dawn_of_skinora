@@ -987,13 +987,29 @@
     {%- endif -%}
 
     {%- comment -%}
-      Disconnect the performance interceptor's MutationObserver now that
-      content_for_header has been rendered. All CSS/script injections it
-      needs to catch are already processed. Leaving it running would fire
-      the callback on every subsequent DOM mutation — unnecessary TBT cost.
+      Observeren kobles fra ved window.load, ikke her.
+
+      Den sto her før, med begrunnelsen «alt content_for_header injiserer er
+      allerede behandlet». Det stemte ikke: Klaviyo og Adobe Fonts-appen
+      setter inn font-CSS LENGE etter head. At det likevel virket, skyldtes
+      en feil — linja lå inne i et script-element som aldri ble lukket, så
+      den kjørte aldri, og observeren levde hele sideinnlastingen.
+
+      Da script-taggen ble lukket 13.09.2026, begynte linja å kjøre, og
+      effekten kom umiddelbart: Google Fonts og to Typekit-kit havnet i
+      kritisk bane med 1 408 ms, og siden deklarerte 30 @font-face i 12
+      familier. Vi bruker fire.
+
+      window.load er riktig grense: alt av font-CSS er injisert innen da, og
+      observeren slutter å koste noe etterpå. Callbacken er billig — den ser
+      bare på tagName og rel.
     {%- endcomment -%}
     <script>
-      if (window.__SK_PERF) window.__SK_PERF.disconnectObserver();
+      if (window.__SK_PERF) {
+        window.addEventListener('load', function () {
+          window.__SK_PERF.disconnectObserver();
+        });
+      }
     </script>
 
     {%- comment -%}

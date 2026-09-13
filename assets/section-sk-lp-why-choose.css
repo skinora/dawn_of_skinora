@@ -151,6 +151,11 @@
   text-decoration: underline;
   text-underline-offset: 0.2em;
   transition: color 0.15s ease;
+  /* Treffflaten var 21 px høy. Loddrett padding på et inline-element endrer
+     ikke linjehøyden — den utvider bare flaten som tar imot trykket — så
+     dette flytter ingenting i teksten. 4 px hver vei gir 29 px, innenfor
+     linjeavstanden, så nabolinjene overlapper ikke. */
+  padding-block: 4px;
 }
 
 .lp-why-choose__text a:hover {

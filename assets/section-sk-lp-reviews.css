@@ -283,6 +283,18 @@
   margin: 0 auto;
 }
 
+/* Treffflaten var 358 × 15 px (målt 390 px bredde, 13.09.2026): bred nok,
+   men 15 px høy. WCAG 2.5.8 krever 24, og på mobil er 44 det praktiske
+   målet — en tommel treffer ikke 15 px pålitelig. Paddingen legges på
+   knappen selv, så teksten står der den sto. */
+.lp-reviews__more-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+}
+
 /* ---------- Disclaimer ---------- */
 .lp-reviews__disclaimer {
   font-family: var(--ff-sans);
