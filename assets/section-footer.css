@@ -654,7 +654,8 @@
 }
 
 .footer__payment h5,
-.footer__shipping-delivery h5 {
+.footer__shipping-delivery h5,
+.footer__block-heading {
   font-size: 1.8rem;
   font-weight: 400;
   color: var(--color-white);

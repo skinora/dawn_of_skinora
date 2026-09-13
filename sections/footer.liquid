@@ -242,7 +242,14 @@
           {%- if section.settings.payment_enable -%}
             <div class="footer__payment">
               <div>
-                <h5>{{ 'sections.footer.payment' | t }}</h5>
+                {%- comment -%}
+                  Var <h5> i en footer der resten er h2 og h3 — nivå 4 ble
+                  hoppet over, som skjermlesere leser som en manglende
+                  seksjon (Lighthouse-funn 13.09.2026). Samme nivå som
+                  menyoverskriftene rundt. Stilen følger klassen nå, ikke
+                  taggen.
+                {%- endcomment -%}
+                <h3 class="footer__block-heading">{{ 'sections.footer.payment' | t }}</h3>
               </div>
 
               {% if shop.enabled_payment_types.size > 0 %}
