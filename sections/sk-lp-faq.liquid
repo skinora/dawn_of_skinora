@@ -3,7 +3,14 @@
   FAQ accordion for landing pages. Each Q&A pair is a block.
 {%- endcomment -%}
 
-{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Delt LP-stilark. På landingssidene lastes det ÉN gang fra theme.liquid:
+  17 seksjoner emitterte hver sin kopi, og den samme 15,7 kB-filen ble
+  parset elleve ganger på samme side (målt 13.09.2026). Utenfor
+  landingssidene — f.eks. denne seksjonen på forsiden — må den fortsatt
+  lastes her.
+{%- endcomment -%}
+{%- unless template.suffix contains 'sk-lp' -%}{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}{%- endunless -%}
 {{ 'section-sk-lp-faq.css' | asset_url | stylesheet_tag }}
 
 <!-- SECTION: FAQ -->

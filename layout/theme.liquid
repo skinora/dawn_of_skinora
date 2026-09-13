@@ -292,6 +292,28 @@
       fjernet sammen med resten av Adobe-oppsettet — cdn.shopify.com serverer
       naa bade siden og fontene over samme forbindelse.
     {%- endcomment -%}
+    {%- comment -%}
+      Delt LP-stilark, lastet ÉN gang.
+
+      17 seksjoner kalte hver sin stylesheet_tag på den samme 15,7 kB-filen.
+      På landingssiden ga det elleve identiske <link>-elementer: én
+      nedlasting, men elleve parseringer og elleve render-blokkerende
+      elementer (målt 13.09.2026 — Style & Layout 435 ms).
+
+      KASKADE: filen ligger nå FØR seksjonsstilarkene i stedet for mellom
+      dem. Den eneste overlappen er heroens fem egne klasser
+      (.lp-hero__title/__text/__content/__actions/__pills), og der vinner
+      section-sk-lp-hero.css allerede på høyere spesifisitet — de doble
+      klassene som står dokumentert i CLAUDE.md. Ingen andre seksjonsfiler
+      deler selektor med denne.
+
+      Seksjonene emitterer den fortsatt selv utenfor landingssidene
+      (sk-lp-hudterapeut står på forsiden).
+    {%- endcomment -%}
+    {%- if template.suffix contains 'sk-lp' -%}
+      {{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     {%- comment -%}
       cdn.jsdelivr.net gets a lightweight dns-prefetch only (non-critical).

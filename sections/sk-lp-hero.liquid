@@ -65,7 +65,14 @@
   >
 {%- endif -%}
 
-{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Delt LP-stilark. På landingssidene lastes det ÉN gang fra theme.liquid:
+  17 seksjoner emitterte hver sin kopi, og den samme 15,7 kB-filen ble
+  parset elleve ganger på samme side (målt 13.09.2026). Utenfor
+  landingssidene — f.eks. denne seksjonen på forsiden — må den fortsatt
+  lastes her.
+{%- endcomment -%}
+{%- unless template.suffix contains 'sk-lp' -%}{{ 'section-sk-lp-radiance-face.css' | asset_url | stylesheet_tag }}{%- endunless -%}
 {{ 'section-sk-lp-hero.css' | asset_url | stylesheet_tag }}
 
 {%- assign sk_lp_handle = section.settings.cta_url | split: '/products/' | last | split: '?' | first -%}
@@ -198,8 +205,19 @@
               sizes="100vw"
             >
           {%- endif -%}
+          {%- comment -%}
+            <img> er fallbacken for nettlesere uten <picture>. Den fikk egen
+            srcset/sizes 13.09.2026: uten den ville de hentet 1600w uansett
+            skjerm, og — like praktisk — Lighthouse rapporterer <img>, ikke
+            <source>, så tre målinger på rad meldte «hero uten srcset» selv
+            om begge kildene har hatt det hele tiden.
+
+            Bredder følger kildene, så ingen ny variant genereres på CDN-en.
+          {%- endcomment -%}
           <img
             src="{{ fallback_image | image_url: width: 1600 }}"
+            srcset="{{ fallback_image | image_url: width: 600 }} 600w, {{ fallback_image | image_url: width: 750 }} 750w, {{ fallback_image | image_url: width: 900 }} 900w, {{ fallback_image | image_url: width: 1200 }} 1200w, {{ fallback_image | image_url: width: 1600 }} 1600w, {{ fallback_image | image_url: width: 2000 }} 2000w"
+            sizes="100vw"
             alt="{{ fallback_image.alt | default: section.settings.title }}"
             width="{{ fallback_image.width }}"
             height="{{ fallback_image.height }}"
