@@ -1,0 +1,52 @@
+{%- comment -%}
+  sk-block-unused-fonts — hindrer at Adobe-fontene i det hele tatt hentes
+  ============================================================================
+  Temaet bruker Switzer og Bespoke Serif, selvhostet i assets/. Ingen Adobe.
+  Likevel injiserte en app to Typekit-kit ved kjøring, og de kjedet videre til
+  p.typekit.net. Lighthouse 13.09.2026: kritisk bane 1 408 ms, utelukkende
+  fonter, og 30 @font-face i 12 familier — vi bruker fire.
+
+  Temaets avskjærer fjernet lenkene, men FOR SENT: en MutationObserver fyrer
+  etter innsetting, og da er hentingen i gang. Derfor sto elementene borte fra
+  DOM-en mens forespørslene fortsatt lå i nettverksloggen. Her patches
+  appendChild/insertBefore i stedet, som er det eneste stedet innsettingen kan
+  stoppes.
+
+  Kjører på alle sider: Adobe-kittene lastes overalt, ikke bare på
+  landingssidene.
+
+  Google Fonts (fonts.googleapis.com) er IKKE med her. Den kommer fra Klaviyo
+  og styrer typografien i skjemaene deres. Blokkeres den, faller popupene
+  tilbake til systemfont — det er en designbeslutning, ikke en feilretting.
+
+  NÅR DETTE KAN SLETTES: koble fra Shopify-appen Adobe Fonts i admin. Da
+  slutter injiseringen ved kilden, og denne filen er overflødig.
+{%- endcomment -%}
+<script>
+  (function () {
+    var FONT_CSS = /(use|p)\.typekit\.net/i;
+
+    function isUnusedFontCss(node) {
+      if (!node || node.nodeType !== 1) return false;
+      if (node.tagName === 'LINK') {
+        return FONT_CSS.test(node.href || node.getAttribute('href') || '');
+      }
+      if (node.tagName === 'SCRIPT') {
+        return FONT_CSS.test(node.src || '');
+      }
+      return false;
+    }
+
+    ['appendChild', 'insertBefore'].forEach(function (name) {
+      var original = Node.prototype[name];
+      if (!original) return;
+      Node.prototype[name] = function (node) {
+        /* Returner noden som om den ble satt inn — appendChild skal levere
+           argumentet tilbake, og kallere som kjeder videre ville ellers
+           kastet. Noden havner aldri i dokumentet. */
+        if (isUnusedFontCss(node)) return node;
+        return original.apply(this, arguments);
+      };
+    });
+  })();
+</script>

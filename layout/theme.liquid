@@ -292,6 +292,12 @@
       fjernet sammen med resten av Adobe-oppsettet — cdn.shopify.com serverer
       naa bade siden og fontene over samme forbindelse.
     {%- endcomment -%}
+    {%- comment -%}
+      Må stå før alt som kan injisere font-CSS. Se snippeten for hvorfor
+      innsettingen stoppes i stedet for å ryddes opp etterpå.
+    {%- endcomment -%}
+    {% render 'sk-block-unused-fonts' %}
+
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     {%- comment -%}
       cdn.jsdelivr.net gets a lightweight dns-prefetch only (non-critical).
