@@ -14,7 +14,18 @@
   outcomes (CurrentBody, Foreo, Solawave all use this).
 {%- endcomment -%}
 
-{{ 'section-sk-lp-results-timeline.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Ikke-blokkerende: seksjonen står under folden, så stilarket rakk aldri
+  å påvirke første maling — men det blokkerte gjengivelsen av alt som kom
+  etter det i dokumentet. Målt 13.09.2026: 31 blokkerende stilark,
+  gjengivelsesforsinkelse 2 060 ms.
+
+  media="print" lastes uten å blokkere; onload flipper til all så snart
+  fila er nede. Samme mønster som header.liquid og kurv-skuffen bruker.
+  noscript-kopien dekker nettlesere uten JS.
+{%- endcomment -%}
+<link rel="stylesheet" href="{{ 'section-sk-lp-results-timeline.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'section-sk-lp-results-timeline.css' | asset_url }}"></noscript>
 <script src="{{ 'section-sk-lp-results-timeline.js' | asset_url }}" defer></script>
 
 <div class="sk-lp">
