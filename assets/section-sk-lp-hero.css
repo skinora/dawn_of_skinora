@@ -34,6 +34,20 @@
   color: var(--paper-0);
 }
 
+/* Heroen skal ALDRI hoppes over i gjengivelsen, uansett hvor i
+   seksjonsrekkefølgen den havner. sk-base.css begrenser nå
+   content-visibility til fjerde seksjon og utover, men denne regelen står
+   som en eksplisitt garanti: legger noen inn enda et bånd over heroen, er
+   LCP-elementet fortsatt trygt.
+
+   Samme spesifisitet som regelen i sk-base (0,3,0), men denne fila lastes av
+   seksjonen og kommer senere i kaskaden — samme mekanikk som trustbaren
+   bruker. Ingen !important. */
+.content-for-layout > .shopify-section:has(.lp-hero) {
+  content-visibility: visible;
+  contain-intrinsic-size: none;
+}
+
 /* ---------- Media (absolute background) ---------- */
 .lp-hero__media {
   position: absolute;

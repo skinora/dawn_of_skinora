@@ -144,9 +144,21 @@
   }
 }
 
-/* ── CLS guard: below-fold Shopify sections get content-visibility:auto ── */
-/* Skips first section (hero) — only targets 2nd+ sections in main */
-.content-for-layout > .shopify-section:nth-child(n + 2) {
+/* ── content-visibility for seksjoner under folden ──────────────────────────
+   Sto på nth-child(n + 2), med kommentaren «skips first section (hero)».
+   Den antakelsen brast da landingssidene fikk et kampanjebånd ØVERST:
+   heroen ble seksjon 2, og dermed fikk selve LCP-elementet
+   content-visibility: auto.
+
+   Det koster dobbelt. Nettleseren må først regne ut at seksjonen er synlig
+   før den rendres — målt gjengivelsesforsinkelse 2 070 ms på mobil,
+   13.09.2026 — og fram til da antas høyden å være 500 px mens heroen
+   faktisk er 844. Differansen dytter alt under seg.
+
+   Chrome frarår selv content-visibility på innhold i første skjermbilde.
+   Grensen står nå ved fjerde seksjon: på alle malene våre er de tre
+   første over eller i folden (bånd, hero, trustbar). */
+.content-for-layout > .shopify-section:nth-child(n + 4) {
   content-visibility: auto;
   contain-intrinsic-size: auto 500px;
 }
