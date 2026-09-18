@@ -41,6 +41,13 @@
 }
 
 @media (min-width: 769px) {
+  /* 300px ble et frimerke ved siden av en tekstblokk på ~470px høyde,
+     med et tomt felt imellom. Portrettet vokser med viewporten og
+     når omtrent tekstens høyde på full bredde. */
+  .sk-note {
+    --sk-note-media: clamp(340px, 38vw, 480px);
+  }
+
   .sk-note__grid {
     grid-template-columns: minmax(0, 1fr) var(--sk-note-media);
     gap: clamp(40px, 6vw, 72px);
