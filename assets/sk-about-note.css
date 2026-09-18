@@ -213,11 +213,10 @@
 }
 
 /* ---------- Portrett ----------
-   Skarpe hjørner og husets skygge, som de øvrige mediarammene. */
+   Skarpe hjørner, ingen skygge: den ga en grå glorie rundt bildet. */
 .sk-note__media {
   overflow: hidden;
   background: var(--paper-50);
-  box-shadow: 0 30px 60px color-mix(in srgb, var(--ink-900) 18%, transparent);
 }
 
 /* Kvadratisk på alle bredder. Kilden er 797×1344 (svært stående), så et
