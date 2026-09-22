@@ -324,7 +324,11 @@
             "name": {{ faq_item.question | json }},
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": {{ faq_item.answer | strip_html | strip_newlines | strip | json }}
+              {%- comment -%}
+                metafield_text, ikke strip_html: et rich text-felt er et
+                JSON-dokument, og strip_html sendte det rått til Google.
+              {%- endcomment -%}
+              "text": {{ faq_item.answer | metafield_text | strip_newlines | strip | json }}
             }
           }{% unless forloop.last %},{% endunless %}
         {%- endfor -%}
