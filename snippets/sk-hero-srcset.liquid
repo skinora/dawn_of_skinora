@@ -5,14 +5,15 @@
     image  – Shopify-bildeobjekt
     widths – kommaliste med ønskede bredder, f.eks. '1600,2000,2600,3168'
 
-  Bredder større enn kildefilen kappes til kildens egen bredde, og dublett-
-  bredder hoppes over: Shopify kan ikke levere flere piksler enn filen har,
-  og to URL-er til samme fil gir bare en ekstra kandidat uten gevinst.
+  Bredder større enn kildefilen kappes til kildens egen bredde. En kandidat
+  som er mindre enn 10 % bredere enn den forrige hoppes over: mobilbildet er
+  768 px, så listen '750,1000,1500' ble '750w, 768w' — to nesten like filer.
+  Shopify kan uansett ikke levere flere piksler enn kildefilen har.
 
   Bruk: {%- render 'sk-hero-srcset', image: img, widths: '750,1500' -%}
 {%- endcomment -%}
 {%- liquid
-  assign shs_seen = ','
+  assign shs_prev = 0
   assign shs_out = ''
   assign shs_list = widths | split: ','
   for shs_w in shs_list
@@ -20,9 +21,9 @@
     if image.width < shs_px
       assign shs_px = image.width
     endif
-    assign shs_key = ',' | append: shs_px | append: ','
-    unless shs_seen contains shs_key
-      assign shs_seen = shs_seen | append: shs_px | append: ','
+    assign shs_floor = shs_prev | times: 11 | divided_by: 10
+    if shs_px > shs_floor
+      assign shs_prev = shs_px
       assign shs_url = image | image_url: width: shs_px
       assign shs_item = shs_url | append: ' ' | append: shs_px | append: 'w'
       if shs_out == ''
@@ -30,7 +31,7 @@
       else
         assign shs_out = shs_out | append: ', ' | append: shs_item
       endif
-    endunless
+    endif
   endfor
 -%}
 {{- shs_out -}}
