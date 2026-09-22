@@ -1,12 +1,35 @@
 {%- comment -%}
-  CLS guard — reserves 100vh for the section wrapper immediately.
-  Prevents layout shift from late-applied .sk-dynamic-banner { height:100vh }.
+  Bildeformatet styrer heroens høyde på desktop, se kommentaren ved
+  .sk-dynamic-banner nedenfor. Faller tilbake til 16:9 hvis bildet mangler.
+{%- endcomment -%}
+{%- liquid
+  assign hb_img_d = section.settings.sk_banner_img_desktop
+  assign hb_ratio_w = 16
+  assign hb_ratio_h = 9
+  if hb_img_d != blank
+    assign hb_ratio_w = hb_img_d.width
+    assign hb_ratio_h = hb_img_d.height
+  endif
+-%}
+
+{%- comment -%}
+  CLS guard — reserves the hero's height for the section wrapper immediately.
+  Prevents layout shift from late-applied .sk-dynamic-banner height rules.
+  Må matche heroens faktiske høyde, ellers blir differansen et tomt felt.
   contain:layout style scopes reflows to this subtree.
 {%- endcomment -%}
 <style>
   #shopify-section-{{ section.id }} {
     min-height: 100vh;
     contain: layout style;
+  }
+
+  @media (min-width: 1001px) {
+    #shopify-section-{{ section.id }} {
+      aspect-ratio: {{ hb_ratio_w }} / {{ hb_ratio_h }};
+      min-height: 520px;
+      max-height: 100vh;
+    }
   }
 
   /* Vakten må matche heroens FAKTISKE høyde. Under 435px settes heroen til
@@ -69,7 +92,18 @@
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
-    height: 100vh;
+    {%- comment -%}
+      Høyden følger bildets eget format i stedet for å være låst til 100vh.
+      Desktopbildet er {{ hb_ratio_w }}×{{ hb_ratio_h }}, altså mye bredere enn et
+      100vh-hero. cover måtte da forstørre bildet rundt 1,5× og kutte en
+      tredel av bredden — motivet så innzoomet ut. min-height holder plass
+      til teksten på korte, brede vinduer; max-height hindrer at heroen blir
+      høyere enn skjermen på svært brede. Nettbrett og mobil er uendret.
+    {%- endcomment -%}
+    aspect-ratio: {{ hb_ratio_w }} / {{ hb_ratio_h }};
+    height: auto;
+    min-height: 520px;
+    max-height: 100vh;
     display: flex;
     align-items: center;
     position: relative;
@@ -288,7 +322,11 @@
       {%- if section.settings.sk_banner_img_tablet != blank %}
       background-image: url('{{ section.settings.sk_banner_img_tablet | image_url: width: 1200 }}');
       {%- endif %}
+      /* Nettbrett og mobil beholder fullskjerms hero: der er bildet stående
+         og formatet passer allerede. min-height nullstilles så 80vh-regelen
+         for små telefoner ikke blir overstyrt av desktopgulvet. */
       height: 100vh;
+      min-height: 0;
     }
 
     .sk-dynamic-banner__container {
