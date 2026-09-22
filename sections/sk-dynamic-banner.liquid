@@ -21,8 +21,16 @@
   2x-bredden kappes mot kildebildets egen bredde: Shopify kan ikke levere
   flere piksler enn filen har, og en for stor width-parameter gir da samme
   fil under en annen URL — altså to nedlastinger av samme bilde.
+
+  Kappingen kan gjøre 2x nesten lik 1x. Mobilbildet er i dag 768 px bredt,
+  så 2x ville blitt 768 mot 750 — en ekstra URL for 2 % flere piksler. Derfor
+  må 2x være minst halvannen gang 1x for å bli med i det hele tatt. Lastes et
+  større mobilbilde opp, slår 2x inn av seg selv.
 {%- endcomment -%}
 {%- liquid
+  assign hb_img_t = section.settings.sk_banner_img_tablet
+  assign hb_img_m = section.settings.sk_banner_img_mobile
+
   assign hb_1x_d = 1600
   assign hb_1x_t = 1200
   assign hb_1x_m = 750
@@ -31,17 +39,27 @@
   if hb_img_d != blank and hb_img_d.width < hb_2x_d
     assign hb_2x_d = hb_img_d.width
   endif
+  assign hb_floor_d = hb_1x_d | times: 3 | divided_by: 2
+  if hb_2x_d < hb_floor_d
+    assign hb_2x_d = hb_1x_d
+  endif
 
-  assign hb_img_t = section.settings.sk_banner_img_tablet
   assign hb_2x_t = hb_1x_t | times: 2
   if hb_img_t != blank and hb_img_t.width < hb_2x_t
     assign hb_2x_t = hb_img_t.width
   endif
+  assign hb_floor_t = hb_1x_t | times: 3 | divided_by: 2
+  if hb_2x_t < hb_floor_t
+    assign hb_2x_t = hb_1x_t
+  endif
 
-  assign hb_img_m = section.settings.sk_banner_img_mobile
   assign hb_2x_m = hb_1x_m | times: 2
   if hb_img_m != blank and hb_img_m.width < hb_2x_m
     assign hb_2x_m = hb_img_m.width
+  endif
+  assign hb_floor_m = hb_1x_m | times: 3 | divided_by: 2
+  if hb_2x_m < hb_floor_m
+    assign hb_2x_m = hb_1x_m
   endif
 -%}
 
