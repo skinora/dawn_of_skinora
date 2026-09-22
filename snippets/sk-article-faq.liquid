@@ -1,0 +1,56 @@
+{%- comment -%}
+  sk-article-faq — synlige spørsmål og svar + FAQPage JSON-LD for artikler.
+
+  Kilde: article.metafields.custom.faq_item, en liste med referanser til
+  samme FAQ-metaobjekt som produktene bruker (feltene question og answer).
+  Rendrer ingenting når metafeltet er tomt.
+
+  Google krever at alt i FAQPage også står synlig på siden, derfor kommer
+  schemaet og trekkspillet fra samme løkke. BlogPosting-noden i seksjonen
+  røres ikke; dette er en egen node.
+
+  Svarteksten i schemaet går gjennom metafield_text: et rich text-felt er
+  ellers et JSON-dokument, og det var det produktsidene sendte til Google.
+
+  Bruk: {%- render 'sk-article-faq', article: article -%}
+{%- endcomment -%}
+{%- assign saf_items = article.metafields.custom.faq_item.value -%}
+{%- if saf_items != blank -%}
+  {{ 'sk-article-faq.css' | asset_url | stylesheet_tag }}
+
+  <section class="sk-article-faq" aria-labelledby="sk-article-faq-heading">
+    <h2 id="sk-article-faq-heading" class="sk-article-faq__heading">Ofte stilte spørsmål</h2>
+
+    {%- for saf_item in saf_items -%}
+      <details class="sk-article-faq__item">
+        <summary class="sk-article-faq__question">{{ saf_item.question.value | escape }}</summary>
+        <div class="sk-article-faq__answer">
+          {%- if saf_item.answer.type == 'rich_text_field' -%}
+            {{ saf_item.answer | metafield_tag }}
+          {%- else -%}
+            <p>{{ saf_item.answer.value | escape | newline_to_br }}</p>
+          {%- endif -%}
+        </div>
+      </details>
+    {%- endfor -%}
+  </section>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for saf_item in saf_items -%}
+          {
+            "@type": "Question",
+            "name": {{ saf_item.question.value | strip | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ saf_item.answer | metafield_text | strip_newlines | strip | json }}
+            }
+          }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}

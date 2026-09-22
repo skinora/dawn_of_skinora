@@ -55,7 +55,9 @@
 {%- liquid
   assign bfk_slot = '%%SKFUNNELKOMPAKT%%'
 
-  assign bfk_content = article.content
+  capture bfk_content
+    render 'sk-article-body', html: article.content
+  endcapture
   assign bfk_content = bfk_content | replace: '<table', '<div class="blog-funnel-tablewrap"><table'
   assign bfk_content = bfk_content | replace: '</table>', '</table></div>'
 

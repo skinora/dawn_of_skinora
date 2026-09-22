@@ -117,6 +117,7 @@
             article: article,
             klaviyo_form_id: section.settings.klaviyo_form_id
           -%}
+          {%- render 'sk-article-faq', article: article -%}
         </div>
 
         {% render 'blog-author-box',

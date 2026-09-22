@@ -1,0 +1,26 @@
+{%- comment -%}
+  sk-article-body — article.content med én H1 per side.
+
+  Seksjonen setter artikkeltittelen som <h1>. Flere artikler har i tillegg
+  limt inn tittelen som <h1> øverst i selve teksten (etter byline-avsnittet),
+  så siden fikk to H1 og tittelen sto to ganger.
+
+  - En <h1> før første <h2> er en gjentatt tittel og fjernes.
+  - Øvrige <h1> er egentlig mellomtitler og senkes til <h2>.
+
+  Bruk: {%- render 'sk-article-body', html: article.content -%}
+  Kan fanges med capture når innholdet skal bearbeides videre.
+{%- endcomment -%}
+{%- liquid
+  assign sab_html = html
+  assign sab_intro = sab_html | split: '<h2' | first
+
+  if sab_intro contains '<h1'
+    assign sab_inner = sab_intro | split: '<h1' | slice: 1 | first | split: '</h1>' | first
+    assign sab_title = '<h1' | append: sab_inner | append: '</h1>'
+    assign sab_html = sab_html | remove_first: sab_title
+  endif
+
+  assign sab_html = sab_html | replace: '<h1', '<h2' | replace: '</h1>', '</h2>'
+-%}
+{{- sab_html -}}

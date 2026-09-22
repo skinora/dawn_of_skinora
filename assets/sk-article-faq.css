@@ -1,0 +1,79 @@
+/* =============================================================
+   sk-article-faq — spørsmål og svar nederst i artikkelteksten.
+   Lastes av snippets/sk-article-faq.liquid, kun når artikkelen
+   har FAQ-metafelt. Native <details>, ingen JS.
+   ============================================================= */
+
+.sk-article-faq {
+  margin-top: var(--space-7);
+  max-width: var(--measure-body);
+}
+
+.sk-article-faq__heading {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+  color: var(--ink-900);
+  margin: 0 0 var(--space-4);
+}
+
+.sk-article-faq__item {
+  border-top: 1px solid var(--ink-300);
+}
+
+.sk-article-faq__item:last-of-type {
+  border-bottom: 1px solid var(--ink-300);
+}
+
+.sk-article-faq__question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 48px;
+  padding-block: var(--space-4);
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-700);
+}
+
+.sk-article-faq__question::-webkit-details-marker {
+  display: none;
+}
+
+.sk-article-faq__question::after {
+  content: '+';
+  flex-shrink: 0;
+  font-weight: var(--fw-regular);
+  color: var(--ink-500);
+}
+
+.sk-article-faq__item[open] > .sk-article-faq__question::after {
+  content: '\2212';
+}
+
+.sk-article-faq__question:focus-visible {
+  outline: 2px solid var(--ink-900);
+  outline-offset: 2px;
+}
+
+.sk-article-faq__answer {
+  padding-bottom: var(--space-4);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--ink-700);
+}
+
+.sk-article-faq__answer p {
+  margin: 0 0 var(--space-3);
+}
+
+.sk-article-faq__answer p:last-child {
+  margin-bottom: 0;
+}
