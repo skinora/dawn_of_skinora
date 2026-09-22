@@ -13,6 +13,39 @@
 -%}
 
 {%- comment -%}
+  Skjermer med dobbel pikseltetthet trenger dobbelt så mange piksler som
+  CSS-bredden. 1x-filene under er valgt for lastetid (desktop 1600 px ≈ 97 kB
+  mot originalens 246 kB); 2x-filene hentes bare av de skjermene som faktisk
+  har oppløsningen, via image-set() og imagesrcset.
+
+  2x-bredden kappes mot kildebildets egen bredde: Shopify kan ikke levere
+  flere piksler enn filen har, og en for stor width-parameter gir da samme
+  fil under en annen URL — altså to nedlastinger av samme bilde.
+{%- endcomment -%}
+{%- liquid
+  assign hb_1x_d = 1600
+  assign hb_1x_t = 1200
+  assign hb_1x_m = 750
+
+  assign hb_2x_d = hb_1x_d | times: 2
+  if hb_img_d != blank and hb_img_d.width < hb_2x_d
+    assign hb_2x_d = hb_img_d.width
+  endif
+
+  assign hb_img_t = section.settings.sk_banner_img_tablet
+  assign hb_2x_t = hb_1x_t | times: 2
+  if hb_img_t != blank and hb_img_t.width < hb_2x_t
+    assign hb_2x_t = hb_img_t.width
+  endif
+
+  assign hb_img_m = section.settings.sk_banner_img_mobile
+  assign hb_2x_m = hb_1x_m | times: 2
+  if hb_img_m != blank and hb_img_m.width < hb_2x_m
+    assign hb_2x_m = hb_img_m.width
+  endif
+-%}
+
+{%- comment -%}
   CLS guard — reserves the hero's height for the section wrapper immediately.
   Prevents layout shift from late-applied .sk-dynamic-banner height rules.
   Må matche heroens faktiske høyde, ellers blir differansen et tomt felt.
@@ -54,7 +87,10 @@
   <link
     rel="preload"
     as="image"
-    href="{{ section.settings.sk_banner_img_mobile | image_url: width: 750 }}"
+    href="{{ hb_img_m | image_url: width: hb_1x_m }}"
+    {%- if hb_2x_m > hb_1x_m %}
+      imagesrcset="{{ hb_img_m | image_url: width: hb_1x_m }} 1x, {{ hb_img_m | image_url: width: hb_2x_m }} 2x"
+    {%- endif %}
     media="(max-width: 700px)"
     fetchpriority="high"
   >
@@ -63,7 +99,10 @@
   <link
     rel="preload"
     as="image"
-    href="{{ section.settings.sk_banner_img_tablet | image_url: width: 1200 }}"
+    href="{{ hb_img_t | image_url: width: hb_1x_t }}"
+    {%- if hb_2x_t > hb_1x_t %}
+      imagesrcset="{{ hb_img_t | image_url: width: hb_1x_t }} 1x, {{ hb_img_t | image_url: width: hb_2x_t }} 2x"
+    {%- endif %}
     media="(min-width: 700.02px) and (max-width: 1000px)"
     fetchpriority="high"
   >
@@ -78,7 +117,10 @@
   <link
     rel="preload"
     as="image"
-    href="{{ section.settings.sk_banner_img_desktop | image_url: width: 1600 }}"
+    href="{{ hb_img_d | image_url: width: hb_1x_d }}"
+    {%- if hb_2x_d > hb_1x_d %}
+      imagesrcset="{{ hb_img_d | image_url: width: hb_1x_d }} 1x, {{ hb_img_d | image_url: width: hb_2x_d }} 2x"
+    {%- endif %}
     media="{{ desktop_preload_media }}"
     fetchpriority="high"
   >
@@ -86,7 +128,21 @@
 
 <style>
   .sk-dynamic-banner {
-    background-image: url('{{ section.settings.sk_banner_img_desktop | image_url: width: 1600 }}');
+    {%- comment -%}
+      url() først som fallback for nettlesere uten image-set, deretter den
+      prefiksede varianten (eldre Safari) og til slutt standarden.
+    {%- endcomment -%}
+    background-image: url('{{ hb_img_d | image_url: width: hb_1x_d }}');
+    {%- if hb_2x_d > hb_1x_d %}
+    background-image: -webkit-image-set(
+      url('{{ hb_img_d | image_url: width: hb_1x_d }}') 1x,
+      url('{{ hb_img_d | image_url: width: hb_2x_d }}') 2x
+    );
+    background-image: image-set(
+      url('{{ hb_img_d | image_url: width: hb_1x_d }}') 1x,
+      url('{{ hb_img_d | image_url: width: hb_2x_d }}') 2x
+    );
+    {%- endif %}
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -324,7 +380,17 @@
   @media (max-width: 1000px) {
     .sk-dynamic-banner {
       {%- if section.settings.sk_banner_img_tablet != blank %}
-      background-image: url('{{ section.settings.sk_banner_img_tablet | image_url: width: 1200 }}');
+      background-image: url('{{ hb_img_t | image_url: width: hb_1x_t }}');
+      {%- if hb_2x_t > hb_1x_t %}
+      background-image: -webkit-image-set(
+        url('{{ hb_img_t | image_url: width: hb_1x_t }}') 1x,
+        url('{{ hb_img_t | image_url: width: hb_2x_t }}') 2x
+      );
+      background-image: image-set(
+        url('{{ hb_img_t | image_url: width: hb_1x_t }}') 1x,
+        url('{{ hb_img_t | image_url: width: hb_2x_t }}') 2x
+      );
+      {%- endif %}
       {%- endif %}
       /* Nettbrett og mobil beholder fullskjerms hero: der er bildet stående
          og formatet passer allerede. min-height nullstilles så 80vh-regelen
@@ -353,7 +419,17 @@
   @media (max-width: 700px) {
     .sk-dynamic-banner {
       {%- if section.settings.sk_banner_img_mobile != blank %}
-      background-image: url('{{ section.settings.sk_banner_img_mobile | image_url: width: 750 }}');
+      background-image: url('{{ hb_img_m | image_url: width: hb_1x_m }}');
+      {%- if hb_2x_m > hb_1x_m %}
+      background-image: -webkit-image-set(
+        url('{{ hb_img_m | image_url: width: hb_1x_m }}') 1x,
+        url('{{ hb_img_m | image_url: width: hb_2x_m }}') 2x
+      );
+      background-image: image-set(
+        url('{{ hb_img_m | image_url: width: hb_1x_m }}') 1x,
+        url('{{ hb_img_m | image_url: width: hb_2x_m }}') 2x
+      );
+      {%- endif %}
       {%- endif %}
       height: 100vh;
       align-items: flex-end;
