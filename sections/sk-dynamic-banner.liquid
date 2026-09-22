@@ -26,16 +26,15 @@
 
   @media (min-width: 1001px) {
     #shopify-section-{{ section.id }} {
-      aspect-ratio: {{ hb_ratio_w }} / {{ hb_ratio_h }};
-      min-height: fit-content;
-      max-height: 100vh;
+      min-height: min(100vh, calc(100vw * {{ hb_ratio_h }} / {{ hb_ratio_w }}));
     }
   }
 
   /* Vakten må matche heroens FAKTISKE høyde. Under 435px settes heroen til
      80vh, mens wrapperen sto igjen på 100vh – de 20vh differanse ble et tomt
-     hvitt felt mellom hero og logostripen. Over 435px er heroen 100vh, så
-     vakten stemmer allerede der. */
+     hvitt felt mellom hero og logostripen. Mellom 435 og 1000px er heroen
+     100vh, så vakten stemmer der; over 1000px bruker begge samme
+     bildeformat-formel. */
   @media (max-width: 435px) {
     #shopify-section-{{ section.id }} {
       min-height: 80vh;
@@ -96,19 +95,19 @@
       Høyden følger bildets eget format i stedet for å være låst til 100vh.
       Desktopbildet er {{ hb_ratio_w }}×{{ hb_ratio_h }}, altså mye bredere enn et
       100vh-hero. cover måtte da forstørre bildet rundt 1,5× og kutte en
-      tredel av bredden — motivet så innzoomet ut. min-height holder plass
-      til teksten på korte, brede vinduer; max-height hindrer at heroen blir
-      høyere enn skjermen på svært brede. Nettbrett og mobil er uendret.
+      tredel av bredden — motivet så innzoomet ut. Nettbrett og mobil er
+      uendret: der er bildet stående og formatet passer allerede.
+
+      Verdien er en MINSTEhøyde, ikke en fast høyde. Bildeformatet bestemmer
+      normalt, men trenger teksten mer plass (ved ca. 1024px er tekstblokken
+      658px mot bildets 434px), får heroen vokse i stedet for at
+      overskriften havner bak toppmenyen. aspect-ratio kan ikke brukes her:
+      den låser høyden, og verken min-height: fit-content eller overflow
+      redder innholdet da. min(100vh, …) hindrer at heroen blir høyere enn
+      skjermen på svært brede vinduer.
     {%- endcomment -%}
-    aspect-ratio: {{ hb_ratio_w }} / {{ hb_ratio_h }};
     height: auto;
-    {%- comment -%}
-      fit-content, ikke en fast px-verdi: på smalere desktopvinduer blir
-      bildehøyden lavere enn teksten, og et fast gulv gjettet feil — ved
-      1024px var innholdet 658px og overskriften havnet bak toppmenyen.
-    {%- endcomment -%}
-    min-height: fit-content;
-    max-height: 100vh;
+    min-height: min(100vh, calc(100vw * {{ hb_ratio_h }} / {{ hb_ratio_w }}));
     display: flex;
     align-items: center;
     position: relative;
