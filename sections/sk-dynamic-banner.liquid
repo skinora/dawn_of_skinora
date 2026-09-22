@@ -27,7 +27,7 @@
   @media (min-width: 1001px) {
     #shopify-section-{{ section.id }} {
       aspect-ratio: {{ hb_ratio_w }} / {{ hb_ratio_h }};
-      min-height: 520px;
+      min-height: fit-content;
       max-height: 100vh;
     }
   }
@@ -102,7 +102,12 @@
     {%- endcomment -%}
     aspect-ratio: {{ hb_ratio_w }} / {{ hb_ratio_h }};
     height: auto;
-    min-height: 520px;
+    {%- comment -%}
+      fit-content, ikke en fast px-verdi: på smalere desktopvinduer blir
+      bildehøyden lavere enn teksten, og et fast gulv gjettet feil — ved
+      1024px var innholdet 658px og overskriften havnet bak toppmenyen.
+    {%- endcomment -%}
+    min-height: fit-content;
     max-height: 100vh;
     display: flex;
     align-items: center;
