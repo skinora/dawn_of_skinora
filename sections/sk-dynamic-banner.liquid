@@ -13,19 +13,18 @@
 -%}
 
 {%- comment -%}
-  Skjermer med dobbel pikseltetthet trenger dobbelt så mange piksler som
-  CSS-bredden. 1x-filene under er valgt for lastetid (desktop 1600 px ≈ 97 kB
-  mot originalens 246 kB); 2x-filene hentes bare av de skjermene som faktisk
-  har oppløsningen, via image-set() og imagesrcset.
+  Bildevalget har to akser: skjermbredde og pikseltetthet. Heroen er full
+  bredde, så en 1920px-skjerm uten høy pikseltetthet trenger like mange
+  piksler som en 960px-skjerm med dobbel.
 
-  2x-bredden kappes mot kildebildets egen bredde: Shopify kan ikke levere
-  flere piksler enn filen har, og en for stor width-parameter gir da samme
-  fil under en annen URL — altså to nedlastinger av samme bilde.
+  - Bredde: w-kandidatene i imagesrcset (forhåndslastingen) og de tilsvarende
+    mediaspørringene i CSS-en lenger nede.
+  - Pikseltetthet: image-set(), som snippeten sk-hero-bg skriver.
 
-  Kappingen kan gjøre 2x nesten lik 1x. Mobilbildet er i dag 768 px bredt,
-  så 2x ville blitt 768 mot 750 — en ekstra URL for 2 % flere piksler. Derfor
-  må 2x være minst halvannen gang 1x for å bli med i det hele tatt. Lastes et
-  større mobilbilde opp, slår 2x inn av seg selv.
+  1x-bredden under er utgangspunktet for det smaleste trinnet, valgt for
+  lastetid: desktop 1600px ≈ 97 kB mot originalens 246 kB. Kapping mot
+  kildefilens bredde og terskelen for når 2x er verdt en egen URL ligger i
+  snippetene, ikke her.
 {%- endcomment -%}
 {%- liquid
   assign hb_img_t = section.settings.sk_banner_img_tablet
@@ -36,31 +35,16 @@
   assign hb_1x_m = 750
 
   assign hb_2x_d = hb_1x_d | times: 2
-  if hb_img_d != blank and hb_img_d.width < hb_2x_d
-    assign hb_2x_d = hb_img_d.width
-  endif
-  assign hb_floor_d = hb_1x_d | times: 3 | divided_by: 2
-  if hb_2x_d < hb_floor_d
-    assign hb_2x_d = hb_1x_d
-  endif
-
   assign hb_2x_t = hb_1x_t | times: 2
-  if hb_img_t != blank and hb_img_t.width < hb_2x_t
-    assign hb_2x_t = hb_img_t.width
-  endif
-  assign hb_floor_t = hb_1x_t | times: 3 | divided_by: 2
-  if hb_2x_t < hb_floor_t
-    assign hb_2x_t = hb_1x_t
-  endif
-
   assign hb_2x_m = hb_1x_m | times: 2
-  if hb_img_m != blank and hb_img_m.width < hb_2x_m
-    assign hb_2x_m = hb_img_m.width
-  endif
-  assign hb_floor_m = hb_1x_m | times: 3 | divided_by: 2
-  if hb_2x_m < hb_floor_m
-    assign hb_2x_m = hb_1x_m
-  endif
+
+  comment
+    Kandidatbredder for srcset. Snippeten kapper mot kildefilens bredde og
+    fjerner dubletter, så listene kan være romslige.
+  endcomment
+  assign hb_widths_d = '1600,2000,2600,3168'
+  assign hb_widths_t = '1200,1600,2000,2400'
+  assign hb_widths_m = '750,1000,1500'
 -%}
 
 {%- comment -%}
@@ -106,9 +90,8 @@
     rel="preload"
     as="image"
     href="{{ hb_img_m | image_url: width: hb_1x_m }}"
-    {%- if hb_2x_m > hb_1x_m %}
-      imagesrcset="{{ hb_img_m | image_url: width: hb_1x_m }} 1x, {{ hb_img_m | image_url: width: hb_2x_m }} 2x"
-    {%- endif %}
+    imagesrcset="{% render 'sk-hero-srcset', image: hb_img_m, widths: hb_widths_m %}"
+    imagesizes="100vw"
     media="(max-width: 700px)"
     fetchpriority="high"
   >
@@ -118,9 +101,8 @@
     rel="preload"
     as="image"
     href="{{ hb_img_t | image_url: width: hb_1x_t }}"
-    {%- if hb_2x_t > hb_1x_t %}
-      imagesrcset="{{ hb_img_t | image_url: width: hb_1x_t }} 1x, {{ hb_img_t | image_url: width: hb_2x_t }} 2x"
-    {%- endif %}
+    imagesrcset="{% render 'sk-hero-srcset', image: hb_img_t, widths: hb_widths_t %}"
+    imagesizes="100vw"
     media="(min-width: 700.02px) and (max-width: 1000px)"
     fetchpriority="high"
   >
@@ -132,13 +114,20 @@
   {%- else -%}
     {%- assign desktop_preload_media = '(min-width: 700.02px)' -%}
   {%- endif -%}
+  {%- comment -%}
+    Desktop bruker w-beskrivelser, ikke 1x/2x. Heroen er full bredde, så
+    behovet er skjermbredde × pikseltetthet — ikke pikseltetthet alene. En
+    1920px-skjerm uten høy pikseltetthet trenger 2000px-filen; med 1x/2x fikk
+    den 1600px strukket til 1900, og DET er uskarpheten som ble meldt.
+    imagesizes="100vw" lar nettleseren regne det ut selv, og
+    CSS-mediaspørringene under velger nøyaktig samme fil.
+  {%- endcomment -%}
   <link
     rel="preload"
     as="image"
     href="{{ hb_img_d | image_url: width: hb_1x_d }}"
-    {%- if hb_2x_d > hb_1x_d %}
-      imagesrcset="{{ hb_img_d | image_url: width: hb_1x_d }} 1x, {{ hb_img_d | image_url: width: hb_2x_d }} 2x"
-    {%- endif %}
+    imagesrcset="{% render 'sk-hero-srcset', image: hb_img_d, widths: hb_widths_d %}"
+    imagesizes="100vw"
     media="{{ desktop_preload_media }}"
     fetchpriority="high"
   >
@@ -146,21 +135,7 @@
 
 <style>
   .sk-dynamic-banner {
-    {%- comment -%}
-      url() først som fallback for nettlesere uten image-set, deretter den
-      prefiksede varianten (eldre Safari) og til slutt standarden.
-    {%- endcomment -%}
-    background-image: url('{{ hb_img_d | image_url: width: hb_1x_d }}');
-    {%- if hb_2x_d > hb_1x_d %}
-    background-image: -webkit-image-set(
-      url('{{ hb_img_d | image_url: width: hb_1x_d }}') 1x,
-      url('{{ hb_img_d | image_url: width: hb_2x_d }}') 2x
-    );
-    background-image: image-set(
-      url('{{ hb_img_d | image_url: width: hb_1x_d }}') 1x,
-      url('{{ hb_img_d | image_url: width: hb_2x_d }}') 2x
-    );
-    {%- endif %}
+    {%- render 'sk-hero-bg', image: hb_img_d, w1: hb_1x_d, w2: hb_2x_d -%}
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -188,6 +163,35 @@
     padding-top: clamp(2rem, 5vh, 6rem);
     padding-bottom: clamp(2rem, 5vh, 6rem);
   }
+
+  {%- comment -%}
+    Bredere vinduer får en bredere fil. Et bakgrunnsbilde kan ikke bruke
+    srcset, og image-set ser bare på pikseltetthet — derfor disse trinnene.
+    Uten dem fikk en 1920px-skjerm uten høy pikseltetthet 1600px-filen
+    strukket til 1900px, som er den uskarpheten som ble meldt.
+
+    Trinnene speiler w-kandidatene i imagesrcset over, så nettleseren
+    forhåndslaster nøyaktig den filen CSS-en senere maler. Et trinn hoppes
+    over når kildefilen ikke har flere piksler å gi.
+  {%- endcomment -%}
+  {%- assign hb_prev_w = hb_1x_d -%}
+  {%- assign hb_steps = '1600.02|2000,2000.02|2600,2560.02|3168' | split: ',' -%}
+  {%- for hb_step in hb_steps -%}
+    {%- assign hb_pair = hb_step | split: '|' -%}
+    {%- assign hb_step_w = hb_pair[1] | plus: 0 -%}
+    {%- if hb_img_d.width < hb_step_w -%}
+      {%- assign hb_step_w = hb_img_d.width -%}
+    {%- endif -%}
+    {%- if hb_step_w > hb_prev_w -%}
+      {%- assign hb_step_2x = hb_step_w | times: 2 -%}
+  @media (min-width: {{ hb_pair[0] }}px) {
+    .sk-dynamic-banner {
+      {%- render 'sk-hero-bg', image: hb_img_d, w1: hb_step_w, w2: hb_step_2x -%}
+    }
+  }
+      {%- assign hb_prev_w = hb_step_w -%}
+    {%- endif -%}
+  {%- endfor %}
 
   /* WIDER SECTION WRAPPER */
   .sk-dynamic-banner .page-width {
@@ -397,18 +401,8 @@
   /* TABLET */
   @media (max-width: 1000px) {
     .sk-dynamic-banner {
-      {%- if section.settings.sk_banner_img_tablet != blank %}
-      background-image: url('{{ hb_img_t | image_url: width: hb_1x_t }}');
-      {%- if hb_2x_t > hb_1x_t %}
-      background-image: -webkit-image-set(
-        url('{{ hb_img_t | image_url: width: hb_1x_t }}') 1x,
-        url('{{ hb_img_t | image_url: width: hb_2x_t }}') 2x
-      );
-      background-image: image-set(
-        url('{{ hb_img_t | image_url: width: hb_1x_t }}') 1x,
-        url('{{ hb_img_t | image_url: width: hb_2x_t }}') 2x
-      );
-      {%- endif %}
+      {%- if hb_img_t != blank -%}
+        {%- render 'sk-hero-bg', image: hb_img_t, w1: hb_1x_t, w2: hb_2x_t -%}
       {%- endif %}
       /* Nettbrett og mobil beholder fullskjerms hero: der er bildet stående
          og formatet passer allerede. min-height nullstilles så 80vh-regelen
@@ -436,18 +430,8 @@
   /* MOBILE */
   @media (max-width: 700px) {
     .sk-dynamic-banner {
-      {%- if section.settings.sk_banner_img_mobile != blank %}
-      background-image: url('{{ hb_img_m | image_url: width: hb_1x_m }}');
-      {%- if hb_2x_m > hb_1x_m %}
-      background-image: -webkit-image-set(
-        url('{{ hb_img_m | image_url: width: hb_1x_m }}') 1x,
-        url('{{ hb_img_m | image_url: width: hb_2x_m }}') 2x
-      );
-      background-image: image-set(
-        url('{{ hb_img_m | image_url: width: hb_1x_m }}') 1x,
-        url('{{ hb_img_m | image_url: width: hb_2x_m }}') 2x
-      );
-      {%- endif %}
+      {%- if hb_img_m != blank -%}
+        {%- render 'sk-hero-bg', image: hb_img_m, w1: hb_1x_m, w2: hb_2x_m -%}
       {%- endif %}
       height: 100vh;
       align-items: flex-end;

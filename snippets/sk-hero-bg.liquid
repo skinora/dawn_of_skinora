@@ -1,0 +1,35 @@
+{%- comment -%}
+  sk-hero-bg — background-image-deklarasjonene for et fullbredde-bilde.
+
+  Forventer:
+    image – Shopify-bildeobjekt
+    w1    – bredde for vanlig pikseltetthet
+    w2    – bredde for dobbel pikseltetthet (kappes mot kildefilen av kalleren)
+
+  Skriver url() først som fallback for nettlesere uten image-set, deretter
+  -webkit-image-set (eldre Safari) og til slutt standarden. Er w2 ikke
+  merkbart større enn w1, droppes image-set helt: en ekstra kandidat som gir
+  noen få prosent flere piksler er bare en URL til.
+{%- endcomment -%}
+{%- liquid
+  assign hbg_w1 = w1 | plus: 0
+  assign hbg_w2 = w2 | plus: 0
+  if image.width < hbg_w1
+    assign hbg_w1 = image.width
+  endif
+  if image.width < hbg_w2
+    assign hbg_w2 = image.width
+  endif
+  assign hbg_floor = hbg_w1 | times: 3 | divided_by: 2
+-%}
+background-image: url('{{ image | image_url: width: hbg_w1 }}');
+{%- if hbg_w2 >= hbg_floor %}
+background-image: -webkit-image-set(
+  url('{{ image | image_url: width: hbg_w1 }}') 1x,
+  url('{{ image | image_url: width: hbg_w2 }}') 2x
+);
+background-image: image-set(
+  url('{{ image | image_url: width: hbg_w1 }}') 1x,
+  url('{{ image | image_url: width: hbg_w2 }}') 2x
+);
+{%- endif -%}
