@@ -309,6 +309,20 @@
       margin: 0;
     }
 
+    /* Produkttypen i H1: egen linje, brødtekststørrelse, så merkenavnet
+       beholder vekten. Egen line-height fordi tittelen har svært lav
+       line-height på desktop. */
+    .sk-product-title__type {
+      display: block;
+      margin-top: var(--space-2);
+      font-family: var(--ff-sans);
+      font-size: var(--fs-md);
+      font-weight: var(--fw-regular);
+      line-height: var(--lh-relaxed);
+      letter-spacing: var(--tracking-normal);
+      color: var(--ink-500);
+    }
+
     @media (min-width: 990px) {
       .sk-product-title {
         font-size: 1.25rem;
@@ -2101,8 +2115,19 @@
             <p class="sk-eyebrow">{{ product_info.radiance_eyebrow.value }}</p>
           {% endif %}
 
+          {%- comment -%}
+            H1 = merkenavn + produkttype. Merkenavnet står stort som før;
+            produkttypen (metafelt custom.h1_produkttype, f.eks. «LED-maske mot
+            akne og problemhud») ligger i samme H1 som en mindre linje under,
+            så søkeordet er en del av overskriften uten å gjøre tittelen lang.
+            Tomt felt = kun merkenavnet, som før.
+          {%- endcomment -%}
+          {%- assign sk_h1_type = product.metafields.custom.h1_produkttype.value | strip -%}
           <h1 class="sk-product-title">
             {{ product_info.radiance_heading.value | default: product.title }}
+            {%- if sk_h1_type != blank -%}
+              <span class="sk-product-title__type"><span class="visually-hidden"> – </span>{{ sk_h1_type | escape }}</span>
+            {%- endif -%}
           </h1>
 
           {% if product_info.radiance_subheading.value != blank %}
