@@ -11,7 +11,9 @@
 
 .sk-related-articles__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* 3–6 kort: fire får én rad på desktop, fem og seks brekker til to
+     rader uten at kortene blir smalere enn 240px. */
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: var(--space-5);
 }
 
@@ -57,12 +59,6 @@
   line-height: var(--lh-normal);
   color: var(--ink-500);
   margin: 0;
-}
-
-@media (max-width: 1024px) {
-  .sk-related-articles__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 700px) {

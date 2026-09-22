@@ -1,26 +1,75 @@
 {{ 'section-sk-related-articles.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%}
-  Relaterte artikler — automatisk intern lenking (temaklynge).
-  Viser inntil 3 andre innlegg fra samme blogg, ekskludert den nåværende
-  artikkelen. Ankertekst = artikkelens tittel.
+  Relaterte artikler — kontekstuell intern lenking (temaklynge).
+  Viser 3–6 andre innlegg fra samme blogg (innstillingen «Antall artikler»),
+  valgt etter delte tags, ikke tilfeldig og ikke bare nyeste. Ankertekst =
+  artikkelens tittel.
 
-  Pilarstruktur: settingen `pillar_article` (komplett-guiden) vises alltid
-  først når den er satt og ikke er artikkelen man står på — slik lenker alle
-  undertema-artikler til pilarsiden, og pilarsiden lenker ut til de mer
-  spesifikke artiklene via de automatiske kortene.
+  Rekkefølge:
+  1. Pilarartikkelen (settingen `pillar_article`), når den er satt og ikke er
+     artikkelen man står på — slik lenker alle undertema-artikler til
+     pilarsiden.
+  2. Artikler som deler minst to tags med denne.
+  3. Artikler som deler én tag. Tags som «women» går igjen på mange
+     artikler, så én felles tag alene er et svakere signal enn to.
+  4. Nyeste artikler fyller opp resten, så seksjonen aldri står halvtom.
+
+  Innen hvert trinn gjelder bloggens egen rekkefølge (nyeste først), så
+  utvalget er stabilt mellom sidevisninger.
 {%- endcomment -%}
 
-{%- assign max_posts = 3 -%}
-{%- assign pillar = section.settings.pillar_article -%}
-{%- assign show_pillar = false -%}
-{%- if pillar != blank and pillar.handle != article.handle -%}
-  {%- assign show_pillar = true -%}
-  {%- assign max_posts = max_posts | minus: 1 -%}
-{%- endif -%}
+{%- liquid
+  assign max_posts = section.settings.max_posts | default: 4
+  assign pillar = section.settings.pillar_article
+  assign show_pillar = false
+  if pillar != blank and pillar.handle != article.handle
+    assign show_pillar = true
+    assign max_posts = max_posts | minus: 1
+  endif
 
-{%- assign other_count = blog.articles_count | minus: 1 -%}
-{%- if show_pillar or other_count > 0 -%}
+  comment
+    picked er en |-avgrenset liste over handles som allerede er brukt, så
+    samme artikkel aldri kommer to ganger på tvers av trinnene.
+  endcomment
+  assign picked = '|' | append: article.handle | append: '|'
+  if show_pillar
+    assign picked = picked | append: pillar.handle | append: '|'
+  endif
+
+  assign picked_list = ''
+  assign shown = 0
+  assign thresholds = '2,1,0' | split: ','
+  for threshold_str in thresholds
+    assign threshold = threshold_str | plus: 0
+    for related in blog.articles
+      if shown >= max_posts
+        break
+      endif
+      assign key = '|' | append: related.handle | append: '|'
+      if picked contains key
+        continue
+      endif
+
+      assign shared = 0
+      for tag in related.tags
+        if article.tags contains tag
+          assign shared = shared | plus: 1
+        endif
+      endfor
+
+      if shared >= threshold
+        assign picked = picked | append: related.handle | append: '|'
+        assign picked_list = picked_list | append: related.handle | append: ','
+        assign shown = shown | plus: 1
+      endif
+    endfor
+  endfor
+
+  assign picked_handles = picked_list | split: ','
+-%}
+
+{%- if show_pillar or shown > 0 -%}
   <section
     class="sk-related-articles section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}"
     aria-labelledby="sk-related-articles-heading-{{ section.id }}"
@@ -35,13 +84,13 @@
           {%- render 'sk-related-article-card', related: pillar -%}
         {%- endif -%}
 
-        {%- assign shown = 0 -%}
-        {%- for related in blog.articles -%}
-          {%- if shown >= max_posts -%}{%- break -%}{%- endif -%}
-          {%- if related.handle == article.handle -%}{%- continue -%}{%- endif -%}
-          {%- if show_pillar and related.handle == pillar.handle -%}{%- continue -%}{%- endif -%}
-          {%- render 'sk-related-article-card', related: related -%}
-          {%- assign shown = shown | plus: 1 -%}
+        {%- for handle in picked_handles -%}
+          {%- for related in blog.articles -%}
+            {%- if related.handle == handle -%}
+              {%- render 'sk-related-article-card', related: related -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
         {%- endfor -%}
       </div>
     </div>
@@ -75,6 +124,16 @@
       "id": "pillar_article",
       "label": "Pilarartikkel",
       "info": "Vises alltid først (f.eks. komplett-guiden). La stå tom for kun automatiske forslag."
+    },
+    {
+      "type": "range",
+      "id": "max_posts",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "label": "Antall artikler",
+      "info": "Inkludert pilarartikkelen. Velges etter felles tags, deretter nyeste.",
+      "default": 4
     },
     {
       "type": "select",
