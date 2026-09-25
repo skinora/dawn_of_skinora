@@ -262,6 +262,14 @@
     "sk_product_clinic_proof_yhWJFi": {
       "type": "sk-product-clinic-proof",
       "blocks": {
+        "clinic_aMRTxM": {
+          "type": "clinic",
+          "settings": {
+            "name": "skinlab",
+            "logo_svg": "skinlabtromso",
+            "logo_transparent": true
+          }
+        },
         "clinic_rAikxz": {
           "type": "clinic",
           "settings": {
@@ -288,6 +296,7 @@
         }
       },
       "block_order": [
+        "clinic_aMRTxM",
         "clinic_rAikxz",
         "clinic_EJCCzD",
         "clinic_dmqjjX"
