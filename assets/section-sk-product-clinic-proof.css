@@ -68,6 +68,49 @@
 }
 
 .sk-cproof__body p { margin: 0; }
+
+/* ── TRE GRUNNER ── */
+.sk-cproof__reasons {
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: sk-cproof-reason;
+  display: grid;
+  gap: var(--space-4);
+  max-width: var(--measure-intro);
+}
+
+.sk-cproof__reason {
+  counter-increment: sk-cproof-reason;
+  display: grid;
+  grid-template-columns: var(--space-6) minmax(0, 1fr);
+  column-gap: var(--space-3);
+}
+
+.sk-cproof__reason::before {
+  content: counter(sk-cproof-reason);
+  grid-row: 1 / span 2;
+  font-family: var(--ff-serif);
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-none);
+  color: var(--ink-400);
+}
+
+.sk-cproof__reason-title,
+.sk-cproof__reason-text {
+  grid-column: 2;
+  margin: 0;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+}
+
+.sk-cproof__reason-title {
+  font-weight: var(--fw-semibold);
+  color: var(--ink-900);
+}
+
+.sk-cproof__reason-text { color: var(--ink-500); }
 .sk-cproof__body p + p { margin-top: var(--space-3); }
 
 /* ── PORTRETT ──
