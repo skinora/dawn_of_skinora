@@ -58,6 +58,7 @@
   max-width: var(--measure-intro);
   font-family: var(--ff-sans);
   font-size: var(--fs-md);
+  font-style: italic;
   line-height: var(--lh-normal);
   color: var(--ink-500);
 }
