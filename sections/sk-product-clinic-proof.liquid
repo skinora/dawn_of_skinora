@@ -1,0 +1,311 @@
+{%- comment -%}
+  sk-product-clinic-proof — «klinikkene selger den».
+
+  Ment å stå rett etter produkt-heroen. Jobben er å fjerne tvil, ikke å
+  ta klikket: kjøpsknappen står rett over, så seksjonen har ingen egen
+  knapp og ingen lenke ut til klinikkene (det ville lekket kunden ut av
+  siden i det øyeblikket hun er nærmest å kjøpe).
+
+  Bevisrekkefølge: påstand (H2) → én navngitt fagperson med ansikt →
+  bredden bak henne (antall klinikker, byer, logoer). Én person slår tre
+  små avatarer; bredden kommer etterpå som bekreftelse.
+
+  Ingenting her har påfunnet standardinnhold. Sitat, navn, tittel og
+  antall klinikker står tomme til de fylles inn med ekte, samtykket
+  innhold – og det som er tomt, rendres ikke.
+
+  Sitatet skrives uten anførselstegn; «» legges på i CSS.
+{%- endcomment -%}
+
+{{ 'section-sk-product-clinic-proof.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+
+  assign has_media = false
+  if s.image != blank
+    assign has_media = true
+  endif
+
+  assign has_person = false
+  if s.quote != blank or s.name != blank
+    assign has_person = true
+  endif
+
+  assign has_proof = false
+  if s.clinic_count > 0 or s.cities != blank or section.blocks.size > 0
+    assign has_proof = true
+  endif
+
+  assign portrait_alt = s.image_alt
+  if portrait_alt == blank and s.name != blank
+    assign portrait_alt = s.name | append: ', ' | append: s.role
+  endif
+-%}
+
+<section
+  class="sk-cproof sk-cproof--{{ s.background }}{% unless has_media %} sk-cproof--no-media{% endunless %}"
+  {% if s.anchor_id != blank %}id="{{ s.anchor_id | handleize }}"{% endif %}
+  aria-labelledby="sk-cproof-heading-{{ section.id }}"
+>
+  <div class="sk-cproof__inner">
+    <div class="sk-cproof__grid">
+      <div class="sk-cproof__intro">
+        {%- if s.eyebrow != blank -%}
+          <p class="sk-cproof__eyebrow">{{ s.eyebrow | escape }}</p>
+        {%- endif -%}
+
+        <h2 id="sk-cproof-heading-{{ section.id }}" class="sk-cproof__heading">{{ s.heading | escape }}</h2>
+
+        {%- if s.body != blank -%}
+          <div class="sk-cproof__body">{{ s.body }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- if has_media -%}
+        <div class="sk-cproof__media" style="--sk-cproof-focus-y: {{ s.image_focus_y }}%;">
+          {{
+            s.image
+            | image_url: width: 1200
+            | image_tag:
+              widths: '360, 540, 720, 960, 1200',
+              sizes: '(min-width: 769px) 460px, calc(100vw - 32px)',
+              class: 'sk-cproof__portrait',
+              alt: portrait_alt,
+              loading: 'lazy'
+          }}
+        </div>
+      {%- endif -%}
+
+      {%- if has_person -%}
+        <figure class="sk-cproof__person">
+          {%- if s.quote != blank -%}
+            <blockquote class="sk-cproof__quote">
+              <p>{{ s.quote | escape | newline_to_br }}</p>
+            </blockquote>
+          {%- endif -%}
+
+          {%- if s.name != blank -%}
+            <figcaption class="sk-cproof__credit">
+              <span class="sk-cproof__name">
+                {{- s.name | escape -}}
+                {%- if s.role != blank %}<span class="sk-cproof__role">, {{ s.role | escape }}</span>{% endif -%}
+              </span>
+              {%- if s.clinic != blank or s.city != blank -%}
+                <span class="sk-cproof__clinic">
+                  {{- s.clinic | escape -}}
+                  {%- if s.clinic != blank and s.city != blank %}, {% endif -%}
+                  {{- s.city | escape -}}
+                </span>
+              {%- endif -%}
+            </figcaption>
+          {%- endif -%}
+        </figure>
+      {%- endif -%}
+    </div>
+
+    {%- if has_proof -%}
+      <div class="sk-cproof__proof">
+        {%- if s.clinic_count > 0 or s.cities != blank -%}
+          <p class="sk-cproof__count">
+            {%- if s.clinic_count > 0 -%}
+              <strong>{{ s.clinic_count }}</strong> {{ s.count_label | escape }}
+            {%- endif -%}
+            {%- if s.clinic_count > 0 and s.cities != blank %}<span class="sk-cproof__sep" aria-hidden="true"> · </span>{% endif -%}
+            {%- if s.cities != blank -%}
+              <span class="sk-cproof__cities">{{ s.cities | escape }}</span>
+            {%- endif -%}
+          </p>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="sk-cproof__logos" role="list" aria-label="{{ s.logos_label | escape }}">
+            {%- for block in section.blocks -%}
+              <li class="sk-cproof__logo" {{ block.shopify_attributes }}>
+                {%- if block.settings.logo != blank -%}
+                  {{
+                    block.settings.logo
+                    | image_url: width: 320
+                    | image_tag:
+                      widths: '160, 320',
+                      sizes: '140px',
+                      alt: block.settings.name,
+                      loading: 'lazy'
+                  }}
+                {%- else -%}
+                  <span class="sk-cproof__logo-name">{{ block.settings.name | escape }}</span>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SK Klinikkbevis",
+  "tag": "div",
+  "class": "sk-cproof-section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Bakgrunn",
+      "info": "Kjølig grå skiller seksjonen fra heroen uten sterke farger.",
+      "options": [
+        { "value": "cool", "label": "Kjølig grå" },
+        { "value": "cream", "label": "Varm krem" },
+        { "value": "paper", "label": "Hvit" }
+      ],
+      "default": "cool"
+    },
+    {
+      "type": "header",
+      "content": "Påstanden"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "I bruk på norske hudklinikker"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "info": "Si hva klinikkene gjør, ikke bare hva de mener. Må være sant.",
+      "default": "Hudsykepleierne sender kundene sine hjem med den."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Brødtekst",
+      "info": "1–2 setninger. Svar på spørsmålet «burde jeg heller kjøpe den på klinikken?».",
+      "default": "<p>Skinora selges gjennom norske hudklinikker, som hjemmebehandling mellom timene. Det er den samme masken du får her.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Fagpersonen"
+    },
+    {
+      "type": "paragraph",
+      "content": "Bruk kun ekte navn, bilde og sitat med skriftlig samtykke. Tomme felt vises ikke."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Portrett",
+      "info": "Ekte foto i klinikken, gjerne med masken i hånda. Vises i 4:5."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Alt-tekst",
+      "info": "Tom: navn og tittel brukes."
+    },
+    {
+      "type": "range",
+      "id": "image_focus_y",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Vertikalt bildefokus",
+      "info": "Lav verdi holder toppen av bildet.",
+      "default": 30
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Sitat",
+      "info": "Uten anførselstegn – de legges på automatisk. Konkret: en situasjon, og gjerne svar på «orker jeg dette?»."
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Navn"
+    },
+    {
+      "type": "text",
+      "id": "role",
+      "label": "Tittel",
+      "info": "Tittelen personen faktisk har. «Sykepleier» er en beskyttet tittel."
+    },
+    {
+      "type": "text",
+      "id": "clinic",
+      "label": "Klinikk"
+    },
+    {
+      "type": "text",
+      "id": "city",
+      "label": "By"
+    },
+    {
+      "type": "header",
+      "content": "Bredden"
+    },
+    {
+      "type": "number",
+      "id": "clinic_count",
+      "label": "Antall klinikker",
+      "info": "Det faktiske tallet. Tom: vises ikke."
+    },
+    {
+      "type": "text",
+      "id": "count_label",
+      "label": "Tekst etter tallet",
+      "default": "klinikker i Norge"
+    },
+    {
+      "type": "text",
+      "id": "cities",
+      "label": "Byer",
+      "info": "F.eks. «Oslo · Bergen · Trondheim»."
+    },
+    {
+      "type": "text",
+      "id": "logos_label",
+      "label": "Skjermleser-tekst for logoraden",
+      "default": "Klinikker som selger Skinora"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anker-ID (valgfri)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "clinic",
+      "name": "Klinikk",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Navn",
+          "info": "Brukes som alt-tekst, eller vises som tekst hvis logo mangler."
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo",
+          "info": "Kun med klinikkens samtykke. Vises dempet i gråtoner."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Klinikkbevis"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product", "index", "page"]
+  }
+}
+{% endschema %}

@@ -1,0 +1,239 @@
+/* sk-product-clinic-proof — «klinikkene selger den».
+   Mobil: påstand → portrett → sitat → bredden, stablet.
+   Desktop (≥769px): portrett til venstre (5/12), påstand og sitat til
+   høyre; bredden i full bredde under en hårlinje.
+   Kun tokens fra typography.css. Ingen !important. */
+
+.sk-cproof {
+  padding-block: var(--space-section-md);
+  background: var(--paper-150);
+  color: var(--ink-700);
+}
+
+.sk-cproof--cream { background: var(--paper-100); }
+.sk-cproof--paper { background: var(--paper-0); }
+
+.sk-cproof__inner {
+  max-width: var(--lp-w-wide);
+  margin-inline: auto;
+  padding-inline: var(--lp-gutter);
+}
+
+/* ── GRID ── */
+.sk-cproof__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'intro'
+    'media'
+    'person';
+  gap: var(--space-5);
+}
+
+.sk-cproof__intro  { grid-area: intro; }
+.sk-cproof__media  { grid-area: media; }
+.sk-cproof__person { grid-area: person; }
+
+/* ── PÅSTANDEN ── */
+.sk-cproof__eyebrow {
+  margin: 0 0 var(--space-3);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--ink-500);
+}
+
+.sk-cproof__heading {
+  margin: 0;
+  max-width: 20ch;
+  font-family: var(--ff-serif);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+  text-wrap: balance;
+}
+
+.sk-cproof__body {
+  margin-top: var(--space-4);
+  max-width: var(--measure-intro);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+}
+
+.sk-cproof__body p { margin: 0; }
+.sk-cproof__body p + p { margin-top: var(--space-3); }
+
+/* ── PORTRETT ──
+   Skarpe hjørner kommer fra den globale sk-regelen for bilder. */
+.sk-cproof__media {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--paper-100);
+}
+
+.sk-cproof__portrait {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% var(--sk-cproof-focus-y, 30%);
+}
+
+/* ── FAGPERSONEN ── */
+.sk-cproof__person { margin: 0; }
+
+.sk-cproof__quote {
+  margin: 0;
+  padding: 0;
+  font-family: var(--ff-serif);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-700);
+}
+
+.sk-cproof__quote p { margin: 0; }
+.sk-cproof__quote p::before { content: '«'; }
+.sk-cproof__quote p::after  { content: '»'; }
+
+.sk-cproof__credit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--hairline);
+  font-family: var(--ff-sans);
+  line-height: var(--lh-relaxed);
+}
+
+.sk-cproof__quote + .sk-cproof__credit { margin-top: var(--space-5); }
+
+.sk-cproof__name {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-700);
+}
+
+.sk-cproof__role {
+  font-weight: var(--fw-regular);
+}
+
+.sk-cproof__clinic {
+  font-size: var(--fs-xs);
+  color: var(--ink-500);
+}
+
+/* ── BREDDEN ── */
+.sk-cproof__proof {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--hairline);
+}
+
+.sk-cproof__count {
+  margin: 0;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-500);
+}
+
+.sk-cproof__count strong {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-regular);
+  color: var(--ink-900);
+}
+
+/* Mobil: logoene scrolles sidelengs, ikke marquee – kunden styrer selv. */
+.sk-cproof__logos {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  margin: var(--space-4) calc(var(--lp-gutter) * -1) 0;
+  padding: var(--space-2) var(--lp-gutter);
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.sk-cproof__logos::-webkit-scrollbar { display: none; }
+
+.sk-cproof__logo {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.sk-cproof__logo img {
+  display: block;
+  width: auto;
+  max-width: 140px;
+  height: 32px;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.72;
+}
+
+.sk-cproof__logo-name {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-wide);
+  white-space: nowrap;
+  color: var(--ink-400);
+}
+
+/* ── DESKTOP ── */
+@media (min-width: 769px) {
+  .sk-cproof__grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    /* Tomme 1fr-rader over og under: teksten sentreres mot portrettet. */
+    grid-template-rows: 1fr auto auto 1fr;
+    grid-template-areas:
+      'media .'
+      'media intro'
+      'media person'
+      'media .';
+    column-gap: var(--space-8);
+    row-gap: var(--space-5);
+  }
+
+  .sk-cproof--no-media .sk-cproof__grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      'intro'
+      'person';
+    max-width: var(--lp-w-narrow);
+  }
+
+  .sk-cproof__quote { font-size: var(--fs-2xl); line-height: var(--lh-snug); }
+
+  .sk-cproof__proof {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    margin-top: var(--space-7);
+  }
+
+  .sk-cproof__count { flex: 0 0 auto; }
+
+  .sk-cproof__logos {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+}
