@@ -266,7 +266,7 @@
         "clinic_biQkwR": {
           "type": "clinic",
           "settings": {
-            "name": "skedsmo",
+            "name": "Skedsmo Laserklinikk",
             "logo_svg": "skedsmolaserklinikk",
             "logo_transparent": true
           }
@@ -274,7 +274,7 @@
         "clinic_aMRTxM": {
           "type": "clinic",
           "settings": {
-            "name": "skinlab",
+            "name": "SkinLab Tromsø",
             "logo_svg": "skinlabtromso",
             "logo_transparent": true
           }
@@ -282,7 +282,7 @@
         "clinic_rAikxz": {
           "type": "clinic",
           "settings": {
-            "name": "fob",
+            "name": "Force of Beauty",
             "logo_svg": "forceofbeauty",
             "logo_transparent": true
           }
@@ -290,7 +290,7 @@
         "clinic_EJCCzD": {
           "type": "clinic",
           "settings": {
-            "name": "theskin",
+            "name": "The Skin",
             "logo_svg": "theskin",
             "logo_transparent": true
           }

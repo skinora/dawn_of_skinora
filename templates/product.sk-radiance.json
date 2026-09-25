@@ -38,26 +38,76 @@
     },
     "sk_product_clinic_proof_zqhBML": {
       "type": "sk-product-clinic-proof",
+      "blocks": {
+        "clinic_biQkwR": {
+          "type": "clinic",
+          "settings": {
+            "name": "Skedsmo Laserklinikk",
+            "logo_svg": "skedsmolaserklinikk",
+            "logo_transparent": true
+          }
+        },
+        "clinic_aMRTxM": {
+          "type": "clinic",
+          "settings": {
+            "name": "SkinLab Tromsø",
+            "logo_svg": "skinlabtromso",
+            "logo_transparent": true
+          }
+        },
+        "clinic_rAikxz": {
+          "type": "clinic",
+          "settings": {
+            "name": "Force of Beauty",
+            "logo_svg": "forceofbeauty",
+            "logo_transparent": true
+          }
+        },
+        "clinic_EJCCzD": {
+          "type": "clinic",
+          "settings": {
+            "name": "The Skin",
+            "logo_svg": "theskin",
+            "logo_transparent": true
+          }
+        },
+        "clinic_dmqjjX": {
+          "type": "clinic",
+          "settings": {
+            "name": "DermaFin",
+            "logo_svg": "dermafin",
+            "logo_transparent": true
+          }
+        }
+      },
+      "block_order": [
+        "clinic_biQkwR",
+        "clinic_aMRTxM",
+        "clinic_rAikxz",
+        "clinic_EJCCzD",
+        "clinic_dmqjjX"
+      ],
       "name": "SK Klinikkbevis",
       "settings": {
         "background": "cool",
-        "eyebrow": "Anbefalt av hudfagfolk",
-        "heading": "Fagfolkene velger den av tre grunner.",
+        "eyebrow": "Anbefalt av fagfolk",
+        "heading": "Hudsykepleierne sender kundene sine hjem med den.",
         "reason_1_title": "Du slipper å lure på om den virker",
-        "reason_1_text": "Lyset er sterkt nok til å gjøre jobben, hver gang.",
+        "reason_1_text": "Lyset er sterkt nok til å gjøre jobben",
         "reason_2_title": "Den føles god å ha på",
-        "reason_2_text": "Myk og lett, og den sitter tett. Behandlingen blir en stund for deg selv, ikke en plikt.",
+        "reason_2_text": "Myk og lett, og den sitter tett. Behandlingen blir en stund for deg selv",
         "reason_3_title": "Du ser det selv i speilet",
         "reason_3_text": "Med jevnlig bruk er det speilet ditt som overbeviser deg, ikke oss.",
-        "body": "<p>Den samme masken selges gjennom norske hudklinikker. Her får du den rett hjem, med 30 dagers åpent kjøp.</p>",
-        "image_alt": "",
+        "body": "<p>Skinora selges gjennom norske hudklinikker, som hjemmebehandling mellom timene. Det er den samme masken du får her.</p>",
+        "image": "shopify://shop_images/Karoline-TheSkinMedispa_jpg.webp",
+        "image_alt": "The Skin hudklinikk  anbefaler Skinora LED masker",
         "image_focus_y": 30,
-        "quote": "",
-        "name": "",
-        "role": "",
+        "quote": "Vi har testet flere LED-masker. Skinora var den som ga best passform og effekt. Nå er det den vi anbefaler.",
+        "name": "Karoline Mørch Lilledrange",
+        "role": "Dermatologisk sykepleier",
         "clinic": "",
         "city": "",
-        "count_label": "hudklinikker har valgt Skinora",
+        "count_label": "klinikker i Norge",
         "cities": "",
         "logos_label": "Klinikker som selger Skinora",
         "anchor_id": ""
