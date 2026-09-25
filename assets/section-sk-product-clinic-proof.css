@@ -56,11 +56,13 @@
 .sk-cproof__body {
   margin-top: var(--space-4);
   max-width: var(--measure-intro);
-  font-family: var(--ff-sans);
-  font-size: var(--fs-md);
+  /* Avslutningslinjen i ekte serif-kursiv (BespokeSerif-VariableItalic),
+     samme stemme som tallene over. */
+  font-family: var(--ff-serif);
+  font-size: var(--fs-lg);
   font-style: italic;
   line-height: var(--lh-normal);
-  color: var(--ink-500);
+  color: var(--ink-700);
 }
 
 .sk-cproof__body p { margin: 0; }
@@ -78,7 +80,7 @@
 
 /* Tallene er blikkfanget: stor kursiv serif, redaksjonelt. Kolonnen er
    låst til bredeste siffer, så titlene står på én linje under hverandre.
-   Temaet har ingen kursiv-fil for Bespoke Serif – kursiven syntetiseres. */
+   Ekte kursiv fra BespokeSerif-VariableItalic (theme.liquid). */
 .sk-cproof__reason {
   counter-increment: sk-cproof-reason;
   display: grid;

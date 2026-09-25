@@ -364,6 +364,16 @@
         font-display: optional;
         src: url('{{ 'BespokeSerif-Variable.woff2' | asset_url }}') format('woff2-variations');
       }
+      /* Ekte kursiv. Uten denne skraastilte nettleseren den oppreiste
+         fonten selv. Ikke preloadet: lastes bare paa sider som faktisk
+         bruker serif-kursiv. */
+      @font-face {
+        font-family: 'Bespoke Serif';
+        font-style: italic;
+        font-weight: 400 600;
+        font-display: optional;
+        src: url('{{ 'BespokeSerif-VariableItalic.woff2' | asset_url }}') format('woff2-variations');
+      }
 
       /* Metrikk-matchede fallbacks. size-adjust er kalibrert paa LINJEBREDDE,
          ikke x-hoeyde: det er bredden som avgjoer hvor linjene brekker, og
