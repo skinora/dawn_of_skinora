@@ -76,24 +76,35 @@
   list-style: none;
   counter-reset: sk-cproof-reason;
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-5);
   max-width: var(--measure-intro);
 }
 
+/* Tallene er blikkfanget: stor kursiv serif, redaksjonelt. Kolonnen er
+   låst til bredeste siffer, så titlene står på én linje under hverandre.
+   Temaet har ingen kursiv-fil for Bespoke Serif – kursiven syntetiseres. */
 .sk-cproof__reason {
   counter-increment: sk-cproof-reason;
   display: grid;
-  grid-template-columns: var(--space-6) minmax(0, 1fr);
-  column-gap: var(--space-3);
+  grid-template-columns: 1.1ch minmax(0, 1fr);
+  column-gap: var(--space-5);
+  align-items: start;
+  font-family: var(--ff-serif);
+  font-size: var(--fs-5xl);
 }
 
 .sk-cproof__reason::before {
   content: counter(sk-cproof-reason);
   grid-row: 1 / span 2;
   font-family: var(--ff-serif);
-  font-size: var(--fs-2xl);
+  font-size: var(--fs-5xl);
+  font-style: italic;
+  font-weight: var(--fw-regular);
   line-height: var(--lh-none);
-  color: var(--ink-400);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+  /* Løfter sifferets topp opp mot titlens versalhøyde. */
+  margin-top: calc(var(--space-2) * -1);
 }
 
 .sk-cproof__reason-title,
