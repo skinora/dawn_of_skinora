@@ -172,6 +172,7 @@
     },
     "sk_quiz_cta_home": {
       "type": "sk_quiz_cta",
+      "disabled": true,
       "settings": {
         "background_style": "lavender",
         "title": "Ikke sikker på hvilken maske?",
