@@ -264,6 +264,10 @@
    skal bli like stor som i de brede ordmerkene. */
 .sk-cproof__logo-svg--tall { height: 48px; }
 
+/* Ordmerker på én linje (format ~11:1) ble bare 13–15px høye innenfor
+   160px. Litt mer bredde gir dem samme visuelle vekt som de andre. */
+.sk-cproof__logo-svg--wide { max-width: 200px; }
+
 .sk-cproof__logo-name {
   font-family: var(--ff-sans);
   font-size: var(--fs-sm);
