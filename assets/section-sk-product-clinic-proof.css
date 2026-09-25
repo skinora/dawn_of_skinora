@@ -132,20 +132,62 @@
   overflow: hidden;
 }
 
-/* Nederste del tones ut mot seksjonsflaten, så bildet glir over i
-   sitatet i stedet for å slutte i en hard kant. */
 .sk-cproof__portrait {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: 50% var(--sk-cproof-focus-y, 30%);
+}
+
+/* Portrett uten sitat oppå: nederste del tones ut mot seksjonsflaten,
+   så bildet ikke slutter i en hard kant. */
+.sk-cproof__media:not(.sk-cproof__media--overlay) .sk-cproof__portrait {
   -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
 }
 
 /* ── FAGPERSONEN ── */
 .sk-cproof__person { margin: 0; }
+
+/* Sitat som matt glass nederst i portrettet. Bildet er høyere (2:3) når
+   sitatet ligger oppå, så panelet havner på brystet, ikke over ansiktet. */
+.sk-cproof__media--overlay {
+  position: relative;
+  aspect-ratio: 2 / 3;
+}
+
+.sk-cproof__person--overlay {
+  position: absolute;
+  inset: auto var(--space-3) var(--space-3);
+  padding: var(--space-4);
+  color: var(--ink-900);
+  background: color-mix(in srgb, var(--paper-0) 58%, transparent);
+  border: 1px solid color-mix(in srgb, var(--paper-0) 70%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  backdrop-filter: blur(18px) saturate(1.2);
+}
+
+/* Uten backdrop-filter: tettere flate, så teksten fortsatt leses. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .sk-cproof__person--overlay {
+    background: color-mix(in srgb, var(--paper-0) 88%, transparent);
+  }
+}
+
+.sk-cproof__person--overlay .sk-cproof__quote {
+  font-size: var(--fs-md);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-900);
+}
+
+.sk-cproof__person--overlay .sk-cproof__quote + .sk-cproof__credit {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top-color: color-mix(in srgb, var(--ink-900) 14%, transparent);
+}
+
+.sk-cproof__person--overlay .sk-cproof__clinic { color: var(--ink-700); }
 
 /* base.css gir alle blockquote en venstrelinje og innrykk; nullstilt her.
    Kursiven settes eksplisitt så den ikke hviler på base.css. */
@@ -319,6 +361,17 @@
     align-self: stretch;
     min-height: 520px;
   }
+
+  /* Med sitat oppå står sitatet ikke lenger i tekstkolonnen, som da blir
+     lavere; portrettet holder likevel et stående format. */
+  .sk-cproof__media--overlay { min-height: 640px; }
+
+  .sk-cproof__person--overlay {
+    inset: auto var(--space-5) var(--space-5);
+    padding: var(--card-padding);
+  }
+
+  .sk-cproof__person--overlay .sk-cproof__quote { font-size: var(--fs-lg); }
 
   /* Uten portrett: samme flex-kolonne som mobil, ingen tomme rader. */
   .sk-cproof--no-media .sk-cproof__grid {

@@ -32,6 +32,11 @@
     assign has_person = true
   endif
 
+  assign overlay = false
+  if has_media and has_person
+    assign overlay = true
+  endif
+
   assign has_proof = false
   if s.clinic_count > 0 or s.cities != blank or section.blocks.size > 0
     assign has_proof = true
@@ -88,8 +93,40 @@
         {%- endif -%}
       </div>
 
+      {%- comment -%}
+        Med både portrett og sitat legges sitatet som et matt glasspanel
+        nederst i bildet. Uten portrett står det alene i kolonnen.
+      {%- endcomment -%}
+      {%- capture person -%}
+        {%- if has_person -%}
+          <figure class="sk-cproof__person{% if overlay %} sk-cproof__person--overlay{% endif %}">
+            {%- if s.quote != blank -%}
+              <blockquote class="sk-cproof__quote">
+                <p>{{ s.quote | escape | newline_to_br }}</p>
+              </blockquote>
+            {%- endif -%}
+
+            {%- if s.name != blank -%}
+              <figcaption class="sk-cproof__credit">
+                <span class="sk-cproof__name">
+                  {{- s.name | escape -}}
+                  {%- if s.role != blank %}<span class="sk-cproof__role">, {{ s.role | escape }}</span>{% endif -%}
+                </span>
+                {%- if s.clinic != blank or s.city != blank -%}
+                  <span class="sk-cproof__clinic">
+                    {{- s.clinic | escape -}}
+                    {%- if s.clinic != blank and s.city != blank %}, {% endif -%}
+                    {{- s.city | escape -}}
+                  </span>
+                {%- endif -%}
+              </figcaption>
+            {%- endif -%}
+          </figure>
+        {%- endif -%}
+      {%- endcapture -%}
+
       {%- if has_media -%}
-        <div class="sk-cproof__media" style="--sk-cproof-focus-y: {{ s.image_focus_y }}%;">
+        <div class="sk-cproof__media{% if overlay %} sk-cproof__media--overlay{% endif %}" style="--sk-cproof-focus-y: {{ s.image_focus_y }}%;">
           {{
             s.image
             | image_url: width: 1200
@@ -100,34 +137,11 @@
               alt: portrait_alt,
               loading: 'lazy'
           }}
+          {%- if overlay -%}{{ person }}{%- endif -%}
         </div>
       {%- endif -%}
 
-      {%- if has_person -%}
-        <figure class="sk-cproof__person">
-          {%- if s.quote != blank -%}
-            <blockquote class="sk-cproof__quote">
-              <p>{{ s.quote | escape | newline_to_br }}</p>
-            </blockquote>
-          {%- endif -%}
-
-          {%- if s.name != blank -%}
-            <figcaption class="sk-cproof__credit">
-              <span class="sk-cproof__name">
-                {{- s.name | escape -}}
-                {%- if s.role != blank %}<span class="sk-cproof__role">, {{ s.role | escape }}</span>{% endif -%}
-              </span>
-              {%- if s.clinic != blank or s.city != blank -%}
-                <span class="sk-cproof__clinic">
-                  {{- s.clinic | escape -}}
-                  {%- if s.clinic != blank and s.city != blank %}, {% endif -%}
-                  {{- s.city | escape -}}
-                </span>
-              {%- endif -%}
-            </figcaption>
-          {%- endif -%}
-        </figure>
-      {%- endif -%}
+      {%- unless overlay -%}{{ person }}{%- endunless -%}
     </div>
 
     {%- if has_proof -%}
