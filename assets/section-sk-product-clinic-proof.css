@@ -412,11 +412,13 @@
 
   .sk-cproof__count { flex: 0 0 auto; }
 
+  /* Sentrert: uten tall/byer til venstre ble raden høyrestilt og lå
+     skjevt under innholdet. */
   .sk-cproof__logos {
     display: flex;
     flex: 1 1 auto;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     gap: var(--space-5) var(--space-6);
     margin: 0;
