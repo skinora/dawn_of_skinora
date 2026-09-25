@@ -237,6 +237,20 @@
   opacity: 0.72;
 }
 
+/* Logo som maske: formen fra fila, fargen fra paletten. Høyden er lik for
+   alle; bredden følger logoens eget format, med tak for svært brede. */
+/* inline-block: da gir høyde + aspect-ratio en ekte bredde. Som block
+   ville bredden strukket seg ut og formatet blitt ignorert. */
+.sk-cproof__logo-mask {
+  display: inline-block;
+  vertical-align: middle;
+  height: 32px;
+  max-width: 160px;
+  background-color: var(--ink-500);
+  -webkit-mask: var(--sk-cproof-logo) center / contain no-repeat;
+  mask: var(--sk-cproof-logo) center / contain no-repeat;
+}
+
 .sk-cproof__logo-name {
   font-family: var(--ff-sans);
   font-size: var(--fs-sm);

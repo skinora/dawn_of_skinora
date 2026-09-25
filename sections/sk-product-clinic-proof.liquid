@@ -148,7 +148,20 @@
           <ul class="sk-cproof__logos" role="list" aria-label="{{ s.logos_label | escape }}">
             {%- for block in section.blocks -%}
               <li class="sk-cproof__logo" {{ block.shopify_attributes }}>
-                {%- if block.settings.logo != blank -%}
+                {%- if block.settings.logo != blank and block.settings.logo_transparent -%}
+                  {%- comment -%}
+                    Logoen brukes som maske og fylles med merkefargen, så
+                    hvite, svarte og fargede logoer blir like. Klinikkenes
+                    egne logoer er ofte hvite for mørk bakgrunn – som bilde
+                    ville de forsvunnet på den lyse flaten.
+                  {%- endcomment -%}
+                  <span
+                    class="sk-cproof__logo-mask"
+                    role="img"
+                    aria-label="{{ block.settings.name | escape }}"
+                    style="--sk-cproof-logo: url('{{ block.settings.logo | image_url: width: 480 }}'); aspect-ratio: {{ block.settings.logo.aspect_ratio }};"
+                  ></span>
+                {%- elsif block.settings.logo != blank -%}
                   {{
                     block.settings.logo
                     | image_url: width: 320
@@ -365,7 +378,14 @@
           "type": "image_picker",
           "id": "logo",
           "label": "Logo",
-          "info": "Kun med klinikkens samtykke. Vises dempet i gråtoner."
+          "info": "Kun med klinikkens samtykke. PNG eller SVG med gjennomsiktig bakgrunn er best – fargen på logoen spiller ingen rolle."
+        },
+        {
+          "type": "checkbox",
+          "id": "logo_transparent",
+          "label": "Logoen har gjennomsiktig bakgrunn",
+          "info": "På: logoen fylles med merkefargen (virker også for hvite logoer). Av: logoen vises som bilde i gråtoner – bruk dette hvis den har en fylt bakgrunn.",
+          "default": true
         }
       ]
     }
