@@ -260,6 +260,10 @@
   color: var(--ink-500);
 }
 
+/* Logoer med symbol over/ved ordmerket trenger mer høyde for at teksten
+   skal bli like stor som i de brede ordmerkene. */
+.sk-cproof__logo-svg--tall { height: 48px; }
+
 .sk-cproof__logo-name {
   font-family: var(--ff-sans);
   font-size: var(--fs-sm);
