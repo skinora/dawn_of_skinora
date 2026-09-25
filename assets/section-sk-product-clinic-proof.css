@@ -124,26 +124,36 @@
 
 /* ── PORTRETT ──
    Skarpe hjørner kommer fra den globale sk-regelen for bilder. */
+/* Ingen egen bakgrunn: fritt­stilte portretter (PNG uten bakgrunn) skal
+   stå rett på seksjonsflaten. En krem plassholder her lyste gjennom som
+   en beige boks rundt personen. */
 .sk-cproof__media {
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: var(--paper-100);
 }
 
+/* Nederste del tones ut mot seksjonsflaten, så bildet glir over i
+   sitatet i stedet for å slutte i en hard kant. */
 .sk-cproof__portrait {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: 50% var(--sk-cproof-focus-y, 30%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
 }
 
 /* ── FAGPERSONEN ── */
 .sk-cproof__person { margin: 0; }
 
+/* base.css gir alle blockquote en venstrelinje og innrykk; nullstilt her.
+   Kursiven settes eksplisitt så den ikke hviler på base.css. */
 .sk-cproof__quote {
   margin: 0;
   padding: 0;
+  border: 0;
+  font-style: italic;
   font-family: var(--ff-serif);
   font-size: var(--fs-xl);
   font-weight: var(--fw-regular);
