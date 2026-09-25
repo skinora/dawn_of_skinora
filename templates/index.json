@@ -261,6 +261,19 @@
     },
     "sk_product_clinic_proof_yhWJFi": {
       "type": "sk-product-clinic-proof",
+      "blocks": {
+        "clinic_dmqjjX": {
+          "type": "clinic",
+          "settings": {
+            "name": "DermaFin",
+            "logo_svg": "dermafin",
+            "logo_transparent": true
+          }
+        }
+      },
+      "block_order": [
+        "clinic_dmqjjX"
+      ],
       "name": "SK Klinikkbevis",
       "settings": {
         "background": "cool",
