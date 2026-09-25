@@ -19,20 +19,15 @@
   padding-inline: var(--lp-gutter);
 }
 
-/* ── GRID ── */
+/* ── GRID ──
+   Mobil: flex-kolonne i DOM-rekkefølge (påstand → portrett → sitat).
+   Ikke grid-areas her: et navngitt område uten innhold blir en tom rad,
+   og hver tom rad fikk et gap – 48px luft når portrett/sitat manglet. */
 .sk-cproof__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas:
-    'intro'
-    'media'
-    'person';
+  display: flex;
+  flex-direction: column;
   gap: var(--space-5);
 }
-
-.sk-cproof__intro  { grid-area: intro; }
-.sk-cproof__media  { grid-area: media; }
-.sk-cproof__person { grid-area: person; }
 
 /* ── PÅSTANDEN ── */
 .sk-cproof__eyebrow {
@@ -207,25 +202,29 @@
   color: var(--ink-900);
 }
 
-/* Mobil: logoene scrolles sidelengs, ikke marquee – kunden styrer selv. */
+/* Mobil: to kolonner, alle logoer synlige samtidig. En sidelengs
+   scroll-rad viste bare to av fem – resten lå utenfor skjermen, og
+   ingenting fortalte at det var mer å se. Odde siste logo sentreres
+   over hele bredden. */
 .sk-cproof__logos {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5) var(--space-4);
   align-items: center;
-  gap: var(--space-6);
-  margin: var(--space-4) calc(var(--lp-gutter) * -1) 0;
-  padding: var(--space-2) var(--lp-gutter);
+  margin: var(--space-5) 0 0;
+  padding: 0;
   list-style: none;
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  scrollbar-width: none;
 }
 
-.sk-cproof__logos::-webkit-scrollbar { display: none; }
-
+/* Cellen er full kolonnebredde, så logoens max-width: 100% har noe
+   fast å regne mot; logoen sentreres inni. */
 .sk-cproof__logo {
-  flex: 0 0 auto;
-  scroll-snap-align: start;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
 }
+
+.sk-cproof__logo:last-child:nth-child(odd) { grid-column: 1 / -1; }
 
 .sk-cproof__logo img {
   display: block;
@@ -252,21 +251,22 @@
 }
 
 /* Inline SVG (snippets/sk-clinic-logo.liquid): fylt med currentColor. */
+/* Mobil: litt lavere, og aldri bredere enn kolonnen (~160px på 375). */
 .sk-cproof__logo-svg {
   display: block;
   width: auto;
-  height: 32px;
-  max-width: 160px;
+  height: 28px;
+  max-width: min(150px, 100%);
   color: var(--ink-500);
 }
 
 /* Logoer med symbol over/ved ordmerket trenger mer høyde for at teksten
    skal bli like stor som i de brede ordmerkene. */
-.sk-cproof__logo-svg--tall { height: 48px; }
+.sk-cproof__logo-svg--tall { height: 40px; }
 
-/* Ordmerker på én linje (format ~11:1) ble bare 13–15px høye innenfor
-   160px. Litt mer bredde gir dem samme visuelle vekt som de andre. */
-.sk-cproof__logo-svg--wide { max-width: 200px; }
+/* Ordmerker på én linje (format ~11:1) blir lave innenfor samme bredde;
+   de får hele kolonnen på mobil og 200px på desktop. */
+.sk-cproof__logo-svg--wide { max-width: min(180px, 100%); }
 
 .sk-cproof__logo-name {
   font-family: var(--ff-sans);
@@ -279,7 +279,12 @@
 
 /* ── DESKTOP ── */
 @media (min-width: 769px) {
+  .sk-cproof__intro  { grid-area: intro; }
+  .sk-cproof__media  { grid-area: media; }
+  .sk-cproof__person { grid-area: person; }
+
   .sk-cproof__grid {
+    display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     /* Tomme 1fr-rader over og under: teksten sentreres mot portrettet. */
     grid-template-rows: 1fr auto auto 1fr;
@@ -292,12 +297,9 @@
     row-gap: var(--space-5);
   }
 
+  /* Uten portrett: samme flex-kolonne som mobil, ingen tomme rader. */
   .sk-cproof--no-media .sk-cproof__grid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto;
-    grid-template-areas:
-      'intro'
-      'person';
+    display: flex;
     max-width: var(--lp-w-narrow);
   }
 
@@ -314,11 +316,16 @@
   .sk-cproof__count { flex: 0 0 auto; }
 
   .sk-cproof__logos {
+    display: flex;
     flex: 1 1 auto;
-    justify-content: flex-end;
     flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--space-5) var(--space-6);
     margin: 0;
-    padding: 0;
-    overflow: visible;
   }
+
+  .sk-cproof__logo-svg { height: 32px; max-width: 160px; }
+  .sk-cproof__logo-svg--tall { height: 48px; }
+  .sk-cproof__logo-svg--wide { max-width: 200px; }
 }
