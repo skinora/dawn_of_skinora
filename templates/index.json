@@ -262,6 +262,14 @@
     "sk_product_clinic_proof_yhWJFi": {
       "type": "sk-product-clinic-proof",
       "blocks": {
+        "clinic_rAikxz": {
+          "type": "clinic",
+          "settings": {
+            "name": "fob",
+            "logo_svg": "forceofbeauty",
+            "logo_transparent": true
+          }
+        },
         "clinic_EJCCzD": {
           "type": "clinic",
           "settings": {
@@ -280,6 +288,7 @@
         }
       },
       "block_order": [
+        "clinic_rAikxz",
         "clinic_EJCCzD",
         "clinic_dmqjjX"
       ],
