@@ -108,15 +108,21 @@
 
             {%- if s.name != blank -%}
               <figcaption class="sk-cproof__credit">
-                <span class="sk-cproof__name">
-                  {{- s.name | escape -}}
-                  {%- if s.role != blank %}<span class="sk-cproof__role">, {{ s.role | escape }}</span>{% endif -%}
-                </span>
-                {%- if s.clinic != blank or s.city != blank -%}
+                {%- comment -%}
+                  Navn alene på første linje; tittel og klinikk samlet på
+                  andre. Med tittelen hengt på navnet brakk linjen midt i
+                  «Navn Etternavn, Dermatologisk sykepleier».
+                {%- endcomment -%}
+                <span class="sk-cproof__name">{{ s.name | escape }}</span>
+                {%- if s.role != blank or s.clinic != blank or s.city != blank -%}
                   <span class="sk-cproof__clinic">
+                    {{- s.role | escape -}}
+                    {%- if s.role != blank and s.clinic != blank %} · {% endif -%}
                     {{- s.clinic | escape -}}
-                    {%- if s.clinic != blank and s.city != blank %}, {% endif -%}
-                    {{- s.city | escape -}}
+                    {%- if s.city != blank -%}
+                      {%- if s.role != blank or s.clinic != blank %}, {% endif -%}
+                      {{- s.city | escape -}}
+                    {%- endif -%}
                   </span>
                 {%- endif -%}
               </figcaption>

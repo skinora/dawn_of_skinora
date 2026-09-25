@@ -154,7 +154,7 @@
    sitatet ligger oppå, så panelet havner på brystet, ikke over ansiktet. */
 .sk-cproof__media--overlay {
   position: relative;
-  aspect-ratio: 2 / 3;
+  aspect-ratio: 3 / 5;
 }
 
 /* Tykt, frostet akryl: avrundet, kraftig blur, en diagonal glans over
@@ -164,16 +164,18 @@
   --glass-hi: color-mix(in srgb, var(--paper-0) 95%, transparent);
   --glass-lo: color-mix(in srgb, var(--ink-900) 10%, transparent);
   position: absolute;
-  inset: auto var(--space-4) var(--space-4);
-  padding: var(--space-5);
-  border-radius: 22px;
+  inset: auto var(--space-3) var(--space-3);
+  padding: var(--space-4);
+  border-radius: 20px;
   color: var(--ink-900);
+  /* Tett nok hvit til at glasset leses lyst også over mørke klær. Med
+     38–62 % ble det grumsete grått over en svart topp. */
   background:
     linear-gradient(
       145deg,
-      color-mix(in srgb, var(--paper-0) 62%, transparent) 0%,
-      color-mix(in srgb, var(--paper-0) 38%, transparent) 55%,
-      color-mix(in srgb, var(--paper-0) 50%, transparent) 100%
+      color-mix(in srgb, var(--paper-0) 82%, transparent) 0%,
+      color-mix(in srgb, var(--paper-0) 66%, transparent) 55%,
+      color-mix(in srgb, var(--paper-0) 74%, transparent) 100%
     );
   border: 1px solid color-mix(in srgb, var(--paper-0) 55%, transparent);
   box-shadow:
@@ -183,8 +185,8 @@
     inset 0 -14px 24px -18px color-mix(in srgb, var(--ink-900) 22%, transparent),
     0 18px 40px -12px color-mix(in srgb, var(--ink-900) 35%, transparent),
     0 3px 8px color-mix(in srgb, var(--ink-900) 10%, transparent);
-  -webkit-backdrop-filter: blur(26px) saturate(1.4) brightness(1.06);
-  backdrop-filter: blur(26px) saturate(1.4) brightness(1.06);
+  -webkit-backdrop-filter: blur(26px) saturate(1.3) brightness(1.15);
+  backdrop-filter: blur(26px) saturate(1.3) brightness(1.15);
 }
 
 /* Uten backdrop-filter: tettere flate, så teksten fortsatt leses. */
@@ -196,7 +198,7 @@
 
 .sk-cproof__person--overlay .sk-cproof__quote {
   font-size: var(--fs-md);
-  line-height: var(--lh-relaxed);
+  line-height: var(--lh-snug);
   color: var(--ink-900);
 }
 
