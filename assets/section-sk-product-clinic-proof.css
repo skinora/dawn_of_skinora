@@ -300,6 +300,16 @@
     row-gap: var(--space-5);
   }
 
+  /* Portrettet fyller hele høyden av tekstkolonnen. Med fast 4:5 ble det
+     592px høyt mot 705px tekst (målt @1280 med tre grunner + sitat), og
+     sto toppjustert med 160px tomrom under. aspect-ratio må av: med den
+     på oppfører stretch seg som start i grid. */
+  .sk-cproof__media {
+    aspect-ratio: auto;
+    align-self: stretch;
+    min-height: 520px;
+  }
+
   /* Uten portrett: samme flex-kolonne som mobil, ingen tomme rader. */
   .sk-cproof--no-media .sk-cproof__grid {
     display: flex;
