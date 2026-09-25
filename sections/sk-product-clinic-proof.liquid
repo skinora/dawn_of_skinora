@@ -148,7 +148,9 @@
           <ul class="sk-cproof__logos" role="list" aria-label="{{ s.logos_label | escape }}">
             {%- for block in section.blocks -%}
               <li class="sk-cproof__logo" {{ block.shopify_attributes }}>
-                {%- if block.settings.logo != blank and block.settings.logo_transparent -%}
+                {%- if block.settings.logo_svg != blank -%}
+                  {%- render 'sk-clinic-logo', key: block.settings.logo_svg, label: block.settings.name -%}
+                {%- elsif block.settings.logo != blank and block.settings.logo_transparent -%}
                   {%- comment -%}
                     Logoen brukes som maske og fylles med merkefargen, så
                     hvite, svarte og fargede logoer blir like. Klinikkenes
@@ -373,6 +375,17 @@
           "id": "name",
           "label": "Navn",
           "info": "Brukes som alt-tekst, eller vises som tekst hvis logo mangler."
+        },
+        {
+          "type": "select",
+          "id": "logo_svg",
+          "label": "Logo som vektor",
+          "info": "Skarp i alle størrelser og alltid i merkefargen. Går foran opplastet logo.",
+          "options": [
+            { "value": "", "label": "Ingen – bruk opplastet logo" },
+            { "value": "dermafin", "label": "DermaFin" }
+          ],
+          "default": ""
         },
         {
           "type": "image_picker",

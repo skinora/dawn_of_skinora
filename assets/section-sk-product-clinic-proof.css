@@ -251,6 +251,15 @@
   mask: var(--sk-cproof-logo) center / contain no-repeat;
 }
 
+/* Inline SVG (snippets/sk-clinic-logo.liquid): fylt med currentColor. */
+.sk-cproof__logo-svg {
+  display: block;
+  width: auto;
+  height: 32px;
+  max-width: 160px;
+  color: var(--ink-500);
+}
+
 .sk-cproof__logo-name {
   font-family: var(--ff-sans);
   font-size: var(--fs-sm);
