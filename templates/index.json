@@ -262,6 +262,14 @@
     "sk_product_clinic_proof_yhWJFi": {
       "type": "sk-product-clinic-proof",
       "blocks": {
+        "clinic_biQkwR": {
+          "type": "clinic",
+          "settings": {
+            "name": "skedsmo",
+            "logo_svg": "skedsmolaserklinikk",
+            "logo_transparent": true
+          }
+        },
         "clinic_aMRTxM": {
           "type": "clinic",
           "settings": {
@@ -296,6 +304,7 @@
         }
       },
       "block_order": [
+        "clinic_biQkwR",
         "clinic_aMRTxM",
         "clinic_rAikxz",
         "clinic_EJCCzD",
