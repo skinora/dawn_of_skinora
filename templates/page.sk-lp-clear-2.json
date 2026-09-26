@@ -1,0 +1,1056 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "announcement": {
+      "type": "sk-lp-announcement",
+      "disabled": true,
+      "settings": {
+        "text": "GRATIS FRAKT I NORGE  |  30 DAGERS FORNØYDGARANTI"
+      }
+    },
+    "header": {
+      "type": "sk-lp-header",
+      "disabled": true,
+      "settings": {}
+    },
+    "urgency": {
+      "type": "sk-lp-urgency",
+      "settings": {
+        "enabled": true,
+        "price_before": "[før-pris]",
+        "price_now": "[pris]",
+        "save_text": "Spar [spar]",
+        "deadline_iso": "",
+        "deadline_label": "Tilbudet slutter om",
+        "demand_text": "Stor pågang",
+        "aria_label": "Kampanje på Skinora Clear",
+        "product": "skinora-clear"
+      }
+    },
+    "hero": {
+      "type": "sk-lp-hero",
+      "blocks": {
+        "pill_1": {
+          "type": "pill",
+          "settings": {
+            "text": "Norsk merke"
+          }
+        },
+        "pill_2": {
+          "type": "pill",
+          "settings": {
+            "text": "30 dagers åpent kjøp"
+          }
+        },
+        "pill_3": {
+          "type": "pill",
+          "settings": {
+            "text": "Gratis frakt"
+          }
+        }
+      },
+      "block_order": [
+        "pill_1",
+        "pill_2",
+        "pill_3"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/skinora_clear_hero_landing_page.webp",
+        "image_mobile": "shopify://shop_images/Skinora_clear.webp",
+        "hero_video_url": "",
+        "eyebrow": "Skinora® Clear",
+        "title": "Huden du slipper å skjule.",
+        "text_line_1": "Blått, rødt og nær-infrarødt lys mot utbruddene. 10 minutter om kvelden, hjemme.",
+        "rating_anchor": "#reviews",
+        "cta_text": "Prøv risikofritt i 30 dager",
+        "cta_url": "/products/skinora-clear",
+        "price_display": "[pris]",
+        "klarna_text": "fra [klarna] kr/mnd med Klarna",
+        "show_link": false,
+        "link_text": "Se hvordan den brukes (60 sek) ↓",
+        "link_url": "#slik-bruker-du"
+      }
+    },
+    "trustbar": {
+      "type": "sk-lp-trustbar",
+      "blocks": {
+        "tb_1": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/no_1.svg",
+            "text": "Norskutviklet"
+          }
+        },
+        "tb_2": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/lager.svg",
+            "text": "Sendes fra norsk lager"
+          }
+        },
+        "tb_3": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/garanti.svg",
+            "text": "30 dagers garanti"
+          }
+        },
+        "tb_4": {
+          "type": "item",
+          "settings": {
+            "icon": "shopify://shop_images/sikker_betaling.svg",
+            "text": "Vipps & Klarna"
+          }
+        }
+      },
+      "block_order": [
+        "tb_1",
+        "tb_2",
+        "tb_3",
+        "tb_4"
+      ],
+      "settings": {}
+    },
+    "problem": {
+      "type": "sk-lp-problem",
+      "blocks": {
+        "p_1": {
+          "type": "item",
+          "settings": {
+            "text": "Du sjekker huden i speilet før du sjekker telefonen."
+          }
+        },
+        "p_2": {
+          "type": "item",
+          "settings": {
+            "text": "Et nytt utbrudd kommer akkurat når noe viktig skal skje."
+          }
+        },
+        "p_3": {
+          "type": "item",
+          "settings": {
+            "text": "Foundation er ikke sminke lenger. Det er et skjold."
+          }
+        },
+        "p_4": {
+          "type": "item",
+          "settings": {
+            "text": "Du trekker deg litt unna når noen kommer nær."
+          }
+        },
+        "p_5": {
+          "type": "item",
+          "settings": {
+            "text": "Du har brukt tusenvis av kroner på ting som virket i to uker."
+          }
+        }
+      },
+      "block_order": [
+        "p_1",
+        "p_2",
+        "p_3",
+        "p_4",
+        "p_5"
+      ],
+      "settings": {
+        "heading": "Du vet nøyaktig hvordan det føles.",
+        "intro": "Du har kjøpt serumene, fulgt rutinene og lest alle rådene. Likevel står du foran speilet om morgenen og regner ut hvor mye concealer dagen trenger.",
+        "image": "shopify://shop_images/Photorealistic_editorial-docum_Nano_Banana_2_83728.png"
+      }
+    },
+    "results": {
+      "type": "sk-lp-results-timeline",
+      "blocks": {
+        "c_1": {
+          "type": "comparison",
+          "settings": {
+            "before_image": "shopify://shop_images/panne_tsone_kviser_for.png",
+            "after_image": "shopify://shop_images/etter_bruk_ren_hud.png",
+            "before_label": "UKE 0",
+            "after_label": "UKE 8",
+            "before_alt": "Linnea, 26 – panne og T-sone før behandling med Skinora Clear",
+            "after_alt": "Linnea, 26 – panne og T-sone etter 8 uker med Skinora Clear",
+            "customer_name": "Linnea, 26 – Stavanger",
+            "concern_tag": "Panne & T-sone",
+            "usage_tag": "10 min, 4x/uke · Etter 8 uker"
+          }
+        },
+        "c_2": {
+          "type": "comparison",
+          "settings": {
+            "before_image": "shopify://shop_images/kundebildet_for.png",
+            "after_image": "shopify://shop_images/kundebilde_etter.png",
+            "before_label": "UKE 0",
+            "after_label": "UKE 6",
+            "before_alt": "Sondre, 29 – voksenakne og rødhet før Skinora Clear",
+            "after_alt": "Sondre, 29 – voksenakne og rødhet etter 6 uker med Skinora Clear",
+            "customer_name": "Sondre, 29 – Oslo",
+            "concern_tag": "Voksenakne, post-akne-arr og rødhet",
+            "usage_tag": "10 min, 5x/uke · Etter 6 uker"
+          }
+        },
+        "c_3": {
+          "type": "comparison",
+          "settings": {
+            "before_image": "shopify://shop_images/for.png",
+            "after_image": "shopify://shop_images/etter.png",
+            "before_label": "UKE 0",
+            "after_label": "UKE 8",
+            "before_alt": "Marte, 34 – hormonell akne på hake og kjeve før Skinora Clear",
+            "after_alt": "Marte, 34 – hormonell akne på hake og kjeve etter 8 uker med Skinora Clear",
+            "customer_name": "Marte, 34 – Trondheim",
+            "concern_tag": "Hormonell akne på hake og kjeve",
+            "usage_tag": "10 min, 4x/uke · Etter 8 uker"
+          }
+        }
+      },
+      "block_order": [
+        "c_1",
+        "c_2",
+        "c_3"
+      ],
+      "settings": {
+        "heading": "Slik ser de neste åtte ukene ut.",
+        "intro": "Uke 2–4: de fleste merker at huden roer seg. Uke 6–8: det er da forskjellen synes. Tre som har gått veien før deg:",
+        "disclaimer": "<p>Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.</p>"
+      }
+    },
+    "sk_lp_mechanism_WhVKGN": {
+      "type": "sk-lp-mechanism",
+      "blocks": {
+        "bullet_1": {
+          "type": "bullet",
+          "settings": {
+            "dot_color": "#4f5bd5",
+            "text": "<p><strong>415 nm</strong> når epidermis – der bakteriene lever</p>"
+          }
+        },
+        "bullet_2": {
+          "type": "bullet",
+          "settings": {
+            "dot_color": "#e63946",
+            "text": "<p><strong>630 nm</strong> når dermis – der betennelsen sitter</p>"
+          }
+        },
+        "bullet_3": {
+          "type": "bullet",
+          "settings": {
+            "dot_color": "#9b1b3a",
+            "text": "<p><strong>830 nm</strong> når subcutis – der reparasjonen starter</p>"
+          }
+        }
+      },
+      "block_order": [
+        "bullet_1",
+        "bullet_2",
+        "bullet_3"
+      ],
+      "name": "LP Mechanism",
+      "settings": {
+        "eyebrow": "Tre bølgelengder. Ett mål.",
+        "heading": "Hvordan Skinora® Clear virker",
+        "intro": "Tre bølgelengder, valgt for hver sin jobb. Samme prinsipp som hos hudterapeuten, tilpasset trygg bruk hjemme.",
+        "hero_image": "shopify://shop_images/hvordan_skinora_led_lys_fungerer.png",
+        "hero_image_alt": "Illustrasjon av hvordan 415nm, 630nm og 830nm lys trenger inn i hudens lag",
+        "hero_image_caption": "Illustrasjon: omtrentlig inntrengningsdybde i huden.",
+        "hero_paragraph": "<p>Skinora® Clear kombinerer tre bølgelengder lys som trenger ned i hver sitt lag av huden. Sammen angriper de aknen fra tre vinkler samtidig – bakteriene som starter utbruddet, betennelsen som gjør det synlig, og reparasjonen som får huden tilbake i balanse.</p>",
+        "card1_label": "Blått lys",
+        "card1_wavelength": "415 nm",
+        "card1_title": "Reduserer bakteriene bak utbrudd",
+        "card1_body": "<p>Blått lys virker i det øverste hudlaget og bryter ned forbindelsene som lar <em>Cutibacterium acnes</em> overleve i porene. Færre bakterier betyr færre nye kviser.</p>",
+        "card1_color_from": "#4f5bd5",
+        "card1_color_to": "#7a83e6",
+        "card2_label": "Rødt lys",
+        "card2_wavelength": "630 nm",
+        "card2_title": "Demper betennelse og rødhet",
+        "card2_body": "<p>Rødt lys trenger inn i dermis, der akneinflammasjonen sitter. Det roer ned betennelsesreaksjonen og reduserer synlig rødhet, slik at huden ser jevnere ut.</p>",
+        "card2_color_from": "#e63946",
+        "card2_color_to": "#ff7a85",
+        "card3_label": "NIR-lys",
+        "card3_wavelength": "830 nm",
+        "card3_title": "Styrker hudens egen reparasjon",
+        "card3_body": "<p>830 nm når dypest – helt ned mot subcutis. Det stimulerer cellenes energiproduksjon og støtter hudens naturlige reparasjon, slik at arr og spor etter utbrudd leges raskere.</p>",
+        "card3_color_dark": "#9b1b3a",
+        "card3_color_light": "#d04a6e",
+        "timeline_line": "De fleste merker de første tegnene etter 2–4 uker med jevn bruk, og tydelig forskjell etter 6–8.",
+        "timeline_citation_marker": "¹",
+        "trust_line": "Samme typer lys som hudklinikker bruker, tilpasset trygg bruk hjemme.",
+        "show_depth_diagram": true,
+        "depth_diagram_alt": "Diagram som viser at hver bølgelengde når en annen dybde i huden",
+        "depth_caption": "<p>Hver bølgelengde når en annen dybde i huden.</p>",
+        "diagram_alt": "Diagram av blått, rødt og nær-infrarødt LED-lys"
+      }
+    },
+    "sk_lp_honest_filter": {
+      "type": "sk-lp-honest-filter",
+      "blocks": {
+        "hf_1": {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du har alvorlig cystisk akne som krever resept-behandling.",
+            "explanation": "Hvis du står på Roaccutan eller isotretinoin — eller burde stå på det — er LED ikke nok. Snakk med fastlege først."
+          }
+        },
+        "hf_2": {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du er gravid eller ammer.",
+            "explanation": "LED-lys er ikke farlig — men det finnes ikke nok kliniske data på akkurat denne gruppen. Vi velger føre-var."
+          }
+        },
+        "hf_3": {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du forventer resultater på under 4 uker.",
+            "explanation": "Huden trenger to fulle sykluser før den viser tydelig forskjell. Hvis du vil ha umiddelbar effekt, er ikke LED riktig verktøy."
+          }
+        },
+        "hf_4": {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du har ikke tid til 10 minutter, 3–5 ganger i uken.",
+            "explanation": "Konsistens er hele forskjellen mellom suksess og frustrasjon. Bruker du den sporadisk, kaster du pengene dine."
+          }
+        }
+      },
+      "block_order": [
+        "hf_1",
+        "hf_2",
+        "hf_3",
+        "hf_4"
+      ],
+      "name": "LP Honest Filter",
+      "settings": {
+        "eyebrow": "ÆRLIG SNAKK",
+        "heading": "Skinora® Clear er ikke for alle.",
+        "intro": "<p>Vi har bygget Skinora Clear for én type kunde. Hvis du kjenner deg igjen i punktene under, er ikke dette riktig produkt for deg — og det er helt greit. Vi vil heller at du finner det som virker.</p>",
+        "closing": "<h3>Nikket du nei til alle fire? Da er du akkurat den vi laget den for.</h3><p>Du har 30 dager på å se det selv.</p>",
+        "cta_label": "PRØV RISIKOFRITT I 30 DAGER →",
+        "cta_url": "#kjop",
+        "accent": "#e63946",
+        "background": "#faf7f2"
+      }
+    },
+    "skinora_clinic_comparison_9acj9k": {
+      "type": "skinora-clinic-comparison",
+      "name": "Klinikksammenligning",
+      "settings": {
+        "background_style": "soft",
+        "number": "",
+        "unit": "kr",
+        "once_label": "Én gang",
+        "lead": "En LED-behandling på klinikk koster gjerne 800–1 500 kr per gang.",
+        "kicker": "Skinora Clear koster som noen få økter, og så er den din. Bruk den hjemme, så ofte du vil.",
+        "show_cta": true,
+        "cta_label": "Prøv risikofritt i 30 dager",
+        "cta_link": "/products/skinora-clear",
+        "guarantee_line": "30 dagers åpent kjøp."
+      }
+    },
+    "how_to_use": {
+      "type": "sk-lp-how-to-use",
+      "blocks": {
+        "s_1": {
+          "type": "step",
+          "settings": {
+            "title": "Rens huden",
+            "text": "Start med ren hud. Fjern sminke og overflødig olje."
+          }
+        },
+        "s_2": {
+          "type": "step",
+          "settings": {
+            "title": "Bruk Skinora® Clear i 10 minutter",
+            "text": "Plasser enheten over problemområdet. Slapp av mens lyset jobber."
+          }
+        },
+        "s_3": {
+          "type": "step",
+          "settings": {
+            "title": "Avslutt med lett fukt",
+            "text": "Påfør en lett, ikke-komedogen fuktighetskrem."
+          }
+        },
+        "t_1": {
+          "type": "tip",
+          "settings": {
+            "text": "Best brukt om kvelden etter rens"
+          }
+        },
+        "t_2": {
+          "type": "tip",
+          "settings": {
+            "text": "Kan målrettes mot spesifikke områder"
+          }
+        },
+        "t_3": {
+          "type": "tip",
+          "settings": {
+            "text": "Anbefalt frekvens: 3–5 ganger i uken"
+          }
+        }
+      },
+      "block_order": [
+        "s_1",
+        "s_2",
+        "s_3",
+        "t_1",
+        "t_2",
+        "t_3"
+      ],
+      "settings": {
+        "heading": "Så enkelt er det.",
+        "anchor_id": "slik-bruker-du"
+      }
+    },
+    "why_choose": {
+      "type": "sk-lp-why-choose",
+      "blocks": {
+        "w_1": {
+          "type": "card",
+          "settings": {
+            "title": "Du går rett ut døra",
+            "text": "<p>Litt concealer, eller ingenting. Det er du som bestemmer, ikke huden.</p>"
+          }
+        },
+        "card_G34QkN": {
+          "type": "card",
+          "settings": {
+            "title": "Speilet blir bare et speil",
+            "text": "<p>Ingen morgensjekk etter nye utbrudd. Du ser deg selv, ikke huden din.</p>"
+          }
+        },
+        "w_2": {
+          "type": "card",
+          "settings": {
+            "title": "Du blir stående",
+            "text": "<p>Når noen kommer nær, trekker du deg ikke unna.</p>"
+          }
+        },
+        "w_3": {
+          "type": "card",
+          "settings": {
+            "title": "Du sier ja til bildet",
+            "text": "<p>Uten å tenke på lys og vinkel først.</p>"
+          }
+        },
+        "w_4": {
+          "type": "card",
+          "settings": {
+            "title": "En rutine som faktisk holder",
+            "text": "<p>Ti minutter om kvelden mens du ser en serie. Lyset gjør jobben.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "w_1",
+        "card_G34QkN",
+        "w_2",
+        "w_3",
+        "w_4"
+      ],
+      "settings": {
+        "heading": "Tenk deg morgenen om åtte uker.",
+        "intro": "Dette er målet. Ikke en ny hud, men din egen, bare roligere.",
+        "background_image": "shopify://shop_images/skinora-clear-led-specs.webp",
+        "scrim_strength": 60
+      }
+    },
+    "reviews": {
+      "type": "sk-lp-reviews",
+      "blocks": {
+        "review_wxnFyr": {
+          "type": "review",
+          "settings": {
+            "priority": 10,
+            "text": "Jeg har aldri hatt akne, men de siste to årene har pannen min vært dekket av små røde kuler som bare ikke ville forsvinne. Tror det startet med mye trening i hjelm og stress fra studiene. Jeg prøvde alt – salicylsyre, retinol, dyre serum, hudterapeut – og fikk det ned i korte perioder, men aldri borte. Etter åtte uker med Skinora® Clear, 4 kvelder i uken, er pannen min nesten helt rolig. Jeg slipper å sjekke speilet hver morgen for å se hva som dukket opp i løpet av natten. Det er en lettelse jeg ikke visste jeg trengte.",
+            "author": "Linnea S., 26, Stavanger",
+            "concern_tag": "PANNE & T-SONE",
+            "usage_tag": "",
+            "before_image": "shopify://shop_images/panne_tsone_kviser_for.png",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_image": "shopify://shop_images/etter_bruk_ren_hud.png",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
+          }
+        },
+        "review_ktegL7": {
+          "type": "review",
+          "settings": {
+            "priority": 10,
+            "text": "Etter to runder med Roaccutan var aknen borte, men huden var rød, ujevn og lett irritabel. Jeg hadde gitt opp å finne noe som faktisk roet det ned uten å være aggressivt. Skinora® Clear er det første jeg har brukt der jeg ser forskjell uten å bli tørr eller flassete. Etter seks uker er rødheten merkbart mindre, og de få nye utbruddene jeg får, går vekk etter et par dager i stedet for å verke i ukevis. Stille, men virker.",
+            "author": "Sondre B., 29, Oslo",
+            "concern_tag": "Voksenakne, post-akne-arr og rødhet",
+            "usage_tag": "",
+            "before_image": "shopify://shop_images/kundebildet_for.png",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_image": "shopify://shop_images/kundebilde_etter.png",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
+          }
+        },
+        "review_CC7jeb": {
+          "type": "review",
+          "settings": {
+            "priority": 10,
+            "text": "Jeg har slitt med smertefulle kuler langs kjeven og haken siden jeg var 24 — alltid verst rett før mensen, alltid på samme sted. Har prøvd antibiotika, p-piller, retinol, klinikkbehandlinger. Noe hjalp en stund, så kom det tilbake. Etter åtte uker med Skinora® Clear, 4 ganger i uken, er det stille på huden min. Jeg våkner ikke til en ny verkende kul. Det høres så enkelt ut, men det har endret hverdagen min.",
+            "author": "Marte H., 34, Trondheim",
+            "concern_tag": "Hormonell akne på hake og kjeve",
+            "usage_tag": "",
+            "before_image": "shopify://shop_images/for.png",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_image": "shopify://shop_images/etter.png",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
+          }
+        },
+        "rev_1": {
+          "type": "review",
+          "settings": {
+            "priority": 10,
+            "text": "Hver eneste måned, en uke før mensen, kom de samme betente kvisene langs kjeven og haken. Jeg avlyste dater, droppet trening og la et tykt lag foundation før jeg gikk ut for å hente posten. Etter 5 uker med Skinora er utbruddene færre, mindre røde, og de gror på dager i stedet for uker. I går gikk jeg på jobb uten sminke. Bare det er verdt hver krone.",
+            "author": "Ida L., 28, Bergen",
+            "concern_tag": "Rødhet & utbrudd · 10 min, 5x/uke",
+            "usage_tag": "",
+            "before_image": "shopify://shop_images/hormonell_akne_kundebilde_for.png",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_image": "shopify://shop_images/hormonell_akne_kundebilde_etter.png",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
+          }
+        },
+        "rev_2": {
+          "type": "review",
+          "settings": {
+            "priority": 10,
+            "text": "To runder med antibiotika, retinol som svidde, syrer som gjorde huden tynn og rød – jeg hadde brukt over 30 000 kr på huden min uten å bli bedre. Skinora var ærlig talt et siste forsøk før jeg booket ny time hos hudlege. Etter 6 uker er huden roligere enn den har vært siden 20-årene. Jeg ser meg selv i speilet uten å lete etter feil for første gang på årevis.",
+            "author": "Emilie K., 34, Oslo",
+            "concern_tag": "Tørr hud & utbrudd · 10 min, 4x/uke",
+            "usage_tag": "",
+            "before_image": "shopify://shop_images/acneutsatthud_bildet_for.png",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_image": "shopify://shop_images/kundebildet_etter.jpg",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
+          }
+        },
+        "rev_3": {
+          "type": "review",
+          "settings": {
+            "priority": 10,
+            "text": "Pannen og nesen min har alltid vært full av små underhudskviser man knapt ser på bilder – men som lyser opp i sterk belysning og kjennes med en gang noen kommer nært. Jeg snudde meg vekk for kyss, unngikk selfies forfra, og hatet kontorlysene på jobb. Etter 4 uker er huden så mye jevnere at sminken legger seg flatt, og kjæresten min faktisk spurte hva jeg hadde gjort før jeg rakk å si det selv.",
+            "author": "Nora T., 25, Drammen",
+            "concern_tag": "T-sone & underhudskviser · 10 min, 3x/uke",
+            "usage_tag": "",
+            "before_image": "shopify://shop_images/kunde_for_bildet.webp",
+            "before_alt": "Før behandling med Skinora Clear",
+            "after_image": "shopify://shop_images/kundebildet_etter.webp",
+            "after_alt": "Etter 8 uker med Skinora Clear",
+            "before_label": "Før",
+            "after_label": "Etter"
+          }
+        }
+      },
+      "block_order": [
+        "review_wxnFyr",
+        "review_ktegL7",
+        "review_CC7jeb",
+        "rev_1",
+        "rev_2",
+        "rev_3"
+      ],
+      "settings": {
+        "heading": "Fra folk som stod der du står nå.",
+        "reviews_visible_count": 6,
+        "show_more_text": "Vis flere anmeldelser",
+        "show_less_text": "Vis færre",
+        "before_after_disclaimer": "<p>Bilder fra ekte verifiserte kunder, brukt med tillatelse. Ikke retusjert. Resultater kan variere fra person til person og avhenger av jevn bruk over 6–8 uker.</p>",
+        "enable_trustpilot_embed": false,
+        "trustpilot_business_unit_id": "",
+        "all_reviews_url": "/products/skinora-clear#fulfilled-reviews-all",
+        "all_reviews_text": "Les alle anmeldelser →",
+        "product_url": "/products/skinora-clear",
+        "midpage_cta_text": "Jeg vil ha roligere hud",
+        "midpage_klarna_text": "Fra [klarna] kr/mnd med Klarna"
+      }
+    },
+    "trust_full": {
+      "type": "sk-lp-trust-full",
+      "blocks": {
+        "tf_1": {
+          "type": "card",
+          "settings": {
+            "title": "30 dagers fornøydgaranti",
+            "text": "<p>Ikke fornøyd? Du får pengene tilbake – ingen spørsmål.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
+          }
+        },
+        "tf_2": {
+          "type": "card",
+          "settings": {
+            "title": "Gratis frakt",
+            "text": "<p>Sendes fra norsk lager. Levering 2–4 virkedager.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
+          }
+        },
+        "tf_3": {
+          "type": "card",
+          "settings": {
+            "title": "Norsk kundeservice",
+            "text": "<p>Har du spørsmål? <a href=\"/pages/kundeservice\" title=\"Kundeservice\">Ta kontakt</a> — vi svarer raskt.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
+          }
+        },
+        "tf_4": {
+          "type": "card",
+          "settings": {
+            "title": "Sikker betaling",
+            "text": "<p>Vipps, Klarna, Visa og Mastercard.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
+          }
+        },
+        "tf_5": {
+          "type": "card",
+          "settings": {
+            "title": "2 års reklamasjonsrett",
+            "text": "<p>Full reklamasjonsrett i henhold til norsk lov.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
+          }
+        }
+      },
+      "block_order": [
+        "tf_1",
+        "tf_2",
+        "tf_3",
+        "tf_4",
+        "tf_5"
+      ],
+      "settings": {
+        "heading": "Trygg handel – alltid"
+      }
+    },
+    "whats_in_box": {
+      "type": "sk-lp-whats-in-box",
+      "blocks": {
+        "b_1": {
+          "type": "item",
+          "settings": {
+            "text": "Skinora® Clear LED-enhet"
+          }
+        },
+        "item_dxQ4KC": {
+          "type": "item",
+          "settings": {
+            "text": "Kontrollenhet med innebygd batteri"
+          }
+        },
+        "b_2": {
+          "type": "item",
+          "settings": {
+            "text": "USB-C ladekabel"
+          }
+        },
+        "item_3KrJcj": {
+          "type": "item",
+          "settings": {
+            "text": "Øyebeskytelse × 2"
+          }
+        },
+        "b_3": {
+          "type": "item",
+          "settings": {
+            "text": "Bruksanvisning (norsk)"
+          }
+        },
+        "b_4": {
+          "type": "item",
+          "settings": {
+            "text": "Oppbevaringspose"
+          }
+        }
+      },
+      "block_order": [
+        "b_1",
+        "item_dxQ4KC",
+        "b_2",
+        "item_3KrJcj",
+        "b_3",
+        "b_4"
+      ],
+      "settings": {
+        "heading": "Hva får du i esken?",
+        "image": "shopify://shop_images/Skinora_clear_hva_er_i_esken_flatlay.png",
+        "product_link_intro": "Vil du se alle tekniske spesifikasjoner, variant-valg og leveringsdetaljer?",
+        "product_link_text": "Se hele produktsiden",
+        "product_link_url": "https://www.skinora.no/products/skinora-clear"
+      }
+    },
+    "faq": {
+      "type": "sk-lp-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Fungerer Clear mot akne?",
+            "answer": "Clear bruker blått og rødt LED-lys bølgelengder som er godt studert for å redusere akne-bakterier og dempe betennelse. Den er spesielt effektiv mot mild til moderat akne."
+          }
+        },
+        "faq_xyfpr7": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvem bør være forsiktig med Skinora® Clear (blått lys)?",
+            "answer": "Hvis du har melasma eller lett får mørke merker etter kviser (PIH) – spesielt ved mørkere hudtyper (Fitzpatrick IV–VI) – anbefaler vi å starte med kortere økter og følge med på huden."
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor ofte bør jeg bruke den?",
+            "answer": "Vi anbefaler 3–5 økter i uken, à 10 minutter. Du kan bruke den morgen eller kveld – det som passer best for deg."
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Når kan jeg forvente resultater?",
+            "answer": "De fleste merker roligere hud etter 2–4 uker. For varige forbedringer anbefaler vi minst 6–8 uker med jevnlig bruk."
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Kan jeg bruke den med hudpleieproduktene mine?",
+            "answer": "Ja. Bruk den på ren hud, og påfør lette produkter etterpå. Unngå tunge oljer eller retinol rett før behandling."
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Hva om jeg ikke er fornøyd?",
+            "answer": "Du har 30 dagers fornøydgaranti. Hvis du ikke er fornøyd, sender du den tilbake og får full refusjon – ingen spørsmål stilt. Kontakt oss på hello@skinora.no."
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor lang er leveringstiden?",
+            "answer": "Vi sender fra norsk lager, og leveringstiden er normalt 2–4 virkedager. Frakt er alltid gratis."
+          }
+        },
+        "faq_freq": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor ofte må jeg bruke den for at det skal være verdt det?",
+            "answer": "Vi anbefaler 3–5 ganger i uken, 10 minutter per økt. Det tilsvarer én sesong med favorittserien din i uken. Mange merker de første resultatene etter 2–4 uker med jevn bruk. Og fordi du betaler én gang og bruker den ubegrenset, blir prisen per behandling lavere jo mer du bruker den."
+          }
+        },
+        "faq_noresult": {
+          "type": "faq",
+          "settings": {
+            "question": "Hva om jeg ikke ser noen forskjell?",
+            "answer": "Da vil vi at du skal sende den tilbake – og du får pengene tilbake, uten spørsmål. Det er hele poenget med vår 30 dagers fornøydgaranti. Vi er trygge på at jevn bruk gir resultater, men vi vet at hud er individuell. Har du ikke sett endring innen 30 dager, kontakter du oss på hello@skinora.no – og vi ordner resten."
+          }
+        },
+        "faq_price": {
+          "type": "faq",
+          "settings": {
+            "question": "Er [pris] mye å betale for LED-behandling?",
+            "answer": "Sammenlignet med klinikk er det faktisk det motsatte. Én LED-behandling hos hudterapeut koster typisk 800–1 500 kr. Med Skinora® Clear betaler du én gang og kan bruke den ubegrenset hjemme. Etter bare [behandlinger] behandlinger har produktet betalt seg selv – resten er ren gevinst. Du kan også dele opp betalingen med Klarna fra [klarna] kr/mnd."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_xyfpr7",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_freq",
+        "faq_noresult",
+        "faq_price"
+      ],
+      "settings": {
+        "heading": "Ofte stilte spørsmål",
+        "product": "skinora-clear"
+      }
+    },
+    "cta": {
+      "type": "sk-lp-cta",
+      "blocks": {
+        "g_1": {
+          "type": "badge",
+          "settings": {
+            "text": "30 dagers åpent kjøp"
+          }
+        },
+        "g_2": {
+          "type": "badge",
+          "settings": {
+            "text": "Sendes innen 24 t"
+          }
+        },
+        "g_3": {
+          "type": "badge",
+          "settings": {
+            "text": "Trygg betaling"
+          }
+        }
+      },
+      "block_order": [
+        "g_1",
+        "g_2",
+        "g_3"
+      ],
+      "settings": {
+        "eyebrow": "Om åtte uker",
+        "heading": "Takk deg selv om åtte uker.",
+        "text": "Du har prøvd nok ting som ikke holdt. Gi dette 30 dager. Virker det ikke for deg, sender du den tilbake.",
+        "price_before": "[før-pris]",
+        "price_text": "[pris]",
+        "save_text": "Spar [spar]",
+        "button_text": "Start mine 30 dager",
+        "product_url": "/products/skinora-clear",
+        "anchor_id": "kjop",
+        "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra [klarna] kr/mnd med Klarna</strong>"
+      }
+    },
+    "cross_sell": {
+      "type": "sk-lp-cross-sell",
+      "blocks": {
+        "product_card_bYabFG": {
+          "type": "product_card",
+          "settings": {
+            "product": "",
+            "eyebrow_tag": "ANSIKT",
+            "show_benefit": false,
+            "benefit": "",
+            "show_price": false
+          }
+        },
+        "product_card_fwAQPc": {
+          "type": "product_card",
+          "settings": {
+            "product": "skinora-radiance-neck",
+            "eyebrow_tag": "HALS",
+            "show_benefit": false,
+            "benefit": "",
+            "show_price": false
+          }
+        },
+        "product_card_jhnGra": {
+          "type": "product_card",
+          "settings": {
+            "product": "skinora-radiance-face",
+            "eyebrow_tag": "ANSIKT",
+            "show_benefit": false,
+            "benefit": "",
+            "show_price": false
+          }
+        }
+      },
+      "block_order": [
+        "product_card_bYabFG",
+        "product_card_fwAQPc",
+        "product_card_jhnGra"
+      ],
+      "settings": {
+        "eyebrow": "OPPDAG MER",
+        "heading": "Andre Skinora-produkter",
+        "subheading": "Bygg ditt komplette LED-rituale – designet for ansikt, hals og kropp.",
+        "show_section_cta": true,
+        "section_cta_text": "Se alle Skinora-produkter",
+        "section_cta_url": "shopify://collections/all",
+        "background_color": ""
+      }
+    },
+    "sk_lp_citations_wCJfGi": {
+      "type": "sk-lp-citations",
+      "disabled": true,
+      "blocks": {
+        "citation_wV88tM": {
+          "type": "citation",
+          "settings": {
+            "authors": "Goldberg DJ, Russell BA",
+            "year": "2006",
+            "title": "Combination blue (415 nm) and red (633 nm) LED phototherapy in the treatment of mild to severe acne vulgaris",
+            "journal": "Journal of Cosmetic and Laser Therapy, 8(2), 71–75",
+            "doi_or_url": ""
+          }
+        },
+        "citation_PmyFH4": {
+          "type": "citation",
+          "settings": {
+            "authors": "Lee SY, You CE, Park MY",
+            "year": "2007",
+            "title": "Blue and red light combination LED phototherapy for acne vulgaris in patients with skin phototype IV",
+            "journal": "Lasers in Surgery and Medicine, 39(2), 180–188",
+            "doi_or_url": ""
+          }
+        },
+        "citation_Uw6jVC": {
+          "type": "citation",
+          "settings": {
+            "authors": "Sadick NS",
+            "year": "2008",
+            "title": "Handheld LED array device in the treatment of acne vulgaris",
+            "journal": "Journal of Drugs in Dermatology, 7(4), 347–350",
+            "doi_or_url": ""
+          }
+        },
+        "citation_LJHHpD": {
+          "type": "citation",
+          "settings": {
+            "authors": "Kwon HH, Lee JB, Yoon JY, et al.",
+            "year": "2013",
+            "title": "The clinical and histological effect of home-use, combination blue–red LED phototherapy for mild-to-moderate acne vulgaris: a randomised controlled trial",
+            "journal": "British Journal of Dermatology, 168(5), 1088–1094",
+            "doi_or_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "citation_wV88tM",
+        "citation_PmyFH4",
+        "citation_Uw6jVC",
+        "citation_LJHHpD"
+      ],
+      "name": "LP Citations",
+      "settings": {
+        "heading": "Kilder",
+        "citations_intro": "<p>Basert på fagfellevurderte studier av kombinert blått (415 nm) og rødt (633 nm) LED-lys for behandling av mild til moderat akne. Resultater kan variere fra person til person.</p>"
+      }
+    },
+    "sticky_buy_bar": {
+      "type": "sk-lp-sticky-buy-bar",
+      "settings": {
+        "enabled": true,
+        "product": "skinora-clear",
+        "price": "Fra [klarna] kr/mnd med Klarna",
+        "subprice": "[pris] engangspris",
+        "cta_label": "Prøv risikofritt →",
+        "trigger_selector": ".lp-hero__actions",
+        "hide_selector": ".lp-cta-final"
+      }
+    },
+    "clinic_proof": {
+      "type": "sk-product-clinic-proof",
+      "blocks": {
+        "clinic_biQkwR": {
+          "type": "clinic",
+          "settings": {
+            "name": "Skedsmo Laserklinikk",
+            "logo_svg": "skedsmolaserklinikk",
+            "logo_transparent": true
+          }
+        },
+        "clinic_aMRTxM": {
+          "type": "clinic",
+          "settings": {
+            "name": "SkinLab Tromsø",
+            "logo_svg": "skinlabtromso",
+            "logo_transparent": true
+          }
+        },
+        "clinic_rAikxz": {
+          "type": "clinic",
+          "settings": {
+            "name": "Force of Beauty",
+            "logo_svg": "forceofbeauty",
+            "logo_transparent": true
+          }
+        },
+        "clinic_EJCCzD": {
+          "type": "clinic",
+          "settings": {
+            "name": "The Skin",
+            "logo_svg": "theskin",
+            "logo_transparent": true
+          }
+        },
+        "clinic_dmqjjX": {
+          "type": "clinic",
+          "settings": {
+            "name": "DermaFin",
+            "logo_svg": "dermafin",
+            "logo_transparent": true
+          }
+        }
+      },
+      "block_order": [
+        "clinic_biQkwR",
+        "clinic_aMRTxM",
+        "clinic_rAikxz",
+        "clinic_EJCCzD",
+        "clinic_dmqjjX"
+      ],
+      "name": "SK Klinikkbevis",
+      "settings": {
+        "background": "cool",
+        "eyebrow": "Anbefalt av fagfolk",
+        "heading": "Fagfolkene velger den av tre grunner.",
+        "reason_1_title": "Du slipper å lure på om den virker",
+        "reason_1_text": "Lyset er sterkt nok til å gjøre jobben, hver gang.",
+        "reason_2_title": "Den føles god å ha på",
+        "reason_2_text": "Myk og lett, og den sitter tett. Behandlingen blir en stund for deg selv, ikke en plikt.",
+        "reason_3_title": "Du ser det selv i speilet",
+        "reason_3_text": "Med jevnlig bruk er det speilet ditt som overbeviser deg, ikke oss.",
+        "body": "<p>Den samme masken selges gjennom norske hudklinikker. Her får du den rett hjem, med 30 dagers åpent kjøp.</p>",
+        "image": "shopify://shop_images/Karoline-TheSkinMedispa_jpg.webp",
+        "image_alt": "The Skin hudklinikk  anbefaler Skinora LED masker",
+        "image_focus_y": 30,
+        "quote": "Vi har testet flere LED-masker. Skinora var den som ga best passform og effekt. Nå er det den vi anbefaler.",
+        "name": "Karoline Mørch Lilledrange",
+        "role": "Dermatologisk sykepleier",
+        "clinic": "The Skin",
+        "city": "",
+        "count_label": "klinikker i Norge",
+        "cities": "",
+        "logos_label": "Klinikker som selger Skinora",
+        "anchor_id": ""
+      }
+    }
+  },
+  "order": [
+    "announcement",
+    "header",
+    "urgency",
+    "hero",
+    "trustbar",
+    "problem",
+    "sk_lp_mechanism_WhVKGN",
+    "results",
+    "clinic_proof",
+    "reviews",
+    "why_choose",
+    "sk_lp_honest_filter",
+    "skinora_clinic_comparison_9acj9k",
+    "how_to_use",
+    "whats_in_box",
+    "trust_full",
+    "faq",
+    "cta",
+    "cross_sell",
+    "sk_lp_citations_wCJfGi",
+    "sticky_buy_bar"
+  ]
+}
