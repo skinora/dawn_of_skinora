@@ -1636,5 +1636,20 @@
         "label": "PDF-URL – protokoll «radiance» (foryngelse/rødt lys)"
       }
     ]
+  },
+  {
+    "name": "A/B-test",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "50/50-test av produktsiden for Skinora Radiance Face. B = produktmalen lp-radiance. Bare besøkende fra Google Shopping (gclid, gbraid, wbraid eller srsltid i URL-en) blir med. QA: ?ab=A / ?ab=B."
+      },
+      {
+        "type": "checkbox",
+        "id": "ab_radiance_enabled",
+        "label": "Kjør A/B-test på Radiance Face-produktsiden",
+        "default": false
+      }
+    ]
   }
 ]

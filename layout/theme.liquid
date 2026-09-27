@@ -3,6 +3,10 @@
   <head>
     {% comment %}theme-check-disable RemoteAsset{% endcomment %}
     <meta charset="utf-8">
+    {%- comment -%} A/B-test Radiance Face (snippets/ab-radiance.liquid). Så tidlig som mulig: B omdirigerer før noe annet lastes. {%- endcomment -%}
+    {%- if template.name == 'product' and product.handle == 'skinora-radiance-face' and settings.ab_radiance_enabled -%}
+      {%- render 'ab-radiance' -%}
+    {%- endif -%}
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="theme-color" content="var(--ink-900)">
