@@ -102,11 +102,14 @@
      ga to naboseksjoner 192px tomrom på desktop, og siden leste som løsrevne
      blokker i stedet for én flate. Målt på Clear-LP-en lå 11 av 17 seksjoner
      på nøyaktig 96px — rytmen var altså riktig, bare for stor.
-     Nå er 72px standarden på alle bredder: gapet mellom to seksjoner er 144px.
-     Skal desktop puste mer igjen, er dette det ene stedet å endre. */
+     Nå er 72px standarden på desktop: gapet mellom to seksjoner er 144px.
+     Mobil (sep 2026): 72px ga også 144px mellom seksjoner på en 812px høy
+     skjerm – nesten en femtedel tomrom, og siden leste som løsrevne kort.
+     Under 769px er md 48 og lg 72; desktopverdiene settes i media-blokken
+     under. sm er 48 på alle bredder. */
   --space-section-sm: 48px;
-  --space-section-md: 72px;
-  --space-section-lg: 96px;
+  --space-section-md: 48px;
+  --space-section-lg: 72px;
 
   /* ---------- READABILITY MAX-WIDTHS ---------- */
   --measure-narrow: 38ch;
@@ -144,15 +147,13 @@
   --card-padding: clamp(24px, 2vw + 16px, 32px);
 }
 
-/* Desktop-bumpen av seksjonsrytmen (72/96/128) er fjernet – se
-   --space-section-* over. Ingen erstatningsregel her med vilje: verdiene skal
-   ha ÉN kilde, og en tom media-blokk ville bare invitert til at noen fyller
-   den igjen. */
-
-/* Trustbaren står på én rad fra 769px og trenger mindre høyde. */
+/* Fra 769px: trustbaren står på én rad og trenger mindre høyde, og
+   seksjonsrytmen går opp til desktopverdiene (se --space-section-* over). */
 @media (min-width: 769px) {
   :root {
     --lp-trustbar-h: 76px;
+    --space-section-md: 72px;
+    --space-section-lg: 96px;
   }
 }
 
