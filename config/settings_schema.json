@@ -1648,7 +1648,7 @@
         "type": "checkbox",
         "id": "ab_radiance_enabled",
         "label": "Kjør A/B-test på Radiance Face-produktsiden",
-        "default": false
+        "default": true
       }
     ]
   }
