@@ -332,7 +332,7 @@
         "eyebrow": "ÆRLIG SNAKK",
         "heading": "Skinora® Clear er ikke for alle.",
         "intro": "<p>Vi har bygget Skinora Clear for én type kunde. Hvis du kjenner deg igjen i punktene under, er ikke dette riktig produkt for deg — og det er helt greit. Vi vil heller at du finner det som virker.</p>",
-        "closing": "<h3>Nikket du nei til alle fire? Da er du akkurat den vi laget den for.</h3><p>Du har 30 dager på å se det selv.</p>",
+        "closing": "<h3>Kjente du deg ikke igjen i noen av dem? Da er du akkurat den vi laget den for.</h3><p>Du har 30 dager på å se det selv.</p>",
         "cta_label": "PRØV RISIKOFRITT I 30 DAGER →",
         "cta_url": "#kjop",
         "accent": "#e63946",
@@ -759,7 +759,7 @@
           "type": "faq",
           "settings": {
             "question": "Hvor ofte må jeg bruke den for at det skal være verdt det?",
-            "answer": "Vi anbefaler 3–5 ganger i uken, 10 minutter per økt. Det tilsvarer én sesong med favorittserien din i uken. Mange merker de første resultatene etter 2–4 uker med jevn bruk. Og fordi du betaler én gang og bruker den ubegrenset, blir prisen per behandling lavere jo mer du bruker den."
+            "answer": "Vi anbefaler 3–5 ganger i uken, 10 minutter per økt. Det er omtrent like lenge som én episode av en serie i uken. Mange merker de første resultatene etter 2–4 uker med jevn bruk. Og fordi du betaler én gang og bruker den ubegrenset, blir prisen per behandling lavere jo mer du bruker den."
           }
         },
         "faq_noresult": {
@@ -876,7 +876,7 @@
       "settings": {
         "eyebrow": "OPPDAG MER",
         "heading": "Andre Skinora-produkter",
-        "subheading": "Bygg ditt komplette LED-rituale – designet for ansikt, hals og kropp.",
+        "subheading": "Masker for ansikt, hals og kropp.",
         "show_section_cta": true,
         "section_cta_text": "Se alle Skinora-produkter",
         "section_cta_url": "shopify://collections/all",
@@ -1007,7 +1007,7 @@
       "settings": {
         "background": "cool",
         "eyebrow": "Anbefalt av fagfolk",
-        "heading": "Fagfolkene velger den av tre grunner.",
+        "heading": "Tre grunner til at hudklinikkene anbefaler den.",
         "reason_1_title": "Du slipper å lure på om den virker",
         "reason_1_text": "Lyset er sterkt nok til å gjøre jobben, hver gang.",
         "reason_2_title": "Den føles god å ha på",
