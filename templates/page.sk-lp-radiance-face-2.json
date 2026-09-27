@@ -48,8 +48,8 @@
         "image_mobile": "shopify://shop_images/skinora-radiance-face-in-use_2.webp",
         "hero_video_url": "",
         "eyebrow": "Skinora Radiance Face",
-        "title": "Se like uthvilt ut som du føler deg.",
-        "text_line_1": "Rødt og nær-infrarødt lys fra hver eneste diode. 10 minutter om kvelden, hjemme i sofaen.",
+        "title": "Du står sist på din egen liste",
+        "text_line_1": "Ti minutter med rødt lys om kvelden · i sofaen du allerede sitter i",
         "cta_text": "Prøv risikofritt i 30 dager",
         "cta_url": "/products/skinora-radiance-face",
         "price_display": "[pris]",
@@ -102,31 +102,31 @@
         "p_1": {
           "type": "item",
           "settings": {
-            "text": "Folk spør om du er sliten, på dager du ikke er det."
+            "text": "Du husker tannlegetimen til barna, men ikke sist du gjorde noe for deg selv."
           }
         },
         "p_2": {
           "type": "item",
           "settings": {
-            "text": "Sminken legger seg i linjer den ikke la seg i før."
+            "text": "Hudpleien din er det du rekker på vei ut døra."
           }
         },
         "p_3": {
           "type": "item",
           "settings": {
-            "text": "Gløden du tok for gitt, må du nå lage med highlighter."
+            "text": "Kremene står i skapet. Tiden til å bruke dem gjør ikke det."
           }
         },
         "p_4": {
           "type": "item",
           "settings": {
-            "text": "Flekker og ujevn tone som ikke gir seg, uansett krem."
+            "text": "I november ser huden like grå ut som været."
           }
         },
         "p_5": {
           "type": "item",
           "settings": {
-            "text": "Du vil gjøre noe som virker, uten sprøyter, ventelister eller klinikktimer."
+            "text": "En klinikktime betyr parkering, venterom og en ettermiddag du ikke har."
           }
         }
       },
@@ -138,8 +138,8 @@
         "p_5"
       ],
       "settings": {
-        "heading": "Speilet og følelsen stemmer ikke overens.",
-        "intro": "Du føler deg som deg selv. Men huden har begynt å fortelle en annen historie, og ingen krem ser ut til å høre etter.",
+        "heading": "Alle andre kommer først.",
+        "intro": "Jobb, middag, lekser, foreldre som trenger hjelp. Når dagen endelig er over, er det ingenting igjen til deg. Og nå som mørket kommer, ser du det i speilet også.",
         "image": "shopify://shop_images/kjenner-du-deg-igjen-i-dette.webp"
       }
     },
@@ -181,8 +181,8 @@
       ],
       "name": "LP Results Timeline",
       "settings": {
-        "heading": "Dette er de neste åtte ukene.",
-        "intro": "Uke 2–4: de fleste merker mer glød. Uke 6–8: jevnere tone og mykere linjer. To som har gått veien før deg:",
+        "heading": "Ti minutter om dagen. Åtte uker.",
+        "intro": "Uke 2–4: de fleste merker mer glød. Uke 6–8: jevnere tone og mykere linjer. To som fant de ti minuttene:",
         "disclaimer": "<p>Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.</p>"
       }
     },
@@ -283,7 +283,7 @@
         "rev_6"
       ],
       "settings": {
-        "heading": "Det de sier etter noen uker.",
+        "heading": "Fra kvinner som heller ikke trodde de hadde tid.",
         "reviews_visible_count": 6,
         "show_more_text": "Vis flere anmeldelser",
         "show_less_text": "Vis færre",
@@ -291,7 +291,7 @@
         "enable_trustpilot_embed": false,
         "trustpilot_business_unit_id": "",
         "product_url": "/products/skinora-radiance-face",
-        "midpage_cta_text": "Jeg vil ha gløden tilbake",
+        "midpage_cta_text": "Sett deg selv på listen",
         "midpage_klarna_text": "Fra [klarna] kr/mnd med Klarna"
       }
     },
@@ -301,43 +301,43 @@
         "w_1": {
           "type": "card",
           "settings": {
-            "title": "Speilet er enig med deg",
-            "text": "<p>Du føler deg uthvilt. Nå ser du det også.</p>"
+            "title": "Du trenger ikke finne tid",
+            "text": "<p>Du bruker tiden du allerede har: serien, podkasten, boka.</p>"
           }
         },
         "card_ttFjc6": {
           "type": "card",
           "settings": {
-            "title": "Du drar rett ut",
-            "text": "<p>Litt maskara, kanskje. Huden trenger ikke mer.</p>"
+            "title": "Ingen time å bestille",
+            "text": "<p>Ingen parkering, ingen venterom. Sofaen din er nok.</p>"
           }
         },
         "card_xRCVi8": {
           "type": "card",
           "settings": {
-            "title": "Sminken sitter der du la den",
-            "text": "<p>Jevnere underlag, mindre å dekke over.</p>"
+            "title": "Et lyspunkt i mørketida",
+            "text": "<p>Ti minutter med varmt, rødt lys hver kveld, hele vinteren gjennom.</p>"
           }
         },
         "w_2": {
           "type": "card",
           "settings": {
-            "title": "Noen spør hva du har gjort",
-            "text": "<p>Og du kan si det som det er: ti minutter om kvelden.</p>"
+            "title": "Du kjenner deg igjen i speilet",
+            "text": "<p>Ikke yngre. Bare mer deg.</p>"
           }
         },
         "w_3": {
           "type": "card",
           "settings": {
-            "title": "Ti minutter som er bare dine",
-            "text": "<p>Sett på masken og len deg tilbake. Det er hele rutinen.</p>"
+            "title": "Noen spør hva du har gjort",
+            "text": "<p>Og du kan svare ærlig: ti minutter om kvelden.</p>"
           }
         },
         "card_BxaxB7": {
           "type": "card",
           "settings": {
-            "title": "Ingen nåler, ingen nedetid",
-            "text": "<p>Bare lys. Du kan gå rett ut etterpå.</p>"
+            "title": "Ingen dårlig samvittighet",
+            "text": "<p>Betalt én gang. Ingen abonnement, ingen timer, ingen kostnad per gang.</p>"
           }
         }
       },
@@ -350,8 +350,8 @@
         "card_BxaxB7"
       ],
       "settings": {
-        "heading": "Tenk deg morgenen om åtte uker.",
-        "intro": "Dette er målet. Ikke et nytt ansikt, men ditt eget, bare uthvilt."
+        "heading": "Ti minutter i kveld er dine.",
+        "intro": "Ingen trenger noe fra deg mens masken er på."
       }
     },
     "how_to_use": {
@@ -406,7 +406,7 @@
         "t_3"
       ],
       "settings": {
-        "heading": "Så enkelt er det.",
+        "heading": "Tre steg. Ti minutter.",
         "anchor_id": "slik-bruker-du"
       }
     },
@@ -734,8 +734,8 @@
         "g_3"
       ],
       "settings": {
-        "heading": "Takk deg selv om åtte uker.",
-        "text": "Du har gitt kremene sjansen. Gi lyset 30 dager. Ser du ikke forskjellen, sender du den tilbake.",
+        "heading": "Sett deg selv på listen.",
+        "text": "Ti minutter om kvelden, hele vinteren. Gi det 30 dager. Ser du ikke forskjellen, sender du den tilbake.",
         "price_before": "[før-pris]",
         "price_text": "[pris]",
         "save_text": "Spar [spar]",
@@ -743,7 +743,7 @@
         "product_url": "/products/skinora-radiance-face",
         "anchor_id": "kjop",
         "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra [klarna] kr/mnd med Klarna</strong>",
-        "eyebrow": "Om åtte uker"
+        "eyebrow": "Din tur"
       }
     },
     "sk_lp_cross_sell_N8N6MW": {
@@ -869,8 +869,8 @@
         "number": "",
         "unit": "kr",
         "once_label": "Én gang",
-        "lead": "En LED-behandling på klinikk koster gjerne 800–1 500 kr per gang.",
-        "kicker": "Radiance Face koster som noen få økter, og så er den din. Bruk den hjemme, så ofte du vil.",
+        "lead": "En LED-behandling på klinikk koster gjerne 800–1 500 kr per gang. Pluss en ettermiddag.",
+        "kicker": "Radiance Face koster som noen få økter, og så er den din. Brukt i din egen sofa, når det passer deg.",
         "show_cta": true,
         "cta_label": "Prøv risikofritt i 30 dager",
         "cta_link": "/products/skinora-radiance-face",
