@@ -12,6 +12,34 @@
     overflow: visible;
   }
 
+  /* Teller over karusellen: stor kursiv serif for gjeldende bilde, dempet
+     «/ 03» etter. Samme stemme som de store tallene i klinikkbeviset. */
+  .sk-ba-counter {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-4);
+    font-family: var(--ff-serif);
+    font-style: italic;
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-none);
+  }
+
+  .sk-ba-counter[hidden] { display: none; }
+
+  .sk-ba-counter__current {
+    font-size: var(--fs-4xl);
+    letter-spacing: var(--tracking-tight);
+    color: var(--ink-900);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .sk-ba-counter__total {
+    font-size: var(--fs-lg);
+    color: var(--ink-400);
+  }
+
   /* Kjøpsknapp under karusellen. Knappens utseende kommer fra buttons.css
      (.sk-btn--primary); her styres bare plassering og linjen under. */
   .sk-ba-cta {
@@ -247,6 +275,18 @@
       </div>
     {% endif %}
 
+    {%- comment -%}
+      Teller «01 / 03» over bildene: sier at det er flere å bla til.
+      Skjules av skriptet når alle bildene får plass (desktop med tre).
+    {%- endcomment -%}
+    {%- assign ba_total = product.metafields.custom.before_after_testimonial_product.value | size -%}
+    {%- if ba_total > 1 -%}
+      <div class="sk-ba-counter" aria-hidden="true">
+        <span class="sk-ba-counter__current">01</span>
+        <span class="sk-ba-counter__total">/ {% if ba_total < 10 %}0{% endif %}{{ ba_total }}</span>
+      </div>
+    {%- endif -%}
+
     <div class="sk-before-after-viewport">
       <div class="sk-ba-track">
         {% for item in product.metafields.custom.before_after_testimonial_product.value %}
@@ -399,10 +439,22 @@
     var dots = root.querySelectorAll('.sk-ba-progress__dot');
     if (!track || !slides.length) return;
 
+    var counter = root.querySelector('.sk-ba-counter');
+    var counterCurrent = root.querySelector('.sk-ba-counter__current');
+    function pad(n) { return n < 10 ? '0' + n : String(n); }
+    // Telleren gir bare mening når ikke alle bildene får plass samtidig.
+    function updateCounterVisibility() {
+      if (!counter) return;
+      counter.hidden = track.scrollWidth <= track.clientWidth + 2;
+    }
+    window.addEventListener('resize', updateCounterVisibility);
+    updateCounterVisibility();
+
     var activeIndex = 0;
     function setActive(idx) {
       if (idx === activeIndex && idx !== 0) return;
       activeIndex = idx;
+      if (counterCurrent) counterCurrent.textContent = pad(idx + 1);
       dots.forEach(function (d, i) {
         var on = i === idx;
         d.classList.toggle('sk-ba-progress__dot--active', on);
