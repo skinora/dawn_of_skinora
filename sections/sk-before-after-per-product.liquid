@@ -12,6 +12,28 @@
     overflow: visible;
   }
 
+  /* Kjøpsknapp under karusellen. Knappens utseende kommer fra buttons.css
+     (.sk-btn--primary); her styres bare plassering og linjen under. */
+  .sk-ba-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    padding-inline: var(--lp-gutter);
+    text-align: center;
+  }
+
+  .sk-ba-cta__form { margin: 0; }
+
+  .sk-ba-cta__note {
+    margin: 0;
+    font-family: var(--ff-sans);
+    font-size: var(--fs-xs);
+    line-height: var(--lh-relaxed);
+    color: var(--ink-500);
+  }
+
   .sk-ba-slide {
     display: flex;
     justify-content: center;
@@ -326,8 +348,44 @@
         </div>
       </div>
     {% endif %}
+
+    {%- comment -%}
+      Kjøpsknapp rett etter bevisene: den som nettopp har sett resultatene,
+      skal slippe å scrolle tilbake til heroen. Samme mønster som «Hva kan du
+      forvente»: ekte cart-skjema (virker uten JS), fanget av sk-lp-cart-add.js,
+      som også respekterer tilbudsvelgeren (Face / Face + Neck) i heroen.
+    {%- endcomment -%}
+    {%- if section.settings.show_cta and product -%}
+      {%- assign ba_variant = product.selected_or_first_available_variant -%}
+      <div class="sk-ba-cta">
+        <form
+          action="{{ routes.cart_add_url }}"
+          method="post"
+          enctype="multipart/form-data"
+          class="lp-cta-form sk-ba-cta__form"
+        >
+          <input type="hidden" name="id" value="{{ ba_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button
+            type="submit"
+            class="sk-btn sk-btn--primary"
+            data-analytics="cta_before_after"
+            data-product-handle="{{ product.handle }}"
+          >
+            {{ section.settings.cta_text | escape }}
+            <span class="sk-btn__icon" aria-hidden="true">→</span>
+          </button>
+        </form>
+        {%- if section.settings.cta_note != blank -%}
+          <p class="sk-ba-cta__note">{{ section.settings.cta_note | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 </section>
+{%- if section.settings.show_cta and product -%}
+  <script src="{{ 'sk-lp-cart-add.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
 <script>
   {%- comment -%} Scroll-snap carousel — no Swiper dependency {%- endcomment -%}
@@ -413,6 +471,29 @@
       "id": "section_subtitle",
       "label": "Subtitle",
       "default": "See the amazing transformations our customers have achieved"
+    },
+    {
+      "type": "header",
+      "content": "Kjøpsknapp"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Vis kjøpsknapp under bildene",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Knappetekst",
+      "default": "Prøv risikofritt i 30 dager"
+    },
+    {
+      "type": "text",
+      "id": "cta_note",
+      "label": "Linje under knappen",
+      "info": "Tom = skjules.",
+      "default": "30 dagers åpent kjøp · Gratis frakt"
     }
   ],
   "presets": [
