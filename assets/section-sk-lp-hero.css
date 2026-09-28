@@ -394,6 +394,48 @@ body .lp-hero--overlay .lp-btn--hero:focus-visible {
   line-height: var(--lh-none);
   color: var(--paper-0);
 }
+/* ---------- Tilbud (bare når før-prisen vises) ----------
+   Modifikatoren settes kun når [før-pris] har verdi, altså på sider som har
+   valgt før-pris (B-malene) og bare under salg. Vanlige LP-er er urørt.
+   Prisen løftes OVER knappen: først ankeret (pris mot før-pris), så
+   handlingen. Stor serif-pris, dempet overstreket før-pris, lyst merke for
+   besparelsen, Klarna på egen linje. */
+.lp-hero--overlay .lp-hero__actions:has(.lp-hero__cta-meta--offer) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+.lp-hero--overlay .lp-hero__cta-meta--offer {
+  order: -1;
+  align-items: center;
+  column-gap: var(--space-3);
+  row-gap: var(--space-2);
+}
+.lp-hero--overlay .lp-hero__cta-meta--offer .lp-hero__cta-price {
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-none);
+}
+.lp-hero--overlay .lp-hero__cta-meta--offer .lp-hero__cta-before {
+  font-size: var(--fs-md);
+  text-decoration-thickness: 1px;
+}
+.lp-hero--overlay .lp-hero__cta-meta--offer .lp-hero__cta-save {
+  padding: var(--space-2) var(--space-3);
+  border-color: transparent;
+  background: var(--paper-0);
+  color: var(--ink-900);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+.lp-hero--overlay .lp-hero__cta-meta--offer .lp-hero__cta-meta-sep {
+  display: none;
+}
+.lp-hero--overlay .lp-hero__cta-meta--offer .lp-hero__cta-klarna {
+  flex-basis: 100%;
+}
+
 .lp-hero--overlay .lp-hero__cta-meta-sep {
   color: color-mix(in srgb, var(--paper-0) 40%, transparent);
   font-weight: var(--fw-semibold);

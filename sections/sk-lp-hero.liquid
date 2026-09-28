@@ -342,7 +342,7 @@
           {%- capture sk_lp_before_out -%}{%- render 'sk-lp-pricing', product: sk_lp_product, text: section.settings.price_before -%}{%- endcapture -%}
           {%- capture sk_lp_save_out -%}{%- render 'sk-lp-pricing', product: sk_lp_product, text: section.settings.save_text -%}{%- endcapture -%}
           {%- if sk_lp_price_out != blank or sk_lp_klarna_out != blank -%}
-            <p class="lp-hero__cta-meta">
+            <p class="lp-hero__cta-meta{% if sk_lp_before_out != blank %} lp-hero__cta-meta--offer{% endif %}">
               {%- if sk_lp_price_out != blank -%}
                 <span class="lp-hero__cta-price">{{ sk_lp_price_out }}</span>
               {%- endif -%}
