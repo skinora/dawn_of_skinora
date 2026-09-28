@@ -53,13 +53,13 @@
         "cta_text": "Legg i handlekurv",
         "cta_url": "/products/skinora-radiance-face",
         "price_display": "[pris]",
-        "price_before": "[før-pris]",
-        "save_text": "Spar [spar]",
         "klarna_text": "fra [klarna] kr/mnd med Klarna",
         "show_link": true,
         "link_text": "Se hvordan den brukes (60 sek) ↓",
         "link_url": "#slik-bruker-du",
-        "rating_show_count": true
+        "rating_show_count": true,
+        "price_before": "[før-pris]",
+        "save_text": "Spar [spar]"
       }
     },
     "sk_lp_trustbar_pnMnN8": {
