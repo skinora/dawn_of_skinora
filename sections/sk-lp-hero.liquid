@@ -334,10 +334,23 @@
           {%- endcomment -%}
           {%- capture sk_lp_price_out -%}{%- render 'sk-lp-pricing', product: sk_lp_product, text: section.settings.price_display -%}{%- endcapture -%}
           {%- capture sk_lp_klarna_out -%}{%- render 'sk-lp-pricing', product: sk_lp_product, text: section.settings.klarna_text -%}{%- endcapture -%}
+          {%- comment -%}
+            Før-pris og «Spar» i egne felt: sk-lp-pricing skriver ikke ut tekst
+            med [før-pris]/[spar] når produktet ikke er på salg. Sto de i samme
+            felt som [pris], forsvant hele prisen utenom kampanje.
+          {%- endcomment -%}
+          {%- capture sk_lp_before_out -%}{%- render 'sk-lp-pricing', product: sk_lp_product, text: section.settings.price_before -%}{%- endcapture -%}
+          {%- capture sk_lp_save_out -%}{%- render 'sk-lp-pricing', product: sk_lp_product, text: section.settings.save_text -%}{%- endcapture -%}
           {%- if sk_lp_price_out != blank or sk_lp_klarna_out != blank -%}
             <p class="lp-hero__cta-meta">
               {%- if sk_lp_price_out != blank -%}
                 <span class="lp-hero__cta-price">{{ sk_lp_price_out }}</span>
+              {%- endif -%}
+              {%- if sk_lp_before_out != blank -%}
+                <s class="lp-hero__cta-before">{{ sk_lp_before_out }}</s>
+              {%- endif -%}
+              {%- if sk_lp_save_out != blank -%}
+                <span class="lp-hero__cta-save">{{ sk_lp_save_out }}</span>
               {%- endif -%}
               {%- if sk_lp_price_out != blank and sk_lp_klarna_out != blank -%}
                 <span class="lp-hero__cta-meta-sep" aria-hidden="true">·</span>
@@ -507,6 +520,20 @@
       "label": "Pris (vises som serif under CTA)",
       "info": "Skriv [pris] — prisen hentes fra produktet i CTA-lenken. Tomt felt skjuler linjen.",
       "default": "[pris]"
+    },
+    {
+      "type": "text",
+      "id": "price_before",
+      "label": "Før-pris (valgfri)",
+      "info": "Bruk [før-pris]. Vises overstreket, og bare når produktet har «Sammenlign med»-pris. Tomt felt = aldri før-pris.",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "id": "save_text",
+      "label": "Spar-merke (valgfri)",
+      "info": "F.eks. «Spar [spar]». Vises bare ved salg. Tomt felt = aldri merke.",
+      "default": ""
     },
     {
       "type": "text",

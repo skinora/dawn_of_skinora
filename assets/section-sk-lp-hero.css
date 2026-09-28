@@ -377,6 +377,23 @@ body .lp-hero--overlay .lp-btn--hero:focus-visible {
   letter-spacing: var(--tracking-tight);
   color: var(--paper-0);
 }
+/* Før-pris og spar-merke: samme signal som «4.690 kr / Spar 21 %» på den
+   vanlige produktsiden, så kunden fra Google ser prisen hun klikket på. */
+.lp-hero--overlay .lp-hero__cta-before {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  color: color-mix(in srgb, var(--paper-0) 62%, transparent);
+}
+.lp-hero--overlay .lp-hero__cta-save {
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid color-mix(in srgb, var(--paper-0) 45%, transparent);
+  border-radius: 999px;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-none);
+  color: var(--paper-0);
+}
 .lp-hero--overlay .lp-hero__cta-meta-sep {
   color: color-mix(in srgb, var(--paper-0) 40%, transparent);
   font-weight: var(--fw-semibold);

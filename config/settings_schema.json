@@ -1642,7 +1642,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "50/50-test av produktsiden for Skinora Radiance Face. B = produktmalen lp-radiance. Bare besøkende fra Google Shopping (gclid, gbraid, wbraid eller srsltid i URL-en) blir med. QA: ?ab=A / ?ab=B."
+        "content": "50/50-test av produktsiden for Skinora Radiance Face. B = produktmalen sk-lp-radiance. Bare besøkende fra Google (Shopping og Ads) (gclid, gbraid, wbraid eller srsltid i URL-en) blir med. QA: ?ab=A / ?ab=B."
       },
       {
         "type": "checkbox",

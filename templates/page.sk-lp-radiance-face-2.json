@@ -48,15 +48,18 @@
         "image_mobile": "shopify://shop_images/skinora-radiance-face-in-use_2.webp",
         "hero_video_url": "",
         "eyebrow": "Skinora Radiance Face",
-        "title": "Du står sist på din egen liste",
-        "text_line_1": "Ti minutter med rødt lys om kvelden · i sofaen du allerede sitter i",
-        "cta_text": "Prøv risikofritt i 30 dager",
+        "title": "LED-masken du bruker i sofaen",
+        "text_line_1": "Rødt og nær-infrarødt lys fra hver diode · 10 minutter om kvelden",
+        "cta_text": "Legg i handlekurv",
         "cta_url": "/products/skinora-radiance-face",
         "price_display": "[pris]",
         "klarna_text": "fra [klarna] kr/mnd med Klarna",
         "show_link": true,
         "link_text": "Se hvordan den brukes (60 sek) ↓",
-        "link_url": "#slik-bruker-du"
+        "link_url": "#slik-bruker-du",
+        "price_before": "[før-pris]",
+        "save_text": "Spar [spar]",
+        "rating_show_count": true
       }
     },
     "sk_lp_trustbar_pnMnN8": {
@@ -138,7 +141,7 @@
         "p_5"
       ],
       "settings": {
-        "heading": "Alle andre kommer først.",
+        "heading": "Du står sist på din egen liste.",
         "intro": "Jobb, middag, lekser, foreldre som trenger hjelp. Når dagen endelig er over, er det ingenting igjen til deg. Og nå som mørket kommer, ser du det i speilet også.",
         "image": "shopify://shop_images/kjenner-du-deg-igjen-i-dette.webp"
       }

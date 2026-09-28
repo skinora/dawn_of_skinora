@@ -37,8 +37,10 @@
       ingen Meta-annonser peker hit, og fbevents.js er 111 kB. Må stå FØR
       Shopifys web-pixels-manager lenger nede i head, ellers rekker den å
       sette inn pikselen først.
+      Gjelder alle sk-lp-maler, også produktmalen sk-lp-radiance (B i
+      A/B-testen), som får trafikk fra Google, ikke Meta.
     {%- endcomment -%}
-    {%- if template.name == 'page' and template.suffix contains 'sk-lp' -%}
+    {%- if template.suffix contains 'sk-lp' -%}
       {% render 'sk-block-meta-pixel' %}
     {%- endif -%}
 

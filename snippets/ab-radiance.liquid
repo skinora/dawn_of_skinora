@@ -1,8 +1,8 @@
 {%- comment -%}
   ab-radiance — 50/50 A/B-test av produktsiden for Skinora Radiance Face.
 
-  A = vanlig produktmal. B = product.lp-radiance (landingssiden som produktmal),
-  vist via ?view=lp-radiance på samme URL. Canonical peker allerede til
+  A = vanlig produktmal. B = product.sk-lp-radiance (landingssiden som produktmal),
+  vist via ?view=sk-lp-radiance på samme URL. Canonical peker allerede til
   produkt-URL-en (theme.liquid, canonical_url), så B blir ikke en egen side.
 
   Rendres øverst i <head> fra theme.liquid, bare på denne produktsiden og bare
@@ -24,7 +24,7 @@
     try {
       var EXPERIMENT = 'rf_lp_2026_10';
       var COOKIE = 'sk_ab_rf';
-      var VIEW = 'lp-radiance';
+      var VIEW = 'sk-lp-radiance';
       var CLICK_IDS = ['gclid', 'gbraid', 'wbraid', 'srsltid'];
 
       var url = new URL(window.location.href);
@@ -43,7 +43,7 @@
         variant = qa;
         setCookie(variant);
       } else if (!variant) {
-        // Utenfor testen. Gjelder også en delt ?view=lp-radiance-lenke uten
+        // Utenfor testen. Gjelder også en delt ?view=sk-lp-radiance-lenke uten
         // klikk-ID: siden vises som B, men telles ikke.
         if (!hasClickId) return;
         if (onB) {
