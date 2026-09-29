@@ -1642,12 +1642,12 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Måling av A/B-testen på produktsiden for Skinora Radiance Face. Fordelingen gjøres av Google Ads (Eksperimenter): B = Final URL suffix view=sk-lp-radiance. Av = ingen måling (ab_exposure / _ab_rf_variant). QA: ?ab=A / ?ab=B."
+        "content": "50/50-test av produktsiden for Skinora Radiance Face. B = produktmalen sk-lp-radiance. Bare besøkende fra Google (Shopping og Ads) (gclid, gbraid, wbraid eller srsltid i URL-en) blir med. QA: ?ab=A / ?ab=B."
       },
       {
         "type": "checkbox",
         "id": "ab_radiance_enabled",
-        "label": "Mål A/B-testen på Radiance Face-produktsiden",
+        "label": "Kjør A/B-test på Radiance Face-produktsiden",
         "default": true
       }
     ]
