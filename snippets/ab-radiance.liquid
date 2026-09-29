@@ -1,75 +1,50 @@
 {%- comment -%}
-  ab-radiance — 50/50 A/B-test av produktsiden for Skinora Radiance Face.
+  ab-radiance — MÅLING for A/B-testen av produktsiden for Skinora Radiance Face.
 
-  A = vanlig produktmal. B = product.sk-lp-radiance (landingssiden som produktmal),
-  vist via ?view=sk-lp-radiance på samme URL. Canonical peker allerede til
-  produkt-URL-en (theme.liquid, canonical_url), så B blir ikke en egen side.
+  Fordelingen gjøres av Google Ads (Eksperimenter): kontrollarmen lander på
+  den vanlige produktsiden (A), eksperimentarmen får Final URL suffix
+  view=sk-lp-radiance og lander på product.sk-lp-radiance (B). Ingen
+  omdirigering, ingen cookie, ingen skjuling – B laster like fort som A, og
+  Google-referansen og gclid følger med.
+
+  (Til 29.09.2026 fordelte dette skriptet selv med cookie + location.replace.
+  Det kostet en ekstra sidelasting på B og talte ikke dem som snudde under
+  omlastingen. Erstattet av Ads-eksperimentet; tellingen startet på nytt.)
 
   Rendres øverst i <head> fra theme.liquid, bare på denne produktsiden og bare
-  når temainnstillingen ab_radiance_enabled er på. Av = ingen kode på siden.
+  når temainnstillingen ab_radiance_enabled er på.
 
-  Hvem er med: bare besøkende som kommer med en Google-klikk-ID (gclid, gbraid,
-  wbraid, srsltid) ved første besøk. Alle andre, også organisk og Meta, står
-  utenfor: ingen cookie, ingen omdirigering, ingen hendelse. ?ab=A|B overstyrer
-  for QA, uansett kilde. Roboter behandles som alle andre (ingen UA-sjekk).
+  Hvem telles:
+    B = siden vises med ?view=sk-lp-radiance
+    A = vanlig produktside OG URL-en har en Google-klikk-ID (gclid, gbraid,
+        wbraid, srsltid) – altså trafikk fra kontrollarmen
+    Alle andre (organisk, direkte, Meta) telles ikke.
+    ?ab=A|B overstyrer for QA.
 
   Måling: GA4 ab_exposure + brukeregenskap ab_rf_variant via sidens egen gtag
   (lastes av Google & YouTube-appen – vi venter på den, definerer den aldri),
-  og cart attribute _ab_rf_variant så varianten følger ordren.
+  og cart attribute _ab_rf_variant (første eksponering vinner) så varianten
+  følger ordren.
 
   Alt er pakket i try/catch: en feil her skal aldri blokkere siden.
 {%- endcomment -%}
 <script>
   (function () {
     try {
-      var EXPERIMENT = 'rf_lp_2026_10';
-      var COOKIE = 'sk_ab_rf';
+      var EXPERIMENT = 'rf_ads_2026_09';
       var VIEW = 'sk-lp-radiance';
       var CLICK_IDS = ['gclid', 'gbraid', 'wbraid', 'srsltid'];
 
-      var url = new URL(window.location.href);
-      var params = url.searchParams;
+      var params = new URLSearchParams(window.location.search);
+      var qa = (params.get('ab') || '').toUpperCase();
       var onB = params.get('view') === VIEW;
       var hasClickId = CLICK_IDS.some(function (k) { return params.has(k); });
-      var match = document.cookie.match(/(?:^|;\s*)sk_ab_rf=([AB])(?:;|$)/);
-      var variant = match ? match[1] : null;
-      var qa = (params.get('ab') || '').toUpperCase();
 
-      function setCookie(v) {
-        document.cookie = COOKIE + '=' + v + '; Max-Age=5184000; Path=/; SameSite=Lax; Secure';
-      }
-
-      if (qa === 'A' || qa === 'B') {
-        variant = qa;
-        setCookie(variant);
-      } else if (!variant) {
-        // Utenfor testen. Gjelder også en delt ?view=sk-lp-radiance-lenke uten
-        // klikk-ID: siden vises som B, men telles ikke.
-        if (!hasClickId) return;
-        if (onB) {
-          variant = 'B';
-        } else {
-          var byte = new Uint8Array(1);
-          window.crypto.getRandomValues(byte);
-          variant = byte[0] < 128 ? 'A' : 'B';
-        }
-        setCookie(variant);
-      }
-
-      if (variant === 'B' && !onB) {
-        params.set('view', VIEW);
-        params.delete('ab');
-        // Anti-flimmer bare for B, og aldri lenger enn 1,5 s.
-        var root = document.documentElement;
-        root.style.visibility = 'hidden';
-        setTimeout(function () { root.style.visibility = ''; }, 1500);
-        window.location.replace(url.toString());
-        return;
-      }
-
-      // Tildelt A, men står på en B-lenke (f.eks. delt URL): vis siden som den
-      // er, men ikke registrer eksponering – innholdet matcher ikke varianten.
-      if (variant === 'A' && onB) return;
+      var variant = null;
+      if (qa === 'A' || qa === 'B') variant = qa;
+      else if (onB) variant = 'B';
+      else if (hasClickId) variant = 'A';
+      if (!variant) return; // utenfor testen
 
       (function waitForGtag(triesLeft) {
         if (typeof window.gtag === 'function') {
@@ -80,10 +55,12 @@
         if (triesLeft > 0) setTimeout(function () { waitForGtag(triesLeft - 1); }, 250);
       })(40);
 
+      // Første eksponering vinner: en kunde som først så B og senere kommer
+      // til A-siden, beholder B på ordren.
       fetch('/cart.js', { credentials: 'same-origin' })
         .then(function (r) { return r.json(); })
         .then(function (cart) {
-          if (cart && cart.attributes && cart.attributes._ab_rf_variant === variant) return;
+          if (cart && cart.attributes && cart.attributes._ab_rf_variant) return;
           return fetch('/cart/update.js', {
             method: 'POST',
             credentials: 'same-origin',
