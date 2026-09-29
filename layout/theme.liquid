@@ -328,9 +328,9 @@
       side mot en tjeneste ingenting brukte.
     {%- endcomment -%}
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    {%- if template.name == 'product' -%}
+    {%- if template.name == 'product' -%}{%- unless template.suffix contains 'sk-lp' -%}
       <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    {%- endif -%}
+    {%- endunless -%}{%- endif -%}
 
     {%- comment -%}
       Preload av begge variable fonter. Tre preloads mot Adobes CDN er
@@ -429,11 +429,13 @@
       but executes before DOMContentLoaded so initHeroSwiper() finds it).
       CSS loaded normally (above-fold gallery — deferred CSS would cause CLS).
       All other carousels use CSS scroll-snap.
+      Ikke på sk-lp-produktmalen (B i A/B-testen): den har ingen Swiper-galleri,
+      og den eksterne CSS-en blokkerte første maling for ingenting.
     {%- endcomment -%}
-    {%- if template.name == 'product' -%}
+    {%- if template.name == 'product' -%}{%- unless template.suffix contains 'sk-lp' -%}
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
       <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
-    {%- endif -%}
+    {%- endunless -%}{%- endif -%}
 
     {%- if settings.favicon != blank -%}
       <link
@@ -1310,7 +1312,9 @@
       spesifisitet — derfor vinner denne filen uten !important, og derfor har
       endringer i Klaviyo-admin ingen effekt paa det som settes her.
     {%- endcomment -%}
-    {%- if request.page_type == 'product' -%}
+    {%- comment -%} Ikke på sk-lp-produktmalen (B): ingen Klaviyo-widget der. {%- endcomment -%}
+    {%- if request.page_type == 'product' and template.suffix contains 'sk-lp' -%}
+    {%- elsif request.page_type == 'product' -%}
       {{ 'klaviyo-reviews.css' | asset_url | stylesheet_tag }}
       {%- comment -%}
         Får #fulfilled-reviews-all til å treffe når man kommer fra
