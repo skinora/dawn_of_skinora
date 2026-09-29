@@ -17,6 +17,10 @@
   Skriptet må stå tidlig i <head>, før Shopifys web-pixels-manager (wpmLoader)
   kjører, ellers rekker den å sette inn pikselen først.
 
+  UPPROMOTE: med block_uppromote: true (sendes bare fra produktmalen
+  sk-lp-radiance, B i A/B-testen) stoppes også UpPromote-skriptet. B får bare
+  Google-trafikk; affiliate-lenker går til vanlige sider, som beholder det.
+
   SLIK SLÅR DU DET AV: fjern render-kallet i theme.liquid. Ingen andre filer
   vet om dette.
 
@@ -26,7 +30,7 @@
 {%- endcomment -%}
 <script>
   (function () {
-    var BLOCK = /connect\.facebook\.net|facebook\.com\/tr/i;
+    var BLOCK = {% if block_uppromote %}/connect\.facebook\.net|facebook\.com\/tr|uppromote/i{% else %}/connect\.facebook\.net|facebook\.com\/tr/i{% endif %};
 
     function isMetaScript(node) {
       return (

@@ -41,7 +41,10 @@
       A/B-testen), som får trafikk fra Google, ikke Meta.
     {%- endcomment -%}
     {%- if template.suffix contains 'sk-lp' -%}
-      {% render 'sk-block-meta-pixel' %}
+      {%- comment -%} UpPromote blokkeres bare på produkt-B, ikke på /pages-LP-ene (affiliate-lenker kan gå dit). {%- endcomment -%}
+      {%- assign sk_block_uppromote = false -%}
+      {%- if template.name == 'product' -%}{%- assign sk_block_uppromote = true -%}{%- endif -%}
+      {% render 'sk-block-meta-pixel', block_uppromote: sk_block_uppromote %}
     {%- endif -%}
 
     {%- if template.name == 'page' and template.suffix contains 'sk-lp' -%}
