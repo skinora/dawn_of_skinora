@@ -223,5 +223,43 @@
     log('set', k, '=', v);
   }
   Object.keys(tags).forEach(function (k) { claritySet(k, tags[k]); });
+
+  /* =========================================================================
+     SAMTYKKE → Clarity (consentv2)
+     Uten samtykkesignal behandler Clarity hver sidevisning som en ny,
+     cookieløs økt – øktene henger ikke sammen og trakten kan ikke måles.
+     Vi leser samtykket fra Shopifys Customer Privacy API (det samme som
+     banneret skriver til) og sender det videre. Endres valget senere
+     (visitorConsentCollected), sendes det på nytt.
+     Endrer ikke selve samtykkeoppsettet – speiler bare det Shopify sier.
+     ========================================================================= */
+  function sendClarityConsent() {
+    var cp = window.Shopify && window.Shopify.customerPrivacy;
+    if (!cp || typeof window.clarity !== 'function') return;
+    try {
+      var consent = {
+        ad_Storage: cp.marketingAllowed() ? 'granted' : 'denied',
+        analytics_Storage: cp.analyticsProcessingAllowed() ? 'granted' : 'denied'
+      };
+      window.clarity('consentv2', consent);
+      log('consentv2', consent);
+    } catch (e) {}
+  }
+
+  // Customer Privacy API lastes av content_for_header lenger ned i <head>,
+  // så vi venter til dokumentet er lest, og laster API-et om det mangler.
+  function initClarityConsent() {
+    var S = window.Shopify;
+    if (S && S.customerPrivacy) {
+      sendClarityConsent();
+    } else if (S && typeof S.loadFeatures === 'function') {
+      S.loadFeatures([{ name: 'consent-tracking-api', version: '0.1' }], function (err) {
+        if (!err) sendClarityConsent();
+      });
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initClarityConsent);
+  else initClarityConsent();
+  document.addEventListener('visitorConsentCollected', sendClarityConsent);
 })();
 </script>
