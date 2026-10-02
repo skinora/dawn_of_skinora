@@ -54,7 +54,7 @@
 
 <section
   id="{{ uid }}"
-  class="skinora-video-story{% if section.settings.video_position == 'right' %} skinora-video-story--media-right{% endif %}"
+  class="skinora-video-story{% if section.settings.video_position == 'right' %} skinora-video-story--media-right{% endif %}{% unless has_file or has_ext %} skinora-video-story--no-media{% endunless %}"
   style="--vs-bg: {{ section.settings.background_color }}; --vs-ratio: {{ ratio }}; --vs-ratio-num: {{ ratio_num }}; --vs-focus: {{ section.settings.video_focus }};"
   data-video-story
   aria-labelledby="{{ uid }}-heading"

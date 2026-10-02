@@ -216,4 +216,10 @@
   .skinora-video-story--media-right .skinora-video-story__media {
     order: 2;
   }
+
+  /* Ingen video valgt ennå: teksten skal ikke stå i en halv kolonne. */
+  .skinora-video-story--no-media .skinora-video-story__inner {
+    grid-template-columns: minmax(0, var(--lp-w-narrow));
+    justify-content: center;
+  }
 }
