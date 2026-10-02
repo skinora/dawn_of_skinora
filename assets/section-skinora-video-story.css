@@ -1,0 +1,219 @@
+/* =============================================================================
+   section-skinora-video-story.css
+   Video «slik brukes den» på produktsiden. Per-forekomst-verdier
+   (bakgrunn, format, utsnitt) kommer som custom properties på seksjonen,
+   så flere forekomster ikke kolliderer.
+   ============================================================================= */
+
+.skinora-video-story {
+  background: var(--vs-bg, var(--paper-0));
+  padding-block: var(--space-section-md);
+  color: var(--ink-700);
+}
+
+.skinora-video-story__inner {
+  max-width: var(--lp-w-wide);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+  display: grid;
+  gap: var(--space-6);
+}
+
+/* ---------- Video ---------- */
+.skinora-video-story__frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--vs-ratio, 4 / 5);
+  overflow: hidden;
+  border-radius: var(--media-radius, 0);
+  background: var(--paper-150);
+}
+
+.skinora-video-story__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+  object-position: var(--vs-focus, 50% 50%);
+  background-size: cover;
+  background-position: var(--vs-focus, 50% 50%);
+}
+
+.skinora-video-story__play,
+.skinora-video-story__sound {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  cursor: pointer;
+  color: var(--paper-0);
+  background: color-mix(in srgb, var(--ink-900) 72%, transparent);
+  transition: background-color 0.2s ease;
+}
+
+.skinora-video-story__play:hover,
+.skinora-video-story__sound:hover {
+  background: var(--ink-900);
+}
+
+.skinora-video-story__play:focus-visible,
+.skinora-video-story__sound:focus-visible {
+  outline: 2px solid var(--paper-0);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--ink-900);
+}
+
+.skinora-video-story__play {
+  top: 50%;
+  left: 50%;
+  width: var(--space-8);
+  height: var(--space-8);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.skinora-video-story__play[hidden] {
+  display: none;
+}
+
+.skinora-video-story__sound {
+  right: var(--space-3);
+  bottom: var(--space-3);
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: 999px;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-none);
+}
+
+.skinora-video-story__icon-sound,
+.skinora-video-story__sound[aria-pressed='true'] .skinora-video-story__icon-muted {
+  display: none;
+}
+
+.skinora-video-story__sound[aria-pressed='true'] .skinora-video-story__icon-sound {
+  display: block;
+}
+
+/* ---------- Tekst ---------- */
+.skinora-video-story__eyebrow {
+  margin: 0 0 var(--space-3);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--ink-500);
+}
+
+.skinora-video-story__heading {
+  margin: 0 0 var(--space-4);
+  font-family: var(--ff-serif);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+}
+
+.skinora-video-story__text {
+  max-width: var(--measure-intro);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--ink-700);
+}
+
+.skinora-video-story__text > * {
+  margin: 0 0 var(--space-4);
+}
+
+.skinora-video-story__steps {
+  list-style: none;
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.skinora-video-story__step {
+  display: grid;
+  grid-template-columns: var(--space-6) 1fr;
+  gap: var(--space-3);
+  align-items: start;
+}
+
+.skinora-video-story__step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-6);
+  height: var(--space-6);
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
+  font-family: var(--ff-serif);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-none);
+  color: var(--ink-900);
+}
+
+.skinora-video-story__step-title {
+  margin: var(--space-1) 0 0;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--ink-900);
+}
+
+.skinora-video-story__step-text {
+  margin: var(--space-1) 0 0;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+}
+
+.skinora-video-story__cta {
+  margin-top: var(--space-6);
+}
+
+.skinora-video-story__note {
+  margin: var(--space-3) 0 0;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+}
+
+/* ---------- Desktop: to kolonner ---------- */
+@media screen and (min-width: 750px) {
+  .skinora-video-story__inner {
+    padding-inline: var(--lp-gutter);
+    grid-template-columns: 45fr 55fr;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  /* En stående video i 45 % av 1200px blir høyere enn skjermen.
+     Kolonnen smalnes så rammen aldri passerer 80 % av viewport-høyden. */
+  .skinora-video-story__media {
+    width: 100%;
+    max-width: calc(80svh * var(--vs-ratio-num, 0.8));
+    justify-self: center;
+  }
+
+  .skinora-video-story--media-right .skinora-video-story__inner {
+    grid-template-columns: 55fr 45fr;
+  }
+
+  .skinora-video-story--media-right .skinora-video-story__media {
+    order: 2;
+  }
+}
