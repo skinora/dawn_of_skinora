@@ -116,53 +116,6 @@
       "name": "LP Trust Bar",
       "settings": {}
     },
-    "problem": {
-      "type": "sk-lp-problem",
-      "blocks": {
-        "p_1": {
-          "type": "item",
-          "settings": {
-            "text": "Du husker tannlegetimen til barna, men ikke når du sist gjorde noe for deg selv."
-          }
-        },
-        "p_2": {
-          "type": "item",
-          "settings": {
-            "text": "Hudpleien din er det du rekker på vei ut døra."
-          }
-        },
-        "p_3": {
-          "type": "item",
-          "settings": {
-            "text": "Kremene står i skapet. Du rekker bare ikke å bruke dem."
-          }
-        },
-        "p_4": {
-          "type": "item",
-          "settings": {
-            "text": "I november er huden like grå som været."
-          }
-        },
-        "p_5": {
-          "type": "item",
-          "settings": {
-            "text": "En klinikktime betyr parkering, venterom og en ettermiddag du ikke har."
-          }
-        }
-      },
-      "block_order": [
-        "p_1",
-        "p_2",
-        "p_3",
-        "p_4",
-        "p_5"
-      ],
-      "settings": {
-        "heading": "Du står sist på din egen liste.",
-        "intro": "Jobb, middag, lekser, foreldre som trenger hjelp. Når dagen endelig er over, er det ingenting igjen til deg. Og nå som mørket kommer, ser du det i speilet også.",
-        "image": "shopify://shop_images/kjenner-du-deg-igjen-i-dette.webp"
-      }
-    },
     "skinora_video_story_YqwUKa": {
       "type": "skinora-video-story",
       "blocks": {
@@ -196,6 +149,7 @@
       "name": "Video – slik brukes den",
       "settings": {
         "video": "shopify://files/videos/1003 (1).mp4",
+        "video_url": "",
         "video_label": "Skinora LED-masken i bruk hjemme",
         "aspect_ratio": "4-5",
         "video_focus": "50% 50%",
@@ -208,7 +162,8 @@
         "button_label": "Prøv hjemme i 30 dager",
         "button_link": "#product-form",
         "button_note": "Fornøyd, eller pengene tilbake.",
-        "background_color": "#FFFFFF"
+        "anchor_id": "se-videoen",
+        "background_color": "#ffffff"
       }
     },
     "clinic_proof": {
@@ -977,7 +932,6 @@
     "urgency",
     "hero",
     "sk_lp_trustbar_pnMnN8",
-    "problem",
     "skinora_video_story_YqwUKa",
     "clinic_proof",
     "reviews",
