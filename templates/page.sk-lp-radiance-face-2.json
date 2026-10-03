@@ -11,10 +11,24 @@
   "sections": {
     "announcement": {
       "type": "sk-lp-announcement",
+      "disabled": true,
       "settings": {
         "text": "GRATIS FRAKT I NORGE  |  30 DAGERS FORNØYDGARANTI"
-      },
-      "disabled": true
+      }
+    },
+    "urgency": {
+      "type": "sk-lp-urgency",
+      "settings": {
+        "enabled": true,
+        "product": "skinora-radiance-face",
+        "price_before": "[før-pris]",
+        "price_now": "[pris]",
+        "save_text": "Spar [spar]",
+        "deadline_iso": "",
+        "deadline_label": "Tilbudet slutter om",
+        "demand_text": "Stor pågang",
+        "aria_label": "Kampanje på Skinora Radiance Face"
+      }
     },
     "hero": {
       "type": "sk-lp-hero",
@@ -50,16 +64,19 @@
         "eyebrow": "Skinora Radiance Face",
         "title": "LED-masken du bruker i sofaen",
         "text_line_1": "Rødt og nær-infrarødt lys fra hver diode · 10 minutter om kvelden",
+        "rating_source": "store",
+        "rating_show_count": true,
+        "rating_anchor": "#reviews",
         "cta_text": "Legg i handlekurv",
         "cta_url": "/products/skinora-radiance-face",
         "price_display": "[pris]",
+        "price_before": "[før-pris]",
+        "save_text": "Spar [spar]",
         "klarna_text": "fra [klarna] kr/mnd med Klarna",
         "show_link": true,
         "link_text": "Se hvordan den brukes (60 sek) ↓",
         "link_url": "#slik-bruker-du",
-        "rating_show_count": true,
-        "price_before": "[før-pris]",
-        "save_text": "Spar [spar]"
+        "pills_desktop_only": true
       }
     },
     "sk_lp_trustbar_pnMnN8": {
@@ -146,47 +163,129 @@
         "image": "shopify://shop_images/kjenner-du-deg-igjen-i-dette.webp"
       }
     },
-    "lp_results_EBb64M": {
-      "type": "sk-lp-results-timeline",
+    "skinora_video_story_YqwUKa": {
+      "type": "skinora-video-story",
       "blocks": {
-        "c_1": {
-          "type": "comparison",
+        "step_B69GTH": {
+          "type": "step",
           "settings": {
-            "before_image": "shopify://shop_images/for_bruk_2.webp",
-            "after_image": "shopify://shop_images/etter_bruk.webp",
-            "before_label": "UKE 0",
-            "after_label": "UKE 8",
-            "before_alt": "Maria, 48 – før behandling med Skinora Radiance Face",
-            "after_alt": "Maria, 48 – etter 8 uker med Skinora Radiance Face",
-            "customer_name": "Maria, 48 – Oslo",
-            "concern_tag": "Fine linjer og trøtt hud",
-            "usage_tag": "10 min, 5x/uke · Etter 8 uker"
+            "title": "Rengjør huden",
+            "text": "Ren, tørr hud uten tunge produkter."
           }
         },
-        "c_2": {
-          "type": "comparison",
+        "step_YAhAYH": {
+          "type": "step",
           "settings": {
-            "before_image": "shopify://shop_images/morke_ringer_og_aldersflekker_for_bruk.png",
-            "after_image": "shopify://shop_images/reduserte_morke_ringer_og_aldersflekker_etter_bruk.png",
-            "before_label": "UKE 0",
-            "after_label": "UKE 8",
-            "before_alt": "Ingrid, 44 – før behandling med Skinora Radiance Face",
-            "after_alt": "Ingrid, 44 – etter 8 uker med Skinora Radiance Face",
-            "customer_name": "Ingrid, 44 – Bergen",
-            "concern_tag": "Aldersflekker, solskader og mørke ringer",
-            "usage_tag": "10 min, 4x/uke · Etter 8 uker"
+            "title": "Velg program",
+            "text": "Rødt og nær-infrarødt lys, ett trykk på fjernkontrollen."
+          }
+        },
+        "step_3cQ6Ka": {
+          "type": "step",
+          "settings": {
+            "title": "10 minutter",
+            "text": "Masken slår seg av automatisk."
           }
         }
       },
       "block_order": [
-        "c_1",
-        "c_2"
+        "step_B69GTH",
+        "step_YAhAYH",
+        "step_3cQ6Ka"
       ],
-      "name": "LP Results Timeline",
+      "name": "Video – slik brukes den",
       "settings": {
-        "heading": "Ti minutter om kvelden. Åtte uker.",
-        "intro": "Uke 2–4: de fleste merker mer glød. Uke 6–8: jevnere tone og mykere linjer. To som fant tiden:",
-        "disclaimer": "<p>Resultat varierer fra person til person. Vi lover ikke mirakler – vi lover en plan.</p>"
+        "video": "shopify://files/videos/1003 (1).mp4",
+        "video_label": "Skinora LED-masken i bruk hjemme",
+        "aspect_ratio": "4-5",
+        "video_focus": "50% 50%",
+        "video_position": "left",
+        "unmute_label": "Se med lyd",
+        "show_controls": false,
+        "eyebrow": "SLIK BRUKES DEN",
+        "heading": "10 minutter. Sofaen. Ferdig.",
+        "text": "<p>Ta på masken, velg program og len deg tilbake. Den slår seg av selv. Ingen gel, ingen oppvarming – bare en rolig pause i hverdagen.</p>",
+        "button_label": "Prøv hjemme i 30 dager",
+        "button_link": "#product-form",
+        "button_note": "Fornøyd, eller pengene tilbake.",
+        "background_color": "#FFFFFF"
+      }
+    },
+    "clinic_proof": {
+      "type": "sk-product-clinic-proof",
+      "blocks": {
+        "clinic_biQkwR": {
+          "type": "clinic",
+          "settings": {
+            "name": "Skedsmo Laserklinikk",
+            "logo_svg": "skedsmolaserklinikk",
+            "logo_transparent": true
+          }
+        },
+        "clinic_aMRTxM": {
+          "type": "clinic",
+          "settings": {
+            "name": "SkinLab Tromsø",
+            "logo_svg": "skinlabtromso",
+            "logo_transparent": true
+          }
+        },
+        "clinic_rAikxz": {
+          "type": "clinic",
+          "settings": {
+            "name": "Force of Beauty",
+            "logo_svg": "forceofbeauty",
+            "logo_transparent": true
+          }
+        },
+        "clinic_EJCCzD": {
+          "type": "clinic",
+          "settings": {
+            "name": "The Skin",
+            "logo_svg": "theskin",
+            "logo_transparent": true
+          }
+        },
+        "clinic_dmqjjX": {
+          "type": "clinic",
+          "settings": {
+            "name": "DermaFin",
+            "logo_svg": "dermafin",
+            "logo_transparent": true
+          }
+        }
+      },
+      "block_order": [
+        "clinic_biQkwR",
+        "clinic_aMRTxM",
+        "clinic_rAikxz",
+        "clinic_EJCCzD",
+        "clinic_dmqjjX"
+      ],
+      "name": "SK Klinikkbevis",
+      "settings": {
+        "background": "cool",
+        "eyebrow": "Anbefalt av fagfolk",
+        "heading": "Tre grunner til at hudklinikkene anbefaler den.",
+        "reason_1_title": "Du slipper å lure på om den virker",
+        "reason_1_text": "Lyset er sterkt nok til å gjøre jobben, hver gang.",
+        "reason_2_title": "Den føles god å ha på",
+        "reason_2_text": "Myk og lett, og den sitter tett. Behandlingen blir en stund for deg selv, ikke en plikt.",
+        "reason_3_title": "Du ser det selv i speilet",
+        "reason_3_text": "Med jevnlig bruk er det speilet ditt som overbeviser deg, ikke oss.",
+        "body": "<p>Den samme masken selges gjennom norske hudklinikker. Her får du den rett hjem, med 30 dagers åpent kjøp.</p>",
+        "image": "shopify://shop_images/Karoline-TheSkinMedispa_jpg.webp",
+        "image_alt": "The Skin hudklinikk  anbefaler Skinora LED masker",
+        "image_focus_y": 30,
+        "quote": "Vi har testet flere LED-masker. Skinora var den som ga best passform og effekt. Nå er det den vi anbefaler.",
+        "name": "Karoline Mørch Lilledrange",
+        "role": "Dermatologisk sykepleier",
+        "clinic": "The Skin",
+        "city": "",
+        "count_label": "klinikker i Norge",
+        "cities": "",
+        "logos_label": "Klinikker som selger Skinora",
+        "anchor_id": ""
       }
     },
     "reviews": {
@@ -287,12 +386,16 @@
       ],
       "settings": {
         "heading": "Fra kvinner som heller ikke trodde de hadde tid.",
+        "show_score": true,
+        "rating_source": "store",
         "reviews_visible_count": 6,
         "show_more_text": "Vis flere anmeldelser",
         "show_less_text": "Vis færre",
         "before_after_disclaimer": "<p>Bilder fra ekte verifiserte kunder, brukt med tillatelse. Ikke retusjert. Resultater kan variere fra person til person og avhenger av jevn bruk over 6–8 uker.</p>",
         "enable_trustpilot_embed": false,
         "trustpilot_business_unit_id": "",
+        "all_reviews_url": "",
+        "all_reviews_text": "Les alle anmeldelser →",
         "product_url": "/products/skinora-radiance-face",
         "midpage_cta_text": "Sett deg selv på listen",
         "midpage_klarna_text": "Fra [klarna] kr/mnd med Klarna"
@@ -354,7 +457,75 @@
       ],
       "settings": {
         "heading": "Ti minutter i kveld er dine.",
-        "intro": "Ingen trenger noe fra deg mens masken er på."
+        "intro": "Ingen trenger noe fra deg mens masken er på.",
+        "text_tone": "onlight",
+        "scrim_strength": 45
+      }
+    },
+    "honest_filter": {
+      "type": "sk-lp-honest-filter",
+      "blocks": {
+        "hf_1": {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du forventer samme resultat som med sprøyter eller laser.",
+            "explanation": "LED er skånsomt og virker gradvis. Det fyller ikke ut. Vil du se endring over natten, er dette ikke riktig for deg."
+          }
+        },
+        "hf_2": {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du er gravid eller bruker lysømfintlige medisiner.",
+            "explanation": "Da vil vi at du snakker med legen din først. Vi velger føre-var."
+          }
+        },
+        "hf_3": {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du forventer å se forskjell etter én uke.",
+            "explanation": "Huden fornyer seg i sykluser. Regn med 6–8 uker før du ser det tydelig i speilet."
+          }
+        },
+        "hf_4": {
+          "type": "filter_item",
+          "settings": {
+            "lead": "Du har ikke ti minutter, tre–fem kvelder i uken.",
+            "explanation": "Jevn bruk er hele forskjellen. Brukt av og til gjør den lite."
+          }
+        }
+      },
+      "block_order": [
+        "hf_1",
+        "hf_2",
+        "hf_3",
+        "hf_4"
+      ],
+      "name": "LP Honest Filter",
+      "settings": {
+        "eyebrow": "ÆRLIG SNAKK",
+        "heading": "Radiance Face er ikke for alle.",
+        "intro": "<p>Vi vil heller miste et salg enn å selge deg noe som ikke passer. Kjenner du deg igjen i punktene under, er dette ikke riktig for deg, og det er helt greit.</p>",
+        "closing": "<h3>Kjente du deg ikke igjen i noen av dem? Da er du akkurat den vi laget den for.</h3><p>Du har 30 dager på å se det selv.</p>",
+        "cta_label": "PRØV RISIKOFRITT I 30 DAGER →",
+        "cta_url": "#kjop",
+        "accent": "#e63946",
+        "background": "#faf7f2"
+      }
+    },
+    "clinic_comparison": {
+      "type": "skinora-clinic-comparison",
+      "name": "Klinikksammenligning",
+      "settings": {
+        "background_style": "soft",
+        "number": "",
+        "unit": "kr",
+        "once_label": "Én gang",
+        "lead": "En LED-behandling på klinikk koster gjerne 800–1 500 kr per gang. Pluss en ettermiddag.",
+        "kicker": "Radiance Face koster som noen få økter, og så er den din. Du bruker den i din egen sofa, når det passer deg.",
+        "show_cta": true,
+        "cta_label": "Prøv risikofritt i 30 dager",
+        "cta_link": "/products/skinora-radiance-face",
+        "guarantee_line": "30 dagers åpent kjøp."
       }
     },
     "how_to_use": {
@@ -535,46 +706,6 @@
         "product_link_url": "https://www.skinora.no/products/skinora-radiance-face"
       }
     },
-    "trust_full": {
-      "type": "sk-lp-trust-full",
-      "blocks": {
-        "tf_3": {
-          "type": "card",
-          "settings": {
-            "title": "Norsk kundeservice",
-            "text": "<p>Har du spørsmål? <a href=\"/pages/kundeservice\" title=\"Kundeservice\">Ta kontakt</a> — vi svarer raskt.</p>",
-            "show_free_return_shipping": false,
-            "free_return_shipping_text": "Vi betaler returfrakten"
-          }
-        },
-        "tf_4": {
-          "type": "card",
-          "settings": {
-            "title": "Sikker betaling",
-            "text": "<p>Vipps, Klarna, Visa og Mastercard.</p>",
-            "show_free_return_shipping": false,
-            "free_return_shipping_text": "Vi betaler returfrakten"
-          }
-        },
-        "tf_5": {
-          "type": "card",
-          "settings": {
-            "title": "2 års reklamasjonsrett",
-            "text": "<p>Full reklamasjonsrett i henhold til norsk lov.</p>",
-            "show_free_return_shipping": false,
-            "free_return_shipping_text": "Vi betaler returfrakten"
-          }
-        }
-      },
-      "block_order": [
-        "tf_3",
-        "tf_4",
-        "tf_5"
-      ],
-      "settings": {
-        "heading": "Du er alltid ivaretatt"
-      }
-    },
     "documentation": {
       "type": "sk-lp-documentation",
       "blocks": {
@@ -616,6 +747,46 @@
       "settings": {
         "heading": "Trygg teknologi – grundig testet",
         "intro": "LED-lysbehandling er brukt av hudklinikker verden over. Her er det du trenger å vite."
+      }
+    },
+    "trust_full": {
+      "type": "sk-lp-trust-full",
+      "blocks": {
+        "tf_3": {
+          "type": "card",
+          "settings": {
+            "title": "Norsk kundeservice",
+            "text": "<p>Har du spørsmål? <a href=\"/pages/kundeservice\" title=\"Kundeservice\">Ta kontakt</a> — vi svarer raskt.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
+          }
+        },
+        "tf_4": {
+          "type": "card",
+          "settings": {
+            "title": "Sikker betaling",
+            "text": "<p>Vipps, Klarna, Visa og Mastercard.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
+          }
+        },
+        "tf_5": {
+          "type": "card",
+          "settings": {
+            "title": "2 års reklamasjonsrett",
+            "text": "<p>Full reklamasjonsrett i henhold til norsk lov.</p>",
+            "show_free_return_shipping": false,
+            "free_return_shipping_text": "Vi betaler returfrakten"
+          }
+        }
+      },
+      "block_order": [
+        "tf_3",
+        "tf_4",
+        "tf_5"
+      ],
+      "settings": {
+        "heading": "Du er alltid ivaretatt"
       }
     },
     "faq": {
@@ -737,6 +908,7 @@
         "g_3"
       ],
       "settings": {
+        "eyebrow": "Din tur",
         "heading": "Sett deg selv på listen.",
         "text": "Ti minutter om kvelden, hele vinteren. Gi det 30 dager. Ser du ikke forskjellen, sender du den tilbake.",
         "price_before": "[før-pris]",
@@ -745,8 +917,7 @@
         "button_text": "Start mine 30 dager",
         "product_url": "/products/skinora-radiance-face",
         "anchor_id": "kjop",
-        "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra [klarna] kr/mnd med Klarna</strong>",
-        "eyebrow": "Din tur"
+        "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra [klarna] kr/mnd med Klarna</strong>"
       }
     },
     "sk_lp_cross_sell_N8N6MW": {
@@ -799,163 +970,6 @@
         "trigger_selector": ".lp-hero__actions",
         "hide_selector": ".lp-cta-final"
       }
-    },
-    "urgency": {
-      "type": "sk-lp-urgency",
-      "settings": {
-        "enabled": true,
-        "price_before": "[før-pris]",
-        "price_now": "[pris]",
-        "save_text": "Spar [spar]",
-        "deadline_iso": "",
-        "deadline_label": "Tilbudet slutter om",
-        "demand_text": "Stor pågang",
-        "aria_label": "Kampanje på Skinora Radiance Face",
-        "product": "skinora-radiance-face"
-      }
-    },
-    "honest_filter": {
-      "type": "sk-lp-honest-filter",
-      "blocks": {
-        "hf_1": {
-          "type": "filter_item",
-          "settings": {
-            "lead": "Du forventer samme resultat som med sprøyter eller laser.",
-            "explanation": "LED er skånsomt og virker gradvis. Det fyller ikke ut. Vil du se endring over natten, er dette ikke riktig for deg."
-          }
-        },
-        "hf_2": {
-          "type": "filter_item",
-          "settings": {
-            "lead": "Du er gravid eller bruker lysømfintlige medisiner.",
-            "explanation": "Da vil vi at du snakker med legen din først. Vi velger føre-var."
-          }
-        },
-        "hf_3": {
-          "type": "filter_item",
-          "settings": {
-            "lead": "Du forventer å se forskjell etter én uke.",
-            "explanation": "Huden fornyer seg i sykluser. Regn med 6–8 uker før du ser det tydelig i speilet."
-          }
-        },
-        "hf_4": {
-          "type": "filter_item",
-          "settings": {
-            "lead": "Du har ikke ti minutter, tre–fem kvelder i uken.",
-            "explanation": "Jevn bruk er hele forskjellen. Brukt av og til gjør den lite."
-          }
-        }
-      },
-      "block_order": [
-        "hf_1",
-        "hf_2",
-        "hf_3",
-        "hf_4"
-      ],
-      "name": "LP Honest Filter",
-      "settings": {
-        "eyebrow": "ÆRLIG SNAKK",
-        "heading": "Radiance Face er ikke for alle.",
-        "intro": "<p>Vi vil heller miste et salg enn å selge deg noe som ikke passer. Kjenner du deg igjen i punktene under, er dette ikke riktig for deg, og det er helt greit.</p>",
-        "closing": "<h3>Kjente du deg ikke igjen i noen av dem? Da er du akkurat den vi laget den for.</h3><p>Du har 30 dager på å se det selv.</p>",
-        "cta_label": "PRØV RISIKOFRITT I 30 DAGER →",
-        "cta_url": "#kjop",
-        "accent": "#e63946",
-        "background": "#faf7f2"
-      }
-    },
-    "clinic_comparison": {
-      "type": "skinora-clinic-comparison",
-      "name": "Klinikksammenligning",
-      "settings": {
-        "background_style": "soft",
-        "number": "",
-        "unit": "kr",
-        "once_label": "Én gang",
-        "lead": "En LED-behandling på klinikk koster gjerne 800–1 500 kr per gang. Pluss en ettermiddag.",
-        "kicker": "Radiance Face koster som noen få økter, og så er den din. Du bruker den i din egen sofa, når det passer deg.",
-        "show_cta": true,
-        "cta_label": "Prøv risikofritt i 30 dager",
-        "cta_link": "/products/skinora-radiance-face",
-        "guarantee_line": "30 dagers åpent kjøp."
-      }
-    },
-    "clinic_proof": {
-      "type": "sk-product-clinic-proof",
-      "blocks": {
-        "clinic_biQkwR": {
-          "type": "clinic",
-          "settings": {
-            "name": "Skedsmo Laserklinikk",
-            "logo_svg": "skedsmolaserklinikk",
-            "logo_transparent": true
-          }
-        },
-        "clinic_aMRTxM": {
-          "type": "clinic",
-          "settings": {
-            "name": "SkinLab Tromsø",
-            "logo_svg": "skinlabtromso",
-            "logo_transparent": true
-          }
-        },
-        "clinic_rAikxz": {
-          "type": "clinic",
-          "settings": {
-            "name": "Force of Beauty",
-            "logo_svg": "forceofbeauty",
-            "logo_transparent": true
-          }
-        },
-        "clinic_EJCCzD": {
-          "type": "clinic",
-          "settings": {
-            "name": "The Skin",
-            "logo_svg": "theskin",
-            "logo_transparent": true
-          }
-        },
-        "clinic_dmqjjX": {
-          "type": "clinic",
-          "settings": {
-            "name": "DermaFin",
-            "logo_svg": "dermafin",
-            "logo_transparent": true
-          }
-        }
-      },
-      "block_order": [
-        "clinic_biQkwR",
-        "clinic_aMRTxM",
-        "clinic_rAikxz",
-        "clinic_EJCCzD",
-        "clinic_dmqjjX"
-      ],
-      "name": "SK Klinikkbevis",
-      "settings": {
-        "background": "cool",
-        "eyebrow": "Anbefalt av fagfolk",
-        "heading": "Tre grunner til at hudklinikkene anbefaler den.",
-        "reason_1_title": "Du slipper å lure på om den virker",
-        "reason_1_text": "Lyset er sterkt nok til å gjøre jobben, hver gang.",
-        "reason_2_title": "Den føles god å ha på",
-        "reason_2_text": "Myk og lett, og den sitter tett. Behandlingen blir en stund for deg selv, ikke en plikt.",
-        "reason_3_title": "Du ser det selv i speilet",
-        "reason_3_text": "Med jevnlig bruk er det speilet ditt som overbeviser deg, ikke oss.",
-        "body": "<p>Den samme masken selges gjennom norske hudklinikker. Her får du den rett hjem, med 30 dagers åpent kjøp.</p>",
-        "image": "shopify://shop_images/Karoline-TheSkinMedispa_jpg.webp",
-        "image_alt": "The Skin hudklinikk  anbefaler Skinora LED masker",
-        "image_focus_y": 30,
-        "quote": "Vi har testet flere LED-masker. Skinora var den som ga best passform og effekt. Nå er det den vi anbefaler.",
-        "name": "Karoline Mørch Lilledrange",
-        "role": "Dermatologisk sykepleier",
-        "clinic": "The Skin",
-        "city": "",
-        "count_label": "klinikker i Norge",
-        "cities": "",
-        "logos_label": "Klinikker som selger Skinora",
-        "anchor_id": ""
-      }
     }
   },
   "order": [
@@ -964,7 +978,7 @@
     "hero",
     "sk_lp_trustbar_pnMnN8",
     "problem",
-    "lp_results_EBb64M",
+    "skinora_video_story_YqwUKa",
     "clinic_proof",
     "reviews",
     "why_choose",
