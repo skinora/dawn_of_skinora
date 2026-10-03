@@ -356,6 +356,22 @@
         "midpage_klarna_text": "Fra [klarna] kr/mnd med Klarna"
       }
     },
+    "clinic_comparison": {
+      "type": "skinora-clinic-comparison",
+      "name": "Klinikksammenligning",
+      "settings": {
+        "background_style": "soft",
+        "number": "",
+        "unit": "kr",
+        "once_label": "Én gang",
+        "lead": "En LED-behandling på klinikk koster gjerne 800–1 500 kr per gang. Pluss en ettermiddag.",
+        "kicker": "Radiance Face koster som noen få økter, og så er den din. Du bruker den i din egen sofa, når det passer deg.",
+        "show_cta": true,
+        "cta_label": "Prøv risikofritt i 30 dager",
+        "cta_link": "/products/skinora-radiance-face",
+        "guarantee_line": "30 dagers åpent kjøp."
+      }
+    },
     "why_choose": {
       "type": "sk-lp-why-choose",
       "blocks": {
@@ -380,25 +396,11 @@
             "text": "<p>Ti minutter med varmt, rødt lys hver kveld, hele vinteren gjennom.</p>"
           }
         },
-        "w_2": {
-          "type": "card",
-          "settings": {
-            "title": "Du kjenner deg igjen i speilet",
-            "text": "<p>Ikke yngre. Bare deg, i bedre form.</p>"
-          }
-        },
         "w_3": {
           "type": "card",
           "settings": {
             "title": "Noen spør hva du har gjort",
             "text": "<p>Og du kan svare ærlig: ti minutter om kvelden.</p>"
-          }
-        },
-        "card_BxaxB7": {
-          "type": "card",
-          "settings": {
-            "title": "Ingen dårlig samvittighet",
-            "text": "<p>Betalt én gang. Ingen abonnement, ingen ekstra kostnad per behandling.</p>"
           }
         }
       },
@@ -406,9 +408,7 @@
         "w_1",
         "card_ttFjc6",
         "card_xRCVi8",
-        "w_2",
-        "w_3",
-        "card_BxaxB7"
+        "w_3"
       ],
       "settings": {
         "heading": "Ti minutter i kveld er dine.",
@@ -465,78 +465,6 @@
         "cta_url": "#kjop",
         "accent": "#e63946",
         "background": "#faf7f2"
-      }
-    },
-    "clinic_comparison": {
-      "type": "skinora-clinic-comparison",
-      "name": "Klinikksammenligning",
-      "settings": {
-        "background_style": "soft",
-        "number": "",
-        "unit": "kr",
-        "once_label": "Én gang",
-        "lead": "En LED-behandling på klinikk koster gjerne 800–1 500 kr per gang. Pluss en ettermiddag.",
-        "kicker": "Radiance Face koster som noen få økter, og så er den din. Du bruker den i din egen sofa, når det passer deg.",
-        "show_cta": true,
-        "cta_label": "Prøv risikofritt i 30 dager",
-        "cta_link": "/products/skinora-radiance-face",
-        "guarantee_line": "30 dagers åpent kjøp."
-      }
-    },
-    "how_to_use": {
-      "type": "sk-lp-how-to-use",
-      "blocks": {
-        "s_1": {
-          "type": "step",
-          "settings": {
-            "title": "Rens huden",
-            "text": "Fjern sminke og smuss. Tørk forsiktig."
-          }
-        },
-        "s_2": {
-          "type": "step",
-          "settings": {
-            "title": "Bruk masken i 10 minutter",
-            "text": "Sett på, slå på. Slapp av mens lyset jobber."
-          }
-        },
-        "s_3": {
-          "type": "step",
-          "settings": {
-            "title": "Avslutt med fukt eller serum",
-            "text": "Bruk kremen eller serumet du liker best."
-          }
-        },
-        "t_1": {
-          "type": "tip",
-          "settings": {
-            "text": "Fungerer morgen eller kveld"
-          }
-        },
-        "t_2": {
-          "type": "tip",
-          "settings": {
-            "text": "Kan brukes foran TV eller i senga"
-          }
-        },
-        "t_3": {
-          "type": "tip",
-          "settings": {
-            "text": "Anbefalt frekvens: 3–5 ganger i uken"
-          }
-        }
-      },
-      "block_order": [
-        "s_1",
-        "s_2",
-        "s_3",
-        "t_1",
-        "t_2",
-        "t_3"
-      ],
-      "settings": {
-        "heading": "Tre steg. Ti minutter.",
-        "anchor_id": "slik-bruker-du"
       }
     },
     "tech_specs": {
@@ -935,10 +863,9 @@
     "skinora_video_story_YqwUKa",
     "clinic_proof",
     "reviews",
+    "clinic_comparison",
     "why_choose",
     "honest_filter",
-    "clinic_comparison",
-    "how_to_use",
     "tech_specs",
     "whats_in_box",
     "documentation",
