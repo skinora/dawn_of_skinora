@@ -100,7 +100,20 @@
 
     var unmuteBtn = root.querySelector('[data-vs-unmute]');
 
+    var soundStarted = false;
+
     function setSound(on) {
+      // Første gang lyden slås på – uansett knapp – starter videoen fra
+      // begynnelsen, så man ikke hører den midt i en setning.
+      if (on && !soundStarted) {
+        soundStarted = true;
+        load();
+        try {
+          video.currentTime = 0;
+        } catch (err) {
+          /* metadata ikke lastet ennå – starter uansett fra 0 */
+        }
+      }
       video.muted = !on;
       if (soundBtn) {
         var text = on ? 'Slå av lyd' : 'Slå på lyd';
@@ -126,12 +139,6 @@
 
     if (unmuteBtn) {
       unmuteBtn.addEventListener('click', function () {
-        load();
-        try {
-          video.currentTime = 0;
-        } catch (err) {
-          /* metadata ikke lastet ennå – starter uansett fra 0 */
-        }
         setSound(true);
       });
     }
