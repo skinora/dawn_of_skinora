@@ -79,6 +79,75 @@
   display: none;
 }
 
+/* Stor ▶ «Se med lyd» midt på den dempede videoen. Selve knappen er
+   gjennomsiktig og dekker hele rammen, så hele videoen er trykkflate;
+   den synlige sirkelen er ikonet. */
+.skinora-video-story__unmute {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  color: var(--paper-0);
+}
+
+.skinora-video-story__unmute[hidden] {
+  display: none;
+}
+
+.skinora-video-story__unmute-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-8);
+  height: var(--space-8);
+  padding-left: var(--space-1); /* optisk midtstilling av trekanten */
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink-900) 72%, transparent);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.skinora-video-story__unmute-label {
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink-900) 72%, transparent);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-relaxed);
+}
+
+.skinora-video-story__unmute:hover .skinora-video-story__unmute-icon {
+  background: var(--ink-900);
+  transform: scale(1.05);
+}
+
+.skinora-video-story__unmute:focus-visible {
+  outline: none;
+}
+
+.skinora-video-story__unmute:focus-visible .skinora-video-story__unmute-icon {
+  outline: 2px solid var(--paper-0);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--ink-900);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skinora-video-story__unmute-icon {
+    transition: none;
+  }
+
+  .skinora-video-story__unmute:hover .skinora-video-story__unmute-icon {
+    transform: none;
+  }
+}
+
 .skinora-video-story__sound {
   right: var(--space-3);
   bottom: var(--space-3);

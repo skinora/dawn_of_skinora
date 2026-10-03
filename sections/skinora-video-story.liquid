@@ -108,17 +108,36 @@
             ></iframe>
           {%- endif -%}
 
-          <button
-            type="button"
-            class="skinora-video-story__play"
-            aria-label="Spill av video"
-            data-vs-play
-            hidden
-          >
-            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
-              <path d="M8 5v14l11-7z" fill="currentColor"/>
-            </svg>
-          </button>
+          {%- if has_file and section.settings.show_controls == false -%}
+            {%- comment -%}
+              Stor ▶ over den dempede videoen: trykk = lyd på og start fra
+              begynnelsen. Ved reduced motion står videoen stille bak den.
+            {%- endcomment -%}
+            <button
+              type="button"
+              class="skinora-video-story__unmute"
+              data-vs-unmute
+            >
+              <span class="skinora-video-story__unmute-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="28" height="28" focusable="false">
+                  <path d="M8 5v14l11-7z" fill="currentColor"/>
+                </svg>
+              </span>
+              <span class="skinora-video-story__unmute-label">{{ section.settings.unmute_label | default: 'Se med lyd' | escape }}</span>
+            </button>
+          {%- else -%}
+            <button
+              type="button"
+              class="skinora-video-story__play"
+              aria-label="Spill av video"
+              data-vs-play
+              hidden
+            >
+              <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+                <path d="M8 5v14l11-7z" fill="currentColor"/>
+              </svg>
+            </button>
+          {%- endif -%}
 
           {%- unless section.settings.show_controls -%}
             <button
@@ -261,6 +280,13 @@
         { "value": "right", "label": "Høyre" }
       ],
       "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "unmute_label",
+      "label": "Tekst på den store ▶-knappen",
+      "default": "Se med lyd",
+      "info": "Trykk starter videoen fra begynnelsen med lyd."
     },
     {
       "type": "checkbox",

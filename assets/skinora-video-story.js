@@ -98,20 +98,41 @@
       });
     }
 
-    if (soundBtn) {
-      soundBtn.addEventListener('click', function () {
-        video.muted = !video.muted;
-        var on = !video.muted;
+    var unmuteBtn = root.querySelector('[data-vs-unmute]');
+
+    function setSound(on) {
+      video.muted = !on;
+      if (soundBtn) {
         var text = on ? 'Slå av lyd' : 'Slå på lyd';
         soundBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
         soundBtn.setAttribute('aria-label', text);
         if (soundLabel) soundLabel.textContent = text;
-        if (on && video.paused) {
-          userStarted = true;
-          userPaused = false;
-          load();
-          video.play();
+      }
+      // Den store ▶ har gjort jobben sin når lyden først er på.
+      if (on && unmuteBtn) unmuteBtn.hidden = true;
+      if (on && video.paused) {
+        userStarted = true;
+        userPaused = false;
+        load();
+        video.play();
+      }
+    }
+
+    if (soundBtn) {
+      soundBtn.addEventListener('click', function () {
+        setSound(video.muted);
+      });
+    }
+
+    if (unmuteBtn) {
+      unmuteBtn.addEventListener('click', function () {
+        load();
+        try {
+          video.currentTime = 0;
+        } catch (err) {
+          /* metadata ikke lastet ennå – starter uansett fra 0 */
         }
+        setSound(true);
       });
     }
 
