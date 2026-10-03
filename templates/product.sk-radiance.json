@@ -20,6 +20,53 @@
         "honesty_body": "<p>Ingen rabattkupp. Ingen falske «før»-priser.</p>"
       }
     },
+    "skinora_video_story_FYFKhN": {
+      "type": "skinora-video-story",
+      "blocks": {
+        "step_c8ydfj": {
+          "type": "step",
+          "settings": {
+            "title": "Rengjør huden",
+            "text": "Ren, tørr hud uten tunge produkter."
+          }
+        },
+        "step_YcBHzz": {
+          "type": "step",
+          "settings": {
+            "title": "Velg program",
+            "text": "Rødt og nær-infrarødt lys, ett trykk på fjernkontrollen."
+          }
+        },
+        "step_jpiYgV": {
+          "type": "step",
+          "settings": {
+            "title": "10 minutter",
+            "text": "Masken slår seg av automatisk."
+          }
+        }
+      },
+      "block_order": [
+        "step_c8ydfj",
+        "step_YcBHzz",
+        "step_jpiYgV"
+      ],
+      "name": "Video – slik brukes den",
+      "settings": {
+        "video": "shopify://files/videos/1003 (1).mp4",
+        "video_label": "Skinora LED-masken i bruk hjemme",
+        "aspect_ratio": "4-5",
+        "video_focus": "50% 50%",
+        "video_position": "left",
+        "show_controls": false,
+        "eyebrow": "SLIK BRUKES DEN",
+        "heading": "10 minutter. Sofaen. Ferdig.",
+        "text": "<p>Ta på masken, velg program og len deg tilbake. Den slår seg av selv. Ingen gel, ingen oppvarming – bare en rolig pause i hverdagen.</p>",
+        "button_label": "Prøv hjemme i 30 dager",
+        "button_link": "#product-form",
+        "button_note": "Fornøyd, eller pengene tilbake.",
+        "background_color": "#FFFFFF"
+      }
+    },
     "sk_product_promotion_logos_r9MTbH": {
       "type": "sk-product-promotion-logos",
       "name": "SK Product Promotion Logos",
@@ -190,6 +237,7 @@
   },
   "order": [
     "main",
+    "skinora_video_story_FYFKhN",
     "sk_product_promotion_logos_r9MTbH",
     "sk_product_clinic_proof_zqhBML",
     "sk_led_light_work_mDz86m",
