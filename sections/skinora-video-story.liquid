@@ -53,7 +53,7 @@
 -%}
 
 <section
-  id="{{ uid }}"
+  id="{{ section.settings.anchor_id | default: uid | handleize }}"
   class="skinora-video-story{% if section.settings.video_position == 'right' %} skinora-video-story--media-right{% endif %}{% unless has_file or has_ext %} skinora-video-story--no-media{% endunless %}"
   style="--vs-bg: {{ section.settings.background_color }}; --vs-ratio: {{ ratio }}; --vs-ratio-num: {{ ratio_num }}; --vs-focus: {{ section.settings.video_focus }};"
   data-video-story
@@ -338,6 +338,13 @@
       "id": "button_note",
       "label": "Liten tekst under knappen",
       "default": "Fornøyd, eller pengene tilbake."
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anker-id",
+      "default": "se-videoen",
+      "info": "Lenk hit med #se-videoen, f.eks. fra heroens «Se hvordan den brukes». Må være unik på siden."
     },
     {
       "type": "header",
