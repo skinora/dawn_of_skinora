@@ -24,9 +24,31 @@
     );
   }
 
+  // GA4-hendelser via sidens egen gtag (lastes av Google & YouTube-appen – vi
+  // venter på den, definerer den aldri). Navnene er registrert i GA4; ikke
+  // endre dem uten å oppdatere de egendefinerte dimensjonene der.
+  function track(root, name, params) {
+    var payload = params || {};
+    payload.video_placement = root.getAttribute('data-vs-placement') || 'pdp';
+    (function waitForGtag(triesLeft) {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', name, payload);
+        return;
+      }
+      if (triesLeft > 0) setTimeout(function () { waitForGtag(triesLeft - 1); }, 250);
+    })(20);
+  }
+
   function initCta(root) {
     var cta = root.querySelector('[data-vs-cta]');
     if (!cta) return;
+    cta.addEventListener('click', function () {
+      var video = root.querySelector('[data-vs-video]');
+      track(root, 'video_story_cta_click', {
+        cta_position: 'below',
+        with_sound: video && !video.muted ? 'true' : 'false'
+      });
+    });
     var href = cta.getAttribute('href') || '';
     if (href.charAt(0) !== '#') return;
     cta.addEventListener('click', function (e) {
@@ -107,6 +129,7 @@
       // begynnelsen, så man ikke hører den midt i en setning.
       if (on && !soundStarted) {
         soundStarted = true;
+        track(root, 'video_story_unmute', { with_sound: 'true' });
         load();
         try {
           video.currentTime = 0;
@@ -142,6 +165,18 @@
         setSound(true);
       });
     }
+
+    // Videoen går i løkke, så «ended» utløses aldri. Sett ferdig = spilt til
+    // siste halve sekund. Sendes én gang dempet og én gang med lyd per sidevisning,
+    // slik at with_sound skiller den dempede løkken fra en reell visning.
+    var completed = { 'true': false, 'false': false };
+    video.addEventListener('timeupdate', function () {
+      if (!video.duration || video.currentTime < video.duration - 0.5) return;
+      var withSound = video.muted ? 'false' : 'true';
+      if (completed[withSound]) return;
+      completed[withSound] = true;
+      track(root, 'video_story_complete', { with_sound: withSound });
+    });
 
     var preloadObs = new IntersectionObserver(
       function (entries) {
@@ -222,6 +257,10 @@
     if (soundBtn) {
       soundBtn.addEventListener('click', function () {
         muted = !muted;
+        if (!muted && !root.dataset.vsUnmuteTracked) {
+          root.dataset.vsUnmuteTracked = 'true';
+          track(root, 'video_story_unmute', { with_sound: 'true' });
+        }
         send(muted ? 'mute' : 'unMute');
         var text = muted ? 'Slå på lyd' : 'Slå av lyd';
         soundBtn.setAttribute('aria-pressed', muted ? 'false' : 'true');
