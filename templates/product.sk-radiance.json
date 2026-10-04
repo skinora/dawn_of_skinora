@@ -64,6 +64,7 @@
         "button_label": "Prøv hjemme i 30 dager",
         "button_link": "#product-form",
         "button_note": "Fornøyd, eller pengene tilbake.",
+        "hide_on_handles": "skinora-clear",
         "background_color": "#FFFFFF"
       }
     },

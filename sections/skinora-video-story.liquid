@@ -12,8 +12,23 @@
   Ingen autoplay-attributt i markupen med vilje: attributtet starter videoen
   før den er synlig og overstyrer reduced-motion. Skriptet kaller play() når
   videoen kommer inn i bildet – samme effekt for alle andre.
+
+  Malen product.sk-radiance deles av flere produkter. «Skjul på disse
+  produktene» lar seksjonen stå i malen uten å vises der videoen ikke passer
+  (f.eks. Radiance Face-videoen på Skinora Clear). Da rendres ingenting.
 {%- endcomment -%}
 
+{%- liquid
+  assign hide_section = false
+  if product and section.settings.hide_on_handles != blank
+    assign hidden_handles = section.settings.hide_on_handles | remove: ' ' | split: ','
+    if hidden_handles contains product.handle
+      assign hide_section = true
+    endif
+  endif
+-%}
+
+{%- unless hide_section -%}
 {{ 'section-skinora-video-story.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
@@ -207,6 +222,7 @@
 </section>
 
 <script src="{{ 'skinora-video-story.js' | asset_url }}" defer="defer"></script>
+{%- endunless -%}
 
 {% schema %}
 {
@@ -345,6 +361,16 @@
       "label": "Anker-id",
       "default": "se-videoen",
       "info": "Lenk hit med #se-videoen, f.eks. fra heroens «Se hvordan den brukes». Må være unik på siden."
+    },
+    {
+      "type": "header",
+      "content": "Synlighet"
+    },
+    {
+      "type": "text",
+      "id": "hide_on_handles",
+      "label": "Skjul på disse produktene",
+      "info": "Produkt-handles adskilt med komma, f.eks. skinora-clear. Tomt = vises på alle produkter som bruker malen."
     },
     {
       "type": "header",
