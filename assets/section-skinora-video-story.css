@@ -170,6 +170,58 @@
   display: block;
 }
 
+/* ---------- Sluttkort (etter at videoen er sett ferdig med lyd) ---------- */
+.skinora-video-story__endcard {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background: color-mix(in srgb, var(--ink-900) 62%, transparent);
+  text-align: center;
+}
+
+.skinora-video-story__endcard[hidden] {
+  display: none;
+}
+
+/* Primærknappen er mørk; på det mørke sløret brukes hover-utseendet som hvile. */
+.skinora-video-story__endcard .sk-btn--primary {
+  border-color: var(--paper-0);
+  background-color: var(--paper-0);
+  color: var(--ink-900);
+}
+
+.skinora-video-story__endcard .sk-btn--primary:hover {
+  border-color: var(--paper-0);
+  background-color: var(--ink-900);
+  color: var(--paper-0);
+}
+
+.skinora-video-story__replay {
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  background: transparent;
+  color: var(--paper-0);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-relaxed);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.skinora-video-story__endcard .sk-btn--primary:focus-visible,
+.skinora-video-story__replay:focus-visible {
+  outline: 2px solid var(--paper-0);
+  outline-offset: 2px;
+}
+
 /* ---------- Tekst ---------- */
 .skinora-video-story__eyebrow {
   margin: 0 0 var(--space-3);

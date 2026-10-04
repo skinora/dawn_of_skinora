@@ -39,13 +39,13 @@
     })(20);
   }
 
-  function initCta(root) {
-    var cta = root.querySelector('[data-vs-cta]');
+  // position: «below» = knappen under videoen, «endcard» = knappen på sluttkortet.
+  function initCta(root, cta, position) {
     if (!cta) return;
     cta.addEventListener('click', function () {
       var video = root.querySelector('[data-vs-video]');
       track(root, 'video_story_cta_click', {
-        cta_position: 'below',
+        cta_position: position,
         with_sound: video && !video.muted ? 'true' : 'false'
       });
     });
@@ -170,13 +170,37 @@
     // siste halve sekund. Sendes én gang dempet og én gang med lyd per sidevisning,
     // slik at with_sound skiller den dempede løkken fra en reell visning.
     var completed = { 'true': false, 'false': false };
+    var endcard = root.querySelector('[data-vs-endcard]');
+    var replayBtn = root.querySelector('[data-vs-replay]');
+
     video.addEventListener('timeupdate', function () {
       if (!video.duration || video.currentTime < video.duration - 0.5) return;
       var withSound = video.muted ? 'false' : 'true';
-      if (completed[withSound]) return;
-      completed[withSound] = true;
-      track(root, 'video_story_complete', { with_sound: withSound });
+      if (!completed[withSound]) {
+        completed[withSound] = true;
+        track(root, 'video_story_complete', { with_sound: withSound });
+      }
+      // Sluttkort bare for den som valgte lyd – den dempede løkken går videre.
+      if (withSound === 'true' && endcard && endcard.hidden) {
+        userPaused = true;
+        video.pause();
+        endcard.hidden = false;
+      }
     });
+
+    if (replayBtn) {
+      replayBtn.addEventListener('click', function () {
+        endcard.hidden = true;
+        userPaused = false;
+        userStarted = true;
+        try {
+          video.currentTime = 0;
+        } catch (err) {
+          /* starter uansett fra begynnelsen ved neste løkke */
+        }
+        video.play();
+      });
+    }
 
     var preloadObs = new IntersectionObserver(
       function (entries) {
@@ -287,7 +311,8 @@
   function init(root) {
     if (root.dataset.vsReady) return;
     root.dataset.vsReady = 'true';
-    initCta(root);
+    initCta(root, root.querySelector('[data-vs-cta]'), 'below');
+    initCta(root, root.querySelector('[data-vs-endcard-cta]'), 'endcard');
     var video = root.querySelector('[data-vs-video]');
     var frame = root.querySelector('[data-vs-embed]');
     if (video) initFile(root, video);
