@@ -39,7 +39,7 @@
     })(20);
   }
 
-  // position: «below» = knappen under videoen, «endcard» = knappen på sluttkortet.
+  // position: «below» = knappen under videoen (eneste plassering i dag).
   function initCta(root, cta, position) {
     if (!cta) return;
     cta.addEventListener('click', function () {
@@ -312,7 +312,6 @@
     if (root.dataset.vsReady) return;
     root.dataset.vsReady = 'true';
     initCta(root, root.querySelector('[data-vs-cta]'), 'below');
-    initCta(root, root.querySelector('[data-vs-endcard-cta]'), 'endcard');
     var video = root.querySelector('[data-vs-video]');
     var frame = root.querySelector('[data-vs-embed]');
     if (video) initFile(root, video);

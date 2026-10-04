@@ -188,19 +188,6 @@
   display: none;
 }
 
-/* Primærknappen er mørk; på det mørke sløret brukes hover-utseendet som hvile. */
-.skinora-video-story__endcard .sk-btn--primary {
-  border-color: var(--paper-0);
-  background-color: var(--paper-0);
-  color: var(--ink-900);
-}
-
-.skinora-video-story__endcard .sk-btn--primary:hover {
-  border-color: var(--paper-0);
-  background-color: var(--ink-900);
-  color: var(--paper-0);
-}
-
 .skinora-video-story__replay {
   min-height: 44px;
   padding: var(--space-2) var(--space-3);
@@ -216,7 +203,6 @@
   cursor: pointer;
 }
 
-.skinora-video-story__endcard .sk-btn--primary:focus-visible,
 .skinora-video-story__replay:focus-visible {
   outline: 2px solid var(--paper-0);
   outline-offset: 2px;

@@ -175,21 +175,14 @@
             </button>
           {%- endunless -%}
 
-          {%- if has_file and section.settings.button_label != blank -%}
+          {%- if has_file -%}
             {%- comment -%}
-              Sluttkort: vises når videoen er sett ferdig med lyd, slik at den
-              som så hele videoen får et neste steg uten å måtte scrolle.
+              Sluttkort: når videoen er sett ferdig med lyd, stopper den med et
+              slør og «Se igjen» i stedet for å gå i løkke. Ingen egen
+              kjøpsknapp her – den faste kjøpslinjen ligger allerede over siden.
               Den dempede løkken utløser det aldri.
             {%- endcomment -%}
             <div class="skinora-video-story__endcard" data-vs-endcard hidden>
-              <a
-                href="{{ section.settings.button_link | default: '#product-form' }}"
-                class="sk-btn sk-btn--primary"
-                data-vs-endcard-cta
-                data-analytics="cta_video_story_endcard"
-              >
-                {{- section.settings.button_label | escape -}}
-              </a>
               <button type="button" class="skinora-video-story__replay" data-vs-replay>Se igjen</button>
             </div>
           {%- endif -%}
