@@ -101,6 +101,49 @@
           "priceCurrency": {{ cart.currency.iso_code | json }},
           "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
           "itemCondition": "https://schema.org/NewCondition"
+          {%- if variant.compare_at_price > variant.price -%}
+            ,"priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "priceType": "https://schema.org/StrikethroughPrice",
+              "price": {{ variant.compare_at_price | divided_by: 100.0 }},
+              "priceCurrency": {{ cart.currency.iso_code | json }}
+            }
+          {%- endif -%}
+          {%- comment -%}
+            Kilde: /pages/retur-og-angrerett — 30 dagers aapent kjoep paa alle
+            produkter, retur per post, kunden dekker returfrakten, hele
+            kjoepesummen tilbake og intet gjenoppfyllingsgebyr.
+          {%- endcomment -%}
+          ,"hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "applicableCountry": "NO",
+            "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+            "merchantReturnDays": 30,
+            "returnMethod": "https://schema.org/ReturnByMail",
+            "returnFees": "https://schema.org/ReturnFeesCustomerResponsibility",
+            "refundType": "https://schema.org/FullRefund",
+            "merchantReturnLink": {{ request.origin | append: '/pages/retur-og-angrerett' | json }}
+          }
+          {%- comment -%}
+            Gratis frakt paastaas bare der siden selv viser det: seksjonen
+            sender pj_free_shipping. Leveringstid (2–5 virkedager) er fra
+            /policies/shipping-policy.
+          {%- endcomment -%}
+          {%- if pj_free_shipping -%}
+            ,"shippingDetails": {
+              "@type": "OfferShippingDetails",
+              "shippingRate": {
+                "@type": "MonetaryAmount",
+                "value": 0,
+                "currency": {{ cart.currency.iso_code | json }}
+              },
+              "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "NO" },
+              "deliveryTime": {
+                "@type": "ShippingDeliveryTime",
+                "transitTime": { "@type": "QuantitativeValue", "minValue": 2, "maxValue": 5, "unitCode": "DAY" }
+              }
+            }
+          {%- endif -%}
           {%- if variant.sku != blank -%}
             ,"sku": {{ variant.sku | json }}
           {%- endif -%}

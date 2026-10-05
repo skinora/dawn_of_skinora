@@ -2566,7 +2566,8 @@
   {%- endcomment -%}
   {%- render 'sk-atc-visibility-tracking' -%}
 
-  {%- render 'sk-product-jsonld' -%}
+  {%- comment -%} Seksjonen viser «Gratis frakt i Norge», saa JSON-LD kan si det samme. {%- endcomment -%}
+  {%- render 'sk-product-jsonld', pj_free_shipping: true -%}
 
   <script>
     document.addEventListener('DOMContentLoaded', async function () {
