@@ -211,30 +211,6 @@
       opacity: 1;
     }
 
-    .sk-hero-progress {
-      display: none;
-      gap: 0.75rem;
-      justify-content: center;
-      margin-top: 1rem;
-    }
-
-    .sk-hero-progress-dot {
-      width: clamp(7px, 1.4vw, 9px);
-      height: clamp(7px, 1.4vw, 9px);
-      border: 1px solid var(--color-neutral-4, #49494a);
-      background: transparent;
-      border-radius: 0;
-      padding: 0;
-      cursor: pointer;
-      transition: background 0.2s ease, border-color 0.2s ease;
-    }
-
-    .sk-hero-progress-dot.is-active,
-    .sk-hero-progress-dot:focus-visible {
-      background: var(--sk-brand);
-      border-color: var(--sk-brand);
-    }
-
     .sk-hero-arrow {
       position: absolute;
       top: 50%;
@@ -1262,10 +1238,6 @@
         gap: 1.5rem;
       }
 
-      .sk-hero-progress {
-        display: flex;
-      }
-
       .sk-hero-media {
         /* Full-bleed på mobil: bryt ut av .page-width + .sk-product-hero
            sidepadding så hero-bildet dekker hele skjermbredden edge-to-edge.
@@ -1338,11 +1310,41 @@
         }
       }
 
-      .sk-hero-gallery-wrapper,
-      .sk-hero-gallery,
-      .sk-hero-thumb,
       .sk-hero-gallery-controls {
         display: none;
+      }
+
+      /* ── Miniatyrrad i stedet for prikker ──────────────────────────────
+         Raden viser hvor i galleriet man er: aktivt bilde har full styrke
+         og ramme, resten er dempet, og JS ruller det aktive inn i midten.
+         «safe center» midtstiller naar raden faar plass og faller tilbake
+         til start naar den maa rulles, saa foerste bilde aldri kuttes. */
+      .sk-hero-gallery-wrapper {
+        width: 100%;
+        margin-top: var(--space-2);
+        padding-inline: var(--space-4);
+      }
+
+      .sk-hero-gallery {
+        grid-auto-columns: 48px;
+        gap: var(--space-2);
+        justify-content: safe center;
+        padding: 0;
+        scrollbar-width: none;
+      }
+
+      .sk-hero-gallery::-webkit-scrollbar {
+        display: none;
+      }
+
+      .sk-hero-thumb img {
+        opacity: 0.55;
+      }
+
+      .sk-hero-thumb img.is-active {
+        opacity: 1;
+        outline: 2px solid var(--sk-brand);
+        outline-offset: -2px;
       }
 
       .sk-offer-cards {
@@ -2071,7 +2073,7 @@
                         {{ image | image_url: width: 360 }} 360w,
                         {{ image | image_url: width: 480 }} 480w
                       "
-                      sizes="120px"
+                      sizes="(max-width: 768px) 48px, 120px"
                       alt="{{ image.alt | default: product.title }}"
                       width="120"
                       height="120"
@@ -2091,21 +2093,6 @@
                 </div>
               {% endif %}
             </div>
-
-            {% if media_images.size > 1 %}
-              <div class="sk-hero-progress" role="tablist" aria-label="Hero swipe progress">
-                {% for image in media_images %}
-                  <button
-                    type="button"
-                    role="tab"
-                    class="sk-hero-progress-dot{% if forloop.first %} is-active{% endif %}"
-                    data-media-index="{{ forloop.index0 }}"
-                    aria-label="View media {{ forloop.index }}"
-                    aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                  ></button>
-                {% endfor %}
-              </div>
-            {% endif %}
           {% endif %}
         </div>
 
@@ -2595,7 +2582,6 @@
         const prevButton = swiperRoot.querySelector('.sk-hero-arrow--prev');
         const nextButton = swiperRoot.querySelector('.sk-hero-arrow--next');
         const thumbnails = sectionEl.querySelectorAll('.sk-hero-thumb img');
-        const progressDots = sectionEl.querySelectorAll('.sk-hero-progress-dot');
         const galleryPrevButton = sectionEl.querySelector('.sk-hero-gallery-controls .sk-hero-arrow--prev');
         const galleryNextButton = sectionEl.querySelector('.sk-hero-gallery-controls .sk-hero-arrow--next');
         const galleryRow = sectionEl.querySelector('.sk-hero-gallery');
@@ -2626,20 +2612,22 @@
 
         const heroSwiper = new Swiper(swiperElement, swiperOptions);
 
-        function updateProgressDots(index) {
-          if (!progressDots.length) return;
-          progressDots.forEach((dot, dotIndex) => {
-            const isActive = dotIndex === index;
-            dot.classList.toggle('is-active', isActive);
-            dot.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-          });
+        /* Ruller kun raden sidelengs. scrollIntoView ville ogsaa flyttet
+           selve siden naar raden ligger utenfor skjermen. */
+        function centerThumbInRow(thumb) {
+          if (!galleryRow || !thumb) return;
+          const rowRect = galleryRow.getBoundingClientRect();
+          const thumbRect = thumb.getBoundingClientRect();
+          if (!rowRect.width) return;
+          const left = galleryRow.scrollLeft + (thumbRect.left - rowRect.left) - (rowRect.width - thumbRect.width) / 2;
+          galleryRow.scrollTo({ left: left, behavior: 'smooth' });
         }
 
         function updateActiveThumb(index) {
           thumbnails.forEach((thumb, thumbIndex) => {
             thumb.classList.toggle('is-active', thumbIndex === index);
           });
-          updateProgressDots(index);
+          centerThumbInRow(thumbnails[index]);
         }
 
         updateActiveThumb(typeof heroSwiper.realIndex === 'number' ? heroSwiper.realIndex : heroSwiper.activeIndex || 0);
@@ -2651,16 +2639,6 @@
 
         thumbnails.forEach((thumb, index) => {
           thumb.addEventListener('click', function () {
-            if (shouldLoop && typeof heroSwiper.slideToLoop === 'function') {
-              heroSwiper.slideToLoop(index);
-              return;
-            }
-            heroSwiper.slideTo(index);
-          });
-        });
-
-        progressDots.forEach((dot, index) => {
-          dot.addEventListener('click', function () {
             if (shouldLoop && typeof heroSwiper.slideToLoop === 'function') {
               heroSwiper.slideToLoop(index);
               return;
