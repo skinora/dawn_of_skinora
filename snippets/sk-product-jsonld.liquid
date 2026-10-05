@@ -7,7 +7,9 @@
 
 {%- liquid
   assign pj_first = product.selected_or_first_available_variant
-  assign pj_desc = product.description | strip_html | strip_newlines | strip | truncate: 5000
+  # strip_html limer blokker sammen ("hjemme.Hva er"), saa blokkslutt faar et mellomrom foerst.
+  # split/join paa mellomrom slaar deretter sammen alt overfloedig luft.
+  assign pj_desc = product.description | replace: '</p>', '</p> ' | replace: '</li>', '</li> ' | replace: '</h2>', '</h2> ' | replace: '</h3>', '</h3> ' | replace: '</h4>', '</h4> ' | replace: '<br', ' <br' | strip_html | strip_newlines | split: ' ' | join: ' ' | truncate: 5000
 
   # ── AI-lag: målte/bekreftede spesifikasjoner per modell (kun i kode, per product.handle) ──
   # Irradians = testverdi konvertert W/m² → mW/cm² (÷10), single output / masken alene på full effekt.
