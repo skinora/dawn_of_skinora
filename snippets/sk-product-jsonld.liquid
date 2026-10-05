@@ -15,6 +15,7 @@
   # Irradians = testverdi konvertert W/m² → mW/cm² (÷10), single output / masken alene på full effekt.
   # NB: legg til instrument + testdato i sk_irr_method før dette går til PROD (målt-påstand krever rapport).
   assign sk_specs = false
+  assign sk_bundle = false
   assign sk_irr_method = 'Method: UPRtek MK350 spectroradiometer, January 2026. Report available on request.'
   case product.handle
     when 'skinora-radiance-face'
@@ -35,6 +36,11 @@
       assign sk_irr_mw = '47'
       assign sk_irr_w = '470'
       assign sk_led = '114'
+    when 'skinora-radiance-face-neck-1'
+      # Pakken: kun det som gjelder begge maskene. Irradians og LED-antall
+      # er per enhet og staar paa enkeltproduktene.
+      assign sk_bundle = true
+      assign sk_wavelengths = '630 nm, 830 nm, 1072 nm'
   endcase
   assign sk_irr_desc = 'Measured at skin contact; equivalent to ' | append: sk_irr_w | append: ' W/m². ' | append: sk_irr_method
 -%}
@@ -90,6 +96,11 @@
       { "@type": "PropertyValue", "name": "Battery", "value": "4000 mAh" },
       { "@type": "PropertyValue", "name": "Material", "value": "Medical-grade silicone" },
       { "@type": "PropertyValue", "name": "Timer", "value": "1–30 min" }
+    ]
+    {%- elsif sk_bundle -%}
+    ,"additionalProperty": [
+      { "@type": "PropertyValue", "name": "Wavelengths", "value": {{ sk_wavelengths | json }} },
+      { "@type": "PropertyValue", "name": "Included devices", "value": "Skinora Radiance Face, Skinora Radiance Neck" }
     ]
     {%- endif -%}
     ,"offers": [
