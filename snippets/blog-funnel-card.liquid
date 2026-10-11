@@ -18,9 +18,12 @@
     'epost' uten klaviyo_form_id    → quiz
     'epost' i kompakt-plassering    → quiz  (kun ett skjema per side)
 
-  INGEN PRIS. Prisen er ikke fast (Clear 4 390 / Radiance 4 690 settes
-  per template), så et hardkodet eller dynamisk beløp her ville vært feil
-  i minst én av kontekstene.
+  PRIS OG ANMELDELSER (kun variant 'produkt'): regnes ut fra produktet i
+  funnel_produkt, aldri skrevet som tekst. Pris og førpris via sk-lp-pricing
+  (førpris kun når compare_at_price > price), snitt og antall via
+  sk-review-stats og stjerner via sk-star-rating, altså de samme kildene som
+  produktsiden (metafeltene reviews.rating / reviews.rating_count). Uten
+  anmeldelser utelates vurderingslinjen. Quiz- og e-postkortene har ingen pris.
 
   Sporing: alle CTA-er bærer data-blog-cta / data-cta-variant / data-cta-type.
   Lytteren ligger i assets/blog-funnel.js.
@@ -79,12 +82,50 @@
         if bfc_hook == blank
           assign bfc_hook = 'Brukes i rutinen i denne artikkelen'
         endif
+
+        capture bfc_pris
+          render 'sk-lp-pricing', product: bfc_product, part: 'pris'
+        endcapture
+        assign bfc_pris = bfc_pris | strip
+        capture bfc_for_pris
+          render 'sk-lp-pricing', product: bfc_product, part: 'for-pris'
+        endcapture
+        assign bfc_for_pris = bfc_for_pris | strip
+        capture bfc_rating
+          render 'sk-review-stats', product: bfc_product, part: 'rating'
+        endcapture
+        assign bfc_rating = bfc_rating | strip
+        capture bfc_count
+          render 'sk-review-stats', product: bfc_product, part: 'count'
+        endcapture
+        assign bfc_count = bfc_count | strip
         if bfc_variant == 'kompakt'
           assign bfc_img_px = 176
         else
           assign bfc_img_px = 440
         endif
       -%}
+
+      {%- capture bfc_meta -%}
+        {%- if bfc_pris != blank or bfc_rating != blank -%}
+          <div class="blog-funnel-card__meta">
+            {%- if bfc_pris != blank -%}
+              <span class="blog-funnel-card__price">
+                <span class="blog-funnel-card__now">{{ bfc_pris }}</span>
+                {%- if bfc_for_pris != blank -%}
+                  <s class="blog-funnel-card__was"><span class="visually-hidden">Førpris </span>{{ bfc_for_pris }}</s>
+                {%- endif -%}
+              </span>
+            {%- endif -%}
+            {%- if bfc_rating != blank and bfc_count != blank -%}
+              <span class="blog-funnel-card__rating">
+                <span aria-hidden="true">{% render 'sk-star-rating', sr_product: bfc_product, sr_show_count: false %}</span>
+                <span class="blog-funnel-card__rating-text">{{ bfc_rating }}<span class="blog-funnel-card__rating-of"> av 5</span> · {{ bfc_count }} anmeldelser</span>
+              </span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endcapture -%}
 
       {%- if bfc_variant == 'kompakt' -%}
         {%- if bfc_img -%}
@@ -106,6 +147,7 @@
             <p class="blog-funnel-card__body">{{ bfc_nytte | escape }}</p>
           {%- endif -%}
         </div>
+        {{ bfc_meta }}
         <div class="blog-funnel-card__actions">
           <a
             href="{{ bfc_product.url }}"
@@ -135,6 +177,7 @@
           <div class="blog-funnel-card__text">
             <p class="blog-funnel-card__eyebrow">{{ bfc_hook | escape }}</p>
             <p class="blog-funnel-card__title">{{ bfc_product.title | escape }}</p>
+            {{ bfc_meta }}
             {%- if bfc_nytte != blank -%}
               <p class="blog-funnel-card__body">{{ bfc_nytte | escape }}</p>
             {%- endif -%}

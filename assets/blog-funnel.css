@@ -148,6 +148,7 @@
   grid-template-columns: 88px minmax(0, 1fr);
   grid-template-areas:
     'media text'
+    'media meta'
     'media actions';
   column-gap: var(--space-4);
   row-gap: var(--space-3);
@@ -192,6 +193,7 @@
     grid-template-columns: 64px minmax(0, 1fr);
     grid-template-areas:
       'media text'
+      'meta meta'
       'actions actions';
   }
 
@@ -203,6 +205,67 @@
   .blog-funnel-card--kompakt .blog-funnel-card__actions .lp-btn {
     width: 100%;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Pris + vurdering (variant produkt) — én liten linje under tittelen.
+   Pris regnes ut i Liquid (sk-lp-pricing), vurdering kommer fra samme
+   metafelt som produktsiden (sk-review-stats / sk-star-rating).
+   --------------------------------------------------------------------------- */
+.blog-funnel-card .blog-funnel-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+}
+
+.blog-funnel-card__price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.blog-funnel-card .blog-funnel-card__now {
+  font-weight: var(--fw-semibold);
+  color: var(--ink-900);
+}
+
+.blog-funnel-card .blog-funnel-card__was {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  color: var(--ink-400);
+  text-decoration: line-through;
+}
+
+.blog-funnel-card__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-xs);
+  color: var(--ink-500);
+}
+
+/* Stjernene bor i .sk-stars (sk-base.css) med egne marger og 17px. Kortet
+   vil ha dem mindre og uten luft, så linjen forblir lav. */
+.blog-funnel-card__meta .sk-stars {
+  --sk-star-size: 14px;
+  margin: 0;
+}
+
+.blog-funnel-card--kompakt .blog-funnel-card__rating-of {
+  display: none;
+}
+
+/* Kompakt: linjen er en egen gridrad (full kortbredde på mobil, så pris og
+   vurdering får plass på én linje). Negativ marg trekker den tett inntil
+   teksten over — row-gap er 12px, linjen skal bare ha 4. */
+.blog-funnel-card--kompakt .blog-funnel-card__meta {
+  grid-area: meta;
+  min-width: 0;
+  margin: calc(var(--space-2) * -1) 0 0;
 }
 
 /* ---------------------------------------------------------------------------
@@ -362,6 +425,34 @@
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+/* Produktvarianten: alltid én linje. Navnet krymper med ellipse, prisen og
+   «Se masken» står fast. Quiz-varianten beholder 2-linjers klipp over. */
+.blog-funnel-sticky__label--produkt {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.blog-funnel-sticky__name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.blog-funnel-sticky__tail {
+  flex: none;
+}
+
+/* Under 375 px er «Radiance Face · 3 690 kr · Se masken →» 11 px for bred i
+   fs-sm. Én størrelse ned (13 px) gir plass uten å brekke linjen. */
+@media (max-width: 374px) {
+  .blog-funnel-sticky__label--produkt {
+    font-size: var(--fs-xs);
+  }
 }
 
 .blog-funnel-sticky__arrow {

@@ -20,7 +20,11 @@
     - Quiz-modalen / handlekurv-skuffen: begge setter .overflow-hidden på
       <body>, som JS-en behandler som «overlay åpen».
 
-  INGEN PRIS i baren — samme begrunnelse som i blog-funnel-card.
+  Produktvarianten viser prisen (sk-lp-pricing, regnet ut fra produktet, aldri
+  skrevet som tekst) og skal stå på én linje. Merkeprefikset («Skinora® ») er
+  strøket fra navnet her: ved 360 px var det ikke plass til «Skinora® Radiance
+  Face · 3 690 kr · Se masken →». Navnet kan krympe med ellipse som siste
+  sikkerhetsnett, prisen og «Se masken» krymper aldri. Førpris vises ikke.
 {%- endcomment -%}
 
 {%- liquid
@@ -44,6 +48,14 @@
     endcomment
     assign bfs_short = bfs_product.title | split: ' – ' | first | split: ' - ' | first | strip
     assign bfs_label = bfs_short | append: ' · Se masken'
+    capture bfs_pris
+      render 'sk-lp-pricing', product: bfs_product, part: 'pris'
+    endcapture
+    assign bfs_pris = bfs_pris | strip
+    assign bfs_name = bfs_short | remove_first: 'Skinora® ' | remove_first: 'Skinora ' | strip
+    if bfs_name == blank
+      assign bfs_name = bfs_short
+    endif
     assign bfs_href = bfs_product.url
   else
     assign bfs_label = 'Hvilken maske passer din hud? Ta testen'
@@ -69,7 +81,14 @@
     data-cta-variant="sticky"
     data-cta-type="{{ bfs_type }}"
   >
-    <span class="blog-funnel-sticky__label">{{ bfs_label | escape }}</span>
+    {%- if bfs_type == 'produkt' -%}
+      <span class="blog-funnel-sticky__label blog-funnel-sticky__label--produkt">
+        <span class="blog-funnel-sticky__name">{{ bfs_name | escape }}</span>
+        <span class="blog-funnel-sticky__tail">{% if bfs_pris != blank %}· {{ bfs_pris }} {% endif %}· Se masken</span>
+      </span>
+    {%- else -%}
+      <span class="blog-funnel-sticky__label">{{ bfs_label | escape }}</span>
+    {%- endif -%}
     <span class="blog-funnel-sticky__arrow" aria-hidden="true">→</span>
   </a>
   <button
