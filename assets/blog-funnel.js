@@ -114,12 +114,14 @@
     });
   }
 
-  /* Klaviyo-popup / -teaser. Ligger på z-index 90000 og eier bunnen av
-     skjermen når den er oppe. Vårt eget innbygde skjema (inne i et
-     funnel-kort) teller ikke — det er en del av sidens innhold. */
+  /* Klaviyo-popup. Ligger på z-index 90000 og eier bunnen av skjermen når den
+     er oppe. Vårt eget innbygde skjema (inne i et funnel-kort) teller ikke —
+     det er en del av sidens innhold. Teaser-fliken («FÅ 10 % RABATT», kl-teaser)
+     telles heller ikke: den er permanent synlig på mobil og holdt ellers baren
+     skjult for alle besøkende som ikke hadde lukket den. */
   function klaviyoOverlayOpen() {
     var nodes = document.querySelectorAll(
-      '[class*="kl-private-reset"], [class*="kl-teaser"], div[data-testid="klaviyo-form"]'
+      '[class*="kl-private-reset"], div[data-testid="klaviyo-form"]'
     );
     for (var i = 0; i < nodes.length; i++) {
       var n = nodes[i];

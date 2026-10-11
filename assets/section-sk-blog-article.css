@@ -175,6 +175,9 @@
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.15em;
+  /* Nakne kilde-URL-er (pubmed…, aad.org/…) har ingen brytepunkt og gjorde
+     siden bredere enn vinduet på mobil. */
+  overflow-wrap: anywhere;
   transition: text-decoration-thickness 0.15s ease, opacity 0.15s ease;
 }
 
