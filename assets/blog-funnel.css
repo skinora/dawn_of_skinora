@@ -275,8 +275,19 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* Mobil: tabeller med 2–3 kolonner fyller rammen og bryter teksten i cellene.
+   Bare tabeller der første rad har fire eller flere celler beholder 520 px
+   minimumsbredde og ruller sidelengs inne i rammen. */
 @media (max-width: 749px) {
   .blog-funnel-tablewrap > table {
+    width: 100%;
+  }
+
+  .blog-funnel-tablewrap > table:not(:has(tr:first-child > :nth-child(n + 4))) :is(th, td) {
+    overflow-wrap: anywhere;
+  }
+
+  .blog-funnel-tablewrap > table:has(tr:first-child > :nth-child(n + 4)) {
     min-width: 520px;
   }
 }
