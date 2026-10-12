@@ -18,8 +18,8 @@
 
        Shopify.analytics.publish('blog_cta_click', {
          article: 'nyheter/torr-hud-overgangsalder',
-         variant: 'kompakt' | 'full' | 'sticky',
-         type:    'produkt' | 'quiz' | 'epost',
+         variant: 'kompakt' | 'full' | 'sticky' | 'sosial',
+         type:    'produkt' | 'quiz' | 'epost' | 'sosial',
          target:  '/products/skinora-radiance-face'
        })
 

@@ -487,3 +487,80 @@
     transition: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   «Følg Skinora» — Instagram og Facebook nederst i artikkelen
+   (snippets/blog-social-box.liquid). Samme rolige skall som kortene.
+   --------------------------------------------------------------------------- */
+.blog-social-box {
+  margin-top: var(--space-7);
+  padding: var(--space-5);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: var(--paper-50);
+  font-family: var(--ff-sans);
+  color: var(--ink-700);
+}
+
+.blog-social-box .blog-social-box__heading {
+  margin: 0 0 var(--space-1);
+  font-family: var(--ff-serif);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--ink-900);
+}
+
+.blog-social-box .blog-social-box__text {
+  margin: 0 0 var(--space-4);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+}
+
+.blog-social-box__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.blog-social-box .blog-social-box__link,
+.blog-social-box .blog-social-box__link:link,
+.blog-social-box .blog-social-box__link:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--ink-700);
+  border-radius: 999px;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  line-height: 1;
+  color: var(--ink-700);
+  text-decoration: none;
+}
+
+.blog-social-box .blog-social-box__link:hover,
+.blog-social-box .blog-social-box__link:focus-visible {
+  background: var(--ink-700);
+  color: var(--paper-0);
+}
+
+.blog-social-box__icon {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+}
+
+.blog-social-box__icon .icon {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 749px) {
+  .blog-social-box {
+    padding: var(--space-4);
+  }
+}

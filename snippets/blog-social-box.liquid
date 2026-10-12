@@ -1,0 +1,54 @@
+{%- comment -%}
+  blog-social-box — «Følg Skinora», Instagram og Facebook nederst i artikkelen
+  ----------------------------------------------------------------------------
+  Parametre:
+    article : artikkel-objektet (påkrevd, brukes til sporing)
+
+  Lenkene kommer fra temainnstillingene (Sosiale medier), aldri hardkodet.
+  Er begge tomme, rendres ingenting — en boks uten lenker er verre enn ingen.
+
+  Sporing: samme blog_cta_click-event som kortene (assets/blog-funnel.js),
+  med variant og type «sosial».
+{%- endcomment -%}
+
+{%- liquid
+  assign bsb_ig = settings.social_instagram_link | strip
+  assign bsb_fb = settings.social_facebook_link | strip
+-%}
+
+{%- if bsb_ig != blank or bsb_fb != blank -%}
+  <aside class="blog-social-box" aria-labelledby="blog-social-box-heading">
+    <p class="blog-social-box__heading" id="blog-social-box-heading">Følg Skinora</p>
+    <p class="blog-social-box__text">Få hudpleietips og nyheter om LED-lysterapi rett i feeden din.</p>
+    <div class="blog-social-box__links">
+      {%- if bsb_ig != blank -%}
+        <a
+          href="{{ bsb_ig }}"
+          class="blog-social-box__link"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-blog-cta="{{ article.handle }}"
+          data-cta-variant="sosial"
+          data-cta-type="sosial"
+        >
+          <span class="blog-social-box__icon" aria-hidden="true">{{- 'icon-instagram.svg' | inline_asset_content -}}</span>
+          Instagram<span class="visually-hidden"> (åpnes i ny fane)</span>
+        </a>
+      {%- endif -%}
+      {%- if bsb_fb != blank -%}
+        <a
+          href="{{ bsb_fb }}"
+          class="blog-social-box__link"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-blog-cta="{{ article.handle }}"
+          data-cta-variant="sosial"
+          data-cta-type="sosial"
+        >
+          <span class="blog-social-box__icon" aria-hidden="true">{{- 'icon-facebook.svg' | inline_asset_content -}}</span>
+          Facebook<span class="visually-hidden"> (åpnes i ny fane)</span>
+        </a>
+      {%- endif -%}
+    </div>
+  </aside>
+{%- endif -%}
