@@ -135,7 +135,7 @@
 }
 
 .sk-blog-article__body h3 {
-  font-size: calc(var(--sk-font-size-xl) * 0.95);
+  font-size: var(--fs-xl); /* 20–22 px: tydelig under h2 (28 px) */
 }
 
 .sk-blog-article__body p {
@@ -189,6 +189,19 @@
 .sk-blog-article__right-content a:focus-visible {
   text-decoration-thickness: 2px;
   opacity: 0.8;
+}
+
+/* Knapper skrevet rett i brødteksten (<a class="lp-btn">). Lenkeregelen over
+   gir ellers mørk tekst og understrek, også på hover og besøkt. Samme verdier
+   som .blog-funnel-card .lp-btn i blog-funnel.css. */
+.sk-blog-article__body a.lp-btn,
+.sk-blog-article__body a.lp-btn:link,
+.sk-blog-article__body a.lp-btn:visited,
+.sk-blog-article__body a.lp-btn:hover,
+.sk-blog-article__body a.lp-btn:focus-visible {
+  color: var(--btn-primary-fg);
+  text-decoration: none;
+  opacity: 1;
 }
 
 .sk-blog-article__custom-content {
@@ -333,6 +346,10 @@
 @media (max-width: 749px) {
   .sk-blog-article__featured-image {
     height: 220px;
+  }
+
+  .sk-blog-article__body h3 {
+    font-size: var(--fs-lg);
   }
 
   .sk-blog-article__title {
