@@ -353,6 +353,20 @@
   .blog-funnel-tablewrap > table:has(tr:first-child > :nth-child(n + 4)) {
     min-width: 520px;
   }
+
+  /* Rullehint: en myk skygge på kanten der det finnes mer å se. De to
+     «cover»-lagene (local) følger innholdet og skjuler skyggen når rammen er
+     rullet helt til den kanten, eller når tabellen får plass uten å rulle.
+     Cover-fargen er artikkelens egen bakgrunn (.sk-blog-article). */
+  .blog-funnel-tablewrap {
+    --tablewrap-bg: var(--color-white, #ffffff);
+    --tablewrap-shadow: color-mix(in srgb, var(--ink-900) 22%, transparent);
+    background:
+      linear-gradient(to right, var(--tablewrap-bg), transparent) left center / 28px 100% no-repeat local,
+      linear-gradient(to left, var(--tablewrap-bg), transparent) right center / 28px 100% no-repeat local,
+      linear-gradient(to right, var(--tablewrap-shadow), transparent) left center / 12px 100% no-repeat scroll,
+      linear-gradient(to left, var(--tablewrap-shadow), transparent) right center / 12px 100% no-repeat scroll;
+  }
 }
 
 /* ---------------------------------------------------------------------------
