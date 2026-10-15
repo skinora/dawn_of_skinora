@@ -56,7 +56,8 @@
           {%- for cg_n in cg_notes -%}
             {%- if cg_n.settings.product.handle == cg_p.handle -%}{%- assign cg_note = cg_n -%}{%- endif -%}
           {%- endfor -%}
-          {%- assign cg_url = '/products/' | append: cg_p.handle -%}
+          {%- assign cg_url = cg_note.settings.link | default: '' -%}
+          {%- if cg_url == blank -%}{%- assign cg_url = '/products/' | append: cg_p.handle -%}{%- endif -%}
           {%- capture cg_price -%}{%- render 'sk-lp-pricing', product: cg_p, part: 'pris' -%}{%- endcapture -%}
           {%- capture cg_before -%}{%- render 'sk-lp-pricing', product: cg_p, part: 'for-pris' -%}{%- endcapture -%}
           {%- capture cg_save -%}{%- render 'sk-lp-pricing', product: cg_p, part: 'spar' -%}{%- endcapture -%}
@@ -241,6 +242,7 @@
       "settings": [
         { "type": "product", "id": "product", "label": "Produkt" },
         { "type": "text", "id": "name", "label": "Kortnavn", "info": "Tomt = produkttittelen." },
+        { "type": "text", "id": "link", "label": "Lenke", "info": "Tomt = produktets egen side. Settet lenker til Radiance Face, der Face + Neck velges." },
         { "type": "textarea", "id": "text", "label": "Velg denne hvis …" }
       ]
     },

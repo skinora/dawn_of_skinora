@@ -16,7 +16,8 @@
           "settings": {
             "product": "skinora-radiance-face-neck-1",
             "name": "Radiance Face + Neck",
-            "text": "Velg dette hvis du vil behandle hele området fra panne til dekolletasje. Det mest komplette valget."
+            "text": "Velg dette hvis du vil behandle hele området fra panne til dekolletasje. Det mest komplette valget.",
+            "link": "/products/skinora-radiance-face"
           }
         },
         "note_neck": {
