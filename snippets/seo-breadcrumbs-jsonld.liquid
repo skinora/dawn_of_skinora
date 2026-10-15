@@ -5,6 +5,16 @@
 {%- endcomment -%}
 
 {%- if request.page_type == 'product' -%}
+  {%- comment -%}
+    Kanoniske produkt-URL-er har ingen collection-kontekst. Ligger produktet i
+    rodlysmaske-samlingen, brukes den i brødsmulestien uansett inngang.
+  {%- endcomment -%}
+  {%- assign bc_col = collection -%}
+  {%- unless bc_col -%}
+    {%- for c in product.collections -%}
+      {%- if c.handle == 'rodlysmaske' -%}{%- assign bc_col = c -%}{%- endif -%}
+    {%- endfor -%}
+  {%- endunless -%}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -16,12 +26,12 @@
           "name": "Hjem",
           "item": {{ request.origin | append: '/' | json }}
         }
-        {%- if collection -%}
+        {%- if bc_col -%}
           ,{
             "@type": "ListItem",
             "position": 2,
-            "name": {{ collection.title | json }},
-            "item": {{ request.origin | append: '/collections/' | append: collection.handle | json }}
+            "name": {{ bc_col.title | json }},
+            "item": {{ request.origin | append: '/collections/' | append: bc_col.handle | json }}
           }
           ,{
             "@type": "ListItem",

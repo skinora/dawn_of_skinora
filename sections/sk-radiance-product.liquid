@@ -937,6 +937,15 @@
 
        Merk: root står på 62.5 %, så `1.3rem` i regelen under er 13px, ikke
        20,8px. Derfor brukes --fs-* her, aldri rem. */
+    .sk-compare-link {
+      margin: 0 0 var(--space-4);
+      font-size: var(--fs-sm);
+    }
+    .sk-compare-link a {
+      color: var(--ink-700);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
     .sk-risk-reversal {
       display: flex;
       flex-direction: column;
@@ -2407,6 +2416,11 @@
               <span>Gratis frakt i Norge</span>
             </p>
           </div>
+
+          {%- comment -%} Lenke til guiden. Ikke på landingssidene (noindex, skal ikke røres). {%- endcomment -%}
+          {%- unless template.suffix contains 'sk-lp' -%}
+            <p class="sk-compare-link"><a href="/collections/rodlysmaske">Usikker på hvilken? Sammenlign maskene →</a></p>
+          {%- endunless -%}
 
           {%- comment -%}
             ÆRLIG PRIS — skjules mens kampanjen går. «Ingen rabattkupp. Ingen

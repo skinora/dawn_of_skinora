@@ -1,0 +1,278 @@
+{%- comment -%}
+  sk-collection-guide.liquid
+  Kategoriside som sammenligner og selger: hero, produktgrid med «Velg denne
+  hvis …», guide, spørsmål og svar, avsluttende CTA. Brukes av
+  templates/collection.rodlysmaske.json. All tekst redigeres i temaeditoren.
+
+  - Produktene kommer fra samlingen (rekkefølgen styres i Shopify).
+  - «Velg denne hvis …» og kortnavnet hentes fra en produktnotat-blokk som
+    peker på samme produkt. Mangler blokken, vises produkttittelen uten notat.
+  - Priser regnes ut av sk-lp-pricing. Ingen pris står som tekst her.
+  - FAQPage-schema bygges av de samme faq-blokkene som vises, så synlig tekst
+    og schema er alltid like. Svarene er ren tekst (textarea) av samme grunn.
+  - BreadcrumbList kommer fra seo-breadcrumbs-jsonld.
+{%- endcomment -%}
+
+{{ 'section-sk-collection-guide.css' | asset_url | stylesheet_tag }}
+
+{%- assign cg_notes = section.blocks | where: 'type', 'product_note' -%}
+{%- assign cg_choices = section.blocks | where: 'type', 'choice' -%}
+{%- assign cg_steps = section.blocks | where: 'type', 'step' -%}
+{%- assign cg_faqs = section.blocks | where: 'type', 'faq' -%}
+{%- assign cg_s = section.settings -%}
+
+<div class="sk-cg">
+  {%- comment -%} 1. Hero {%- endcomment -%}
+  <div class="sk-cg__wrap sk-cg__hero">
+    <h1>{{ cg_s.heading | default: collection.title }}</h1>
+    {%- if cg_s.intro != blank -%}
+      <p class="sk-cg__intro">{{ cg_s.intro }}</p>
+    {%- endif -%}
+    {%- if cg_s.trust_1 != blank or cg_s.trust_2 != blank or cg_s.trust_3 != blank or cg_s.trust_4 != blank -%}
+      <ul class="sk-cg__trust">
+        {%- for i in (1..4) -%}
+          {%- assign cg_key = 'trust_' | append: i -%}
+          {%- assign cg_t = cg_s[cg_key] -%}
+          {%- if cg_t != blank -%}<li>{{ cg_t }}</li>{%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+    <div class="sk-cg__actions">
+      {%- if cg_s.button_grid != blank -%}
+        <a class="sk-cg__btn" href="#velg-maske">{{ cg_s.button_grid }}</a>
+      {%- endif -%}
+      {%- if cg_s.button_guide != blank -%}
+        <a class="sk-cg__btn sk-cg__btn--ghost" href="#velg-riktig">{{ cg_s.button_guide }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} 2. Produktgrid {%- endcomment -%}
+  <div class="sk-cg__band sk-cg__band--tint" id="velg-maske">
+    <div class="sk-cg__wrap">
+      <ul class="sk-cg__grid">
+        {%- for cg_p in collection.products -%}
+          {%- assign cg_note = nil -%}
+          {%- for cg_n in cg_notes -%}
+            {%- if cg_n.settings.product.handle == cg_p.handle -%}{%- assign cg_note = cg_n -%}{%- endif -%}
+          {%- endfor -%}
+          {%- assign cg_url = '/products/' | append: cg_p.handle -%}
+          {%- capture cg_price -%}{%- render 'sk-lp-pricing', product: cg_p, part: 'pris' -%}{%- endcapture -%}
+          {%- capture cg_before -%}{%- render 'sk-lp-pricing', product: cg_p, part: 'for-pris' -%}{%- endcapture -%}
+          {%- capture cg_save -%}{%- render 'sk-lp-pricing', product: cg_p, part: 'spar' -%}{%- endcapture -%}
+          {%- capture cg_klarna -%}{%- render 'sk-lp-pricing', product: cg_p, part: 'klarna' -%}{%- endcapture -%}
+          <li class="sk-cg__card" {{ cg_note.shopify_attributes }}>
+            {%- if cg_p.featured_image -%}
+              <a class="sk-cg__card-media" href="{{ cg_url }}" tabindex="-1" aria-hidden="true">
+                {{
+                  cg_p.featured_image
+                  | image_url: width: 640
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '320, 480, 640',
+                    sizes: '(min-width: 1100px) 25vw, (min-width: 700px) 50vw, 100vw',
+                    alt: cg_p.featured_image.alt
+                }}
+              </a>
+            {%- endif -%}
+            <div class="sk-cg__card-body">
+              <h3 class="sk-cg__card-title">
+                <a href="{{ cg_url }}">{{ cg_note.settings.name | default: cg_p.title }}</a>
+              </h3>
+              {% render 'sk-star-rating', sr_product: cg_p %}
+              {%- if cg_note.settings.text != blank -%}
+                <p class="sk-cg__card-note">{{ cg_note.settings.text }}</p>
+              {%- endif -%}
+              <p class="sk-cg__price">
+                {%- if cg_before != blank -%}<s>{{ cg_before }}</s>{%- endif -%}
+                <span>{{ cg_price }}</span>
+                {%- if cg_save != blank -%}<span class="sk-cg__save">Spar {{ cg_save }}</span>{%- endif -%}
+              </p>
+              {%- if cg_klarna != blank -%}
+                <p class="sk-cg__klarna">eller {{ cg_klarna }} kr/mnd med Klarna</p>
+              {%- endif -%}
+              <a class="sk-cg__btn" href="{{ cg_url }}">{{ cg_s.card_button }}</a>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+
+  {%- comment -%} 3. Guide {%- endcomment -%}
+  <div class="sk-cg__band" id="velg-riktig">
+    <div class="sk-cg__wrap sk-cg__stack">
+      {%- if cg_s.what_heading != blank -%}
+        <div>
+          <h2>{{ cg_s.what_heading }}</h2>
+          <div class="sk-cg__prose">{{ cg_s.what_text }}</div>
+        </div>
+      {%- endif -%}
+
+      {%- if cg_choices.size > 0 -%}
+        <div>
+          <h2>{{ cg_s.choose_heading }}</h2>
+          <ol class="sk-cg__list">
+            {%- for cg_c in cg_choices -%}
+              <li {{ cg_c.shopify_attributes }}><strong>{{ cg_c.settings.title }}</strong>{{ cg_c.settings.text }}</li>
+            {%- endfor -%}
+          </ol>
+        </div>
+      {%- endif -%}
+
+      {%- if cg_s.mature_heading != blank -%}
+        <div>
+          <h2>{{ cg_s.mature_heading }}</h2>
+          <div class="sk-cg__prose">{{ cg_s.mature_text }}</div>
+        </div>
+      {%- endif -%}
+
+      {%- if cg_steps.size > 0 -%}
+        <div>
+          <h2>{{ cg_s.use_heading }}</h2>
+          <ol class="sk-cg__steps">
+            {%- for cg_st in cg_steps -%}
+              <li {{ cg_st.shopify_attributes }}>{{ cg_st.settings.text }}</li>
+            {%- endfor -%}
+          </ol>
+          {%- if cg_s.use_note != blank -%}
+            <p class="sk-cg__note">{{ cg_s.use_note }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} 4. Spørsmål og svar {%- endcomment -%}
+  {%- if cg_faqs.size > 0 -%}
+    <div class="sk-cg__band sk-cg__band--tint">
+      <div class="sk-cg__wrap">
+        <h2>{{ cg_s.faq_heading }}</h2>
+        <div class="sk-cg__faq">
+          {%- for cg_f in cg_faqs -%}
+            <details {{ cg_f.shopify_attributes }}>
+              <summary>{{ cg_f.settings.question }}</summary>
+              <div class="sk-cg__faq-a">{{ cg_f.settings.answer | escape | newline_to_br }}</div>
+            </details>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} 5. Avsluttende CTA {%- endcomment -%}
+  {%- if cg_s.cta_heading != blank -%}
+    <div class="sk-cg__band">
+      <div class="sk-cg__wrap sk-cg__cta">
+        <h2>{{ cg_s.cta_heading }}</h2>
+        {%- if cg_s.cta_text != blank -%}<p>{{ cg_s.cta_text }}</p>{%- endif -%}
+        {%- if cg_s.cta_button != blank -%}
+          <div class="sk-cg__actions">
+            <a class="sk-cg__btn" href="#velg-maske">{{ cg_s.cta_button }}</a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{%- if cg_faqs.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for cg_f in cg_faqs -%}
+          {
+            "@type": "Question",
+            "name": {{ cg_f.settings.question | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ cg_f.settings.answer | strip_newlines | strip | json }}
+            }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SK Rødlysmaske-guide",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "heading", "label": "H1", "info": "Tomt = samlingens tittel." },
+    { "type": "textarea", "id": "intro", "label": "Ingress" },
+    { "type": "text", "id": "trust_1", "label": "Tillitslinje 1" },
+    { "type": "text", "id": "trust_2", "label": "Tillitslinje 2" },
+    { "type": "text", "id": "trust_3", "label": "Tillitslinje 3" },
+    { "type": "text", "id": "trust_4", "label": "Tillitslinje 4" },
+    { "type": "text", "id": "button_grid", "label": "Knapp til produktene", "default": "Se maskene" },
+    { "type": "text", "id": "button_guide", "label": "Knapp til guiden", "default": "Hvilken passer meg?" },
+
+    { "type": "header", "content": "Produktkort" },
+    { "type": "text", "id": "card_button", "label": "Kortknapp", "default": "Se masken" },
+
+    { "type": "header", "content": "Guide" },
+    { "type": "text", "id": "what_heading", "label": "Hva er … (overskrift)" },
+    { "type": "richtext", "id": "what_text", "label": "Hva er … (tekst)" },
+    { "type": "text", "id": "choose_heading", "label": "Slik velger du (overskrift)" },
+    { "type": "text", "id": "mature_heading", "label": "Moden hud (overskrift)" },
+    { "type": "richtext", "id": "mature_text", "label": "Moden hud (tekst)" },
+    { "type": "text", "id": "use_heading", "label": "Slik bruker du den (overskrift)" },
+    { "type": "textarea", "id": "use_note", "label": "Merknad under trinnene" },
+
+    { "type": "header", "content": "Spørsmål og svar" },
+    { "type": "text", "id": "faq_heading", "label": "Overskrift", "default": "Spørsmål og svar" },
+
+    { "type": "header", "content": "Avsluttende CTA" },
+    { "type": "text", "id": "cta_heading", "label": "Overskrift" },
+    { "type": "textarea", "id": "cta_text", "label": "Tekst" },
+    { "type": "text", "id": "cta_button", "label": "Knapp", "default": "Velg din maske" }
+  ],
+  "blocks": [
+    {
+      "type": "product_note",
+      "name": "Produktnotat («Velg denne hvis …»)",
+      "limit": 8,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Produkt" },
+        { "type": "text", "id": "name", "label": "Kortnavn", "info": "Tomt = produkttittelen." },
+        { "type": "textarea", "id": "text", "label": "Velg denne hvis …" }
+      ]
+    },
+    {
+      "type": "choice",
+      "name": "Slik velger du: punkt",
+      "limit": 8,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Tittel" },
+        { "type": "textarea", "id": "text", "label": "Tekst" }
+      ]
+    },
+    {
+      "type": "step",
+      "name": "Slik bruker du den: trinn",
+      "limit": 8,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Trinn" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Spørsmål",
+      "limit": 20,
+      "settings": [
+        { "type": "text", "id": "question", "label": "Spørsmål" },
+        { "type": "textarea", "id": "answer", "label": "Svar", "info": "Ren tekst. Samme tekst vises på siden og i FAQ-schemaet." }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "SK Rødlysmaske-guide" }
+  ]
+}
+{% endschema %}

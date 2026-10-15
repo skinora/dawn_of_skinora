@@ -1,0 +1,181 @@
+{
+  "sections": {
+    "guide": {
+      "type": "sk-collection-guide",
+      "blocks": {
+        "note_face": {
+          "type": "product_note",
+          "settings": {
+            "product": "skinora-radiance-face",
+            "name": "Radiance Face",
+            "text": "Velg denne hvis du vil ha fastere, jevnere og mer uthvilt hud i ansiktet. 630, 830 og 1072 nm."
+          }
+        },
+        "note_set": {
+          "type": "product_note",
+          "settings": {
+            "product": "skinora-radiance-face-neck-1",
+            "name": "Radiance Face + Neck",
+            "text": "Velg dette hvis du vil behandle hele området fra panne til dekolletasje. Det mest komplette valget."
+          }
+        },
+        "note_neck": {
+          "type": "product_note",
+          "settings": {
+            "product": "skinora-radiance-neck",
+            "name": "Radiance Neck",
+            "text": "Velg denne hvis hals og dekolletasje er det du legger mest merke til. 630, 830 og 1072 nm."
+          }
+        },
+        "note_clear": {
+          "type": "product_note",
+          "settings": {
+            "product": "skinora-clear",
+            "name": "Clear",
+            "text": "Velg denne hvis du har problemhud og vil ha roligere hud med færre utbrudd. 415, 630 og 830 nm."
+          }
+        },
+        "choice_1": {
+          "type": "choice",
+          "settings": {
+            "title": "1. Se på bølgelengdene, ikke fargene.",
+            "text": "Mange masker reklamerer med sju farger. Det som betyr noe, er om bølgelengdene er valgt med tanke på huden din. Radiance Face bruker 630, 830 og 1072 nm – rødt lys og to nivåer av nær-infrarødt lys."
+          }
+        },
+        "choice_2": {
+          "type": "choice",
+          "settings": {
+            "title": "2. Velg etter huden din.",
+            "text": "Moden hud og problemhud trenger ulike bølgelengder. Derfor har vi egne masker for hvert behov i stedet for én maske med mange programmer."
+          }
+        },
+        "choice_3": {
+          "type": "choice",
+          "settings": {
+            "title": "3. Passform og dekning.",
+            "text": "Lyset virker best når masken ligger nær huden. Glem ikke halsen – det er der mange først ser tegn til alder."
+          }
+        },
+        "choice_4": {
+          "type": "choice",
+          "settings": {
+            "title": "4. Kjøp med trygghet.",
+            "text": "Velg et merke som står bak produktet. Hos oss kan du prøve i 30 dager, og du får pengene tilbake hvis masken ikke er noe for deg."
+          }
+        },
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "text": "Rens huden og tørk den."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "text": "Ta på masken og start behandlingen – 10–15 minutter (Clear: 10 minutter)."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "text": "Fortsett med den vanlige hudpleien din."
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Hva er forskjellen på rødlysmaske og LED-maske?",
+            "answer": "En rødlysmaske er en LED-maske som bruker rødt og ofte nær-infrarødt lys. «LED-maske» er samlebetegnelsen og kan også omfatte masker med blått og andre farger. Alle Skinora-maskene er rødlysmasker. Clear har i tillegg blått lys (415 nm) for problemhud."
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Virker rødlysmaske?",
+            "answer": "Rødt og nær-infrarødt lys er studert i en rekke kliniske studier på hud. Resultatene varierer fra person til person, og forbedringen kommer gradvis ved jevnlig bruk – ikke etter én behandling."
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor ofte skal jeg bruke masken?",
+            "answer": "Bruk masken 10–15 minutter, 3–5 ganger i uken. Clear brukes i 10 minutter. De fleste får best resultat med en jevn rutine over 6–8 uker."
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvilken maske skal jeg velge?",
+            "answer": "Vil du ha fastere og mer uthvilt hud i ansiktet, velg Radiance Face. Vil du ha med hals og dekolletasje, velg settet Face + Neck. Har du problemhud, velg Clear."
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Hva hvis den ikke passer meg?",
+            "answer": "Du kan prøve masken i 30 dager. Hvis den ikke er noe for deg, får du pengene tilbake."
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "Hvor raskt får jeg masken?",
+            "answer": "Vi sender fra norsk lager, og leveringstiden er 2–4 virkedager. Frakten er gratis i hele Norge."
+          }
+        },
+        "faq_7": {
+          "type": "faq",
+          "settings": {
+            "question": "Kan jeg dele opp betalingen?",
+            "answer": "Ja, du kan betale med Klarna i kassen."
+          }
+        }
+      },
+      "block_order": [
+        "note_face",
+        "note_set",
+        "note_neck",
+        "note_clear",
+        "choice_1",
+        "choice_2",
+        "choice_3",
+        "choice_4",
+        "step_1",
+        "step_2",
+        "step_3",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7"
+      ],
+      "settings": {
+        "heading": "Rødlysmaske",
+        "intro": "LED-masker med rødt og nær-infrarødt lys, utviklet i Norge for hud som har begynt å endre seg. Ti minutter om kvelden, hjemme hos deg.",
+        "trust_1": "Prøv i 30 dager – pengene tilbake",
+        "trust_2": "Gratis frakt i hele Norge",
+        "trust_3": "Del opp betalingen med Klarna",
+        "trust_4": "Utviklet i Norge",
+        "button_grid": "Se maskene",
+        "button_guide": "Hvilken passer meg?",
+        "card_button": "Se masken",
+        "what_heading": "Hva er en rødlysmaske?",
+        "what_text": "<p>En rødlysmaske er en LED-maske som gir huden rødt og nær-infrarødt lys. Lyset trenger inn i huden uten varme og uten å skade overflaten. Rødt og nær-infrarødt lys er studert i en rekke kliniske studier på hud, og derfor brukes det i dag både på klinikk og hjemme.</p><p>Forskjellen mellom maskene ligger ikke i hvor mange farger de har, men i hvilke bølgelengder som brukes, og om masken ligger tett nok mot huden.</p>",
+        "choose_heading": "Slik velger du rødlysmaske",
+        "mature_heading": "Laget for moden hud",
+        "mature_text": "<p>Mange LED-masker selges som et trendprodukt. Skinora er laget for kvinner med hud som har begynt å endre seg, og som vil ha en enkel kveldsrutine med noe som faktisk er gjennomtenkt. Ingen apper, ingen kompliserte programmer. Ta på masken, slapp av i ti minutter, og fortsett med hudpleien din.</p>",
+        "use_heading": "Slik bruker du den",
+        "use_note": "Bruk masken 3–5 ganger i uken. Lysbehandling virker gradvis, så bruk den jevnlig i 6–8 uker før du vurderer resultatet.",
+        "faq_heading": "Spørsmål og svar",
+        "cta_heading": "Prøv i 30 dager.",
+        "cta_text": "Bruk masken hjemme i en måned. Er du ikke fornøyd, får du pengene tilbake.",
+        "cta_button": "Velg din maske"
+      }
+    }
+  },
+  "order": [
+    "guide"
+  ]
+}

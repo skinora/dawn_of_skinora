@@ -1,0 +1,362 @@
+/* sk-collection-guide — kategoriside som sammenligner og selger.
+   Kun tokens fra typography.css. Ingen !important, ingen rem på font-size. */
+
+.sk-cg {
+  color: var(--ink-700);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  background: var(--paper-0);
+}
+
+.sk-cg__wrap {
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+.sk-cg__band {
+  padding-block: var(--space-section-md);
+}
+
+.sk-cg__band--tint {
+  background: var(--paper-150);
+}
+
+.sk-cg h1,
+.sk-cg h2,
+.sk-cg h3 {
+  font-family: var(--ff-serif);
+  font-weight: var(--fw-regular);
+  color: var(--ink-900);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+
+.sk-cg h1 {
+  font-size: var(--fs-hero);
+  line-height: var(--lh-tight);
+}
+
+.sk-cg h2 {
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-snug);
+}
+
+.sk-cg h3 {
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+}
+
+.sk-cg p {
+  margin: 0;
+}
+
+.sk-cg__eyebrow {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--ink-500);
+  margin-bottom: var(--space-3);
+}
+
+/* ---------- Hero ---------- */
+.sk-cg__hero {
+  padding-block: var(--space-section-md) var(--space-section-sm);
+  text-align: center;
+}
+
+.sk-cg__intro {
+  max-width: var(--measure-intro);
+  margin: var(--space-4) auto 0;
+  font-size: var(--fs-lg);
+  color: var(--ink-500);
+}
+
+.sk-cg__trust {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-5);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  font-size: var(--fs-xs);
+  color: var(--ink-500);
+}
+
+.sk-cg__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.sk-cg__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: var(--space-3) var(--space-6);
+  border: 1px solid var(--ink-700);
+  border-radius: 0;
+  background: var(--ink-700);
+  color: var(--paper-0);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--lh-relaxed);
+  text-decoration: none;
+}
+
+.sk-cg__btn:hover {
+  background: var(--ink-900);
+  border-color: var(--ink-900);
+}
+
+.sk-cg__btn--ghost {
+  background: transparent;
+  color: var(--ink-700);
+}
+
+.sk-cg__btn--ghost:hover {
+  background: var(--paper-150);
+  color: var(--ink-900);
+}
+
+/* ---------- Produktgrid ---------- */
+.sk-cg__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+}
+
+.sk-cg__card {
+  display: flex;
+  flex-direction: column;
+  background: var(--paper-0);
+  border: 1px solid var(--ink-300);
+}
+
+.sk-cg__card-media {
+  display: block;
+  background: var(--paper-150);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.sk-cg__card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sk-cg__card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+}
+
+.sk-cg__card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.sk-cg__card-note {
+  flex: 1;
+  color: var(--ink-500);
+  font-size: var(--fs-sm);
+}
+
+.sk-cg__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  color: var(--ink-900);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+}
+
+.sk-cg__price s {
+  color: var(--ink-400);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+}
+
+.sk-cg__save {
+  color: var(--accent-green);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+}
+
+.sk-cg__klarna {
+  color: var(--ink-400);
+  font-size: var(--fs-xs);
+}
+
+.sk-cg__card .sk-cg__btn {
+  width: 100%;
+}
+
+/* ---------- Guide ---------- */
+.sk-cg__prose {
+  max-width: var(--measure-body);
+}
+
+.sk-cg__stack h2 + .sk-cg__prose {
+  margin-top: var(--space-4);
+}
+
+.sk-cg__prose p + p {
+  margin-top: var(--space-4);
+}
+
+.sk-cg__stack {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.sk-cg__list {
+  list-style: none;
+  display: grid;
+  gap: var(--space-5);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  max-width: var(--measure-wide);
+}
+
+.sk-cg__list strong {
+  display: block;
+  color: var(--ink-900);
+  font-weight: var(--fw-semibold);
+}
+
+.sk-cg__steps {
+  display: grid;
+  gap: var(--space-5);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: sk-cg-step;
+  max-width: var(--measure-wide);
+}
+
+.sk-cg__steps li {
+  position: relative;
+  padding-left: var(--space-7);
+  counter-increment: sk-cg-step;
+}
+
+.sk-cg__steps li::before {
+  content: counter(sk-cg-step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-6);
+  height: var(--space-6);
+  border: 1px solid var(--ink-300);
+  border-radius: 50%;
+  color: var(--ink-900);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-none);
+}
+
+.sk-cg__note {
+  margin-top: var(--space-5);
+  color: var(--ink-500);
+  max-width: var(--measure-body);
+}
+
+/* ---------- FAQ ---------- */
+.sk-cg__faq {
+  max-width: var(--measure-wide);
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--ink-300);
+}
+
+.sk-cg__faq details {
+  border-bottom: 1px solid var(--ink-300);
+}
+
+.sk-cg__faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+  color: var(--ink-700);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  list-style: none;
+}
+
+.sk-cg__faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.sk-cg__faq summary::after {
+  content: '+';
+  flex: none;
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-none);
+}
+
+.sk-cg__faq details[open] summary::after {
+  content: '\2212';
+}
+
+.sk-cg__faq-a {
+  padding-bottom: var(--space-4);
+  color: var(--ink-500);
+  max-width: var(--measure-body);
+}
+
+/* ---------- Avsluttende CTA ---------- */
+.sk-cg__cta {
+  text-align: center;
+}
+
+.sk-cg__cta p {
+  max-width: var(--measure-intro);
+  margin: var(--space-3) auto 0;
+  color: var(--ink-500);
+}
+
+.sk-cg__cta .sk-cg__actions {
+  margin-top: var(--space-5);
+}
+
+@media (min-width: 700px) {
+  .sk-cg__wrap {
+    padding-inline: var(--space-6);
+  }
+
+  .sk-cg__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .sk-cg__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .sk-cg__band {
+    padding-block: var(--space-section-lg);
+  }
+}
