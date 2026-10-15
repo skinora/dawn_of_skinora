@@ -39,10 +39,10 @@
     {%- endif -%}
     <div class="sk-cg__actions">
       {%- if cg_s.button_grid != blank -%}
-        <a class="sk-cg__btn" href="#velg-maske">{{ cg_s.button_grid }}</a>
+        <a class="btn btn--primary" href="#velg-maske">{{ cg_s.button_grid }}</a>
       {%- endif -%}
       {%- if cg_s.button_guide != blank -%}
-        <a class="sk-cg__btn sk-cg__btn--ghost" href="#velg-riktig">{{ cg_s.button_guide }}</a>
+        <a class="btn btn--secondary" href="#velg-riktig">{{ cg_s.button_guide }}</a>
       {%- endif -%}
     </div>
   </div>
@@ -92,7 +92,7 @@
               {%- if cg_klarna != blank -%}
                 <p class="sk-cg__klarna">eller {{ cg_klarna }} kr/mnd med Klarna</p>
               {%- endif -%}
-              <a class="sk-cg__btn" href="{{ cg_url }}">{{ cg_s.card_button }}</a>
+              <a class="btn btn--primary" href="{{ cg_url }}">{{ cg_s.card_button }}</a>
             </div>
           </li>
         {%- endfor -%}
@@ -169,7 +169,7 @@
         {%- if cg_s.cta_text != blank -%}<p>{{ cg_s.cta_text }}</p>{%- endif -%}
         {%- if cg_s.cta_button != blank -%}
           <div class="sk-cg__actions">
-            <a class="sk-cg__btn" href="#velg-maske">{{ cg_s.cta_button }}</a>
+            <a class="btn btn--primary" href="#velg-maske">{{ cg_s.cta_button }}</a>
           </div>
         {%- endif -%}
       </div>
