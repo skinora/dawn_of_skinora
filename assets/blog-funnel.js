@@ -18,8 +18,8 @@
 
        Shopify.analytics.publish('blog_cta_click', {
          article: 'nyheter/torr-hud-overgangsalder',
-         variant: 'kompakt' | 'full' | 'sticky',
-         type:    'produkt' | 'quiz' | 'epost',
+         variant: 'kompakt' | 'full' | 'sticky' | 'sosial',
+         type:    'produkt' | 'quiz' | 'epost' | 'sosial',
          target:  '/products/skinora-radiance-face'
        })
 
@@ -114,17 +114,35 @@
     });
   }
 
-  /* Klaviyo-popup / -teaser. Ligger på z-index 90000 og eier bunnen av
+  /* Klaviyo-popup eller -flyout. Ligger på z-index 90000 og eier bunnen av
      skjermen når den er oppe. Vårt eget innbygde skjema (inne i et
-     funnel-kort) teller ikke — det er en del av sidens innhold. */
+     funnel-kort) teller ikke — det er en del av sidens innhold.
+
+     Teaser-fliken («FÅ 10 % RABATT») er permanent synlig på mobil og bærer
+     samme klasser (kl-teaser / kl-private-reset) som popupen. Å teste på
+     klassenavn alene holdt baren skjult for alle besøkende. Fliken står
+     loddrett på venstre kant (ca. 50 × 184 px) og kolliderer ikke med baren.
+     Et Klaviyo-element teller derfor bare som «oppe» når det enten dekker en
+     vesentlig del av skjermen (popup) eller er bred og når ned i barens felt
+     nederst (flyout). En smal flik teller aldri, uansett høyde på skjermen. */
+  var BAR_ZONE = 96; // px nederst: barens høyde (ca. 69) + safe-area-slingring
+  var BIG_SHARE = 0.25; // andel av viewportflaten som regnes som «popup»
+
   function klaviyoOverlayOpen() {
     var nodes = document.querySelectorAll(
       '[class*="kl-private-reset"], [class*="kl-teaser"], div[data-testid="klaviyo-form"]'
     );
+    var vw = window.innerWidth;
+    var vh = window.innerHeight;
     for (var i = 0; i < nodes.length; i++) {
       var n = nodes[i];
       if (n.closest('.blog-funnel-card')) continue;
-      if (n.offsetParent !== null && n.getBoundingClientRect().height > 0) return true;
+      if (n.offsetParent === null && window.getComputedStyle(n).position !== 'fixed') continue;
+      var r = n.getBoundingClientRect();
+      if (r.height <= 0 || r.width <= 0) continue;
+      if (r.bottom <= 0 || r.top >= vh || r.right <= 0 || r.left >= vw) continue;
+      if (r.width * r.height >= vw * vh * BIG_SHARE) return true;
+      if (r.bottom > vh - BAR_ZONE && r.width >= vw * 0.5) return true;
     }
     return false;
   }

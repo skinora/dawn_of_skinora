@@ -148,6 +148,7 @@
   grid-template-columns: 88px minmax(0, 1fr);
   grid-template-areas:
     'media text'
+    'media meta'
     'media actions';
   column-gap: var(--space-4);
   row-gap: var(--space-3);
@@ -192,6 +193,7 @@
     grid-template-columns: 64px minmax(0, 1fr);
     grid-template-areas:
       'media text'
+      'meta meta'
       'actions actions';
   }
 
@@ -203,6 +205,67 @@
   .blog-funnel-card--kompakt .blog-funnel-card__actions .lp-btn {
     width: 100%;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Pris + vurdering (variant produkt) — én liten linje under tittelen.
+   Pris regnes ut i Liquid (sk-lp-pricing), vurdering kommer fra samme
+   metafelt som produktsiden (sk-review-stats / sk-star-rating).
+   --------------------------------------------------------------------------- */
+.blog-funnel-card .blog-funnel-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+}
+
+.blog-funnel-card__price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.blog-funnel-card .blog-funnel-card__now {
+  font-weight: var(--fw-semibold);
+  color: var(--ink-900);
+}
+
+.blog-funnel-card .blog-funnel-card__was {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  color: var(--ink-400);
+  text-decoration: line-through;
+}
+
+.blog-funnel-card__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-xs);
+  color: var(--ink-500);
+}
+
+/* Stjernene bor i .sk-stars (sk-base.css) med egne marger og 17px. Kortet
+   vil ha dem mindre og uten luft, så linjen forblir lav. */
+.blog-funnel-card__meta .sk-stars {
+  --sk-star-size: 14px;
+  margin: 0;
+}
+
+.blog-funnel-card--kompakt .blog-funnel-card__rating-of {
+  display: none;
+}
+
+/* Kompakt: linjen er en egen gridrad (full kortbredde på mobil, så pris og
+   vurdering får plass på én linje). Negativ marg trekker den tett inntil
+   teksten over — row-gap er 12px, linjen skal bare ha 4. */
+.blog-funnel-card--kompakt .blog-funnel-card__meta {
+  grid-area: meta;
+  min-width: 0;
+  margin: calc(var(--space-2) * -1) 0 0;
 }
 
 /* ---------------------------------------------------------------------------
@@ -275,9 +338,34 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* Mobil: tabeller med 2–3 kolonner fyller rammen og bryter teksten i cellene.
+   Bare tabeller der første rad har fire eller flere celler beholder 520 px
+   minimumsbredde og ruller sidelengs inne i rammen. */
 @media (max-width: 749px) {
   .blog-funnel-tablewrap > table {
+    width: 100%;
+  }
+
+  .blog-funnel-tablewrap > table:not(:has(tr:first-child > :nth-child(n + 4))) :is(th, td) {
+    overflow-wrap: anywhere;
+  }
+
+  .blog-funnel-tablewrap > table:has(tr:first-child > :nth-child(n + 4)) {
     min-width: 520px;
+  }
+
+  /* Rullehint: en myk skygge på kanten der det finnes mer å se. De to
+     «cover»-lagene (local) følger innholdet og skjuler skyggen når rammen er
+     rullet helt til den kanten, eller når tabellen får plass uten å rulle.
+     Cover-fargen er artikkelens egen bakgrunn (.sk-blog-article). */
+  .blog-funnel-tablewrap {
+    --tablewrap-bg: var(--color-white, #ffffff);
+    --tablewrap-shadow: color-mix(in srgb, var(--ink-900) 22%, transparent);
+    background:
+      linear-gradient(to right, var(--tablewrap-bg), transparent) left center / 28px 100% no-repeat local,
+      linear-gradient(to left, var(--tablewrap-bg), transparent) right center / 28px 100% no-repeat local,
+      linear-gradient(to right, var(--tablewrap-shadow), transparent) left center / 12px 100% no-repeat scroll,
+      linear-gradient(to left, var(--tablewrap-shadow), transparent) right center / 12px 100% no-repeat scroll;
   }
 }
 
@@ -353,6 +441,34 @@
   -webkit-box-orient: vertical;
 }
 
+/* Produktvarianten: alltid én linje. Navnet krymper med ellipse, prisen og
+   «Se masken» står fast. Quiz-varianten beholder 2-linjers klipp over. */
+.blog-funnel-sticky__label--produkt {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.blog-funnel-sticky__name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.blog-funnel-sticky__tail {
+  flex: none;
+}
+
+/* Under 375 px er «Radiance Face · 3 690 kr · Se masken →» 11 px for bred i
+   fs-sm. Én størrelse ned (13 px) gir plass uten å brekke linjen. */
+@media (max-width: 374px) {
+  .blog-funnel-sticky__label--produkt {
+    font-size: var(--fs-xs);
+  }
+}
+
 .blog-funnel-sticky__arrow {
   flex: none;
 }
@@ -383,5 +499,82 @@
   .blog-funnel-sticky,
   .blog-funnel-sticky.is-visible {
     transition: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   «Følg Skinora» — Instagram og Facebook nederst i artikkelen
+   (snippets/blog-social-box.liquid). Samme rolige skall som kortene.
+   --------------------------------------------------------------------------- */
+.blog-social-box {
+  margin-top: var(--space-7);
+  padding: var(--space-5);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: var(--paper-50);
+  font-family: var(--ff-sans);
+  color: var(--ink-700);
+}
+
+.blog-social-box .blog-social-box__heading {
+  margin: 0 0 var(--space-1);
+  font-family: var(--ff-serif);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--ink-900);
+}
+
+.blog-social-box .blog-social-box__text {
+  margin: 0 0 var(--space-4);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+}
+
+.blog-social-box__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.blog-social-box .blog-social-box__link,
+.blog-social-box .blog-social-box__link:link,
+.blog-social-box .blog-social-box__link:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--ink-700);
+  border-radius: 999px;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  line-height: 1;
+  color: var(--ink-700);
+  text-decoration: none;
+}
+
+.blog-social-box .blog-social-box__link:hover,
+.blog-social-box .blog-social-box__link:focus-visible {
+  background: var(--ink-700);
+  color: var(--paper-0);
+}
+
+.blog-social-box__icon {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+}
+
+.blog-social-box__icon .icon {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 749px) {
+  .blog-social-box {
+    padding: var(--space-4);
   }
 }

@@ -9,8 +9,11 @@
   igjen tegn for tegn, så H2-attributter (id, class, anker) bevares uendret.
 
   PLASSERING
-    kompakt : rett etter det FØRSTE avsnittet med minst 120 tegn faktisk
-              brødtekst, uansett hvor i artikkelen det står.
+    kompakt : rett FØR første <h2>, så hele innledningen står samlet over
+              kortet. Har artikkelen ingen <h2>, eller ingen innledning
+              (intet avsnitt med minst 120 tegn før første <h2>), brukes
+              regelen under: rett etter det FØRSTE avsnittet med minst 120
+              tegn faktisk brødtekst, uansett hvor i artikkelen det står.
     full    : rett før H2-en som inneholder «Kilder».
               Fallback 1: før «Om denne artikkelen».
               Fallback 2: etter alt innholdet.
@@ -67,7 +70,29 @@
     prefiks i stedet for å settes sammen av chunks igjen — ellers ville en
     avsluttende </p> gått tapt.
   endcomment
-  if bfk_content contains '</p>'
+  comment
+    Innledning = minst ett avsnitt med 120+ tegn tekst FØR første <h2>. Da
+    settes plassholderen rett før første <h2>. Uten h2 eller uten innledning
+    (bare meta-linjen før h2) faller vi tilbake til gammel plassering under,
+    ellers havnet kortet rett under datostempelet, over alt innhold.
+  endcomment
+  assign bfk_h2_tag = '<h2'
+  assign bfk_intro = false
+  if bfk_content contains bfk_h2_tag
+    assign bfk_pre = bfk_content | split: bfk_h2_tag | first
+    assign bfk_pre_chunks = bfk_pre | split: '</p>'
+    for bfk_pre_chunk in bfk_pre_chunks
+      assign bfk_pre_txt = bfk_pre_chunk | strip_html | strip
+      if bfk_pre_txt.size >= 120
+        assign bfk_intro = true
+      endif
+    endfor
+  endif
+
+  if bfk_intro
+    assign bfk_rest = bfk_content | remove_first: bfk_pre
+    assign bfk_content = bfk_pre | append: bfk_slot | append: bfk_rest
+  elsif bfk_content contains '</p>'
     assign bfk_chunks = bfk_content | split: '</p>'
     assign bfk_cut = 0
     for bfk_chunk in bfk_chunks
