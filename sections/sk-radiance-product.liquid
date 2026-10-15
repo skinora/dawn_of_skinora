@@ -2115,7 +2115,8 @@
             så søkeordet er en del av overskriften uten å gjøre tittelen lang.
             Tomt felt = kun merkenavnet, som før.
           {%- endcomment -%}
-          {%- assign sk_h1_type = product.metafields.custom.h1_produkttype.value | strip -%}
+          {%- comment -%} H1-undertittel: custom.h1_suffix vinner, deretter custom.h1_produkttype. Tomt = kun produkttittel. {%- endcomment -%}
+          {%- assign sk_h1_type = product.metafields.custom.h1_suffix.value | default: product.metafields.custom.h1_produkttype.value | strip -%}
           <h1 class="sk-product-title">
             {{ product_info.radiance_heading.value | default: product.title }}
             {%- if sk_h1_type != blank -%}

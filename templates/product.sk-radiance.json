@@ -13,7 +13,7 @@
       "type": "sk-radiance-product",
       "settings": {
         "ce_text": "CE-merket",
-        "demand_show": true,
+        "demand_show": false,
         "demand_text": "Stor pågang – disse forsvinner raskt",
         "honesty_show": true,
         "honesty_heading": "Fastpris — 365 dager i året.",
