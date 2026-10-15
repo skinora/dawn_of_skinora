@@ -93,28 +93,67 @@
     assign bfk_rest = bfk_content | remove_first: bfk_pre
     assign bfk_content = bfk_pre | append: bfk_slot | append: bfk_rest
   elsif bfk_content contains '</p>'
+    comment
+      Kortet skal ligge på toppnivå i brødteksten, aldri inne i en
+      blockquote, liste eller tabell (et kort inni et sitat arver sitatets
+      innrykk og kantlinje). Derfor holdes det regnskap over åpne
+      blockquote/ul/ol/table-tagger mens avsnittene gås gjennom: et avsnitt
+      godtas bare når regnskapet er null etter dets </p>.
+    endcomment
     assign bfk_chunks = bfk_content | split: '</p>'
     assign bfk_cut = 0
+    assign bfk_cut_any = 0
+    assign bfk_depth = 0
     for bfk_chunk in bfk_chunks
-      assign bfk_txt = bfk_chunk | strip_html | strip
-      if bfk_cut == 0 and bfk_txt.size >= 120
-        assign bfk_cut = forloop.index
+      assign bfk_opens = bfk_chunk | split: '<blockquote' | size | minus: 1
+      assign bfk_n = bfk_chunk | split: '<ul' | size | minus: 1
+      assign bfk_opens = bfk_opens | plus: bfk_n
+      assign bfk_n = bfk_chunk | split: '<ol' | size | minus: 1
+      assign bfk_opens = bfk_opens | plus: bfk_n
+      assign bfk_n = bfk_chunk | split: '<table' | size | minus: 1
+      assign bfk_opens = bfk_opens | plus: bfk_n
+      assign bfk_closes = bfk_chunk | split: '</blockquote>' | size | minus: 1
+      assign bfk_n = bfk_chunk | split: '</ul>' | size | minus: 1
+      assign bfk_closes = bfk_closes | plus: bfk_n
+      assign bfk_n = bfk_chunk | split: '</ol>' | size | minus: 1
+      assign bfk_closes = bfk_closes | plus: bfk_n
+      assign bfk_n = bfk_chunk | split: '</table>' | size | minus: 1
+      assign bfk_closes = bfk_closes | plus: bfk_n
+      assign bfk_depth = bfk_depth | plus: bfk_opens | minus: bfk_closes
+      if bfk_depth == 0
+        assign bfk_txt = bfk_chunk | strip_html | strip
+        if bfk_cut == 0 and bfk_txt.size >= 120
+          assign bfk_cut = forloop.index
+        endif
+        if bfk_cut_any == 0
+          assign bfk_cut_any = forloop.index
+        endif
       endif
     endfor
     comment
-      Ingen avsnitt nådde terskelen — kort artikkel uten vesentlige avsnitt.
-      Bruk første </p>, altså gammel oppførsel.
+      Ingen toppnivå-avsnitt nådde terskelen: kortet settes før første <h2>
+      når artikkelen har en, ellers etter første toppnivå-avsnitt uansett
+      lengde. Finnes ingen toppnivå-avsnitt, kommer kortet øverst.
     endcomment
-    if bfk_cut == 0
-      assign bfk_cut = 1
+    if bfk_cut == 0 and bfk_content contains bfk_h2_tag
+      assign bfk_pre = bfk_content | split: bfk_h2_tag | first
+      assign bfk_rest = bfk_content | remove_first: bfk_pre
+      assign bfk_content = bfk_pre | append: bfk_slot | append: bfk_rest
+    else
+      if bfk_cut == 0
+        assign bfk_cut = bfk_cut_any
+      endif
+      if bfk_cut == 0
+        assign bfk_content = bfk_slot | append: bfk_content
+      else
+        assign bfk_head = ''
+        for bfk_chunk in bfk_chunks limit: bfk_cut
+          assign bfk_head = bfk_head | append: bfk_chunk | append: '</p>'
+        endfor
+        assign bfk_rest = bfk_content | remove_first: bfk_head
+        assign bfk_content = bfk_head | append: bfk_slot | append: bfk_rest
+      endif
     endif
-
-    assign bfk_head = ''
-    for bfk_chunk in bfk_chunks limit: bfk_cut
-      assign bfk_head = bfk_head | append: bfk_chunk | append: '</p>'
-    endfor
-    assign bfk_rest = bfk_content | remove_first: bfk_head
-    assign bfk_content = bfk_head | append: bfk_slot | append: bfk_rest
   else
     comment
       Ingen avsnitt i det hele tatt. Kortet skal likevel finnes — en

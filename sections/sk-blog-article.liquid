@@ -2,7 +2,7 @@
 {%- comment -%}
   Bloggtrakt: kontekstuelle CTA-kort, mobil sticky-bar og klikksporing.
   Begge filene lastes KUN herfra, og denne seksjonen brukes kun av
-  templates/article.blog-post.json — altså kun på artikkelsider.
+  templates/article.json og article.blog-post.json (identiske) — altså kun på artikkelsider.
 {%- endcomment -%}
 {{ 'blog-funnel.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'blog-funnel.js' | asset_url }}" defer></script>
@@ -268,14 +268,27 @@
         assign ld_url = ld_url | prepend: request.origin
       endunless
     -%}
-    {%- if sk_author_name != blank -%}
+    {%- comment -%}
+      «Skinora Redaksjonen» er en redaksjon, ikke en person: schema bruker da
+      Organization (Skinora). Person beholdes for navngitte forfattere, og
+      jobTitle tas med kun når innstillingen «Jobbtittel / rolle» er fylt ut —
+      ingen hardkodet tittel i koden.
+    {%- endcomment -%}
+    {%- assign ld_author_org = false -%}
+    {%- if sk_author_name == blank or sk_author_name == 'Skinora Redaksjonen' -%}
+      {%- assign ld_author_org = true -%}
+    {%- endif -%}
+    {%- unless ld_author_org -%}
       "author": {
         "@type": "Person",
         "name": {{ sk_author_name | json }},
-        "jobTitle": {{ section.settings.forfatter_tittel | default: 'Fagansvarlig hudpleie' | json }},
+        {%- if section.settings.forfatter_tittel != blank -%}
+          "jobTitle": {{ section.settings.forfatter_tittel | json }},
+        {%- endif -%}
         "url": {{ ld_url | json }}
       },
-    {%- else -%}
+    {%- endunless -%}
+    {%- if ld_author_org -%}
       {%- comment -%}
         Ingen navngitt person ennå → behold Organization. En Person-node med
         «Skinora» som name ville vært verre enn den vi erstattet: gyldig
@@ -285,7 +298,7 @@
       "author": {
         "@type": "Organization",
         "name": "Skinora",
-        "url": "{{ shop.url }}"
+        "url": "https://www.skinora.no"
       },
     {%- endif -%}
     "publisher": {
@@ -300,9 +313,17 @@
       "@type": "WebPage",
       "@id": "{{ request.origin }}{{ article.url }}"
     },
-    "description": {{ article.excerpt_or_content | strip_html | truncate: 160 | json }},
-    "articleSection": {{ blog.title | json }},
-    "keywords": {{ article.tags | join: ', ' | json }}
+    {%- comment -%}
+      SEO-beskrivelsen fra Shopify-feltet «Beskrivelse» (global.description_tag).
+      Tomt felt: tekstutdrag kuttet på ordgrense, uten «...». «keywords» er
+      fjernet med vilje: den lekket interne tagger (seo-okt-2026 m.fl.).
+    {%- endcomment -%}
+    {%- assign ld_desc = article.metafields.global.description_tag | strip -%}
+    {%- if ld_desc == blank -%}
+      {%- assign ld_desc = article.excerpt_or_content | strip_html | strip_newlines | truncatewords: 28, '' | strip -%}
+    {%- endif -%}
+    "description": {{ ld_desc | json }},
+    "articleSection": {{ blog.title | json }}
   }
 </script>
 
