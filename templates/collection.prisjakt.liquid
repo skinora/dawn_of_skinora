@@ -17,7 +17,7 @@
 <rss xmlns:pj="https://schema.prisjakt.nu/ns/1.0" xmlns:g="http://base.google.com/ns/1.0" version="3.0">
 <channel>
 <title>{{ shop.name | escape }}</title>
-{{ lt }}link>{{ shop.url }}{{ lt }}/link>
+{{ lt }}link>{{ shop.url | escape }}{{ lt }}/link>
 <description>Produktfeed for Prisjakt</description>
 {%- for product in collection.products -%}
   {%- if product.gift_card? or product.price <= 0 -%}{%- continue -%}{%- endif -%}
@@ -42,9 +42,9 @@
 {%- if description != blank %}
 <g:description>{{ description | escape }}</g:description>
 {%- endif %}
-<g:link>{{ shop.url }}{{ variant.url }}</g:link>
+<g:link>{{ shop.url }}{{ variant.url | escape }}</g:link>
 {%- if image %}
-<g:image_link>{{ image_url }}</g:image_link>
+<g:image_link>{{ image_url | escape }}</g:image_link>
 {%- endif %}
 <g:price>{{ list_cents | divided_by: 100 }}.{{ list_cents | modulo: 100 | plus: 100 | append: '' | slice: 1, 2 }} NOK</g:price>
 {%- if variant.compare_at_price > variant.price %}
