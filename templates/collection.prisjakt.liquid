@@ -1,47 +1,68 @@
 {%- layout none -%}
+{%- comment -%}
+  Prisjakt XML (utvidelse av Google Merchant Product Data Specification).
+  Spec: https://developer.prisjakt.nu/docs/sections/for-shops/offer-inventory/feeds/offer/formats/prisjakt_xml/
+  Feltregler: .../feeds/offer/fields/<felt>/
+  Feed-URL: /collections/all?view=prisjakt
+
+  Alle felt i item har g:-prefiks (også g:title og g:link, i motsetning til
+  Googles RSS-variant). Påkrevd: g:id, g:title, g:link, g:price,
+  g:availability, g:condition. Priser regnes fra variantene i Shopify:
+  g:price = ordinærpris, g:sale_price = gjeldende pris når «Sammenlign med»
+  er høyere enn prisen.
+{%- endcomment -%}
 {%- paginate collection.products by 250 -%}
 {%- assign lt = "<" -%}
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+<rss xmlns:pj="https://schema.prisjakt.nu/ns/1.0" xmlns:g="http://base.google.com/ns/1.0" version="3.0">
 <channel>
 <title>{{ shop.name | escape }}</title>
 {{ lt }}link>{{ shop.url }}{{ lt }}/link>
 <description>Produktfeed for Prisjakt</description>
 {%- for product in collection.products -%}
   {%- if product.gift_card? or product.price <= 0 -%}{%- continue -%}{%- endif -%}
-  {%- assign description = product.description | strip_html | strip_newlines | replace: '&nbsp;', ' ' | replace: '  ', ' ' | strip | truncate: 5000, '...' -%}
+  {%- comment -%} Beskrivelsen avkodes først (&amp; osv.) og escapes én gang, ellers vises «&amp;» bokstavelig i feeden. {%- endcomment -%}
+  {%- assign description = product.description | replace: '</p>', '</p> ' | replace: '</li>', '</li> ' | replace: '<br', ' <br' | strip_html | strip_newlines | replace: '&nbsp;', ' ' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' | replace: '  ', ' ' | strip | truncate: 5000, '' -%}
   {%- for variant in product.variants -%}
     {%- if variant.price <= 0 -%}{%- continue -%}{%- endif -%}
     {%- assign image = variant.featured_image | default: product.featured_image -%}
+    {%- assign image_url = image | image_url: width: 1200 -%}
+    {%- unless image_url contains '://' -%}{%- assign image_url = image_url | prepend: 'https:' -%}{%- endunless -%}
     {%- assign title = product.title -%}
     {%- unless product.has_only_default_variant -%}{%- assign title = title | append: ' - ' | append: variant.title -%}{%- endunless -%}
     {%- assign price_cents = variant.price | modulo: 100 -%}
     {%- assign list_cents = variant.price -%}
     {%- if variant.compare_at_price > variant.price -%}{%- assign list_cents = variant.compare_at_price -%}{%- endif -%}
-    {%- assign mpn = variant.sku | default: variant.id %}
+    {%- assign sku = variant.sku | strip -%}
+    {%- assign feed_id = sku | default: variant.id -%}
+    {%- assign gtin_len = variant.barcode | strip | size %}
 <item>
-<g:id>{{ variant.id }}</g:id>
-<title>{{ title | escape }}</title>
-<description>{{ description | escape }}</description>
-{{ lt }}link>{{ shop.url }}{{ variant.url }}{{ lt }}/link>
+<g:id>{{ feed_id | escape }}</g:id>
+<g:title>{{ title | escape }}</g:title>
+{%- if description != blank %}
+<g:description>{{ description | escape }}</g:description>
+{%- endif %}
+<g:link>{{ shop.url }}{{ variant.url }}</g:link>
 {%- if image %}
-<g:image_link>{{ image | image_url: width: 1200 }}</g:image_link>
+<g:image_link>{{ image_url }}</g:image_link>
 {%- endif %}
 <g:price>{{ list_cents | divided_by: 100 }}.{{ list_cents | modulo: 100 | plus: 100 | append: '' | slice: 1, 2 }} NOK</g:price>
 {%- if variant.compare_at_price > variant.price %}
 <g:sale_price>{{ variant.price | divided_by: 100 }}.{{ price_cents | plus: 100 | append: '' | slice: 1, 2 }} NOK</g:sale_price>
 {%- endif %}
 <g:availability>{% if variant.available %}in_stock{% else %}out_of_stock{% endif %}</g:availability>
-<g:brand>Skinora</g:brand>
 <g:condition>new</g:condition>
-<g:mpn>{{ mpn | escape }}</g:mpn>
-{%- if variant.barcode != blank %}
-<g:gtin>{{ variant.barcode | escape }}</g:gtin>
+<g:brand>Skinora</g:brand>
+{%- if sku != blank %}
+<g:mpn>{{ sku | escape }}</g:mpn>
+{%- endif %}
+{%- if gtin_len == 8 or gtin_len == 12 or gtin_len == 13 or gtin_len == 14 %}
+<g:gtin>{{ variant.barcode | strip | escape }}</g:gtin>
 {%- endif %}
 <g:shipping>
 <g:country>NO</g:country>
-<g:service>PostNord</g:service>
 <g:price>0.00 NOK</g:price>
+<g:carrier>PostNord</g:carrier>
 </g:shipping>
 </item>
   {%- endfor -%}
