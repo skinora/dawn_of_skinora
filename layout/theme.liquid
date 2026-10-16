@@ -727,6 +727,11 @@
             "@type": "Organization",
             "@id": {{ shop.url | append: '#organization' | json }},
             "name": "Skinora",
+            "legalName": "Providento AS",
+            "description": "Skinora er et norsk merke for LED-masker med rødt og nær-infrarødt lys til ansikt og hals, utviklet i Norge.",
+            {%- if settings.schema_org_number != blank %}
+            "identifier": {{ settings.schema_org_number | json }},
+            {%- endif %}
             "url": {{ shop.url | json }},
             "logo": {
               "@type": "ImageObject",
@@ -742,6 +747,11 @@
               {%- if settings.social_youtube_link != blank -%}{%- assign sk_socials = sk_socials | append: settings.social_youtube_link | append: '|' -%}{%- endif -%}
               {%- if settings.social_twitter_link != blank -%}{%- assign sk_socials = sk_socials | append: settings.social_twitter_link | append: '|' -%}{%- endif -%}
               {%- if settings.social_pinterest_link != blank -%}{%- assign sk_socials = sk_socials | append: settings.social_pinterest_link | append: '|' -%}{%- endif -%}
+              {%- assign sk_extra_lines = settings.schema_sameas_extra | newline_to_br | split: '<br />' -%}
+              {%- for sk_extra in sk_extra_lines -%}
+                {%- assign sk_extra_url = sk_extra | strip -%}
+                {%- if sk_extra_url contains '://' -%}{%- assign sk_socials = sk_socials | append: sk_extra_url | append: '|' -%}{%- endif -%}
+              {%- endfor -%}
               {%- assign sk_sameas = sk_socials | split: '|' | reject: '' -%}
               {%- for u in sk_sameas -%}{{ u | json }}{% unless forloop.last %}, {% endunless %}{%- endfor -%}
             ],
@@ -777,6 +787,26 @@
         ]
       }
     </script>
+
+    {%- comment -%}
+      AboutPage kun på om-siden. mainEntity peker på samme Organization-node
+      (@id) som grafen over, så siden og merket er én enhet.
+    {%- endcomment -%}
+    {%- if request.page_type == 'page' and page.handle == 'om-skinora' -%}
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "@id": {{ request.origin | append: page.url | append: '#aboutpage' | json }},
+          "url": {{ request.origin | append: page.url | json }},
+          "name": {{ page.title | json }},
+          "inLanguage": "nb-NO",
+          "isPartOf": { "@id": {{ shop.url | append: '#website' | json }} },
+          "about": { "@id": {{ shop.url | append: '#organization' | json }} },
+          "mainEntity": { "@id": {{ shop.url | append: '#organization' | json }} }
+        }
+      </script>
+    {%- endif -%}
 
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>

@@ -177,6 +177,39 @@
   {%- endif -%}
 </div>
 
+{%- comment -%}
+  CollectionPage + ItemList: gjør siden til en lesbar sammenligning for AI og
+  søkemotorer. Rekkefølgen er samlingens egen (position = plass i griden).
+{%- endcomment -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": {{ request.origin | append: collection.url | append: '#collectionpage' | json }},
+    "url": {{ request.origin | append: collection.url | json }},
+    "name": {{ cg_s.heading | default: collection.title | json }},
+    "description": {{ cg_s.intro | default: collection.description | strip_html | json }},
+    "inLanguage": "nb-NO",
+    "isPartOf": { "@id": {{ shop.url | append: '#website' | json }} },
+    "publisher": { "@id": {{ shop.url | append: '#organization' | json }} },
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": {{ collection.products.size }},
+      "itemListOrder": "https://schema.org/ItemListUnordered",
+      "itemListElement": [
+        {%- for cg_p in collection.products -%}
+          {
+            "@type": "ListItem",
+            "position": {{ forloop.index }},
+            "url": {{ request.origin | append: '/products/' | append: cg_p.handle | json }},
+            "name": {{ cg_p.title | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  }
+</script>
+
 {%- if cg_faqs.size > 0 -%}
   <script type="application/ld+json">
     {

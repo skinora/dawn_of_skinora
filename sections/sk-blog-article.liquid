@@ -297,12 +297,16 @@
       {%- endcomment -%}
       "author": {
         "@type": "Organization",
+        "@id": {{ shop.url | append: '#organization' | json }},
         "name": "Skinora",
-        "url": "https://www.skinora.no"
+        "url": {{ shop.url | json }}
       },
     {%- endif -%}
+    "inLanguage": "nb-NO",
+    "isPartOf": { "@id": {{ shop.url | append: '#website' | json }} },
     "publisher": {
       "@type": "Organization",
+      "@id": {{ shop.url | append: '#organization' | json }},
       "name": "Skinora",
       "logo": {
         "@type": "ImageObject",

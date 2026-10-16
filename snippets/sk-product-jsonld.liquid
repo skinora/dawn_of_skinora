@@ -52,6 +52,7 @@
   {
     "@context": "https://schema.org",
     "@type": "Product",
+    "@id": {{ request.origin | append: product.url | append: '#product' | json }},
     "name": {{ product.title | json }},
     "url": {{ request.origin | append: product.url | json }},
     "description": {{ pj_desc | json }},
@@ -64,9 +65,18 @@
     "brand": {
       "@type": "Brand",
       "name": "Skinora"
-    }
+    },
+    "manufacturer": { "@type": "Organization", "@id": {{ shop.url | append: '#organization' | json }}, "name": "Skinora" }
     {%- if pj_first.sku != blank -%}
       ,"sku": {{ pj_first.sku | json }}
+    {%- endif -%}
+    {%- if pj_first.sku != blank -%}
+      ,"mpn": {{ pj_first.sku | json }}
+    {%- endif -%}
+    {%- assign pj_gtin = pj_first.barcode | strip -%}
+    {%- assign pj_gtin_len = pj_gtin | size -%}
+    {%- if pj_gtin_len == 8 or pj_gtin_len == 12 or pj_gtin_len == 13 or pj_gtin_len == 14 -%}
+      ,"gtin": {{ pj_gtin | json }}
     {%- endif -%}
     {%- if pj_first.barcode != blank -%}
       ,"gtin": {{ pj_first.barcode | json }}
@@ -110,6 +120,7 @@
         {
           "@type": "Offer",
           "url": {{ request.origin | append: variant.url | json }},
+          "seller": { "@type": "Organization", "@id": {{ shop.url | append: '#organization' | json }}, "name": "Skinora" },
           "price": {{ variant.price | divided_by: 100.0 }},
           "priceCurrency": {{ cart.currency.iso_code | json }},
           "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",

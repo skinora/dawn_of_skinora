@@ -1356,6 +1356,18 @@
         "id": "social_vimeo_link",
         "label": "t:settings_schema.social-media.settings.social_vimeo_link.label",
         "placeholder": "t:settings_schema.social-media.settings.social_vimeo_link.info"
+      },
+      {
+        "type": "textarea",
+        "id": "schema_sameas_extra",
+        "label": "Flere profil-lenker til AI og søkemotorer (én per linje)",
+        "info": "Trustpilot, Google-profil, Prisjakt, LinkedIn osv. Legges i sameAs i Organization-schemaet sammen med lenkene over."
+      },
+      {
+        "type": "text",
+        "id": "schema_org_number",
+        "label": "Organisasjonsnummer (Providento AS)",
+        "info": "Skrives som vatID/identifier i Organization-schemaet. Tomt felt = utelatt."
       }
     ]
   },
