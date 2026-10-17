@@ -9,7 +9,6 @@ Dokumentasjon: https://developer.prisjakt.nu/docs/sections/for-shops/analytics/p
 ## Hva som ligger i repoet
 
 - `prisjakt-pixel/custom-pixel.js`: Prisjakts kode for Shopify Custom Pixel, med `PIXEL_ID` satt. Limes inn manuelt (se under).
-- `layout/theme.liquid`: reserveskript rett før `</head>` som lagrer `pjclid` som cart-attributt via `/cart/update.js`. Det trengs bare hvis kassen ligger på et annet domene enn butikken (`250e09-w5.myshopify.com` mot `skinora.no`). Det gjør ingen skade hvis domenene er like.
 
 ## Manuelt i Shopify-admin
 
@@ -31,4 +30,4 @@ Pikselen rapporterer et ekte kjøp, så testen krever et ekte klikk fra Prisjakt
 
 ## Kassedomene
 
-Jeg kunne ikke avgjøre fra temaet eller den offentlige siden om kassen kjører på `skinora.no` eller `250e09-w5.myshopify.com`. Derfor ligger reserveskriptet i `layout/theme.liquid`. Hvis du ser at kassen kjører på `skinora.no` (adressefeltet under betaling), er reserveskriptet unødvendig, men skadeløst. Merk at cart-attributter bare varer så lenge Shopifys handlekurv-cookie, som er kortere enn 30-dagersvinduet.
+Kassen kjører på `skinora.no`, samme domene som butikken. Da leser pikselen klikk-ID-en direkte fra nettleserens lagring, og reserveskriptet (pjclid som cart-attributt) trengs ikke. Det er derfor ikke lagt inn i temaet. Hvis kassen senere flyttes til et annet domene, må reserveskriptet fra Prisjakts dokumentasjon legges i `layout/theme.liquid` rett før `</head>`.

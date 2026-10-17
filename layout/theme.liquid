@@ -1414,23 +1414,6 @@
     </script>
 
     {% render 'sk-mobile-optimizations' %}
-    {%- comment -%}
-      Prisjakt PJ Pixel, reserve for kasse på annet domene: lagrer pjclid som
-      cart-attributt så den følger handlekurven gjennom kassen. Selve pikselen
-      limes inn i Shopify-admin (se prisjakt-pixel/README.md). Skadeløs når
-      butikk og kasse har samme domene.
-    {%- endcomment -%}
-    <script>
-      (function () {
-        var clid = new URLSearchParams(window.location.search).get('pjclid');
-        if (!clid) return;
-        fetch('/cart/update.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ attributes: { pjclid: clid } }),
-        });
-      })();
-    </script>
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
