@@ -238,18 +238,15 @@
     {%- endif -%}
     {%- comment -%}
       Product landing pages (/pages/skinora-clear, /pages/skinora-radiance-face)
-      duplicate /products/<handle>. They are in Shopify's sitemap (cannot be
-      removed), so they get canonical -> product page instead of noindex: the
-      product pages own organic SEO, LPs live for paid / email / direct traffic.
-      Other sk-lp pages (e.g. betaling) stay noindex, follow.
+      duplicate /products/<handle>. Tell Google to skip them — LPs live for
+      paid / email / direct traffic (and the ?view= A/B variants); the product
+      pages own organic SEO. Canonical was rejected: the LP content differs, so
+      Google may ignore it and index both. The sitemap warning in Bing is
+      cosmetic. The `follow` part lets internal link equity still flow.
     {%- endcomment -%}
     {%- assign sk_canonical = canonical_url -%}
     {%- if template.name == 'page' and template.suffix contains 'sk-lp' -%}
-      {%- if page.handle == 'skinora-clear' or page.handle == 'skinora-radiance-face' -%}
-        {%- assign sk_canonical = request.origin | append: '/products/' | append: page.handle -%}
-      {%- else -%}
-        <meta name="robots" content="noindex, follow">
-      {%- endif -%}
+      <meta name="robots" content="noindex, follow">
     {%- endif -%}
     {%- comment -%}
       Én kanonisk blogg-listeside: /pages/blogs (designet indeks i nav, med
