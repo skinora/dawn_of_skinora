@@ -238,23 +238,28 @@
     {%- endif -%}
     {%- comment -%}
       Product landing pages (/pages/skinora-clear, /pages/skinora-radiance-face)
-      duplicate /products/<handle>. Tell Google to skip them — LPs live for
-      paid / email / direct traffic; the product pages own organic SEO. The
-      `follow` part lets internal link equity (to cart, blog, related products)
-      still flow.
+      duplicate /products/<handle>. They are in Shopify's sitemap (cannot be
+      removed), so they get canonical -> product page instead of noindex: the
+      product pages own organic SEO, LPs live for paid / email / direct traffic.
+      Other sk-lp pages (e.g. betaling) stay noindex, follow.
     {%- endcomment -%}
+    {%- assign sk_canonical = canonical_url -%}
     {%- if template.name == 'page' and template.suffix contains 'sk-lp' -%}
-      <meta name="robots" content="noindex, follow">
+      {%- if page.handle == 'skinora-clear' or page.handle == 'skinora-radiance-face' -%}
+        {%- assign sk_canonical = request.origin | append: '/products/' | append: page.handle -%}
+      {%- else -%}
+        <meta name="robots" content="noindex, follow">
+      {%- endif -%}
     {%- endif -%}
     {%- comment -%}
       Én kanonisk blogg-listeside: /pages/blogs (designet indeks i nav, med
-      H1 + title). Den native blogg-forsiden /blogs/nyheter dupliserer den og
-      kan ikke 301-redirectes (Shopify redirecter kun 404-stier), så den settes
-      noindex. `follow` beholder lenkeflyt til artiklene. Artikkelsidene selv
-      (page_type == 'article') berøres ikke.
+      H1 + title). Den native blogg-forsiden /blogs/<handle> dupliserer den og
+      kan ikke 301-redirectes (Shopify redirecter kun 404-stier). Den står i
+      sitemapet, så den får canonical -> /pages/blogs i stedet for noindex.
+      Artikkelsidene selv (page_type == 'article') berøres ikke.
     {%- endcomment -%}
     {%- if request.page_type == 'blog' -%}
-      <meta name="robots" content="noindex, follow">
+      {%- assign sk_canonical = request.origin | append: '/pages/blogs' -%}
     {%- endif -%}
     {%- comment -%}
       Engelsk artikkel på nb-domene — noindex til den er oversatt. hreflang er
@@ -265,7 +270,7 @@
     {%- if request.page_type == 'article' and article.handle == 'nyheter/how-led-light-therapy-transforms-your-skin' -%}
       <meta name="robots" content="noindex, follow">
     {%- endif -%}
-    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="canonical" href="{{ sk_canonical }}">
 
     {%- comment -%}
       Open Graph article tags — gives Google + social platforms an explicit
