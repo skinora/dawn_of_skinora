@@ -302,7 +302,7 @@
 
 .sk-cproof__logo:last-child:nth-child(odd) { grid-column: 1 / -1; }
 
-.sk-cproof__logo img {
+.sk-cproof__logo img:not(.sk-cproof__logo-svg) {
   display: block;
   width: auto;
   max-width: 140px;
@@ -326,14 +326,17 @@
   mask: var(--sk-cproof-logo) center / contain no-repeat;
 }
 
-/* Inline SVG (snippets/sk-clinic-logo.liquid): fylt med currentColor. */
+/* SVG-logo som <img> (snippets/sk-clinic-logo.liquid). Fargen (#2d1b3d =
+   --ink-900) er bakt inn i fila; opacity gir samme tone som --ink-500.
+   object-fit: contain gir samme letterboxing som inline <svg> hadde. */
 /* Mobil: litt lavere, og aldri bredere enn kolonnen (~160px på 375). */
 .sk-cproof__logo-svg {
   display: block;
   width: auto;
   height: 28px;
   max-width: min(150px, 100%);
-  color: var(--ink-500);
+  object-fit: contain;
+  opacity: 0.72;
 }
 
 /* Logoer med symbol over/ved ordmerket trenger mer høyde for at teksten
