@@ -258,7 +258,13 @@
                   {% for type in shop.enabled_payment_types %}
                     {%- unless excluded_payment_types contains type -%}
                       <li class="list-payment__item">
-                        {{ type | payment_type_svg_tag }}
+                        <img
+                          src="{{ type | payment_type_img_url }}"
+                          alt="{{ type | replace: '_', ' ' | capitalize }}"
+                          width="38"
+                          height="24"
+                          loading="lazy"
+                        >
                       </li>
                     {%- endunless -%}
                   {% endfor %}
