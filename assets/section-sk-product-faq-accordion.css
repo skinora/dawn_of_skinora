@@ -1,0 +1,250 @@
+/* sk-product-faq-accordion — flyttet ut av sections/sk-product-faq-accordion.liquid.
+   Selektorene var scopet med {{ section.id }}; de bruker nå klassen .sk-product-faq-accordion
+   (satt på rotelementet i seksjonen). */
+
+/* ============================================
+   SKINORA — PRODUCT FAQ (LIGHT VERSION)
+   ============================================ */
+
+/* Nøytral lys bakgrunn + mørk tekst */
+.sk-product-faq-accordion {
+  background: #F7F7FA; /* subtilt, ikke helt hvit */
+  padding: 0 0 6rem;
+  color: var(--ink-900);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Kill Bootstrap-visuals inne i denne sekjsonen, beholder JS */
+.sk-product-faq-accordion .accordion,
+.sk-product-faq-accordion .accordion-item,
+.sk-product-faq-accordion .accordion-header,
+.sk-product-faq-accordion .accordion-button,
+.sk-product-faq-accordion .accordion-body,
+.sk-product-faq-accordion .accordion-collapse {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.sk-product-faq-accordion .accordion-button::after {
+  display: none !important;
+}
+
+.sk-product-faq-accordion .accordion-button:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* --- Main container --- */
+.sk-product-faq-accordion .sk-faq-accordion__container {
+  max-width: 880px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  justify-items: stretch;
+  position: relative;
+}
+
+.sk-product-faq-accordion .sk-faq-accordion__content {
+  max-width: 640px;
+}
+
+/* --- Right decorative image, nå mer subtil --- */
+/* --- Title --- */
+.sk-product-faq-accordion .sk-faq-accordion__title {
+  margin-bottom: 2.6rem;
+  letter-spacing: -0.4px;
+  color: var(--ink-900);
+}
+
+/* --- Accordion list --- */
+.sk-product-faq-accordion .sk-faq-accordion__accordion {
+  border: none;
+  margin-top: 1rem;
+}
+
+.sk-product-faq-accordion .sk-faq-accordion__item {
+  border: 1px solid rgba(168, 165, 195, 0.5);
+  border-radius: 14px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.sk-product-faq-accordion .sk-faq-accordion__header {
+  margin: 0;
+}
+
+/* --- FAQ Question header --- */
+.sk-product-faq-accordion .sk-faq-accordion__button {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 18px 18px;
+  color: var(--ink-900);
+  font-size: var(--sk-font-size-medium);
+  font-weight: 500;
+  text-align: left;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  transition: color 0.25s ease, background 0.45s ease;
+  cursor: pointer;
+  column-gap: 16px;
+  padding-inline: 0;
+  box-sizing: border-box;
+  min-height: 60px;
+  border-radius: 14px;
+}
+
+.sk-product-faq-accordion .sk-faq-accordion__button:hover {
+  color: var(--color-brand);
+  background: rgba(var(--color-brand-rgb), 0.06);
+}
+
+.sk-product-faq-accordion .sk-faq-accordion__button[aria-expanded="true"] {
+  background: rgba(var(--color-brand-rgb), 0.1);
+  color: var(--color-brand);
+}
+
+.sk-product-faq-accordion .sk-faq-accordion__question {
+  min-width: 0;
+  padding-right: 0;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+}
+
+/* --- Icon (brand-lilla) --- */
+.sk-product-faq-accordion .sk-faq-accordion__icon {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  color: var(--color-brand);
+  border: 1px solid rgba(var(--color-brand-rgb), 0.2);
+  background: rgba(var(--color-brand-rgb), 0.06);
+  box-shadow: none;
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  line-height: 1;
+  border-radius: 999px;
+}
+
+section.sk-product-faq-accordion .sk-faq-accordion__icon::before {
+  content: "+";
+  line-height: 1;
+  font-size: 1.8rem !important;
+  color: var(--color-brand) !important;
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  padding: 0;
+}
+
+.sk-product-faq-accordion .sk-faq-accordion__button[aria-expanded="true"] .sk-faq-accordion__icon {
+  color: rgba(var(--color-brand-rgb), 0.8);
+  background: rgba(var(--color-brand-rgb), 0.12);
+  border-color: rgba(var(--color-brand-rgb), 0.35);
+  transform: rotate(180deg);
+}
+
+.sk-product-faq-accordion .sk-faq-accordion__button[aria-expanded="true"] .sk-faq-accordion__icon::before {
+  content: "−";
+}
+
+/* --- The expanded text --- */
+.sk-product-faq-accordion .sk-faq-accordion__body {
+  padding: 4px 18px 16px;
+  margin-right: 0;
+  color: var(--ink-700);
+  font-size: 1.7rem;
+  line-height: 1.7;
+}
+
+.sk-product-faq-accordion .sk-faq-accordion__answer p {
+  margin-bottom: 1rem;
+}
+
+.sk-product-faq-accordion .sk-faq-accordion__answer p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- Read more button --- */
+.sk-product-faq-accordion .sk-faq-read-more-btn .sk-btn {
+  margin-top: 2.3rem;
+  gap: 10px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sk-product-faq-accordion .sk-faq-read-more-btn {
+  display: flex;
+  justify-content: center;
+}
+
+/* --- Mobile --- */
+@media (max-width: 900px) {
+  .sk-product-faq-accordion .sk-faq-accordion__container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .sk-product-faq-accordion .sk-faq-accordion__title {
+    font-size: var(--sk-font-size-2xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .sk-product-faq-accordion .sk-faq-accordion__button {
+    font-size: var(--sk-font-size-medium);
+    padding: 16px 14px;
+    min-height: 56px;
+  }
+
+  .sk-product-faq-accordion .sk-faq-accordion__question {
+    font-size: 1.4rem;
+    line-height: 1.35;
+  }
+
+  .sk-product-faq-accordion .sk-faq-accordion__icon {
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    font-size: 1.4rem;
+  }
+
+  section.sk-product-faq-accordion .sk-faq-accordion__icon::before {
+    font-size: 1.6rem !important;
+  }
+
+  .sk-product-faq-accordion .sk-faq-accordion__body {
+    padding: 4px 14px 14px;
+    font-size: 1.6rem;
+  }
+
+  .sk-product-faq-accordion .sk-faq-read-more-btn .sk-btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+@media screen and (max-width: 749px) {
+  .sk-section-heading {
+    font-size: var(--sk-mobile-heading-size);
+    line-height: var(--sk-mobile-heading-line);
+  }
+  .sk-section-body {
+    font-size: var(--sk-mobile-body-size);
+    line-height: var(--sk-mobile-body-line);
+  }
+}

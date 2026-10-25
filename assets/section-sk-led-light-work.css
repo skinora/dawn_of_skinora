@@ -1,0 +1,351 @@
+/* sk-led-light-work — flyttet ut av sections/sk-led-light-work.liquid.
+   Id-reglene (#sk-wavelengths-{{ section.id }}) ligger igjen i seksjonen:
+   de trenger id-spesifisiteten og kan ikke skrives statisk. */
+
+/* === SECTION WRAPPER === */
+.sk-wavelengths {
+  --sk-spacing-unit: 4px;
+  /* --sk-title-block-height fjernet: den laaste tittelblokken til fast hoeyde og klippet lange titler med line-clamp. */
+
+  /* Map section colors to existing theme tokens (no hex). */
+  --sk-color-brand: rgb(var(--color-foreground));
+  --sk-color-neutral: rgba(var(--color-foreground), 0.6);
+  --sk-color-neutral-dark: rgba(var(--color-foreground), 0.75);
+  --sk-color-border: rgba(var(--color-foreground), 0.12);
+  --sk-color-body: rgb(var(--color-foreground));
+  --sk-color-tag-text: rgb(var(--color-background));
+
+  padding: clamp(calc(var(--sk-spacing-unit) * 6), 4vw, calc(var(--sk-spacing-unit) * 8)) 0;
+  background: rgb(var(--color-background));
+}
+
+
+/* === DESKTOP GRID === */
+.sk-wavelengths__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(calc(var(--sk-spacing-unit) * 10), 6vw, calc(var(--sk-spacing-unit) * 12));
+  max-width: calc(var(--sk-spacing-unit) * 450);
+  margin: calc(var(--sk-spacing-unit) * 6) auto 0;
+  padding: 0 calc(var(--sk-spacing-unit) * 6);
+  align-items: start;
+}
+
+.sk-wavelengths__slider {
+  display: none;
+  margin-top: calc(var(--sk-spacing-unit) * 3);
+  position: relative;
+  padding: 0 clamp(calc(var(--sk-spacing-unit) * 4), 4vw, calc(var(--sk-spacing-unit) * 6));
+}
+
+.sk-wavelengths__empty {
+  text-align: center;
+  color: var(--sk-color-neutral);
+  font-size: 14px;
+  margin-top: calc(var(--sk-spacing-unit) * 4);
+}
+
+/* ============================================================
+   KORT — omskrevet. Det gamle designet var sentrert, avrundet, med
+   et flytende pill-merke over kortet og en shimmer-animasjon. Alt
+   tre er moenstre som daterer en side, og ingen av dem finnes ellers
+   i temaet.
+
+   Naa: venstrestilt redaksjonelt kort med skarpe hjoerner, som
+   resten av butikken. Boelgelengden — 630 nm, 830 nm, 1072 nm — er
+   loeftet ut av tittelen og satt i serif som kortets ankerpunkt.
+   Det er tallene posisjoneringen hviler paa; de laa begravd midt i
+   en sentrert h3 bak en |-separator.
+   ============================================================ */
+.sk-wavelength {
+  background: var(--paper-0);
+  border: 1px solid var(--hairline);
+  padding: 0 0 var(--space-4);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+}
+
+/* === BILDE — fyller kortets bredde, skarpe hjoerner === */
+.sk-wavelength__visual {
+  width: 100%;
+  margin: 0 0 var(--space-4);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--paper-50);
+}
+
+.sk-wavelength__visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* === TOPPRAD: eyebrow til venstre, merke til hoeyre ===
+   Merket laa foer som en fylt pille som svevde over kortkanten og
+   blinket. Naa en rolig markoer paa linje med eyebrow-en. */
+.sk-wavelength__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-inline: var(--space-4);
+}
+
+/* flex-wrap: naar eyebrow og merke ikke faar plass paa samme linje,
+   droppes merket ned i stedet for at eyebrow-en brekker midt i ordet.
+   "LED-TEKNOLOGI" + "AVANSERT TEKNOLOGI" er ~300 px med sperret versal,
+   som er mer enn kortets innhold har paa mobil. */
+.sk-wavelength__meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  padding-inline: var(--space-4);
+  margin-bottom: var(--space-2);
+}
+
+.sk-wavelength__eyebrow {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+  white-space: nowrap;
+  margin: 0;
+}
+
+.sk-tag {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--accent-clay);
+  white-space: nowrap;
+}
+
+/* === TITTEL: boelgelengde + loefte === */
+.sk-wavelength__title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sk-wavelength__nm {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+}
+
+.sk-wavelength__claim {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+  color: var(--ink-700);
+}
+
+/* === FORDELER ===
+   Ingen markoer foran punktene. Linjeavstanden skiller dem godt nok,
+   og en strek eller prikk foran hver linje tilfoerer bare stoey naar
+   punktene uansett staar under hverandre. */
+.sk-wavelength__benefits {
+  list-style: none;
+  padding: var(--space-4) var(--space-4) 0;
+  margin: var(--space-4) 0 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.sk-wavelength__benefits li {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+  color: var(--ink-500);
+  margin-bottom: var(--space-2);
+  padding: 0;
+}
+
+.sk-wavelength__benefits li:last-child {
+  margin-bottom: 0;
+}
+
+/* Scroll-snap track (mobile carousel). */
+.sk-llw-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  padding: calc(var(--sk-spacing-unit) * 7) 0 calc(var(--sk-spacing-unit) * 6);
+}
+.sk-llw-track::-webkit-scrollbar { display: none; }
+.sk-llw-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+}
+
+.sk-llw-dots {
+  position: static;
+  margin: calc(var(--sk-spacing-unit) * 1) auto 0;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--sk-spacing-unit) * 2);
+}
+
+.sk-llw-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin: 0;
+  background: var(--sk-color-brand);
+  opacity: 0.25;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.sk-llw-dot--active {
+  opacity: 1;
+  transform: scale(1.25);
+}
+
+.sk-wavelengths__arrow {
+  position: absolute;
+  top: 50%;
+  width: calc(var(--sk-spacing-unit) * 9);
+  height: calc(var(--sk-spacing-unit) * 9);
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  color: rgba(var(--color-foreground), 0.35);
+  font-size: 26px;
+  line-height: 1;
+  transform: translateY(-50%);
+  transition: color 0.2s ease, opacity 0.2s ease;
+  pointer-events: auto;
+  text-shadow: 0 3px 10px rgba(var(--color-shadow), 0.18);
+  padding: calc(var(--sk-spacing-unit) * 2);
+}
+
+.sk-wavelengths__arrow--prev {
+  left: calc(var(--sk-spacing-unit) * 3);
+}
+
+.sk-wavelengths__arrow--next {
+  right: calc(var(--sk-spacing-unit) * 3);
+}
+
+.sk-wavelengths__arrow:hover {
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+.sk-wavelengths__arrow[data-visible="false"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sk-wavelengths__arrow-icon {
+  width: calc(var(--sk-spacing-unit) * 4);
+  height: calc(var(--sk-spacing-unit) * 4);
+  border: 1.5px solid currentColor;
+  border-bottom: none;
+  border-left: none;
+  display: inline-block;
+  filter: drop-shadow(0 1px 2px rgba(var(--color-shadow), 0.15));
+}
+
+.sk-wavelengths__arrow--prev .sk-wavelengths__arrow-icon {
+  transform: rotate(225deg);
+}
+
+.sk-wavelengths__arrow--next .sk-wavelengths__arrow-icon {
+  transform: rotate(45deg);
+}
+
+
+
+/* === MOBILE SLIDER === */
+@media (max-width: 750px) {
+  /* Kanten av neste kort synlig. Var flex: 0 0 100%, altsaa noeyaktig
+     sporbredde — neste kort laa helt utenfor og ingenting antydet at
+     karusellen kunne dras. Kun mobil; over 750px staar den som foer. */
+  .sk-llw-slide {
+    flex: 0 0 85%;
+  }
+
+  .sk-wavelengths__grid {
+    display: none;
+  }
+
+  .sk-wavelengths__slider {
+    display: block;
+    margin-top: calc(var(--sk-spacing-unit) * -3);
+
+    /* Full-bleed implementation moved to wrapper (no horizontal scroll). */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    overflow-x: clip;
+    padding-left: calc(var(--sk-spacing-unit) * 6);
+    padding-right: calc(var(--sk-spacing-unit) * 6);
+  }
+
+  @supports not (overflow: clip) {
+    .sk-wavelengths__slider {
+      overflow-x: hidden;
+    }
+  }
+
+  .sk-wavelengths {
+    --sk-title-block-height: calc(var(--sk-spacing-unit) * 20);
+  }
+
+  .sk-wavelength {
+    padding: calc(var(--sk-spacing-unit) * 5) calc(var(--sk-spacing-unit) * 3);
+    margin-top: calc(var(--sk-spacing-unit) * -2);
+  }
+
+
+  .sk-wavelengths__arrow {
+    width: auto;
+    height: auto;
+    padding: calc(var(--sk-spacing-unit) * 4);
+    box-shadow: none;
+  }
+
+  .sk-wavelength__visual {
+    max-width: calc(var(--sk-spacing-unit) * 120);
+    width: 100%;
+    margin: 0 0 calc(var(--sk-spacing-unit) * 4);
+  }
+
+  /* Boelgelengden trappes ned et hakk paa mobil, men beholder serif og
+     ink-900 fra basisregelen. */
+  .sk-wavelength__nm {
+    font-size: var(--fs-lg);
+  }
+
+  /* Den gamle mobilregelen for fordelslisten satte font-family, stoerrelse
+     og farge paa nytt og overstyrte det nye kortdesignet — listen rendret
+     fortsatt i rgba(sk-color-body-text, .9) i stedet for --ink-500.
+     Den er fjernet; basisregelen gjelder paa alle bredder. */
+}

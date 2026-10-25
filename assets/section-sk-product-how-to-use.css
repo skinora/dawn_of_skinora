@@ -1,0 +1,233 @@
+/* sk-product-how-to-use — flyttet ut av sections/sk-product-how-to-use.liquid.
+   Selektorene var scopet med {{ section.id }}; de bruker nå klassen .sk-product-how-to-use
+   (satt på rotelementet i seksjonen). */
+
+  .sk-product-how-to-use {
+    --sk-space-2: 0.5rem;
+    --sk-space-3: 0.75rem;
+    --sk-space-4: 1rem;
+    --sk-space-5: 1.25rem;
+    --sk-space-6: 1.5rem;
+    --sk-space-7: 1.75rem;
+    --sk-space-8: 2rem;
+    --sk-space-10: 2.5rem;
+    --sk-space-12: 3rem;
+    padding: 0 0 var(--sk-space-12);
+    margin-top: 0;
+  }
+
+  .sk-product-how-to-use .sk-how-to-use__wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+    gap: clamp(2rem, 4vw, 4.5rem);
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    margin-inline: auto;
+    justify-content: center;
+  }
+
+  .sk-product-how-to-use .sk-how-to-use__left {
+    width: 100%;
+    min-width: 0;
+    grid-column: 2 / 3;
+  }
+
+  .sk-product-how-to-use .sk-how-to-use__content {
+    max-width: 560px;
+    position: relative;
+  }
+
+.sk-product-how-to-use .sk-how-to-use__image{
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  max-height: 640px;
+  background: rgb(var(--color-background));
+  border-radius: 16px;
+  width: 100%;
+  max-width: none;
+  grid-column: 1 / 2;
+  justify-self: stretch;
+}
+
+@media (min-width: 750px) {
+  .sk-product-how-to-use.sk-how-to-use--image-right .sk-how-to-use__image {
+    grid-column: 2 / 3;
+  }
+
+  .sk-product-how-to-use.sk-how-to-use--image-right .sk-how-to-use__left {
+    grid-column: 1 / 2;
+  }
+}
+
+
+  .sk-product-how-to-use .sk-how-to-use__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+  }
+
+  .sk-product-how-to-use .sk-how-to-use__heading {
+    text-align: inherit;
+    margin: 0;
+  }
+
+  .sk-product-how-to-use .sk-how-to-use__subtitle {
+    margin: 0 0 var(--sk-space-6);
+    color: rgba(var(--sk-color-body-text), 0.8);
+  }
+
+  .sk-product-how-to-use .sk-how-to-use__steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    padding-left: var(--sk-space-6);
+  }
+
+  .sk-product-how-to-use .sk-how-to-use__steps::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: var(--sk-space-2);
+    bottom: var(--sk-space-2);
+    width: 1px;
+    background: rgba(var(--sk-color-body-text), 0.16);
+  }
+
+  .sk-product-how-to-use .sk-how-to-use__step {
+    display: flex;
+    gap: var(--sk-space-5);
+    margin-bottom: var(--sk-space-6);
+  }
+  .sk-product-how-to-use .sk-how-to-use__step .sk-how-to-use__step-content strong {
+    font-weight: 600;
+    font-size: var(--sk-font-size-medium);
+  }
+  /* .sk-product-how-to-use .sk-how-to-use__step:first-child + .sk-how-to-use__step {
+    margin-bottom: 30px;
+  } */
+
+  .sk-product-how-to-use .sk-how-to-use__step:last-child {
+    margin-bottom: 0;
+  }
+
+  .sk-product-how-to-use .sk-how-to-use__step-number {
+    font-size: var(--fs-sm); /* var 1.2rem = 12px ved 10px rot */
+    line-height: 1.2;
+    font-weight: 400;
+    color: rgba(var(--sk-color-body-text), 0.45);
+    flex-shrink: 0;
+    width: 2.2rem;
+    margin-top: 0.15rem;
+  }
+
+  .sk-product-how-to-use .sk-how-to-use__step-content h3,
+  .sk-product-how-to-use .sk-how-to-use__step-content h4,
+  .sk-product-how-to-use .sk-how-to-use__step-content strong {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: rgb(var(--color-foreground));
+    margin: 0 0 0.5rem 0;
+    text-transform: none;
+    letter-spacing: 0.01em;
+  }
+
+  .sk-product-how-to-use .sk-how-to-use__step-content p {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: rgba(var(--sk-color-body-text), 0.9);
+    margin: 0;
+    max-width: 56ch;
+  }
+
+  .sk-product-how-to-use .sk-how-to-use__step-content h3 + p,
+  .sk-product-how-to-use .sk-how-to-use__step-content h4 + p,
+  .sk-product-how-to-use .sk-how-to-use__step-content strong + p {
+    margin-top: 0.5rem;
+  }
+
+  .sk-product-how-to-use .sk-how-to-use__step-number{
+    font-weight: 400;
+  }
+
+  @media only screen and (max-width: 749px) {
+    .sk-product-how-to-use {
+      padding: 0 0 var(--sk-space-10);
+    }
+
+    .sk-product-how-to-use .sk-how-to-use__image {
+      min-height: 0;
+      aspect-ratio: 4 / 3;
+      border-radius: 0;
+      max-height: none;
+      width: 100vw;
+      max-width: none;
+      margin-inline: calc(50% - 50vw);
+      overflow: clip; /* prevent iOS Safari from scrolling into 100vw overflow */
+    }
+
+    .sk-product-how-to-use .sk-how-to-use__image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .sk-product-how-to-use .sk-how-to-use__steps {
+      padding-left: var(--sk-space-5);
+    }
+  }
+
+  @media only screen and (max-width: 749px) {
+    .sk-product-how-to-use .sk-how-to-use__wrap {
+      grid-template-columns: 1fr;
+    }
+
+    .sk-product-how-to-use .sk-how-to-use__left {
+      grid-column: 1 / -1;
+    }
+
+    .sk-product-how-to-use .sk-how-to-use__image {
+      grid-column: 1 / -1;
+      justify-self: center;
+    }
+  }
+
+
+
+  @media only screen and (max-width: 435px) {
+    .sk-product-how-to-use .sk-how-to-use__heading {
+      margin: 0;
+    }
+    .sk-product-how-to-use .sk-how-to-use__step-number {
+      /* Var calc(var(--sk-font-size-xxs) * 0.8) = 10,9px. Stoerrelsen
+         arves naa fra --fs-sm i regelen lenger opp paa alle bredder. */
+      width: 2.2rem;
+    }
+
+  .sk-product-how-to-use .sk-how-to-use__step .sk-how-to-use__step-content strong {
+    font-size: var(--sk-font-size-medium);
+  }
+  .sk-product-how-to-use .sk-how-to-use__step .sk-how-to-use__step-content p {
+    font-size: var(--sk-font-size-xxs);
+    line-height: 1.6;
+  }
+
+
+
+  }
+  @media screen and (max-width: 749px) {
+    .sk-section-heading {
+      font-size: var(--sk-mobile-heading-size);
+      line-height: var(--sk-mobile-heading-line);
+    }
+    .sk-section-body {
+      font-size: var(--sk-mobile-body-size);
+      line-height: var(--sk-mobile-body-line);
+    }
+  }

@@ -1,0 +1,218 @@
+/* sk-product-why-choose — flyttet ut av sections/sk-product-why-choose.liquid.
+   Selektorene var scopet med {{ section.id }}; de bruker nå klassen .sk-product-why-choose
+   (satt på rotelementet i seksjonen). */
+
+.sk-product-why-choose {
+  background: transparent;
+  padding: clamp(3rem, 4vw, 5rem) 0;
+}
+
+.sk-product-why-choose .sk-reasons__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-inline: var(--sk-page-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 3vw, 3.5rem);
+}
+
+.sk-product-why-choose .sk-reasons__layout {
+  display: flex;
+  align-items: stretch;
+  gap: calc(var(--sk-why-gap) * 1%);
+}
+
+.sk-product-why-choose .sk-reasons__media {
+  flex: 0 0 calc(var(--sk-why-image-width) * 1%);
+  max-width: calc(var(--sk-why-image-width) * 1%);
+  display: flex;
+}
+
+.sk-product-why-choose .sk-reasons__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 16px;
+  display: block;
+}
+
+.sk-product-why-choose .sk-reasons__content-wrap {
+  flex: 1 1 calc(var(--sk-why-text-width) * 1%);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 3vw, 3.5rem);
+}
+
+.sk-product-why-choose .sk-reasons__header {
+  max-width: 70ch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sk-section-header-gap);
+}
+
+.sk-product-why-choose .sk-reasons__title {
+  margin: 0;
+  font-size: var(--section-heading-h2);
+  line-height: var(--section-heading-h2-line);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--sk-section-title-spacing);
+  color: rgb(var(--sk-color-heading-text));
+}
+
+.sk-product-why-choose .sk-reasons__lead {
+  margin: 0;
+  max-width: 60ch;
+  font-size: clamp(1.6rem, 1.2vw, 2rem);
+  line-height: 1.6;
+  color: rgba(var(--sk-color-body-text), 0.8);
+}
+
+.sk-product-why-choose .sk-reasons__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 2.5vw, 2.5rem);
+}
+
+.sk-product-why-choose .sk-reasons__item {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  column-gap: clamp(1.6rem, 3vw, 2.6rem);
+  align-items: flex-start;
+  padding-block: clamp(1.2rem, 2vw, 1.8rem);
+}
+
+.sk-product-why-choose .sk-reasons__item + .sk-reasons__item {
+  border-top: 1px solid rgba(var(--color-foreground), 0.1);
+}
+
+.sk-product-why-choose .sk-reasons__num {
+  font-size: clamp(3.6rem, 4.5vw, 5.2rem);
+  line-height: 1;
+  font-weight: 600;
+  font-family: var(--font-heading-family);
+  color: rgba(var(--color-foreground), 0.32);
+}
+
+.sk-product-why-choose .sk-reasons__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sk-product-why-choose .sk-reasons__item-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(1.6rem, 1.2vw, 2.1rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground));
+}
+
+.sk-product-why-choose .sk-reasons__item-body {
+  margin: 0;
+  max-width: 68ch;
+  font-size: clamp(1.5rem, 1.1vw, 1.8rem);
+  line-height: 1.65;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.sk-product-why-choose .sk-reasons__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  align-items: center;
+}
+
+.sk-product-why-choose .sk-reasons__link {
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.3);
+  padding-bottom: 0.2rem;
+}
+
+.sk-product-why-choose .sk-reasons__link:hover {
+  color: rgb(var(--color-brand-rgb));
+  border-bottom-color: rgba(var(--color-brand-rgb), 0.5);
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .sk-product-why-choose {
+    padding: clamp(2.6rem, 4vw, 4.2rem) 0;
+  }
+
+  .sk-product-why-choose .sk-reasons__inner {
+    gap: clamp(1.8rem, 2.6vw, 3rem);
+  }
+
+  .sk-product-why-choose .sk-reasons__item {
+    grid-template-columns: 52px minmax(0, 1fr);
+    column-gap: clamp(1.2rem, 2.5vw, 2rem);
+  }
+
+  .sk-product-why-choose .sk-reasons__num {
+    font-size: clamp(3.2rem, 4vw, 4.4rem);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .sk-product-why-choose {
+    padding: clamp(2.8rem, 6vw, 3.6rem) 0;
+  }
+
+  .sk-product-why-choose .sk-reasons__inner {
+    padding-inline: clamp(1.6rem, 5vw, 2.6rem);
+  }
+
+  .sk-product-why-choose .sk-reasons__layout {
+    flex-direction: column;
+    gap: clamp(1.8rem, 6vw, 2.6rem);
+  }
+
+  .sk-product-why-choose .sk-reasons__media,
+  .sk-product-why-choose .sk-reasons__content-wrap {
+    flex-basis: auto;
+    max-width: 100%;
+  }
+
+  .sk-product-why-choose .sk-reasons__title {
+    font-size: var(--sk-mobile-heading-size);
+    line-height: var(--sk-mobile-heading-line);
+  }
+
+  .sk-product-why-choose .sk-reasons__lead {
+    font-size: var(--sk-mobile-body-size);
+    line-height: var(--sk-mobile-body-line);
+  }
+
+  .sk-product-why-choose .sk-reasons__item {
+    grid-template-columns: 36px minmax(0, 1fr);
+    column-gap: 1rem;
+    padding-block: 1.6rem;
+  }
+
+  .sk-product-why-choose .sk-reasons__num {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: rgba(var(--color-foreground), 0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: rgba(var(--color-foreground), 0.6);
+  }
+
+  .sk-product-why-choose .sk-reasons__item-title {
+    font-size: 1.6rem;
+  }
+
+  .sk-product-why-choose .sk-reasons__item-body {
+    font-size: 1.5rem;
+    line-height: 1.6;
+  }
+}
