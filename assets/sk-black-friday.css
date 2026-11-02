@@ -1,10 +1,19 @@
 /* =============================================================
-   sk-black-friday — svart boks med gull (snippets/sk-bf-box.liquid)
+   sk-black-friday — Black Friday-boks (snippets/sk-bf-box.liquid)
    Lastes kun mens kampanjen går. Farger fra tokens i typography.css.
-   Dobbel gullramme (kant + innvendig strek), sentrert, serif-tall.
+   Uttrykk: dyp, avrundet flate med varm gullglød bak, matt glass i
+   kolonnene, myk skygge. Settet fremheves med glødende gullkant.
+   Skriftstørrelser i px der rem blir for lite (rot-font 62.5 %).
    ============================================================= */
 
 .sk-bf-box {
+  --bf-gold: var(--accent-gold, #c9a24a);
+  --bf-gold-soft: color-mix(in srgb, var(--bf-gold) 55%, #fff4d6);
+  --bf-ink: var(--bf-black, #0d0b10);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,49 +22,70 @@
   width: 100%;
   max-width: 480px; /* samme bredde som kjøpsknappen under */
   margin: 0;
-  padding: var(--space-5) var(--space-5) var(--space-4);
-  background: var(--bf-black);
-  border: 1px solid var(--accent-gold);
-  outline: 1px solid color-mix(in srgb, var(--accent-gold) 40%, transparent);
-  outline-offset: -6px;
-  color: var(--paper-0);
+  padding: 22px 20px 16px;
+  border-radius: 20px;
+  background:
+    radial-gradient(120% 90% at 85% -10%, color-mix(in srgb, var(--bf-gold) 34%, transparent) 0%, transparent 55%),
+    radial-gradient(90% 80% at 0% 110%, color-mix(in srgb, #7a3b2e 40%, transparent) 0%, transparent 60%),
+    linear-gradient(160deg, color-mix(in srgb, var(--bf-ink) 85%, #2a2230) 0%, var(--bf-ink) 100%);
+  border: 1px solid color-mix(in srgb, var(--bf-gold) 35%, transparent);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 18px 40px -16px rgba(13, 11, 16, 0.55),
+    0 6px 14px -6px rgba(13, 11, 16, 0.35),
+    0 0 40px -18px color-mix(in srgb, var(--bf-gold) 70%, transparent);
+  color: var(--paper-0, #fff);
   font-family: var(--ff-sans);
   line-height: var(--lh-relaxed);
   text-align: center;
 }
 
-/* Eyebrow med gullstreker på hver side */
+/* Fin korn-/glans-hinne over flaten */
+.sk-bf-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, transparent 38%);
+  pointer-events: none;
+}
+
+/* Eyebrow: gull-gradient-tekst med lyse streker */
 .sk-bf-box__label {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  font-size: var(--fs-xs);
+  gap: 10px;
+  font-size: 12px;
   font-weight: var(--fw-semibold);
-  letter-spacing: var(--tracking-wider);
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--accent-gold);
+  color: var(--bf-gold);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--bf-gold) 55%, transparent);
 }
 
 .sk-bf-box__label::before,
 .sk-bf-box__label::after {
   content: '';
-  width: var(--space-6);
+  width: 28px;
   height: 1px;
-  background: var(--accent-gold);
-  opacity: 0.6;
+  background: linear-gradient(90deg, transparent, var(--bf-gold));
 }
 
-/* Overskriften: besparelsen i stort serif-tall */
+.sk-bf-box__label::after {
+  background: linear-gradient(90deg, var(--bf-gold), transparent);
+}
+
+/* Besparelsen i stort serif-tall */
 .sk-bf-box__save {
   font-family: var(--ff-serif);
   font-size: var(--fs-3xl);
   font-weight: var(--fw-medium);
   line-height: var(--lh-tight);
   letter-spacing: var(--tracking-tight);
-  color: var(--paper-0);
+  color: var(--paper-0, #fff);
 }
 
-/* Prislinje: ny pris stor, ordinær pris overstrøket og dempet */
+/* Prislinje: ny pris i gull, ordinær pris overstrøket og dempet */
 .sk-bf-box__price {
   display: flex;
   align-items: baseline;
@@ -67,29 +97,28 @@
   font-family: var(--ff-serif);
   font-size: var(--fs-xl);
   font-weight: var(--fw-medium);
-  color: var(--accent-gold);
+  color: var(--bf-gold-soft);
 }
 
 .sk-bf-box__was {
-  color: color-mix(in srgb, var(--paper-0) 55%, transparent);
+  color: rgba(255, 255, 255, 0.5);
   text-decoration-thickness: 1px;
 }
 
 /* ---------- To kolonner: masken | settet ----------
    Like store kolonner og like skriftstørrelser (likt hierarki).
-   Settet skilles kun ut med gullramme, lys gulltone og merket.
-   Skriftstørrelser i px: temaets rot-font er 62.5 %, så rem blir for lite. */
+   Matt glass i begge; settet får glødende gullkant og varmere glass. */
 .sk-bf-box--duo {
-  padding-left: var(--space-4);
-  padding-right: var(--space-4);
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .sk-bf-box__duo {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-3);
+  gap: 12px;
   align-self: stretch;
-  margin-top: var(--space-2);
+  margin-top: 8px;
 }
 
 .sk-bf-box__col {
@@ -100,37 +129,76 @@
   justify-content: center;
   gap: 4px;
   min-width: 0;
-  padding: var(--space-4) var(--space-2) var(--space-3);
-  border: 1px solid color-mix(in srgb, var(--paper-0) 18%, transparent);
+  padding: 18px 8px 14px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.10) inset,
+    0 8px 20px -10px rgba(0, 0, 0, 0.6);
 }
 
 .sk-bf-box__col--featured {
-  border-color: var(--accent-gold);
-  background: color-mix(in srgb, var(--accent-gold) 12%, transparent);
+  background:
+    radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--bf-gold) 26%, transparent) 0%, transparent 70%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border-color: color-mix(in srgb, var(--bf-gold) 75%, transparent);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.14) inset,
+    0 0 0 1px color-mix(in srgb, var(--bf-gold) 25%, transparent),
+    0 0 22px -4px color-mix(in srgb, var(--bf-gold) 55%, transparent),
+    0 10px 24px -10px rgba(0, 0, 0, 0.7);
+  animation: sk-bf-glow 3.2s ease-in-out infinite;
 }
 
+@keyframes sk-bf-glow {
+  0%, 100% {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.14) inset,
+      0 0 0 1px color-mix(in srgb, var(--bf-gold) 25%, transparent),
+      0 0 18px -6px color-mix(in srgb, var(--bf-gold) 45%, transparent),
+      0 10px 24px -10px rgba(0, 0, 0, 0.7);
+  }
+  50% {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.14) inset,
+      0 0 0 1px color-mix(in srgb, var(--bf-gold) 40%, transparent),
+      0 0 28px -2px color-mix(in srgb, var(--bf-gold) 65%, transparent),
+      0 10px 24px -10px rgba(0, 0, 0, 0.7);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-bf-box__col--featured { animation: none; }
+}
+
+/* «Best verdi»: gullpille som svæver over kanten */
 .sk-bf-box__tag {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 2px var(--space-2);
-  background: var(--accent-gold);
-  color: var(--bf-black);
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--bf-gold-soft) 0%, var(--bf-gold) 55%, color-mix(in srgb, var(--bf-gold) 70%, #6b4a12) 100%);
+  color: var(--bf-ink);
   font-size: 10px;
   font-weight: var(--fw-semibold);
-  letter-spacing: var(--tracking-wide);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   line-height: 1.4;
   white-space: nowrap;
+  box-shadow: 0 4px 12px -2px color-mix(in srgb, var(--bf-gold) 60%, transparent);
 }
 
 .sk-bf-box__col-name {
-  font-size: var(--fs-xs);
+  font-size: 11px;
   font-weight: var(--fw-semibold);
-  letter-spacing: var(--tracking-wide);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--paper-0) 72%, transparent);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .sk-bf-box__duo .sk-bf-box__save {
@@ -141,7 +209,7 @@
 .sk-bf-box__duo .sk-bf-box__price {
   flex-wrap: wrap;
   justify-content: center;
-  column-gap: var(--space-2);
+  column-gap: 8px;
   row-gap: 0;
   font-size: 13px;
 }
@@ -155,21 +223,31 @@
   white-space: nowrap;
 }
 
-/* Frist: egen linje under en fin strek */
+/* Frist: egen linje under en glødende gullstrek */
 .sk-bf-box__deadline {
+  position: relative;
   align-self: stretch;
-  margin-top: var(--space-2);
-  padding-top: var(--space-3);
-  border-top: 1px solid color-mix(in srgb, var(--accent-gold) 35%, transparent);
-  font-size: var(--fs-xs);
-  letter-spacing: var(--tracking-wide);
+  margin-top: 8px;
+  padding-top: 12px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--paper-0) 72%, transparent);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.sk-bf-box__deadline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--bf-gold) 70%, transparent), transparent);
 }
 
 .sk-bf-box__deadline strong {
   font-weight: var(--fw-semibold);
-  color: var(--accent-gold);
+  color: var(--bf-gold-soft);
 }
 
 /* På produktsiden settes avstanden av .sk-hero-extras (ingen egen marg) */
