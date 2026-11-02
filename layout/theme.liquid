@@ -71,11 +71,23 @@
       (Settings → Customer events) to avoid double-tracking.
     {%- endcomment -%}
     <script type="text/javascript">
-      (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window, document, "clarity", "script", "xmgzwwlwhg");
+      /* Egen trafikk: ?internal=1 setter skinora_internal i localStorage i denne
+         nettleseren, ?internal=0 fjerner den. Er nøkkelen satt, lastes Clarity
+         ikke (ingen opptak). sk-clarity.liquid sjekker typeof window.clarity,
+         så resten av koden er uberørt. All lagring i try/catch. */
+      var skInternal = false;
+      try {
+        if (/[?&]internal=1(&|$)/.test(location.search)) localStorage.setItem('skinora_internal', '1');
+        else if (/[?&]internal=0(&|$)/.test(location.search)) localStorage.removeItem('skinora_internal');
+        skInternal = localStorage.getItem('skinora_internal') === '1';
+      } catch (e) {}
+      if (!skInternal) {
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "xmgzwwlwhg");
+      }
     </script>
 
     {%- comment -%} Clarity-segmentering (UTM-normalisering + tags/events) – én snippet {%- endcomment -%}
