@@ -1,26 +1,35 @@
 {%- comment -%}
-  sk-bf-box — Black Friday-boks (svart med gullkant)
-  --------------------------------------------------
+  sk-bf-box — Black Friday-boks (svart med gull)
+  ----------------------------------------------
   Vises kun når kampanjen går (sk-campaign-live: bryter + sluttdato), og
-  forsvinner av seg selv etter datoen. Besparelsen regnes ut av produktet
-  via sk-lp-pricing, aldri skrevet som tall; uten «Sammenlign med»-pris
-  vises ingen «Spar»-linje.
+  forsvinner av seg selv etter datoen. Alle tall regnes ut av produktet via
+  sk-lp-pricing, aldri skrevet som tekst. Uten «Sammenlign med»-pris på
+  produktet utelates besparelse og prislinje; da står bare merket og fristen.
 
   Parametre:
-    product : produktobjekt (påkrevd for «Spar»-linjen)
+    product : produktobjekt (påkrevd for besparelse og pris)
+    variant : 'product' (på produktsiden, med luft rundt) | standard (i hero)
 {%- endcomment -%}
 {%- capture bf_live -%}{% render 'sk-campaign-live' %}{%- endcapture -%}
 {%- if bf_live contains '1' -%}
   {{ 'sk-black-friday.css' | asset_url | stylesheet_tag }}
   {%- capture bf_save -%}{%- render 'sk-lp-pricing', product: product, text: 'Spar [spar]' -%}{%- endcapture -%}
+  {%- capture bf_price -%}{%- render 'sk-lp-pricing', product: product, text: '[pris]' -%}{%- endcapture -%}
+  {%- capture bf_before -%}{%- render 'sk-lp-pricing', product: product, text: '[før-pris]' -%}{%- endcapture -%}
   {%- capture bf_date -%}{%- render 'sk-campaign-date' -%}{%- endcapture -%}
   <div class="sk-bf-box{% if variant == 'product' %} sk-bf-box--product{% endif %}">
     <span class="sk-bf-box__label">Black Friday</span>
     {%- if bf_save != blank -%}
       <span class="sk-bf-box__save">{{ bf_save }}</span>
+      {%- if bf_price != blank and bf_before != blank -%}
+        <span class="sk-bf-box__price">
+          <span class="sk-bf-box__now">{{ bf_price }}</span>
+          <s class="sk-bf-box__was">{{ bf_before }}</s>
+        </span>
+      {%- endif -%}
     {%- endif -%}
     {%- if bf_date != blank -%}
-      <span class="sk-bf-box__deadline">{{ 'sections.cart.campaign_until' | t }} <strong>{{ bf_date }}</strong></span>
+      <span class="sk-bf-box__deadline">Tilbudet varer til <strong>{{ bf_date }}</strong></span>
     {%- endif -%}
   </div>
 {%- endif -%}
