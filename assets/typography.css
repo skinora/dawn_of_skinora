@@ -147,6 +147,30 @@
   --card-padding: clamp(24px, 2vw + 16px, 32px);
 }
 
+/* ---------- BLACK FRIDAY-DRAKT ----------
+   Invertert aubergine: samme tokens, byttet roller. Flater blir aubergine,
+   blekk blir lavendel/hvitt. Ingen nye fargefamilier. Klassen settes på <html>
+   av layout/theme.liquid når kampanjen går (sk-campaign-live), og forsvinner
+   av seg selv etter sluttdatoen. Aksentene (gull, grønn, clay) er uendret. */
+:root.sk-bf {
+  --ink-900: #ffffff;
+  --ink-700: #efe9f5;
+  --ink-500: rgba(255, 255, 255, 0.76);
+  --ink-400: rgba(255, 255, 255, 0.62);
+  --ink-300: rgba(255, 255, 255, 0.42);
+  --paper-0: #2d1b3d;
+  --paper-50: #34224a;
+  --paper-100: #3d2b52;
+  --paper-150: #3a2850;
+  /* Opprinnelige aliaser i sk-base.css regnes ut fra ink-*, men er RGB-triplets */
+  --color-brand-rgb: 255, 255, 255;
+  --sk-color-body-text: 239, 233, 245;
+  --sk-color-heading-text: 239, 233, 245;
+  --color-white: #2d1b3d;
+  --color-white-rgb: 45, 27, 61;
+  color-scheme: dark;
+}
+
 /* Fra 769px: trustbaren står på én rad og trenger mindre høyde, og
    seksjonsrytmen går opp til desktopverdiene (se --space-section-* over). */
 @media (min-width: 769px) {

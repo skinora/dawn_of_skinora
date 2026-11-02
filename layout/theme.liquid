@@ -1,5 +1,13 @@
+{%- comment -%}
+  Black Friday-drakt: invertert aubergine over hele butikken. Styres av samme
+  bryter som kampanjen (sk-campaign-live: bryter + sluttdato), så den slukker
+  av seg selv etter datoen. Fargene ligger i typography.css (html.sk-bf).
+{%- endcomment -%}
+{%- capture sk_bf_live -%}{% render 'sk-campaign-live' %}{%- endcapture -%}
+{%- assign sk_bf = false -%}
+{%- if sk_bf_live contains '1' -%}{%- assign sk_bf = true -%}{%- endif -%}
 <!doctype html>
-<html class="js" lang="{{ request.locale.iso_code }}">
+<html class="js{% if sk_bf %} sk-bf{% endif %}" lang="{{ request.locale.iso_code }}">
   <head>
     {% comment %}theme-check-disable RemoteAsset{% endcomment %}
     <meta charset="utf-8">
@@ -1147,6 +1155,29 @@
               --payment-terms-background-color: rgb({{ scheme.settings.background.rgb }});
             }
           {% endfor %}
+
+          {%- if sk_bf -%}
+            {%- comment -%}
+              Fargeskjemaene settes per seksjon (.color-*), så en override på
+              :root alene når dem ikke. Alle skjemaer tvinges til samme
+              inverterte aubergine her, etter løkka (lik spesifisitet, senere vinner).
+            {%- endcomment -%}
+            {{ scheme_classes | prepend: ':root' }} {
+              --color-background: 45, 27, 61;
+              --gradient-background: #2d1b3d;
+              --color-foreground: 239, 233, 245;
+              --color-background-contrast: 61, 43, 82;
+              --color-button: 239, 233, 245;
+              --color-button-text: 45, 27, 61;
+              --color-secondary-button: 45, 27, 61;
+              --color-secondary-button-text: 239, 233, 245;
+              --color-link: 239, 233, 245;
+              --color-badge-foreground: 239, 233, 245;
+              --color-badge-background: 45, 27, 61;
+              --color-badge-border: 239, 233, 245;
+              --payment-terms-background-color: rgb(45, 27, 61);
+            }
+          {%- endif -%}
 
           {{ scheme_classes | prepend: 'body' }} {
               color: rgba(var(--color-foreground), 0.9);
