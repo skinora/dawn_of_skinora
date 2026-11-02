@@ -21,10 +21,7 @@
   height: auto;
 }
 
-/* Ved tittel/pris på produktsiden */
-.tara-badge--product {
-  margin-top: var(--space-4);
-}
+/* På produktsiden: avstanden settes av .sk-hero-extras, ingen egen marg */
 
 /* I LP-hero: hjørnemerke øverst til høyre, oppå heroen (over bildet og
    overlayet, under ingenting). Ligger utenfor tekstflyten, så det ikke tar

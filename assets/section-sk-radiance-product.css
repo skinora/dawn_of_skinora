@@ -1439,6 +1439,8 @@
 
     .sk-product-title { order: 1; }
     .sk-product-reviews { order: 2; }
+    /* TARA-merke + Black Friday-boks: etter vurderingen, før prisen */
+    .sk-hero-extras { order: 3; }
 
     /* ── Undertittelen ut paa mobil ────────────────────────────────────
        «Stoetter hudens struktur, spenst og naturlige gloed» er en god
@@ -1912,4 +1914,18 @@
   .sk-hero-lightbox__slide img {
     width: 100%;
   }
+}
+
+/* TARA-merke og Black Friday-boks på produktsiden (sk-radiance-product.liquid).
+   Samlet i ett flex-barn så rytmen i .sk-hero-content ikke dobles. */
+.sk-hero-extras {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+/* :empty duger ikke: snippetene sender et linjeskift selv når de er skjult */
+.sk-hero-extras:not(:has(*)) {
+  display: none;
 }

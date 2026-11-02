@@ -221,9 +221,12 @@
             <p class="sk-product-subtitle">{{ product_info.radiance_subheading.value }}</p>
           {% endif %}
 
-          {%- render 'tara-badge', product: product, variant: 'product', eager: true -%}
-
-          {%- render 'sk-bf-box', product: product, variant: 'product' -%}
+          {%- comment -%}
+            TARA-merket + Black Friday-boks i ÉN flex-barn: gapet i .sk-hero-content
+            kommer da bare én gang på hver side, og de to står tett (12 px) sammen.
+            Ingen barn (begge av) = skjules via :not(:has(*)), ingen ekstra gap.
+          {%- endcomment -%}
+          <div class="sk-hero-extras">{%- render 'tara-badge', product: product, variant: 'product', eager: true -%}{%- render 'sk-bf-box', product: product, variant: 'product' -%}</div>
 
           {%- liquid
             comment
