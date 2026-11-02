@@ -1,0 +1,26 @@
+{%- comment -%}
+  sk-bf-box — Black Friday-boks (svart med gullkant)
+  --------------------------------------------------
+  Vises kun når kampanjen går (sk-campaign-live: bryter + sluttdato), og
+  forsvinner av seg selv etter datoen. Besparelsen regnes ut av produktet
+  via sk-lp-pricing, aldri skrevet som tall; uten «Sammenlign med»-pris
+  vises ingen «Spar»-linje.
+
+  Parametre:
+    product : produktobjekt (påkrevd for «Spar»-linjen)
+{%- endcomment -%}
+{%- capture bf_live -%}{% render 'sk-campaign-live' %}{%- endcapture -%}
+{%- if bf_live contains '1' -%}
+  {{ 'sk-black-friday.css' | asset_url | stylesheet_tag }}
+  {%- capture bf_save -%}{%- render 'sk-lp-pricing', product: product, text: 'Spar [spar]' -%}{%- endcapture -%}
+  {%- capture bf_date -%}{%- render 'sk-campaign-date' -%}{%- endcapture -%}
+  <div class="sk-bf-box">
+    <span class="sk-bf-box__label">Black Friday</span>
+    {%- if bf_save != blank -%}
+      <span class="sk-bf-box__save">{{ bf_save }}</span>
+    {%- endif -%}
+    {%- if bf_date != blank -%}
+      <span class="sk-bf-box__deadline">{{ 'sections.cart.campaign_until' | t }} <strong>{{ bf_date }}</strong></span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

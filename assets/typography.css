@@ -25,6 +25,9 @@
      merkevaren mot lavpris. Brukes kun til besparelse og ja-svar, aldri som
      flatefarge eller i typografi. */
   --accent-green: #2f7d5b;
+  /* Black Friday-boksen (snippets/sk-bf-box.liquid): varm svart med gullkant.
+     Kun for den ene boksen og bildene til kampanjen, ikke flatefarge ellers. */
+  --bf-black: #0e0b10;
 
   /* ---------- LED-SPEKTER ----------
      Lyset masken faktisk sender ut. Verdiene fantes fra foer inline i

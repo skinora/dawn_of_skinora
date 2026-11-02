@@ -307,6 +307,7 @@
         {%- endif -%}
 
         <div class="lp-hero__actions">
+          {%- render 'sk-bf-box', product: sk_lp_product -%}
           <form
             action="{{ routes.cart_add_url }}"
             method="post"

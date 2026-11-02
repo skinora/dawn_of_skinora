@@ -1,0 +1,49 @@
+/* =============================================================
+   sk-black-friday — svart boks med gullkant (snippets/sk-bf-box.liquid)
+   Lastes kun mens kampanjen går. Farger fra tokens i typography.css.
+   ============================================================= */
+
+.sk-bf-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2) var(--space-4);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 480px; /* samme bredde som kjøpsknappen under */
+  margin: 0;
+  padding: var(--space-3) var(--space-5);
+  background: var(--bf-black);
+  border: 1px solid var(--accent-gold);
+  color: var(--paper-0);
+  font-family: var(--ff-sans);
+  line-height: var(--lh-relaxed);
+  text-align: center;
+}
+
+.sk-bf-box__label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--accent-gold);
+}
+
+.sk-bf-box__save {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-medium);
+  color: var(--paper-0);
+}
+
+.sk-bf-box__deadline {
+  flex-basis: 100%;
+  font-size: var(--fs-sm);
+  color: var(--paper-0);
+}
+
+.sk-bf-box__deadline strong {
+  font-weight: var(--fw-semibold);
+  color: var(--accent-gold);
+}
