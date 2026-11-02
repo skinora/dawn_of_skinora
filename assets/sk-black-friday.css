@@ -75,19 +75,83 @@
   text-decoration-thickness: 1px;
 }
 
-/* Sett-linje: «Kjøp settet og spar X» — skjules når settet er valgt */
-.sk-bf-box__extra {
-  font-size: var(--fs-sm, 0.875rem);
-  color: color-mix(in srgb, var(--paper-0) 85%, transparent);
+/* ---------- To kolonner: masken | settet ----------
+   Like store kolonner og like skriftstørrelser (likt hierarki).
+   Settet skilles kun ut med gullramme, lys gulltone og merket. */
+.sk-bf-box--duo {
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
 }
 
-.sk-bf-box__extra strong {
+.sk-bf-box__duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  align-self: stretch;
+  margin-top: var(--space-2);
+}
+
+.sk-bf-box__col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1, 4px);
+  min-width: 0;
+  padding: var(--space-4) var(--space-2) var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--paper-0) 18%, transparent);
+}
+
+.sk-bf-box__col--featured {
+  border-color: var(--accent-gold);
+  background: color-mix(in srgb, var(--accent-gold) 12%, transparent);
+}
+
+.sk-bf-box__tag {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2px var(--space-2);
+  background: var(--accent-gold);
+  color: var(--bf-black);
+  font-size: 10px;
   font-weight: var(--fw-semibold);
-  color: var(--accent-gold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  line-height: 1.4;
+  white-space: nowrap;
 }
 
-.sk-bf-box__extra[hidden] {
-  display: none;
+.sk-bf-box__col-name {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--paper-0) 72%, transparent);
+}
+
+.sk-bf-box__duo .sk-bf-box__save {
+  font-size: clamp(1.2rem, 4.6vw, 1.6rem);
+  white-space: nowrap;
+}
+
+.sk-bf-box__duo .sk-bf-box__price {
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: var(--space-2);
+  row-gap: 0;
+  font-size: var(--fs-sm, 0.875rem);
+}
+
+.sk-bf-box__duo .sk-bf-box__now {
+  font-size: var(--fs-md, 1rem);
+  white-space: nowrap;
+}
+
+.sk-bf-box__duo .sk-bf-box__was {
+  white-space: nowrap;
 }
 
 /* Frist: egen linje under en fin strek */

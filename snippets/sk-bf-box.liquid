@@ -7,9 +7,11 @@
   produktet utelates besparelse og prislinje; da står bare merket og fristen.
 
   SETT: på produktsiden hentes settet fra metafeltet custom.bundle_product
-  (samme som tilbudskortet «Best verdi»). Er settet også på salg, vises en
-  ekstra linje «Kjøp settet og spar X». Velger kunden settet-kortet, bytter
-  boksen til settets besparelse og priser, og linjen skjules.
+  (samme som tilbudskortet «Best verdi»). Er både produktet og settet på
+  salg, vises de side om side i to like kolonner: masken til venstre, settet
+  til høyre. Samme størrelser i begge (likt hierarki); settet fremheves med
+  gullramme, lys gulltone og merket «Best verdi».
+  Uten sett (eller sett uten salg) vises én kolonne som før.
 
   Parametre:
     product : produktobjekt (påkrevd for besparelse og pris)
@@ -33,76 +35,46 @@
   -%}
   {%- if bf_bundle != blank -%}
     {%- capture bfb_save -%}{%- render 'sk-lp-pricing', product: bf_bundle, text: 'Spar [spar]' -%}{%- endcapture -%}
-    {%- capture bfb_spar -%}{%- render 'sk-lp-pricing', product: bf_bundle, part: 'spar' -%}{%- endcapture -%}
     {%- capture bfb_price -%}{%- render 'sk-lp-pricing', product: bf_bundle, text: '[pris]' -%}{%- endcapture -%}
     {%- capture bfb_before -%}{%- render 'sk-lp-pricing', product: bf_bundle, text: '[før-pris]' -%}{%- endcapture -%}
-    {%- if bf_save != blank and bfb_save != blank and bfb_price != blank and bfb_before != blank -%}
+    {%- if bf_save != blank and bf_price != blank and bf_before != blank and bfb_save != blank and bfb_price != blank and bfb_before != blank -%}
       {%- assign bf_has_bundle = true -%}
     {%- endif -%}
   {%- endif -%}
 
-  <div
-    class="sk-bf-box{% if variant == 'product' %} sk-bf-box--product{% endif %}"
-    {% if bf_has_bundle %}
-      data-sk-bf-box
-      data-single-save="{{ bf_save | strip | escape }}"
-      data-single-now="{{ bf_price | strip | escape }}"
-      data-single-was="{{ bf_before | strip | escape }}"
-      data-bundle-save="{{ bfb_save | strip | escape }}"
-      data-bundle-now="{{ bfb_price | strip | escape }}"
-      data-bundle-was="{{ bfb_before | strip | escape }}"
-    {% endif %}
-  >
+  <div class="sk-bf-box{% if variant == 'product' %} sk-bf-box--product{% endif %}{% if bf_has_bundle %} sk-bf-box--duo{% endif %}">
     <span class="sk-bf-box__label">Black Friday</span>
-    {%- if bf_save != blank -%}
-      <span class="sk-bf-box__save" data-bf-save>{{ bf_save }}</span>
+    {%- if bf_has_bundle -%}
+      <div class="sk-bf-box__duo">
+        <div class="sk-bf-box__col">
+          <span class="sk-bf-box__col-name">Masken</span>
+          <span class="sk-bf-box__save">{{ bf_save }}</span>
+          <span class="sk-bf-box__price">
+            <span class="sk-bf-box__now">{{ bf_price }}</span>
+            <s class="sk-bf-box__was">{{ bf_before }}</s>
+          </span>
+        </div>
+        <div class="sk-bf-box__col sk-bf-box__col--featured">
+          <span class="sk-bf-box__tag">Best verdi</span>
+          <span class="sk-bf-box__col-name">Settet</span>
+          <span class="sk-bf-box__save">{{ bfb_save }}</span>
+          <span class="sk-bf-box__price">
+            <span class="sk-bf-box__now">{{ bfb_price }}</span>
+            <s class="sk-bf-box__was">{{ bfb_before }}</s>
+          </span>
+        </div>
+      </div>
+    {%- elsif bf_save != blank -%}
+      <span class="sk-bf-box__save">{{ bf_save }}</span>
       {%- if bf_price != blank and bf_before != blank -%}
         <span class="sk-bf-box__price">
-          <span class="sk-bf-box__now" data-bf-now>{{ bf_price }}</span>
-          <s class="sk-bf-box__was" data-bf-was>{{ bf_before }}</s>
+          <span class="sk-bf-box__now">{{ bf_price }}</span>
+          <s class="sk-bf-box__was">{{ bf_before }}</s>
         </span>
       {%- endif -%}
-    {%- endif -%}
-    {%- if bf_has_bundle -%}
-      <span class="sk-bf-box__extra" data-bf-extra>Kjøp settet og spar <strong>{{ bfb_spar }}</strong></span>
     {%- endif -%}
     {%- if bf_date != blank -%}
       <span class="sk-bf-box__deadline">Tilbudet varer til <strong>{{ bf_date }}</strong></span>
     {%- endif -%}
   </div>
-
-  {%- if bf_has_bundle -%}
-    <script>
-      (function () {
-        if (window.__skBfBoxBound) return;
-        window.__skBfBoxBound = true;
-        function apply(input) {
-          var scope = input.closest('.sk-product-hero') || input.closest('product-info') || document;
-          var box = scope.querySelector('[data-sk-bf-box]');
-          if (!box) return;
-          var k = input.value === 'bundle' ? 'bundle' : 'single';
-          var save = box.querySelector('[data-bf-save]');
-          var now = box.querySelector('[data-bf-now]');
-          var was = box.querySelector('[data-bf-was]');
-          var extra = box.querySelector('[data-bf-extra]');
-          if (save) save.textContent = box.getAttribute('data-' + k + '-save');
-          if (now) now.textContent = box.getAttribute('data-' + k + '-now');
-          if (was) was.textContent = box.getAttribute('data-' + k + '-was');
-          if (extra) extra.hidden = k === 'bundle';
-        }
-        document.addEventListener('change', function (e) {
-          var t = e.target;
-          if (t && t.matches && t.matches('input[name="sk-offer"]') && t.checked) apply(t);
-        });
-        function init() {
-          document.querySelectorAll('input[name="sk-offer"]:checked').forEach(apply);
-        }
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', init);
-        } else {
-          init();
-        }
-      })();
-    </script>
-  {%- endif -%}
 {%- endif -%}
