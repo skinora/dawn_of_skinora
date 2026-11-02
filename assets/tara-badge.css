@@ -21,7 +21,6 @@
   height: auto;
 }
 
-/* På produktsiden: avstanden settes av .sk-hero-extras, ingen egen marg */
 
 /* I LP-hero: hjørnemerke øverst til høyre, oppå heroen (over bildet og
    overlayet, under ingenting). Ligger utenfor tekstflyten, så det ikke tar
@@ -43,8 +42,41 @@
   pointer-events: none;
 }
 
+/* Flyter over produktbildene (sk-radiance-product): fast i hjørnet mens bildene
+   sveiper, større enn merket ellers (×1,35 av bredden i temainnstillingene),
+   med myk skygge og en rolig svevebevegelse. Foreldre er .sk-hero-media-swiper
+   (position: relative). */
+.tara-badge--gallery {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 5;
+  width: calc(var(--tara-w) * 1.35);
+  filter: drop-shadow(0 6px 14px color-mix(in srgb, var(--bf-black) 35%, transparent));
+  animation: tara-float 5s ease-in-out infinite;
+}
+
+@keyframes tara-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tara-badge--gallery {
+    animation: none;
+  }
+}
+
 @media (min-width: 750px) {
-  .tara-badge--product,
+  .tara-badge--gallery {
+    width: calc(var(--tara-w-lg) * 1.35);
+  }
+
   .tara-badge--hero {
     width: var(--tara-w-lg);
   }

@@ -157,6 +157,11 @@
                     ›
                   </button>
                 {% endif %}
+                {%- comment -%}
+                  TARA-merket flyter over bildeflaten, utenfor swiper-wrapper, så det blir stående
+                  mens bildene sveiper forbi. Selve flytingen ligger i tara-badge.css.
+                {%- endcomment -%}
+                {%- render 'tara-badge', product: product, variant: 'gallery', eager: true -%}
               </div>
             </div>
 
@@ -226,7 +231,7 @@
             kommer da bare én gang på hver side, og de to står tett (12 px) sammen.
             Ingen barn (begge av) = skjules via :not(:has(*)), ingen ekstra gap.
           {%- endcomment -%}
-          <div class="sk-hero-extras">{%- render 'tara-badge', product: product, variant: 'product', eager: true -%}{%- render 'sk-bf-box', product: product, variant: 'product' -%}</div>
+          <div class="sk-hero-extras">{%- render 'sk-bf-box', product: product, variant: 'product' -%}</div>
 
           {%- liquid
             comment
