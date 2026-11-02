@@ -14,7 +14,7 @@
   {{ 'sk-black-friday.css' | asset_url | stylesheet_tag }}
   {%- capture bf_save -%}{%- render 'sk-lp-pricing', product: product, text: 'Spar [spar]' -%}{%- endcapture -%}
   {%- capture bf_date -%}{%- render 'sk-campaign-date' -%}{%- endcapture -%}
-  <div class="sk-bf-box">
+  <div class="sk-bf-box{% if variant == 'product' %} sk-bf-box--product{% endif %}">
     <span class="sk-bf-box__label">Black Friday</span>
     {%- if bf_save != blank -%}
       <span class="sk-bf-box__save">{{ bf_save }}</span>

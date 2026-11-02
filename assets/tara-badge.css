@@ -26,9 +26,14 @@
   margin-top: var(--space-4);
 }
 
-/* I LP-hero, nær kjøpsknappen */
+/* I LP-hero: hjørnemerke øverst til høyre, oppå heroen (over bildet og
+   overlayet, under ingenting). Ligger utenfor tekstflyten, så det ikke tar
+   plass fra CTA-en. Heroen er position: relative. */
 .tara-badge--hero {
-  margin-top: var(--space-1);
+  position: absolute;
+  top: var(--space-4);
+  right: var(--lp-gutter);
+  z-index: 3;
 }
 
 /* Lite merke i hjørnet av produktkortbildet */

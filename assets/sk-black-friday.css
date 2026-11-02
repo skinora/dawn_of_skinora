@@ -22,6 +22,11 @@
   text-align: center;
 }
 
+/* På produktsiden ligger boksen i tekstflyten, med luft over og under */
+.sk-bf-box--product {
+  margin-block: var(--space-4);
+}
+
 .sk-bf-box__label {
   font-size: var(--fs-xs);
   font-weight: var(--fw-semibold);

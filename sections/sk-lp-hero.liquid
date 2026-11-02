@@ -232,6 +232,8 @@
 
     <div class="lp-hero__overlay" aria-hidden="true"></div>
 
+    {%- render 'tara-badge', product: sk_lp_product, variant: 'hero', eager: true -%}
+
     <div class="lp-hero__inner">
       <div class="lp-hero__content">
         {%- if section.settings.eyebrow != blank -%}
@@ -361,8 +363,6 @@
               {%- endif -%}
             </p>
           {%- endif -%}
-
-          {%- render 'tara-badge', product: sk_lp_product, variant: 'hero', eager: true -%}
 
           {%- if section.settings.show_link and section.settings.link_text != blank -%}
             <a href="{{ section.settings.link_url | default: '#' }}" class="lp-hero__link">
