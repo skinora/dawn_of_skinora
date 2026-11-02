@@ -18,7 +18,6 @@
         "header_max_width": 720,
         "header_align": "center",
         "show_collection_description": true,
-        "show_collection_image": true,
         "color_scheme": "scheme-1"
       }
     },

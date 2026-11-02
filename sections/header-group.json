@@ -13,7 +13,6 @@
   "sections": {
     "sk_announcment_bar_tWPjQL": {
       "type": "sk-announcment-bar",
-      "disabled": false,
       "name": "SK Announcement Bar",
       "settings": {
         "message_1": "✦ 10 % på din første maske – meld deg på nyhetsbrevet",
