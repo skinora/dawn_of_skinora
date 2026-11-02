@@ -122,6 +122,11 @@
     "cart_drawer_collection": "",
     "kampanje_aktiv": true,
     "kampanje_sluttdato_iso": "2026-11-30",
+    "tara_badge_enabled": false,
+    "tara_badge_image": "shopify://shop_images/Tara_Pro_Age_nomineret_logo_round_oransje_2026nominert.png",
+    "tara_badge_url": "https://tara.no/skjonnhet/pro-age/stem-pa-dine-pro-age-favoritter-2026-og-vinn-dem",
+    "tara_badge_width_desktop": 110,
+    "tara_badge_width_mobile": 80,
     "sections": {
       "main-password-header": {
         "type": "main-password-header",

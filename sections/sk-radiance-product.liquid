@@ -221,6 +221,8 @@
             <p class="sk-product-subtitle">{{ product_info.radiance_subheading.value }}</p>
           {% endif %}
 
+          {%- render 'tara-badge', product: product, variant: 'product', eager: true -%}
+
           {%- liquid
             comment
               Gloedens palett (pills) foelger maskens egen boelgelengde.

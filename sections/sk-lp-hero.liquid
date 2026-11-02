@@ -362,6 +362,8 @@
             </p>
           {%- endif -%}
 
+          {%- render 'tara-badge', product: sk_lp_product, variant: 'hero', eager: true -%}
+
           {%- if section.settings.show_link and section.settings.link_text != blank -%}
             <a href="{{ section.settings.link_url | default: '#' }}" class="lp-hero__link">
               {{- section.settings.link_text -}}

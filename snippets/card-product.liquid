@@ -32,6 +32,7 @@
             height="675"
           >
         {%- endif -%}
+        {%- render 'tara-badge', product: product, variant: 'card' -%}
       {%- else -%}
         {{ 'product-apparel-2' | placeholder_svg_tag: 'cb-card__image' }}
       {%- endif -%}

@@ -1,0 +1,49 @@
+/* =============================================================
+   tara-badge — nominasjonsmerke (snippets/tara-badge.liquid)
+   Bredder kommer fra temainnstillinger via --tara-w (mobil) og
+   --tara-w-lg (desktop). Bildet har width/height-attributter, så høyden
+   følger bredden og det blir ikke layout-skift.
+   ============================================================= */
+
+.tara-badge {
+  display: block;
+  width: var(--tara-w);
+  line-height: var(--lh-none);
+}
+
+.tara-badge__link {
+  display: block;
+}
+
+.tara-badge .tara-badge__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Ved tittel/pris på produktsiden */
+.tara-badge--product {
+  margin-top: var(--space-4);
+}
+
+/* I LP-hero, nær kjøpsknappen */
+.tara-badge--hero {
+  margin-top: var(--space-1);
+}
+
+/* Lite merke i hjørnet av produktkortbildet */
+.tara-badge--card {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 2;
+  width: clamp(44px, 22%, 64px);
+  pointer-events: none;
+}
+
+@media (min-width: 750px) {
+  .tara-badge--product,
+  .tara-badge--hero {
+    width: var(--tara-w-lg);
+  }
+}

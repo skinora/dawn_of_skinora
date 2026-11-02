@@ -106,6 +106,11 @@
       {{ 'sk-campaign.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
+    {%- comment -%} TARA-nominasjonsmerket – lastes kun når det er på og bildet er satt {%- endcomment -%}
+    {%- if settings.tara_badge_enabled and settings.tara_badge_image != blank -%}
+      {{ 'tara-badge.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+
     {%- if request.page_type == 'product' -%}
       {%- comment -%}
         Klaviyo-teaseren («FÅ 10 % RABATT») er 184 px fast plassert på z-index

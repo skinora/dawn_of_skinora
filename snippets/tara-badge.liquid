@@ -1,0 +1,55 @@
+{%- comment -%}
+  tara-badge — TARA Pro Age-nominasjonsmerke (KUN Radiance Face)
+  ----------------------------------------------------------------
+  Rendrer bare når bryteren i Temainnstillinger → TARA-nominasjon er på, bildet
+  er satt OG produktet er Radiance Face. Handle-sjekken ligger her, ikke hos
+  kallerne, så merket ikke kan havne på Clear, Neck eller andre produkter selv
+  om en seksjon gjenbrukes.
+
+  Merket brukes uendret slik TARA leverte det. Aldri «vinner» eller «kåret»:
+  alt-teksten og merket sier nominert.
+
+  Parametre:
+    product : produktobjekt (påkrevd – uten det rendres ingenting)
+    variant : 'product' (standard, ved tittel/pris) | 'hero' (LP-hero) | 'card'
+              (hjørnet av produktkortbildet; aldri lenket, kortet er en lenke)
+    eager   : true når merket ligger over brettekanten (ellers loading="lazy")
+
+  CSS: assets/tara-badge.css, lastet fra theme.liquid kun når merket er på.
+{%- endcomment -%}
+{%- liquid
+  assign tb_image = settings.tara_badge_image
+  assign tb_show = false
+  if settings.tara_badge_enabled and tb_image != blank and product.handle == 'skinora-radiance-face'
+    assign tb_show = true
+  endif
+  assign tb_variant = variant | default: 'product'
+  assign tb_url = settings.tara_badge_url | strip
+  assign tb_alt = 'Nominert til TARA Pro Age-favoritter 2026'
+  assign tb_loading = 'lazy'
+  if eager
+    assign tb_loading = 'eager'
+  endif
+-%}
+{%- if tb_show -%}
+  {%- capture tb_img -%}
+    {{- tb_image | image_url: width: 320 | image_tag:
+      width: 320,
+      height: 320,
+      alt: tb_alt,
+      loading: tb_loading,
+      class: 'tara-badge__img',
+      sizes: '160px'
+    -}}
+  {%- endcapture -%}
+  <span
+    class="tara-badge tara-badge--{{ tb_variant }}"
+    style="--tara-w: {{ settings.tara_badge_width_mobile | default: 80 }}px; --tara-w-lg: {{ settings.tara_badge_width_desktop | default: 110 }}px;"
+  >
+    {%- if tb_url != blank and tb_variant != 'card' -%}
+      <a href="{{ tb_url }}" target="_blank" rel="noopener noreferrer" class="tara-badge__link">{{ tb_img }}</a>
+    {%- else -%}
+      {{ tb_img }}
+    {%- endif -%}
+  </span>
+{%- endif -%}

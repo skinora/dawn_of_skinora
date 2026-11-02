@@ -1663,5 +1663,51 @@
         "default": true
       }
     ]
+  },
+  {
+    "name": "TARA-nominasjon",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Merket for nominasjonen til TARA Pro Age-favoritter 2026. Gjelder KUN Skinora Radiance Face: det vises bare på Radiance-produktsiden, Radiance-landingssidene og i Radiance-kortet i lister, uansett hva som er valgt her. Bruk merket nøyaktig slik TARA leverte det, og skriv aldri «vinner» eller «kåret» – merket sier nominert."
+      },
+      {
+        "type": "checkbox",
+        "id": "tara_badge_enabled",
+        "label": "Vis TARA-nominasjonsmerke",
+        "default": false
+      },
+      {
+        "type": "image_picker",
+        "id": "tara_badge_image",
+        "label": "Merke"
+      },
+      {
+        "type": "url",
+        "id": "tara_badge_url",
+        "label": "Lenke ved klikk",
+        "info": "Åpnes i ny fane. Tom = merket er ikke klikkbart. Merket i produktkort er aldri klikkbart (kortet er allerede en lenke)."
+      },
+      {
+        "type": "range",
+        "id": "tara_badge_width_desktop",
+        "label": "Bredde på desktop",
+        "min": 60,
+        "max": 160,
+        "step": 5,
+        "unit": "px",
+        "default": 110
+      },
+      {
+        "type": "range",
+        "id": "tara_badge_width_mobile",
+        "label": "Bredde på mobil",
+        "min": 40,
+        "max": 120,
+        "step": 5,
+        "unit": "px",
+        "default": 80
+      }
+    ]
   }
 ]
