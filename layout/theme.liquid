@@ -267,6 +267,12 @@
     {%- if request.page_type == 'article' and article.handle == 'nyheter/how-led-light-therapy-transforms-your-skin' -%}
       <meta name="robots" content="noindex, follow">
     {%- endif -%}
+    {%- comment -%}
+      Lar Google vise store bilder (hovedbilde/delingsbilde) i søkeresultater
+      og Discover. Google slår sammen flere robots-tagger, så denne kolliderer
+      ikke med noindex-reglene over.
+    {%- endcomment -%}
+    <meta name="robots" content="max-image-preview:large">
     <link rel="canonical" href="{{ sk_canonical }}">
 
     {%- comment -%}

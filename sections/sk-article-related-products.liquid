@@ -1,0 +1,70 @@
+{%- comment -%}
+  Relaterte produkter nederst i artikler.
+  Styres av artikkel-metafeltet custom.related_products (liste med
+  produktreferanser). Uten metafelt, eller med bare utsolgte/skjulte produkter,
+  rendres ingenting — ingen tom ramme og ingen tilfeldige produkter.
+  Pris går via sk-lp-pricing (aldri pris som tekst), så kampanjer følger med.
+{%- endcomment -%}
+{%- assign rp_products = article.metafields.custom.related_products.value -%}
+{%- assign rp_count = 0 -%}
+{%- for rp_p in rp_products -%}
+  {%- if rp_p.available -%}{%- assign rp_count = rp_count | plus: 1 -%}{%- endif -%}
+{%- endfor -%}
+
+{%- if rp_count > 0 -%}
+  {{ 'section-sk-article-related-products.css' | asset_url | stylesheet_tag }}
+  <section class="sk-arp" aria-labelledby="sk-arp-{{ section.id }}">
+    <div class="page-width">
+      <h2 class="sk-arp__heading" id="sk-arp-{{ section.id }}">{{ section.settings.heading }}</h2>
+      <ul class="sk-arp__grid">
+        {%- for rp_p in rp_products -%}
+          {%- unless rp_p.available -%}{%- continue -%}{%- endunless -%}
+          {%- capture rp_price -%}{%- render 'sk-lp-pricing', product: rp_p, part: 'pris' -%}{%- endcapture -%}
+          {%- capture rp_before -%}{%- render 'sk-lp-pricing', product: rp_p, part: 'for-pris' -%}{%- endcapture -%}
+          <li class="sk-arp__card">
+            {%- if rp_p.featured_image -%}
+              <a class="sk-arp__media" href="{{ rp_p.url }}" tabindex="-1" aria-hidden="true">
+                {{
+                  rp_p.featured_image
+                  | image_url: width: 480
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '240, 360, 480',
+                    sizes: '(min-width: 750px) 240px, 45vw',
+                    alt: rp_p.featured_image.alt
+                }}
+              </a>
+            {%- endif -%}
+            <div class="sk-arp__body">
+              <h3 class="sk-arp__title"><a href="{{ rp_p.url }}">{{ rp_p.title }}</a></h3>
+              {% render 'sk-star-rating', sr_product: rp_p %}
+              <p class="sk-arp__price">
+                {%- if rp_before != blank -%}<s>{{ rp_before }}</s> {% endif -%}
+                <span>{{ rp_price }}</span>
+              </p>
+              <a class="btn btn--secondary sk-arp__button" href="{{ rp_p.url }}">{{ section.settings.button_label }}</a>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Relaterte produkter",
+  "tag": "div",
+  "class": "section",
+  "enabled_on": { "templates": ["article"] },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Produktene velges per artikkel i metafeltet «Relaterte produkter» (custom.related_products). Uten metafelt vises ingenting."
+    },
+    { "type": "text", "id": "heading", "label": "Overskrift", "default": "Relaterte produkter" },
+    { "type": "text", "id": "button_label", "label": "Knapp", "default": "Se masken" }
+  ],
+  "presets": [{ "name": "Relaterte produkter" }]
+}
+{% endschema %}

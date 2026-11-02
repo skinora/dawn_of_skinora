@@ -65,6 +65,15 @@
   assign bfk_content = bfk_content | replace: '</table>', '</table></div>'
 
   comment
+    Bilder i artikkelteksten ligger alltid under hovedbildet (som er LCP og
+    lastes eager), så de kan lastes lat. Gjelder bare <img uten eget
+    loading-attributt; et bilde med loading="eager" i innholdet beholdes.
+  endcomment
+  unless bfk_content contains 'loading="eager"'
+    assign bfk_content = bfk_content | replace: '<img ', '<img loading="lazy" decoding="async" '
+  endunless
+
+  comment
     Finn første avsnitt med nok brødtekst, og sett plassholderen rett etter.
     split dropper skilletegnet, så halen kuttes med remove_first på et
     prefiks i stedet for å settes sammen av chunks igjen — ellers ville en

@@ -1,0 +1,68 @@
+{%- comment -%}
+  SEO-ingress for samlinger (mal collection.seo).
+  H1 = samlingens tittel (eller overstyring). Under: samlingsbeskrivelsen fra
+  admin, kortet ned til tre linjer med «Les mer». Hele teksten står i HTML-en
+  hele tiden (bare skjult visuelt), så Google leser den uansett.
+{%- endcomment -%}
+{{ 'section-sk-collection-seo.css' | asset_url | stylesheet_tag }}
+
+{%- assign si_desc = collection.description | strip -%}
+{%- assign si_long = false -%}
+{%- if si_desc != blank and si_desc.size > 280 -%}{%- assign si_long = true -%}{%- endif -%}
+
+<div class="sk-cseo sk-cseo--intro">
+  <div class="page-width sk-cseo__wrap">
+    <h1 class="sk-cseo__title">{{ section.settings.heading | default: collection.title }}</h1>
+    {%- if si_desc != blank -%}
+      <div
+        class="sk-cseo__intro{% if si_long %} is-clamped{% endif %}"
+        id="sk-cseo-intro-{{ section.id }}"
+      >
+        {{ collection.description }}
+      </div>
+      {%- if si_long -%}
+        <button
+          type="button"
+          class="sk-cseo__more"
+          aria-expanded="false"
+          aria-controls="sk-cseo-intro-{{ section.id }}"
+          data-less="{{ section.settings.less_label | escape }}"
+          data-more="{{ section.settings.more_label | escape }}"
+        >
+          {{- section.settings.more_label -}}
+        </button>
+        <script>
+          (function () {
+            var btn = document.currentScript.previousElementSibling;
+            var box = document.getElementById(btn.getAttribute('aria-controls'));
+            btn.addEventListener('click', function () {
+              var open = btn.getAttribute('aria-expanded') === 'true';
+              btn.setAttribute('aria-expanded', String(!open));
+              box.classList.toggle('is-clamped', open);
+              btn.textContent = open ? btn.dataset.more : btn.dataset.less;
+            });
+          })();
+        </script>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SEO-ingress (samling)",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["collection"] },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Teksten er samlingsbeskrivelsen i Shopify admin. Første 2–3 linjer vises, resten bak «Les mer»."
+    },
+    { "type": "text", "id": "heading", "label": "H1", "info": "Tomt = samlingens tittel." },
+    { "type": "text", "id": "more_label", "label": "Knapp for å vise mer", "default": "Les mer" },
+    { "type": "text", "id": "less_label", "label": "Knapp for å vise mindre", "default": "Vis mindre" }
+  ],
+  "presets": [{ "name": "SEO-ingress (samling)" }]
+}
+{% endschema %}

@@ -1,0 +1,113 @@
+{%- comment -%}
+  FAQ for samlinger (mal collection.seo), med FAQPage JSON-LD fra de samme
+  dataene som vises.
+
+  Kilde, i denne rekkefølgen:
+  1. Blokker i tema-editoren (Spørsmål/Svar), hvis seksjonen har noen.
+  2. Samlingens metafelt custom.faq (JSON-liste: [{"q": "...", "a": "..."}]).
+  Ingen spørsmål = ingen seksjon og ingen schema.
+
+  Svarene er ren tekst, så teksten på siden og i schemaet er identisk.
+  Google viser sjelden FAQ-rich results for nettbutikker; schemaet er riktig,
+  men innholdet er hovedpoenget.
+{%- endcomment -%}
+{%- liquid
+  assign fq_source = 'none'
+  if section.blocks.size > 0
+    assign fq_source = 'blocks'
+  elsif collection.metafields.custom.faq.value != blank
+    assign fq_source = 'metafield'
+  endif
+-%}
+
+{%- if fq_source != 'none' -%}
+  {{ 'section-sk-collection-seo.css' | asset_url | stylesheet_tag }}
+  <div class="sk-cseo sk-cseo--faq">
+    <div class="page-width sk-cseo__wrap">
+      <h2 class="sk-cseo__heading">{{ section.settings.heading }}</h2>
+      <div class="sk-cseo__faq">
+        {%- if fq_source == 'blocks' -%}
+          {%- for block in section.blocks -%}
+            {%- if block.settings.question != blank and block.settings.answer != blank -%}
+              <details class="sk-cseo__item" {{ block.shopify_attributes }}>
+                <summary><h3>{{ block.settings.question | escape }}</h3></summary>
+                <p>{{ block.settings.answer | escape | newline_to_br }}</p>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for fq in collection.metafields.custom.faq.value -%}
+            {%- if fq.q != blank and fq.a != blank -%}
+              <details class="sk-cseo__item">
+                <summary><h3>{{ fq.q | escape }}</h3></summary>
+                <p>{{ fq.a | escape | newline_to_br }}</p>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- assign fq_first = true -%}
+        {%- if fq_source == 'blocks' -%}
+          {%- for block in section.blocks -%}
+            {%- if block.settings.question != blank and block.settings.answer != blank -%}
+              {%- unless fq_first -%},{%- endunless -%}
+              {%- assign fq_first = false -%}
+              {
+                "@type": "Question",
+                "name": {{ block.settings.question | strip | json }},
+                "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip | json }} }
+              }
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for fq in collection.metafields.custom.faq.value -%}
+            {%- if fq.q != blank and fq.a != blank -%}
+              {%- unless fq_first -%},{%- endunless -%}
+              {%- assign fq_first = false -%}
+              {
+                "@type": "Question",
+                "name": {{ fq.q | strip | json }},
+                "acceptedAnswer": { "@type": "Answer", "text": {{ fq.a | strip | json }} }
+              }
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FAQ (samling)",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["collection"] },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Legg til spørsmål som blokker her. Uten blokker brukes samlingens metafelt custom.faq (JSON: [{\"q\": \"Spørsmål\", \"a\": \"Svar\"}]). FAQ-schema lages fra de samme dataene."
+    },
+    { "type": "text", "id": "heading", "label": "Overskrift", "default": "Spørsmål og svar" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Spørsmål",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Spørsmål" },
+        { "type": "textarea", "id": "answer", "label": "Svar", "info": "Ren tekst. Samme tekst vises på siden og i FAQ-schemaet." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "FAQ (samling)" }]
+}
+{% endschema %}

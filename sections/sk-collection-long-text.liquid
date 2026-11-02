@@ -1,0 +1,48 @@
+{%- comment -%}
+  Valgfri lang brødtekst (300–500 ord) under FAQ på samlinger (mal collection.seo).
+  Kilde: samlingens metafelt custom.long_text (rik tekst) hvis det er fylt ut,
+  ellers rik tekst-feltet i seksjonen. Tomt begge steder = ingen seksjon.
+{%- endcomment -%}
+{%- liquid
+  assign lt_meta = collection.metafields.custom.long_text
+  assign lt_html = ''
+  if lt_meta != blank
+    if lt_meta.type == 'rich_text_field'
+      assign lt_html = lt_meta | metafield_tag
+    else
+      assign lt_html = lt_meta.value | newline_to_br
+    endif
+  elsif section.settings.text != blank
+    assign lt_html = section.settings.text
+  endif
+-%}
+
+{%- if lt_html != blank -%}
+  {{ 'section-sk-collection-seo.css' | asset_url | stylesheet_tag }}
+  <div class="sk-cseo sk-cseo--long">
+    <div class="page-width sk-cseo__wrap">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sk-cseo__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      <div class="sk-cseo__prose">{{ lt_html }}</div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Lang tekst (samling)",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["collection"] },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Bruker samlingens metafelt custom.long_text når det er fylt ut. Ellers teksten under. Bruk H3 for underoverskrifter (H2 er seksjonens overskrift)."
+    },
+    { "type": "text", "id": "heading", "label": "Overskrift (valgfri)" },
+    { "type": "richtext", "id": "text", "label": "Tekst" }
+  ],
+  "presets": [{ "name": "Lang tekst (samling)" }]
+}
+{% endschema %}

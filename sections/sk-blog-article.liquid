@@ -31,6 +31,20 @@
       {%- endif -%}
 
       <div class="sk-blog-article__content">
+        {%- comment -%}
+          Synlig brødsmulesti, samme sti som BreadcrumbList i
+          snippets/seo-breadcrumbs-jsonld.liquid: Hjem › Blogg › artikkelen.
+          «Blogg» lenker til /pages/blogs, som er den kanoniske blogg-indeksen
+          (/blogs/nyheter har canonical dit). Står utenfor <header> fordi
+          sk-base.css gjør header:not(.sk-header) til en flex-rad på mobil.
+        {%- endcomment -%}
+        <nav class="sk-blog-article__breadcrumbs" aria-label="Brødsmulesti">
+          <ol>
+            <li><a href="{{ routes.root_url }}">Hjem</a></li>
+            <li><a href="/pages/blogs">Blogg</a></li>
+            <li><span aria-current="page">{{ article.title | escape }}</span></li>
+          </ol>
+        </nav>
         <header class="sk-blog-article__header">
           <h1 class="sk-header__section sk-blog-article__title sk-section-heading sk-section-heading--hxl">
             {{ article.title | escape }}

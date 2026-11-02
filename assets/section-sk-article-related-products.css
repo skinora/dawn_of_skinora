@@ -1,0 +1,88 @@
+/* Relaterte produkter nederst i artikler (sk-article-related-products). */
+.sk-arp {
+  padding-block: var(--space-7);
+  background: var(--paper-0);
+}
+
+.sk-arp__heading {
+  margin: 0 0 var(--space-5);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  color: var(--ink-900);
+  text-align: center;
+}
+
+.sk-arp__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 260px));
+  justify-content: center;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sk-arp__card {
+  display: flex;
+  flex-direction: column;
+  background: var(--paper-0);
+  border: 1px solid color-mix(in srgb, var(--ink-900) 10%, transparent);
+}
+
+.sk-arp__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.sk-arp__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+.sk-arp__title {
+  margin: 0;
+  font-size: var(--fs-md);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+}
+
+.sk-arp__title a {
+  color: var(--ink-900);
+  text-decoration: none;
+}
+
+.sk-arp__price {
+  margin: 0;
+  font-size: var(--fs-md);
+  color: var(--ink-700);
+}
+
+.sk-arp__price s {
+  color: var(--ink-400);
+}
+
+.sk-arp__button {
+  margin-top: auto;
+}
+
+@media (max-width: 749px) {
+  .sk-arp {
+    padding-block: var(--space-6);
+  }
+
+  .sk-arp__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .sk-arp__body {
+    padding: var(--space-3);
+  }
+}

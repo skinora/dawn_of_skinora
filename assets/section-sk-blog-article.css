@@ -38,6 +38,46 @@
   text-align: center;
 }
 
+/* Brødsmulesti over tittelen. Siste ledd (artikkelen) kortes av med … */
+.sk-blog-article__breadcrumbs {
+  margin: var(--space-6) 48px 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-500);
+}
+
+.sk-blog-article__breadcrumbs ol {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+
+.sk-blog-article__breadcrumbs li {
+  display: flex;
+  gap: var(--space-2);
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.sk-blog-article__breadcrumbs li + li::before {
+  content: '›';
+  color: var(--ink-400);
+}
+
+.sk-blog-article__breadcrumbs li:last-child span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sk-blog-article__breadcrumbs a {
+  color: var(--ink-500);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .sk-blog-article__title {
   font-size: var(--section-heading-h1);
   line-height: var(--section-heading-h1-line);
@@ -339,6 +379,10 @@
 
   .sk-blog-article__header {
     margin: 32px 24px;
+  }
+
+  .sk-blog-article__breadcrumbs {
+    margin: var(--space-5) 24px 0;
   }
 }
 

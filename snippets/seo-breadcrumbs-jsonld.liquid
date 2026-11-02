@@ -85,8 +85,8 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": {{ blog.title | json }},
-          "item": {{ request.origin | append: '/blogs/' | append: blog.handle | json }}
+          "name": "Blogg",
+          "item": {{ request.origin | append: '/pages/blogs' | json }}
         },
         {
           "@type": "ListItem",
