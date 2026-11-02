@@ -75,6 +75,21 @@
   text-decoration-thickness: 1px;
 }
 
+/* Sett-linje: «Kjøp settet og spar X» — skjules når settet er valgt */
+.sk-bf-box__extra {
+  font-size: var(--fs-sm, 0.875rem);
+  color: color-mix(in srgb, var(--paper-0) 85%, transparent);
+}
+
+.sk-bf-box__extra strong {
+  font-weight: var(--fw-semibold);
+  color: var(--accent-gold);
+}
+
+.sk-bf-box__extra[hidden] {
+  display: none;
+}
+
 /* Frist: egen linje under en fin strek */
 .sk-bf-box__deadline {
   align-self: stretch;
