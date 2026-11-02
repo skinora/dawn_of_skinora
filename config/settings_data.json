@@ -121,7 +121,7 @@
     "show_cart_note": false,
     "cart_drawer_collection": "",
     "kampanje_aktiv": true,
-    "kampanje_sluttdato_iso": "2026-09-15",
+    "kampanje_sluttdato_iso": "2026-11-30",
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
@@ -140,18 +140,6 @@
     "blocks": {
       "855628211100114053": {
         "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
-        "disabled": false,
-        "settings": {}
-      },
-      "733389323033596483": {
-        "type": "shopify://apps/okendo/blocks/theme-settings/bb689e69-ea70-4661-8fb7-ad24a2e23c29",
-        "disabled": true,
-        "settings": {
-          "show_preview_data": true
-        }
-      },
-      "5918445685253060206": {
-        "type": "shopify://apps/bundler/blocks/bundler-script-append/7a6ae1b8-3b16-449b-8429-8bb89a62c664",
         "disabled": false,
         "settings": {}
       },
