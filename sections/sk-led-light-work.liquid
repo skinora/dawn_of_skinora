@@ -77,7 +77,7 @@
               <div class="sk-wavelength__visual">
                 <img
                   src="{{ card_image | image_url: width: 1000 }}"
-                  alt="{{ card_title | default: 'Skinora LED lys' | escape }}"
+                  alt="{{ card_image.alt | default: product.title | default: card_title | escape }}"
                   loading="lazy"
                   width="{{ card_image.width | default: 1000 }}"
                   height="{{ card_image.height | default: 750 }}"
@@ -146,7 +146,7 @@
                   <div class="sk-wavelength__visual">
                     <img
                       src="{{ card_image | image_url: width: 800 }}"
-                      alt="{{ card_title | default: 'Skinora LED lys' | escape }}"
+                      alt="{{ card_image.alt | default: product.title | default: card_title | escape }}"
                       {%- comment -%} Se sk-before-after.liquid: peek-kanten er tom uten dette. {%- endcomment -%}
                       {% if forloop.index <= 2 %}loading="eager"{% else %}loading="lazy"{% endif %}
                       width="{{ card_image.width | default: 800 }}"

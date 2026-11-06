@@ -1,82 +1,64 @@
 {{ 'section-sk-product-faq-accordion.css' | asset_url | stylesheet_tag }}
 
-{%- if product.metafields.custom.faq_item.value != blank -%}
-  <section class="sk-product-faq-accordion sk-faq-accordion-{{ section.id }}">
-    <div class="page-width">
-      <div class="sk-faq-accordion__container">
-        <div class="sk-faq-accordion__content">
-          {% if section.settings.title != blank %}
-            <h2 class="sk-header__section sk-faq-accordion__title sk-section-heading sk-section-heading--h1">
-              {{ section.settings.title | escape }}
-            </h2>
-          {% endif %}
+{%- comment -%}
+  Synlig FAQ (<details>/<summary>, ingen JS) + FAQPage JSON-LD fra SAMME kilde.
+  Kilden er metafeltet custom.faq_item. Listen gås gjennom én gang: hvert
+  spørsmål/svar skrives til både HTML-en og JSON-LD-en i samme iterasjon, så
+  de ikke kan komme i utakt. Svarene ligger i HTML-en ved sidelasting.
+{%- endcomment -%}
+{%- assign faq_items = product.metafields.custom.faq_item.value -%}
 
-          <div class="sk-faq-accordion__questions">
-            <div class="accordion sk-faq-accordion__accordion" id="faqAccordion-{{ section.id }}">
-              {% for faq_item in product.metafields.custom.faq_item.value %}
-                <div class="accordion-item sk-faq-accordion__item">
-                  <h3
-                    class="accordion-header sk-faq-accordion__header"
-                    id="heading-{{ forloop.index }}-{{ section.id }}"
-                  >
-                    <button
-                      class="accordion-button sk-faq-accordion__button collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapse-{{ forloop.index }}-{{ section.id }}"
-                      aria-expanded="false"
-                      aria-controls="collapse-{{ forloop.index }}-{{ section.id }}"
-                    >
-                      <span class="sk-faq-accordion__question">{{ faq_item.question }}</span>
-                      <div class="sk-faq-accordion__icon"></div>
-                    </button>
-                  </h3>
-                  <div
-                    id="collapse-{{ forloop.index }}-{{ section.id }}"
-                    class="accordion-collapse collapse sk-faq-accordion__collapse"
-                    aria-labelledby="heading-{{ forloop.index }}-{{ section.id }}"
-                    data-bs-parent="#faqAccordion-{{ section.id }}"
-                  >
-                    <div class="accordion-body sk-faq-accordion__body">
-                      <div class="sk-faq-accordion__answer sk-section-body">
-                        {%- if faq_item.answer.type == 'rich_text_field' -%}
-                          {{ faq_item.answer | metafield_tag }}
-                        {%- else -%}
-                          {{ faq_item.answer }}
-                        {%- endif -%}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
-          </div>
+{%- if faq_items != blank -%}
+  {%- capture faq_ld -%}
+    {%- for faq_item in faq_items -%}
+      {
+        "@type": "Question",
+        "name": {{ faq_item.question | json }},
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": {{ faq_item.answer | metafield_text | strip_newlines | strip | json }}
+        }
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  {%- endcapture -%}
+
+  <section class="sk-product-faq-accordion" aria-labelledby="faq-heading-{{ section.id }}">
+    <div class="page-width">
+      <div class="sk-faq-accordion__content">
+        {%- if section.settings.title != blank -%}
+          <h2 class="sk-faq-accordion__title" id="faq-heading-{{ section.id }}">
+            {{- section.settings.title | escape -}}
+          </h2>
+        {%- endif -%}
+
+        <div class="sk-faq-accordion__list">
+          {%- for faq_item in faq_items -%}
+            <details
+              class="sk-faq-accordion__item"
+              {%- if forloop.first and section.settings.open_first_item %} open{% endif %}
+            >
+              <summary class="sk-faq-accordion__summary">
+                <h3 class="sk-faq-accordion__question">{{ faq_item.question | escape }}</h3>
+              </summary>
+              <div class="sk-faq-accordion__answer">
+                {%- if faq_item.answer.type == 'rich_text_field' -%}
+                  {{ faq_item.answer | metafield_tag }}
+                {%- else -%}
+                  {{ faq_item.answer }}
+                {%- endif -%}
+              </div>
+            </details>
+          {%- endfor -%}
         </div>
       </div>
     </div>
   </section>
 
-  {%- comment -%} FAQPage JSON-LD — matches the visible Q&A above {%- endcomment -%}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": [
-        {%- for faq_item in product.metafields.custom.faq_item.value -%}
-          {
-            "@type": "Question",
-            "name": {{ faq_item.question | json }},
-            "acceptedAnswer": {
-              "@type": "Answer",
-              {%- comment -%}
-                metafield_text, ikke strip_html: et rich text-felt er et
-                JSON-dokument, og strip_html sendte det rått til Google.
-              {%- endcomment -%}
-              "text": {{ faq_item.answer | metafield_text | strip_newlines | strip | json }}
-            }
-          }{% unless forloop.last %},{% endunless %}
-        {%- endfor -%}
-      ]
+      "mainEntity": [{{ faq_ld }}]
     }
   </script>
 {%- endif -%}
@@ -84,50 +66,24 @@
 {% schema %}
 {
   "name": "SK Product FAQ",
-  "tag": "section",
+  "tag": "div",
   "class": "section",
   "settings": [
     {
-      "type": "header",
-      "content": "Product-Specific Control"
-    },
-    {
       "type": "paragraph",
-      "content": "This section displays FAQ from product metafields. To show FAQs on specific products:"
-    },
-    {
-      "type": "paragraph",
-      "content": "1. Create a metaobject definition called 'faq_item' with fields: 'question' (single line text) and 'answer' (rich text)"
-    },
-    {
-      "type": "paragraph",
-      "content": "2. Add product metafield 'custom.faq_items' (List of metaobject references to 'faq_item')"
-    },
-    {
-      "type": "header",
-      "content": "Section Settings"
-    },
-    {
-      "type": "image_picker",
-      "id": "faq_image",
-      "label": "FAQ Image"
+      "content": "Viser spørsmål og svar fra produktets metafelt custom.faq_item (liste av metaobjekter med 'question' og 'answer'). FAQPage-schema bygges av de samme elementene."
     },
     {
       "type": "text",
       "id": "title",
-      "label": "Section Title",
-      "default": "Alt Du Lurte På"
+      "label": "Overskrift (H2)",
+      "default": "Spørsmål og svar om LED-masken"
     },
     {
       "type": "checkbox",
       "id": "open_first_item",
-      "label": "Open first FAQ item by default",
+      "label": "Åpne første spørsmål som standard",
       "default": false
-    },
-    {
-      "type": "url",
-      "id": "faq_link",
-      "label": "FAQ Link"
     }
   ],
   "presets": [

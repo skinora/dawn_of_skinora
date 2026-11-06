@@ -126,7 +126,7 @@
           <div class="sw-publication__card">
             <img
               src="{{ logo | image_url: width: 300, height: 300 }}"
-              alt="Promotion logo {{ forloop.index }}"
+              alt="{{ logo.alt | default: product.title | escape }}"
               width="104"
               height="104"
               loading="lazy"
@@ -139,7 +139,7 @@
           <div class="sw-publication__card">
             <img
               src="{{ logo | image_url: width: 300, height: 300 }}"
-              alt="Promotion logo {{ forloop.index }}"
+              alt="" aria-hidden="true"
               width="104"
               height="104"
               loading="lazy"

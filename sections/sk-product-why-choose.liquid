@@ -26,6 +26,7 @@
 {%- endif -%}
 
 {%- if show_section -%}
+  {%- assign why_image_alt = image_obj.alt | default: product.title -%}
   <section
     class="sk-product-why-choose sk-reasons sk-reasons--{{ section.id }}"
     style="--sk-why-image-width: {{ section.settings.layout_image_width }}; --sk-why-text-width: {{ section.settings.layout_text_width }}; --sk-why-gap: {{ section.settings.layout_gap }};"
@@ -41,8 +42,7 @@
                 widths: '375, 550, 750, 900, 1100, 1400',
                 sizes: '(min-width: 990px) 40vw, (min-width: 750px) 45vw, 100vw',
                 loading: 'lazy',
-                alt: image_obj.alt
-              | default: heading
+                alt: why_image_alt
             }}
           </div>
         {% endif %}

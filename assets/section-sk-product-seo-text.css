@@ -1,0 +1,49 @@
+/* sk-product-seo-text — rich text fra metafeltet custom.seo_tekst. */
+
+.sk-product-seo-text {
+  background: var(--paper-0);
+  padding-block: var(--space-section-md);
+  color: var(--ink-700);
+}
+
+.sk-product-seo-text .sk-product-seo-text__body {
+  max-width: var(--measure-wide);
+  margin-inline: auto;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--ink-700);
+}
+
+.sk-product-seo-text .sk-product-seo-text__body h2,
+.sk-product-seo-text .sk-product-seo-text__body h3 {
+  margin: var(--space-6) 0 var(--space-3);
+  font-family: var(--ff-serif);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+}
+
+.sk-product-seo-text .sk-product-seo-text__body h2 {
+  font-size: var(--fs-3xl);
+}
+
+.sk-product-seo-text .sk-product-seo-text__body h3 {
+  font-size: var(--fs-xl);
+}
+
+.sk-product-seo-text .sk-product-seo-text__body > :first-child {
+  margin-top: 0;
+}
+
+.sk-product-seo-text .sk-product-seo-text__body p,
+.sk-product-seo-text .sk-product-seo-text__body ul,
+.sk-product-seo-text .sk-product-seo-text__body ol {
+  margin: 0 0 var(--space-4);
+}
+
+.sk-product-seo-text .sk-product-seo-text__body a {
+  color: var(--ink-900);
+  text-decoration: underline;
+}

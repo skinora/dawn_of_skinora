@@ -1,0 +1,38 @@
+{{ 'section-sk-product-seo-text.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  SEO-tekst fra rich text-metafeltet custom.seo_tekst. Rendres kun når feltet
+  har innhold. h2/h3 fra metafeltet bevares; h1 nedgraderes til h2 slik at
+  siden aldri får mer enn én h1.
+{%- endcomment -%}
+{%- assign seo_field = product.metafields.custom.seo_tekst -%}
+
+{%- if seo_field != blank -%}
+  {%- assign seo_html = seo_field | metafield_tag | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' -%}
+  <section class="sk-product-seo-text">
+    <div class="page-width">
+      <div class="sk-product-seo-text__body">
+        {{ seo_html }}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SK Product SEO-tekst",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Viser rich text-metafeltet custom.seo_tekst på produktet. Seksjonen vises ikke når feltet er tomt."
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK Product SEO-tekst"
+    }
+  ]
+}
+{% endschema %}

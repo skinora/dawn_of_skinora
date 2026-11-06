@@ -79,11 +79,11 @@
           eneste vei ut var da X-en i hjørnet, og på mobil er drawer-en nå hele
           skjermen.
 
-          Overskriften beholdes visuelt skjult. Dialogen har aria-label, men
-          skjermlesere som navigerer på overskriftsnivå ville ellers mistet
-          ankeret sitt i kurven.
+          Teksten beholdes visuelt skjult som <p>, ikke overskrift: en <h2> her
+          kom før produktets <h1> i DOM-en. Dialogen har aria-label, så
+          skjermlesere finner fortsatt kurven.
         {%- endcomment -%}
-        <h2 class="visually-hidden">{{ 'sections.cart.title' | t }}</h2>
+        <p class="visually-hidden">{{ 'sections.cart.title' | t }}</p>
 
         <button
           class="sk-cart-continue"

@@ -615,7 +615,7 @@
               <div class="sk-payment sk-trust-icons">
                 {% for badge in trust_badges_value %}
                   {% assign badge_img = badge.url | default: badge.image | default: badge.src | default: badge %}
-                  {% assign badge_alt = badge.alt | default: badge.alt_text | default: 'Trust badge' %}
+                  {% assign badge_alt = badge.alt | default: badge.alt_text | default: product.title %}
                   {% if badge_img != blank %}
                     <span class="sk-trust-icon">
                       <img

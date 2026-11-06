@@ -46,6 +46,9 @@
   if portrait_alt == blank and s.name != blank
     assign portrait_alt = s.name | append: ', ' | append: s.role
   endif
+  if portrait_alt == blank
+    assign portrait_alt = product.title
+  endif
 -%}
 
 <section

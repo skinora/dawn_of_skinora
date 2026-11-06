@@ -203,6 +203,11 @@
         "layout_gap": 10
       }
     },
+    "sk_product_seo_text_Qm4Tn8": {
+      "type": "sk-product-seo-text",
+      "name": "SK Product SEO-tekst",
+      "settings": {}
+    },
     "sk_product_specifications_cJY9VW": {
       "type": "sk-product-specifications",
       "name": "SK Product Specifications",
@@ -214,10 +219,8 @@
       "type": "sk-product-faq-accordion",
       "name": "SK Product FAQ",
       "settings": {
-        "faq_image": "shopify://shop_images/enecta-cannabis-extracts-80wCkpt-IKE-unsplash.webp",
-        "title": "",
-        "open_first_item": true,
-        "faq_link": ""
+        "title": "Spørsmål og svar om LED-masken",
+        "open_first_item": false
       }
     },
     "1759515838eeeda580": {
@@ -239,6 +242,7 @@
   "order": [
     "main",
     "skinora_video_story_FYFKhN",
+    "sk_product_faq_accordion_EPRXLb",
     "sk_product_promotion_logos_r9MTbH",
     "sk_product_clinic_proof_zqhBML",
     "sk_led_light_work_mDz86m",
@@ -246,8 +250,8 @@
     "sk_clinic_comparison_kP7m2x",
     "sk_product_how_to_use_dbAJA9",
     "sk_product_why_choose_pwJz83",
+    "sk_product_seo_text_Qm4Tn8",
     "sk_product_specifications_cJY9VW",
-    "1759515838eeeda580",
-    "sk_product_faq_accordion_EPRXLb"
+    "1759515838eeeda580"
   ]
 }
