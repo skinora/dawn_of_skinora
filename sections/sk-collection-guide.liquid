@@ -28,6 +28,9 @@
     {%- if cg_s.intro != blank -%}
       <p class="sk-cg__intro">{{ cg_s.intro }}</p>
     {%- endif -%}
+    {%- if collection.description != blank -%}
+      <div class="sk-cg__desc rte">{{ collection.description }}</div>
+    {%- endif -%}
     {%- if cg_s.trust_1 != blank or cg_s.trust_2 != blank or cg_s.trust_3 != blank or cg_s.trust_4 != blank -%}
       <ul class="sk-cg__trust">
         {%- for i in (1..4) -%}

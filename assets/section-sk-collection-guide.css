@@ -74,6 +74,23 @@
   color: var(--ink-500);
 }
 
+.sk-cg .sk-cg__desc {
+  max-width: var(--measure-intro);
+  margin: var(--space-3) auto 0;
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--ink-500);
+}
+
+.sk-cg .sk-cg__desc p {
+  margin: 0;
+}
+
+.sk-cg .sk-cg__desc a {
+  color: var(--ink-900);
+  text-decoration: underline;
+}
+
 .sk-cg__trust {
   list-style: none;
   display: flex;
