@@ -135,3 +135,8 @@
   overflow-anchor: none;
   scroll-margin-top: var(--space-6, 32px);
 }
+
+/* Anmeldelsesdato («for 4 måneder siden») vises ikke. Stjernene og navnet står igjen. */
+#klaviyo-product-reviews-wrapper .kl_reviews__time_badge {
+  display: none;
+}
