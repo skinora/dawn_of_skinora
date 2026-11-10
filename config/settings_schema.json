@@ -1573,7 +1573,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Styrer toppbanneret og Black Week-seksjonen. SELVE TILBUDET settes på produktet i Shopify: «Pris» = kampanjeprisen, «Sammenlign med» = prisen masken faktisk hadde før kampanjen. Banneret og seksjonen leser tallene derfra, vises fra startdatoen og slukker av seg selv etter sluttdatoen. Er produktet ikke satt ned, vises ingenting."
+        "content": "Styrer toppbanneret og Black Week-seksjonen. SELVE TILBUDET settes på produktet i Shopify: «Pris» = kampanjeprisen, «Sammenlign med» = før-prisen. Banneret og seksjonen leser tallene derfra. Alt vises fra temaet er publisert og produktet er satt ned, og slukker av seg selv etter sluttdatoen. Er produktet ikke satt ned, vises ingenting."
       },
       {
         "type": "checkbox",
@@ -1585,9 +1585,8 @@
       {
         "type": "text",
         "id": "bw_start_iso",
-        "label": "Startdato (ÅÅÅÅ-MM-DD)",
-        "default": "2026-11-23",
-        "info": "Vises fra kl. 00.00 denne dagen."
+        "label": "Startdato (valgfri, ÅÅÅÅ-MM-DD)",
+        "info": "La stå tom: da gjelder Black Week fra temaet er publisert. Fyll bare inn hvis det skal vente til en bestemt dag."
       },
       {
         "type": "text",
@@ -1627,9 +1626,9 @@
       {
         "type": "checkbox",
         "id": "bw_forhandsvis",
-        "label": "Forhåndsvis før startdato",
+        "label": "Forhåndsvis",
         "default": false,
-        "info": "Viser Black Week før startdatoen, men KUN i temaer som ikke er publisert."
+        "info": "Viser Black Week med forhåndsvisningsprisene under, men KUN i temaer som ikke er publisert."
       },
       {
         "type": "number",

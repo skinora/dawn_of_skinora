@@ -42,7 +42,7 @@
       assign bw_end_day = bw_end_iso | date: '%-d'
       assign bw_end_m = bw_end_iso | date: '%-m' | minus: 1
       assign bw_end_text = bw_end_day | append: '. ' | append: bw_months[bw_end_m]
-      assign bw_period = bw_end_text
+      assign bw_period = 'til ' | append: bw_end_text
 
       if bw_start_iso != blank
         assign bw_start_day = bw_start_iso | date: '%-d'
