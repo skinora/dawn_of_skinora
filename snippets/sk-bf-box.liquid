@@ -42,9 +42,22 @@
     {%- endif -%}
   {%- endif -%}
 
-  <div class="sk-bf-box{% if variant == 'product' %} sk-bf-box--product{% endif %}{% if bf_has_bundle %} sk-bf-box--duo{% endif %}">
-    <span class="sk-bf-box__label">Black Friday</span>
-    {%- if bf_has_bundle -%}
+  {%- comment -%}
+    Black Week: for maskene som teller byttes innholdet i boksen ut med ÉN
+    trapp (snippets/sk-bw-pdp.liquid). Masken/Settet-oppsettet vises ikke da:
+    to tilbud ved siden av trappen ga fire valg i én boks, og settet er
+    dyrere enn to masker kjøpt enkeltvis mens Black Week går.
+  {%- endcomment -%}
+  {%- capture bf_bw -%}{%- render 'sk-bw-pdp', product: product, before: bf_before -%}{%- endcapture -%}
+  {%- if bf_bw != blank -%}
+    {%- assign bf_has_bundle = false -%}
+  {%- endif -%}
+
+  <div class="sk-bf-box{% if variant == 'product' %} sk-bf-box--product{% endif %}{% if bf_has_bundle %} sk-bf-box--duo{% endif %}{% if bf_bw != blank %} sk-bf-box--bw{% endif %}">
+    <span class="sk-bf-box__label">{% if bf_bw != blank %}Black Week{% else %}Black Friday{% endif %}</span>
+    {%- if bf_bw != blank -%}
+      {{ bf_bw }}
+    {%- elsif bf_has_bundle -%}
       <div class="sk-bf-box__duo">
         <div class="sk-bf-box__col">
           <span class="sk-bf-box__col-name">Masken</span>
@@ -76,7 +89,5 @@
     {%- if bf_date != blank -%}
       <span class="sk-bf-box__deadline">Tilbudet varer til <strong>{{ bf_date }}</strong></span>
     {%- endif -%}
-    {%- comment -%} Black Week: pris per maske ved to og ved tre eller flere {%- endcomment -%}
-    {% render 'sk-bw-pdp', product: product %}
   </div>
 {%- endif -%}

@@ -252,67 +252,98 @@
 
 /* På produktsiden settes avstanden av .sk-hero-extras (ingen egen marg) */
 
-/* ---------- Black Week: «Kjøp mer, spar mer» i boksen (sk-bw-pdp) ---------- */
+/* ---------- Black Week: én trapp i boksen (snippets/sk-bw-pdp.liquid) ----------
+   Tre trinn på rad med samme mål (pris per maske). Ett trinn er fremhevet:
+   2 masker. De to andre er bevisst roligere, så blikket lander ett sted. */
+
+.sk-bf-box--bw .sk-bf-box__save {
+  font-size: var(--fs-2xl);
+}
 
 .sk-bw-pdp {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-2);
-  width: 100%;
-  margin-top: var(--space-2);
-  padding-top: var(--space-3);
-  border-top: 1px solid color-mix(in srgb, var(--accent-gold) 35%, transparent);
-}
-
-.sk-bw-pdp__title {
-  font-size: 12px;
-  font-weight: var(--fw-semibold);
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
-  color: var(--accent-gold);
-}
-
-.sk-bw-pdp__tiers {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  align-items: stretch;
   gap: var(--space-2);
   width: 100%;
+  margin-top: var(--space-3);
 }
 
 .sk-bw-pdp__tier {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-1);
-  padding: var(--space-3) var(--space-2);
-  border: 1px solid color-mix(in srgb, var(--paper-0) 16%, transparent);
+  padding: var(--space-4) var(--space-1) var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--paper-0) 14%, transparent);
   border-radius: 12px;
 }
 
-.sk-bw-pdp__tier--top {
+.sk-bw-pdp__tier--pick {
   border-color: var(--accent-gold);
+  background: color-mix(in srgb, var(--accent-gold) 12%, transparent);
+}
+
+.sk-bw-pdp__badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2px var(--space-2);
+  border-radius: 999px;
+  background: var(--accent-gold);
+  color: var(--bf-black);
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-relaxed);
+  white-space: nowrap;
+}
+
+.sk-bw-pdp__badge--quiet {
+  border: 1px solid color-mix(in srgb, var(--accent-gold) 55%, transparent);
+  background: var(--bf-black);
+  color: var(--accent-gold);
 }
 
 .sk-bw-pdp__qty,
-.sk-bw-pdp__per {
+.sk-bw-pdp__per,
+.sk-bw-pdp__was {
   font-size: var(--fs-xs);
   font-weight: var(--fw-regular);
   line-height: var(--lh-none);
-  color: color-mix(in srgb, var(--paper-0) 74%, transparent);
+  color: color-mix(in srgb, var(--paper-0) 72%, transparent);
+}
+
+.sk-bw-pdp__was {
+  text-decoration-thickness: 1px;
 }
 
 .sk-bw-pdp__price {
   font-family: var(--ff-serif);
-  font-size: var(--fs-xl);
+  font-size: var(--fs-lg);
   font-weight: var(--fw-medium);
   line-height: var(--lh-none);
+  white-space: nowrap;
   color: var(--paper-0);
+}
+
+.sk-bw-pdp__tier--pick .sk-bw-pdp__price {
+  font-size: var(--fs-xl);
+}
+
+.sk-bw-pdp__save {
+  margin-top: var(--space-1);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-none);
+  white-space: nowrap;
+  color: var(--accent-gold);
 }
 
 .sk-bw-pdp__note {
   font-size: var(--fs-xs);
   font-weight: var(--fw-regular);
   line-height: var(--lh-relaxed);
-  color: color-mix(in srgb, var(--paper-0) 74%, transparent);
+  color: color-mix(in srgb, var(--paper-0) 72%, transparent);
 }

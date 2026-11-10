@@ -1,17 +1,30 @@
 {%- comment -%}
-  sk-bw-pdp — «Kjøp mer, spar mer» på produktsiden
+  sk-bw-pdp — Black Week på produktsiden: ÉN trapp, ett valg
   ----------------------------------------------------------------------------
-  Vises inne i Black Friday-boksen (snippets/sk-bf-box.liquid) når Black Week
-  går og produktet er ett av maskene som teller (Temainnstillinger → Black
-  Week). Viser hva DENNE masken koster per stk. ved to og ved tre eller flere.
+  Erstatter innholdet i Black Friday-boksen (snippets/sk-bf-box.liquid) mens
+  Black Week går, for maskene som teller (Temainnstillinger → Black Week).
 
-  Tallene er prisen kunden faktisk betaler i kassen: produktets pris minus
-  prosentene i temainnstillingene, som er de samme som de automatiske
-  rabattene i Shopify. Ingen prosenter skrives ut — bare pris per maske — så
-  linjen stemmer med handlekurven uansett hva resten av siden sammenligner mot.
+  HVORFOR ÉN TRAPP: boksen viste «Masken», «Settet – Best verdi», fristen og
+  så «Kjøp mer, spar mer» under. Fire tilbud i én boks, og settet til
+  6 690 kr sto som «Best verdi» rett over to masker til 6 273 kr. Kunden
+  skal svare på ett spørsmål: hvor mange masker. Derfor tre trinn på rad,
+  samme mål på alle (pris per maske), og ett av dem fremhevet.
+
+  Fremhevet trinn er 2 masker: det er det realistiske steget opp fra én, og
+  «Årets julegave» gir en grunn til å ta det. 3 eller flere står som det
+  billigste alternativet og gjør 2 lettere å velge.
+
+  Tallene er det kunden betaler i kassen: produktets pris minus prosentene i
+  temainnstillingene (de samme som rabattene i Shopify). «Spar …» er summen
+  for alle maskene i trinnet, regnet fra produktets pris.
+
+  Skriver ingenting ut når Black Week ikke går eller produktet ikke teller —
+  da viser sk-bf-box det vanlige innholdet.
 
   Parametre:
     product : produktobjekt (påkrevd)
+    before  : ferdig formatert før-pris fra sk-lp-pricing (valgfri) — vises
+              overstreket under prisen for én maske, slik boksen gjorde før
 {%- endcomment -%}
 {%- capture bwp_live -%}{%- render 'sk-bw-live' -%}{%- endcapture -%}
 {%- if bwp_live contains '1' and product != blank -%}
@@ -29,24 +42,38 @@
       assign bwp_price = product.selected_or_first_available_variant.price
       assign bwp_k2 = 100 | minus: settings.bw_prosent_2
       assign bwp_k3 = 100 | minus: settings.bw_prosent_3
+      assign bwp_u1 = bwp_price | divided_by: 100.0 | round
       assign bwp_u2 = bwp_price | times: bwp_k2 | divided_by: 10000.0 | round
       assign bwp_u3 = bwp_price | times: bwp_k3 | divided_by: 10000.0 | round
+      assign bwp_s2 = bwp_price | times: 2 | times: settings.bw_prosent_2 | divided_by: 10000.0 | round
+      assign bwp_s3 = bwp_price | times: 3 | times: settings.bw_prosent_3 | divided_by: 10000.0 | round
     -%}
-    <div class="sk-bw-pdp">
-      <span class="sk-bw-pdp__title">Kjøp mer, spar mer</span>
-      <span class="sk-bw-pdp__tiers">
-        <span class="sk-bw-pdp__tier">
-          <span class="sk-bw-pdp__qty">2 masker</span>
-          <span class="sk-bw-pdp__price">{%- render 'sk-kr', kroner: bwp_u2 -%}</span>
+    <span class="sk-bf-box__save">Kjøp mer, spar mer</span>
+    <span class="sk-bw-pdp">
+      <span class="sk-bw-pdp__tier">
+        <span class="sk-bw-pdp__qty">1 maske</span>
+        <span class="sk-bw-pdp__price">{%- render 'sk-kr', kroner: bwp_u1 -%}</span>
+        {%- if before != blank -%}
+          <s class="sk-bw-pdp__was">{{ before }}</s>
+        {%- else -%}
           <span class="sk-bw-pdp__per">per stk.</span>
-        </span>
-        <span class="sk-bw-pdp__tier sk-bw-pdp__tier--top">
-          <span class="sk-bw-pdp__qty">3 eller flere</span>
-          <span class="sk-bw-pdp__price">{%- render 'sk-kr', kroner: bwp_u3 -%}</span>
-          <span class="sk-bw-pdp__per">per stk.</span>
-        </span>
+        {%- endif -%}
       </span>
-      <span class="sk-bw-pdp__note">Alle LED-maskene teller og kan blandes. Rabatten trekkes i handlekurven.</span>
-    </div>
+      <span class="sk-bw-pdp__tier sk-bw-pdp__tier--pick">
+        <span class="sk-bw-pdp__badge">Årets julegave</span>
+        <span class="sk-bw-pdp__qty">2 masker</span>
+        <span class="sk-bw-pdp__price">{%- render 'sk-kr', kroner: bwp_u2 -%}</span>
+        <span class="sk-bw-pdp__per">per stk.</span>
+        <span class="sk-bw-pdp__save">Spar {% render 'sk-kr', kroner: bwp_s2 %}</span>
+      </span>
+      <span class="sk-bw-pdp__tier">
+        <span class="sk-bw-pdp__badge sk-bw-pdp__badge--quiet">Lavest pris</span>
+        <span class="sk-bw-pdp__qty">3 eller flere</span>
+        <span class="sk-bw-pdp__price">{%- render 'sk-kr', kroner: bwp_u3 -%}</span>
+        <span class="sk-bw-pdp__per">per stk.</span>
+        <span class="sk-bw-pdp__save">Spar {% render 'sk-kr', kroner: bwp_s3 %}</span>
+      </span>
+    </span>
+    <span class="sk-bw-pdp__note">Bland maskene som du vil. Rabatten trekkes automatisk i handlekurven.</span>
   {%- endif -%}
 {%- endif -%}
