@@ -134,6 +134,7 @@
     "bw_banner_tekst": "Black Week: Kjøp mer, spar mer – opptil [maks] %",
     "bw_banner_lenke": "shopify://collections/led-masker",
     "bw_forhandsvis": true,
+    "bw_forhandsvis_forpris": true,
     "tara_badge_enabled": true,
     "tara_badge_image": "shopify://shop_images/Tara_Pro_Age_nomineret_logo_round_oransje_2026nominert.png",
     "tara_badge_url": "https://tara.no/skjonnhet/pro-age/stem-pa-dine-pro-age-favoritter-2026-og-vinn-dem",

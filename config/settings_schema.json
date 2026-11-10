@@ -1638,6 +1638,13 @@
         "label": "Forhåndsvis før startdato",
         "default": false,
         "info": "Brukes bare hvis startdato er satt: viser Black Week før den datoen, men KUN i temaer som ikke er publisert."
+      },
+      {
+        "type": "checkbox",
+        "id": "bw_forhandsvis_forpris",
+        "label": "Forhåndsvis med butikkens førpriser",
+        "default": false,
+        "info": "Regner prosent og besparelse fra «Sammenlign med»-prisen på produktene i stedet for fra prisen. Virker KUN i temaer som ikke er publisert — på det publiserte temaet vises alltid de ekte prosentene."
       }
     ]
   },

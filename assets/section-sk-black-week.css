@@ -208,6 +208,12 @@
   color: var(--paper-0);
 }
 
+.sk-bw__row-was {
+  font-weight: var(--fw-regular);
+  text-decoration-thickness: 1px;
+  color: var(--bw-muted);
+}
+
 .sk-bw__per {
   font-size: var(--fs-xs);
   font-weight: var(--fw-regular);

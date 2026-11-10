@@ -33,6 +33,33 @@
   {%- liquid
     assign bw_p2 = settings.bw_prosent_2
     assign bw_p3 = settings.bw_prosent_3
+
+    comment
+      FORHÅNDSVISNING MED BUTIKKENS FØRPRISER. Bare i upubliserte temaer, og
+      bare med bryteren i Temainnstillinger → Black Week på: prosent og
+      besparelse regnes da fra «Sammenlign med»-prisen på produktet i stedet
+      for fra prisen. På det publiserte temaet er bw_fp alltid false.
+    endcomment
+    assign bw_fp = false
+    if settings.bw_forhandsvis_forpris
+      if theme.role == 'unpublished' or theme.role == 'development'
+        assign bw_fp = true
+      endif
+    endif
+    assign bw_maks = bw_p3
+    if bw_fp
+      assign bw_keep3 = 100 | minus: bw_p3
+      for bw_q in bw_products
+        assign bw_qv = bw_q.selected_or_first_available_variant
+        if bw_qv.compare_at_price > bw_qv.price
+          assign bw_q_unit = bw_qv.price | times: bw_keep3 | divided_by: 100.0
+          assign bw_q_pct = bw_qv.compare_at_price | minus: bw_q_unit | times: 100 | divided_by: bw_qv.compare_at_price | round
+          if bw_q_pct > bw_maks
+            assign bw_maks = bw_q_pct
+          endif
+        endif
+      endfor
+    endif
     assign bw_months = 'januar,februar,mars,april,mai,juni,juli,august,september,oktober,november,desember' | split: ','
 
     assign bw_start_iso = settings.bw_start_iso | strip
@@ -63,7 +90,7 @@
     assign bw_ex_name = bw_ex.title | split: ' – ' | first | remove: 'Skinora® ' | remove: 'Skinora '
     assign bw_ex_price = bw_ex.selected_or_first_available_variant.price
 
-    assign bw_heading = section.settings.heading | replace: '[maks]', bw_p3
+    assign bw_heading = section.settings.heading | replace: '[maks]', bw_maks
     assign bw_terms = section.settings.terms | replace: '[periode]', bw_period | replace: '[maks]', bw_p3
     assign bw_tag = section.settings.heading_tag | default: 'h2'
 
@@ -168,11 +195,32 @@
             assign bw_full_kr = bw_ex_price | times: bw_tier | divided_by: 100.0 | round
             assign bw_total_kr = bw_ex_price | times: bw_tier | times: bw_keep | divided_by: 10000.0 | round
             assign bw_save_kr = bw_full_kr | minus: bw_total_kr
+
+            assign bw_card_pct = 0
+            if bw_fp
+              for bw_q in bw_products
+                assign bw_qv = bw_q.selected_or_first_available_variant
+                if bw_qv.compare_at_price > bw_qv.price
+                  assign bw_q_unit = bw_qv.price | times: bw_keep | divided_by: 100.0
+                  assign bw_q_pct = bw_qv.compare_at_price | minus: bw_q_unit | times: 100 | divided_by: bw_qv.compare_at_price | round
+                  if bw_q_pct > bw_card_pct
+                    assign bw_card_pct = bw_q_pct
+                  endif
+                endif
+              endfor
+              assign bw_ex_cmp = bw_ex.selected_or_first_available_variant.compare_at_price | default: 0
+              if bw_ex_cmp > bw_ex_price
+                assign bw_full_kr = bw_ex_cmp | times: bw_tier | divided_by: 100.0 | round
+                assign bw_save_kr = bw_full_kr | minus: bw_total_kr
+              endif
+            endif
           -%}
           <li class="sk-bw__card{% if bw_tier == 3 %} sk-bw__card--top{% endif %}">
             <p class="sk-bw__card-qty">{{ bw_qty_label }}</p>
             <p class="sk-bw__card-pct">
-              {%- if bw_pct > 0 -%}
+              {%- if bw_fp and bw_card_pct > 0 -%}
+                Spar opptil {{ bw_card_pct }}&nbsp;%
+              {%- elsif bw_pct > 0 -%}
                 Spar {{ bw_pct }}&nbsp;%
               {%- else -%}
                 {{ section.settings.no_discount_label }}
@@ -187,10 +235,14 @@
                 {%- liquid
                   assign bw_p_name = bw_p.title | split: ' – ' | first | remove: 'Skinora® ' | remove: 'Skinora '
                   assign bw_p_unit = bw_p.selected_or_first_available_variant.price | times: bw_keep | divided_by: 10000.0 | round
+                  assign bw_p_cmp = bw_p.selected_or_first_available_variant.compare_at_price | default: 0 | divided_by: 100
                 -%}
                 <li class="sk-bw__price-row">
                   <span class="sk-bw__price-name">{{ bw_p_name | escape }}</span>
                   <span class="sk-bw__price-val">
+                    {%- if bw_fp and bw_p_cmp > bw_p_unit -%}
+                      <s class="sk-bw__row-was">{%- render 'sk-kr', kroner: bw_p_cmp -%}</s>{{ ' ' }}
+                    {%- endif -%}
                     {%- render 'sk-kr', kroner: bw_p_unit -%}
                     {%- if bw_tier > 1 %} <span class="sk-bw__per">per stk.</span>{% endif -%}
                   </span>
@@ -198,7 +250,7 @@
               {%- endfor -%}
             </ul>
 
-            {%- if bw_pct > 0 -%}
+            {%- if bw_pct > 0 or bw_fp -%}
               <p class="sk-bw__example">
                 {{ bw_word }} {{ bw_ex_name | escape }}:
                 <strong>{%- render 'sk-kr', kroner: bw_total_kr -%}</strong>
@@ -228,6 +280,11 @@
 
       {%- if bw_terms != blank -%}
         <p class="sk-bw__terms">{{ bw_terms | escape }}</p>
+      {%- endif -%}
+      {%- if bw_fp -%}
+        <p class="sk-bw__terms">
+          Forhåndsvisning: prosent og besparelse er regnet fra «Sammenlign med»-prisen i Shopify. Vises bare i upubliserte temaer.
+        </p>
       {%- endif -%}
     </div>
   </div>
