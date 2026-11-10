@@ -42,7 +42,6 @@
     # Forhåndsvisning med butikkens førpriser — kun i upubliserte temaer.
     # Samme regnestykke som i sections/sk-black-week.liquid.
     if settings.bw_forhandsvis_forpris
-      if theme.role == 'unpublished' or theme.role == 'development'
         assign ann_bw_keep = 100 | minus: settings.bw_prosent_3
         for ann_q in settings.bw_produkter
           assign ann_qv = ann_q.selected_or_first_available_variant
@@ -54,7 +53,6 @@
             endif
           endif
         endfor
-      endif
     endif
     assign ann_bw_text = settings.bw_banner_tekst | replace: '[maks]', ann_bw_maks
     assign ann_count = 1
