@@ -165,8 +165,17 @@
       </div>
 
       {%- assign bw_rcp = section.settings.recipients | split: ',' -%}
-      <ol class="sk-bw__cards">
+      {%- comment -%}
+        Kortet for 1 maske er av som standard: det viser ingen Black Week-rabatt,
+        og tok den første skjermen på mobil fra de to kortene som er tilbudet.
+      {%- endcomment -%}
+      <ol class="sk-bw__cards{% unless section.settings.show_tier_1 %} sk-bw__cards--2{% endunless %}">
         {%- for bw_tier in (1..3) -%}
+          {%- if bw_tier == 1 -%}
+            {%- unless section.settings.show_tier_1 -%}
+              {%- continue -%}
+            {%- endunless -%}
+          {%- endif -%}
           {%- liquid
             case bw_tier
               when 1
@@ -400,6 +409,12 @@
     {
       "type": "header",
       "content": "Pakkekort"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tier_1",
+      "label": "Vis kortet for 1 maske",
+      "default": false
     },
     {
       "type": "checkbox",

@@ -380,9 +380,19 @@
   text-transform: uppercase;
 }
 
+/* Egen linje under maskenavnet. Sto på samme linje og brakk midt i
+   («til» / «deg») når prisen tok plassen. */
 .sk-bw__price-who {
-  margin-left: var(--space-1);
+  display: block;
   font-size: var(--fs-xs);
   font-weight: var(--fw-regular);
   color: var(--bw-gold);
+}
+
+/* To kort (kortet for 1 maske er av): to kolonner på desktop, samlet på midten. */
+@media (min-width: 990px) {
+  .sk-bw__cards--2 {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 840px;
+  }
 }
