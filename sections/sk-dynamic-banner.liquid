@@ -792,7 +792,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    padding: var(--space-4) var(--space-4) var(--space-4) 0;
+    padding: var(--space-3) var(--space-4) var(--space-3) 0;
   }
 
   .sk-dynamic-banner__bw-tier + .sk-dynamic-banner__bw-tier {
@@ -818,9 +818,9 @@
     white-space: nowrap;
   }
 
+  /* «/stk» står på samme linje som prisen, i liten sans. */
   .sk-dynamic-banner__bw-tier-per {
-    display: block;
-    margin-top: var(--space-2);
+    margin-left: var(--space-1);
     font-family: var(--ff-sans);
     font-size: var(--fs-xs);
     font-weight: var(--fw-regular);
@@ -871,22 +871,14 @@
     color: var(--ink-900);
   }
 
-  /* På mobil står overskrift og brødtekst øverst, mens knappen, fristen og
-     tillitsraden skyves helt ned. Sløret dekker bare den nederste femdelen,
-     der de står, og er borte før det når motivet midt i bildet. Det første
-     sløret gikk til 78 % av høyden og ville lagt masken i mørke. */
+  /* På mobil samles ALT øverst: merke, overskrift, tekst, priser, knapp,
+     frist og tillitsrad. Mørke bilder har gjerne motivet i nedre halvdel
+     og rolig, mørk flate øverst, så teksten står der og motivet får stå
+     urørt. Uten denne skyves knappen helt ned (margin-top: auto), oppå
+     motivet. Ingen slør trengs da — det er ingenting igjen nederst. */
   @media (max-width: 700px) {
-    .sk-dynamic-banner.sk-dynamic-banner--dark::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to top,
-        color-mix(in srgb, var(--bf-black) 90%, transparent) 0%,
-        color-mix(in srgb, var(--bf-black) 72%, transparent) 16%,
-        transparent 34%
-      );
-      pointer-events: none;
+    .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__cta {
+      margin-top: var(--space-2);
     }
   }
 </style>
@@ -1019,14 +1011,14 @@
                 <span class="sk-dynamic-banner__bw-tier-label">2 masker</span>
                 <span class="sk-dynamic-banner__bw-tier-price">
                   {%- render 'sk-kr', kroner: hb_u2 %}
-                  <span class="sk-dynamic-banner__bw-tier-per">per stk.</span>
+                  <span class="sk-dynamic-banner__bw-tier-per">/stk</span>
                 </span>
               </span>
               <span class="sk-dynamic-banner__bw-tier">
                 <span class="sk-dynamic-banner__bw-tier-label">3 eller flere</span>
                 <span class="sk-dynamic-banner__bw-tier-price">
                   {%- render 'sk-kr', kroner: hb_u3 %}
-                  <span class="sk-dynamic-banner__bw-tier-per">per stk.</span>
+                  <span class="sk-dynamic-banner__bw-tier-per">/stk</span>
                 </span>
               </span>
             </p>
