@@ -411,6 +411,8 @@
       {%- if hb_img_t != blank -%}
         {%- render 'sk-hero-bg', image: hb_img_t, w1: hb_1x_t, w2: hb_2x_t -%}
         background-position: {{ hb_img_t.presentation.focal_point | default: 'center' }};
+      {%- else -%}
+        background-position: {{ section.settings.sk_banner_pos_x }}% center;
       {%- endif %}
       /* Nettbrett og mobil beholder fullskjerms hero: der er bildet stående
          og formatet passer allerede. min-height nullstilles så 80vh-regelen
@@ -441,6 +443,9 @@
       {%- if hb_img_m != blank -%}
         {%- render 'sk-hero-bg', image: hb_img_m, w1: hb_1x_m, w2: hb_2x_m -%}
         background-position: {{ hb_img_m.presentation.focal_point | default: 'center' }};
+      {%- else -%}
+        {%- comment -%} Uten eget mobilbilde brukes desktopbildet. Glideren velger hvilken del som vises. {%- endcomment -%}
+        background-position: {{ section.settings.sk_banner_pos_x }}% center;
       {%- endif %}
       height: 100vh;
       align-items: flex-end;
@@ -1060,6 +1065,17 @@
       "label": "Mørkt bilde – lys tekst",
       "default": false,
       "info": "Slå på når hero-bildet er mørkt. Teksten blir hvit, knappen lys, og på mobil legges et mørkt slør nederst bak teksten."
+    },
+    {
+      "type": "range",
+      "id": "sk_banner_pos_x",
+      "label": "Utsnitt på mobil og nettbrett (vannrett)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "info": "Brukes når det ikke er valgt eget bilde for mobil eller nettbrett. 0 = venstre kant av bildet, 50 = midten, 100 = høyre kant."
     },
     {
       "type": "text",
