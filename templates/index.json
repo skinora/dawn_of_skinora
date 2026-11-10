@@ -19,7 +19,9 @@
         "sk_banner_description": "Friskere, fastere hud – på 10 minutter om dagen.",
         "sk_banner_button_link": "/products/skinora-radiance-face",
         "sk_banner_button_text": "",
-        "sk_banner_cta_position_mobile": "top"
+        "sk_banner_cta_position_mobile": "top",
+        "sk_banner_img_mobile": "shopify://shop_images/skinora-black-week-hero-mobil-2026.jpg",
+        "sk_banner_pos_x": 72
       }
     },
     "sk_promotion_logos_giWdMT": {
