@@ -137,7 +137,14 @@
   .sk-dynamic-banner {
     {%- render 'sk-hero-bg', image: hb_img_d, w1: hb_1x_d, w2: hb_2x_d -%}
     background-size: cover;
-    background-position: center;
+    {%- comment -%}
+      Utsnittet følger bildets FOKUSPUNKT (settes på bildet i Shopify:
+      Innhold → Filer → bildet → fokuspunkt). Uten fokuspunkt: midten, som
+      før. Viktig når motivet ikke står midt i bildet — på en stående
+      mobilskjerm vises bare en smal stripe av et liggende bilde, og med
+      «center» ble et motiv til høyre kuttet bort.
+    {%- endcomment -%}
+    background-position: {{ hb_img_d.presentation.focal_point | default: 'center' }};
     background-repeat: no-repeat;
     width: 100%;
     {%- comment -%}
@@ -403,6 +410,7 @@
     .sk-dynamic-banner {
       {%- if hb_img_t != blank -%}
         {%- render 'sk-hero-bg', image: hb_img_t, w1: hb_1x_t, w2: hb_2x_t -%}
+        background-position: {{ hb_img_t.presentation.focal_point | default: 'center' }};
       {%- endif %}
       /* Nettbrett og mobil beholder fullskjerms hero: der er bildet stående
          og formatet passer allerede. min-height nullstilles så 80vh-regelen
@@ -432,6 +440,7 @@
     .sk-dynamic-banner {
       {%- if hb_img_m != blank -%}
         {%- render 'sk-hero-bg', image: hb_img_m, w1: hb_1x_m, w2: hb_2x_m -%}
+        background-position: {{ hb_img_m.presentation.focal_point | default: 'center' }};
       {%- endif %}
       height: 100vh;
       align-items: flex-end;
@@ -756,6 +765,69 @@
       font-size: 1.25rem;
     }
   }
+
+  /* ── Black Week: trinnene under brødteksten ── */
+  .sk-dynamic-banner__bw-tiers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    margin: 0;
+    font-family: var(--ff-sans);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-relaxed);
+  }
+
+  .sk-dynamic-banner__bw-tiers strong {
+    font-weight: var(--fw-semibold);
+  }
+
+  @media (max-width: 700px) {
+    .sk-dynamic-banner__bw-tiers {
+      justify-content: center;
+    }
+  }
+
+  /* ── Mørkt bilde: lys tekst ──
+     Slås på med «Mørkt bilde – lys tekst» i seksjonen. Heroen er skrevet for
+     et lyst bilde med aubergine tekst; på et mørkt bilde forsvinner den.
+     Dobbel klasse i selektorene, fordi fargereglene over har samme styrke. */
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__title,
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__description,
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__price-now,
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__deadline,
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__deadline strong,
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__rating,
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__bw-tiers {
+    color: var(--paper-0);
+  }
+
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__eyebrow,
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__bw-tiers strong {
+    color: var(--accent-gold);
+  }
+
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__price-was {
+    color: color-mix(in srgb, var(--paper-0) 70%, transparent);
+  }
+
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__button {
+    border-color: var(--paper-0);
+    background: var(--paper-0);
+    color: var(--ink-900);
+  }
+
+  /* På mobil ligger teksten nederst, oppå motivet. Et mørkt slør fra bunnen
+     gir lys tekst noe å stå på uten å dekke ansiktet øverst. */
+  @media (max-width: 700px) {
+    .sk-dynamic-banner.sk-dynamic-banner--dark::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--bf-black) 32%, transparent 78%);
+      pointer-events: none;
+    }
+  }
 </style>
 
 {%- liquid
@@ -811,12 +883,53 @@
   #  siden metafeltet kun gir ett produkts tall.)
 -%}
 
-<section class="sk-dynamic-banner sk-dynamic-banner--cta-{{ section.settings.sk_banner_cta_position_mobile }}{% if kampanje %} sk-dynamic-banner--kampanje{% endif %}">
+{%- comment -%}
+  BLACK WEEK
+  Mens Black Week går (sk-bw-live), byttes overskrift, brødtekst og knapp ut
+  med tekstene i Temainnstillinger → Black Week → «Forsiden», og prislinja
+  byttes med trinnene: pris per maske ved to og ved tre eller flere, regnet
+  fra produktet i knappelenken og prosentene i temainnstillingene. Seksjonens
+  egne tekster røres ikke — de kommer tilbake av seg selv etter sluttdatoen.
+{%- endcomment -%}
+{%- capture hb_bw_live -%}{%- render 'sk-bw-live' -%}{%- endcapture -%}
+{%- liquid
+  assign bw_hero = false
+  assign hero_cta_link = hero_link
+  if hb_bw_live contains '1' and settings.bw_hero_tittel != blank
+    assign bw_hero = true
+    assign hero_title = settings.bw_hero_tittel
+    assign hero_desc = settings.bw_hero_tekst
+    assign hero_btn = settings.bw_hero_knapp | default: 'Se tilbudet'
+    if settings.bw_banner_lenke != blank
+      assign hero_cta_link = settings.bw_banner_lenke
+    endif
+
+    assign hb_handle = hero_link | split: '/products/' | last | split: '?' | first | split: '#' | first
+    assign hb_p = all_products[hb_handle]
+    assign hb_base = hb_p.selected_or_first_available_variant.price
+    assign hb_k2 = 100 | minus: settings.bw_prosent_2
+    assign hb_k3 = 100 | minus: settings.bw_prosent_3
+    assign hb_u2 = hb_base | times: hb_k2 | divided_by: 10000.0 | round
+    assign hb_u3 = hb_base | times: hb_k3 | divided_by: 10000.0 | round
+
+    assign hb_bw_until = ''
+    assign hb_bw_end_iso = settings.bw_slutt_iso | strip
+    if hb_bw_end_iso != blank
+      assign hb_months = 'januar,februar,mars,april,mai,juni,juli,august,september,oktober,november,desember' | split: ','
+      assign hb_bw_end_m = hb_bw_end_iso | date: '%-m' | minus: 1
+      assign hb_bw_until = hb_bw_end_iso | date: '%-d' | append: '. ' | append: hb_months[hb_bw_end_m]
+    endif
+  endif
+-%}
+
+<section class="sk-dynamic-banner sk-dynamic-banner--cta-{{ section.settings.sk_banner_cta_position_mobile }}{% if kampanje %} sk-dynamic-banner--kampanje{% endif %}{% if section.settings.sk_banner_dark %} sk-dynamic-banner--dark{% endif %}">
   <h1 class="visually-hidden">Skinora® Norge – LED-ansiktsmasker for anti-aging, glød og problemhud</h1>
   <div class="page-width">
     <div class="sk-dynamic-banner__container">
       <div class="sk-dynamic-banner__content">
-        {%- if kampanje -%}
+        {%- if bw_hero -%}
+          <p class="sk-dynamic-banner__eyebrow">Black Week</p>
+        {%- elsif kampanje -%}
           {%- comment -%}
             Etiketten RAMMER INN (dette er en kampanje). Selve fristen står
             nede ved knappen – hastverk virker kun der beslutningen tas, ikke
@@ -838,7 +951,14 @@
           (strøket ordinærpris + ny pris) leser raskere enn samme informasjon
           pakket inn i en setning – og holder brødteksten fri for pris.
         {%- endcomment -%}
-        {%- if kampanje -%}
+        {%- if bw_hero -%}
+          {%- if hb_p != blank -%}
+            <p class="sk-dynamic-banner__bw-tiers">
+              <span><strong>2 masker</strong> {% render 'sk-kr', kroner: hb_u2 %} per stk.</span>
+              <span><strong>3 eller flere</strong> {% render 'sk-kr', kroner: hb_u3 %} per stk.</span>
+            </p>
+          {%- endif -%}
+        {%- elsif kampanje -%}
           <p class="sk-dynamic-banner__price">
             <span class="sk-dynamic-banner__price-now">{{ hb_pris }}</span>
             {%- if hb_for != blank -%}
@@ -852,7 +972,7 @@
 
         <div class="sk-dynamic-banner__cta">
           <a
-            href="{{ hero_link }}"
+            href="{{ hero_cta_link }}"
             class="sk-dynamic-banner__button sk-btn sk-btn--primary"
           >
             {{ hero_btn }}
@@ -867,7 +987,11 @@
           Formulert som tap («da er prisen tilbake på …»), ikke bare som en dato
           – tapsaversjon flytter flere enn en nøytral opplysning.
         {%- endcomment -%}
-        {%- if kampanje and hb_date != blank -%}
+        {%- if bw_hero -%}
+          {%- if hb_bw_until != blank -%}
+            <p class="sk-dynamic-banner__deadline">Til <strong>{{ hb_bw_until }}</strong> kl. 23.59</p>
+          {%- endif -%}
+        {%- elsif kampanje and hb_date != blank -%}
           <p class="sk-dynamic-banner__deadline">
             Kun til <strong>{{ hb_date }}</strong>
             {%- if hb_for != blank -%}
@@ -929,6 +1053,13 @@
       "type": "image_picker",
       "id": "sk_banner_img_mobile",
       "label": "Banner Image – Mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "sk_banner_dark",
+      "label": "Mørkt bilde – lys tekst",
+      "default": false,
+      "info": "Slå på når hero-bildet er mørkt. Teksten blir hvit, knappen lys, og på mobil legges et mørkt slør nederst bak teksten."
     },
     {
       "type": "text",

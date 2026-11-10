@@ -1727,6 +1727,32 @@
         "id": "bw_pdp_verdi_3",
         "label": "3 eller flere – hovedtall",
         "default": "Spar [p3] %"
+      },
+      {
+        "type": "header",
+        "content": "Forsiden"
+      },
+      {
+        "type": "paragraph",
+        "content": "Teksten i heroen på forsiden mens Black Week går. De vanlige tekstene kommer tilbake av seg selv etter sluttdatoen. Tom overskrift = heroen endres ikke."
+      },
+      {
+        "type": "text",
+        "id": "bw_hero_tittel",
+        "label": "Overskrift",
+        "default": "Kjøp mer, spar mer"
+      },
+      {
+        "type": "text",
+        "id": "bw_hero_tekst",
+        "label": "Brødtekst",
+        "default": "Én til deg, én til mamma. Bland maskene som du vil – rabatten trekkes automatisk i handlekurven."
+      },
+      {
+        "type": "text",
+        "id": "bw_hero_knapp",
+        "label": "Knappetekst",
+        "default": "SE BLACK WEEK-TILBUDET"
       }
     ]
   },
