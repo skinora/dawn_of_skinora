@@ -1602,6 +1602,12 @@
         "label": "Produktet tilbudet gjelder"
       },
       {
+        "type": "product",
+        "id": "bw_pakke",
+        "label": "Pakken (julegave)",
+        "info": "Vises som «Årets julegave» i Black Week-seksjonen når pakken er satt ned i Shopify."
+      },
+      {
         "type": "text",
         "id": "bw_banner_tekst",
         "label": "Tekst i toppbanneret",
@@ -1630,6 +1636,29 @@
         "id": "bw_forhandsvis_pris",
         "label": "Kampanjepris i forhåndsvisningen (kr)",
         "info": "F.eks. 2990. Brukes kun i upubliserte temaer, sammen med bryteren over: viser denne prisen mot dagens pris, uten å røre prisen i Shopify. Tom = av."
+      },
+      {
+        "type": "number",
+        "id": "bw_forhandsvis_pakkepris",
+        "label": "Pakkepris i forhåndsvisningen (kr)",
+        "info": "F.eks. 5990. Samme regler som feltet over."
+      },
+      {
+        "type": "select",
+        "id": "bw_forhandsvis_for",
+        "label": "Før-pris i forhåndsvisningen",
+        "options": [
+          {
+            "value": "butikk",
+            "label": "«Sammenlign med»-prisen i Shopify nå"
+          },
+          {
+            "value": "dagens",
+            "label": "Prisen produktet selges for i dag"
+          }
+        ],
+        "default": "dagens",
+        "info": "Bytt mellom de to for å se forskjellen. Gjelder kun forhåndsvisningen i upubliserte temaer."
       }
     ]
   },

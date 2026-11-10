@@ -173,6 +173,59 @@
         {%- endif -%}
       </div>
     </div>
+
+    {%- comment -%}
+      Julegave-pakken: settet fra Temainnstillinger → Black Week → «Pakken».
+      Vises bare når pakken selv er satt ned i Shopify. Tallene kommer fra
+      pakkeproduktet, samme vei som hovedtilbudet (sk-bw-offer, which: 'pakke').
+    {%- endcomment -%}
+    {%- capture bwg_sale -%}{%- render 'sk-bw-offer', which: 'pakke', part: 'salg' -%}{%- endcapture -%}
+    {%- if section.settings.show_gift and bwg_sale contains '1' -%}
+      {%- capture bwg_price -%}{%- render 'sk-bw-offer', which: 'pakke', part: 'pris' -%}{%- endcapture -%}
+      {%- capture bwg_was -%}{%- render 'sk-bw-offer', which: 'pakke', part: 'for' -%}{%- endcapture -%}
+      {%- capture bwg_save -%}{%- render 'sk-bw-offer', which: 'pakke', part: 'spar' -%}{%- endcapture -%}
+      {%- liquid
+        assign bwg_p = settings.bw_pakke
+        assign bwg_name = bwg_p.title | split: ' – ' | first | remove: 'Skinora® ' | remove: 'Skinora '
+        assign bwg_heading = section.settings.gift_heading | replace: '[pakke]', bwg_name | replace: '[pris]', bwg_price
+        assign bwg_cta = section.settings.gift_cta | replace: '[pakke]', bwg_name
+      -%}
+      <div class="sk-bw__gift-wrap page-width">
+        <div class="sk-bw__gift">
+          {%- if bwg_p.featured_image != blank -%}
+            <a class="sk-bw__gift-media" href="{{ bwg_p.url }}" tabindex="-1" aria-hidden="true">
+              {{-
+                bwg_p.featured_image
+                | image_url: width: 600
+                | image_tag:
+                  class: 'sk-bw__img',
+                  loading: 'lazy',
+                  widths: '240, 360, 600',
+                  sizes: '(min-width: 990px) 240px, 90vw',
+                  alt: bwg_p.featured_image.alt
+              -}}
+            </a>
+          {%- endif -%}
+          <div class="sk-bw__gift-body">
+            <p class="sk-bw__eyebrow">{{ section.settings.gift_eyebrow }}</p>
+            <h3 class="sk-bw__gift-title">{{ bwg_heading | escape }}</h3>
+            {%- if section.settings.gift_lede != blank -%}
+              <p class="sk-bw__lede">{{ section.settings.gift_lede | escape }}</p>
+            {%- endif -%}
+            <p class="sk-bw__prices sk-bw__prices--gift">
+              <span class="sk-bw__now sk-bw__now--gift"><span class="visually-hidden">Nå:</span> {{ bwg_price }}</span>
+              <s class="sk-bw__was"><span class="visually-hidden">Før:</span> {{ bwg_was }}</s>
+              <span class="sk-bw__save">Spar {{ bwg_save }}</span>
+            </p>
+            {%- if bwg_cta != blank -%}
+              <p class="sk-bw__cta-wrap">
+                <a class="sk-bw__cta sk-bw__cta--outline" href="{{ bwg_p.url }}">{{ bwg_cta | escape }}</a>
+              </p>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
   </div>
 
   <script>
@@ -292,6 +345,41 @@
       "id": "terms",
       "label": "Vilkår",
       "default": "Gjelder [produkt] [periode] 2026, så langt lageret rekker."
+    },
+    {
+      "type": "header",
+      "content": "Julegave-pakken"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gift",
+      "label": "Vis pakken",
+      "default": true,
+      "info": "Pakken velges i Temainnstillinger → Black Week. Den vises bare når pakken er satt ned i Shopify."
+    },
+    {
+      "type": "text",
+      "id": "gift_eyebrow",
+      "label": "Merke",
+      "default": "Årets julegave"
+    },
+    {
+      "type": "text",
+      "id": "gift_heading",
+      "label": "Overskrift",
+      "default": "[pakke] til [pris]"
+    },
+    {
+      "type": "text",
+      "id": "gift_lede",
+      "label": "Ingress",
+      "default": "Begge maskene i én pakke: én for ansiktet og én for halsen."
+    },
+    {
+      "type": "text",
+      "id": "gift_cta",
+      "label": "Knappetekst",
+      "default": "Kjøp [pakke]"
     }
   ],
   "presets": [
