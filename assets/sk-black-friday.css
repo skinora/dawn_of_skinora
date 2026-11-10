@@ -307,37 +307,32 @@
 }
 
 .sk-bw-pdp__qty,
-.sk-bw-pdp__per,
-.sk-bw-pdp__was {
+.sk-bw-pdp__unit {
   font-size: var(--fs-xs);
   font-weight: var(--fw-regular);
-  line-height: var(--lh-none);
+  line-height: var(--lh-relaxed);
+  text-align: center;
   color: color-mix(in srgb, var(--paper-0) 72%, transparent);
 }
 
 .sk-bw-pdp__was {
   text-decoration-thickness: 1px;
+  white-space: nowrap;
 }
 
-.sk-bw-pdp__price {
+/* Hovedtallet: teksten fra temainnstillingene. Får bryte over to linjer,
+   så en lengre tekst ikke sprenger kolonnen på mobil. */
+.sk-bw-pdp__big {
   font-family: var(--ff-serif);
   font-size: var(--fs-lg);
   font-weight: var(--fw-medium);
-  line-height: var(--lh-none);
-  white-space: nowrap;
+  line-height: var(--lh-tight);
+  text-align: center;
   color: var(--paper-0);
 }
 
-.sk-bw-pdp__tier--pick .sk-bw-pdp__price {
+.sk-bw-pdp__tier--pick .sk-bw-pdp__big {
   font-size: var(--fs-xl);
-}
-
-.sk-bw-pdp__save {
-  margin-top: var(--space-1);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-semibold);
-  line-height: var(--lh-none);
-  white-space: nowrap;
   color: var(--accent-gold);
 }
 

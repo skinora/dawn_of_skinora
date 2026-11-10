@@ -48,30 +48,37 @@
       assign bwp_s2 = bwp_price | times: 2 | times: settings.bw_prosent_2 | divided_by: 10000.0 | round
       assign bwp_s3 = bwp_price | times: 3 | times: settings.bw_prosent_3 | divided_by: 10000.0 | round
     -%}
+    {%- liquid
+      comment
+        Hovedtallet i hvert trinn er en tekst fra Temainnstillinger → Black
+        Week → «Produktsiden». [p2] og [p3] byttes med prosentene som
+        rabattene i Shopify bruker. Pris per maske står under, regnet ut.
+      endcomment
+      assign bwp_t1 = settings.bw_pdp_verdi_1 | replace: '[p2]', settings.bw_prosent_2 | replace: '[p3]', settings.bw_prosent_3
+      assign bwp_t2 = settings.bw_pdp_verdi_2 | replace: '[p2]', settings.bw_prosent_2 | replace: '[p3]', settings.bw_prosent_3
+      assign bwp_t3 = settings.bw_pdp_verdi_3 | replace: '[p2]', settings.bw_prosent_2 | replace: '[p3]', settings.bw_prosent_3
+    -%}
     <span class="sk-bf-box__save">Kjøp mer, spar mer</span>
     <span class="sk-bw-pdp">
       <span class="sk-bw-pdp__tier">
         <span class="sk-bw-pdp__qty">1 maske</span>
-        <span class="sk-bw-pdp__price">{%- render 'sk-kr', kroner: bwp_u1 -%}</span>
-        {%- if before != blank -%}
-          <s class="sk-bw-pdp__was">{{ before }}</s>
-        {%- else -%}
-          <span class="sk-bw-pdp__per">per stk.</span>
-        {%- endif -%}
+        <span class="sk-bw-pdp__big">{{ bwp_t1 | escape }}</span>
+        <span class="sk-bw-pdp__unit">
+          {%- render 'sk-kr', kroner: bwp_u1 -%}
+          {%- if before != blank %} <s class="sk-bw-pdp__was">{{ before }}</s>{% endif -%}
+        </span>
       </span>
       <span class="sk-bw-pdp__tier sk-bw-pdp__tier--pick">
         <span class="sk-bw-pdp__badge">Årets julegave</span>
         <span class="sk-bw-pdp__qty">2 masker</span>
-        <span class="sk-bw-pdp__price">{%- render 'sk-kr', kroner: bwp_u2 -%}</span>
-        <span class="sk-bw-pdp__per">per stk.</span>
-        <span class="sk-bw-pdp__save">Spar {% render 'sk-kr', kroner: bwp_s2 %}</span>
+        <span class="sk-bw-pdp__big">{{ bwp_t2 | escape }}</span>
+        <span class="sk-bw-pdp__unit">{%- render 'sk-kr', kroner: bwp_u2 -%} per stk.</span>
       </span>
       <span class="sk-bw-pdp__tier">
         <span class="sk-bw-pdp__badge sk-bw-pdp__badge--quiet">Lavest pris</span>
         <span class="sk-bw-pdp__qty">3 eller flere</span>
-        <span class="sk-bw-pdp__price">{%- render 'sk-kr', kroner: bwp_u3 -%}</span>
-        <span class="sk-bw-pdp__per">per stk.</span>
-        <span class="sk-bw-pdp__save">Spar {% render 'sk-kr', kroner: bwp_s3 %}</span>
+        <span class="sk-bw-pdp__big">{{ bwp_t3 | escape }}</span>
+        <span class="sk-bw-pdp__unit">{%- render 'sk-kr', kroner: bwp_u3 -%} per stk.</span>
       </span>
     </span>
     <span class="sk-bw-pdp__note">Bland maskene som du vil. Rabatten trekkes automatisk i handlekurven.</span>
