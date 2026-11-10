@@ -1,0 +1,328 @@
+/* =============================================================
+   section-sk-black-week — «Kjøp mer, spar mer» (sections/sk-black-week.liquid)
+   Varm svart flate med gull, samme uttrykk som Black Friday-boksen
+   (sk-black-friday.css). Farger, størrelser og avstander fra tokens i
+   typography.css. Ingen rem i font-size (rot-font er 62.5 %).
+   ============================================================= */
+
+.sk-bw {
+  --bw-gold: var(--accent-gold);
+  --bw-line: color-mix(in srgb, var(--accent-gold) 32%, transparent);
+  --bw-muted: color-mix(in srgb, var(--paper-0) 74%, transparent);
+  --bw-surface: color-mix(in srgb, var(--paper-0) 6%, transparent);
+
+  padding-block: var(--space-section-md);
+  background: var(--bf-black);
+  color: var(--paper-0);
+  font-family: var(--ff-sans);
+}
+
+.sk-bw__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+/* ---------- Hode: merke, overskrift, ingress, nedtelling ---------- */
+
+.sk-bw__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.sk-bw__eyebrow {
+  margin: 0;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--bw-gold);
+}
+
+.sk-bw .sk-bw__title {
+  margin: 0;
+  max-width: var(--measure-narrow);
+  font-family: var(--ff-serif);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--paper-0);
+}
+
+.sk-bw__lede {
+  margin: 0;
+  max-width: var(--measure-intro);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--bw-muted);
+}
+
+.sk-bw__countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.sk-bw__countdown-label,
+.sk-bw__countdown-until {
+  margin: 0;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-relaxed);
+  color: var(--bw-muted);
+}
+
+.sk-bw__clock {
+  display: flex;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.sk-bw__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 64px;
+  padding: var(--space-3) var(--space-2);
+  border: 1px solid var(--bw-line);
+  border-radius: 12px;
+  background: var(--bw-surface);
+}
+
+.sk-bw__num {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-none);
+  font-variant-numeric: tabular-nums;
+  color: var(--paper-0);
+}
+
+.sk-bw__unit-label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-none);
+  color: var(--bw-muted);
+}
+
+/* ---------- Pakkekort ---------- */
+
+.sk-bw__cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sk-bw__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-5);
+  border: 1px solid var(--bw-line);
+  border-radius: 16px;
+  background: var(--bw-surface);
+  text-align: left;
+}
+
+/* Kortet for 3 eller flere bærer den høyeste rabatten og får full gullkant. */
+.sk-bw__card--top {
+  border-color: var(--bw-gold);
+  background: color-mix(in srgb, var(--accent-gold) 9%, transparent);
+}
+
+.sk-bw__card-qty {
+  margin: 0;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--bw-gold);
+}
+
+.sk-bw__card-pct {
+  margin: 0;
+  font-family: var(--ff-serif);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--paper-0);
+}
+
+.sk-bw .sk-bw__card-name {
+  margin: 0;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-normal);
+  color: var(--bw-muted);
+}
+
+.sk-bw__prices {
+  display: flex;
+  flex-direction: column;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--bw-line);
+}
+
+.sk-bw__price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--bw-line);
+  font-size: var(--fs-md);
+  line-height: var(--lh-relaxed);
+}
+
+.sk-bw__price-name {
+  font-weight: var(--fw-regular);
+  color: var(--bw-muted);
+}
+
+.sk-bw__price-val {
+  font-weight: var(--fw-semibold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--paper-0);
+}
+
+.sk-bw__per {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  color: var(--bw-muted);
+}
+
+.sk-bw__example {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  margin: var(--space-3) 0 0;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-relaxed);
+  color: var(--bw-muted);
+}
+
+.sk-bw__example strong {
+  font-weight: var(--fw-semibold);
+  color: var(--paper-0);
+}
+
+.sk-bw__save {
+  flex-basis: 100%;
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  color: var(--bw-gold);
+}
+
+/* ---------- Knapp, trygghet, vilkår ---------- */
+
+.sk-bw__cta-wrap {
+  margin: 0;
+}
+
+.sk-bw .sk-bw__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: var(--space-3) var(--space-6);
+  border-radius: 999px;
+  background: var(--paper-0);
+  color: var(--ink-900);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--tracking-normal);
+  text-decoration: none;
+}
+
+.sk-bw .sk-bw__cta:hover {
+  background: var(--paper-100);
+}
+
+.sk-bw .sk-bw__cta:focus-visible {
+  outline: 2px solid var(--bw-gold);
+  outline-offset: 3px;
+}
+
+.sk-bw__trust {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sk-bw__trust-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--fs-md);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-relaxed);
+  color: var(--paper-0);
+}
+
+.sk-bw__trust-item::before {
+  content: '';
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bw-gold);
+}
+
+.sk-bw__terms {
+  margin: 0;
+  max-width: var(--measure-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-loose);
+  text-align: center;
+  color: var(--bw-muted);
+}
+
+/* ---------- Desktop: tre kort side om side ---------- */
+
+@media (min-width: 990px) {
+  .sk-bw__cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+
+  .sk-bw__trust {
+    flex-direction: row;
+    gap: var(--space-6);
+  }
+
+  .sk-bw__unit {
+    min-width: 80px;
+  }
+}

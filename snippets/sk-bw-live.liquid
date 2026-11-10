@@ -1,0 +1,63 @@
+{%- comment -%}
+  sk-bw-live — én sannhet for «går Black Week akkurat nå?»
+  ----------------------------------------------------------------------------
+  Skriver ut «1» når toppbanneret, Black Week-seksjonen og trappen i
+  handlekurven skal vises, ellers ingenting. Brukes slik:
+
+    {%- capture bw_live -%}{%- render 'sk-bw-live' -%}{%- endcapture -%}
+    {%- if bw_live contains '1' -%} ... {%- endif -%}
+
+  Egen snippet, ikke sk-campaign-live: den gamle kampanjen bygger på
+  «Sammenlign med»-prisen og har bare sluttdato. Black Week er en mengderabatt
+  som trekkes av Shopify i handlekurven, og den har også en STARTdato — temaet
+  kan publiseres på forhånd uten at noe vises før rabatten faktisk gjelder.
+
+  Vinduet er INKLUDERENDE i begge ender: fra kl. 00.00 på startdatoen til
+  kl. 23.59.59 på sluttdatoen, i butikkens tidssone (Liquid rendres der).
+
+  Forhåndsvisning: bw_forhandsvis viser Black Week før startdatoen, men bare
+  når temaet IKKE er publisert. Sjekken er skrevet som «er upublisert», ikke
+  «er ikke publisert»: skulle theme.role mangle, slår forhåndsvisningen seg
+  av — den kan aldri lekke ut på det publiserte temaet.
+{%- endcomment -%}
+{%- liquid
+  assign bwl_on = false
+
+  if settings.bw_aktiv
+    assign bwl_on = true
+    assign bwl_now = 'now' | date: '%s' | plus: 0
+    assign bwl_start_iso = settings.bw_start_iso | strip
+    assign bwl_end_iso = settings.bw_slutt_iso | strip
+    assign bwl_early = false
+    assign bwl_late = false
+
+    if bwl_start_iso != blank
+      assign bwl_start = bwl_start_iso | date: '%s' | plus: 0
+      if bwl_now < bwl_start
+        assign bwl_early = true
+      endif
+    endif
+
+    if bwl_end_iso != blank
+      assign bwl_end = bwl_end_iso | date: '%s' | plus: 86399
+      if bwl_now > bwl_end
+        assign bwl_late = true
+      endif
+    endif
+
+    if bwl_late
+      assign bwl_on = false
+    elsif bwl_early
+      assign bwl_on = false
+      if settings.bw_forhandsvis
+        if theme.role == 'unpublished' or theme.role == 'development'
+          assign bwl_on = true
+        endif
+      endif
+    endif
+  endif
+
+  if bwl_on
+    echo '1'
+  endif
+-%}

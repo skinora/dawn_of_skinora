@@ -1,0 +1,410 @@
+{{ 'section-sk-black-week.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  sk-black-week — «Kjøp mer, spar mer» (Black Week)
+  ----------------------------------------------------------------------------
+  Overskrift, nedtelling, tre pakkekort, to trygghetslinjer og vilkår.
+
+  INGEN TALL ER SKREVET HER. Prisene hentes fra produktene i
+  Temainnstillinger → Black Week → «Masker som teller», og prosentene fra
+  samme sted. Kortene regner ut pris per maske og spart beløp fra ordinær
+  pris (produktets «Pris» i Shopify) — aldri fra «Sammenlign med»-prisen.
+  Rabatten selv trekkes av de automatiske rabattene i Shopify; seksjonen
+  viser bare regnestykket.
+
+  Avrunding: pris per maske vises i hele kroner (3 136,50 → 3 137). Summen
+  for to og tre masker regnes av hele beløpet, slik Shopify gjør i kurven,
+  så «6 273 kr» her er tallet kunden ser i kassen.
+
+  Seksjonen vises bare mens Black Week går (sk-bw-live) og fjerner seg selv
+  når fristen passeres — også i en fane som har stått åpen (JS nederst).
+{%- endcomment -%}
+
+{%- capture bw_live -%}{%- render 'sk-bw-live' -%}{%- endcapture -%}
+{%- liquid
+  assign bw_products = settings.bw_produkter
+  assign bw_show = false
+  if bw_live contains '1' and bw_products.count > 0
+    assign bw_show = true
+  endif
+-%}
+
+{%- if bw_show -%}
+  {%- liquid
+    assign bw_p2 = settings.bw_prosent_2
+    assign bw_p3 = settings.bw_prosent_3
+    assign bw_months = 'januar,februar,mars,april,mai,juni,juli,august,september,oktober,november,desember' | split: ','
+
+    assign bw_start_iso = settings.bw_start_iso | strip
+    assign bw_end_iso = settings.bw_slutt_iso | strip
+    assign bw_period = ''
+    assign bw_end_text = ''
+    assign bw_end_ts = 0
+
+    if bw_end_iso != blank
+      assign bw_end_ts = bw_end_iso | date: '%s' | plus: 86399
+      assign bw_end_day = bw_end_iso | date: '%-d'
+      assign bw_end_m = bw_end_iso | date: '%-m' | minus: 1
+      assign bw_end_text = bw_end_day | append: '. ' | append: bw_months[bw_end_m]
+      assign bw_period = bw_end_text
+
+      if bw_start_iso != blank
+        assign bw_start_day = bw_start_iso | date: '%-d'
+        assign bw_start_m = bw_start_iso | date: '%-m' | minus: 1
+        if bw_start_m == bw_end_m
+          assign bw_period = bw_start_day | append: '.–' | append: bw_end_text
+        else
+          assign bw_period = bw_start_day | append: '. ' | append: bw_months[bw_start_m] | append: ' – ' | append: bw_end_text
+        endif
+      endif
+    endif
+
+    assign bw_ex = bw_products | first
+    assign bw_ex_name = bw_ex.title | split: ' – ' | first | remove: 'Skinora® ' | remove: 'Skinora '
+    assign bw_ex_price = bw_ex.selected_or_first_available_variant.price
+
+    assign bw_heading = section.settings.heading | replace: '[maks]', bw_p3
+    assign bw_terms = section.settings.terms | replace: '[periode]', bw_period | replace: '[maks]', bw_p3
+    assign bw_tag = section.settings.heading_tag | default: 'h2'
+
+    assign bw_cta_url = section.settings.cta_url
+    if bw_cta_url == blank
+      assign bw_cta_url = settings.bw_banner_lenke
+    endif
+    if bw_cta_url == blank
+      assign bw_cta_url = routes.all_products_collection_url
+    endif
+  -%}
+
+  <div
+    class="sk-bw"
+    id="sk-bw-{{ section.id }}"
+    data-sk-bw
+    {% if bw_end_ts > 0 %}
+      data-end-ts="{{ bw_end_ts }}"
+    {% endif %}
+  >
+    <div class="sk-bw__inner page-width">
+      <div class="sk-bw__head">
+        <p class="sk-bw__eyebrow">
+          {{ section.settings.eyebrow }}
+          {%- if bw_period != blank %} · {{ bw_period }}{% endif -%}
+        </p>
+        <{{ bw_tag }} class="sk-bw__title">{{ bw_heading | escape }}</{{ bw_tag }}>
+        {%- if section.settings.lede != blank -%}
+          <p class="sk-bw__lede">{{ section.settings.lede | escape }}</p>
+        {%- endif -%}
+
+        {%- if bw_end_ts > 0 -%}
+          {%- liquid
+            assign bw_now_ts = 'now' | date: '%s' | plus: 0
+            assign bw_left = bw_end_ts | minus: bw_now_ts
+            if bw_left < 0
+              assign bw_left = 0
+            endif
+            assign bw_d = bw_left | divided_by: 86400
+            assign bw_h = bw_left | modulo: 86400 | divided_by: 3600
+            assign bw_m = bw_left | modulo: 3600 | divided_by: 60
+            assign bw_s = bw_left | modulo: 60
+          -%}
+          {%- comment -%}
+            Serveren skriver ut ferdige tall, så klokka er riktig ved første
+            maling. JS tar over og teller mot samme tidsstempel (sekunder
+            siden 1970), så kundens tidssone ikke flytter fristen.
+          {%- endcomment -%}
+          <div class="sk-bw__countdown">
+            <p class="sk-bw__countdown-label">{{ section.settings.countdown_label }}</p>
+            <p class="sk-bw__clock" data-sk-bw-clock role="timer">
+              <span class="sk-bw__unit">
+                <span class="sk-bw__num" data-u="d">{{ bw_d }}</span>
+                <span class="sk-bw__unit-label">dager</span>
+              </span>
+              <span class="sk-bw__unit">
+                <span class="sk-bw__num" data-u="h">{{ bw_h | prepend: '0' | slice: -2, 2 }}</span>
+                <span class="sk-bw__unit-label">timer</span>
+              </span>
+              <span class="sk-bw__unit">
+                <span class="sk-bw__num" data-u="m">{{ bw_m | prepend: '0' | slice: -2, 2 }}</span>
+                <span class="sk-bw__unit-label">min</span>
+              </span>
+              <span class="sk-bw__unit">
+                <span class="sk-bw__num" data-u="s">{{ bw_s | prepend: '0' | slice: -2, 2 }}</span>
+                <span class="sk-bw__unit-label">sek</span>
+              </span>
+            </p>
+            {%- if bw_end_text != blank -%}
+              <p class="sk-bw__countdown-until">Til {{ bw_end_text }} kl. 23.59</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <ol class="sk-bw__cards">
+        {%- for bw_tier in (1..3) -%}
+          {%- liquid
+            case bw_tier
+              when 1
+                assign bw_pct = 0
+                assign bw_qty_label = section.settings.qty_1
+                assign bw_name = section.settings.name_1
+                assign bw_word = 'Én'
+              when 2
+                assign bw_pct = bw_p2
+                assign bw_qty_label = section.settings.qty_2
+                assign bw_name = section.settings.name_2
+                assign bw_word = 'To'
+              when 3
+                assign bw_pct = bw_p3
+                assign bw_qty_label = section.settings.qty_3
+                assign bw_name = section.settings.name_3
+                assign bw_word = 'Tre'
+            endcase
+            assign bw_keep = 100 | minus: bw_pct
+
+            comment
+              Priser i øre. Full pris for bw_tier stk. av eksempelmasken, og
+              summen etter rabatt — avrundet til hele kroner først til slutt.
+            endcomment
+            assign bw_full_kr = bw_ex_price | times: bw_tier | divided_by: 100.0 | round
+            assign bw_total_kr = bw_ex_price | times: bw_tier | times: bw_keep | divided_by: 10000.0 | round
+            assign bw_save_kr = bw_full_kr | minus: bw_total_kr
+          -%}
+          <li class="sk-bw__card{% if bw_tier == 3 %} sk-bw__card--top{% endif %}">
+            <p class="sk-bw__card-qty">{{ bw_qty_label }}</p>
+            <p class="sk-bw__card-pct">
+              {%- if bw_pct > 0 -%}
+                Spar {{ bw_pct }}&nbsp;%
+              {%- else -%}
+                {{ section.settings.no_discount_label }}
+              {%- endif -%}
+            </p>
+            {%- if bw_name != blank -%}
+              <h3 class="sk-bw__card-name">{{ bw_name | escape }}</h3>
+            {%- endif -%}
+
+            <ul class="sk-bw__prices" aria-label="Pris per maske">
+              {%- for bw_p in bw_products -%}
+                {%- liquid
+                  assign bw_p_name = bw_p.title | split: ' – ' | first | remove: 'Skinora® ' | remove: 'Skinora '
+                  assign bw_p_unit = bw_p.selected_or_first_available_variant.price | times: bw_keep | divided_by: 10000.0 | round
+                -%}
+                <li class="sk-bw__price-row">
+                  <span class="sk-bw__price-name">{{ bw_p_name | escape }}</span>
+                  <span class="sk-bw__price-val">
+                    {%- render 'sk-kr', kroner: bw_p_unit -%}
+                    {%- if bw_tier > 1 %} <span class="sk-bw__per">per stk.</span>{% endif -%}
+                  </span>
+                </li>
+              {%- endfor -%}
+            </ul>
+
+            {%- if bw_pct > 0 -%}
+              <p class="sk-bw__example">
+                {{ bw_word }} {{ bw_ex_name | escape }}:
+                <strong>{%- render 'sk-kr', kroner: bw_total_kr -%}</strong>
+                <span class="sk-bw__save">Du sparer {% render 'sk-kr', kroner: bw_save_kr %}</span>
+              </p>
+            {%- else -%}
+              <p class="sk-bw__example">{{ section.settings.tier_1_note | escape }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+
+      {%- if section.settings.cta_label != blank -%}
+        <p class="sk-bw__cta-wrap">
+          <a class="sk-bw__cta" href="{{ bw_cta_url }}">{{ section.settings.cta_label | escape }}</a>
+        </p>
+      {%- endif -%}
+
+      <ul class="sk-bw__trust">
+        {%- if section.settings.trust_1 != blank -%}
+          <li class="sk-bw__trust-item">{{ section.settings.trust_1 | escape }}</li>
+        {%- endif -%}
+        {%- if section.settings.trust_2 != blank -%}
+          <li class="sk-bw__trust-item">{{ section.settings.trust_2 | escape }}</li>
+        {%- endif -%}
+      </ul>
+
+      {%- if bw_terms != blank -%}
+        <p class="sk-bw__terms">{{ bw_terms | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById('sk-bw-{{ section.id }}');
+      if (!root) return;
+      var end = parseInt(root.getAttribute('data-end-ts'), 10) * 1000;
+      var clock = root.querySelector('[data-sk-bw-clock]');
+      if (!end || !clock) return;
+
+      var cells = {};
+      ['d', 'h', 'm', 's'].forEach(function (k) {
+        cells[k] = clock.querySelector('[data-u="' + k + '"]');
+      });
+      function pad(n) {
+        return n < 10 ? '0' + n : String(n);
+      }
+
+      var timer;
+      function tick() {
+        var left = Math.floor((end - Date.now()) / 1000);
+        if (left <= 0) {
+          /* Fristen passert mens siden sto åpen: fjern hele seksjonen. Et
+             utløpt tilbud er verre enn ingen kampanje. */
+          clearInterval(timer);
+          root.remove();
+          return;
+        }
+        if (cells.d) cells.d.textContent = Math.floor(left / 86400);
+        if (cells.h) cells.h.textContent = pad(Math.floor((left % 86400) / 3600));
+        if (cells.m) cells.m.textContent = pad(Math.floor((left % 3600) / 60));
+        if (cells.s) cells.s.textContent = pad(left % 60);
+      }
+
+      tick();
+      timer = setInterval(tick, 1000);
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Black Week – pakkekort",
+  "tag": "section",
+  "class": "section sk-bw-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Vises bare mens Black Week går (Temainnstillinger → Black Week). Priser, pris per maske og spart beløp regnes ut fra produktene og prosentene der — skriv aldri tall i feltene under. [maks] byttes med prosenten for 3 eller flere, [periode] med datoene."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Overskriftsnivå",
+      "options": [
+        { "value": "h1", "label": "H1 (egen Black Week-side)" },
+        { "value": "h2", "label": "H2 (forside og andre sider)" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Merke over overskriften",
+      "default": "Black Week"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Kjøp mer, spar mer – opptil [maks] %"
+    },
+    {
+      "type": "text",
+      "id": "lede",
+      "label": "Ingress",
+      "default": "Alle LED-maskene teller, og du kan blande dem som du vil. Rabatten trekkes automatisk i handlekurven."
+    },
+    {
+      "type": "text",
+      "id": "countdown_label",
+      "label": "Tekst over nedtellingen",
+      "default": "Tilbudet slutter om"
+    },
+    {
+      "type": "header",
+      "content": "Pakkekort"
+    },
+    {
+      "type": "text",
+      "id": "qty_1",
+      "label": "Kort 1 – antall",
+      "default": "1 maske"
+    },
+    {
+      "type": "text",
+      "id": "name_1",
+      "label": "Kort 1 – navn",
+      "default": "Til deg selv"
+    },
+    {
+      "type": "text",
+      "id": "no_discount_label",
+      "label": "Kort 1 – i stedet for prosent",
+      "default": "Vanlig pris"
+    },
+    {
+      "type": "text",
+      "id": "tier_1_note",
+      "label": "Kort 1 – linje nederst",
+      "default": "Legg til én maske til, så får du rabatt på begge."
+    },
+    {
+      "type": "text",
+      "id": "qty_2",
+      "label": "Kort 2 – antall",
+      "default": "2 masker"
+    },
+    {
+      "type": "text",
+      "id": "name_2",
+      "label": "Kort 2 – navn",
+      "default": "Én til deg, én i gave"
+    },
+    {
+      "type": "text",
+      "id": "qty_3",
+      "label": "Kort 3 – antall",
+      "default": "3 eller flere"
+    },
+    {
+      "type": "text",
+      "id": "name_3",
+      "label": "Kort 3 – navn",
+      "default": "Julegavene på plass"
+    },
+    {
+      "type": "header",
+      "content": "Knapp, trygghet og vilkår"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Knappetekst",
+      "default": "Velg maskene dine"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Knappen lenker til",
+      "info": "Tom = samme lenke som toppbanneret."
+    },
+    {
+      "type": "text",
+      "id": "trust_1",
+      "label": "Trygghetslinje 1",
+      "default": "Gratis frakt i hele Norge"
+    },
+    {
+      "type": "text",
+      "id": "trust_2",
+      "label": "Trygghetslinje 2",
+      "default": "30 dager – pengene for masken tilbake"
+    },
+    {
+      "type": "textarea",
+      "id": "terms",
+      "label": "Vilkår",
+      "default": "Gjelder [periode] 2026 på alle Skinora LED-masker: Radiance Face, Radiance Neck og Clear. Rabatten regnes av ordinær pris og trekkes automatisk i handlekurven. Kan ikke kombineres med andre rabattkoder."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Black Week – pakkekort"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "black_week": {
+      "type": "sk-black-week",
+      "settings": {
+        "heading_tag": "h1"
+      }
+    }
+  },
+  "order": [
+    "black_week"
+  ]
+}

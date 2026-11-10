@@ -29,6 +29,18 @@
   if ann_count < 1
     assign ann_count = 1
   endif
+-%}
+{%- capture ann_bw_live -%}{%- render 'sk-bw-live' -%}{%- endcapture -%}
+{%- liquid
+  # Black Week: baren viser ÉN melding, statisk, på alle skjermer. De faste
+  # meldingene slettes ikke — de kommer tilbake av seg selv etter sluttdatoen.
+  # Teksten og lenken ligger i Temainnstillinger → Black Week.
+  assign ann_bw = false
+  if ann_bw_live contains '1' and settings.bw_banner_tekst != blank
+    assign ann_bw = true
+    assign ann_bw_text = settings.bw_banner_tekst | replace: '[maks]', settings.bw_prosent_3
+    assign ann_count = 1
+  endif
 
   assign ann_cycle = ann_count | times: 5
   assign ann_slot = 100.0 | divided_by: ann_count
@@ -172,6 +184,19 @@
 
 <div class="sk-announcement">
   <div class="page-width sk-announcement__inner">
+    {%- if ann_bw -%}
+      {%- comment -%}
+        --primary gjør at meldingen også vises på mobil, der baren ellers
+        bare viser frakt.
+      {%- endcomment -%}
+      {%- if settings.bw_banner_lenke != blank -%}
+        <a class="sk-announcement__link sk-announcement__text--primary" href="{{ settings.bw_banner_lenke }}">
+          {{- ann_bw_text | escape -}}
+        </a>
+      {%- else -%}
+        <p class="sk-announcement__text sk-announcement__text--primary">{{ ann_bw_text | escape }}</p>
+      {%- endif -%}
+    {%- else -%}
     {%- comment -%}
       Melding 1 = velkomsttilbudet. Klikkbar: scroller til nyhetsbrev-skjemaet
       i footeren via ankeret (#newsletter på .footer-top_section). Meldingene
@@ -200,6 +225,7 @@
 
     {%- if section.settings.message_3 != blank -%}
       <p class="sk-announcement__text">{{ section.settings.message_3 }}</p>
+    {%- endif -%}
     {%- endif -%}
   </div>
 </div>
