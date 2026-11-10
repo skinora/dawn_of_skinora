@@ -1569,11 +1569,11 @@
     ]
   },
   {
-    "name": "Black Week",
+    "name": "Black Week – kjøp mer, spar mer",
     "settings": [
       {
         "type": "paragraph",
-        "content": "Styrer toppbanneret og Black Week-seksjonen. SELVE TILBUDET settes på produktet i Shopify: «Pris» = kampanjeprisen, «Sammenlign med» = før-prisen. Banneret og seksjonen leser tallene derfra. Alt vises fra temaet er publisert og produktet er satt ned, og slukker av seg selv etter sluttdatoen. Er produktet ikke satt ned, vises ingenting."
+        "content": "Styrer toppbanneret, Black Week-seksjonen og trappen i handlekurven. SELVE RABATTEN ligger i Shopify → Rabatter (to automatiske rabatter). Prosentene og sluttdatoen her må være de samme som der — temaet viser bare det Shopify trekker fra. Alt vises fra temaet er publisert og slukker av seg selv etter sluttdatoen."
       },
       {
         "type": "checkbox",
@@ -1586,7 +1586,7 @@
         "type": "text",
         "id": "bw_start_iso",
         "label": "Startdato (valgfri, ÅÅÅÅ-MM-DD)",
-        "info": "La stå tom: da gjelder Black Week fra temaet er publisert. Fyll bare inn hvis det skal vente til en bestemt dag."
+        "info": "La stå tom: da gjelder Black Week fra temaet er publisert."
       },
       {
         "type": "text",
@@ -1596,68 +1596,48 @@
         "info": "Varer ut denne dagen (kl. 23.59) og slukker av seg selv."
       },
       {
-        "type": "product",
-        "id": "bw_produkt",
-        "label": "Produktet tilbudet gjelder"
+        "type": "range",
+        "id": "bw_prosent_2",
+        "label": "Rabatt ved 2 masker (%)",
+        "min": 5,
+        "max": 50,
+        "step": 1,
+        "default": 15
       },
       {
-        "type": "product",
-        "id": "bw_pakke",
-        "label": "Pakken (julegave)",
-        "info": "Vises som «Årets julegave» i Black Week-seksjonen når pakken er satt ned i Shopify."
+        "type": "range",
+        "id": "bw_prosent_3",
+        "label": "Rabatt ved 3 eller flere (%)",
+        "min": 5,
+        "max": 50,
+        "step": 1,
+        "default": 20
+      },
+      {
+        "type": "product_list",
+        "id": "bw_produkter",
+        "label": "Masker som teller",
+        "limit": 6,
+        "info": "De samme produktene som rabattene i Shopify gjelder for. Det første brukes som regneeksempel på pakkekortene."
       },
       {
         "type": "text",
         "id": "bw_banner_tekst",
         "label": "Tekst i toppbanneret",
-        "default": "Black Week: [produkt] [pris] – spar [spar]",
-        "info": "[produkt], [pris], [før-pris] og [spar] hentes fra produktet."
+        "default": "Black Week: Kjøp mer, spar mer – opptil [maks] %",
+        "info": "[maks] byttes med prosenten for 3 eller flere."
       },
       {
         "type": "url",
         "id": "bw_banner_lenke",
-        "label": "Toppbanneret lenker til",
-        "info": "Tom = produktsiden."
-      },
-      {
-        "type": "header",
-        "content": "Forhåndsvisning"
+        "label": "Toppbanneret lenker til"
       },
       {
         "type": "checkbox",
         "id": "bw_forhandsvis",
-        "label": "Forhåndsvis",
+        "label": "Forhåndsvis før startdato",
         "default": false,
-        "info": "Viser Black Week med forhåndsvisningsprisene under, men KUN i temaer som ikke er publisert."
-      },
-      {
-        "type": "number",
-        "id": "bw_forhandsvis_pris",
-        "label": "Kampanjepris i forhåndsvisningen (kr)",
-        "info": "F.eks. 2990. Brukes kun i upubliserte temaer, sammen med bryteren over: viser denne prisen mot dagens pris, uten å røre prisen i Shopify. Tom = av."
-      },
-      {
-        "type": "number",
-        "id": "bw_forhandsvis_pakkepris",
-        "label": "Pakkepris i forhåndsvisningen (kr)",
-        "info": "F.eks. 5990. Samme regler som feltet over."
-      },
-      {
-        "type": "select",
-        "id": "bw_forhandsvis_for",
-        "label": "Før-pris i forhåndsvisningen",
-        "options": [
-          {
-            "value": "butikk",
-            "label": "«Sammenlign med»-prisen i Shopify nå"
-          },
-          {
-            "value": "dagens",
-            "label": "Prisen produktet selges for i dag"
-          }
-        ],
-        "default": "dagens",
-        "info": "Bytt mellom de to for å se forskjellen. Gjelder kun forhåndsvisningen i upubliserte temaer."
+        "info": "Brukes bare hvis startdato er satt: viser Black Week før den datoen, men KUN i temaer som ikke er publisert."
       }
     ]
   },

@@ -106,6 +106,16 @@
       {{ 'sk-campaign.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
+    {%- comment -%}
+      Black Week-trappen i handlekurven – lastes kun mens Black Week går.
+      Her og ikke i snippeten: skuffen rendres på nytt ved hver mengdeendring,
+      og en <link> inne i den ville blitt lastet inn på nytt hver gang.
+    {%- endcomment -%}
+    {%- capture bw_css_live -%}{%- render 'sk-bw-live' -%}{%- endcapture -%}
+    {%- if bw_css_live contains '1' -%}
+      {{ 'sk-bw-ladder.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+
     {%- comment -%} TARA-nominasjonsmerket – lastes kun når det er på og bildet er satt {%- endcomment -%}
     {%- if settings.tara_badge_enabled and settings.tara_badge_image != blank -%}
       {{ 'tara-badge.css' | asset_url | stylesheet_tag }}

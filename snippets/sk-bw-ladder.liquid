@@ -1,0 +1,92 @@
+{%- comment -%}
+  sk-bw-ladder — Black Week-trappen i handlekurven
+  ----------------------------------------------------------------------------
+  Viser hvor mange masker som ligger i kurven og hva neste trinn gir:
+    1 maske   → «Legg til én maske til og spar 15 %»
+    2 masker  → «Du har 15 % … legg til én til og spar 20 % på alt»
+    3 eller flere → «Du har 20 % på alle maskene»
+
+  Trappen REGNER IKKE rabatten. Den trekkes av de automatiske rabattene i
+  Shopify, og beløpet står på varelinjene og i summen. Trappen teller bare
+  masker, på samme produktliste som rabattene gjelder for
+  (Temainnstillinger → Black Week → «Masker som teller»). Prosentene hentes
+  fra samme sted, så trappen og seksjonen aldri kan love ulike tall.
+
+  Ingen JS: skuffen (cart-drawer-items) og /cart (.js-contents) rendres på
+  nytt på serveren ved hver mengdeendring, så trappen følger kurven.
+
+  Parametre:
+    context : 'drawer' (standard) | 'cart'
+{%- endcomment -%}
+{%- capture bwc_live -%}{%- render 'sk-bw-live' -%}{%- endcapture -%}
+{%- if bwc_live contains '1' and cart.item_count > 0 -%}
+  {%- liquid
+    assign bwc_count = 0
+    for bwc_item in cart.items
+      for bwc_p in settings.bw_produkter
+        if bwc_p.id == bwc_item.product_id
+          assign bwc_count = bwc_count | plus: bwc_item.quantity
+          break
+        endif
+      endfor
+    endfor
+
+    assign bwc_p2 = settings.bw_prosent_2
+    assign bwc_p3 = settings.bw_prosent_3
+    assign bwc_step = bwc_count
+    if bwc_step > 3
+      assign bwc_step = 3
+    endif
+  -%}
+  {%- if bwc_count > 0 -%}
+    <div
+      class="sk-bw-ladder sk-bw-ladder--{{ context | default: 'drawer' }}"
+      data-step="{{ bwc_step }}"
+      role="status"
+    >
+      <p class="sk-bw-ladder__eyebrow">Black Week · Kjøp mer, spar mer</p>
+
+      {%- case bwc_step -%}
+        {%- when 1 -%}
+          <p class="sk-bw-ladder__msg">
+            Legg til én maske til og <strong>spar {{ bwc_p2 }}&nbsp;%</strong>
+          </p>
+          <p class="sk-bw-ladder__sub">Tre eller flere gir {{ bwc_p3 }}&nbsp;% på alt.</p>
+        {%- when 2 -%}
+          <p class="sk-bw-ladder__msg">
+            Du har {{ bwc_p2 }}&nbsp;% på begge maskene
+          </p>
+          <p class="sk-bw-ladder__sub">
+            Legg til én maske til og <strong>spar {{ bwc_p3 }}&nbsp;% på alt</strong>.
+          </p>
+        {%- else -%}
+          <p class="sk-bw-ladder__msg">
+            Du har {{ bwc_p3 }}&nbsp;% på alle maskene
+          </p>
+          <p class="sk-bw-ladder__sub">Rabatten er trukket fra i summen.</p>
+      {%- endcase -%}
+
+      <ol class="sk-bw-ladder__steps" aria-label="Trinnene i Black Week-tilbudet">
+        <li class="sk-bw-ladder__step{% if bwc_step >= 1 %} is-reached{% endif %}">
+          <span class="sk-bw-ladder__dot" aria-hidden="true"></span>
+          <span class="sk-bw-ladder__label">1 maske</span>
+          <span class="sk-bw-ladder__value">Vanlig pris</span>
+        </li>
+        <li class="sk-bw-ladder__step{% if bwc_step >= 2 %} is-reached{% endif %}">
+          <span class="sk-bw-ladder__dot" aria-hidden="true"></span>
+          <span class="sk-bw-ladder__label">2 masker</span>
+          <span class="sk-bw-ladder__value">{{ bwc_p2 }}&nbsp;%</span>
+        </li>
+        <li class="sk-bw-ladder__step{% if bwc_step >= 3 %} is-reached{% endif %}">
+          <span class="sk-bw-ladder__dot" aria-hidden="true"></span>
+          <span class="sk-bw-ladder__label">3 eller flere</span>
+          <span class="sk-bw-ladder__value">{{ bwc_p3 }}&nbsp;%</span>
+        </li>
+      </ol>
+
+      <p class="sk-bw-ladder__terms">
+        Alle LED-maskene teller og kan blandes. Kan ikke kombineres med rabattkoder.
+      </p>
+    </div>
+  {%- endif -%}
+{%- endif -%}
