@@ -45,8 +45,6 @@
       assign bwp_u1 = bwp_price | divided_by: 100.0 | round
       assign bwp_u2 = bwp_price | times: bwp_k2 | divided_by: 10000.0 | round
       assign bwp_u3 = bwp_price | times: bwp_k3 | divided_by: 10000.0 | round
-      assign bwp_s2 = bwp_price | times: 2 | times: settings.bw_prosent_2 | divided_by: 10000.0 | round
-      assign bwp_s3 = bwp_price | times: 3 | times: settings.bw_prosent_3 | divided_by: 10000.0 | round
     -%}
     {%- liquid
       comment
