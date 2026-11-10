@@ -288,16 +288,28 @@
                               rendre den selv: compare_at_price følger ikke med
                               inn i kurven, så blokka under ser aldri forskjell.
                             {%- endcomment -%}
-                            {% render 'sk-cart-campaign', part: 'line', item: item %}
+                            {%- capture ck_line_was -%}
+                              {%- render 'sk-cart-campaign', part: 'line', item: item -%}
+                            {%- endcapture -%}
+                            {{ ck_line_was }}
 
                             {%- if item.original_line_price != item.final_line_price -%}
                               <div class="cart-item__discounted-prices">
+                                {%- comment -%}
+                                  Én overstreket pris i denne kolonnen, ikke to. Viser
+                                  kampanjelinja over allerede en overstreket pris, droppes
+                                  Shopifys egen her — ellers sto tre priser under hverandre.
+                                  Prisen før rabatt står fortsatt under produktnavnet
+                                  til venstre («3 690 kr → 3 137 kr»).
+                                {%- endcomment -%}
+                                {%- if ck_line_was == blank -%}
                                 <span class="visually-hidden">
                                   {{ 'products.product.price.regular_price' | t }}
                                 </span>
                                 <s class="cart-item__old-price price price--end">
                                   {{ item.original_line_price | money }}
                                 </s>
+                                {%- endif -%}
                                 <span class="visually-hidden">
                                   {{ 'products.product.price.sale_price' | t }}
                                 </span>
