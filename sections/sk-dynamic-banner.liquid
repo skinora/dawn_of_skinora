@@ -771,26 +771,47 @@
     }
   }
 
-  /* ── Black Week: trinnene under brødteksten ── */
+  /* ── Black Week: trinnene under brødteksten ──
+     En liten prisliste, ikke to løse setninger: antall til venstre, pris til
+     høyre, tynn strek mellom. Venstrestilt og i samme størrelse som
+     brødteksten på alle skjermer, så den leses som en del av den. Var
+     midtstilt på mobil og større enn brødteksten, og sto da og fløt for seg
+     selv under en venstrestilt overskrift. */
   .sk-dynamic-banner__bw-tiers {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-5);
+    display: grid;
+    width: 100%;
+    max-width: 32ch;
     margin: 0;
     font-family: var(--ff-sans);
-    font-size: var(--fs-md);
+    font-size: var(--fs-sm);
     font-weight: var(--fw-regular);
     line-height: var(--lh-relaxed);
+    letter-spacing: var(--tracking-normal);
+    text-align: left;
   }
 
-  .sk-dynamic-banner__bw-tiers strong {
+  .sk-dynamic-banner__bw-tier {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-2) 0;
+    border-top: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+  }
+
+  .sk-dynamic-banner__bw-tier:last-child {
+    border-bottom: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+  }
+
+  .sk-dynamic-banner__bw-tier-price {
     font-weight: var(--fw-semibold);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
 
-  @media (max-width: 700px) {
-    .sk-dynamic-banner__bw-tiers {
-      justify-content: center;
-    }
+  .sk-dynamic-banner__bw-tier-per {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-regular);
   }
 
   /* ── Mørkt bilde: lys tekst ──
@@ -798,7 +819,6 @@
      et lyst bilde med aubergine tekst; på et mørkt bilde forsvinner den.
      Dobbel klasse i selektorene, fordi fargereglene over har samme styrke. */
   .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__title,
-  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__description,
   .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__price-now,
   .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__deadline,
   .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__deadline strong,
@@ -807,8 +827,17 @@
     color: var(--paper-0);
   }
 
-  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__eyebrow,
-  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__bw-tiers strong {
+  /* Brødteksten er ett trinn roligere enn overskriften: vanlig vekt og litt
+     dempet hvit. Helt hvit i halvfet så like tung ut som overskriften. */
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__description,
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__bw-tier-label,
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__bw-tier-per {
+    font-weight: var(--fw-regular);
+    color: color-mix(in srgb, var(--paper-0) 80%, transparent);
+  }
+
+  /* Gull er forbeholdt merket «Black Week». Ett aksentpunkt, ikke tre. */
+  .sk-dynamic-banner.sk-dynamic-banner--dark .sk-dynamic-banner__eyebrow {
     color: var(--accent-gold);
   }
 
@@ -966,8 +995,20 @@
         {%- if bw_hero -%}
           {%- if hb_p != blank -%}
             <p class="sk-dynamic-banner__bw-tiers">
-              <span><strong>2 masker</strong> {% render 'sk-kr', kroner: hb_u2 %} per stk.</span>
-              <span><strong>3 eller flere</strong> {% render 'sk-kr', kroner: hb_u3 %} per stk.</span>
+              <span class="sk-dynamic-banner__bw-tier">
+                <span class="sk-dynamic-banner__bw-tier-label">2 masker</span>
+                <span class="sk-dynamic-banner__bw-tier-price">
+                  {%- render 'sk-kr', kroner: hb_u2 %}
+                  <span class="sk-dynamic-banner__bw-tier-per">per stk.</span>
+                </span>
+              </span>
+              <span class="sk-dynamic-banner__bw-tier">
+                <span class="sk-dynamic-banner__bw-tier-label">3 eller flere</span>
+                <span class="sk-dynamic-banner__bw-tier-price">
+                  {%- render 'sk-kr', kroner: hb_u3 %}
+                  <span class="sk-dynamic-banner__bw-tier-per">per stk.</span>
+                </span>
+              </span>
             </p>
           {%- endif -%}
         {%- elsif kampanje -%}
