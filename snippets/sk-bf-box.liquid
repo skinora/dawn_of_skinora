@@ -76,5 +76,7 @@
     {%- if bf_date != blank -%}
       <span class="sk-bf-box__deadline">Tilbudet varer til <strong>{{ bf_date }}</strong></span>
     {%- endif -%}
+    {%- comment -%} Black Week: pris per maske ved to og ved tre eller flere {%- endcomment -%}
+    {% render 'sk-bw-pdp', product: product %}
   </div>
 {%- endif -%}

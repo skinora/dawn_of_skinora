@@ -1,0 +1,52 @@
+{%- comment -%}
+  sk-bw-pdp — «Kjøp mer, spar mer» på produktsiden
+  ----------------------------------------------------------------------------
+  Vises inne i Black Friday-boksen (snippets/sk-bf-box.liquid) når Black Week
+  går og produktet er ett av maskene som teller (Temainnstillinger → Black
+  Week). Viser hva DENNE masken koster per stk. ved to og ved tre eller flere.
+
+  Tallene er prisen kunden faktisk betaler i kassen: produktets pris minus
+  prosentene i temainnstillingene, som er de samme som de automatiske
+  rabattene i Shopify. Ingen prosenter skrives ut — bare pris per maske — så
+  linjen stemmer med handlekurven uansett hva resten av siden sammenligner mot.
+
+  Parametre:
+    product : produktobjekt (påkrevd)
+{%- endcomment -%}
+{%- capture bwp_live -%}{%- render 'sk-bw-live' -%}{%- endcapture -%}
+{%- if bwp_live contains '1' and product != blank -%}
+  {%- liquid
+    assign bwp_in = false
+    for bwp_q in settings.bw_produkter
+      if bwp_q.id == product.id
+        assign bwp_in = true
+        break
+      endif
+    endfor
+  -%}
+  {%- if bwp_in -%}
+    {%- liquid
+      assign bwp_price = product.selected_or_first_available_variant.price
+      assign bwp_k2 = 100 | minus: settings.bw_prosent_2
+      assign bwp_k3 = 100 | minus: settings.bw_prosent_3
+      assign bwp_u2 = bwp_price | times: bwp_k2 | divided_by: 10000.0 | round
+      assign bwp_u3 = bwp_price | times: bwp_k3 | divided_by: 10000.0 | round
+    -%}
+    <div class="sk-bw-pdp">
+      <span class="sk-bw-pdp__title">Kjøp mer, spar mer</span>
+      <span class="sk-bw-pdp__tiers">
+        <span class="sk-bw-pdp__tier">
+          <span class="sk-bw-pdp__qty">2 masker</span>
+          <span class="sk-bw-pdp__price">{%- render 'sk-kr', kroner: bwp_u2 -%}</span>
+          <span class="sk-bw-pdp__per">per stk.</span>
+        </span>
+        <span class="sk-bw-pdp__tier sk-bw-pdp__tier--top">
+          <span class="sk-bw-pdp__qty">3 eller flere</span>
+          <span class="sk-bw-pdp__price">{%- render 'sk-kr', kroner: bwp_u3 -%}</span>
+          <span class="sk-bw-pdp__per">per stk.</span>
+        </span>
+      </span>
+      <span class="sk-bw-pdp__note">Alle LED-maskene teller og kan blandes. Rabatten trekkes i handlekurven.</span>
+    </div>
+  {%- endif -%}
+{%- endif -%}

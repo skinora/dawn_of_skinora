@@ -251,3 +251,68 @@
 }
 
 /* På produktsiden settes avstanden av .sk-hero-extras (ingen egen marg) */
+
+/* ---------- Black Week: «Kjøp mer, spar mer» i boksen (sk-bw-pdp) ---------- */
+
+.sk-bw-pdp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  margin-top: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid color-mix(in srgb, var(--accent-gold) 35%, transparent);
+}
+
+.sk-bw-pdp__title {
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--accent-gold);
+}
+
+.sk-bw-pdp__tiers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.sk-bw-pdp__tier {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-2);
+  border: 1px solid color-mix(in srgb, var(--paper-0) 16%, transparent);
+  border-radius: 12px;
+}
+
+.sk-bw-pdp__tier--top {
+  border-color: var(--accent-gold);
+}
+
+.sk-bw-pdp__qty,
+.sk-bw-pdp__per {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-none);
+  color: color-mix(in srgb, var(--paper-0) 74%, transparent);
+}
+
+.sk-bw-pdp__price {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-none);
+  color: var(--paper-0);
+}
+
+.sk-bw-pdp__note {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-relaxed);
+  color: color-mix(in srgb, var(--paper-0) 74%, transparent);
+}
