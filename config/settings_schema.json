@@ -1642,9 +1642,9 @@
       {
         "type": "checkbox",
         "id": "bw_forhandsvis_forpris",
-        "label": "Forhåndsvis med butikkens førpriser",
+        "label": "Regn prosent fra «Sammenlign med»-prisen",
         "default": false,
-        "info": "Regner prosent og besparelse fra «Sammenlign med»-prisen på produktene i stedet for fra prisen. Virker KUN i temaer som ikke er publisert — på det publiserte temaet vises alltid de ekte prosentene."
+        "info": "På: prosent og «Du sparer» på Black Week-siden og i toppbanneret regnes fra «Sammenlign med»-prisen på produktene. Av: de regnes fra prisen, altså det kassen faktisk trekker. Gjelder også når temaet er publisert."
       },
       {
         "type": "header",

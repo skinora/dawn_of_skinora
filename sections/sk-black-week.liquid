@@ -35,10 +35,10 @@
     assign bw_p3 = settings.bw_prosent_3
 
     comment
-      FORHÅNDSVISNING MED BUTIKKENS FØRPRISER. Bare i upubliserte temaer, og
-      bare med bryteren i Temainnstillinger → Black Week på: prosent og
-      besparelse regnes da fra «Sammenlign med»-prisen på produktet i stedet
-      for fra prisen. På det publiserte temaet er bw_fp alltid false.
+      FØRPRIS-VISNING. Med bryteren «Regn prosent fra Sammenlign med-prisen»
+      i Temainnstillinger → Black Week på, regnes prosent og besparelse fra
+      «Sammenlign med»-prisen på produktet i stedet for fra prisen. Sperren
+      mot publisert tema er fjernet av butikkeier (commit 72e0dd51).
     endcomment
     assign bw_fp = false
     if settings.bw_forhandsvis_forpris
