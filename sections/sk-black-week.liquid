@@ -42,9 +42,7 @@
     endcomment
     assign bw_fp = false
     if settings.bw_forhandsvis_forpris
-      if theme.role == 'unpublished' or theme.role == 'development'
-        assign bw_fp = true
-      endif
+      assign bw_fp = true
     endif
     assign bw_maks = bw_p3
     if bw_fp
@@ -244,7 +242,9 @@
                       <s class="sk-bw__row-was">{%- render 'sk-kr', kroner: bw_p_cmp -%}</s>{{ ' ' }}
                     {%- endif -%}
                     {%- render 'sk-kr', kroner: bw_p_unit -%}
-                    {%- if bw_tier > 1 %} <span class="sk-bw__per">per stk.</span>{% endif -%}
+                    {%- if bw_tier > 1 %}
+                      <span class="sk-bw__per">per stk.</span>
+                    {%- endif -%}
                   </span>
                 </li>
               {%- endfor -%}
@@ -252,7 +252,8 @@
 
             {%- if bw_pct > 0 or bw_fp -%}
               <p class="sk-bw__example">
-                {{ bw_word }} {{ bw_ex_name | escape }}:
+                {{ bw_word }}
+                {{ bw_ex_name | escape }}:
                 <strong>{%- render 'sk-kr', kroner: bw_total_kr -%}</strong>
                 <span class="sk-bw__save">Du sparer {% render 'sk-kr', kroner: bw_save_kr %}</span>
               </p>
@@ -280,11 +281,6 @@
 
       {%- if bw_terms != blank -%}
         <p class="sk-bw__terms">{{ bw_terms | escape }}</p>
-      {%- endif -%}
-      {%- if bw_fp -%}
-        <p class="sk-bw__terms">
-          Forhåndsvisning: prosent og besparelse er regnet fra «Sammenlign med»-prisen i Shopify. Vises bare i upubliserte temaer.
-        </p>
       {%- endif -%}
     </div>
   </div>
