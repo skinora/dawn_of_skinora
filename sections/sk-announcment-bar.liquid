@@ -54,7 +54,14 @@
           endif
         endfor
     endif
-    assign ann_bw_text = settings.bw_banner_tekst | replace: '[maks]', ann_bw_maks
+    assign ann_bw_text = settings.bw_banner_tekst | replace: '[maks]', ann_bw_maks | remove_first: 'Black Week: '
+    assign ann_bw_until = ''
+    assign ann_bw_end_iso = settings.bw_slutt_iso | strip
+    if ann_bw_end_iso != blank
+      assign ann_bw_months = 'januar,februar,mars,april,mai,juni,juli,august,september,oktober,november,desember' | split: ','
+      assign ann_bw_end_m = ann_bw_end_iso | date: '%-m' | minus: 1
+      assign ann_bw_until = ann_bw_end_iso | date: '%-d' | append: '. ' | append: ann_bw_months[ann_bw_end_m]
+    endif
     assign ann_count = 1
   endif
 
@@ -64,6 +71,49 @@
 -%}
 
 <style>
+  /* ── Black Week: svart bar med gull, større skrift, på alle skjermer ──
+     Vanlig bar er 40 px og dempet på mobil fordi den konkurrerer med
+     kjøpsknappen. Under Black Week ER baren budskapet, så den får 52 px,
+     tydelig skrift og et gullmerke. Slår seg av med sk-bw-live. */
+  .sk-announcement--bw {
+    background: var(--bf-black);
+    border-bottom: 1px solid var(--accent-gold);
+  }
+
+  .sk-announcement--bw .sk-announcement__inner {
+    min-height: 52px;
+    padding-block: var(--space-2);
+  }
+
+  .sk-announcement--bw .sk-announcement__bw {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1) var(--space-3);
+    font-family: var(--ff-sans);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-relaxed);
+    letter-spacing: var(--tracking-wide);
+    color: var(--paper-0);
+  }
+
+  .sk-announcement__bw-tag {
+    padding: var(--space-1) var(--space-3);
+    border-radius: 999px;
+    background: var(--accent-gold);
+    color: var(--bf-black);
+    font-size: var(--fs-xs);
+    letter-spacing: var(--tracking-wider);
+    white-space: nowrap;
+  }
+
+  .sk-announcement__bw-until {
+    color: var(--accent-gold);
+    white-space: nowrap;
+  }
+
   .sk-announcement {
     background: var(--ink-900);
     color: var(--color-white, #ffffff);
@@ -198,7 +248,7 @@
   }
 </style>
 
-<div class="sk-announcement">
+<div class="sk-announcement{% if ann_bw %} sk-announcement--bw{% endif %}">
   <div class="page-width sk-announcement__inner">
     {%- if ann_bw -%}
       {%- comment -%}
@@ -206,8 +256,15 @@
         bare viser frakt.
       {%- endcomment -%}
       {%- if settings.bw_banner_lenke != blank -%}
-        <a class="sk-announcement__link sk-announcement__text--primary" href="{{ settings.bw_banner_lenke }}">
-          {{- ann_bw_text | escape -}}
+        <a
+          class="sk-announcement__link sk-announcement__text--primary sk-announcement__bw"
+          href="{{ settings.bw_banner_lenke }}"
+        >
+          <span class="sk-announcement__bw-tag">Black Week</span>
+          <span>{{ ann_bw_text | escape }}</span>
+          {%- if ann_bw_until != blank -%}
+            <span class="sk-announcement__bw-until">til {{ ann_bw_until }}</span>
+          {%- endif -%}
         </a>
       {%- else -%}
         <p class="sk-announcement__text sk-announcement__text--primary">{{ ann_bw_text | escape }}</p>

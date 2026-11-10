@@ -332,3 +332,57 @@
     min-width: 80px;
   }
 }
+
+/* ---------- Kort: bilder, merke, mottaker ---------- */
+
+.sk-bw__card {
+  position: relative;
+}
+
+.sk-bw__card-media {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.sk-bw__card-media--1 {
+  grid-template-columns: 1fr;
+  max-width: 50%;
+}
+
+.sk-bw__card-media--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.sk-bw__card-media--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.sk-bw__card-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.sk-bw__card-badge {
+  align-self: flex-start;
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  background: var(--bw-gold);
+  color: var(--bf-black);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.sk-bw__price-who {
+  margin-left: var(--space-1);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  color: var(--bw-gold);
+}

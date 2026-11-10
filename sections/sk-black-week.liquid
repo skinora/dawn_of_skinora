@@ -164,6 +164,7 @@
         {%- endif -%}
       </div>
 
+      {%- assign bw_rcp = section.settings.recipients | split: ',' -%}
       <ol class="sk-bw__cards">
         {%- for bw_tier in (1..3) -%}
           {%- liquid
@@ -172,16 +173,19 @@
                 assign bw_pct = 0
                 assign bw_qty_label = section.settings.qty_1
                 assign bw_name = section.settings.name_1
+                assign bw_badge = section.settings.badge_1
                 assign bw_word = 'Én'
               when 2
                 assign bw_pct = bw_p2
                 assign bw_qty_label = section.settings.qty_2
                 assign bw_name = section.settings.name_2
+                assign bw_badge = section.settings.badge_2
                 assign bw_word = 'To'
               when 3
                 assign bw_pct = bw_p3
                 assign bw_qty_label = section.settings.qty_3
                 assign bw_name = section.settings.name_3
+                assign bw_badge = section.settings.badge_3
                 assign bw_word = 'Tre'
             endcase
             assign bw_keep = 100 | minus: bw_pct
@@ -214,6 +218,26 @@
             endif
           -%}
           <li class="sk-bw__card{% if bw_tier == 3 %} sk-bw__card--top{% endif %}">
+            {%- comment -%}
+              Bildene viser like mange masker som kortet gjelder: én, to, tre.
+              Rene pynt-bilder (alt er tomt) — maskene er navngitt i prisradene.
+            {%- endcomment -%}
+            {%- if section.settings.show_images -%}
+              <div class="sk-bw__card-media sk-bw__card-media--{{ bw_tier }}" aria-hidden="true">
+                {%- for bw_ip in bw_products limit: bw_tier -%}
+                  {%- if bw_ip.featured_image != blank -%}
+                    {{-
+                      bw_ip.featured_image
+                      | image_url: width: 400
+                      | image_tag: class: 'sk-bw__card-img', loading: 'lazy', alt: '', sizes: '(min-width: 990px) 120px, 30vw', widths: '200, 400'
+                    -}}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+            {%- if bw_badge != blank -%}
+              <p class="sk-bw__card-badge">{{ bw_badge | escape }}</p>
+            {%- endif -%}
             <p class="sk-bw__card-qty">{{ bw_qty_label }}</p>
             <p class="sk-bw__card-pct">
               {%- if bw_fp and bw_card_pct > 0 -%}
@@ -236,7 +260,13 @@
                   assign bw_p_cmp = bw_p.selected_or_first_available_variant.compare_at_price | default: 0 | divided_by: 100
                 -%}
                 <li class="sk-bw__price-row">
-                  <span class="sk-bw__price-name">{{ bw_p_name | escape }}</span>
+                  <span class="sk-bw__price-name">
+                    {{- bw_p_name | escape -}}
+                    {%- assign bw_r = bw_rcp[forloop.index0] | strip -%}
+                    {%- if bw_r != blank %}
+                      <span class="sk-bw__price-who">{{ bw_r | escape }}</span>
+                    {%- endif -%}
+                  </span>
                   <span class="sk-bw__price-val">
                     {%- if bw_fp and bw_p_cmp > bw_p_unit -%}
                       <s class="sk-bw__row-was">{%- render 'sk-kr', kroner: bw_p_cmp -%}</s>{{ ' ' }}
@@ -372,6 +402,36 @@
       "content": "Pakkekort"
     },
     {
+      "type": "checkbox",
+      "id": "show_images",
+      "label": "Vis produktbilder på kortene",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "recipients",
+      "label": "Hvem masken passer til",
+      "info": "Kommadelt, i samme rekkefølge som «Masker som teller» i temainnstillingene. Vises ved siden av maskenavnet.",
+      "default": "til deg, til mamma, til tenåringen"
+    },
+    {
+      "type": "text",
+      "id": "badge_1",
+      "label": "Kort 1 – merke"
+    },
+    {
+      "type": "text",
+      "id": "badge_2",
+      "label": "Kort 2 – merke",
+      "default": "Årets julegave"
+    },
+    {
+      "type": "text",
+      "id": "badge_3",
+      "label": "Kort 3 – merke",
+      "default": "Lavest pris per maske"
+    },
+    {
       "type": "text",
       "id": "qty_1",
       "label": "Kort 1 – antall",
@@ -405,7 +465,7 @@
       "type": "text",
       "id": "name_2",
       "label": "Kort 2 – navn",
-      "default": "Én til deg, én i gave"
+      "default": "Én til deg, én til mamma"
     },
     {
       "type": "text",
@@ -417,7 +477,7 @@
       "type": "text",
       "id": "name_3",
       "label": "Kort 3 – navn",
-      "default": "Julegavene på plass"
+      "default": "Gaver til hele familien"
     },
     {
       "type": "header",
