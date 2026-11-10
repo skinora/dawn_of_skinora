@@ -496,7 +496,11 @@ html {
 
 .sk-header__grid {
   display: grid;
-  grid-template-columns: minmax(0, max-content) auto minmax(0, max-content);
+  /* Tre kolonner: meny | logo | ikoner. Sidekolonnene deler plassen likt
+     (1fr), så logoen står midt på UTEN å være absolutt posisjonert. Menyen
+     kan da aldri vokse inn under logoen — den får det som er igjen av
+     venstre halvdel og bryter til ny linje der. */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   grid-template-areas: 'nav brand icons';
   align-items: center;
   column-gap: clamp(1.6rem, 3vw, 4.4rem);
@@ -598,6 +602,12 @@ html {
   gap: clamp(1rem, 1.6vw, 2.4rem);
 }
 
+/* Et menypunkt brytes aldri midt i («ALLE LED-» / «MASKER»). Blir det for
+   trangt, flytter hele punktet seg til neste linje. */
+.sk-header__inline-menu .header__menu-item {
+  white-space: nowrap;
+}
+
 .sk-header__inline-menu--primary .list-menu--inline {
   justify-content: flex-start;
   text-align: left;
@@ -611,7 +621,7 @@ html {
   .sk-header__nav--primary {
     justify-self: start;
     width: auto;
-    max-width: min(90rem, 60vw);
+    max-width: 100%;
   }
 
   .header.sk-header .header__heading,
@@ -1185,10 +1195,11 @@ footer .footer__column.footer__column--menu a:hover {
     width: var(--sk-header-logo-width, clamp(140px, 14vw, 210px));
   }
 
+  /* Logoen sto absolutt posisjonert midt i headeren. Da lå den utenfor
+     rutenettet, og menyen (opptil 60vw bred) gikk rett gjennom den på
+     skjermer mellom 990 og ca. 1900 px. Nå er den en vanlig kolonne. */
   .sk-header__grid > .sk-header__brand {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    width: auto;
     pointer-events: none;
   }
 
