@@ -92,9 +92,14 @@
     assign bw_terms = section.settings.terms | replace: '[periode]', bw_period | replace: '[maks]', bw_p3
     assign bw_tag = section.settings.heading_tag | default: 'h2'
 
+    comment
+      Knappen går til kolleksjonen med maskene. Den falt tidligere tilbake på
+      toppbannerets lenke, som nå peker til Black Week-siden — knappen lenket
+      altså til siden den selv sto på.
+    endcomment
     assign bw_cta_url = section.settings.cta_url
     if bw_cta_url == blank
-      assign bw_cta_url = settings.bw_banner_lenke
+      assign bw_cta_url = collections['led-masker'].url
     endif
     if bw_cta_url == blank
       assign bw_cta_url = routes.all_products_collection_url
@@ -508,7 +513,7 @@
       "type": "url",
       "id": "cta_url",
       "label": "Knappen lenker til",
-      "info": "Tom = samme lenke som toppbanneret."
+      "info": "Tom = kolleksjonen LED-masker."
     },
     {
       "type": "text",
