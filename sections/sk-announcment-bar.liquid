@@ -75,7 +75,9 @@
      Vanlig bar er 40 px og dempet på mobil fordi den konkurrerer med
      kjøpsknappen. Under Black Week ER baren budskapet, så den får 52 px,
      tydelig skrift og et gullmerke. Slår seg av med sk-bw-live. */
-  .sk-announcement--bw {
+  /* Dobbel klasse med vilje: .sk-announcement lenger ned setter bakgrunnen
+     med samme styrke og står SENERE i arket, så en enkel klasse her taper. */
+  .sk-announcement.sk-announcement--bw {
     background: var(--bf-black);
     border-bottom: 1px solid var(--accent-gold);
   }
