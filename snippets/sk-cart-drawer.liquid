@@ -129,12 +129,6 @@
           <div id="CartDrawer-CartItems" class="drawer__contents js-contents">
             {%- if cart != empty -%}
               <div class="drawer__cart-items-wrapper">
-                {%- comment -%}
-                  Black Week-trappen står ØVERST i varelisten: det er neste
-                  maske kunden skal ta stilling til, og det må skje før blikket
-                  når summen. Rendres bare mens Black Week går (sk-bw-live).
-                {%- endcomment -%}
-                {% render 'sk-bw-ladder', context: 'drawer' %}
                 <table class="cart-items" role="table">
                   <thead role="rowgroup">
                     <tr role="row">

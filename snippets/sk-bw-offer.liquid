@@ -1,0 +1,60 @@
+{%- comment -%}
+  sk-bw-offer — tallene i Black Week-tilbudet, fra ÉN kilde
+  ----------------------------------------------------------------------------
+  Toppbanneret og Black Week-seksjonen henter pris, før-pris og besparelse
+  herfra, så de aldri kan vise ulike tall.
+
+  NORMALT: tallene kommer fra produktet i Shopify via sk-lp-pricing — «Pris»
+  er kampanjeprisen, «Sammenlign med» er prisen før kampanjen. Er produktet
+  ikke satt ned, skrives ingenting ut, og banner og seksjon skjuler seg.
+
+  FORHÅNDSVISNING: produktpriser deles av alle temaer og kan ikke endres for
+  å teste. I et UPUBLISERT tema, med bryteren «Forhåndsvis før startdato» på
+  og en forhåndsvisningspris satt, vises den prisen mot produktets pris i dag.
+  På det publiserte temaet er denne grenen død (se sk-bw-live om theme.role).
+
+  Parametre:
+    part : 'pris' | 'for' | 'spar' | 'salg' («1» når det finnes et tilbud)
+           | 'preview' («1» når tallene er forhåndsvisning)
+{%- endcomment -%}
+{%- liquid
+  assign bwo_p = settings.bw_produkt
+  assign bwo_preview = false
+
+  if bwo_p != blank and settings.bw_forhandsvis and settings.bw_forhandsvis_pris > 0
+    if theme.role == 'unpublished' or theme.role == 'development'
+      assign bwo_was_kr = bwo_p.selected_or_first_available_variant.price | divided_by: 100
+      assign bwo_now_kr = settings.bw_forhandsvis_pris | plus: 0
+      if bwo_was_kr > bwo_now_kr
+        assign bwo_preview = true
+        assign bwo_save_kr = bwo_was_kr | minus: bwo_now_kr
+      endif
+    endif
+  endif
+
+  if bwo_preview
+    case part
+      when 'pris'
+        render 'sk-kr', kroner: bwo_now_kr
+      when 'for'
+        render 'sk-kr', kroner: bwo_was_kr
+      when 'spar'
+        render 'sk-kr', kroner: bwo_save_kr
+      when 'salg'
+        echo '1'
+      when 'preview'
+        echo '1'
+    endcase
+  elsif bwo_p != blank
+    case part
+      when 'pris'
+        render 'sk-lp-pricing', product: bwo_p, part: 'pris'
+      when 'for'
+        render 'sk-lp-pricing', product: bwo_p, part: 'for-pris'
+      when 'spar'
+        render 'sk-lp-pricing', product: bwo_p, part: 'spar'
+      when 'salg'
+        render 'sk-lp-pricing', product: bwo_p, part: 'salg'
+    endcase
+  endif
+-%}
