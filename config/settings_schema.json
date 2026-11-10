@@ -1645,6 +1645,62 @@
         "label": "Forhåndsvis med butikkens førpriser",
         "default": false,
         "info": "Regner prosent og besparelse fra «Sammenlign med»-prisen på produktene i stedet for fra prisen. Virker KUN i temaer som ikke er publisert — på det publiserte temaet vises alltid de ekte prosentene."
+      },
+      {
+        "type": "header",
+        "content": "Trappen i handlekurven"
+      },
+      {
+        "type": "paragraph",
+        "content": "Tekstene kunden ser i handlekurven. [p2] og [p3] byttes med prosentene for 2 masker og 3 eller flere."
+      },
+      {
+        "type": "text",
+        "id": "bw_trapp_1",
+        "label": "1 maske i kurven – hovedlinje",
+        "default": "Legg til én maske til og spar [p2] %"
+      },
+      {
+        "type": "text",
+        "id": "bw_trapp_1_under",
+        "label": "1 maske i kurven – underlinje",
+        "default": "Tre eller flere gir [p3] % på alt."
+      },
+      {
+        "type": "text",
+        "id": "bw_trapp_2",
+        "label": "2 masker i kurven – hovedlinje",
+        "default": "Du har [p2] % på begge maskene"
+      },
+      {
+        "type": "text",
+        "id": "bw_trapp_2_under",
+        "label": "2 masker i kurven – underlinje",
+        "default": "Legg til én maske til og spar [p3] % på alt."
+      },
+      {
+        "type": "text",
+        "id": "bw_trapp_3",
+        "label": "3 eller flere i kurven – hovedlinje",
+        "default": "Du har [p3] % på alle maskene"
+      },
+      {
+        "type": "text",
+        "id": "bw_trapp_3_under",
+        "label": "3 eller flere i kurven – underlinje",
+        "default": "Rabatten er trukket fra i summen."
+      },
+      {
+        "type": "text",
+        "id": "bw_trapp_verdi_2",
+        "label": "Trinn 2 – verdi under «2 masker»",
+        "default": "[p2] %"
+      },
+      {
+        "type": "text",
+        "id": "bw_trapp_verdi_3",
+        "label": "Trinn 3 – verdi under «3 eller flere»",
+        "default": "[p3] %"
       }
     ]
   },

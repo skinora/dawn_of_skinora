@@ -33,6 +33,19 @@
 
     assign bwc_p2 = settings.bw_prosent_2
     assign bwc_p3 = settings.bw_prosent_3
+
+    comment
+      Tekstene ligger i Temainnstillinger → Black Week → «Trappen i
+      handlekurven». [p2] og [p3] byttes med prosentene over.
+    endcomment
+    assign bwc_t1 = settings.bw_trapp_1 | replace: '[p2]', bwc_p2 | replace: '[p3]', bwc_p3
+    assign bwc_t1s = settings.bw_trapp_1_under | replace: '[p2]', bwc_p2 | replace: '[p3]', bwc_p3
+    assign bwc_t2 = settings.bw_trapp_2 | replace: '[p2]', bwc_p2 | replace: '[p3]', bwc_p3
+    assign bwc_t2s = settings.bw_trapp_2_under | replace: '[p2]', bwc_p2 | replace: '[p3]', bwc_p3
+    assign bwc_t3 = settings.bw_trapp_3 | replace: '[p2]', bwc_p2 | replace: '[p3]', bwc_p3
+    assign bwc_t3s = settings.bw_trapp_3_under | replace: '[p2]', bwc_p2 | replace: '[p3]', bwc_p3
+    assign bwc_v2 = settings.bw_trapp_verdi_2 | replace: '[p2]', bwc_p2 | replace: '[p3]', bwc_p3
+    assign bwc_v3 = settings.bw_trapp_verdi_3 | replace: '[p2]', bwc_p2 | replace: '[p3]', bwc_p3
     assign bwc_step = bwc_count
     if bwc_step > 3
       assign bwc_step = 3
@@ -48,22 +61,20 @@
 
       {%- case bwc_step -%}
         {%- when 1 -%}
-          <p class="sk-bw-ladder__msg">
-            Legg til én maske til og <strong>spar {{ bwc_p2 }}&nbsp;%</strong>
-          </p>
-          <p class="sk-bw-ladder__sub">Tre eller flere gir {{ bwc_p3 }}&nbsp;% på alt.</p>
+          <p class="sk-bw-ladder__msg">{{ bwc_t1 | escape }}</p>
+          {%- if bwc_t1s != blank -%}
+            <p class="sk-bw-ladder__sub">{{ bwc_t1s | escape }}</p>
+          {%- endif -%}
         {%- when 2 -%}
-          <p class="sk-bw-ladder__msg">
-            Du har {{ bwc_p2 }}&nbsp;% på begge maskene
-          </p>
-          <p class="sk-bw-ladder__sub">
-            Legg til én maske til og <strong>spar {{ bwc_p3 }}&nbsp;% på alt</strong>.
-          </p>
+          <p class="sk-bw-ladder__msg">{{ bwc_t2 | escape }}</p>
+          {%- if bwc_t2s != blank -%}
+            <p class="sk-bw-ladder__sub">{{ bwc_t2s | escape }}</p>
+          {%- endif -%}
         {%- else -%}
-          <p class="sk-bw-ladder__msg">
-            Du har {{ bwc_p3 }}&nbsp;% på alle maskene
-          </p>
-          <p class="sk-bw-ladder__sub">Rabatten er trukket fra i summen.</p>
+          <p class="sk-bw-ladder__msg">{{ bwc_t3 | escape }}</p>
+          {%- if bwc_t3s != blank -%}
+            <p class="sk-bw-ladder__sub">{{ bwc_t3s | escape }}</p>
+          {%- endif -%}
       {%- endcase -%}
 
       <ol class="sk-bw-ladder__steps" aria-label="Trinnene i Black Week-tilbudet">
@@ -75,12 +86,12 @@
         <li class="sk-bw-ladder__step{% if bwc_step >= 2 %} is-reached{% endif %}">
           <span class="sk-bw-ladder__dot" aria-hidden="true"></span>
           <span class="sk-bw-ladder__label">2 masker</span>
-          <span class="sk-bw-ladder__value">{{ bwc_p2 }}&nbsp;%</span>
+          <span class="sk-bw-ladder__value">{{ bwc_v2 | escape }}</span>
         </li>
         <li class="sk-bw-ladder__step{% if bwc_step >= 3 %} is-reached{% endif %}">
           <span class="sk-bw-ladder__dot" aria-hidden="true"></span>
           <span class="sk-bw-ladder__label">3 eller flere</span>
-          <span class="sk-bw-ladder__value">{{ bwc_p3 }}&nbsp;%</span>
+          <span class="sk-bw-ladder__value">{{ bwc_v3 | escape }}</span>
         </li>
       </ol>
 
