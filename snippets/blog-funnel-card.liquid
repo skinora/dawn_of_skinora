@@ -109,19 +109,40 @@
       {%- capture bfc_meta -%}
         {%- if bfc_pris != blank or bfc_rating != blank -%}
           <div class="blog-funnel-card__meta">
+            {%- comment -%}
+              Pris og vurdering er lenker: lesere trykket på dem uten at noe
+              skjedde. Prisen går til produktsiden, vurderingen til
+              anmeldelsene der (#fulfilled-reviews-all, samme anker som
+              sk-reviews-modal; sk-reviews-anchor holder widgeten i toppen
+              mens den laster). Samme klasser som før, så layouten er
+              uendret; lenkefarge og understrek fra .sk-blog-article__body a
+              nulles i blog-funnel.css.
+            {%- endcomment -%}
             {%- if bfc_pris != blank -%}
-              <span class="blog-funnel-card__price">
+              <a
+                href="{{ bfc_product.url }}"
+                class="blog-funnel-card__price"
+                data-blog-cta="{{ article.handle }}"
+                data-cta-variant="{{ bfc_variant }}"
+                data-cta-type="produkt"
+              >
                 <span class="blog-funnel-card__now">{{ bfc_pris }}</span>
                 {%- if bfc_for_pris != blank -%}
                   <s class="blog-funnel-card__was"><span class="visually-hidden">Førpris </span>{{ bfc_for_pris }}</s>
                 {%- endif -%}
-              </span>
+              </a>
             {%- endif -%}
             {%- if bfc_rating != blank and bfc_count != blank -%}
-              <span class="blog-funnel-card__rating">
+              <a
+                href="{{ bfc_product.url }}#fulfilled-reviews-all"
+                class="blog-funnel-card__rating"
+                data-blog-cta="{{ article.handle }}"
+                data-cta-variant="{{ bfc_variant }}"
+                data-cta-type="produkt"
+              >
                 <span aria-hidden="true">{% render 'sk-star-rating', sr_product: bfc_product, sr_show_count: false %}</span>
                 <span class="blog-funnel-card__rating-text">{{ bfc_rating }}<span class="blog-funnel-card__rating-of"> av 5</span> · {{ bfc_count }} anmeldelser</span>
-              </span>
+              </a>
             {%- endif -%}
           </div>
         {%- endif -%}

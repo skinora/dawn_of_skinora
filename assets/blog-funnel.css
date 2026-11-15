@@ -259,6 +259,42 @@
   display: none;
 }
 
+/* Pris og vurdering er lenker (pris → produktsiden, vurdering → anmeldelsene
+   på produktsiden). De skal se ut akkurat som før. Rik-tekst-regelen
+   `.sk-blog-article__body a` (0,1,1) og hover-varianten (0,2,1) gir ellers
+   merkevarefarge, vekt 500, understrek og opacity 0.8. `a.`-selektorene under
+   er (0,2,1)/(0,3,1) og vinner. */
+.blog-funnel-card a.blog-funnel-card__price,
+.blog-funnel-card a.blog-funnel-card__price:hover,
+.blog-funnel-card a.blog-funnel-card__price:focus-visible,
+.blog-funnel-card a.blog-funnel-card__rating,
+.blog-funnel-card a.blog-funnel-card__rating:hover,
+.blog-funnel-card a.blog-funnel-card__rating:focus-visible {
+  font-weight: inherit;
+  text-decoration: none;
+  overflow-wrap: normal;
+  opacity: 1;
+}
+
+.blog-funnel-card a.blog-funnel-card__price,
+.blog-funnel-card a.blog-funnel-card__price:hover,
+.blog-funnel-card a.blog-funnel-card__price:focus-visible {
+  color: inherit;
+}
+
+.blog-funnel-card a.blog-funnel-card__rating,
+.blog-funnel-card a.blog-funnel-card__rating:hover,
+.blog-funnel-card a.blog-funnel-card__rating:focus-visible {
+  color: var(--ink-500);
+}
+
+/* Diskret hint om at teksten er klikkbar, uten å endre størrelse/plass. */
+.blog-funnel-card a.blog-funnel-card__rating:hover .blog-funnel-card__rating-text,
+.blog-funnel-card a.blog-funnel-card__rating:focus-visible .blog-funnel-card__rating-text {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 /* Kompakt: linjen er en egen gridrad (full kortbredde på mobil, så pris og
    vurdering får plass på én linje). Negativ marg trekker den tett inntil
    teksten over — row-gap er 12px, linjen skal bare ha 4. */
