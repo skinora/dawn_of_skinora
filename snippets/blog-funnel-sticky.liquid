@@ -86,9 +86,7 @@
     {%- if bfs_type == 'produkt' -%}
       <span class="blog-funnel-sticky__label blog-funnel-sticky__label--produkt">
         <span class="blog-funnel-sticky__name">Se {{ bfs_name | escape }}</span>
-        {%- if bfs_pris != blank -%}
-          <span class="blog-funnel-sticky__tail">– {{ bfs_pris }}</span>
-        {%- endif -%}
+        {% if bfs_pris != blank %}<span class="blog-funnel-sticky__tail">– {{ bfs_pris }}</span>{% endif %}
       </span>
     {%- else -%}
       <span class="blog-funnel-sticky__label">{{ bfs_label | escape }}</span>
