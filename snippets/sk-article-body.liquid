@@ -8,6 +8,14 @@
   - En <h1> før første <h2> er en gjentatt tittel og fjernes.
   - Øvrige <h1> er egentlig mellomtitler og senkes til <h2>.
 
+  - Lenker til konkurrenter fjernes: <a>-taggen strippes, lenketeksten blir
+    stående som ren tekst (artikkelen kan fortsatt nevne navnet). Treffer på
+    VERTSNAVNET i href (ikke tittel eller tekst), så forskningskilder som
+    PubMed og AAD og lenker til skinora.no ikke berøres. Listen ligger i
+    sab_blocked under; legg til et ord for å blokkere flere. «shark» treffer
+    alle vertsnavn som inneholder ordet. Artikkelinnholdet i Shopify røres
+    ikke, så regelen overlever synkingen fra det andre systemet.
+
   Bruk: {%- render 'sk-article-body', html: article.content -%}
   Kan fanges med capture når innholdet skal bearbeides videre.
 {%- endcomment -%}
@@ -22,5 +30,38 @@
   endif
 
   assign sab_html = sab_html | replace: '<h1', '<h2' | replace: '</h1>', '</h2>'
+
+  assign sab_blocked = 'alvaskin,alva-skin,shark,iviskin,omnilux,currentbody' | split: ','
+  if sab_html contains '<a '
+    assign sab_parts = sab_html | split: '<a '
+    assign sab_out = sab_parts.first
+    for sab_part in sab_parts offset: 1
+      assign sab_attrs = sab_part | split: '>' | first
+      assign sab_href = ''
+      if sab_attrs contains 'href="'
+        assign sab_href = sab_attrs | split: 'href="' | last | split: '"' | first
+      elsif sab_attrs contains "href='"
+        assign sab_href = sab_attrs | split: "href='" | last | split: "'" | first
+      endif
+      assign sab_href = sab_href | downcase | strip
+      assign sab_drop = false
+      assign sab_lead = sab_href | slice: 0, 2
+      if sab_href contains '://' or sab_lead == '//'
+        assign sab_host = sab_href | split: '//' | last | split: '/' | first | split: '?' | first
+        for sab_word in sab_blocked
+          if sab_host contains sab_word
+            assign sab_drop = true
+          endif
+        endfor
+      endif
+      if sab_drop
+        assign sab_unwrapped = sab_part | remove_first: sab_attrs | slice: 1, sab_part.size | remove_first: '</a>'
+        assign sab_out = sab_out | append: sab_unwrapped
+      else
+        assign sab_out = sab_out | append: '<a ' | append: sab_part
+      endif
+    endfor
+    assign sab_html = sab_out
+  endif
 -%}
 {{- sab_html -}}
