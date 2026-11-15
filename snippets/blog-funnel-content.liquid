@@ -14,7 +14,9 @@
               (intet avsnitt med minst 120 tegn før første <h2>), brukes
               regelen under: rett etter det FØRSTE avsnittet med minst 120
               tegn faktisk brødtekst, uansett hvor i artikkelen det står.
-    full    : rett før H2-en som inneholder «Kilder».
+              Metafeltet custom.funnel_kort_tidlig = true velger denne
+              siste regelen også når artikkelen har innledning.
+    full   : rett før H2-en som inneholder «Kilder».
               Fallback 1: før «Om denne artikkelen».
               Fallback 2: etter alt innholdet.
 
@@ -96,6 +98,17 @@
         assign bfk_intro = true
       endif
     endfor
+  endif
+
+  comment
+    Tidlig plassering, per artikkel: metafeltet custom.funnel_kort_tidlig
+    (boolsk). Er det på, hopper vi over «før første h2» og bruker regelen
+    under, altså rett etter første toppnivå-avsnitt med minst 120 tegn. Da
+    kommer kortet nær første skjerm på mobil i stedet for etter hele
+    ingressen. Av eller tomt = uendret plassering.
+  endcomment
+  if article.metafields.custom.funnel_kort_tidlig.value == true
+    assign bfk_intro = false
   endif
 
   if bfk_intro
