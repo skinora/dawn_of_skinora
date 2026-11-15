@@ -240,6 +240,22 @@
   text-decoration: line-through;
 }
 
+/* Black Week-etiketten ved prisen. Ingen loddrett padding, så linjen blir
+   ikke høyere enn før. Brekker til egen linje hvis det blir trangt. */
+.blog-funnel-card__price {
+  flex-wrap: wrap;
+}
+
+.blog-funnel-card .blog-funnel-card__deal {
+  padding: 0 var(--space-2);
+  border-radius: 4px;
+  background: var(--paper-100);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-900);
+  white-space: nowrap;
+}
+
 .blog-funnel-card__rating {
   display: inline-flex;
   align-items: center;

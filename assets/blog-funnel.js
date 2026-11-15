@@ -62,7 +62,7 @@
   if (!bar) return;
 
   var STORAGE_KEY = 'sk_blog_funnel_sticky_closed';
-  var SHOW_AFTER = 0.35; // 35 % av scrollbar høyde
+  var SHOW_AFTER = 0.35; // reserve: 35 % av scrollbar høyde (se scrolledEnough)
   var mq = window.matchMedia('(max-width: 749px)');
 
   var dismissed = false;
@@ -153,7 +153,16 @@
     return document.body.classList.contains('overflow-hidden') || klaviyoOverlayOpen();
   }
 
+  /* Baren vises når kompaktkortet (det første kortet, oppe i artikkelen) har
+     scrollet ut av syne oppover. Da har leseren sett tilbudet og lest videre.
+     Scroller de opp igjen til kortet, viker baren. Finnes ikke kortet, eller
+     er det skjult, gjelder den gamle regelen: 35 % av siden. */
   function scrolledEnough() {
+    var card = document.querySelector('.blog-funnel-card--kompakt');
+    if (card) {
+      var cr = card.getBoundingClientRect();
+      if (cr.height > 0 || cr.width > 0) return cr.bottom < 0;
+    }
     var doc = document.documentElement;
     var max = doc.scrollHeight - window.innerHeight;
     if (max <= 0) return false;

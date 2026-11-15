@@ -91,6 +91,23 @@
           render 'sk-lp-pricing', product: bfc_product, part: 'for-pris'
         endcapture
         assign bfc_for_pris = bfc_for_pris | strip
+
+        comment
+          Black Week-etikett: «Black Week: −2 000 kr». Beløpet er differansen
+          mellom «Sammenlign med» og prisen (sk-lp-pricing, part 'spar'), altså
+          det samme som førprisen ved siden av allerede viser. Vises bare mens
+          Black Week går (sk-bw-live) og produktet faktisk er satt ned.
+        endcomment
+        assign bfc_bw_spar = ''
+        capture bfc_bw_live
+          render 'sk-bw-live'
+        endcapture
+        if bfc_bw_live contains '1'
+          capture bfc_bw_spar
+            render 'sk-lp-pricing', product: bfc_product, part: 'spar'
+          endcapture
+          assign bfc_bw_spar = bfc_bw_spar | strip
+        endif
         capture bfc_rating
           render 'sk-review-stats', product: bfc_product, part: 'rating'
         endcapture
@@ -129,6 +146,9 @@
                 <span class="blog-funnel-card__now">{{ bfc_pris }}</span>
                 {%- if bfc_for_pris != blank -%}
                   <s class="blog-funnel-card__was"><span class="visually-hidden">Førpris </span>{{ bfc_for_pris }}</s>
+                {%- endif -%}
+                {%- if bfc_bw_spar != blank -%}
+                  <span class="blog-funnel-card__deal">Black Week: −{{ bfc_bw_spar }}</span>
                 {%- endif -%}
               </a>
             {%- endif -%}

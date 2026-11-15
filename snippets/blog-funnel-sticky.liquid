@@ -4,8 +4,10 @@
   Parametre:
     article : artikkel-objektet (påkrevd)
 
-  Vises av assets/blog-funnel.js etter 35 % scroll, og skjules igjen når
-  fullkortet eller footeren kommer i synsfeltet (IntersectionObserver).
+  Vises av assets/blog-funnel.js når kompaktkortet har scrollet ut av syne
+  oppover, og skjules igjen når fullkortet eller footeren kommer i
+  synsfeltet (IntersectionObserver). Produktvarianten lyder
+  «Se Radiance Face – 3 690 kr».
 
   Ingen CLS: baren er position: fixed og ligger utenfor dokumentflyten fra
   første maling. Den starter translateY(110%) + visibility: hidden, så den
@@ -22,9 +24,9 @@
 
   Produktvarianten viser prisen (sk-lp-pricing, regnet ut fra produktet, aldri
   skrevet som tekst) og skal stå på én linje. Merkeprefikset («Skinora® ») er
-  strøket fra navnet her: ved 360 px var det ikke plass til «Skinora® Radiance
-  Face · 3 690 kr · Se masken →». Navnet kan krympe med ellipse som siste
-  sikkerhetsnett, prisen og «Se masken» krymper aldri. Førpris vises ikke.
+  strøket fra navnet her, ellers er det ikke plass ved 360 px. «Se» + navnet
+  kan krympe med ellipse som siste sikkerhetsnett, prisen krymper aldri.
+  Førpris vises ikke.
 {%- endcomment -%}
 
 {%- liquid
@@ -83,8 +85,10 @@
   >
     {%- if bfs_type == 'produkt' -%}
       <span class="blog-funnel-sticky__label blog-funnel-sticky__label--produkt">
-        <span class="blog-funnel-sticky__name">{{ bfs_name | escape }}</span>
-        <span class="blog-funnel-sticky__tail">{% if bfs_pris != blank %}· {{ bfs_pris }} {% endif %}· Se masken</span>
+        <span class="blog-funnel-sticky__name">Se {{ bfs_name | escape }}</span>
+        {%- if bfs_pris != blank -%}
+          <span class="blog-funnel-sticky__tail">– {{ bfs_pris }}</span>
+        {%- endif -%}
       </span>
     {%- else -%}
       <span class="blog-funnel-sticky__label">{{ bfs_label | escape }}</span>
