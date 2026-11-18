@@ -45,7 +45,7 @@
             <li><span aria-current="page">{{ article.title | escape }}</span></li>
           </ol>
         </nav>
-        <header class="sk-blog-article__header">
+        <div class="sk-blog-article__header">
           <h1 class="sk-header__section sk-blog-article__title sk-section-heading sk-section-heading--hxl">
             {{ article.title | escape }}
           </h1>
@@ -118,7 +118,7 @@
               </div>
             {%- endif -%}
           </div>
-        </header>
+        </div>
 
         {%- comment -%}
           Artikkelteksten rendres via blog-funnel-content, som skyter inn
