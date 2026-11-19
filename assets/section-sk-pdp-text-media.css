@@ -1,7 +1,11 @@
 /* sk-pdp-text-media — H2, brødtekst, valgfritt bilde og fakta-merker (produktsiden).
-   Mobil først: bildet over teksten. Fra 990px to kolonner. */
+   Redaksjonelt uttrykk: kort strek over overskriften, bildet på en lavendel
+   flate som stikker ut nede til høyre, fakta som en stille linje med
+   versaler. Mobil først: bildet over teksten. Fra 990px to like kolonner. */
 
 .sk-pdp-text-media {
+  --tm-offset: var(--space-3);
+
   background: var(--paper-0);
   padding-block: var(--space-section-md);
   color: var(--ink-700);
@@ -9,9 +13,21 @@
 
 .sk-pdp-text-media .sk-pdp-text-media__inner {
   display: grid;
-  gap: var(--space-5);
-  max-width: 1040px;
+  gap: var(--space-6);
+  max-width: 1120px;
   margin-inline: auto;
+}
+
+.sk-pdp-text-media:not(.sk-pdp-text-media--has-media) .sk-pdp-text-media__inner {
+  max-width: 880px;
+}
+
+/* Flaten bak bildet er en skygge uten uskarphet, så den tar ikke plass i
+   layouten. Margen under og til høyre holder den innenfor seksjonen. */
+.sk-pdp-text-media .sk-pdp-text-media__media {
+  margin: 0 var(--tm-offset) var(--tm-offset) 0;
+  background: var(--paper-150);
+  box-shadow: var(--tm-offset) var(--tm-offset) 0 var(--paper-150);
 }
 
 .sk-pdp-text-media .sk-pdp-text-media__media img {
@@ -24,25 +40,31 @@
   max-width: var(--measure-body);
 }
 
-.sk-pdp-text-media:not(.sk-pdp-text-media--has-media) .sk-pdp-text-media__inner {
-  max-width: 880px;
-}
-
 .sk-pdp-text-media .sk-pdp-text-media__heading {
   margin: 0 0 var(--space-4);
   font-family: var(--ff-serif);
   font-size: var(--fs-3xl);
   font-weight: var(--fw-medium);
-  line-height: var(--lh-snug);
+  line-height: var(--lh-tight);
   letter-spacing: var(--tracking-tight);
   color: var(--ink-900);
+  text-wrap: balance;
+}
+
+.sk-pdp-text-media .sk-pdp-text-media__heading::before {
+  content: "";
+  display: block;
+  width: var(--space-7);
+  height: 2px;
+  margin-bottom: var(--space-5);
+  background: var(--ink-900);
 }
 
 .sk-pdp-text-media .sk-pdp-text-media__body {
   font-family: var(--ff-sans);
   font-size: var(--fs-md);
   font-weight: var(--fw-regular);
-  line-height: var(--lh-normal);
+  line-height: var(--lh-loose);
   color: var(--ink-700);
 }
 
@@ -54,31 +76,48 @@
   margin-bottom: 0;
 }
 
+/* Fakta: én rolig linje under en hårstrek, ikke knapper. */
 .sk-pdp-text-media .sk-pdp-text-media__facts {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
-  margin: var(--space-5) 0 0;
-  padding: 0;
+  gap: var(--space-2) var(--space-5);
+  margin: var(--space-6) 0 0;
+  padding: var(--space-4) 0 0;
+  border-top: 1px solid var(--hairline);
   list-style: none;
 }
 
 .sk-pdp-text-media .sk-pdp-text-media__fact {
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--ink-300);
-  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   font-family: var(--ff-sans);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-medium);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
   line-height: var(--lh-snug);
-  color: var(--ink-700);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-900);
+}
+
+.sk-pdp-text-media .sk-pdp-text-media__fact::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ink-900);
 }
 
 @media (min-width: 990px) {
+  .sk-pdp-text-media {
+    --tm-offset: var(--space-5);
+  }
+
   .sk-pdp-text-media--has-media .sk-pdp-text-media__inner {
-    grid-template-columns: minmax(0, 480px) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: center;
-    gap: var(--space-8);
+    gap: var(--space-9);
   }
 
   .sk-pdp-text-media--media-right .sk-pdp-text-media__media {

@@ -89,7 +89,7 @@
                 </span>
               {%- endif -%}
               {%- if section.settings.numbered -%}
-                <span class="sk-pdp-cards__number" aria-hidden="true">{{ forloop.index }}</span>
+                <span class="sk-pdp-cards__number" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
               {%- endif -%}
               {%- if block.settings.depth > 0 -%}
                 <span class="sk-pdp-cards__depth sk-pdp-cards__depth--{{ block.settings.depth }}" aria-hidden="true">
@@ -97,7 +97,26 @@
                 </span>
               {%- endif -%}
               {%- if block.settings.title != blank -%}
-                <h3 class="sk-pdp-cards__title">{{ block.settings.title | escape }}</h3>
+                {%- comment -%}
+                  Tittelen deles ved første tankestrek: «630 nm – rødt lys» blir
+                  «630 nm» stort i serif og «rødt lys» som liten linje under.
+                  Uten tankestrek vises tittelen som den er. Tankestreken selv
+                  beholdes skjult for skjermlesere og søkemotorer leser hele
+                  tittelen som én overskrift.
+                {%- endcomment -%}
+                {%- liquid
+                  assign pc_title_parts = block.settings.title | split: ' – '
+                  assign pc_title_rest = block.settings.title | remove_first: pc_title_parts.first | remove_first: ' – '
+                -%}
+                <h3 class="sk-pdp-cards__title">
+                  {%- if pc_title_parts.size > 1 -%}
+                    <span class="sk-pdp-cards__title-main">{{ pc_title_parts.first | escape }}</span>
+                    <span class="visually-hidden"> – </span>
+                    <span class="sk-pdp-cards__title-sub">{{ pc_title_rest | escape }}</span>
+                  {%- else -%}
+                    {{- block.settings.title | escape -}}
+                  {%- endif -%}
+                </h3>
               {%- endif -%}
               {%- if block.settings.text != blank -%}
                 <p class="sk-pdp-cards__text">{{ block.settings.text | escape }}</p>

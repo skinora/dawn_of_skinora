@@ -1,5 +1,10 @@
 /* sk-pdp-cards — H2, ingress, kort/steg og avslutning (produktsiden).
-   Mobil først: kortene under hverandre. Fra 750px tre kolonner. */
+   To uttrykk:
+   - Nummererte steg: ingen bokser. Store serif-tall («01») over en strek,
+     som en redaksjonell liste.
+   - Kort: lavendel flater uten kant. Tittelen deles ved tankestreken:
+     første del stor i serif («630 nm»), resten som liten versallinje.
+   Mobil først. Fra 750px tre kolonner. */
 
 .sk-pdp-cards {
   background: var(--paper-0);
@@ -8,7 +13,7 @@
 }
 
 .sk-pdp-cards .sk-pdp-cards__inner {
-  max-width: 1040px;
+  max-width: 1120px;
   margin-inline: auto;
 }
 
@@ -17,9 +22,19 @@
   font-family: var(--ff-serif);
   font-size: var(--fs-3xl);
   font-weight: var(--fw-medium);
-  line-height: var(--lh-snug);
+  line-height: var(--lh-tight);
   letter-spacing: var(--tracking-tight);
   color: var(--ink-900);
+  text-wrap: balance;
+}
+
+.sk-pdp-cards .sk-pdp-cards__heading::before {
+  content: "";
+  display: block;
+  width: var(--space-7);
+  height: 2px;
+  margin-bottom: var(--space-5);
+  background: var(--ink-900);
 }
 
 .sk-pdp-cards .sk-pdp-cards__intro,
@@ -28,7 +43,7 @@
   font-family: var(--ff-sans);
   font-size: var(--fs-md);
   font-weight: var(--fw-regular);
-  line-height: var(--lh-normal);
+  line-height: var(--lh-loose);
   color: var(--ink-700);
 }
 
@@ -42,29 +57,9 @@
   margin-bottom: 0;
 }
 
-.sk-pdp-cards .sk-pdp-cards__list {
-  display: grid;
-  gap: var(--space-3);
-  margin: var(--space-5) 0;
-  padding: 0;
-  list-style: none;
-}
-
-.sk-pdp-cards .sk-pdp-cards__list:last-child {
-  margin-bottom: 0;
-}
-
-.sk-pdp-cards .sk-pdp-cards__card {
-  margin: 0;
-  padding: var(--space-5);
-  border: 1px solid var(--hairline);
-  border-radius: 12px;
-  background: var(--paper-0);
-}
-
 /* Seksjonsbildet over kortene. */
 .sk-pdp-cards .sk-pdp-cards__media {
-  margin-top: var(--space-5);
+  margin-top: var(--space-6);
 }
 
 .sk-pdp-cards .sk-pdp-cards__media img {
@@ -73,63 +68,55 @@
   height: auto;
 }
 
-/* Bilde på kortet: øverst, i full kortbredde, fast 4:3 (plassen er reservert
-   før bildet lastes). Negativ marg trekker det ut til kortets kant. */
-.sk-pdp-cards .sk-pdp-cards__card--has-image {
-  overflow: hidden;
+.sk-pdp-cards .sk-pdp-cards__list {
+  display: grid;
+  gap: var(--space-3);
+  margin: var(--space-6) 0;
+  padding: 0;
+  list-style: none;
 }
 
-.sk-pdp-cards .sk-pdp-cards__card-media {
-  display: block;
-  grid-column: 1 / -1;
-  margin: calc(var(--space-5) * -1) calc(var(--space-5) * -1) var(--space-4);
-  aspect-ratio: 4 / 3;
+.sk-pdp-cards .sk-pdp-cards__list:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Kort (ikke nummerert): lavendel flate, ingen kant ───────────────────── */
+.sk-pdp-cards .sk-pdp-cards__card {
+  position: relative;
+  margin: 0;
+  padding: var(--space-5);
+  border-radius: 16px;
   background: var(--paper-150);
 }
 
-.sk-pdp-cards .sk-pdp-cards__card-media img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Nummererte steg på mobil: tallet til venstre, teksten ved siden av. */
-.sk-pdp-cards--numbered .sk-pdp-cards__card {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  column-gap: var(--space-4);
-  align-items: start;
-}
-
-.sk-pdp-cards .sk-pdp-cards__number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--ink-300);
-  border-radius: 999px;
-  font-family: var(--ff-sans);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-semibold);
-  line-height: var(--lh-none);
-  color: var(--ink-900);
-}
-
-.sk-pdp-cards--numbered .sk-pdp-cards__title,
-.sk-pdp-cards--numbered .sk-pdp-cards__text {
-  grid-column: 2;
-}
-
 .sk-pdp-cards .sk-pdp-cards__title {
-  margin: 0 0 var(--space-2);
+  margin: 0 0 var(--space-3);
   font-family: var(--ff-sans);
   font-size: var(--fs-lg);
   font-weight: var(--fw-semibold);
   line-height: var(--lh-snug);
   letter-spacing: var(--tracking-normal);
   color: var(--ink-900);
+}
+
+.sk-pdp-cards .sk-pdp-cards__title-main {
+  display: block;
+  font-family: var(--ff-serif);
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.sk-pdp-cards .sk-pdp-cards__title-sub {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-500);
 }
 
 .sk-pdp-cards .sk-pdp-cards__text {
@@ -141,25 +128,87 @@
   color: var(--ink-700);
 }
 
-/* Dybdesøylen: tre felt, fylt ovenfra og ned til dybden kortet gjelder. */
+/* Dybdesøylen: tre streker oppe til høyre i kortet, fylt ovenfra og ned til
+   dybden kortet gjelder. */
 .sk-pdp-cards .sk-pdp-cards__depth {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-5);
   display: grid;
-  grid-template-rows: repeat(3, 8px);
+  grid-template-rows: repeat(3, 4px);
   gap: var(--space-1);
-  width: 48px;
-  margin-bottom: var(--space-4);
+  width: var(--space-6);
 }
 
 .sk-pdp-cards .sk-pdp-cards__depth span {
   display: block;
-  border-radius: 2px;
-  background: var(--paper-150);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink-900) 14%, transparent);
 }
 
 .sk-pdp-cards .sk-pdp-cards__depth--1 span:nth-child(-n + 1),
 .sk-pdp-cards .sk-pdp-cards__depth--2 span:nth-child(-n + 2),
 .sk-pdp-cards .sk-pdp-cards__depth--3 span:nth-child(-n + 3) {
-  background: var(--ink-700);
+  background: var(--ink-900);
+}
+
+/* Bilde på kortet: øverst, i full kortbredde, fast 4:3 (plassen er reservert
+   før bildet lastes). Negativ marg trekker det ut til kortets kant. */
+.sk-pdp-cards .sk-pdp-cards__card--has-image {
+  overflow: hidden;
+}
+
+.sk-pdp-cards .sk-pdp-cards__card-media {
+  display: block;
+  grid-column: 1 / -1;
+  margin: calc(var(--space-5) * -1) calc(var(--space-5) * -1) var(--space-5);
+  aspect-ratio: 4 / 3;
+  background: var(--paper-150);
+}
+
+.sk-pdp-cards .sk-pdp-cards__card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Nummererte steg: ingen bokser, stort serif-tall, strek over ─────────── */
+.sk-pdp-cards--numbered .sk-pdp-cards__list {
+  gap: 0;
+}
+
+.sk-pdp-cards--numbered .sk-pdp-cards__card {
+  display: grid;
+  grid-template-columns: var(--space-8) minmax(0, 1fr);
+  column-gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--hairline);
+  border-radius: 0;
+  background: none;
+}
+
+.sk-pdp-cards--numbered .sk-pdp-cards__card:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.sk-pdp-cards .sk-pdp-cards__number {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-none);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-300);
+}
+
+.sk-pdp-cards--numbered .sk-pdp-cards__title,
+.sk-pdp-cards--numbered .sk-pdp-cards__text {
+  grid-column: 2;
+}
+
+.sk-pdp-cards--numbered .sk-pdp-cards__text {
+  color: var(--ink-900);
 }
 
 @media (min-width: 750px) {
@@ -168,11 +217,37 @@
     gap: var(--space-4);
   }
 
+  .sk-pdp-cards .sk-pdp-cards__card {
+    padding: var(--space-6);
+  }
+
+  .sk-pdp-cards .sk-pdp-cards__depth {
+    top: var(--space-6);
+    right: var(--space-6);
+  }
+
+  .sk-pdp-cards .sk-pdp-cards__card-media {
+    margin: calc(var(--space-6) * -1) calc(var(--space-6) * -1) var(--space-5);
+  }
+
+  /* Steg i tre kolonner: tallet over teksten, strek over hver kolonne. */
+  .sk-pdp-cards--numbered .sk-pdp-cards__list {
+    gap: var(--space-6);
+  }
+
   .sk-pdp-cards--numbered .sk-pdp-cards__card {
     display: block;
+    padding: var(--space-5) 0 0;
+    border-top: 1px solid var(--ink-900);
+  }
+
+  .sk-pdp-cards--numbered .sk-pdp-cards__card:last-child {
+    border-bottom: 0;
   }
 
   .sk-pdp-cards--numbered .sk-pdp-cards__number {
+    display: block;
     margin-bottom: var(--space-4);
+    font-size: var(--fs-5xl);
   }
 }
