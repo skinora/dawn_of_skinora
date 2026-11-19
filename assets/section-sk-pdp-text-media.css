@@ -1,0 +1,87 @@
+/* sk-pdp-text-media — H2, brødtekst, valgfritt bilde og fakta-merker (produktsiden).
+   Mobil først: bildet over teksten. Fra 990px to kolonner. */
+
+.sk-pdp-text-media {
+  background: var(--paper-0);
+  padding-block: var(--space-section-md);
+  color: var(--ink-700);
+}
+
+.sk-pdp-text-media .sk-pdp-text-media__inner {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 1040px;
+  margin-inline: auto;
+}
+
+.sk-pdp-text-media .sk-pdp-text-media__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.sk-pdp-text-media .sk-pdp-text-media__text {
+  max-width: var(--measure-body);
+}
+
+.sk-pdp-text-media:not(.sk-pdp-text-media--has-media) .sk-pdp-text-media__inner {
+  max-width: 880px;
+}
+
+.sk-pdp-text-media .sk-pdp-text-media__heading {
+  margin: 0 0 var(--space-4);
+  font-family: var(--ff-serif);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+}
+
+.sk-pdp-text-media .sk-pdp-text-media__body {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-700);
+}
+
+.sk-pdp-text-media .sk-pdp-text-media__body p {
+  margin: 0 0 var(--space-4);
+}
+
+.sk-pdp-text-media .sk-pdp-text-media__body p:last-child {
+  margin-bottom: 0;
+}
+
+.sk-pdp-text-media .sk-pdp-text-media__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sk-pdp-text-media .sk-pdp-text-media__fact {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--ink-300);
+  border-radius: 999px;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  color: var(--ink-700);
+}
+
+@media (min-width: 990px) {
+  .sk-pdp-text-media--has-media .sk-pdp-text-media__inner {
+    grid-template-columns: minmax(0, 480px) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .sk-pdp-text-media--media-right .sk-pdp-text-media__media {
+    order: 2;
+  }
+}

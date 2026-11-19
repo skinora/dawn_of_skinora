@@ -1,0 +1,131 @@
+{{ 'section-sk-pdp-cards.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  sk-pdp-cards — H2, ingress, en rad kort og en avslutning (produktsiden).
+  Brukes til både nummererte steg og kort med egen tittel. All tekst kommer
+  fra innstillinger og blokker. Teksten står i HTML-en fra serveren og er
+  synlig som standard, uten JavaScript.
+
+  «Nummerer kortene» gir en <ol> med tallet som merke på hvert kort.
+  «Dybde» (0–3) på en blokk tegner en liten tredelt søyle som viser hvor
+  dypt i huden lyset når. Søylen er pynt (aria-hidden): det samme står i
+  teksten på kortet.
+{%- endcomment -%}
+{%- liquid
+  if section.settings.numbered
+    assign pc_list = 'ol'
+  else
+    assign pc_list = 'ul'
+  endif
+-%}
+
+<section
+  class="sk-pdp-cards{% if section.settings.numbered %} sk-pdp-cards--numbered{% endif %}"
+  {% if section.settings.heading != blank %}aria-labelledby="sk-pdp-cards-{{ section.id }}"{% endif %}
+>
+  <div class="page-width">
+    <div class="sk-pdp-cards__inner">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sk-pdp-cards__heading" id="sk-pdp-cards-{{ section.id }}">
+          {{- section.settings.heading | escape -}}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.intro != blank -%}
+        <div class="sk-pdp-cards__intro">{{ section.settings.intro }}</div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <{{ pc_list }} class="sk-pdp-cards__list">
+          {%- for block in section.blocks -%}
+            <li class="sk-pdp-cards__card" {{ block.shopify_attributes }}>
+              {%- if section.settings.numbered -%}
+                <span class="sk-pdp-cards__number" aria-hidden="true">{{ forloop.index }}</span>
+              {%- endif -%}
+              {%- if block.settings.depth > 0 -%}
+                <span class="sk-pdp-cards__depth sk-pdp-cards__depth--{{ block.settings.depth }}" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </span>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h3 class="sk-pdp-cards__title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="sk-pdp-cards__text">{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </{{ pc_list }}>
+      {%- endif -%}
+
+      {%- if section.settings.outro != blank -%}
+        <div class="sk-pdp-cards__outro">{{ section.settings.outro }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SK PDP Kort og steg",
+  "tag": "div",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift (H2)"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Ingress (over kortene)"
+    },
+    {
+      "type": "checkbox",
+      "id": "numbered",
+      "label": "Nummerer kortene (steg 1, 2, 3)",
+      "default": false
+    },
+    {
+      "type": "richtext",
+      "id": "outro",
+      "label": "Tekst under kortene"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Kort",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tittel (valgfri)"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Tekst"
+        },
+        {
+          "type": "range",
+          "id": "depth",
+          "label": "Dybde i huden (illustrasjon)",
+          "min": 0,
+          "max": 3,
+          "step": 1,
+          "default": 0,
+          "info": "0 = ingen illustrasjon. 1 = øvre hudlag, 3 = dypest."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK PDP Kort og steg"
+    }
+  ]
+}
+{% endschema %}

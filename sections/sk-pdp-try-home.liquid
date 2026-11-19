@@ -1,0 +1,97 @@
+{{ 'section-sk-pdp-try-home.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  sk-pdp-try-home — boks med H2, tekst, pris og knapp (produktsiden).
+  All tekst kommer fra innstillinger.
+
+  PRIS: regnes ut fra produktet via sk-lp-pricing, aldri skrevet som tekst.
+  Førpris vises bare når «Sammenlign med» er høyere enn prisen.
+
+  KNAPPEN ruller opp til kjøpsboksen, den legger ikke selv i handlekurven.
+  Kjøpsboksen (sk-radiance-product) har egen logikk for enkeltkjøp, pakke og
+  Black Week-trinn; et eget skjema her ville kunne legge en annen vare eller
+  pris i kurven enn den kunden nettopp så. Hovedseksjonen heter «main» i
+  malen, så ankeret bygges av denne seksjonens id.
+{%- endcomment -%}
+{%- liquid
+  assign th_anchor = section.id | split: '__' | first | append: '__main' | prepend: '#MainProduct-'
+  capture th_pris
+    render 'sk-lp-pricing', product: product, part: 'pris'
+  endcapture
+  assign th_pris = th_pris | strip
+  capture th_for_pris
+    render 'sk-lp-pricing', product: product, part: 'for-pris'
+  endcapture
+  assign th_for_pris = th_for_pris | strip
+-%}
+
+<section
+  class="sk-pdp-try-home"
+  {% if section.settings.heading != blank %}aria-labelledby="sk-pdp-th-{{ section.id }}"{% endif %}
+>
+  <div class="page-width">
+    <div class="sk-pdp-try-home__box">
+      <div class="sk-pdp-try-home__text">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="sk-pdp-try-home__heading" id="sk-pdp-th-{{ section.id }}">
+            {{- section.settings.heading | escape -}}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="sk-pdp-try-home__body">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="sk-pdp-try-home__buy">
+        {%- if th_pris != blank -%}
+          <p class="sk-pdp-try-home__price">
+            <span class="sk-pdp-try-home__now">{{ th_pris }}</span>
+            {%- if th_for_pris != blank -%}
+              <s class="sk-pdp-try-home__was"><span class="visually-hidden">Førpris </span>{{ th_for_pris }}</s>
+            {%- endif -%}
+          </p>
+        {%- endif -%}
+        {%- if section.settings.button_label != blank -%}
+          <a class="lp-btn sk-pdp-try-home__btn" href="{{ th_anchor }}" data-sk-pdp-cta="try-home">
+            {{- section.settings.button_label | escape -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SK PDP Prøv hjemme",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Prisen hentes fra produktet. Knappen ruller opp til kjøpsboksen."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift (H2)"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Tekst"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Knappetekst",
+      "info": "Tomt felt skjuler knappen."
+    }
+  ],
+  "presets": [
+    {
+      "name": "SK PDP Prøv hjemme"
+    }
+  ]
+}
+{% endschema %}
