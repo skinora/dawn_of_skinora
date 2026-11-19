@@ -1,0 +1,388 @@
+{
+  "sections": {
+    "main": {
+      "type": "sk-radiance-product",
+      "settings": {
+        "ce_text": "CE-merket",
+        "demand_show": true,
+        "demand_text": "Stor pågang – disse forsvinner raskt",
+        "honesty_show": true,
+        "honesty_heading": "Fastpris — 365 dager i året.",
+        "honesty_body": "<p>Ingen rabattkupp. Ingen falske «før»-priser.</p>"
+      }
+    },
+    "skinora_video_story_FYFKhN": {
+      "type": "skinora-video-story",
+      "blocks": {
+        "step_c8ydfj": {
+          "type": "step",
+          "settings": {
+            "title": "Rengjør huden",
+            "text": "Ren, tørr hud uten tunge produkter."
+          }
+        },
+        "step_YcBHzz": {
+          "type": "step",
+          "settings": {
+            "title": "Velg program",
+            "text": "Rødt og nær-infrarødt lys, ett trykk på fjernkontrollen."
+          }
+        },
+        "step_jpiYgV": {
+          "type": "step",
+          "settings": {
+            "title": "10 minutter",
+            "text": "Masken slår seg av automatisk."
+          }
+        }
+      },
+      "block_order": [
+        "step_c8ydfj",
+        "step_YcBHzz",
+        "step_jpiYgV"
+      ],
+      "name": "Video – slik brukes den",
+      "settings": {
+        "video": "shopify://files/videos/1003 (1).mp4",
+        "video_label": "Skinora LED-masken i bruk hjemme",
+        "aspect_ratio": "4-5",
+        "video_focus": "50% 50%",
+        "video_position": "left",
+        "show_controls": false,
+        "eyebrow": "SLIK BRUKES DEN",
+        "heading": "10 minutter. Sofaen. Ferdig.",
+        "text": "<p>Ta på masken, velg program og len deg tilbake. Den slår seg av selv. Ingen gel, ingen oppvarming – bare en rolig pause i hverdagen.</p>",
+        "button_label": "Prøv hjemme i 30 dager",
+        "button_link": "#product-form",
+        "button_note": "Fornøyd, eller pengene tilbake.",
+        "hide_on_handles": "skinora-clear",
+        "background_color": "#FFFFFF"
+      }
+    },
+    "sk_product_promotion_logos_r9MTbH": {
+      "type": "sk-product-promotion-logos",
+      "name": "SK Product Promotion Logos",
+      "settings": {
+        "heading": "",
+        "sk_promotion_bgColor": "#f1eff4"
+      }
+    },
+    "sk_product_clinic_proof_zqhBML": {
+      "type": "sk-product-clinic-proof",
+      "blocks": {
+        "clinic_biQkwR": {
+          "type": "clinic",
+          "settings": {
+            "name": "Skedsmo Laserklinikk",
+            "logo_svg": "skedsmolaserklinikk",
+            "logo_transparent": true
+          }
+        },
+        "clinic_aMRTxM": {
+          "type": "clinic",
+          "settings": {
+            "name": "SkinLab Tromsø",
+            "logo_svg": "skinlabtromso",
+            "logo_transparent": true
+          }
+        },
+        "clinic_rAikxz": {
+          "type": "clinic",
+          "settings": {
+            "name": "Force of Beauty",
+            "logo_svg": "forceofbeauty",
+            "logo_transparent": true
+          }
+        },
+        "clinic_EJCCzD": {
+          "type": "clinic",
+          "settings": {
+            "name": "The Skin",
+            "logo_svg": "theskin",
+            "logo_transparent": true
+          }
+        },
+        "clinic_dmqjjX": {
+          "type": "clinic",
+          "settings": {
+            "name": "DermaFin",
+            "logo_svg": "dermafin",
+            "logo_transparent": true
+          }
+        }
+      },
+      "block_order": [
+        "clinic_biQkwR",
+        "clinic_aMRTxM",
+        "clinic_rAikxz",
+        "clinic_EJCCzD",
+        "clinic_dmqjjX"
+      ],
+      "name": "SK Klinikkbevis",
+      "settings": {
+        "background": "cool",
+        "eyebrow": "Anbefalt av fagfolk",
+        "heading": "Hudsykepleierne sender kundene sine hjem med den.",
+        "reason_1_title": "Du slipper å lure på om den virker",
+        "reason_1_text": "Lyset er sterkt nok til å gjøre jobben",
+        "reason_2_title": "Den føles god å ha på",
+        "reason_2_text": "Myk og lett, og den sitter tett. Behandlingen blir en stund for deg selv",
+        "reason_3_title": "Du ser det selv i speilet",
+        "reason_3_text": "Med jevnlig bruk er det speilet ditt som overbeviser deg, ikke oss.",
+        "body": "<p>Skinora selges gjennom norske hudklinikker, som hjemmebehandling mellom timene. Det er den samme masken du får her.</p>",
+        "image": "shopify://shop_images/Karoline-TheSkinMedispa_jpg.webp",
+        "image_alt": "The Skin hudklinikk  anbefaler Skinora LED masker",
+        "image_focus_y": 30,
+        "quote": "Vi har testet flere LED-masker. Skinora var den som ga best passform og effekt. Nå er det den vi anbefaler.",
+        "name": "Karoline Mørch Lilledrange",
+        "role": "Dermatologisk sykepleier",
+        "clinic": "The Skin",
+        "city": "Skien",
+        "count_label": "klinikker i Norge",
+        "cities": "",
+        "logos_label": "Klinikker som selger Skinora",
+        "anchor_id": ""
+      }
+    },
+    "sk_led_light_work_mDz86m": {
+      "type": "sk-led-light-work",
+      "name": "SK Led Light Work",
+      "settings": {
+        "sk_led_light_work_eyebrow": "VITENSKAPEN BAK SKINORA LED",
+        "sk_led_light_work_heading": "Hvordan Fungerer Skinora LED Lys",
+        "sk_led_light_work_subheading": "Oppdag hver bølgelengdes rolige effekt, steg for steg"
+      },
+      "disabled": true
+    },
+    "sk_product_led_stats_fwHqcw": {
+      "type": "sk-product-led-stats",
+      "name": "SK – LED Stats",
+      "settings": {}
+    },
+    "sk_clinic_comparison_kP7m2x": {
+      "type": "skinora-clinic-comparison",
+      "settings": {
+        "background_style": "lavender",
+        "number": "",
+        "unit": "kr",
+        "once_label": "Én gang",
+        "lead": "I klinikken betaler du 800–1 500 kr for hver behandling.",
+        "kicker": "Skinora koster som noen få økter – så er masken din. Bruk den hjemme, så ofte du vil.",
+        "show_cta": true,
+        "cta_label": "Prøv risikofritt i 30 dager",
+        "cta_link": "",
+        "guarantee_line": "30 dagers åpent kjøp – full refusjon hvis du ikke er fornøyd."
+      }
+    },
+    "sk_product_how_to_use_dbAJA9": {
+      "type": "sk-product-how-to-use",
+      "name": "SK Product How to Use",
+      "settings": {
+        "image_position_desktop": "left",
+        "subtitle": "__"
+      },
+      "disabled": true
+    },
+    "sk_product_why_choose_pwJz83": {
+      "type": "sk-product-why-choose",
+      "name": "SK Product Why Choose",
+      "settings": {
+        "cta_label": "__",
+        "cta_link": "",
+        "link_label": "__",
+        "link_url": "",
+        "layout_image_width": 45,
+        "layout_text_width": 45,
+        "layout_gap": 10
+      }
+    },
+    "sk_product_seo_text_Qm4Tn8": {
+      "type": "sk-product-seo-text",
+      "name": "SK Product SEO-tekst",
+      "settings": {}
+    },
+    "sk_product_specifications_cJY9VW": {
+      "type": "sk-product-specifications",
+      "name": "SK Product Specifications",
+      "settings": {
+        "specification": "tekniske-spesifikasjoner-2"
+      }
+    },
+    "sk_product_faq_accordion_EPRXLb": {
+      "type": "sk-product-faq-accordion",
+      "name": "SK Product FAQ",
+      "settings": {
+        "title": "Spørsmål og svar om LED-masken",
+        "open_first_item": false
+      }
+    },
+    "1759515838eeeda580": {
+      "type": "apps",
+      "blocks": {
+        "klaviyo_reviews_product_reviews_Dcrdpw": {
+          "type": "shopify://apps/klaviyo-reviews/blocks/product-reviews/db20e365-d984-4ac4-9655-e1588d951ca9",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "klaviyo_reviews_product_reviews_Dcrdpw"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "sk_pdp_moden_hud": {
+      "type": "sk-pdp-text-media",
+      "settings": {
+        "heading": "Laget for moden hud",
+        "text": "<p>Skinora Radiance Face er en LED-maske for ansiktet, laget for deg som ser at huden har endret seg. Fine linjer har blitt til rynker. Huden er slappere langs kjevelinjen og rundt øynene. Gløden er ikke den samme som før. Masken er utviklet i Norge med moden hud i tankene.</p>",
+        "product_image_no": 2,
+        "image_alt": "",
+        "image_side": "right"
+      }
+    },
+    "sk_pdp_ti_minutter": {
+      "type": "sk-pdp-cards",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "title": "",
+            "text": "Rens ansiktet og tørk huden.",
+            "depth": 0
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "title": "",
+            "text": "Legg på masken, fest stroppene og trykk på kontrollenheten.",
+            "depth": 0
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "title": "",
+            "text": "Etter 10 minutter slår den seg av av seg selv. Bruk den 3–5 ganger i uken.",
+            "depth": 0
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3"
+      ],
+      "settings": {
+        "heading": "Ti minutter, noen kvelder i uken",
+        "intro": "",
+        "numbered": true,
+        "outro": "<p>Du kan lese, høre på en podkast eller bare ligge stille. Ta serum og krem etterpå, som vanlig. Resultatene kommer med jevn bruk over uker. Det er rutinen som gjør forskjellen.</p>"
+      }
+    },
+    "sk_pdp_bolgelengder": {
+      "type": "sk-pdp-cards",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "title": "630 nm – rødt lys",
+            "text": "Virker i de øvre hudlagene og gir huden et friskere uttrykk.",
+            "depth": 1
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "title": "830 nm – nær-infrarødt lys",
+            "text": "Når dypere ned, der kollagenet dannes.",
+            "depth": 2
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "title": "1072 nm – dypt nær-infrarødt lys",
+            "text": "Når lengst ned. Denne bølgelengden er sjelden i masker for hjemmebruk.",
+            "depth": 3
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3"
+      ],
+      "settings": {
+        "heading": "Hvorfor tre bølgelengder",
+        "intro": "<p>De fleste LED-masker for anti-aging bruker rødt og nær-infrarødt lys. Radiance Face har tre bølgelengder, som virker på hvert sitt nivå i huden:</p>",
+        "numbered": false,
+        "outro": "<p>Med tre bølgelengder får flere lag av huden lys i samme behandling. Det er derfor masken passer for rynker og slapp hud, ikke bare for glød.</p>"
+      }
+    },
+    "sk_pdp_silikon": {
+      "type": "sk-pdp-text-media",
+      "blocks": {
+        "fact_1": {
+          "type": "fact",
+          "settings": {
+            "label": "Matt silikon"
+          }
+        },
+        "fact_2": {
+          "type": "fact",
+          "settings": {
+            "label": "285 g"
+          }
+        },
+        "fact_3": {
+          "type": "fact",
+          "settings": {
+            "label": "Øyebeskyttelse i esken"
+          }
+        }
+      },
+      "block_order": [
+        "fact_1",
+        "fact_2",
+        "fact_3"
+      ],
+      "settings": {
+        "heading": "Matt silikon som ligger tett inntil",
+        "text": "<p>Masken er laget i myk, matt silikon. Den former seg etter ansiktet og ligger tett inntil huden, også rundt nesen, munnen og haken. Lyset treffer huden direkte, uten luft imellom. Med 285 g er den lett nok til at du glemmer at du har den på. Øyebeskyttelse i silikon følger med.</p>",
+        "product_image_no": 0,
+        "image_alt": "",
+        "image_side": "left"
+      }
+    },
+    "sk_pdp_prov_hjemme": {
+      "type": "sk-pdp-try-home",
+      "settings": {
+        "heading": "En rødlysmaske du kan prøve hjemme",
+        "text": "<p>Du får 30 dager – pengene for masken tilbake. Bruk masken som vanlig i hele perioden. Er du ikke fornøyd, sender du den tilbake. Slik kan du se hvordan din egen hud svarer på LED-masken før du bestemmer deg.</p>",
+        "button_label": "Velg og legg i handlekurv"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "sk_pdp_moden_hud",
+    "skinora_video_story_FYFKhN",
+    "sk_pdp_ti_minutter",
+    "sk_product_faq_accordion_EPRXLb",
+    "sk_product_promotion_logos_r9MTbH",
+    "sk_product_clinic_proof_zqhBML",
+    "sk_pdp_bolgelengder",
+    "sk_led_light_work_mDz86m",
+    "sk_product_led_stats_fwHqcw",
+    "sk_pdp_silikon",
+    "sk_clinic_comparison_kP7m2x",
+    "sk_product_how_to_use_dbAJA9",
+    "sk_product_why_choose_pwJz83",
+    "sk_pdp_prov_hjemme",
+    "sk_product_seo_text_Qm4Tn8",
+    "sk_product_specifications_cJY9VW",
+    "1759515838eeeda580"
+  ]
+}
