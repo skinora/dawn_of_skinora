@@ -261,7 +261,13 @@
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": {{ article.title | json }},
-    "image": {%- if article.image -%}{{ article.image | image_url: width: 1200 | prepend: 'https:' | json }}{%- else -%}null{%- endif -%},
+    {%- comment -%}
+      image utelates helt når artikkelen ikke har hovedbilde. «image: null»
+      er ikke en gyldig verdi og gir advarsel i Rich Results Test.
+    {%- endcomment -%}
+    {%- if article.image -%}
+      "image": {{ article.image | image_url: width: 1200 | prepend: 'https:' | json }},
+    {%- endif -%}
     "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
     "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
     {%- comment -%}
@@ -405,12 +411,13 @@
     },
     {
       "type": "paragraph",
-      "content": "Fyll inn en ekte person. Navnet vises som byline under tittelen, i boksen «Om skribenten» nederst, og som author (Person) i BlogPosting-schemaet. Står feltet tomt, faller vi tilbake til artikkelens forfatterfelt i Shopify — men KUN hvis det avviker fra butikknavnet. Er begge «Skinora», vises ingen byline og ingen forfatterboks, og schemaet beholder Organization. Det er med vilje: «Person: Skinora» er usant og skader E-E-A-T mer enn det hjelper."
+      "content": "Navnet vises som byline under tittelen, i boksen «Om skribenten» nederst, og som author (Person) i BlogPosting-schemaet, på alle artikler. Tømmes feltet, faller vi tilbake til artikkelens forfatterfelt i Shopify — men KUN hvis det avviker fra butikknavnet. Er begge «Skinora», vises ingen byline og ingen forfatterboks, og schemaet bruker Organization. Det er med vilje: «Person: Skinora» er usant og skader E-E-A-T mer enn det hjelper."
     },
     {
       "type": "text",
       "id": "forfatter_navn",
-      "label": "Forfatternavn"
+      "label": "Forfatternavn",
+      "default": "Anastasia fra Skinora"
     },
     {
       "type": "text",
