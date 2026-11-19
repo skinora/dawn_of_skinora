@@ -1090,9 +1090,14 @@
               <strong>{{ hb_rv_rating }}</strong> av 5 · <strong>{{ hb_rv_count }}</strong> anmeldelser
             </span>
           {%- endif -%}
-          <span class="sk-dynamic-banner__pay" aria-label="Vipps og Klarna">
-            <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="" height="16" width="40" loading="lazy">
-            <img src="{{ 'klarna-logo.svg' | asset_url }}" alt="" width="21" height="16" loading="lazy">
+          {%- comment -%}
+            Logoene ER innholdet her (hvilke betalingsmåter som tilbys), så de
+            får alt-tekst. aria-label på en <span> uten rolle leses ikke
+            pålitelig av skjermlesere, og alt="" gjorde logoene usynlige.
+          {%- endcomment -%}
+          <span class="sk-dynamic-banner__pay">
+            <img src="{{ 'icon-vipps.svg' | asset_url }}" alt="Vipps" height="16" width="40" loading="lazy">
+            <img src="{{ 'klarna-logo.svg' | asset_url }}" alt="Klarna" width="21" height="16" loading="lazy">
           </span>
         </div>
       </div>
