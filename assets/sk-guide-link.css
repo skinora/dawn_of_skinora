@@ -1,0 +1,27 @@
+/* sk-guide-link — tekstlinje med lenke til en guide (snippets/sk-guide-link.liquid).
+   Dobbel klasse i selektorene: linjen står inne i FAQ-seksjoner som har egne
+   p- og a-regler med én klasse + element. */
+
+.sk-guide-link.sk-guide-link {
+  margin: var(--space-5) 0 0;
+  font-family: var(--ff-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--ink-700);
+}
+
+.sk-guide-link .sk-guide-link__lenke,
+.sk-guide-link .sk-guide-link__lenke:link,
+.sk-guide-link .sk-guide-link__lenke:visited {
+  font-weight: var(--fw-medium);
+  color: var(--ink-900);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+.sk-guide-link .sk-guide-link__lenke:hover,
+.sk-guide-link .sk-guide-link__lenke:focus-visible {
+  text-decoration-thickness: 2px;
+}

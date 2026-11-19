@@ -1,0 +1,37 @@
+{%- comment -%}
+  sk-guide-link — én rolig tekstlinje med lenke til en guide/artikkel.
+  ----------------------------------------------------------------------------
+  Brukes ved FAQ-en på produktsiden og forsiden for å lenke til
+  best i test-artikkelen. Alle tekstene kommer fra seksjonsinnstillinger,
+  så de kan endres i temaredigeringen.
+
+  Parametre:
+    tekst       : innledning, f.eks. «Usikker på hvilken LED-maske du skal velge?»
+    lenketekst  : selve lenken, f.eks. «Se vår sammenligning av 8 masker»
+    url         : lenkemål. Tomt felt = best i test-artikkelen
+                  (url-innstillinger støtter ikke default, derfor her).
+    plassering  : kort kode til sporing, f.eks. «produkt-faq» / «forside-faq»
+
+  Rendrer ingenting når lenketeksten er tom.
+  Sporing: data-sk-guide-link="<plassering>" (ingen UTM, intet nytt skript).
+{%- endcomment -%}
+{%- liquid
+  assign sgl_lenketekst = lenketekst | strip
+  assign sgl_tekst = tekst | strip
+  assign sgl_url = url | default: '/blogs/nyheter/led-maske-best-i-test'
+-%}
+{%- if sgl_lenketekst != blank -%}
+  {{ 'sk-guide-link.css' | asset_url | stylesheet_tag }}
+  <p class="sk-guide-link">
+    {%- if sgl_tekst != blank -%}
+      <span class="sk-guide-link__tekst">{{ sgl_tekst | escape }}</span>
+    {% endif -%}
+    <a
+      class="sk-guide-link__lenke"
+      href="{{ sgl_url }}"
+      data-sk-guide-link="{{ plassering | default: 'ukjent' | escape }}"
+    >
+      {{- sgl_lenketekst | escape -}}
+    </a>
+  </p>
+{%- endif -%}

@@ -249,6 +249,12 @@
             {% endfor %}
           </div>
         </div>
+        {%- render 'sk-guide-link',
+          tekst: section.settings.guide_tekst,
+          lenketekst: section.settings.guide_lenketekst,
+          url: section.settings.guide_url,
+          plassering: 'forside-faq'
+        -%}
         <div class="sk-faq-read-more-btn">
           <a href="{{ section.settings.faq_link }}" class="sk-btn sk-btn--secondary">
             Les mer
@@ -282,6 +288,29 @@
       "id": "background_color",
       "label": "Background Color",
       "default": "#3a3052"
+    },
+    {
+      "type": "header",
+      "content": "Lenke til guide (under spørsmålene)"
+    },
+    {
+      "type": "text",
+      "id": "guide_tekst",
+      "label": "Tekst foran lenken",
+      "default": "Usikker på hvilken LED-maske du skal velge?"
+    },
+    {
+      "type": "text",
+      "id": "guide_lenketekst",
+      "label": "Lenketekst",
+      "default": "Se vår sammenligning av 8 masker",
+      "info": "Tomt felt skjuler hele linjen."
+    },
+    {
+      "type": "url",
+      "id": "guide_url",
+      "label": "Lenke",
+      "info": "Tomt felt = /blogs/nyheter/led-maske-best-i-test (settes i Liquid, url-innstillinger støtter ikke default)."
     },
     {
       "type": "header",
