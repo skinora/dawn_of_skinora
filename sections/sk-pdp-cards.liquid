@@ -10,8 +10,22 @@
   «Dybde» (0–3) på en blokk tegner en liten tredelt søyle som viser hvor
   dypt i huden lyset når. Søylen er pynt (aria-hidden): det samme står i
   teksten på kortet.
+
+  BILDER (valgfritt, ingenting vises før noe er valgt):
+  - Seksjonsbilde over kortene: eget bilde, ellers produktbilde nr. N.
+  - Bilde på hvert kort (blokk): vises øverst i kortet i fast 4:3-utsnitt.
+  Alle bilder har width/height (ingen layout shift) og lastes lat.
 {%- endcomment -%}
 {%- liquid
+  assign pc_image = section.settings.image
+  if pc_image == blank and section.settings.product_image_no > 0
+    assign pc_idx = section.settings.product_image_no | minus: 1
+    assign pc_image = product.images[pc_idx]
+  endif
+  assign pc_alt = section.settings.image_alt | strip
+  if pc_alt == blank
+    assign pc_alt = pc_image.alt | default: product.title
+  endif
   if section.settings.numbered
     assign pc_list = 'ol'
   else
@@ -35,10 +49,45 @@
         <div class="sk-pdp-cards__intro">{{ section.settings.intro }}</div>
       {%- endif -%}
 
+      {%- if pc_image != blank -%}
+        <div class="sk-pdp-cards__media">
+          <img
+            src="{{ pc_image | image_url: width: 1040 }}"
+            srcset="{{ pc_image | image_url: width: 450 }} 450w, {{ pc_image | image_url: width: 700 }} 700w, {{ pc_image | image_url: width: 1040 }} 1040w, {{ pc_image | image_url: width: 1600 }} 1600w"
+            sizes="(min-width: 1100px) 1040px, calc(100vw - 32px)"
+            alt="{{ pc_alt | escape }}"
+            width="{{ pc_image.width }}"
+            height="{{ pc_image.height }}"
+            loading="lazy"
+            decoding="async"
+          >
+        </div>
+      {%- endif -%}
+
       {%- if section.blocks.size > 0 -%}
         <{{ pc_list }} class="sk-pdp-cards__list">
           {%- for block in section.blocks -%}
-            <li class="sk-pdp-cards__card" {{ block.shopify_attributes }}>
+            <li class="sk-pdp-cards__card{% if block.settings.image != blank %} sk-pdp-cards__card--has-image{% endif %}" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                {%- liquid
+                  assign pc_card_alt = block.settings.image_alt | strip
+                  if pc_card_alt == blank
+                    assign pc_card_alt = block.settings.image.alt | default: block.settings.title | default: product.title
+                  endif
+                -%}
+                <span class="sk-pdp-cards__card-media">
+                  <img
+                    src="{{ block.settings.image | image_url: width: 640, height: 480, crop: 'center' }}"
+                    srcset="{{ block.settings.image | image_url: width: 400, height: 300, crop: 'center' }} 400w, {{ block.settings.image | image_url: width: 640, height: 480, crop: 'center' }} 640w, {{ block.settings.image | image_url: width: 960, height: 720, crop: 'center' }} 960w"
+                    sizes="(min-width: 750px) 320px, calc(100vw - 32px)"
+                    alt="{{ pc_card_alt | escape }}"
+                    width="640"
+                    height="480"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                </span>
+              {%- endif -%}
               {%- if section.settings.numbered -%}
                 <span class="sk-pdp-cards__number" aria-hidden="true">{{ forloop.index }}</span>
               {%- endif -%}
@@ -92,6 +141,32 @@
       "type": "richtext",
       "id": "outro",
       "label": "Tekst under kortene"
+    },
+    {
+      "type": "header",
+      "content": "Bilde over kortene"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Eget bilde",
+      "info": "Valgfritt. Står feltet tomt, brukes produktbildet under."
+    },
+    {
+      "type": "range",
+      "id": "product_image_no",
+      "label": "Produktbilde nr.",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 0,
+      "info": "Rekkefølgen i produktets medier. 0 = intet bilde."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Alt-tekst",
+      "info": "Si hva bildet viser, og nevn produktnavnet. Tomt felt = bildets egen alt-tekst."
     }
   ],
   "blocks": [
@@ -118,6 +193,18 @@
           "step": 1,
           "default": 0,
           "info": "0 = ingen illustrasjon. 1 = øvre hudlag, 3 = dypest."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Bilde på kortet (valgfritt)",
+          "info": "Vises øverst i kortet i 4:3-utsnitt."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Alt-tekst",
+          "info": "Si hva bildet viser. Tomt felt = bildets egen alt-tekst."
         }
       ]
     }

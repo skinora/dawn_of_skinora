@@ -14,6 +14,18 @@
   malen, så ankeret bygges av denne seksjonens id.
 {%- endcomment -%}
 {%- liquid
+  comment
+    Bilde (valgfritt): eget bilde, ellers produktbilde nr. N. 0 = intet bilde.
+  endcomment
+  assign th_image = section.settings.image
+  if th_image == blank and section.settings.product_image_no > 0
+    assign th_idx = section.settings.product_image_no | minus: 1
+    assign th_image = product.images[th_idx]
+  endif
+  assign th_alt = section.settings.image_alt | strip
+  if th_alt == blank
+    assign th_alt = th_image.alt | default: product.title
+  endif
   assign th_anchor = section.id | split: '__' | first | append: '__main' | prepend: '#MainProduct-'
   capture th_pris
     render 'sk-lp-pricing', product: product, part: 'pris'
@@ -30,7 +42,21 @@
   {% if section.settings.heading != blank %}aria-labelledby="sk-pdp-th-{{ section.id }}"{% endif %}
 >
   <div class="page-width">
-    <div class="sk-pdp-try-home__box">
+    <div class="sk-pdp-try-home__box{% if th_image != blank %} sk-pdp-try-home__box--has-media{% endif %}">
+      {%- if th_image != blank -%}
+        <div class="sk-pdp-try-home__media">
+          <img
+            src="{{ th_image | image_url: width: 480, height: 480, crop: 'center' }}"
+            srcset="{{ th_image | image_url: width: 240, height: 240, crop: 'center' }} 240w, {{ th_image | image_url: width: 480, height: 480, crop: 'center' }} 480w, {{ th_image | image_url: width: 800, height: 800, crop: 'center' }} 800w"
+            sizes="(min-width: 750px) 200px, calc(100vw - 80px)"
+            alt="{{ th_alt | escape }}"
+            width="480"
+            height="480"
+            loading="lazy"
+            decoding="async"
+          >
+        </div>
+      {%- endif -%}
       <div class="sk-pdp-try-home__text">
         {%- if section.settings.heading != blank -%}
           <h2 class="sk-pdp-try-home__heading" id="sk-pdp-th-{{ section.id }}">
@@ -86,6 +112,32 @@
       "id": "button_label",
       "label": "Knappetekst",
       "info": "Tomt felt skjuler knappen."
+    },
+    {
+      "type": "header",
+      "content": "Bilde"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Eget bilde",
+      "info": "Valgfritt. Står feltet tomt, brukes produktbildet under."
+    },
+    {
+      "type": "range",
+      "id": "product_image_no",
+      "label": "Produktbilde nr.",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 0,
+      "info": "Rekkefølgen i produktets medier. 0 = intet bilde."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Alt-tekst",
+      "info": "Si hva bildet viser, og nevn produktnavnet. Tomt felt = bildets egen alt-tekst."
     }
   ],
   "presets": [

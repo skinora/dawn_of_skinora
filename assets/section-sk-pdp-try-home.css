@@ -18,6 +18,19 @@
   background: var(--paper-0);
 }
 
+/* Valgfritt bilde: kvadratisk, plassen er reservert før bildet lastes. */
+.sk-pdp-try-home .sk-pdp-try-home__media {
+  aspect-ratio: 1 / 1;
+  background: var(--paper-150);
+}
+
+.sk-pdp-try-home .sk-pdp-try-home__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .sk-pdp-try-home .sk-pdp-try-home__heading {
   margin: 0 0 var(--space-4);
   font-family: var(--ff-serif);
@@ -88,5 +101,9 @@
 
   .sk-pdp-try-home .sk-pdp-try-home__buy {
     min-width: 260px;
+  }
+
+  .sk-pdp-try-home .sk-pdp-try-home__box--has-media {
+    grid-template-columns: 200px minmax(0, 1fr) auto;
   }
 }
