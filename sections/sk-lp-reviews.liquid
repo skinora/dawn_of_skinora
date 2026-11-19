@@ -306,13 +306,15 @@
     </button>
   </form>
   <p class="lp-midpage-cta__guarantees">
-    ✔ 30 dagers fornøydgaranti &nbsp;·&nbsp; ✔ Gratis frakt &nbsp;·&nbsp; ✔
+    ✔ 30 dagers fornøydgaranti &nbsp;·&nbsp; ✔ Gratis frakt
     {%- comment -%}
-      Klarna regnes ut fra produktet i Produkt-URL (sk-lp-pricing). Den gamle
-      fallbacken «Fra 130 kr/mnd» var Radiance-tallet hardkodet, og ville vist
-      Radiance-prisen på Clear-siden hvis feltet sto tomt.
+      Valgfritt tredje punkt (feltet midpage_klarna_text), regnet ut fra
+      produktet i Produkt-URL (sk-lp-pricing). Står tomt som standard: månedsbeløp
+      for delbetaling krever kredittopplysninger (Klarna, Norge). Tomt felt gir
+      ingen løs «✔» eller skilletegn.
     {%- endcomment -%}
-    {%- render 'sk-lp-pricing', product: reviews_product, text: section.settings.midpage_klarna_text -%}
+    {%- capture reviews_extra -%}{%- render 'sk-lp-pricing', product: reviews_product, text: section.settings.midpage_klarna_text -%}{%- endcapture -%}
+    {%- if reviews_extra != blank %} &nbsp;·&nbsp; ✔ {{ reviews_extra }}{% endif -%}
   </p>
 </div>
 
@@ -482,9 +484,8 @@
     {
       "type": "text",
       "id": "midpage_klarna_text",
-      "label": "Klarna-tekst",
-      "info": "Bruk [klarna] for månedsbeløpet (pris / 36), hentet fra produktet i Produkt-URL.",
-      "default": "Fra [klarna] kr/mnd med Klarna"
+      "label": "Tilleggspunkt under knappen (valgfritt)",
+      "info": "Ikke bruk månedsbeløp for delbetaling uten kredittopplysninger (Klarna, Norge). Tomt felt skjuler punktet."
     }
   ],
   "blocks": [

@@ -72,7 +72,7 @@
         "price_display": "[pris]",
         "price_before": "[før-pris]",
         "save_text": "Spar [spar]",
-        "klarna_text": "fra [klarna] kr/mnd med Klarna",
+        "klarna_text": "",
         "show_link": true,
         "link_text": "Se hvordan den brukes (60 sek) ↓",
         "link_url": "#se-videoen",
@@ -353,7 +353,7 @@
         "all_reviews_text": "Les alle anmeldelser →",
         "product_url": "/products/skinora-radiance-face",
         "midpage_cta_text": "Sett deg selv på listen",
-        "midpage_klarna_text": "Fra [klarna] kr/mnd med Klarna"
+        "midpage_klarna_text": ""
       }
     },
     "clinic_comparison": {
@@ -679,7 +679,7 @@
           "type": "faq",
           "settings": {
             "question": "Er [pris] mye å betale for en LED-maske?",
-            "answer": "Sammenlignet med klinikk er det faktisk det motsatte. Én LED-behandling hos hudterapeut koster typisk 800–1 500 kr. Med Skinora® Radiance Face betaler du én gang og kan bruke masken ubegrenset hjemme. Etter bare [behandlinger] behandlinger har produktet betalt seg selv – resten er ren gevinst. Du kan også dele opp betalingen med Klarna fra [klarna] kr/mnd."
+            "answer": "Sammenlignet med klinikk er det faktisk det motsatte. Én LED-behandling hos hudterapeut koster typisk 800–1 500 kr. Med Skinora® Radiance Face betaler du én gang og kan bruke masken ubegrenset hjemme. Etter bare [behandlinger] behandlinger har produktet betalt seg selv – resten er ren gevinst."
           }
         },
         "faq_1": {
@@ -800,7 +800,7 @@
         "button_text": "Start mine 30 dager",
         "product_url": "/products/skinora-radiance-face",
         "anchor_id": "kjop",
-        "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra [klarna] kr/mnd med Klarna</strong>"
+        "klarna_text": ""
       }
     },
     "sk_lp_cross_sell_N8N6MW": {
@@ -848,7 +848,7 @@
         "enabled": true,
         "product": "skinora-radiance-face",
         "price": "[pris]",
-        "subprice": "eller fra [klarna] kr/mnd med Klarna",
+        "subprice": "",
         "cta_label": "Prøv risikofritt →",
         "trigger_selector": ".lp-hero__actions",
         "hide_selector": ".lp-cta-final"

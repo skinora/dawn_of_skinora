@@ -73,7 +73,7 @@
         "cta_text": "Prøv risikofritt i 30 dager",
         "cta_url": "/products/skinora-clear",
         "price_display": "[pris]",
-        "klarna_text": "fra [klarna] kr/mnd med Klarna",
+        "klarna_text": "",
         "show_link": false,
         "link_text": "Se hvordan den brukes (60 sek) ↓",
         "link_url": "#slik-bruker-du"
@@ -584,7 +584,7 @@
         "all_reviews_text": "Les alle anmeldelser →",
         "product_url": "/products/skinora-clear",
         "midpage_cta_text": "Jeg vil ha roligere hud",
-        "midpage_klarna_text": "Fra [klarna] kr/mnd med Klarna"
+        "midpage_klarna_text": ""
       }
     },
     "trust_full": {
@@ -773,7 +773,7 @@
           "type": "faq",
           "settings": {
             "question": "Er [pris] mye å betale for LED-behandling?",
-            "answer": "Sammenlignet med klinikk er det faktisk det motsatte. Én LED-behandling hos hudterapeut koster typisk 800–1 500 kr. Med Skinora® Clear betaler du én gang og kan bruke den ubegrenset hjemme. Etter bare [behandlinger] behandlinger har produktet betalt seg selv – resten er ren gevinst. Du kan også dele opp betalingen med Klarna fra [klarna] kr/mnd."
+            "answer": "Sammenlignet med klinikk er det faktisk det motsatte. Én LED-behandling hos hudterapeut koster typisk 800–1 500 kr. Med Skinora® Clear betaler du én gang og kan bruke den ubegrenset hjemme. Etter bare [behandlinger] behandlinger har produktet betalt seg selv – resten er ren gevinst."
           }
         }
       },
@@ -831,7 +831,7 @@
         "button_text": "Start mine 30 dager",
         "product_url": "/products/skinora-clear",
         "anchor_id": "kjop",
-        "klarna_text": "Eller del opp betalingen – <strong style=\"color:#30273e;\">fra [klarna] kr/mnd med Klarna</strong>"
+        "klarna_text": ""
       }
     },
     "cross_sell": {
@@ -945,8 +945,8 @@
       "settings": {
         "enabled": true,
         "product": "skinora-clear",
-        "price": "Fra [klarna] kr/mnd med Klarna",
-        "subprice": "[pris] engangspris",
+        "price": "[pris]",
+        "subprice": "engangspris",
         "cta_label": "Prøv risikofritt →",
         "trigger_selector": ".lp-hero__actions",
         "hide_selector": ".lp-cta-final"

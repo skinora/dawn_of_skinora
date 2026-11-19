@@ -64,7 +64,6 @@
           {%- capture cg_price -%}{%- render 'sk-lp-pricing', product: cg_p, part: 'pris' -%}{%- endcapture -%}
           {%- capture cg_before -%}{%- render 'sk-lp-pricing', product: cg_p, part: 'for-pris' -%}{%- endcapture -%}
           {%- capture cg_save -%}{%- render 'sk-lp-pricing', product: cg_p, part: 'spar' -%}{%- endcapture -%}
-          {%- capture cg_klarna -%}{%- render 'sk-lp-pricing', product: cg_p, part: 'klarna' -%}{%- endcapture -%}
           <li class="sk-cg__card" {{ cg_note.shopify_attributes }}>
             {%- if cg_p.featured_image -%}
               <a class="sk-cg__card-media" href="{{ cg_url }}" tabindex="-1" aria-hidden="true">
@@ -92,9 +91,6 @@
                 <span>{{ cg_price }}</span>
                 {%- if cg_save != blank -%}<span class="sk-cg__save">Spar {{ cg_save }}</span>{%- endif -%}
               </p>
-              {%- if cg_klarna != blank -%}
-                <p class="sk-cg__klarna">eller {{ cg_klarna }} kr/mnd med Klarna</p>
-              {%- endif -%}
               <a class="btn btn--primary" href="{{ cg_url }}">{{ cg_s.card_button }}</a>
             </div>
           </li>

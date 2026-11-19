@@ -34,7 +34,7 @@
         <div class="lp-faq__list" data-lp-faq>
           {%- for block in section.blocks -%}
             {%- comment -%}
-              Spørsmål og svar kan inneholde [pris], [klarna] og [behandlinger].
+              Spørsmål og svar kan inneholde [pris] og [behandlinger]. [klarna] (månedsbeløp) skal ikke brukes uten kredittopplysninger.
               De byttes ut fra produktet i seksjonsinnstillingen (sk-lp-pricing),
               både her og i FAQ-schemaet under, så Google og kunden alltid ser
               samme tall. Blir spørsmål eller svar tomt etter utbytting (produkt
@@ -141,7 +141,7 @@
       "type": "product",
       "id": "product",
       "label": "Produkt (for priser i svarene)",
-      "info": "Spørsmål og svar kan bruke [pris], [klarna] og [behandlinger] — tallene hentes fra dette produktet. Uten produkt skjules spørsmål som inneholder plassholdere."
+      "info": "Spørsmål og svar kan bruke [pris] og [behandlinger] — tallene hentes fra dette produktet. Bruk ikke [klarna] (månedsbeløp for delbetaling) uten kredittopplysninger, jf. Klarnas retningslinjer for Norge. Uten produkt skjules spørsmål som inneholder plassholdere."
     }
   ],
   "blocks": [
