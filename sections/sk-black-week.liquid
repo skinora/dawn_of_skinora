@@ -253,15 +253,13 @@
               <p class="sk-bw__card-badge">{{ bw_badge | escape }}</p>
             {%- endif -%}
             <p class="sk-bw__card-qty">{{ bw_qty_label }}</p>
-            <p class="sk-bw__card-pct">
-              {%- if bw_fp and bw_card_pct > 0 -%}
-                Spar opptil {{ bw_card_pct }}&nbsp;%
-              {%- elsif bw_pct > 0 -%}
-                Spar {{ bw_pct }}&nbsp;%
-              {%- else -%}
-                {{ section.settings.no_discount_label }}
-              {%- endif -%}
-            </p>
+            {%- if bw_fp and bw_card_pct > 0 -%}
+              <p class="sk-bw__card-pct">Spar opptil {{ bw_card_pct }}&nbsp;%</p>
+            {%- elsif bw_pct > 0 -%}
+              <p class="sk-bw__card-pct">Spar {{ bw_pct }}&nbsp;%</p>
+            {%- elsif section.settings.no_discount_label != blank -%}
+              <p class="sk-bw__card-pct">{{ section.settings.no_discount_label }}</p>
+            {%- endif -%}
             {%- if bw_name != blank -%}
               <h3 class="sk-bw__card-name">{{ bw_name | escape }}</h3>
             {%- endif -%}
@@ -467,7 +465,7 @@
       "type": "text",
       "id": "no_discount_label",
       "label": "Kort 1 – i stedet for prosent",
-      "default": "Vanlig pris"
+      "info": "Vises bare når kort 1 ikke har noen rabatt å vise. Tomt felt = ingen linje."
     },
     {
       "type": "text",

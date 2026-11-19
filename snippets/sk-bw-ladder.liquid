@@ -21,11 +21,29 @@
 {%- capture bwc_live -%}{%- render 'sk-bw-live' -%}{%- endcapture -%}
 {%- if bwc_live contains '1' and cart.item_count > 0 -%}
   {%- liquid
+    comment
+      bwc_pct1_max / _min: rabatten på én maske (førpris mot pris) for
+      maskene i kurven. Trinn 1 viser den i stedet for «Vanlig pris». Har
+      maskene ulik rabatt, står det «opptil». Uten førpris vises ingenting.
+    endcomment
     assign bwc_count = 0
+    assign bwc_pct1_max = 0
+    assign bwc_pct1_min = 100
     for bwc_item in cart.items
       for bwc_p in settings.bw_produkter
         if bwc_p.id == bwc_item.product_id
           assign bwc_count = bwc_count | plus: bwc_item.quantity
+          assign bwc_cmp = bwc_item.variant.compare_at_price | default: 0
+          assign bwc_pct1 = 0
+          if bwc_cmp > bwc_item.variant.price
+            assign bwc_pct1 = bwc_cmp | minus: bwc_item.variant.price | times: 100.0 | divided_by: bwc_cmp | round
+          endif
+          if bwc_pct1 > bwc_pct1_max
+            assign bwc_pct1_max = bwc_pct1
+          endif
+          if bwc_pct1 < bwc_pct1_min
+            assign bwc_pct1_min = bwc_pct1
+          endif
           break
         endif
       endfor
@@ -81,7 +99,9 @@
         <li class="sk-bw-ladder__step{% if bwc_step >= 1 %} is-reached{% endif %}">
           <span class="sk-bw-ladder__dot" aria-hidden="true"></span>
           <span class="sk-bw-ladder__label">1 maske</span>
-          <span class="sk-bw-ladder__value">Vanlig pris</span>
+          {%- if bwc_pct1_max > 0 -%}
+            <span class="sk-bw-ladder__value">{% if bwc_pct1_min < bwc_pct1_max %}opptil {% endif %}{{ bwc_pct1_max }} %</span>
+          {%- endif -%}
         </li>
         <li class="sk-bw-ladder__step{% if bwc_step >= 2 %} is-reached{% endif %}">
           <span class="sk-bw-ladder__dot" aria-hidden="true"></span>

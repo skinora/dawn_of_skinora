@@ -52,7 +52,24 @@
         Week → «Produktsiden». [p2] og [p3] byttes med prosentene som
         rabattene i Shopify bruker. Pris per maske står under, regnet ut.
       endcomment
+      comment
+        [p1] er rabatten på én maske: forskjellen mellom «Sammenlign med» og
+        prisen på produktet, i prosent. Uten førpris finnes ingen rabatt å
+        vise, og da skrives ikke linjen ut i det hele tatt.
+      endcomment
+      assign bwp_cmp = product.selected_or_first_available_variant.compare_at_price | default: 0
+      assign bwp_p1 = 0
+      if bwp_cmp > bwp_price
+        assign bwp_p1 = bwp_cmp | minus: bwp_price | times: 100.0 | divided_by: bwp_cmp | round
+      endif
       assign bwp_t1 = settings.bw_pdp_verdi_1 | replace: '[p2]', settings.bw_prosent_2 | replace: '[p3]', settings.bw_prosent_3
+      if bwp_t1 contains '[p1]'
+        if bwp_p1 > 0
+          assign bwp_t1 = bwp_t1 | replace: '[p1]', bwp_p1
+        else
+          assign bwp_t1 = ''
+        endif
+      endif
       assign bwp_t2 = settings.bw_pdp_verdi_2 | replace: '[p2]', settings.bw_prosent_2 | replace: '[p3]', settings.bw_prosent_3
       assign bwp_t3 = settings.bw_pdp_verdi_3 | replace: '[p2]', settings.bw_prosent_2 | replace: '[p3]', settings.bw_prosent_3
     -%}
@@ -60,7 +77,9 @@
     <span class="sk-bw-pdp">
       <span class="sk-bw-pdp__tier">
         <span class="sk-bw-pdp__qty">1 maske</span>
-        <span class="sk-bw-pdp__big">{{ bwp_t1 | escape }}</span>
+        {%- if bwp_t1 != blank -%}
+          <span class="sk-bw-pdp__big">{{ bwp_t1 | escape }}</span>
+        {%- endif -%}
         <span class="sk-bw-pdp__unit">
           {%- render 'sk-kr', kroner: bwp_u1 -%}
           {%- if before != blank %} <s class="sk-bw-pdp__was">{{ before }}</s>{% endif -%}

@@ -1708,13 +1708,13 @@
       },
       {
         "type": "paragraph",
-        "content": "Hovedtallet i de tre trinnene i Black Week-boksen på produktsidene. [p2] og [p3] byttes med prosentene for 2 masker og 3 eller flere. Pris per maske under regnes ut av seg selv."
+        "content": "Hovedtallet i de tre trinnene i Black Week-boksen på produktsidene. [p1] byttes med rabatten på én maske (førpris mot pris på produktet), [p2] og [p3] med prosentene for 2 masker og 3 eller flere. Pris per maske under regnes ut av seg selv."
       },
       {
         "type": "text",
         "id": "bw_pdp_verdi_1",
         "label": "1 maske – hovedtall",
-        "default": "Vanlig pris"
+        "default": "Spar [p1] %"
       },
       {
         "type": "text",
