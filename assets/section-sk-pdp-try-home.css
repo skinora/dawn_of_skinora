@@ -103,7 +103,29 @@
     min-width: 260px;
   }
 
+  /* Med bilde: bilde | tekst, og pris + knapp under teksten. Tre kolonner
+     ble for trangt under 1200px (overskriften brakk midt i ord). */
+  .sk-pdp-try-home .sk-pdp-try-home__box--has-media {
+    grid-template-columns: 160px minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-5) var(--space-6);
+  }
+
+  .sk-pdp-try-home .sk-pdp-try-home__box--has-media .sk-pdp-try-home__buy {
+    grid-column: 2;
+    max-width: 320px;
+  }
+}
+
+@media (min-width: 1200px) {
   .sk-pdp-try-home .sk-pdp-try-home__box--has-media {
     grid-template-columns: 200px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-7);
+  }
+
+  .sk-pdp-try-home .sk-pdp-try-home__box--has-media .sk-pdp-try-home__buy {
+    grid-column: auto;
+    max-width: none;
   }
 }
