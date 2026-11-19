@@ -318,7 +318,9 @@
         "heading": "Hvorfor tre bølgelengder",
         "intro": "<p>De fleste LED-masker for anti-aging bruker rødt og nær-infrarødt lys. Radiance Face har tre bølgelengder, som virker på hvert sitt nivå i huden:</p>",
         "numbered": false,
-        "outro": "<p>Med tre bølgelengder får flere lag av huden lys i samme behandling. Det er derfor masken passer for rynker og slapp hud, ikke bare for glød.</p>"
+        "outro": "<p>Med tre bølgelengder får flere lag av huden lys i samme behandling. Det er derfor masken passer for rynker og slapp hud, ikke bare for glød.</p>",
+        "product_image_no": 8,
+        "image_alt": ""
       }
     },
     "sk_pdp_silikon": {
@@ -351,7 +353,7 @@
       "settings": {
         "heading": "Matt silikon som ligger tett inntil",
         "text": "<p>Masken er laget i myk, matt silikon. Den former seg etter ansiktet og ligger tett inntil huden, også rundt nesen, munnen og haken. Lyset treffer huden direkte, uten luft imellom. Med 285 g er den lett nok til at du glemmer at du har den på. Øyebeskyttelse i silikon følger med.</p>",
-        "product_image_no": 0,
+        "product_image_no": 9,
         "image_alt": "",
         "image_side": "left"
       }
@@ -361,7 +363,9 @@
       "settings": {
         "heading": "En rødlysmaske du kan prøve hjemme",
         "text": "<p>Du får 30 dager – pengene for masken tilbake. Bruk masken som vanlig i hele perioden. Er du ikke fornøyd, sender du den tilbake. Slik kan du se hvordan din egen hud svarer på LED-masken før du bestemmer deg.</p>",
-        "button_label": "Velg og legg i handlekurv"
+        "button_label": "Velg og legg i handlekurv",
+        "product_image_no": 3,
+        "image_alt": ""
       }
     }
   },
