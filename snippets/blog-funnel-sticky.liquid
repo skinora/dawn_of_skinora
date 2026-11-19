@@ -4,8 +4,8 @@
   Parametre:
     article : artikkel-objektet (påkrevd)
 
-  Vises av assets/blog-funnel.js når kompaktkortet har scrollet ut av syne
-  oppover, og skjules igjen når fullkortet eller footeren kommer i
+  Vises av assets/blog-funnel.js når leseren har scrollet ca. 25 % av siden
+  og kompaktkortet ikke står på skjermen, og skjules igjen når fullkortet eller footeren kommer i
   synsfeltet (IntersectionObserver). Produktvarianten lyder
   «Se Radiance Face – 3 690 kr».
 
@@ -30,13 +30,19 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign bfs_type = article.metafields.custom.funnel_type.value | downcase | strip
-  assign bfs_product = article.metafields.custom.funnel_produkt.value
-
-  unless bfs_type == 'produkt' or bfs_type == 'quiz' or bfs_type == 'epost'
-    assign bfs_type = 'quiz'
-  endunless
-  if bfs_type == 'produkt' and bfs_product == blank
+  comment
+    Samme valg som kortene: snippets/blog-funnel-pick.liquid.
+  endcomment
+  capture bfs_pick
+    render 'blog-funnel-pick', article: article
+  endcapture
+  assign bfs_pick = bfs_pick | strip | split: '|'
+  assign bfs_type = bfs_pick[0]
+  assign bfs_product = blank
+  if bfs_pick[1] != blank
+    assign bfs_product = all_products[bfs_pick[1]]
+  endif
+  if bfs_type == 'produkt' and bfs_product.title == blank
     assign bfs_type = 'quiz'
   endif
 

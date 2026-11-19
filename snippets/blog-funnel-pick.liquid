@@ -1,0 +1,56 @@
+{%- comment -%}
+  blog-funnel-pick — hva CTA-kortene i en bloggartikkel skal vise
+  ----------------------------------------------------------------------------
+  Parametre:
+    article : artikkel-objektet (påkrevd)
+
+  Skriver ut «type|produkt-handle|kilde», f.eks. «produkt|skinora-clear|auto».
+  Leses av blog-funnel-card og blog-funnel-sticky, så kortene og den klistrede
+  linjen alltid viser det samme. En snippet kan ikke returnere et objekt,
+  derfor et håndtak: mottakeren slår opp all_products[handle].
+
+  REKKEFØLGE
+    1. custom.cta_product (produktreferanse) er satt  → det produktet.
+    2. custom.funnel_type er «quiz» eller «epost»     → uendret, intet produkt.
+       Det er et bevisst valg per artikkel (f.eks. graviditetsartikkelen).
+    3. custom.funnel_produkt er satt                  → det produktet.
+    4. Ellers velges produktet ut fra taggene: «problemhud», «akne» eller
+       «problem-skin» (taggen artiklene faktisk bruker i dag) gir Skinora
+       Clear, alt annet gir Skinora Radiance Face.
+    Finnes ikke produktet i butikken, faller kortet tilbake til quiz.
+
+  kilde: «valgt» når produktet kommer fra et metafelt, «auto» når det er
+  valgt ut fra taggene. Kortet bruker det til å velge en sann kontekstlinje.
+{%- endcomment -%}
+{%- liquid
+  assign bfp_type = article.metafields.custom.funnel_type.value | downcase | strip
+  assign bfp_cta = article.metafields.custom.cta_product.value
+  assign bfp_funnel = article.metafields.custom.funnel_produkt.value
+  assign bfp_handle = ''
+  assign bfp_kilde = 'valgt'
+
+  if bfp_cta != blank
+    assign bfp_type = 'produkt'
+    assign bfp_handle = bfp_cta.handle
+  elsif bfp_type == 'quiz' or bfp_type == 'epost'
+    assign bfp_handle = ''
+  elsif bfp_funnel != blank
+    assign bfp_type = 'produkt'
+    assign bfp_handle = bfp_funnel.handle
+  else
+    assign bfp_type = 'produkt'
+    assign bfp_kilde = 'auto'
+    assign bfp_handle = 'skinora-radiance-face'
+    for bfp_tag in article.tags
+      assign bfp_t = bfp_tag | downcase | strip
+      if bfp_t contains 'problemhud' or bfp_t contains 'akne' or bfp_t == 'problem-skin'
+        assign bfp_handle = 'skinora-clear'
+      endif
+    endfor
+    if all_products[bfp_handle].title == blank
+      assign bfp_type = 'quiz'
+      assign bfp_handle = ''
+    endif
+  endif
+-%}
+{{- bfp_type }}|{{ bfp_handle }}|{{ bfp_kilde -}}

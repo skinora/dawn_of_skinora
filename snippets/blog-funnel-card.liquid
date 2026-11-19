@@ -7,14 +7,19 @@
     klaviyo_form_id  : ID-en til Klaviyo embedded form (fra seksjonsinnstilling)
 
   Metafelt som leses:
+    article.metafields.custom.cta_product    – produktreferanse (vinner over alt)
     article.metafields.custom.funnel_type    – 'produkt' | 'quiz' | 'epost'
     article.metafields.custom.funnel_produkt – produktreferanse
     article.metafields.custom.funnel_hook    – kontekstlinje (maks 90 tegn)
     product.metafields.custom.kort_nytte     – nyttebasert kortbeskrivelse
 
+  HVA KORTET VISER avgjøres i snippets/blog-funnel-pick.liquid (delt med
+  den klistrede linjen). Kort sagt: uten metafelt vises et produktkort, der
+  produktet velges ut fra taggene (problemhud/akne → Skinora Clear, ellers
+  Skinora Radiance Face). «quiz» og «epost» i funnel_type respekteres.
+
   FALLBACK-KJEDE (artikler skal ALDRI stå uten CTA):
-    tomt / ukjent funnel_type      → quiz
-    'produkt' uten produktreferanse → quiz
+    produktet finnes ikke i butikken → quiz
     'epost' uten klaviyo_form_id    → quiz
     'epost' i kompakt-plassering    → quiz  (kun ett skjema per side)
 
@@ -31,16 +36,20 @@
 
 {%- liquid
   assign bfc_variant = variant | default: 'full'
-  assign bfc_type = article.metafields.custom.funnel_type.value | downcase | strip
+  capture bfc_pick
+    render 'blog-funnel-pick', article: article
+  endcapture
+  assign bfc_pick = bfc_pick | strip | split: '|'
+  assign bfc_type = bfc_pick[0]
+  assign bfc_kilde = bfc_pick[2]
+  assign bfc_product = blank
+  if bfc_pick[1] != blank
+    assign bfc_product = all_products[bfc_pick[1]]
+  endif
   assign bfc_hook = article.metafields.custom.funnel_hook.value | strip
-  assign bfc_product = article.metafields.custom.funnel_produkt.value
   assign bfc_form_id = klaviyo_form_id | strip
 
-  unless bfc_type == 'produkt' or bfc_type == 'quiz' or bfc_type == 'epost'
-    assign bfc_type = 'quiz'
-  endunless
-
-  if bfc_type == 'produkt' and bfc_product == blank
+  if bfc_type == 'produkt' and bfc_product.title == blank
     assign bfc_type = 'quiz'
   endif
 
@@ -79,8 +88,21 @@
           (snippets/blog-funnel-sticky.liquid).
         endcomment
         assign bfc_short = bfc_product.title | split: ' – ' | first | split: ' - ' | first | strip
+        comment
+          Kontekstlinjen. «Brukes i rutinen i denne artikkelen» er bare sann
+          når noen har valgt produktet for artikkelen (metafelt). Er produktet
+          valgt automatisk ut fra taggene, sier linjen i stedet hva masken er.
+        endcomment
         if bfc_hook == blank
-          assign bfc_hook = 'Brukes i rutinen i denne artikkelen'
+          if bfc_kilde == 'auto'
+            if bfc_product.handle == 'skinora-clear'
+              assign bfc_hook = 'LED-maske for problemhud'
+            else
+              assign bfc_hook = 'LED-maske for anti-aging'
+            endif
+          else
+            assign bfc_hook = 'Brukes i rutinen i denne artikkelen'
+          endif
         endif
 
         capture bfc_pris
@@ -196,9 +218,11 @@
             data-blog-cta="{{ article.handle }}"
             data-cta-variant="kompakt"
             data-cta-type="produkt"
+            aria-label="Se masken: {{ bfc_short | escape }}"
           >
-            Se {{ bfc_short | escape }}
+            Se masken
           </a>
+          <p class="blog-funnel-card__trust">30 dager – pengene for masken tilbake</p>
         </div>
 
       {%- else -%}
@@ -229,8 +253,9 @@
                 data-blog-cta="{{ article.handle }}"
                 data-cta-variant="full"
                 data-cta-type="produkt"
+                aria-label="Se masken: {{ bfc_short | escape }}"
               >
-                Se {{ bfc_short | escape }}
+                Se masken
               </a>
               <a
                 href="{{ bfc_quiz_url }}"
@@ -245,7 +270,7 @@
               </a>
             </div>
             <p class="blog-funnel-card__trust">
-              30 dagers fornøydgaranti · Del opp betalingen med Klarna
+              30 dager – pengene for masken tilbake · Del opp betalingen med Klarna
             </p>
           </div>
         </div>

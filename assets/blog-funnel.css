@@ -187,6 +187,12 @@
   min-width: 0;
 }
 
+/* Garantilinjen står ved siden av knappen (under den på mobil, der knappen
+   er i full bredde). Luften kommer fra gap i __actions. */
+.blog-funnel-card--kompakt .blog-funnel-card__trust {
+  margin: 0;
+}
+
 /* Mobil: knappen i full bredde under både bilde og tekst. */
 @media (max-width: 599px) {
   .blog-funnel-card--kompakt {
@@ -424,7 +430,7 @@
 /* ---------------------------------------------------------------------------
    MOBIL STICKY-BAR (≤ 749 px)
    position: fixed → kan per definisjon ikke bidra til CLS.
-   Skjult som utgangspunkt; vises av blog-funnel.js etter 35 % scroll.
+   Skjult som utgangspunkt; vises av blog-funnel.js etter 25 % scroll.
 
    z-index 60 er bevisst lavt: Klaviyo-teaseren ligger på 90000 og Shopifys
    personvernbanner på 2147483001 (sk-base.css). Begge skal ligge OVER baren.

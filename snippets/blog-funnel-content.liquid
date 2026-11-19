@@ -16,9 +16,12 @@
               tegn faktisk brødtekst, uansett hvor i artikkelen det står.
               Metafeltet custom.funnel_kort_tidlig = true velger denne
               siste regelen også når artikkelen har innledning.
-    full   : rett før H2-en som inneholder «Kilder».
-              Fallback 1: før «Om denne artikkelen».
-              Fallback 2: etter alt innholdet.
+    full   : rett før FAQ-overskriften i brødteksten (H2 som inneholder
+              «spørsmål» eller «FAQ»).
+              Fallback 1: før H2-en som inneholder «Kilder».
+              Fallback 2: før «Om denne artikkelen».
+              Fallback 3: etter alt innholdet. Der står kortet også rett
+              før metafelt-FAQ-en (sk-article-faq), som rendres etterpå.
 
   Hvorfor «første vesentlige avsnitt» og ikke «første </p>»:
   alle artiklene åpner brødteksten med en meta-linje —
@@ -188,9 +191,16 @@
 
   assign bfk_full_idx = 0
   assign bfk_om_idx = 0
+  assign bfk_faq_idx = 0
   for bfk_part in bfk_parts
     unless forloop.first
       assign bfk_heading = bfk_part | split: '</h2>' | first
+      assign bfk_heading_lc = bfk_heading | downcase
+      if bfk_faq_idx == 0
+        if bfk_heading_lc contains 'spørsmål' or bfk_heading_lc contains 'faq'
+          assign bfk_faq_idx = forloop.index
+        endif
+      endif
       if bfk_full_idx == 0 and bfk_heading contains 'Kilder'
         assign bfk_full_idx = forloop.index
       endif
@@ -200,6 +210,9 @@
     endunless
   endfor
 
+  if bfk_faq_idx != 0
+    assign bfk_full_idx = bfk_faq_idx
+  endif
   if bfk_full_idx == 0
     assign bfk_full_idx = bfk_om_idx
   endif
