@@ -16,6 +16,14 @@
     alle vertsnavn som inneholder ordet. Artikkelinnholdet i Shopify røres
     ikke, så regelen overlever synkingen fra det andre systemet.
 
+  - Internlenker (20.11.2026): forsiden skal eie søket «led maske», så
+    ankerteksten «LED-maske» peker til forsiden, og lenker til produktsiden
+    har produktnavnet som ankertekst. Hver regel under bytter én eksakt
+    setning i ett innlegg (best i test, LED-guiden, LED-fargene, rynker rundt
+    munnen). Endres setningen i kildesystemet, slutter regelen å treffe uten
+    feil: da står teksten som i kilden. Gjøres her, ikke i artikkelen, av
+    samme grunn som over: innholdet synkes inn og ville blitt overskrevet.
+
   Bruk: {%- render 'sk-article-body', html: article.content -%}
   Kan fanges med capture når innholdet skal bearbeides videre.
 {%- endcomment -%}
@@ -30,6 +38,15 @@
   endif
 
   assign sab_html = sab_html | replace: '<h1', '<h2' | replace: '</h1>', '</h2>'
+
+  assign sab_html = sab_html | replace: 'Skinora Radiance Face, en myk <a href="https://www.skinora.no/products/skinora-radiance-face">LED-maske</a> i silikon', '<a href="https://www.skinora.no/products/skinora-radiance-face">Skinora Radiance Face</a>, en myk LED-maske i silikon'
+  assign sab_html = sab_html | replace: 'i en myk <a href="/products/skinora-radiance-face">LED-maske for ansiktet</a> i silikon', 'i en myk LED-maske for ansiktet i silikon'
+  assign sab_html = sab_html | replace: 'En rødlysmaske er en LED-maske med rødt lys', 'En rødlysmaske er en <a href="https://www.skinora.no/">LED-maske</a> med rødt lys'
+  assign sab_html = sab_html | replace: 'En LED-maske (også kalt lysmaske', 'En <a href="https://www.skinora.no/">LED-maske</a> (også kalt lysmaske'
+  assign sab_html = sab_html | replace: 'En LED-maske hjemme har lavere intensitet', 'En <a href="https://www.skinora.no/">LED-maske</a> hjemme har lavere intensitet'
+  assign sab_html = sab_html | replace: 'velge en LED-maske <em>primært</em>', 'velge en <a href="https://www.skinora.no/">LED-maske</a> <em>primært</em>'
+  assign sab_html = sab_html | replace: 'lys fra en <a href="https://www.skinora.no/products/skinora-radiance-face">LED-maske</a> kan bidra', 'lys fra en <a href="https://www.skinora.no/">LED-maske</a> kan bidra'
+  assign sab_html = sab_html | replace: 'Skinora Radiance Face er en <a href="https://www.skinora.no/products/skinora-radiance-face">LED-maske</a> i myk, matt silikon', '<a href="https://www.skinora.no/products/skinora-radiance-face">Skinora Radiance Face</a> er en LED-maske i myk, matt silikon'
 
   assign sab_blocked = 'alvaskin,alva-skin,shark,iviskin,omnilux,currentbody' | split: ','
   if sab_html contains '<a '
