@@ -61,6 +61,12 @@
       assign ann_bw_months = 'januar,februar,mars,april,mai,juni,juli,august,september,oktober,november,desember' | split: ','
       assign ann_bw_end_m = ann_bw_end_iso | date: '%-m' | minus: 1
       assign ann_bw_until = ann_bw_end_iso | date: '%-d' | append: '. ' | append: ann_bw_months[ann_bw_end_m]
+      # Nevner teksten allerede måneden («… hele november»), sier «til 30.
+      # november» det samme én gang til. Da vises bare teksten.
+      assign ann_bw_text_lc = ann_bw_text | downcase
+      if ann_bw_text_lc contains ann_bw_months[ann_bw_end_m]
+        assign ann_bw_until = ''
+      endif
     endif
     assign ann_count = 1
   endif

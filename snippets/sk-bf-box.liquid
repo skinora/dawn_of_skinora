@@ -86,7 +86,9 @@
         </span>
       {%- endif -%}
     {%- endif -%}
-    {%- if bf_date != blank -%}
+    {%- if bf_bw != blank -%}
+      <span class="sk-bf-box__deadline">Black Friday-prisene gjelder <strong>hele november</strong></span>
+    {%- elsif bf_date != blank -%}
       <span class="sk-bf-box__deadline">Tilbudet varer til <strong>{{ bf_date }}</strong></span>
     {%- endif -%}
   </div>

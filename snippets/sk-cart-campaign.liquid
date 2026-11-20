@@ -115,7 +115,12 @@
 
     {%- when 'deadline' -%}
       {%- capture ck_date -%}{%- render 'sk-campaign-date' -%}{%- endcapture -%}
-      {%- if ck_date != blank -%}
+      {%- capture ck_bw_live -%}{%- render 'sk-bw-live' -%}{%- endcapture -%}
+      {%- if ck_bw_live contains '1' -%}
+        <p class="sk-cart-campaign__deadline">
+          Black Friday-prisene gjelder <strong>hele november</strong>
+        </p>
+      {%- elsif ck_date != blank -%}
         <p class="sk-cart-campaign__deadline">
           {{ 'sections.cart.campaign_cart_until_html' | t: date: ck_date }}
         </p>
