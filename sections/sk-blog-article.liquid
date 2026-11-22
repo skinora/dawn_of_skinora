@@ -260,6 +260,8 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+    {%- comment -%} @id lar JSON-LD i artikkelteksten (f.eks. citation) peke paa samme node. {%- endcomment -%}
+    "@id": "{{ request.origin }}{{ article.url }}#article",
     "headline": {{ article.title | json }},
     {%- comment -%}
       image utelates helt når artikkelen ikke har hovedbilde. «image: null»
