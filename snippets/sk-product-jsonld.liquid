@@ -90,12 +90,15 @@
     }
     {%- endif -%}
     {%- if sk_specs -%}
+    {%- comment -%} Radiance Neck: ingen hasCertification foer FDA-paastanden er verifisert for halsmasken. {%- endcomment -%}
+    {%- unless product.handle == 'skinora-radiance-neck' -%}
     ,"hasCertification": {
       "@type": "Certification",
       "name": "FDA 510(k) Clearance",
       "certificationIdentification": "K233114",
       "issuedBy": { "@type": "Organization", "name": "U.S. Food and Drug Administration" }
     }
+    {%- endunless -%}
     ,"additionalProperty": [
       {
         "@type": "PropertyValue",
