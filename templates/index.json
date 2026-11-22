@@ -17,7 +17,7 @@
         "sk_banner_img_mobile": "shopify://shop_images/skinora-black-week-hero-mobil-2026.jpg",
         "sk_banner_dark": true,
         "sk_banner_title": "Klinikkens LED-teknologi. Hjemme hos deg.",
-        "sk_banner_description": "Friskere, fastere hud – på 10 minutter om dagen.",
+        "sk_banner_description": "Friskere, fastere hud – på 10–15 minutter om dagen.",
         "sk_banner_button_link": "/products/skinora-radiance-face",
         "sk_banner_button_text": "",
         "sk_banner_cta_position_mobile": "top"
@@ -400,7 +400,7 @@
           "type": "faq_item",
           "settings": {
             "question": "Hvor ofte og hvor lenge bør jeg bruke led-masken for å se synlige resultater?",
-            "answer": "<p>Vi anbefaler å bruke masken 3-5 ganger per uke i 10-20 minutter per gang. Mange opplever at huden får mer glød etter bare noen få behandlinger, mens reduksjon av fine linjer og jevnere hudtone vanligvis blir synlig etter 4-6 uker med regelmessig bruk.</p>"
+            "answer": "<p>Vi anbefaler å bruke masken 3-5 ganger per uke i 10–15 minutter per gang. Mange opplever at huden får mer glød etter bare noen få behandlinger, mens reduksjon av fine linjer og jevnere hudtone vanligvis blir synlig etter 4-6 uker med regelmessig bruk.</p>"
           }
         },
         "faq_item_Epi3pT": {

@@ -329,7 +329,7 @@
         "w_3": {
           "type": "card",
           "settings": {
-            "title": "10 minutter – og slapp av",
+            "title": "10–15 minutter – og slapp av",
             "text": "<p>Ingen komplisert rutine. Sett på masken, trykk på – og se favorittserien din</p>"
           }
         },
@@ -367,7 +367,7 @@
         "s_2": {
           "type": "step",
           "settings": {
-            "title": "Bruk masken i 10 minutter",
+            "title": "Bruk masken i 10–15 minutter",
             "text": "Sett på, slå på. Slapp av mens lyset jobber."
           }
         },
@@ -431,7 +431,7 @@
           "type": "spec",
           "settings": {
             "label": "Behandlingstid",
-            "value": "10 minutter per økt"
+            "value": "10–15 minutter per økt"
           }
         },
         "spec_4": {
@@ -629,7 +629,7 @@
           "type": "faq",
           "settings": {
             "question": "Hvor ofte bør jeg bruke masken?",
-            "answer": "Vi anbefaler 3–5 økter i uken, à 10 minutter. Du kan bruke den morgen eller kveld – det som passer best for deg."
+            "answer": "Vi anbefaler 3–5 økter i uken, à 10–15 minutter. Du kan bruke den morgen eller kveld – det som passer best for deg."
           }
         },
         "faq_xgRBbg": {
@@ -678,7 +678,7 @@
           "type": "faq",
           "settings": {
             "question": "Hvor ofte må jeg bruke den for at det skal være verdt det?",
-            "answer": "Vi anbefaler 3–5 ganger i uken, 10 minutter per økt. Det tilsvarer én sesong med favorittserien din i uken. Mange merker de første resultatene etter 2–4 uker med jevn bruk. Og fordi du betaler én gang og bruker den ubegrenset, blir prisen per behandling lavere jo mer du bruker den."
+            "answer": "Vi anbefaler 3–5 ganger i uken, 10–15 minutter per økt. Det tilsvarer én sesong med favorittserien din i uken. Mange merker de første resultatene etter 2–4 uker med jevn bruk. Og fordi du betaler én gang og bruker den ubegrenset, blir prisen per behandling lavere jo mer du bruker den."
           }
         },
         "faq_noresult": {

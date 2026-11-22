@@ -73,7 +73,7 @@
         "step_2": {
           "type": "step",
           "settings": {
-            "text": "Ta på masken og start behandlingen – 10–15 minutter (Clear: 10 minutter)."
+            "text": "Ta på masken og start behandlingen – 10–15 minutter."
           }
         },
         "step_3": {
@@ -100,7 +100,7 @@
           "type": "faq",
           "settings": {
             "question": "Hvor ofte skal jeg bruke masken?",
-            "answer": "Bruk masken 10–15 minutter, 3–5 ganger i uken. Clear brukes i 10 minutter. De fleste får best resultat med en jevn rutine over 6–8 uker."
+            "answer": "Bruk masken 10–15 minutter, 3–5 ganger i uken. De fleste får best resultat med en jevn rutine over 6–8 uker."
           }
         },
         "faq_4": {

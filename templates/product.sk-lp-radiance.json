@@ -63,7 +63,7 @@
         "hero_video_url": "",
         "eyebrow": "Skinora Radiance Face",
         "title": "LED-masken du bruker i sofaen",
-        "text_line_1": "Rødt og nær-infrarødt lys fra hver diode · 10 minutter om kvelden",
+        "text_line_1": "Rødt og nær-infrarødt lys fra hver diode · 10–15 minutter om kvelden",
         "rating_source": "store",
         "rating_show_count": true,
         "rating_anchor": "#reviews",
@@ -136,7 +136,7 @@
         "step_3cQ6Ka": {
           "type": "step",
           "settings": {
-            "title": "10 minutter",
+            "title": "10–15 minutter",
             "text": "Masken slår seg av automatisk."
           }
         }
@@ -157,7 +157,7 @@
         "unmute_label": "Se med lyd",
         "show_controls": false,
         "eyebrow": "SLIK BRUKES DEN",
-        "heading": "10 minutter. Sofaen. Ferdig.",
+        "heading": "10–15 minutter. Sofaen. Ferdig.",
         "text": "<p>Ta på masken, velg program og len deg tilbake. Den slår seg av selv. Ingen gel, ingen oppvarming – bare en rolig pause i hverdagen.</p>",
         "button_label": "Prøv hjemme i 30 dager",
         "button_link": "#kjop",
@@ -488,7 +488,7 @@
           "type": "spec",
           "settings": {
             "label": "Behandlingstid",
-            "value": "10 minutter per økt"
+            "value": "10–15 minutter per økt"
           }
         },
         "spec_4": {
@@ -686,7 +686,7 @@
           "type": "faq",
           "settings": {
             "question": "Hvor ofte bør jeg bruke masken?",
-            "answer": "Vi anbefaler 3–5 økter i uken, à 10 minutter. Du kan bruke den morgen eller kveld – det som passer best for deg."
+            "answer": "Vi anbefaler 3–5 økter i uken, à 10–15 minutter. Du kan bruke den morgen eller kveld – det som passer best for deg."
           }
         },
         "faq_xgRBbg": {
@@ -735,7 +735,7 @@
           "type": "faq",
           "settings": {
             "question": "Hvor ofte må jeg bruke den for at det skal være verdt det?",
-            "answer": "Vi anbefaler 3–5 ganger i uken, 10 minutter per økt. Det er omtrent like lenge som én episode av en serie i uken. Mange merker de første resultatene etter 2–4 uker med jevn bruk. Og fordi du betaler én gang og bruker den ubegrenset, blir prisen per behandling lavere jo mer du bruker den."
+            "answer": "Vi anbefaler 3–5 ganger i uken, 10–15 minutter per økt. Det er omtrent like lenge som én episode av en serie i uken. Mange merker de første resultatene etter 2–4 uker med jevn bruk. Og fordi du betaler én gang og bruker den ubegrenset, blir prisen per behandling lavere jo mer du bruker den."
           }
         },
         "faq_noresult": {

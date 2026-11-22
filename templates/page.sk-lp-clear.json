@@ -68,7 +68,7 @@
         "hero_video_url": "",
         "eyebrow": "Skinora® Clear",
         "title": "Klarere hud — uten sterke midler",
-        "text_line_1": "Klinisk dokumentert LED · 10 minutter, hjemme",
+        "text_line_1": "Klinisk dokumentert LED · 10–15 minutter, hjemme",
         "rating_anchor": "#reviews",
         "cta_text": "Prøv risikofritt i 30 dager",
         "cta_url": "/products/skinora-clear",
@@ -316,7 +316,7 @@
         "hf_4": {
           "type": "filter_item",
           "settings": {
-            "lead": "Du har ikke tid til 10 minutter, 3–5 ganger i uken.",
+            "lead": "Du har ikke tid til 10–15 minutter, 3–5 ganger i uken.",
             "explanation": "Konsistens er hele forskjellen mellom suksess og frustrasjon. Bruker du den sporadisk, kaster du pengene dine."
           }
         }
@@ -368,7 +368,7 @@
         "s_2": {
           "type": "step",
           "settings": {
-            "title": "Bruk Skinora® Clear i 10 minutter",
+            "title": "Bruk Skinora® Clear i 10–15 minutter",
             "text": "Plasser enheten over problemområdet. Slapp av mens lyset jobber."
           }
         },
@@ -724,7 +724,7 @@
           "type": "faq",
           "settings": {
             "question": "Hvor ofte bør jeg bruke den?",
-            "answer": "Vi anbefaler 3–5 økter i uken, à 10 minutter. Du kan bruke den morgen eller kveld – det som passer best for deg."
+            "answer": "Vi anbefaler 3–5 økter i uken, à 10–15 minutter. Du kan bruke den morgen eller kveld – det som passer best for deg."
           }
         },
         "faq_3": {
@@ -759,7 +759,7 @@
           "type": "faq",
           "settings": {
             "question": "Hvor ofte må jeg bruke den for at det skal være verdt det?",
-            "answer": "Vi anbefaler 3–5 ganger i uken, 10 minutter per økt. Det tilsvarer én sesong med favorittserien din i uken. Mange merker de første resultatene etter 2–4 uker med jevn bruk. Og fordi du betaler én gang og bruker den ubegrenset, blir prisen per behandling lavere jo mer du bruker den."
+            "answer": "Vi anbefaler 3–5 ganger i uken, 10–15 minutter per økt. Det tilsvarer én sesong med favorittserien din i uken. Mange merker de første resultatene etter 2–4 uker med jevn bruk. Og fordi du betaler én gang og bruker den ubegrenset, blir prisen per behandling lavere jo mer du bruker den."
           }
         },
         "faq_noresult": {
