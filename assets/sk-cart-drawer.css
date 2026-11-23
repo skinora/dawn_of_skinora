@@ -537,3 +537,72 @@ cart-drawer-items::-webkit-scrollbar-track-piece {
    CUSTOM SK MODIFICATIONS
    Add your brand-specific cart styles below
    =================================== */
+
+/* ── Tettere skuff, synlig vareliste (23.11.2026) ────────────────────────
+   Målt på 375×667: topp 74 px + bunn 419 px ga varelisten 172 px. Reglene
+   under strammer luften i topp og bunn, og skjuler de roterende sitatene på
+   lave skjermer. Vurderingslinjen, summen, knappen og betalingslogoene står. */
+.drawer__header {
+  padding: var(--space-2) 0;
+}
+
+.drawer__footer {
+  padding: var(--space-3) 0;
+}
+
+.drawer__footer .cart-drawer__footer > * + * {
+  margin-top: var(--space-1);
+}
+
+.cart-drawer .drawer__footer .tax-note {
+  margin: var(--space-1) 0 var(--space-2) auto;
+}
+
+.drawer__footer .cart-reassure--drawer {
+  margin-bottom: var(--space-2);
+}
+
+.drawer__footer .cart-reassure-payments {
+  margin-top: var(--space-2);
+}
+
+@media (max-height: 760px) {
+  .drawer__footer .sk-quote-rot {
+    display: none;
+  }
+}
+
+/* Tydelig at varelisten kan scrolles: bredere rullefelt med synlig spor, og
+   en skygge som ligger fast nederst i listen, rett over summen. Luften
+   under innholdet gjør at skyggen ikke dekker siste linje når man er i bunn. */
+cart-drawer-items {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-400) var(--hairline);
+}
+
+cart-drawer-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+cart-drawer-items::-webkit-scrollbar-thumb {
+  background-color: var(--ink-400);
+}
+
+cart-drawer-items::-webkit-scrollbar-track {
+  background: var(--hairline);
+}
+
+cart-drawer-items:not(.is-empty)::after {
+  content: '';
+  position: sticky;
+  bottom: 0;
+  display: block;
+  height: var(--space-5);
+  margin-top: calc(var(--space-5) * -1);
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--ink-900) 14%, transparent));
+  pointer-events: none;
+}
+
+cart-drawer-items:not(.is-empty) .drawer__cart-items-wrapper {
+  padding-bottom: var(--space-5);
+}

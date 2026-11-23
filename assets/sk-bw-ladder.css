@@ -134,3 +134,40 @@
   line-height: var(--lh-relaxed);
   color: var(--ink-400);
 }
+
+/* ── I skuffen: lavere trapp ─────────────────────────────────────────────
+   Målt 23.11.2026 på 375×667: trappen var 224 px og varelisten hadde 172 px,
+   så selve varen sto under kanten. Her er etiketten «Black Week · …» tatt
+   bort (meldingen under sier det samme), luften er strammet inn, og
+   undertittelen vises bare på høye skjermer. Vilkårene står alltid. */
+.sk-bw-ladder--drawer {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3);
+}
+
+.sk-bw-ladder--drawer .sk-bw-ladder__eyebrow {
+  display: none;
+}
+
+.sk-bw-ladder--drawer .sk-bw-ladder__steps {
+  margin-top: var(--space-3);
+}
+
+.sk-bw-ladder--drawer .sk-bw-ladder__step {
+  gap: 2px;
+}
+
+.sk-bw-ladder--drawer .sk-bw-ladder__label {
+  line-height: var(--lh-snug);
+}
+
+.sk-bw-ladder--drawer .sk-bw-ladder__terms {
+  margin-top: var(--space-2);
+  line-height: var(--lh-snug);
+}
+
+@media (max-height: 800px) {
+  .sk-bw-ladder--drawer .sk-bw-ladder__sub {
+    display: none;
+  }
+}
