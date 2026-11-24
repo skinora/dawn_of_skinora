@@ -483,6 +483,7 @@
       >
     {%- endif -%}
 
+    {%- assign sk_title_article = article.handle | split: '/' | last -%}
     {%- if request.page_type == 'page' and page.handle == 'skinora-radiance-face' -%}
       <title>LED-maske for ansiktet – Skinora Radiance Face | 30 d. garanti</title>
       <meta
@@ -501,6 +502,16 @@
         name="description"
         content="Klarere hud på 10–15 min/dag. Skinora® Clear LED-maske – enkel hjemmebehandling for uren og akneutsatt hud. 4,9★ av 47. 30 dagers fornøydgaranti."
       >
+    {%- elsif request.page_type == 'article' and blog.handle == 'nyheter' and sk_title_article == 'led-maske-best-i-test' -%}
+      {%- comment -%}
+        Bare <title> for «LED-maske best i test». H1, innhold og meta-
+        beskrivelse er som før. article.handle kan komme med blogg-handle
+        foran («nyheter/…»), derfor sammenlignes siste ledd.
+      {%- endcomment -%}
+      <title>LED-maske og rødlysmaske test 2026 – dette så vi etter | Skinora</title>
+      {% if page_description %}
+        <meta name="description" content="{{ page_description | escape }}">
+      {% endif %}
     {%- elsif request.page_type == 'collection' and collection.handle == 'rodlysmaske' -%}
       {%- comment -%}
         Bare samlingen «rodlysmaske». Fra-prisen er prisen på den rimeligste
