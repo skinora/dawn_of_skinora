@@ -86,9 +86,16 @@
   margin: 0;
 }
 
-.sk-cg .sk-cg__desc a {
+.sk-cg .sk-cg__desc a,
+.sk-cg .sk-cg__faq-a a {
   color: var(--ink-900);
   text-decoration: underline;
+}
+
+/* Stjerner under H1: .sk-stars er venstrestilt i kortene, hero er midtstilt. */
+.sk-cg__hero .sk-cg__rating {
+  justify-content: center;
+  margin: var(--space-3) 0 0;
 }
 
 .sk-cg__trust {

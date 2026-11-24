@@ -9,7 +9,12 @@
     peker på samme produkt. Mangler blokken, vises produkttittelen uten notat.
   - Priser regnes ut av sk-lp-pricing. Ingen pris står som tekst her.
   - FAQPage-schema bygges av de samme faq-blokkene som vises, så synlig tekst
-    og schema er alltid like. Svarene er ren tekst (textarea) av samme grunn.
+    og schema er alltid like. Svarene er tekst (textarea) og kan inneholde
+    lenker (<a href>). Schemaet får samme tekst med taggene fjernet.
+  - Stjernene under H1 er summen av produktenes egne anmeldelser
+    (metafeltene reviews.rating / reviews.rating_count, samme kilde som
+    kortene): antallet legges sammen, og snittet veies etter antall. Produkter
+    uten anmeldelser teller ikke. Uten anmeldelser vises ingenting.
   - BreadcrumbList kommer fra seo-breadcrumbs-jsonld.
 {%- endcomment -%}
 
@@ -25,6 +30,37 @@
   {%- comment -%} 1. Hero {%- endcomment -%}
   <div class="sk-cg__wrap sk-cg__hero">
     <h1>{{ cg_s.heading | default: collection.title }}</h1>
+    {%- liquid
+      assign cg_rev_n = 0
+      assign cg_rev_sum = 0.0
+      for cg_p in collection.products
+        assign cg_rev_c = cg_p.metafields.reviews.rating_count | plus: 0
+        assign cg_rev_r = cg_p.metafields.reviews.rating.value.rating | plus: 0.0
+        if cg_rev_c > 0 and cg_rev_r > 0
+          assign cg_rev_w = cg_rev_r | times: cg_rev_c
+          assign cg_rev_n = cg_rev_n | plus: cg_rev_c
+          assign cg_rev_sum = cg_rev_sum | plus: cg_rev_w
+        endif
+      endfor
+    -%}
+    {%- if cg_rev_n > 0 -%}
+      {%- liquid
+        assign cg_rev_avg = cg_rev_sum | divided_by: cg_rev_n
+        assign cg_rev_fill = cg_rev_avg | times: 20.0 | round: 1
+        assign cg_rev_txt = cg_rev_avg | round: 1 | replace: '.', ','
+      -%}
+      <div
+        class="sk-stars sk-cg__rating"
+        role="img"
+        aria-label="{{ cg_rev_txt }} av 5 stjerner, basert på {{ cg_rev_n }} anmeldelser av maskene"
+      >
+        <span class="sk-stars__track" aria-hidden="true">
+          <span class="sk-stars__row sk-stars__row--empty"></span>
+          <span class="sk-stars__row sk-stars__row--full" style="width: {{ cg_rev_fill }}%"></span>
+        </span>
+        <span class="sk-stars__count" aria-hidden="true">{{ cg_rev_n }} anmeldelser</span>
+      </div>
+    {%- endif -%}
     {%- if cg_s.intro != blank -%}
       <p class="sk-cg__intro">{{ cg_s.intro }}</p>
     {%- endif -%}
@@ -156,7 +192,7 @@
           {%- for cg_f in cg_faqs -%}
             <details {{ cg_f.shopify_attributes }}>
               <summary>{{ cg_f.settings.question }}</summary>
-              <div class="sk-cg__faq-a">{{ cg_f.settings.answer | escape | newline_to_br }}</div>
+              <div class="sk-cg__faq-a">{{ cg_f.settings.answer | newline_to_br }}</div>
             </details>
           {%- endfor -%}
         </div>
@@ -225,7 +261,7 @@
             "name": {{ cg_f.settings.question | json }},
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": {{ cg_f.settings.answer | strip_newlines | strip | json }}
+              "text": {{ cg_f.settings.answer | strip_html | strip_newlines | strip | json }}
             }
           }{% unless forloop.last %},{% endunless %}
         {%- endfor -%}
@@ -305,7 +341,7 @@
       "limit": 20,
       "settings": [
         { "type": "text", "id": "question", "label": "Spørsmål" },
-        { "type": "textarea", "id": "answer", "label": "Svar", "info": "Ren tekst. Samme tekst vises på siden og i FAQ-schemaet." }
+        { "type": "textarea", "id": "answer", "label": "Svar", "info": "Tekst, lenker (<a href>) er tillatt. Samme tekst vises på siden og i FAQ-schemaet, der uten lenketagger." }
       ]
     }
   ],
