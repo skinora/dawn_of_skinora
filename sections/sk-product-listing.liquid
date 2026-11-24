@@ -211,6 +211,16 @@
     text-overflow: ellipsis;
   }
 
+  /* Lenken i beskrivelsen må ligge over tittellenkens ::after, som dekker
+     hele kortet. Uten dette går et trykk på lenken til produktsiden. */
+  .sk-product-card__description a {
+    position: relative;
+    z-index: 2;
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
   .sk-product-card__footer {
     display: flex;
     flex-direction: column;
@@ -348,11 +358,37 @@
       {% endif %}
 
       {% if section.blocks.size > 0 %}
+        {%- comment -%}
+          Søkeordet «rødlysmaske» tilhører /collections/rodlysmaske. Tittel og
+          beskrivelse i kortene kommer rett fra produktet, og derfra fikk
+          forsiden ordet fem ganger og begynte å konkurrere med samlingssiden.
+          Her, og bare her, byttes ordet til «LED-maske» i det som skrives ut.
+          Første forekomst i brødtekst blir stående og lenker til samlingen,
+          så forsiden peker dit i stedet for å konkurrere. Produktdataene i
+          Shopify røres ikke (tittelen går også til Google Merchant Center).
+        {%- endcomment -%}
+        {%- assign pl_kw = 'rødlysmaske' -%}
+        {%- assign pl_kw_link = '<a href="/collections/rodlysmaske">rødlysmaske</a>' -%}
+        {%- assign pl_linked = false -%}
         <div class="sk-product-listing__grid">
           {% for block in section.blocks %}
             {% assign card_product = block.settings.product %}
             {% if card_product != blank %}
               {% assign hover_image = card_product.images[1] %}
+              {%- liquid
+                assign card_title = card_product.title | replace: 'Rødlysmaske', 'LED-maske' | replace: pl_kw, 'LED-maske' | replace: 'RØDLYSMASKE', 'LED-MASKE'
+                assign card_desc = card_product.description | strip_html
+                if pl_linked == false and card_desc contains pl_kw
+                  assign card_desc_head = card_desc | split: pl_kw | first
+                  assign card_desc_tail = card_desc | remove_first: card_desc_head | remove_first: pl_kw
+                  assign card_desc_head = card_desc_head | replace: 'Rødlysmaske', 'LED-maske' | replace: 'RØDLYSMASKE', 'LED-MASKE'
+                  assign card_desc_tail = card_desc_tail | replace: 'Rødlysmaske', 'LED-maske' | replace: pl_kw, 'LED-maske' | replace: 'RØDLYSMASKE', 'LED-MASKE'
+                  assign card_desc = card_desc_head | append: pl_kw_link | append: card_desc_tail
+                  assign pl_linked = true
+                else
+                  assign card_desc = card_desc | replace: 'Rødlysmaske', 'LED-maske' | replace: pl_kw, 'LED-maske' | replace: 'RØDLYSMASKE', 'LED-MASKE'
+                endif
+              -%}
               <div class="sk-product-card" {{ block.shopify_attributes }}>
                   <div class="sk-product-card__image">
                     {% if card_product.featured_media %}
@@ -404,12 +440,12 @@
                 <div class="sk-product-card__content">
                   <div class="sk-product-card__content-body">
                     <a class="sk-product-card__title-link" href="{{ card_product.url }}">
-                      <h3 class="sk-product-card__title">{{ card_product.title | escape }}</h3>
+                      <h3 class="sk-product-card__title">{{ card_title | escape }}</h3>
                     </a>
                     {% render 'sk-star-rating', sr_product: card_product %}
                     {% if block.settings.show_description and card_product.description != blank %}
                       <div class="sk-product-card__description sk-section-body">
-                        <p>{{ card_product.description | strip_html }}</p>
+                        <p>{{ card_desc }}</p>
                       </div>
                     {% endif %}
                   </div>
