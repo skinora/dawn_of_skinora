@@ -501,6 +501,33 @@
         name="description"
         content="Klarere hud på 10–15 min/dag. Skinora® Clear LED-maske – enkel hjemmebehandling for uren og akneutsatt hud. 4,9★ av 47. 30 dagers fornøydgaranti."
       >
+    {%- elsif request.page_type == 'collection' and collection.handle == 'rodlysmaske' -%}
+      {%- comment -%}
+        Bare samlingen «rodlysmaske». Fra-prisen er prisen på den rimeligste
+        masken i samlingen, regnet ut av sk-lp-pricing (samme tall og samme
+        skrivemåte som kortene på siden). Liquid har ingen collection.price_min,
+        derfor løkken. Uten produkter skrives tittel og beskrivelse uten pris.
+      {%- endcomment -%}
+      {%- liquid
+        assign sk_col_cheapest = nil
+        for sk_col_p in collection.products
+          if sk_col_cheapest == nil or sk_col_p.price < sk_col_cheapest.price
+            assign sk_col_cheapest = sk_col_p
+          endif
+        endfor
+        assign sk_col_from = ''
+        if sk_col_cheapest != nil
+          capture sk_col_from
+            render 'sk-lp-pricing', product: sk_col_cheapest, part: 'pris'
+          endcapture
+          assign sk_col_from = sk_col_from | strip
+        endif
+      -%}
+      <title>Rødlysmaske for moden hud{% if sk_col_from != blank %} – fra {{ sk_col_from }}{% endif %} | Skinora</title>
+      <meta
+        name="description"
+        content="Rødlysmaske med rødt og nær-infrarødt lys, utviklet i Norge for moden hud. {% if sk_col_from != blank %}Fra {{ sk_col_from }}, gratis frakt{% else %}Gratis frakt{% endif %} og 30 dager pengene tilbake."
+      >
     {%- else -%}
       <title>
         {{ page_title }}
