@@ -212,8 +212,10 @@
   }
 
   /* Lenken i beskrivelsen må ligge over tittellenkens ::after, som dekker
-     hele kortet. Uten dette går et trykk på lenken til produktsiden. */
-  .sk-product-card__description a {
+     hele kortet. Uten dette går et trykk på lenken til produktsiden.
+     To klasser i selektoren: «.sk-product-card a» lenger ned fjerner ellers
+     understrekingen (samme spesifisitet, står sist). */
+  .sk-product-card .sk-product-card__description a {
     position: relative;
     z-index: 2;
     color: inherit;
