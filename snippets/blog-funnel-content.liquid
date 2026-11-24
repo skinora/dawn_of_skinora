@@ -193,9 +193,10 @@
     minst 120 tegn brødtekst, av samme grunn som over: første </p> er
     meta-linjen med forfatter og dato. Gjøres etter at plassholderen for
     kompaktkortet er satt, så kortets plassering ikke påvirkes. Lander begge
-    på samme sted, står lenkeboksen først.
+    på samme sted, står lenkeboksen først. «LED-maske best i test» er med
+    vilje ikke i listen: den artikkelen skal stå helt urørt.
   endcomment
-  assign bfk_lb_handles = 'rodlysmaske-hva-forskningen-faktisk-har-undersokt,led-maske-erfaringer,led-maske-best-i-test,rynker-rundt-munnen' | split: ','
+  assign bfk_lb_handles = 'rodlysmaske-hva-forskningen-faktisk-har-undersokt,led-maske-erfaringer,rynker-rundt-munnen' | split: ','
   assign bfk_lb_handle = article.handle | split: '/' | last
   if blog.handle == 'nyheter' and bfk_lb_handles contains bfk_lb_handle
     assign bfk_lb_chunks = bfk_content | split: '</p>'
