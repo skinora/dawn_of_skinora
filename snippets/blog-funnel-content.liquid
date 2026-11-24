@@ -187,6 +187,59 @@
     assign bfk_content = bfk_slot | append: bfk_content
   endif
 
+  comment
+    Lenkeboks til samlingssiden «rodlysmaske» (sk-collection-linkbox), bare i
+    artiklene i listen under. Settes rett etter første toppnivå-avsnitt med
+    minst 120 tegn brødtekst, av samme grunn som over: første </p> er
+    meta-linjen med forfatter og dato. Gjøres etter at plassholderen for
+    kompaktkortet er satt, så kortets plassering ikke påvirkes. Lander begge
+    på samme sted, står lenkeboksen først.
+  endcomment
+  assign bfk_lb_handles = 'rodlysmaske-hva-forskningen-faktisk-har-undersokt,led-maske-erfaringer,led-maske-best-i-test,rynker-rundt-munnen' | split: ','
+  assign bfk_lb_handle = article.handle | split: '/' | last
+  if blog.handle == 'nyheter' and bfk_lb_handles contains bfk_lb_handle
+    assign bfk_lb_chunks = bfk_content | split: '</p>'
+    assign bfk_lb_head = ''
+    assign bfk_lb_found = false
+    for bfk_lb_chunk in bfk_lb_chunks
+      if bfk_lb_found == false
+        assign bfk_lb_head = bfk_lb_head | append: bfk_lb_chunk | append: '</p>'
+        assign bfk_lb_txt = bfk_lb_chunk | remove: bfk_slot | split: '<p' | last | prepend: '<p' | strip_html | strip
+        if bfk_lb_txt.size >= 120
+          assign bfk_lb_opens = bfk_lb_head | split: '<blockquote' | size
+          assign bfk_n = bfk_lb_head | split: '<ul' | size
+          assign bfk_lb_opens = bfk_lb_opens | plus: bfk_n
+          assign bfk_n = bfk_lb_head | split: '<ol' | size
+          assign bfk_lb_opens = bfk_lb_opens | plus: bfk_n
+          assign bfk_n = bfk_lb_head | split: '<table' | size
+          assign bfk_lb_opens = bfk_lb_opens | plus: bfk_n
+          assign bfk_lb_closes = bfk_lb_head | split: '</blockquote>' | size
+          assign bfk_n = bfk_lb_head | split: '</ul>' | size
+          assign bfk_lb_closes = bfk_lb_closes | plus: bfk_n
+          assign bfk_n = bfk_lb_head | split: '</ol>' | size
+          assign bfk_lb_closes = bfk_lb_closes | plus: bfk_n
+          assign bfk_n = bfk_lb_head | split: '</table>' | size
+          assign bfk_lb_closes = bfk_lb_closes | plus: bfk_n
+          if bfk_lb_opens == bfk_lb_closes
+            assign bfk_lb_found = true
+          endif
+        endif
+      endif
+    endfor
+    comment
+      Siste bit etter split har ingen </p>. Da er hodet ikke lenger starten
+      på innholdet, og boksen settes ikke inn framfor å havne feil.
+    endcomment
+    assign bfk_lb_prefix = bfk_content | slice: 0, bfk_lb_head.size
+    if bfk_lb_found and bfk_lb_prefix == bfk_lb_head
+      capture bfk_lb_html
+        render 'sk-collection-linkbox'
+      endcapture
+      assign bfk_lb_rest = bfk_content | remove_first: bfk_lb_head
+      assign bfk_content = bfk_lb_head | append: bfk_lb_html | append: bfk_lb_rest
+    endif
+  endif
+
   assign bfk_parts = bfk_content | split: '<h2'
 
   assign bfk_full_idx = 0

@@ -504,3 +504,27 @@
 .sk-blog-article__author {
   color: var(--ink-500);
 }
+
+/* Lenkeboks til samlingssiden (snippets/sk-collection-linkbox.liquid).
+   Hvit flate, mørk grå tekst, tynn ramme: skal leses som en rolig henvisning
+   i brødteksten, ikke som et kort. Produktkortene (blog-funnel) er salgs-
+   flaten; denne er bare en lenke. */
+.sk-blog-article__body .sk-linkbox {
+  margin: var(--space-5) 0;
+  padding: var(--space-4) var(--space-5);
+  background: var(--paper-0);
+  border: 1px solid var(--ink-300);
+  color: var(--ink-700);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+}
+
+.sk-blog-article__body .sk-linkbox p {
+  margin: 0;
+}
+
+.sk-blog-article__body .sk-linkbox a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
